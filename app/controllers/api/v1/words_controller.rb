@@ -1,4 +1,4 @@
-class WordsController < ApplicationController
+class Api::V1::WordsController < ApplicationController
   before_action :set_word, only: %i[ show update destroy ]
 
   # GET /words
