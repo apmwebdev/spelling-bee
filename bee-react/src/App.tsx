@@ -2,6 +2,7 @@ import './App.css';
 import axios from "axios";
 import Words from "./components/words.tsx";
 import { useEffect, useState } from 'react';
+import Puzzle from './components/puzzle.tsx';
 
 const API_URL = "http://localhost:3000/api/v1/words";
 
@@ -21,7 +22,10 @@ function App() {
     return () => {mounted = false};
   }, []);
   return (
-    <Words words={words} />
+    <div>
+      <Puzzle centerLetter='M' otherLetters={['D', 'E', 'H', 'O','T', 'U']} />
+      {/*<Words words={words} />*/}
+    </div>
   )
 }
 
