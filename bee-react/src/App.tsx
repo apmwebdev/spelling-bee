@@ -22,9 +22,16 @@ function App() {
     return () => {mounted = false};
   }, []);
   return (
-    <div>
-      <Puzzle centerLetter='M' otherLetters={['D', 'E', 'H', 'O','T', 'U']} />
-      {/*<Words words={words} />*/}
+    <div className="sb-top-container">
+      <header className="sb-header"></header>
+      <div className="sb-main-container">
+        <div className="sb-main">
+          <div className="sb-controls">
+            <Puzzle centerLetter='M' otherLetters={['D', 'E', 'H', 'O', 'T', 'U']} />
+          </div>
+          <div className="sb-status">status</div>
+        </div>
+      </div>
     </div>
   )
 }
