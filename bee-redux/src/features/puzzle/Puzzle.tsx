@@ -7,12 +7,6 @@ import PuzzleControls from "./PuzzleControls"
 export function Puzzle() {
   const data = useAppSelector(selectPuzzle)
   const dispatch = useAppDispatch()
-  const [puzzleDate, setPuzzleDate] = useState("2023-06-20")
-
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    dispatch(fetchAsync(puzzleDate))
-  }
 
   const displayData = () => {
     let retVal
@@ -30,16 +24,7 @@ export function Puzzle() {
   }
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          name="dateInput"
-          value={puzzleDate}
-          onChange={(e) => setPuzzleDate(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className="hive-container">
       {displayData()}
     </div>
   )
