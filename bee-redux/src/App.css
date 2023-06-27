@@ -131,4 +131,6 @@ Header {
 
 .sb-status {
   border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
 }

@@ -1,6 +1,7 @@
 import "./App.css"
 import { Puzzle } from "./features/puzzle/Puzzle"
 import { Header } from "./features/header/Header"
+import { Status } from "./features/status/Status"
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
                 <Puzzle />
               </div>
             </div>
-            <div className="sb-status">status</div>
+            <Status />
           </div>
         </div>
       </div>
