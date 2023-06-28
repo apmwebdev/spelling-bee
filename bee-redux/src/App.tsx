@@ -10,11 +10,7 @@ function App() {
         <Header />
         <div className="sb-main-container">
           <div className="sb-main">
-            <div className="sb-controls-container">
-              <div className="sb-controls">
-                <Puzzle />
-              </div>
-            </div>
+            <Puzzle />
             <Status />
           </div>
         </div>

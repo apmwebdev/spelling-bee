@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react"
 
 import { useAppDispatch } from "../../app/hooks"
-import { fetchAsync } from "../puzzle/puzzleSlice"
+import { fetchPuzzleAsync } from "../puzzle/puzzleSlice"
 
 export function Header() {
   const dispatch = useAppDispatch()
@@ -9,7 +9,7 @@ export function Header() {
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(fetchAsync(puzzleDate))
+    dispatch(fetchPuzzleAsync(puzzleDate))
   }
 
   return (

@@ -12,7 +12,7 @@ const initialState: PuzzleState = {
   status: "idle",
 }
 
-export const fetchAsync = createAsyncThunk(
+export const fetchPuzzleAsync = createAsyncThunk(
   "puzzle/fetchPuzzle",
   async (dateString: string) => {
     const response = await fetchPuzzle(dateString)
@@ -26,14 +26,14 @@ export const puzzleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAsync.pending, (state) => {
+      .addCase(fetchPuzzleAsync.pending, (state) => {
         state.status = "loading"
       })
-      .addCase(fetchAsync.fulfilled, (state, action) => {
+      .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
         state.status = "idle"
         state.data = action.payload
       })
-      .addCase(fetchAsync.rejected, (state) => {
+      .addCase(fetchPuzzleAsync.rejected, (state) => {
         state.status = "failed"
       })
   },

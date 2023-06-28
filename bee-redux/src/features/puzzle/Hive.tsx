@@ -3,7 +3,7 @@ import LetterCell from "./LetterCell"
 import { useAppSelector } from "../../app/hooks"
 import { selectPuzzle } from "./puzzleSlice"
 
-const PuzzleControls: FC = () => {
+const Hive: FC = () => {
   const puzzle = useAppSelector(selectPuzzle)
   let contents
   if (!puzzle) {
@@ -21,4 +21,4 @@ const PuzzleControls: FC = () => {
   return <div className="hive-container">{contents}</div>
 }
 
-export default PuzzleControls
+export default Hive
