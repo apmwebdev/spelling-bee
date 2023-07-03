@@ -15,26 +15,40 @@ export const guessesSampleData: GuessesFormat[] = [
     puzzleId: "1234",
     guesses: [
       {
-        word: "mouthed",
+        word: "MOUTHED",
         timestamp: 0,
+        isAnswer: true,
       },
       {
-        word: "dehm",
+        word: "DEHM",
         timestamp: 1,
+        isAnswer: false,
       },
       {
-        word: "deem",
+        word: "DEEM",
         timestamp: 2,
+        isAnswer: true,
       },
       {
-        word: "motu",
+        word: "MOTU",
         timestamp: 3,
+        isAnswer: false,
       },
       {
-        word: "deemed",
+        word: "DEEMED",
         timestamp: 4,
+        isAnswer: true,
       },
     ],
+    // includes(searchTerm: string) {
+    //   return (
+    //     this &&
+    //     this.guesses &&
+    //     this.guesses.some(
+    //       (guessObject: GuessFormat) => guessObject.word === searchTerm,
+    //     )
+    //   )
+    // },
   },
 ]
 

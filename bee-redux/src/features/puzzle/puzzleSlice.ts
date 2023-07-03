@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { PuzzleFormat, fetchPuzzle } from "./puzzleAPI"
+import { fetchPuzzle } from "./puzzleAPI"
 import { RootState } from "../../app/store"
+
+export interface PuzzleFormat {
+  printDate: string
+  centerLetter: string
+  outerLetters: string[]
+  validLetters: string[]
+  pangrams: string[]
+  answers: string[]
+}
 
 export interface PuzzleState {
   data: PuzzleFormat | null | undefined
@@ -42,5 +51,15 @@ export const puzzleSlice = createSlice({
 export const {} = puzzleSlice.actions
 
 export const selectPuzzle = (state: RootState) => state.puzzle.data
+export const selectPrintDate = (state: RootState) =>
+  state.puzzle.data?.printDate
+export const selectCenterLetter = (state: RootState) =>
+  state.puzzle.data?.centerLetter
+export const selectOuterLetters = (state: RootState) =>
+  state.puzzle.data?.outerLetters
+export const selectValidLetters = (state: RootState) =>
+  state.puzzle.data?.validLetters
+export const selectPangrams = (state: RootState) => state.puzzle.data?.pangrams
+export const selectAnswers = (state: RootState) => state.puzzle.data?.answers
 
 export default puzzleSlice.reducer

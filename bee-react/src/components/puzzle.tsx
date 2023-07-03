@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 // import PropTypes from 'prop-types';
 import LetterCell from './LetterCell.tsx';
 

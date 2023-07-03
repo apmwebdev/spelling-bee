@@ -1,11 +1,4 @@
-export interface PuzzleFormat {
-  printDate: string
-  centerLetter: string
-  outerLetters: string[]
-  validLetters: string[]
-  pangrams: string[]
-  answers: string[]
-}
+import { PuzzleFormat } from "./puzzleSlice"
 
 const getPuzzleSampleData = (inputDate: string): PuzzleFormat | undefined => {
   return puzzleSampleData.find((el) => el.printDate === inputDate)

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { fetchGuesses, guessesSampleData } from './guessesAPI';
+import { fetchGuesses, guessesSampleData } from "./guessesAPI"
 import { RootState } from "../../app/store"
 
 export enum Status {
@@ -9,15 +9,22 @@ export enum Status {
   Error = "Error",
 }
 
+export interface GuessFormData {
+  word: string
+  isAnswer: boolean
+}
+
 export interface GuessFormat {
   word: string
   timestamp: number
+  isAnswer: boolean
 }
 
 export interface GuessesFormat {
   userId: number
   puzzleId: string
   guesses: GuessFormat[]
+  // includes: Function
 }
 
 export interface GuessesState {
@@ -38,10 +45,11 @@ export const fetchGuessesAsync = createAsyncThunk(
   },
 )
 
-const createGuessObject = (word: string): GuessFormat => {
+const createGuessObject = (guessData: GuessFormData): GuessFormat => {
   return {
-    word: word,
+    word: guessData.word,
     timestamp: Date.now(),
+    isAnswer: guessData.isAnswer,
   }
 }
 
