@@ -58,11 +58,7 @@ export const guessesSlice = createSlice({
   initialState,
   reducers: {
     addGuess: (state, action) => {
-      if (!state.data) {
-        //create state object
-      } else {
-        state.data.guesses.push(createGuessObject(action.payload))
-      }
+      state.data.guesses.push(createGuessObject(action.payload))
     },
   },
   extraReducers: (builder) => {
