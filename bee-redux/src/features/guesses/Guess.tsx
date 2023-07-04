@@ -97,7 +97,7 @@ export function Guess() {
   }
 
   const guessIsAnswer = (userInput: string, answers: string[] | undefined) => {
-    return !!(answers && answers.includes(userInput))
+    return !!(answers && answers.includes(userInput.toLowerCase()))
   }
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
