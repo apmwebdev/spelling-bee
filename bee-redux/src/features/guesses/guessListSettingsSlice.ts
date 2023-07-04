@@ -34,7 +34,7 @@ const initialState: GuessListSettingsState = {
   data: {
     sortType: SortType.Alphabetical,
     sortOrder: SortOrder.Ascending,
-    showWrongGuesses: true,
+    showWrongGuesses: false,
     separateWrongGuesses: true,
   },
   status: Status.Initial,
