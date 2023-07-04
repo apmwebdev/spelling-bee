@@ -1,5 +1,5 @@
 import { Progress } from "./Progress"
-import { Hints } from "./Hints"
+import { Hints } from "../hints/Hints"
 import { GuessList } from "../guesses/GuessList"
 
 export function Status() {
