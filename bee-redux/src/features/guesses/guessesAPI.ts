@@ -3,10 +3,18 @@ import { GuessesFormat } from "./guessesSlice"
 const getGuessesSampleData = (
   userId: number,
   puzzleId: string,
-): GuessesFormat | undefined => {
-  return guessesSampleData.find(
+): GuessesFormat => {
+  const result = guessesSampleData.find(
     (el) => el.puzzleId === puzzleId && el.userId === userId,
   )
+  if (result) {
+    return result
+  }
+  return {
+    userId: 0,
+    puzzleId: "not found",
+    guesses: [],
+  }
 }
 
 export const guessesSampleData: GuessesFormat[] = [
@@ -55,8 +63,8 @@ export const guessesSampleData: GuessesFormat[] = [
 export function fetchGuesses(
   userId: number,
   puzzleId: string,
-): Promise<{ data: GuessesFormat | undefined }> {
-  return new Promise<{ data: GuessesFormat | undefined }>((resolve) => {
+): Promise<{ data: GuessesFormat }> {
+  return new Promise<{ data: GuessesFormat }>((resolve) => {
     return setTimeout(
       () => resolve({ data: getGuessesSampleData(userId, puzzleId) }),
       500,

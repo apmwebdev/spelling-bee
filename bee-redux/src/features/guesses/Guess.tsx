@@ -1,6 +1,11 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { addGuess, GuessesFormat, GuessFormat, selectGuesses } from './guessesSlice';
+import {
+  addGuess,
+  GuessesFormat,
+  GuessFormat,
+  selectGuesses,
+} from "./guessesSlice"
 import { useAppSelector } from "../../app/hooks"
 import {
   selectAnswers,
@@ -55,17 +60,12 @@ export function Guess() {
     }
   }, [ErrorTypes.InvalidLetter, guessValue, validLetters])
 
-  const getMatchingGuess = (
-    guesses: GuessesFormat | null | undefined,
-    guessValue: string,
-  ) => {
+  const getMatchingGuess = (guesses: GuessesFormat, guessValue: string) => {
     let matchingGuess: GuessFormat | null = null
-    if (guesses) {
-      for (const guessObject of guesses.guesses) {
-        if (guessObject.word === guessValue) {
-          matchingGuess = guessObject
-          break
-        }
+    for (const guessObject of guesses.guesses) {
+      if (guessObject.word === guessValue) {
+        matchingGuess = guessObject
+        break
       }
     }
     return matchingGuess

@@ -28,7 +28,7 @@ export interface GuessesFormat {
 }
 
 export interface GuessesState {
-  data: GuessesFormat | null | undefined
+  data: GuessesFormat
   status: Status
 }
 
