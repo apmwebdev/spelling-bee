@@ -2,20 +2,18 @@ import { useDispatch } from "react-redux"
 import { useAppSelector } from "../../app/hooks"
 import {
   ChangeProfilePayload,
-  selectCurrentHintProfile,
   selectHintProfiles,
   setCurrentProfile,
 } from "./hintProfilesSlice"
+import { ChangeEvent } from "react"
 
 export function HintProfile() {
   const dispatch = useDispatch()
-  const profiles = useAppSelector(selectHintProfiles)
-  const currentProfile = useAppSelector(selectCurrentHintProfile)
+  const { currentProfile, profiles } = useAppSelector(selectHintProfiles)
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload: ChangeProfilePayload = {
-      oldCurrent: currentProfile.id,
-      newCurrent: Number(e.target.value),
+      newId: Number(e.target.value),
     }
     dispatch(setCurrentProfile(payload))
   }
@@ -25,7 +23,11 @@ export function HintProfile() {
       Hint profile:&nbsp;
       <select value={currentProfile.id} onChange={(e) => handleChange(e)}>
         {profiles.map((profile) => {
-          return <option value={profile.id}>{profile.name}</option>
+          return (
+            <option key={profile.id} value={profile.id}>
+              {profile.name}
+            </option>
+          )
         })}
       </select>
     </div>

@@ -102,7 +102,6 @@ export enum ProfileDisplayDefaults {
 export interface HintProfileFormat {
   id: number
   name: string
-  isCurrent: boolean
   isUserCreated: boolean
   displayDefault: ProfileDisplayDefaults
   trackingDefault: TrackingOptions
@@ -112,222 +111,224 @@ export interface HintProfileFormat {
 export const blankHintProfile: HintProfileFormat = {
   id: -1,
   name: "None",
-  isCurrent: true,
   isUserCreated: false,
   displayDefault: ProfileDisplayDefaults.Expanded,
   trackingDefault: TrackingOptions.Both,
   panels: [],
 }
 
+export interface HintProfilesStateData {
+  currentProfile: HintProfileFormat
+  profiles: HintProfileFormat[]
+}
+
 export interface HintProfilesState {
-  data: HintProfileFormat[]
+  data: HintProfilesStateData
   status: string
 }
 
-const initialState: HintProfilesState = {
-  data: [
-    {
-      id: 0,
-      name: "Super Spelling Bee",
-      isCurrent: true,
-      isUserCreated: false,
-      displayDefault: ProfileDisplayDefaults.Expanded,
-      trackingDefault: TrackingOptions.Both,
-      panels: [
-        {
-          name: "Basic Info",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Basic,
-          typeOptions: {
-            showWordCount: true,
-            showTotalPoints: true,
-            showPangramCount: true,
-            showPerfectPangramCount: true,
-          },
+const superSpellingBeeProfile = (): HintProfileFormat => {
+  return {
+    id: 0,
+    name: "Super Spelling Bee",
+    isUserCreated: false,
+    displayDefault: ProfileDisplayDefaults.Expanded,
+    trackingDefault: TrackingOptions.Both,
+    panels: [
+      {
+        name: "Basic Info",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Basic,
+        typeOptions: {
+          showWordCount: true,
+          showTotalPoints: true,
+          showPangramCount: true,
+          showPerfectPangramCount: true,
         },
-        {
-          name: "Remaining Words",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Letter,
-          typeOptions: {
-            numberOfLetters: 1,
-            locationInWord: LetterPanelLocations.Beginning,
-            offset: 0,
-            display: StringHintDisplayOptions.WordLengthGrid,
-          },
+      },
+      {
+        name: "Remaining Words",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Letter,
+        typeOptions: {
+          numberOfLetters: 1,
+          locationInWord: LetterPanelLocations.Beginning,
+          offset: 0,
+          display: StringHintDisplayOptions.WordLengthGrid,
         },
-        {
-          name: "Starting Letters x Word Lengths",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Letter,
-          typeOptions: {
-            numberOfLetters: 2,
-            locationInWord: LetterPanelLocations.Beginning,
-            offset: 0,
-            display: StringHintDisplayOptions.WordLengthGrid,
-          },
+      },
+      {
+        name: "Starting Letters x Word Lengths",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Letter,
+        typeOptions: {
+          numberOfLetters: 2,
+          locationInWord: LetterPanelLocations.Beginning,
+          offset: 0,
+          display: StringHintDisplayOptions.WordLengthGrid,
         },
-        {
-          name: "Word Obscurity Ranking",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.WordObscurity,
-          typeOptions: {},
+      },
+      {
+        name: "Word Obscurity Ranking",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.WordObscurity,
+        typeOptions: {},
+      },
+      {
+        name: "String Search",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Search,
+        typeOptions: {
+          searchLocation: SearchPanelLocations.Anywhere,
+          offset: 0,
+          display: StringHintDisplayOptions.LettersOnly,
         },
-        {
-          name: "String Search",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Search,
-          typeOptions: {
-            searchLocation: SearchPanelLocations.Anywhere,
-            offset: 0,
-            display: StringHintDisplayOptions.LettersOnly,
-          },
+      },
+      {
+        name: "Definitions",
+        isCollapsed: true,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Collapsed,
+        type: PanelTypes.Definitions,
+        typeOptions: {},
+      },
+      {
+        name: "Excluded Words",
+        isCollapsed: true,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Collapsed,
+        type: PanelTypes.ExcludedWords,
+        typeOptions: {},
+      },
+    ],
+  }
+}
+
+const spellingBeeBuddyProfile = (): HintProfileFormat => {
+  return {
+    id: 1,
+    name: "NYT Spelling Bee Buddy",
+    isUserCreated: false,
+    displayDefault: ProfileDisplayDefaults.Blurred,
+    trackingDefault: TrackingOptions.Remaining,
+    panels: [
+      {
+        name: "Basic info",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Basic,
+        typeOptions: {
+          showWordCount: true,
+          showTotalPoints: true,
+          showPangramCount: true,
+          showPerfectPangramCount: false,
         },
-        {
-          name: "Definitions",
-          isCollapsed: true,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Collapsed,
-          type: PanelTypes.Definitions,
-          typeOptions: {},
+      },
+      {
+        name: "Your Grid of Remaining Words",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Remaining,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Letter,
+        typeOptions: {
+          numberOfLetters: 1,
+          locationInWord: LetterPanelLocations.Beginning,
+          offset: 0,
+          display: StringHintDisplayOptions.WordLengthGrid,
         },
-        {
-          name: "Excluded Words",
-          isCollapsed: true,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Collapsed,
-          type: PanelTypes.ExcludedWords,
-          typeOptions: {},
+      },
+      {
+        name: "Your Two-Letter List",
+        isCollapsed: false,
+        isBlurred: false,
+        tracking: TrackingOptions.Remaining,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Letter,
+        typeOptions: {
+          numberOfLetters: 2,
+          locationInWord: LetterPanelLocations.Beginning,
+          offset: 0,
+          display: StringHintDisplayOptions.WordCountList,
         },
-      ],
+      },
+      {
+        name: "Word Obscurity Ranking",
+        isCollapsed: false,
+        isBlurred: true,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Blurred,
+        type: PanelTypes.WordObscurity,
+        typeOptions: {},
+      },
+      {
+        name: "Definitions",
+        isCollapsed: false,
+        isBlurred: true,
+        tracking: TrackingOptions.Both,
+        initialDisplay: PanelInitialDisplayOptions.Blurred,
+        type: PanelTypes.Definitions,
+        typeOptions: {},
+      },
+    ],
+  }
+}
+
+const initialState = (): HintProfilesState => {
+  const ssbProfile = superSpellingBeeProfile()
+  return {
+    data: {
+      currentProfile: ssbProfile,
+      profiles: [ssbProfile, spellingBeeBuddyProfile()],
     },
-    {
-      id: 1,
-      name: "NYT Spelling Bee Buddy",
-      isCurrent: false,
-      isUserCreated: false,
-      displayDefault: ProfileDisplayDefaults.Blurred,
-      trackingDefault: TrackingOptions.Remaining,
-      panels: [
-        {
-          name: "Basic info",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Basic,
-          typeOptions: {
-            showWordCount: true,
-            showTotalPoints: true,
-            showPangramCount: true,
-            showPerfectPangramCount: false,
-          },
-        },
-        {
-          name: "Your Grid of Remaining Words",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Remaining,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Letter,
-          typeOptions: {
-            numberOfLetters: 1,
-            locationInWord: LetterPanelLocations.Beginning,
-            offset: 0,
-            display: StringHintDisplayOptions.WordLengthGrid,
-          },
-        },
-        {
-          name: "Your Two-Letter List",
-          isCollapsed: false,
-          isBlurred: false,
-          tracking: TrackingOptions.Remaining,
-          initialDisplay: PanelInitialDisplayOptions.Expanded,
-          type: PanelTypes.Letter,
-          typeOptions: {
-            numberOfLetters: 2,
-            locationInWord: LetterPanelLocations.Beginning,
-            offset: 0,
-            display: StringHintDisplayOptions.WordCountList,
-          },
-        },
-        {
-          name: "Word Obscurity Ranking",
-          isCollapsed: false,
-          isBlurred: true,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Blurred,
-          type: PanelTypes.WordObscurity,
-          typeOptions: {},
-        },
-        {
-          name: "Definitions",
-          isCollapsed: false,
-          isBlurred: true,
-          tracking: TrackingOptions.Both,
-          initialDisplay: PanelInitialDisplayOptions.Blurred,
-          type: PanelTypes.Definitions,
-          typeOptions: {},
-        },
-      ],
-    },
-  ],
-  status: "stub",
+    status: "stub",
+  }
 }
 
 export interface ChangeProfilePayload {
-  oldCurrent: number
-  newCurrent: number
+  newId: number
 }
 
 export const hintProfilesSlice = createSlice({
   name: "hintProfiles",
   initialState,
   reducers: {
-    setCurrentProfile: (state, action) => {
-      const oldCurrent = state.data.find(
-        (profile) => profile.id === action.payload.oldCurrent,
-      )
-      if (oldCurrent) {
-        oldCurrent.isCurrent = false
-      }
-      const newCurrent = state.data.find(
-        (profile) => profile.id === action.payload.newCurrent,
+    setCurrentProfile: (
+      state,
+      action: { payload: ChangeProfilePayload; type: string },
+    ) => {
+      const newCurrent = state.data.profiles.find(
+        (profile) => profile.id === action.payload.newId,
       )
       if (newCurrent) {
-        newCurrent.isCurrent = true
+        state.data.currentProfile = newCurrent
       }
     },
   },
-  extraReducers: {},
+  extraReducers: (builder) => {},
 })
 
 export const { setCurrentProfile } = hintProfilesSlice.actions
 
 export const selectHintProfiles = (state: RootState) => state.hintProfiles.data
-export const selectCurrentHintProfile = (state: RootState) => {
-  const current = state.hintProfiles.data.find((el) => el.isCurrent)
-  if (current) {
-    return current
-  }
-  return blankHintProfile
-}
 
 export default hintProfilesSlice.reducer
