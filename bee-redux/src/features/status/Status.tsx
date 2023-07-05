@@ -1,5 +1,5 @@
 import { Progress } from "./Progress"
-import { Hints } from "../hints/Hints"
+import { HintSection } from "../hints/HintSection"
 import { GuessList } from "../guesses/GuessList"
 
 export function Status() {
@@ -7,7 +7,7 @@ export function Status() {
     <div className="sb-status">
       <Progress />
       <GuessList />
-      <Hints />
+      <HintSection />
     </div>
   )
 }

@@ -1,7 +1,21 @@
-import { PuzzleFormat } from "./puzzleSlice"
+import { BlankPuzzle, PuzzleFormat } from './puzzleSlice';
 
-const getPuzzleSampleData = (inputDate: string): PuzzleFormat | undefined => {
-  return puzzleSampleData.find((el) => el.printDate === inputDate)
+const getPerfectPangrams = (puzzle: PuzzleFormat) => {
+  return puzzle.pangrams.filter((pangram) => {
+    return (
+      pangram.toUpperCase().split("").sort().toString() ===
+      puzzle.validLetters.toString()
+    )
+  })
+}
+
+const getPuzzleSampleData = (inputDate: string): PuzzleFormat => {
+  const puzzle = puzzleSampleData.find((el) => el.printDate === inputDate)
+  if (puzzle) {
+    puzzle.perfectPangrams = getPerfectPangrams(puzzle)
+    return puzzle
+  }
+  return BlankPuzzle
 }
 
 const puzzleSampleData: PuzzleFormat[] = [
@@ -11,6 +25,7 @@ const puzzleSampleData: PuzzleFormat[] = [
     outerLetters: ["D", "E", "H", "O", "T", "U"],
     validLetters: ["D", "E", "H", "M", "O", "T", "U"],
     pangrams: ["mouthed"],
+    perfectPangrams: [],
     answers: [
       "mouthed",
       "deem",
@@ -71,8 +86,8 @@ const puzzleSampleData: PuzzleFormat[] = [
 
 export function fetchPuzzle(
   dateString: string,
-): Promise<{ data: PuzzleFormat | undefined }> {
-  return new Promise<{ data: PuzzleFormat | undefined }>((resolve) => {
+): Promise<{ data: PuzzleFormat }> {
+  return new Promise<{ data: PuzzleFormat }>((resolve) => {
     return setTimeout(
       () => resolve({ data: getPuzzleSampleData(dateString) }),
       500,

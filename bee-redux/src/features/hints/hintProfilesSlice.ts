@@ -6,8 +6,10 @@ import { RootState } from "../../app/store"
  * For determining how to live update the hints when correct guesses are made
  */
 export enum TrackingOptions {
-  Both = "BOTH", //show remaining and total words
+  RemainingOfTotal = "REMAINING_OF_TOTAL",
+  FoundOfTotal = "FOUND_OF_TOTAL",
   Remaining = "REMAINING", //show remaining words only
+  Found = "FOUND", //show remaining and total words
   Total = "TOTAL", //show total words only, i.e., no live updates
 }
 
@@ -39,6 +41,10 @@ export interface BasicPanelSettings {
   showTotalPoints: boolean
   showPangramCount: boolean
   showPerfectPangramCount: boolean
+}
+
+export function isBasicPanelSettings(a: any): a is BasicPanelSettings {
+  return a.showWordCount !== undefined
 }
 
 export enum LetterPanelLocations {
@@ -113,7 +119,7 @@ export const blankHintProfile: HintProfileFormat = {
   name: "None",
   isUserCreated: false,
   displayDefault: ProfileDisplayDefaults.Expanded,
-  trackingDefault: TrackingOptions.Both,
+  trackingDefault: TrackingOptions.RemainingOfTotal,
   panels: [],
 }
 
@@ -133,13 +139,13 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     name: "Super Spelling Bee",
     isUserCreated: false,
     displayDefault: ProfileDisplayDefaults.Expanded,
-    trackingDefault: TrackingOptions.Both,
+    trackingDefault: TrackingOptions.RemainingOfTotal,
     panels: [
       {
         name: "Basic Info",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Basic,
         typeOptions: {
@@ -153,7 +159,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Remaining Words",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeOptions: {
@@ -167,7 +173,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Starting Letters x Word Lengths",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeOptions: {
@@ -181,7 +187,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Word Obscurity Ranking",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.WordObscurity,
         typeOptions: {},
@@ -190,7 +196,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "String Search",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Search,
         typeOptions: {
@@ -203,7 +209,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Definitions",
         isCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.Definitions,
         typeOptions: {},
@@ -212,7 +218,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Excluded Words",
         isCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.ExcludedWords,
         typeOptions: {},
@@ -233,7 +239,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         name: "Basic info",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Basic,
         typeOptions: {
@@ -275,7 +281,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         name: "Word Obscurity Ranking",
         isCollapsed: false,
         isBlurred: true,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.WordObscurity,
         typeOptions: {},
@@ -284,7 +290,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         name: "Definitions",
         isCollapsed: false,
         isBlurred: true,
-        tracking: TrackingOptions.Both,
+        tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.Definitions,
         typeOptions: {},

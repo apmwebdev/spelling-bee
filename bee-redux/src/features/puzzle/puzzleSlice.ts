@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { fetchPuzzle } from "./puzzleAPI"
 import { RootState } from "../../app/store"
+import { calculateScore } from "../../utils/utils"
 
 export interface PuzzleFormat {
   printDate: string
@@ -8,16 +9,27 @@ export interface PuzzleFormat {
   outerLetters: string[]
   validLetters: string[]
   pangrams: string[]
+  perfectPangrams: string[]
   answers: string[]
 }
 
+export const BlankPuzzle: PuzzleFormat = {
+  printDate: "01-01-1600",
+  centerLetter: "B",
+  outerLetters: ["C", "D", "F", "G", "H", "J"],
+  validLetters: ["B", "C", "D", "F", "G", "H", "J"],
+  pangrams: [],
+  perfectPangrams: [],
+  answers: [],
+}
+
 export interface PuzzleState {
-  data: PuzzleFormat | null | undefined
+  data: PuzzleFormat
   status: "idle" | "loading" | "failed"
 }
 
 const initialState: PuzzleState = {
-  data: null,
+  data: BlankPuzzle,
   status: "idle",
 }
 
@@ -51,15 +63,18 @@ export const puzzleSlice = createSlice({
 export const {} = puzzleSlice.actions
 
 export const selectPuzzle = (state: RootState) => state.puzzle.data
-export const selectPrintDate = (state: RootState) =>
-  state.puzzle.data?.printDate
+export const selectPrintDate = (state: RootState) => state.puzzle.data.printDate
 export const selectCenterLetter = (state: RootState) =>
-  state.puzzle.data?.centerLetter
+  state.puzzle.data.centerLetter
 export const selectOuterLetters = (state: RootState) =>
-  state.puzzle.data?.outerLetters
+  state.puzzle.data.outerLetters
 export const selectValidLetters = (state: RootState) =>
-  state.puzzle.data?.validLetters
-export const selectPangrams = (state: RootState) => state.puzzle.data?.pangrams
-export const selectAnswers = (state: RootState) => state.puzzle.data?.answers
+  state.puzzle.data.validLetters
+export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams
+export const selectPerfectPangrams = (state: RootState) =>
+  state.puzzle.data.perfectPangrams
+export const selectAnswers = (state: RootState) => state.puzzle.data.answers
+export const selectTotalPoints = (state: RootState) =>
+  calculateScore(state.puzzle.data.answers)
 
 export default puzzleSlice.reducer

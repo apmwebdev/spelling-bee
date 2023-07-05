@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { fetchGuesses, guessesSampleData } from "./guessesAPI"
 import { RootState } from "../../app/store"
+import { calculateScore } from '../../utils/utils';
 
 export enum Status {
   Initial = "Not Fetched",
@@ -79,5 +80,11 @@ export const guessesSlice = createSlice({
 export const { addGuess } = guessesSlice.actions
 
 export const selectGuesses = (state: RootState) => state.guesses.data
+export const selectScore = (state: RootState) => {
+  const correctGuesses = state.guesses.data.guesses
+    .filter((guessObject) => guessObject.isAnswer)
+    .map((guessObject) => guessObject.word)
+  return calculateScore(correctGuesses)
+}
 
 export default guessesSlice.reducer

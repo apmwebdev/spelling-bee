@@ -5,20 +5,16 @@ import { selectPuzzle } from "./puzzleSlice"
 
 const Hive: FC = () => {
   const puzzle = useAppSelector(selectPuzzle)
-  let contents
-  if (!puzzle) {
-    contents = <div className="hive">No content</div>
-  } else {
-    contents = (
+  return (
+    <div className="hive-container">
       <div className="hive">
         <LetterCell letter={puzzle.centerLetter} isCenter={true} />
         {puzzle.outerLetters.map((letter) => {
           return <LetterCell key={letter} letter={letter} isCenter={false} />
         })}
       </div>
-    )
-  }
-  return <div className="hive-container">{contents}</div>
+    </div>
+  )
 }
 
 export default Hive
