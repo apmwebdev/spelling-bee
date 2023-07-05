@@ -25,9 +25,9 @@ export function PerfectPangramCount({
     if (showPerfectPangramCount) {
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          return `Perfect pangrams: ${remainingPerfectPangrams} remaining of ${totalPerfectPangrams}`
+          return `Perfect pangrams: ${remainingPerfectPangrams} / ${totalPerfectPangrams} remaining`
         case TrackingOptions.FoundOfTotal:
-          return `Perfect pangrams: ${foundPerfectPangrams} found of ${totalPerfectPangrams}`
+          return `Perfect pangrams: ${foundPerfectPangrams} / ${totalPerfectPangrams} found`
         case TrackingOptions.Remaining:
           return `Remaining perfect pangrams: ${remainingPerfectPangrams}`
         case TrackingOptions.Found:

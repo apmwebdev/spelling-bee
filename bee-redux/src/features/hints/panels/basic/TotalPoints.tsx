@@ -18,13 +18,13 @@ export function TotalPoints({ showTotalPoints, tracking }: TotalPointsProps) {
     if (showTotalPoints) {
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          return `Points: ${remainingPoints} remaining of ${totalPoints}`
+          return `Points: ${remainingPoints} / ${totalPoints} remaining`
         case TrackingOptions.FoundOfTotal:
-          return `Points: ${currentScore} of ${totalPoints}`
+          return `Points: ${currentScore} / ${totalPoints} achieved`
         case TrackingOptions.Remaining:
           return `Remaining points: ${remainingPoints}`
         case TrackingOptions.Found:
-          return `Points: ${currentScore}`
+          return `Current points: ${currentScore}`
         case TrackingOptions.Total:
           return `Total points: ${totalPoints}`
       }

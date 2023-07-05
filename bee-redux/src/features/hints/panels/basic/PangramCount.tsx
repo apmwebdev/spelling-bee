@@ -25,9 +25,9 @@ export function PangramCount({
     if (showPangramCount) {
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          return `Pangrams: ${remainingPangrams} remaining of ${totalPangrams}`
+          return `Pangrams: ${remainingPangrams} / ${totalPangrams} remaining`
         case TrackingOptions.FoundOfTotal:
-          return `Pangrams: ${foundPangrams} found of ${totalPangrams}`
+          return `Pangrams: ${foundPangrams} / ${totalPangrams} found`
         case TrackingOptions.Remaining:
           return `Remaining pangrams: ${remainingPangrams}`
         case TrackingOptions.Found:

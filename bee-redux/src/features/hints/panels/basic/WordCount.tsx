@@ -39,9 +39,9 @@ export function WordCount({
     if (showWordCount) {
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          return `Word count: ${remaining} remaining of ${answerCount}`
+          return `Words: ${remaining} / ${answerCount} remaining`
         case TrackingOptions.FoundOfTotal:
-          return `Word count: ${correctGuessCount} found of ${answerCount}`
+          return `Words: ${correctGuessCount} / ${answerCount} found`
         case TrackingOptions.Remaining:
           return `Remaining words: ${remaining}`
         case TrackingOptions.Found:
@@ -50,7 +50,7 @@ export function WordCount({
           return `Total words: ${answerCount}`
       }
     }
-    return "Word count: hidden"
+    return "Words: hidden"
   }
   return (
     <div>
