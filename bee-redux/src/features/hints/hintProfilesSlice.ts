@@ -6,11 +6,11 @@ import { RootState } from "../../app/store"
  * For determining how to live update the hints when correct guesses are made
  */
 export enum TrackingOptions {
-  RemainingOfTotal = "REMAINING_OF_TOTAL",
-  FoundOfTotal = "FOUND_OF_TOTAL",
-  Remaining = "REMAINING", //show remaining words only
-  Found = "FOUND", //show remaining and total words
-  Total = "TOTAL", //show total words only, i.e., no live updates
+  RemainingOfTotal = "REMAINING_OF_TOTAL", //show "[remaining #] of [total #] of hint
+  FoundOfTotal = "FOUND_OF_TOTAL", //show "[found #] of [total #]" of hint
+  Remaining = "REMAINING", //show remaining # only
+  Found = "FOUND", //show found # only
+  Total = "TOTAL", //show total [hint] only, i.e., no live updates
 }
 
 /**
@@ -84,6 +84,7 @@ export interface WordObscurityPanelSettings {}
 export interface DefinitionsPanelSettings {}
 
 export interface HintPanelFormat {
+  id: number
   name: string
   isCollapsed: boolean
   isBlurred: boolean
@@ -142,6 +143,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     trackingDefault: TrackingOptions.RemainingOfTotal,
     panels: [
       {
+        id: 0,
         name: "Basic Info",
         isCollapsed: false,
         isBlurred: false,
@@ -156,6 +158,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 1,
         name: "Remaining Words",
         isCollapsed: false,
         isBlurred: false,
@@ -170,6 +173,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 2,
         name: "Starting Letters x Word Lengths",
         isCollapsed: false,
         isBlurred: false,
@@ -184,6 +188,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 3,
         name: "Word Obscurity Ranking",
         isCollapsed: false,
         isBlurred: false,
@@ -193,6 +198,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         typeOptions: {},
       },
       {
+        id: 4,
         name: "String Search",
         isCollapsed: false,
         isBlurred: false,
@@ -206,6 +212,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 5,
         name: "Definitions",
         isCollapsed: true,
         isBlurred: false,
@@ -215,6 +222,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         typeOptions: {},
       },
       {
+        id: 6,
         name: "Excluded Words",
         isCollapsed: true,
         isBlurred: false,
@@ -236,6 +244,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
     trackingDefault: TrackingOptions.Remaining,
     panels: [
       {
+        id: 7,
         name: "Basic info",
         isCollapsed: false,
         isBlurred: false,
@@ -250,6 +259,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 8,
         name: "Your Grid of Remaining Words",
         isCollapsed: false,
         isBlurred: false,
@@ -264,6 +274,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 9,
         name: "Your Two-Letter List",
         isCollapsed: false,
         isBlurred: false,
@@ -278,6 +289,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 10,
         name: "Word Obscurity Ranking",
         isCollapsed: false,
         isBlurred: true,
@@ -287,6 +299,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         typeOptions: {},
       },
       {
+        id: 11,
         name: "Definitions",
         isCollapsed: false,
         isBlurred: true,
@@ -314,6 +327,16 @@ export interface ChangeProfilePayload {
   newId: number
 }
 
+export interface ChangeBasicPanelSubsectionDisplayPayload {
+  panelId: number
+  settingName:
+    | "showWordCount"
+    | "showTotalPoints"
+    | "showPangramCount"
+    | "showPerfectPangramCount"
+  newValue: boolean
+}
+
 export const hintProfilesSlice = createSlice({
   name: "hintProfiles",
   initialState,
@@ -329,11 +352,31 @@ export const hintProfilesSlice = createSlice({
         state.data.currentProfile = newCurrent
       }
     },
+    changeBasicPanelSubsectionDisplay: (
+      state,
+      action: {
+        payload: ChangeBasicPanelSubsectionDisplayPayload
+        type: string
+      },
+    ) => {
+      const panel = state.data.currentProfile.panels.find((profilePanel) => {
+        return profilePanel.id === action.payload.panelId
+      })
+      if (!panel || !isBasicPanelSettings(panel.typeOptions)) {
+        return
+      }
+      for (const property in panel.typeOptions) {
+        if (property === action.payload.settingName) {
+          panel.typeOptions[property] = action.payload.newValue
+        }
+      }
+    },
   },
   extraReducers: (builder) => {},
 })
 
-export const { setCurrentProfile } = hintProfilesSlice.actions
+export const { setCurrentProfile, changeBasicPanelSubsectionDisplay } =
+  hintProfilesSlice.actions
 
 export const selectHintProfiles = (state: RootState) => state.hintProfiles.data
 

@@ -4,6 +4,7 @@ import { selectPangrams } from "../../../puzzle/puzzleSlice"
 import { selectGuesses } from "../../../guesses/guessesSlice"
 
 interface PangramCountProps {
+  panelId: number
   showPangramCount: boolean
   tracking: TrackingOptions
 }

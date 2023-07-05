@@ -1,19 +1,39 @@
-import { TrackingOptions } from "../../hintProfilesSlice"
+import {
+  changeBasicPanelSubsectionDisplay,
+  ChangeBasicPanelSubsectionDisplayPayload,
+  TrackingOptions,
+} from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswers } from "../../../puzzle/puzzleSlice"
 import { selectGuesses } from "../../../guesses/guessesSlice"
+import { useDispatch } from "react-redux"
 
 interface WordCountProps {
+  panelId: number
   showWordCount: boolean
   tracking: TrackingOptions
 }
 
-export function WordCount({ showWordCount, tracking }: WordCountProps) {
+export function WordCount({
+  panelId,
+  showWordCount,
+  tracking,
+}: WordCountProps) {
+  const dispatch = useDispatch()
   const answers = useAppSelector(selectAnswers)
   const { guesses } = useAppSelector(selectGuesses)
   const answerCount = answers.length
   const correctGuessCount = guesses.filter((guess) => guess.isAnswer).length
   const remaining = answerCount - correctGuessCount
+
+  const handleClick = () => {
+    const payload: ChangeBasicPanelSubsectionDisplayPayload = {
+      panelId: panelId,
+      settingName: "showWordCount",
+      newValue: !showWordCount,
+    }
+    dispatch(changeBasicPanelSubsectionDisplay(payload))
+  }
 
   const content = () => {
     if (showWordCount) {
@@ -32,5 +52,12 @@ export function WordCount({ showWordCount, tracking }: WordCountProps) {
     }
     return "Word count: hidden"
   }
-  return <div>{content()}</div>
+  return (
+    <div>
+      {content()}
+      <button type="button" onClick={handleClick}>
+        Toggle
+      </button>
+    </div>
+  )
 }

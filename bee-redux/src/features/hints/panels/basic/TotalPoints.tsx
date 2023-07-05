@@ -4,6 +4,7 @@ import { selectTotalPoints } from "../../../puzzle/puzzleSlice"
 import { selectScore } from "../../../guesses/guessesSlice"
 
 interface TotalPointsProps {
+  panelId: number
   showTotalPoints: boolean
   tracking: TrackingOptions
 }

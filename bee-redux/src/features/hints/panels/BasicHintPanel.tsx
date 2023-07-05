@@ -20,24 +20,28 @@ export function BasicHintPanel({ panel }: HintPanelProps) {
           <div>{panel.name}</div>
           <div className="sb-word-count">
             <WordCount
+              panelId={panel.id}
               showWordCount={showWordCount}
               tracking={panel.tracking}
             />
           </div>
           <div className="sb-pangram-count">
             <PangramCount
+              panelId={panel.id}
               showPangramCount={showPangramCount}
               tracking={panel.tracking}
             />
           </div>
           <div className="sb-perfect-pangram-count">
             <PerfectPangramCount
+              panelId={panel.id}
               showPerfectPangramCount={showPerfectPangramCount}
               tracking={panel.tracking}
             />
           </div>
           <div className="sb-total-points">
             <TotalPoints
+              panelId={panel.id}
               showTotalPoints={showTotalPoints}
               tracking={panel.tracking}
             />
