@@ -1,7 +1,7 @@
-import { TrackingOptions } from '../../hintProfilesSlice';
-import { useAppSelector } from '../../../../app/hooks';
-import { selectTotalPoints } from '../../../puzzle/puzzleSlice';
-import { selectScore } from '../../../guesses/guessesSlice';
+import { TrackingOptions } from "../../hintProfilesSlice"
+import { useAppSelector } from "../../../../app/hooks"
+import { selectTotalPoints } from "../../../puzzle/puzzleSlice"
+import { selectScore } from "../../../guesses/guessesSlice"
 
 interface TotalPointsProps {
   showTotalPoints: boolean

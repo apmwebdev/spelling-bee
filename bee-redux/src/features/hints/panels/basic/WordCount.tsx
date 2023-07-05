@@ -1,14 +1,14 @@
-import { TrackingOptions } from '../../hintProfilesSlice';
-import { useAppSelector } from '../../../../app/hooks';
-import { selectAnswers } from '../../../puzzle/puzzleSlice';
-import { selectGuesses } from '../../../guesses/guessesSlice';
+import { TrackingOptions } from "../../hintProfilesSlice"
+import { useAppSelector } from "../../../../app/hooks"
+import { selectAnswers } from "../../../puzzle/puzzleSlice"
+import { selectGuesses } from "../../../guesses/guessesSlice"
 
 interface WordCountProps {
   showWordCount: boolean
   tracking: TrackingOptions
 }
 
-export function WordCount({ showWordCount, tracking}: WordCountProps) {
+export function WordCount({ showWordCount, tracking }: WordCountProps) {
   const answers = useAppSelector(selectAnswers)
   const { guesses } = useAppSelector(selectGuesses)
   const answerCount = answers.length

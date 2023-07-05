@@ -3,7 +3,7 @@ import { isBasicPanelSettings } from "../hintProfilesSlice"
 import { WordCount } from "./basic/WordCount"
 import { PangramCount } from "./basic/PangramCount"
 import { PerfectPangramCount } from "./basic/PerfectPangramCount"
-import { TotalPoints } from './basic/TotalPoints';
+import { TotalPoints } from "./basic/TotalPoints"
 
 export function BasicHintPanel({ panel }: HintPanelProps) {
   const content = () => {
