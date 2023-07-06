@@ -1,7 +1,12 @@
-import { TrackingOptions } from "../../hintProfilesSlice"
+import {
+  changeBasicPanelSubsectionDisplay,
+  ChangeBasicPanelSubsectionDisplayPayload,
+  TrackingOptions,
+} from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectPerfectPangrams } from "../../../puzzle/puzzleSlice"
 import { selectGuesses } from "../../../guesses/guessesSlice"
+import { useDispatch } from "react-redux"
 
 interface PerfectPangramCountProps {
   panelId: number
@@ -10,9 +15,11 @@ interface PerfectPangramCountProps {
 }
 
 export function PerfectPangramCount({
+  panelId,
   showPerfectPangramCount,
   tracking,
 }: PerfectPangramCountProps) {
+  const dispatch = useDispatch()
   const perfectPangrams = useAppSelector(selectPerfectPangrams)
   const { guesses } = useAppSelector(selectGuesses)
   const totalPerfectPangrams = perfectPangrams.length
@@ -20,6 +27,15 @@ export function PerfectPangramCount({
     perfectPangrams.includes(guess.word.toLowerCase()),
   ).length
   const remainingPerfectPangrams = totalPerfectPangrams - foundPerfectPangrams
+
+  const handleClick = () => {
+    const payload: ChangeBasicPanelSubsectionDisplayPayload = {
+      panelId: panelId,
+      settingName: "showPerfectPangramCount",
+      newValue: !showPerfectPangramCount,
+    }
+    dispatch(changeBasicPanelSubsectionDisplay(payload))
+  }
 
   const content = () => {
     if (showPerfectPangramCount) {
@@ -39,5 +55,12 @@ export function PerfectPangramCount({
     return "Perfect pangrams: hidden"
   }
 
-  return <div>{content()}</div>
+  return (
+    <div>
+      {content()}
+      <button type="button" onClick={handleClick}>
+        {showPerfectPangramCount ? "Hide" : "Show"}
+      </button>
+    </div>
+  )
 }

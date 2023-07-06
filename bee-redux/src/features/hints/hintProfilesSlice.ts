@@ -147,7 +147,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         name: "Basic Info",
         isCollapsed: false,
         isBlurred: false,
-        tracking: TrackingOptions.RemainingOfTotal,
+        tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Basic,
         typeOptions: {

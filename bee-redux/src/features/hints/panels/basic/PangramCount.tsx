@@ -1,7 +1,12 @@
-import { TrackingOptions } from "../../hintProfilesSlice"
+import {
+  changeBasicPanelSubsectionDisplay,
+  ChangeBasicPanelSubsectionDisplayPayload,
+  TrackingOptions,
+} from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectPangrams } from "../../../puzzle/puzzleSlice"
 import { selectGuesses } from "../../../guesses/guessesSlice"
+import { useDispatch } from "react-redux"
 
 interface PangramCountProps {
   panelId: number
@@ -10,9 +15,11 @@ interface PangramCountProps {
 }
 
 export function PangramCount({
+  panelId,
   showPangramCount,
   tracking,
 }: PangramCountProps) {
+  const dispatch = useDispatch()
   const pangrams = useAppSelector(selectPangrams)
   const { guesses } = useAppSelector(selectGuesses)
   const totalPangrams = pangrams.length
@@ -20,6 +27,15 @@ export function PangramCount({
     pangrams.includes(guess.word.toLowerCase()),
   ).length
   const remainingPangrams = totalPangrams - foundPangrams
+
+  const handleClick = () => {
+    const payload: ChangeBasicPanelSubsectionDisplayPayload = {
+      panelId: panelId,
+      settingName: "showPangramCount",
+      newValue: !showPangramCount,
+    }
+    dispatch(changeBasicPanelSubsectionDisplay(payload))
+  }
 
   const content = () => {
     if (showPangramCount) {
@@ -39,5 +55,12 @@ export function PangramCount({
     return "Pangrams: hidden"
   }
 
-  return <div>{content()}</div>
+  return (
+    <div>
+      {content()}
+      <button type="button" onClick={handleClick}>
+        {showPangramCount ? "Hide" : "Show"}
+      </button>
+    </div>
+  )
 }
