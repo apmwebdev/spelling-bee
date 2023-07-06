@@ -10,6 +10,10 @@
   text-align: center;
 }
 
+.display-none {
+  display: none;
+}
+
 .App {
   min-height: 550px;
 }
@@ -145,15 +149,27 @@ Header {
 }
 
 .sb-guess-list-section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   border: 1px dotted;
-  padding: 0px 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.sb-guess-list-settings {
+  border: 1px dotted;
+}
+
+.sb-guess-list-settings-title {
+  border: 1px dotted;
 }
 
 .sb-guess-list {
   border: 1px dotted;
   list-style: none;
   text-align: left;
+  margin: 0px;
 }
 
 .sb-guess-list > li {

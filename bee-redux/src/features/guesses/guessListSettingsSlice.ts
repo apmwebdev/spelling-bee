@@ -23,6 +23,7 @@ export interface GuessListSettingsFormat {
   sortOrder: SortOrder
   showWrongGuesses: boolean
   separateWrongGuesses: boolean
+  isCollapsed: boolean
 }
 
 export interface GuessListSettingsState {
@@ -35,7 +36,8 @@ const initialState: GuessListSettingsState = {
     sortType: SortType.Alphabetical,
     sortOrder: SortOrder.Ascending,
     showWrongGuesses: false,
-    separateWrongGuesses: true,
+    separateWrongGuesses: false,
+    isCollapsed: true,
   },
   status: Status.Initial,
 }
@@ -56,6 +58,9 @@ export const guessListSettingsSlice = createSlice({
     toggleSeparateWrongGuesses: (state) => {
       state.data.separateWrongGuesses = !state.data.separateWrongGuesses
     },
+    toggleIsCollapsed: (state) => {
+      state.data.isCollapsed = !state.data.isCollapsed
+    },
   },
   extraReducers: (builder) => {},
 })
@@ -65,6 +70,7 @@ export const {
   setSortOrder,
   toggleShowWrongGuesses,
   toggleSeparateWrongGuesses,
+  toggleIsCollapsed,
 } = guessListSettingsSlice.actions
 
 export const selectGuessListSettings = (state: RootState) =>
