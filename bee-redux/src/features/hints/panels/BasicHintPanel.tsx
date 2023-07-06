@@ -17,11 +17,17 @@ export function BasicHintPanel({ panel }: HintPanelProps) {
 
       return (
         <div className="sb-basic-hints">
-          <div>{panel.name}</div>
           <div className="sb-word-count">
             <WordCount
               panelId={panel.id}
               showWordCount={showWordCount}
+              tracking={panel.tracking}
+            />
+          </div>
+          <div className="sb-total-points">
+            <TotalPoints
+              panelId={panel.id}
+              showTotalPoints={showTotalPoints}
               tracking={panel.tracking}
             />
           </div>
@@ -39,17 +45,10 @@ export function BasicHintPanel({ panel }: HintPanelProps) {
               tracking={panel.tracking}
             />
           </div>
-          <div className="sb-total-points">
-            <TotalPoints
-              panelId={panel.id}
-              showTotalPoints={showTotalPoints}
-              tracking={panel.tracking}
-            />
-          </div>
         </div>
       )
     }
   }
 
-  return <div>{content()}</div>
+  return content()
 }

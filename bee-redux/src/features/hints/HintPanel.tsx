@@ -30,7 +30,9 @@ export function HintPanel({ panel }: HintPanelProps) {
     }
   }
   return (
-    <div className="sb-hint-panel">{panelContent(panel)}</div>
-
+    <div className="sb-hint-panel">
+      <div className="sb-hint-panel-name">{panel.name}</div>
+      {panelContent(panel)}
+    </div>
   )
 }

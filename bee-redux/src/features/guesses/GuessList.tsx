@@ -56,7 +56,7 @@ export function GuessList() {
     )
     if (displayGuessList.length > 0) {
       return (
-        <ul>
+        <ul className="sb-guess-list">
           {displayGuessList.map((guess) => {
             return <li key={guess.word}>{guess.word}</li>
           })}
@@ -66,7 +66,7 @@ export function GuessList() {
     return <div>No guesses</div>
   }
   return (
-    <div className="guess-list">
+    <div className="sb-guess-list-section">
       <GuessListSettings />
       {guessListContent()}
     </div>

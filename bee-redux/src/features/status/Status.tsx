@@ -6,7 +6,6 @@ export function Status() {
   return (
     <div className="sb-status">
       <Progress />
-      <GuessList />
       <HintSection />
     </div>
   )
