@@ -25,7 +25,7 @@
   }
 
   .hexagon.center-letter polygon {
-    fill: #887711;
+    fill: #887711; //hsl(51, 78%, 30%)
   }
 
   .hexagon text {
@@ -50,6 +50,41 @@
 
   .sb-hint-duplicate-button-box {
     /*background-color: #339;*/
+  }
+
+  .sb-wlg-content,
+  .sb-wlg-total-column,
+  .sb-wlg-row-header,
+  .sb-wlg-total-row,
+  {
+    border-top: 1px solid #666;
+  }
+
+  .sb-wlg-content,
+  .sb-wlg-total-column,
+  .sb-wlg-total-row,
+  {
+    border-left: 1px solid #666;
+  }
+
+  .sb-wlg-content-full {
+    background-color: #333;
+  }
+
+  .hint-completed {
+    color: hsl(120, 80%, 85%);
+    //background-color: hsl(120, 40%, 20%);
+    font-style: italic;
+  }
+
+  .hint-in-progress {
+    color: hsl(60, 80%, 85%)
+    //background-color: hsl(60, 60%, 20%);
+  }
+
+  .hint-not-started {
+    color: hsl(0, 80%, 85%);
+    //background-color: hsl(0, 40%, 20%);
   }
 }
 

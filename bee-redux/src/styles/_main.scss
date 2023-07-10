@@ -238,13 +238,17 @@ Header {
   justify-content: flex-start;
   gap: 8px;
   margin: 0px 8px;
-  padding: 8px;
+  padding: 8px 0px;
   border-bottom: 1px dotted;
 }
 
 .sb-basic-hints {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.sb-letter-panel-settings {
+  text-align: left;
 }
 
 .sb-word-length-grid-container {
@@ -256,6 +260,22 @@ Header {
 .sb-word-length-grid {
   display: grid;
 }
+
+.sb-word-length-grid > div {
+  padding: 6px 2px;
+}
+
+.sb-wlg-col-header, .sb-wlg-row-header, .sb-wlg-total {
+  //font-weight: bold;
+}
+
+.sb-wlg-content {
+  //font-weight: bold;
+}
+
+//.sb-wlg-total {
+//  font-weight: bold;
+//}
 
 .sb-number-of-letters-control, .sb-offset-control {
   width: 3rem;

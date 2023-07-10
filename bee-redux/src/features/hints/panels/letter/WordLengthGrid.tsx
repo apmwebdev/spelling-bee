@@ -82,51 +82,83 @@ export function WordLengthGrid({
     }
     const gridArr = []
 
-    const populateGridCellContent = (cell: GridCell) => {
+    const createCell = (displayString: string, stylingClasses?: string) => {
+      gridArr.push(
+        <div key={uniqid()} className={stylingClasses}>
+          {displayString}
+        </div>,
+      )
+    }
+
+    const populateGridCellContent = (
+      cell: GridCell,
+      isTotalRow: boolean = false,
+      isTotalColumn: boolean = false,
+    ) => {
       const found = cell.guesses
       const total = cell.answers
       const remaining = total - found
+
+      const getCellClasses = (
+        cell: GridCell,
+        isTotalRow: boolean = false,
+        isTotalColumn: boolean = false,
+      ): string => {
+        if (cell.answers === 0 && !isTotalRow && !isTotalColumn) {
+          return "sb-wlg-content"
+        }
+        let returnStr = ""
+        if (cell.guesses === cell.answers) {
+          returnStr += "hint-completed"
+        } else if (cell.guesses === 0) {
+          returnStr += "hint-not-started"
+        } else {
+          returnStr += "hint-in-progress"
+        }
+        if (!isTotalRow && !isTotalColumn) {
+          return returnStr + " sb-wlg-content sb-wlg-content-full"
+        }
+        if (isTotalRow) {
+          returnStr += " sb-wlg-total-row"
+        }
+        if (isTotalColumn) {
+          returnStr += " sb-wlg-total-column"
+        }
+        return returnStr
+      }
+      //So TypeScript will stop complaining when using spread syntax below
+      const args: [GridCell, boolean, boolean] = [
+        cell,
+        isTotalRow,
+        isTotalColumn,
+      ]
+
       if (total === 0) {
-        gridArr.push(<div key={uniqid()}>-</div>)
+        createCell("", getCellClasses(...args))
         return
       }
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          gridArr.push(
-            <div key={uniqid()}>
-              {remaining}/{total}
-            </div>,
-          )
+          createCell(`${remaining}/${total}`, getCellClasses(...args))
           break
         case TrackingOptions.FoundOfTotal:
-          gridArr.push(
-            <div key={uniqid()}>
-              {found}/{total}
-            </div>,
-          )
+          createCell(`${found}/${total}`, getCellClasses(...args))
           break
         case TrackingOptions.Remaining:
-          gridArr.push(<div key={uniqid()}>{remaining}</div>)
+          createCell(`${remaining}`, getCellClasses(...args))
           break
         case TrackingOptions.Found:
-          gridArr.push(<div key={uniqid()}>{found}</div>)
+          createCell(`${found}`, getCellClasses(...args))
           break
         case TrackingOptions.Total:
-          gridArr.push(<div key={uniqid()}>{total}</div>)
+          createCell(`${total}`, getCellClasses(...args))
       }
     }
 
-    const populateGridArrayContent = (row: GridRow) => {
-      for (const cell in row) {
-        populateGridCellContent(row[cell])
-      }
-    }
+    //super header labeling y axis (letters)
+    createCell("Letters", "sb-word-length-grid-y-label")
 
-    gridArr.push(
-      <div className="sb-word-length-grid-y-label" key={uniqid()}>
-        Letters
-      </div>,
-    )
+    //super header labeling x axis (word length)
     gridArr.push(
       <div
         className="sb-word-length-grid-x-label"
@@ -136,14 +168,25 @@ export function WordLengthGrid({
         Word Length →
       </div>,
     )
-    gridArr.push(<div key={uniqid()}>↓</div>)
+    //header with down arrow for labeling y axis
+    createCell("↓", "")
+
+    //headers for word length columns
     for (const num of answerLengths) {
-      gridArr.push(<div key={uniqid()}>{num}</div>)
+      createCell(`${num}`, "sb-wlg-col-header")
     }
-    gridArr.push(<div key={uniqid()}>Total</div>)
+
+    //header for Total column
+    createCell("Total", "sb-wlg-col-header")
+
+    //rows of table, including row headers
     for (const property in gridRows) {
-      gridArr.push(<div key={uniqid()}>{property}</div>)
-      populateGridArrayContent(gridRows[property])
+      //row header
+      createCell(`${property}`, "sb-wlg-row-header")
+      //row content
+      for (const cell in gridRows[property]) {
+        populateGridCellContent(gridRows[property][cell])
+      }
       const rowAnswerTotal = Object.values(gridRows[property]).reduce(
         (sum, cell) => sum + cell.answers,
         0,
@@ -152,13 +195,22 @@ export function WordLengthGrid({
         (sum, cell) => sum + cell.guesses,
         0,
       )
-      populateGridCellContent({
-        answers: rowAnswerTotal,
-        guesses: rowGuessTotal,
-      })
+      //row total
+      populateGridCellContent(
+        {
+          answers: rowAnswerTotal,
+          guesses: rowGuessTotal,
+        },
+        false,
+        true,
+      )
     }
-    gridArr.push(<div key={uniqid()}>Total</div>)
-    populateGridArrayContent(totalRow)
+    //Total Row row header
+    createCell("Total", "sb-wlg-row-header sb-wlg-total")
+    //column totals
+    for (const cell in totalRow) {
+      populateGridCellContent(totalRow[cell], true)
+    }
     const answerGrandTotal = Object.values(totalRow).reduce(
       (sum, cell) => sum + cell.answers,
       0,
@@ -167,10 +219,15 @@ export function WordLengthGrid({
       (sum, cell) => sum + cell.guesses,
       0,
     )
-    populateGridCellContent({
-      answers: answerGrandTotal,
-      guesses: guessGrandTotal,
-    })
+    //grand total cell
+    populateGridCellContent(
+      {
+        answers: answerGrandTotal,
+        guesses: guessGrandTotal,
+      },
+      true,
+      true,
+    )
     return (
       <div className="sb-word-length-grid-container">
         {/*<table>{outputArr}</table>*/}
