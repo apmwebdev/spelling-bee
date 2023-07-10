@@ -209,3 +209,21 @@ Header {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.sb-word-length-grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sb-word-length-grid {
+  display: grid;
+}
+
+.sb-word-length-grid-x-label {
+
+}
+
+.sb-number-of-letters-control, .sb-offset-control {
+  width: 3rem;
+}

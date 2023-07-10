@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchGuesses, guessesSampleData } from "./guessesAPI"
 import { RootState } from "../../app/store"
 import { calculateScore } from '../../utils/utils';
@@ -79,7 +79,21 @@ export const guessesSlice = createSlice({
 
 export const { addGuess } = guessesSlice.actions
 
-export const selectGuesses = (state: RootState) => state.guesses.data
+export const selectGuessesData = (state: RootState) => state.guesses.data
+export const selectGuesses = (state: RootState) => state.guesses.data.guesses
+export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
+  guesses.map((guessObj) => guessObj.word),
+)
+export const selectCorrectGuesses = createSelector([selectGuesses], (guesses) =>
+  guesses.filter((guess) => guess.isAnswer),
+)
+export const selectCorrectGuessWords = createSelector(
+  [selectCorrectGuesses],
+  (guessObjects) =>
+    guessObjects
+      .filter((guessObj) => guessObj.isAnswer)
+      .map((guessObj) => guessObj.word),
+)
 export const selectScore = (state: RootState) => {
   const correctGuesses = state.guesses.data.guesses
     .filter((guessObject) => guessObject.isAnswer)

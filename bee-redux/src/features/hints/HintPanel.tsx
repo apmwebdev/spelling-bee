@@ -5,12 +5,15 @@ import { SearchHintPanel } from "./panels/SearchHintPanel"
 import { ExcludedWordsHintPanel } from "./panels/ExcludedWordsHintPanel"
 import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel"
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel"
+import { useAppSelector } from "../../app/hooks"
+import { selectAnswers } from "../puzzle/puzzleSlice"
 
 export interface HintPanelProps {
   panel: HintPanelFormat
 }
 
 export function HintPanel({ panel }: HintPanelProps) {
+  const answers = useAppSelector(selectAnswers)
   const panelContent = (panel: HintPanelFormat) => {
     switch (panel.type) {
       case PanelTypes.Basic:
@@ -32,7 +35,7 @@ export function HintPanel({ panel }: HintPanelProps) {
   return (
     <div className="sb-hint-panel">
       <div className="sb-hint-panel-name">{panel.name}</div>
-      {panelContent(panel)}
+      {answers.length > 0 ? panelContent(panel) : ""}
     </div>
   )
 }

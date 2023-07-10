@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
 import { fetchPuzzle } from "./puzzleAPI"
 import { RootState } from "../../app/store"
 import { calculateScore } from "../../utils/utils"
@@ -76,5 +76,17 @@ export const selectPerfectPangrams = (state: RootState) =>
 export const selectAnswers = (state: RootState) => state.puzzle.data.answers
 export const selectTotalPoints = (state: RootState) =>
   calculateScore(state.puzzle.data.answers)
+export const selectAnswerLengths = createSelector(
+  [selectAnswers],
+  (answers) => {
+    const answerLengths: number[] = []
+    for (const answer of answers) {
+      if (!answerLengths.includes(answer.length)) {
+        answerLengths.push(answer.length)
+      }
+    }
+    return answerLengths.sort()
+  },
+)
 
 export default puzzleSlice.reducer

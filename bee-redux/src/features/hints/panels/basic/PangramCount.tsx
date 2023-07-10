@@ -5,7 +5,7 @@ import {
 } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectPangrams } from "../../../puzzle/puzzleSlice"
-import { selectGuesses } from "../../../guesses/guessesSlice"
+import { selectCorrectGuesses } from "../../../guesses/guessesSlice"
 import { useDispatch } from "react-redux"
 
 interface PangramCountProps {
@@ -21,9 +21,9 @@ export function PangramCount({
 }: PangramCountProps) {
   const dispatch = useDispatch()
   const pangrams = useAppSelector(selectPangrams)
-  const { guesses } = useAppSelector(selectGuesses)
+  const correctGuesses = useAppSelector(selectCorrectGuesses)
   const totalPangrams = pangrams.length
-  const foundPangrams = guesses.filter((guess) =>
+  const foundPangrams = correctGuesses.filter((guess) =>
     pangrams.includes(guess.word.toLowerCase()),
   ).length
   const remainingPangrams = totalPangrams - foundPangrams

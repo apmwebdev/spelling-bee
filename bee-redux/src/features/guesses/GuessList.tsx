@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../app/hooks"
-import { GuessFormat, selectGuesses } from "./guessesSlice"
+import { GuessFormat, selectGuessesData } from "./guessesSlice"
 import { GuessListSettings } from "./GuessListSettings"
 import {
   GuessListSettingsFormat,
@@ -9,7 +9,7 @@ import {
 } from "./guessListSettingsSlice"
 
 export function GuessList() {
-  const guessesData = useAppSelector(selectGuesses)
+  const guessesData = useAppSelector(selectGuessesData)
   const guestListSettings = useAppSelector(selectGuessListSettings)
 
   const generateDisplayGuessList = (

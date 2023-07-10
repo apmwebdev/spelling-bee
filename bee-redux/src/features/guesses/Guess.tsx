@@ -4,7 +4,7 @@ import {
   addGuess,
   GuessesFormat,
   GuessFormat,
-  selectGuesses,
+  selectGuessesData,
 } from "./guessesSlice"
 import { useAppSelector } from "../../app/hooks"
 import {
@@ -16,7 +16,7 @@ import { GuessAlerts } from "./GuessAlerts"
 
 export function Guess() {
   const dispatch = useDispatch()
-  const guesses = useAppSelector(selectGuesses)
+  const guesses = useAppSelector(selectGuessesData)
   const validLetters = useAppSelector(selectValidLetters)
   const centerLetter = useAppSelector(selectCenterLetter)
   const answers = useAppSelector(selectAnswers)

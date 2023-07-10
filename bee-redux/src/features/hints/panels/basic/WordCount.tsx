@@ -5,7 +5,7 @@ import {
 } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswers } from "../../../puzzle/puzzleSlice"
-import { selectGuesses } from "../../../guesses/guessesSlice"
+import { selectCorrectGuesses } from "../../../guesses/guessesSlice"
 import { useDispatch } from "react-redux"
 
 interface WordCountProps {
@@ -21,9 +21,9 @@ export function WordCount({
 }: WordCountProps) {
   const dispatch = useDispatch()
   const answers = useAppSelector(selectAnswers)
-  const { guesses } = useAppSelector(selectGuesses)
+  const correctGuesses = useAppSelector(selectCorrectGuesses)
   const answerCount = answers.length
-  const correctGuessCount = guesses.filter((guess) => guess.isAnswer).length
+  const correctGuessCount = correctGuesses.length
   const remaining = answerCount - correctGuessCount
 
   const handleClick = () => {

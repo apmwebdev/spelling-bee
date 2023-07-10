@@ -65,6 +65,10 @@ export interface LetterPanelSettings {
   display: StringHintDisplayOptions
 }
 
+export function isLetterPanelSettings(a: any): a is LetterPanelSettings {
+  return a.numberOfLetters !== undefined
+}
+
 export enum SearchPanelLocations {
   Beginning = "BEGINNING",
   End = "END",
@@ -159,7 +163,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
       },
       {
         id: 1,
-        name: "Remaining Words",
+        name: "First Letter x Word Length Grid",
         isCollapsed: false,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
@@ -174,7 +178,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
       },
       {
         id: 2,
-        name: "Starting Letters x Word Lengths",
+        name: "First Two Letters Word Count",
         isCollapsed: false,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
@@ -184,7 +188,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
           numberOfLetters: 2,
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
-          display: StringHintDisplayOptions.WordLengthGrid,
+          display: StringHintDisplayOptions.WordCountList,
         },
       },
       {
@@ -337,6 +341,32 @@ export interface ChangeBasicPanelSubsectionDisplayPayload {
   newValue: boolean
 }
 
+export interface ChangeLetterPanelNumberOfLettersPayload {
+  panelId: number
+  newValue: number
+}
+
+export interface ChangeLetterPanelLocationInWordPayload {
+  panelId: number
+  newValue: LetterPanelLocations
+}
+
+export interface ChangeLetterPanelOffsetPayload {
+  panelId: number
+  newValue: number
+}
+
+export interface ChangeLetterPanelDisplayPayload {
+  panelId: number
+  newValue: StringHintDisplayOptions
+}
+
+const findPanel = (state: HintProfilesState, panelId: number) => {
+  return state.data.currentProfile.panels.find((panel) => {
+    return panel.id === panelId
+  })
+}
+
 export const hintProfilesSlice = createSlice({
   name: "hintProfiles",
   initialState,
@@ -359,9 +389,7 @@ export const hintProfilesSlice = createSlice({
         type: string
       },
     ) => {
-      const panel = state.data.currentProfile.panels.find((profilePanel) => {
-        return profilePanel.id === action.payload.panelId
-      })
+      const panel = findPanel(state, action.payload.panelId)
       if (!panel || !isBasicPanelSettings(panel.typeOptions)) {
         return
       }
@@ -371,12 +399,70 @@ export const hintProfilesSlice = createSlice({
         }
       }
     },
+    changeLetterPanelNumberOfLetters: (
+      state,
+      action: {
+        payload: ChangeLetterPanelNumberOfLettersPayload
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+        return
+      }
+      panel.typeOptions.numberOfLetters = action.payload.newValue
+    },
+    changeLetterPanelLocationInWord: (
+      state,
+      action: {
+        payload: ChangeLetterPanelLocationInWordPayload
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+        return
+      }
+      panel.typeOptions.locationInWord = action.payload.newValue
+    },
+    changeLetterPanelOffset: (
+      state,
+      action: {
+        payload: ChangeLetterPanelOffsetPayload
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+        return
+      }
+      panel.typeOptions.offset = action.payload.newValue
+    },
+    changeLetterPanelDisplay: (
+      state,
+      action: {
+        payload: ChangeLetterPanelDisplayPayload
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+        return
+      }
+      panel.typeOptions.display = action.payload.newValue
+    },
   },
   extraReducers: (builder) => {},
 })
 
-export const { setCurrentProfile, changeBasicPanelSubsectionDisplay } =
-  hintProfilesSlice.actions
+export const {
+  setCurrentProfile,
+  changeBasicPanelSubsectionDisplay,
+  changeLetterPanelNumberOfLetters,
+  changeLetterPanelLocationInWord,
+  changeLetterPanelOffset,
+  changeLetterPanelDisplay,
+} = hintProfilesSlice.actions
 
 export const selectHintProfiles = (state: RootState) => state.hintProfiles.data
 
