@@ -42,7 +42,7 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
 
   return (
     <div className="sb-general-hint-settings">
-      Display: {liveUpdateOptions()}
+      <span>Display:</span> {liveUpdateOptions()}
     </div>
   )
 }

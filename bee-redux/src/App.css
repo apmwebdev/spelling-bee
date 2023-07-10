@@ -205,20 +205,27 @@ Header {
 
 .sb-hint-panel-header {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr max-content;
   align-items: center;
   /*border-bottom: 1px dotted;*/
-  margin-bottom: 4px;
+  /*margin-bottom: 8px;*/
   background-color: #333;
   padding: 4px 8px;
 }
 
-.sb-hint-panel-header-buttons {
-  grid-column: 1 / 2;
+.sb-hint-panel-header-buttons-left, .sb-hint-panel-header-buttons-right {
   grid-row: 1 / 2;
   display: flex;
   gap: 8px;
   /*margin-bottom: 8px;*/
+}
+
+.sb-hint-panel-header-buttons-left {
+  grid-column: 1 / 2;
+}
+
+.sb-hint-panel-header-buttons-right {
+  grid-column: 3 / 4;
 }
 
 .hint-button-box {
@@ -227,6 +234,7 @@ Header {
   display: grid;
   place-content: center;
   border-radius: 4px;
+  /*border: 1px solid #555;*/
 }
 
 .sb-hint-remove-button-box {
@@ -246,9 +254,18 @@ Header {
 }
 
 .sb-hint-panel-name {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   grid-row: 1 / 2;
   font-weight: bold;
+}
+
+.sb-general-hint-settings {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 0px 8px;
+  padding: 8px;
+  border-bottom: 1px dotted;
 }
 
 .sb-basic-hints {
@@ -264,10 +281,6 @@ Header {
 
 .sb-word-length-grid {
   display: grid;
-}
-
-.sb-word-length-grid-x-label {
-
 }
 
 .sb-number-of-letters-control, .sb-offset-control {
