@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
+import cloneDeep from "lodash/cloneDeep"
+import uniqid from 'uniqid';
 // import { defaultProfiles } from "./hintProfilesAPI"
 
 /**
@@ -382,6 +384,58 @@ export const hintProfilesSlice = createSlice({
         state.data.currentProfile = newCurrent
       }
     },
+    removePanel: (
+      state,
+      action: { payload: { panelId: number }; type: string },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      const panelIndex = state.data.currentProfile.panels.indexOf(panel)
+      state.data.currentProfile.panels.splice(panelIndex, 1)
+    },
+    setIsCollapsed: (
+      state,
+      action: {
+        payload: { panelId: number; isCollapsed: boolean }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      panel.isCollapsed = action.payload.isCollapsed
+    },
+    duplicatePanel: (
+      state,
+      action: {
+        payload: { panelId: number }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      const newPanel = cloneDeep(panel)
+      newPanel.id = newPanel.id + 20
+      state.data.currentProfile.panels.push(newPanel)
+    },
+    setTracking: (
+      state,
+      action: {
+        payload: { panelId: number; tracking: TrackingOptions }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      panel.tracking = action.payload.tracking
+    },
     changeBasicPanelSubsectionDisplay: (
       state,
       action: {
@@ -457,6 +511,10 @@ export const hintProfilesSlice = createSlice({
 
 export const {
   setCurrentProfile,
+  removePanel,
+  setIsCollapsed,
+  duplicatePanel,
+  setTracking,
   changeBasicPanelSubsectionDisplay,
   changeLetterPanelNumberOfLetters,
   changeLetterPanelLocationInWord,

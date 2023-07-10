@@ -7,6 +7,8 @@ import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel"
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel"
 import { useAppSelector } from "../../app/hooks"
 import { selectAnswers } from "../puzzle/puzzleSlice"
+import { GeneralPanelSettings } from "./GeneralPanelSettings"
+import { PanelHeader } from "./generalControls/PanelHeader"
 
 export interface HintPanelProps {
   panel: HintPanelFormat
@@ -15,6 +17,9 @@ export interface HintPanelProps {
 export function HintPanel({ panel }: HintPanelProps) {
   const answers = useAppSelector(selectAnswers)
   const panelContent = (panel: HintPanelFormat) => {
+    if (answers.length === 0) {
+      return
+    }
     switch (panel.type) {
       case PanelTypes.Basic:
         return <BasicHintPanel panel={panel} />
@@ -32,10 +37,18 @@ export function HintPanel({ panel }: HintPanelProps) {
         return null
     }
   }
+  if (!panel.isCollapsed) {
+    return (
+      <div className="sb-hint-panel">
+        <PanelHeader panel={panel} />
+        <GeneralPanelSettings panel={panel} />
+        {panelContent(panel)}
+      </div>
+    )
+  }
   return (
     <div className="sb-hint-panel">
-      <div className="sb-hint-panel-name">{panel.name}</div>
-      {answers.length > 0 ? panelContent(panel) : ""}
+      <PanelHeader panel={panel} />
     </div>
   )
 }

@@ -199,10 +199,51 @@ Header {
   padding: 8px;
 }
 
-.sb-hint-panel-name {
-  font-weight: bold;
+.sb-hint-panel-header {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
   border-bottom: 1px dotted;
   margin-bottom: 4px;
+}
+
+.sb-hint-panel-header-buttons {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.hint-button-box {
+  cursor: pointer;
+  padding: 2px;
+  display: grid;
+  place-content: center;
+  border-radius: 4px;
+  border: 2px solid #999;
+}
+
+.sb-hint-remove-button-box {
+  background-color: #633;
+}
+
+.sb-hint-collapse-button-box {
+  background-color: #663;
+}
+
+.sb-hint-expand-button-box {
+  background-color: #363;
+}
+
+.sb-hint-duplicate-button-box {
+  background-color: #339;
+}
+
+.sb-hint-panel-name {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  font-weight: bold;
 }
 
 .sb-basic-hints {
