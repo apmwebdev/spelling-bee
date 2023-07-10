@@ -1,4 +1,9 @@
-import { HintPanelFormat, setTracking, TrackingOptions } from './hintProfilesSlice';
+import {
+  HintPanelFormat,
+  PanelInitialDisplayOptions, setInitialDisplay,
+  setTracking,
+  TrackingOptions
+} from './hintProfilesSlice';
 import uniqid from 'uniqid';
 import { useDispatch } from 'react-redux';
 import { ChangeEvent } from 'react';
@@ -20,7 +25,7 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
 
   const liveUpdateOptions = () => {
     return (
-      <select value={panel.tracking} onChange={(e) => handleTrackingChange(e)}>
+      <select value={panel.tracking} onChange={handleTrackingChange}>
         <option key={uniqid()} value={TrackingOptions.RemainingOfTotal}>
           Remaining of total
         </option>
@@ -40,9 +45,46 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
     )
   }
 
+  const handleInitialDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const payload = {
+      panelId: panel.id,
+      initialDisplay: e.target.value as PanelInitialDisplayOptions,
+    }
+    dispatch(setInitialDisplay(payload))
+  }
+
+  const initialDisplayOptions = () => {
+    return (
+      <select
+        value={panel.initialDisplay}
+        onChange={handleInitialDisplayChange}
+      >
+        <option key={uniqid()} value={PanelInitialDisplayOptions.Sticky}>
+          Sticky
+        </option>
+        <option key={uniqid()} value={PanelInitialDisplayOptions.Expanded}>
+          Expanded
+        </option>
+        <option key={uniqid()} value={PanelInitialDisplayOptions.Blurred}>
+          Blurred
+        </option>
+        <option key={uniqid()} value={PanelInitialDisplayOptions.Collapsed}>
+          Collapsed
+        </option>
+        <option
+          key={uniqid()}
+          value={PanelInitialDisplayOptions.CollapsedAndBlurred}
+        >
+          Collapsed and blurred
+        </option>
+      </select>
+    )
+  }
+
   return (
     <div className="sb-general-hint-settings">
       <span>Display:</span> {liveUpdateOptions()}
+      <span>Load as:</span> {initialDisplayOptions()}
     </div>
   )
 }

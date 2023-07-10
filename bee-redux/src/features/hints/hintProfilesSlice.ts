@@ -26,6 +26,7 @@ export enum PanelInitialDisplayOptions {
   Expanded = "EXPANDED",
   Blurred = "BLURRED",
   Collapsed = "COLLAPSED",
+  CollapsedAndBlurred = "COLLAPSED_AND_BLURRED",
   Sticky = "STICKY",
 }
 
@@ -436,6 +437,19 @@ export const hintProfilesSlice = createSlice({
       }
       panel.tracking = action.payload.tracking
     },
+    setInitialDisplay: (
+      state,
+      action: {
+        payload: { panelId: number; initialDisplay: PanelInitialDisplayOptions }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      panel.initialDisplay = action.payload.initialDisplay
+    },
     changeBasicPanelSubsectionDisplay: (
       state,
       action: {
@@ -515,6 +529,7 @@ export const {
   setIsCollapsed,
   duplicatePanel,
   setTracking,
+  setInitialDisplay,
   changeBasicPanelSubsectionDisplay,
   changeLetterPanelNumberOfLetters,
   changeLetterPanelLocationInWord,
