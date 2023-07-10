@@ -1,0 +1,67 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #222;
+  }
+
+  a {
+    color: #646cff;
+  }
+
+  a:hover {
+    color: #535bf2;
+  }
+
+  button {
+    background-color: #335;
+  }
+
+  button:hover {
+    border-color: #646cff;
+  }
+
+  .hexagon polygon {
+    fill: #555;
+  }
+
+  .hexagon.center-letter polygon {
+    fill: #887711;
+  }
+
+  .hexagon text {
+    fill: #eee;
+  }
+
+  .sb-hint-panel-header {
+    background-color: #333;
+  }
+
+  .sb-hint-remove-button-box {
+    /*background-color: #633;*/
+  }
+
+  .sb-hint-collapse-button-box {
+    /*background-color: #663;*/
+  }
+
+  .sb-hint-expand-button-box {
+    /*background-color: #363;*/
+  }
+
+  .sb-hint-duplicate-button-box {
+    /*background-color: #339;*/
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}

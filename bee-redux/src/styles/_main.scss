@@ -94,19 +94,10 @@ Header {
   /*margin: 4px;*/
 }
 
-.hexagon polygon {
-  fill: #555;
-}
-
-.hexagon.center-letter polygon {
-  fill: #887711;
-}
-
 .hexagon text {
   text-anchor: middle;
   font-size: 36px;
   font-weight: bold;
-  fill: #eee;
 }
 
 .hexagon:nth-child(1) {
@@ -209,7 +200,6 @@ Header {
   align-items: center;
   /*border-bottom: 1px dotted;*/
   /*margin-bottom: 8px;*/
-  background-color: #333;
   padding: 4px 8px;
 }
 
@@ -235,22 +225,6 @@ Header {
   place-content: center;
   border-radius: 4px;
   /*border: 1px solid #555;*/
-}
-
-.sb-hint-remove-button-box {
-  /*background-color: #633;*/
-}
-
-.sb-hint-collapse-button-box {
-  /*background-color: #663;*/
-}
-
-.sb-hint-expand-button-box {
-  /*background-color: #363;*/
-}
-
-.sb-hint-duplicate-button-box {
-  /*background-color: #339;*/
 }
 
 .sb-hint-panel-name {

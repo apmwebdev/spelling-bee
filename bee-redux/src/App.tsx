@@ -1,4 +1,4 @@
-import "./App.css"
+import "./styles/_main.scss"
 import { Puzzle } from "./features/puzzle/Puzzle"
 import { Header } from "./features/header/Header"
 import { Status } from "./features/status/Status"
