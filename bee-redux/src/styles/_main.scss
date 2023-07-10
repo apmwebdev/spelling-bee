@@ -261,7 +261,7 @@ Header {
   display: grid;
 }
 
-.sb-word-length-grid > div {
+.sb-word-length-grid > div:not(.axis-label) {
   padding: 6px 2px;
 }
 

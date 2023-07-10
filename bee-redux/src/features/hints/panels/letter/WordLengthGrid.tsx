@@ -77,7 +77,7 @@ export function WordLengthGrid({
     const numberOfRows = Object.keys(gridRows).length + 3
     const numberOfColumns = Object.keys(Object.values(gridRows)[0]).length + 2
     const gridStyle = {
-      gridTemplateRows: `repeat(${numberOfRows}, 1fr)`,
+      gridTemplateRows: `max-content repeat(${numberOfRows - 1}, 1fr)`,
       gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`,
     }
     const gridArr = []
@@ -156,12 +156,12 @@ export function WordLengthGrid({
     }
 
     //super header labeling y axis (letters)
-    createCell("Letters", "sb-word-length-grid-y-label")
+    createCell("Letters", "sb-word-length-grid-y-label axis-label")
 
     //super header labeling x axis (word length)
     gridArr.push(
       <div
-        className="sb-word-length-grid-x-label"
+        className="sb-word-length-grid-x-label axis-label"
         style={{ gridColumn: `2 / ${numberOfColumns + 1}` }}
         key={uniqid()}
       >

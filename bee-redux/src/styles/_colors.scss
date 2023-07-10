@@ -54,7 +54,7 @@
 
   .sb-wlg-content,
   .sb-wlg-total-column,
-  .sb-wlg-row-header,
+  .sb-wlg-row-header:not(:nth-child(-n + 1 of div.sb-wlg-row-header)),
   .sb-wlg-total-row,
   {
     border-top: 1px solid #666;
