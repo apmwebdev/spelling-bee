@@ -42,7 +42,7 @@ export function HintPanel({ panel }: HintPanelProps) {
       <div className="sb-hint-panel">
         <PanelHeader panel={panel} />
         <GeneralPanelSettings panel={panel} />
-        {panelContent(panel)}
+        <div className="sb-hint-panel-content">{panelContent(panel)}</div>
       </div>
     )
   }

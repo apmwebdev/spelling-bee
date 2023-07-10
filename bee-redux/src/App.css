@@ -195,7 +195,11 @@ Header {
 }
 
 .sb-hint-panel {
-  /*border: 1px dotted;*/
+  border: 1px dotted;
+  /*padding: 8px;*/
+}
+
+.sb-hint-panel-content {
   padding: 8px;
 }
 
@@ -203,8 +207,10 @@ Header {
   display: grid;
   grid-template-columns: max-content 1fr;
   align-items: center;
-  border-bottom: 1px dotted;
+  /*border-bottom: 1px dotted;*/
   margin-bottom: 4px;
+  background-color: #333;
+  padding: 4px 8px;
 }
 
 .sb-hint-panel-header-buttons {
@@ -212,7 +218,7 @@ Header {
   grid-row: 1 / 2;
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  /*margin-bottom: 8px;*/
 }
 
 .hint-button-box {
@@ -221,23 +227,22 @@ Header {
   display: grid;
   place-content: center;
   border-radius: 4px;
-  border: 2px solid #999;
 }
 
 .sb-hint-remove-button-box {
-  background-color: #633;
+  /*background-color: #633;*/
 }
 
 .sb-hint-collapse-button-box {
-  background-color: #663;
+  /*background-color: #663;*/
 }
 
 .sb-hint-expand-button-box {
-  background-color: #363;
+  /*background-color: #363;*/
 }
 
 .sb-hint-duplicate-button-box {
-  background-color: #339;
+  /*background-color: #339;*/
 }
 
 .sb-hint-panel-name {
