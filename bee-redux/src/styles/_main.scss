@@ -190,17 +190,13 @@ Header {
   /*padding: 8px;*/
 }
 
-.sb-hint-panel-content {
-  padding: 8px;
-}
-
 .sb-hint-panel-header {
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   align-items: center;
   /*border-bottom: 1px dotted;*/
   /*margin-bottom: 8px;*/
-  padding: 4px 8px;
+  padding: 8px;
 }
 
 .sb-hint-panel-header-buttons-left, .sb-hint-panel-header-buttons-right {
@@ -238,8 +234,12 @@ Header {
   justify-content: flex-start;
   gap: 8px;
   margin: 0px 8px;
-  padding: 8px 0px;
+  padding: 8px 8px;
   border-bottom: 1px dotted;
+}
+
+.sb-hint-panel-content {
+  padding: 8px;
 }
 
 .sb-basic-hints {
@@ -248,13 +248,24 @@ Header {
 }
 
 .sb-letter-panel-settings {
-  text-align: left;
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  justify-content: stretch;
+  padding: 8px;
+  gap: 8px;
+  margin-bottom: 8px;
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   }
 }
 
 .sb-word-length-grid-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  //margin-top: 8px;
 }
 
 .sb-word-length-grid {

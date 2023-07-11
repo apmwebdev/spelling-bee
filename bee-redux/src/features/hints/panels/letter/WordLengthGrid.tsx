@@ -230,7 +230,6 @@ export function WordLengthGrid({
     )
     return (
       <div className="sb-word-length-grid-container">
-        {/*<table>{outputArr}</table>*/}
         <div className="sb-word-length-grid" style={gridStyle}>
           {gridArr}
         </div>

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import cloneDeep from "lodash/cloneDeep"
-import uniqid from 'uniqid';
 // import { defaultProfiles } from "./hintProfilesAPI"
 
 /**
@@ -149,24 +148,24 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     displayDefault: ProfileDisplayDefaults.Expanded,
     trackingDefault: TrackingOptions.RemainingOfTotal,
     panels: [
-      {
-        id: 0,
-        name: "Basic Info",
-        isCollapsed: false,
-        isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Expanded,
-        type: PanelTypes.Basic,
-        typeOptions: {
-          showWordCount: true,
-          showTotalPoints: true,
-          showPangramCount: true,
-          showPerfectPangramCount: true,
-        },
-      },
+      // {
+      //   id: 0,
+      //   name: "Basic Info",
+      //   isCollapsed: false,
+      //   isBlurred: false,
+      //   tracking: TrackingOptions.FoundOfTotal,
+      //   initialDisplay: PanelInitialDisplayOptions.Expanded,
+      //   type: PanelTypes.Basic,
+      //   typeOptions: {
+      //     showWordCount: true,
+      //     showTotalPoints: true,
+      //     showPangramCount: true,
+      //     showPerfectPangramCount: true,
+      //   },
+      // },
       {
         id: 1,
-        name: "First Letter x Word Length Grid",
+        name: "Answer Lengths x First Letter",
         isCollapsed: false,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
@@ -252,7 +251,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
     panels: [
       {
         id: 7,
-        name: "Basic info",
+        name: "Basic Info",
         isCollapsed: false,
         isBlurred: false,
         tracking: TrackingOptions.FoundOfTotal,

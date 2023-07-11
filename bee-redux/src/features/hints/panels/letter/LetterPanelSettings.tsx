@@ -13,6 +13,7 @@ import {
 import { useDispatch } from "react-redux"
 import { ChangeEvent } from "react"
 import uniqid from "uniqid"
+import { capitalize } from "lodash"
 
 interface LetterPanelSettingsProps {
   panelId: number
@@ -43,13 +44,13 @@ export function LetterPanelSettings({
     return (
       <select value={display} onChange={handleDisplayChange}>
         <option key={uniqid()} value={StringHintDisplayOptions.WordLengthGrid}>
-          word length grid
+          Word Length Grid
         </option>
         <option key={uniqid()} value={StringHintDisplayOptions.WordCountList}>
-          word count list
+          Word Count List
         </option>
         <option key={uniqid()} value={StringHintDisplayOptions.LettersOnly}>
-          letters only
+          Letters Only
         </option>
       </select>
     )
@@ -85,10 +86,10 @@ export function LetterPanelSettings({
     return (
       <select value={locationInWord} onChange={handleLocationInWordChange}>
         <option key={uniqid()} value={LetterPanelLocations.Beginning}>
-          first
+          {capitalize(LetterPanelLocations.Beginning)}
         </option>
         <option key={uniqid()} value={LetterPanelLocations.End}>
-          last
+          {capitalize(LetterPanelLocations.End)}
         </option>
       </select>
     )
@@ -115,11 +116,18 @@ export function LetterPanelSettings({
 
   return (
     <div className="sb-letter-panel-settings">
-      Show me
-      {display === StringHintDisplayOptions.LettersOnly ? "" : " a"}{" "}
-      {displayControl()} for the {locationInWordControl()}{" "}
-      {numOfLettersControl()} {numberOfLetters > 1 ? "letters" : "letter"},{" "}
-      offset by {offsetControl()} letters.
+      <div className="display-section">
+        <span key={uniqid()}>Type:</span> {displayControl()}
+      </div>
+      <div className="number-of-letters-section">
+        <span key={uniqid()}>Number of letters:</span> {numOfLettersControl()}
+      </div>
+      <div className="location-in-word-section">
+        <span key={uniqid()}>Start from:</span> {locationInWordControl()}
+      </div>
+      <div className="offset-section">
+        <span key={uniqid()}>Offset:</span> {offsetControl()}
+      </div>
     </div>
   )
 }
