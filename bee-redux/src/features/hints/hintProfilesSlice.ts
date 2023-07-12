@@ -182,6 +182,21 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
+        id: 4,
+        name: "String Search",
+        isCollapsed: false,
+        settingsAreCollapsed: true,
+        isBlurred: false,
+        tracking: TrackingOptions.FoundOfTotal,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Search,
+        typeOptions: {
+          searchLocation: SearchPanelLocations.Anywhere,
+          offset: 0,
+          display: StringHintDisplayOptions.LettersOnly,
+        },
+      },
+      {
         id: 0,
         name: "Basic Info",
         isCollapsed: false,
@@ -195,21 +210,6 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
           showTotalPoints: true,
           showPangramCount: true,
           showPerfectPangramCount: true,
-        },
-      },
-      {
-        id: 4,
-        name: "String Search",
-        isCollapsed: false,
-        settingsAreCollapsed: true,
-        isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Expanded,
-        type: PanelTypes.Search,
-        typeOptions: {
-          searchLocation: SearchPanelLocations.Anywhere,
-          offset: 0,
-          display: StringHintDisplayOptions.LettersOnly,
         },
       },
       {

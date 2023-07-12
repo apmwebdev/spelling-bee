@@ -27,7 +27,6 @@ const puzzleSampleData: PuzzleFormat[] = [
     pangrams: ["mouthed"],
     perfectPangrams: [],
     answers: [
-      "mouthed",
       "deem",
       "deemed",
       "demo",
@@ -66,6 +65,7 @@ const puzzleSampleData: PuzzleFormat[] = [
       "motto",
       "moue",
       "mouth",
+      "mouthed",
       "mute",
       "muted",
       "mutt",
