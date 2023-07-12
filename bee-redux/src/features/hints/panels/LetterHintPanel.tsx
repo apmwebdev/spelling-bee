@@ -12,8 +12,7 @@ import { LettersOnly } from "./letter/LettersOnly"
 import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
 import { useAppSelector } from "../../../app/hooks"
 import { selectAnswers } from "../../puzzle/puzzleSlice"
-import { GeneralPanelSettings } from '../GeneralPanelSettings';
-import { HintPanelSettings } from '../HintPanelSettings';
+import { HintPanelSettings } from "../HintPanelSettings"
 
 export interface LetterHintSubsectionProps {
   answers: string[]
@@ -24,17 +23,18 @@ export interface LetterHintSubsectionProps {
   tracking: TrackingOptions
 }
 
+export interface LetterHintDataCell {
+  answers: number
+  guesses: number
+}
+
 export function LetterHintPanel({ panel }: HintPanelProps) {
   const answers = useAppSelector(selectAnswers)
   const correctGuessWords = useAppSelector(selectCorrectGuessWords)
   const content = () => {
     if (isLetterPanelSettings(panel.typeOptions)) {
-      const {
-        numberOfLetters,
-        locationInWord,
-        offset,
-        display,
-      } = panel.typeOptions
+      const { numberOfLetters, locationInWord, offset, display } =
+        panel.typeOptions
 
       const subsectionProps: LetterHintSubsectionProps = {
         answers,

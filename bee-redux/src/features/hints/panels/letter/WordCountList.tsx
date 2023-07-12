@@ -1,15 +1,13 @@
-import { LetterHintSubsectionProps } from '../LetterHintPanel';
-import { LetterPanelLocations, TrackingOptions } from '../../hintProfilesSlice';
-import uniqid from 'uniqid';
-import { WordLengthGridKey } from './WordLengthGridKey';
-
-interface ListCell {
-  answers: number
-  guesses: number
-}
+import {
+  LetterHintDataCell,
+  LetterHintSubsectionProps,
+} from "../LetterHintPanel"
+import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice"
+import uniqid from "uniqid"
+import { WordLengthGridKey } from "./WordLengthGridKey"
 
 interface ListRow {
-  [substring: string]: ListCell
+  [substring: string]: LetterHintDataCell
 }
 
 interface ListRows {
@@ -62,13 +60,12 @@ export function WordCountList({
   }
 
   const generateOutput = () => {
-
     const createCell = ({
       cell,
       fragment,
       fragmentDivs,
     }: {
-      cell: ListCell
+      cell: LetterHintDataCell
       fragment: string
       fragmentDivs: any[]
     }) => {

@@ -1,17 +1,15 @@
-import { LetterHintSubsectionProps } from "../LetterHintPanel"
+import {
+  LetterHintDataCell,
+  LetterHintSubsectionProps,
+} from "../LetterHintPanel"
 import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswerLengths } from "../../../puzzle/puzzleSlice"
 import uniqid from "uniqid"
 import { WordLengthGridKey } from "./WordLengthGridKey"
 
-interface GridCell {
-  answers: number
-  guesses: number
-}
-
 interface GridRow {
-  [index: number]: GridCell
+  [index: number]: LetterHintDataCell
 }
 
 interface GridRows {
@@ -92,7 +90,7 @@ export function WordLengthGrid({
     }
 
     const populateGridCellContent = (
-      cell: GridCell,
+      cell: LetterHintDataCell,
       isTotalRow: boolean = false,
       isTotalColumn: boolean = false,
     ) => {
@@ -101,7 +99,7 @@ export function WordLengthGrid({
       const remaining = total - found
 
       const getCellClasses = (
-        cell: GridCell,
+        cell: LetterHintDataCell,
         isTotalRow: boolean = false,
         isTotalColumn: boolean = false,
       ): string => {
@@ -130,7 +128,7 @@ export function WordLengthGrid({
         return returnStr
       }
       //So TypeScript will stop complaining when using spread syntax below
-      const args: [GridCell, boolean, boolean] = [
+      const args: [LetterHintDataCell, boolean, boolean] = [
         cell,
         isTotalRow,
         isTotalColumn,
