@@ -71,20 +71,24 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
         <option key={uniqid()} value={PanelInitialDisplayOptions.Collapsed}>
           Collapsed
         </option>
-        <option
-          key={uniqid()}
-          value={PanelInitialDisplayOptions.CollapsedAndBlurred}
-        >
-          Collapsed and blurred
-        </option>
+        {/*<option*/}
+        {/*  key={uniqid()}*/}
+        {/*  value={PanelInitialDisplayOptions.CollapsedAndBlurred}*/}
+        {/*>*/}
+        {/*  Collapsed and blurred*/}
+        {/*</option>*/}
       </select>
     )
   }
 
   return (
     <div className="sb-general-hint-settings">
-      <span>Display:</span> {liveUpdateOptions()}
-      <span>Load as:</span> {initialDisplayOptions()}
+      <div className="sb-hint-display-section">
+        <span>Display:</span> {liveUpdateOptions()}
+      </div>
+      <div className="sb-hint-load-section">
+        <span>Load as:</span> {initialDisplayOptions()}
+      </div>
     </div>
   )
 }

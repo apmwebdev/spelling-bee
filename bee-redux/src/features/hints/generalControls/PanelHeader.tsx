@@ -1,27 +1,49 @@
 import { RemoveButton } from './RemoveButton';
 import uniqid from 'uniqid';
-import { CollapseExpandButton } from "./CollapseExpandButton"
-import { HintPanelFormat } from "../hintProfilesSlice"
+import { HintPanelCollapseExpandButton } from "./HintPanelCollapseExpandButton"
+import { HintPanelFormat, setIsCollapsed } from '../hintProfilesSlice';
 import { DuplicateButton } from "./DuplicateButton"
+import { useDispatch } from 'react-redux';
+import { HeaderDisclosureWidget } from '../../../utils/HeaderDisclosureWidget';
 
 interface PanelHeaderProps {
-  panel: HintPanelFormat
+  panelId: number
+  panelName: string
+  isCollapsed: boolean
 }
 
-export function PanelHeader({ panel }: PanelHeaderProps) {
+export function PanelHeader({
+  panelId,
+  panelName,
+  isCollapsed,
+}: PanelHeaderProps) {
+  const dispatch = useDispatch()
+
+  const cssClasses = () => {
+    let classList = "sb-hint-panel-header click-header-to-collapse"
+    if (isCollapsed) {
+      classList += " collapsed"
+    } else {
+      classList += " expanded"
+    }
+    return classList
+  }
+
+  const toggleCollapsed = () => {
+    dispatch(setIsCollapsed({ panelId, isCollapsed: !isCollapsed }))
+  }
   return (
-    <div className="sb-hint-panel-header">
-      <div className="sb-hint-panel-name">{panel.name}</div>
+    <div className={cssClasses()} onClick={toggleCollapsed}>
       <div className="sb-hint-panel-header-buttons-left">
-        <RemoveButton key={uniqid()} panelId={panel.id} />
-        <CollapseExpandButton
-          key={uniqid()}
-          panelId={panel.id}
-          isCollapsed={panel.isCollapsed}
-        />
+        <RemoveButton key={uniqid()} panelId={panelId} />
       </div>
+      <HeaderDisclosureWidget
+        key={uniqid()}
+        title={panelName}
+        isCollapsed={isCollapsed}
+      />
       <div className="sb-hint-panel-header-buttons-right">
-        <DuplicateButton key={uniqid()} panelId={panel.id} />
+        <DuplicateButton key={uniqid()} panelId={panelId} />
       </div>
     </div>
   )

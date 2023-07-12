@@ -15,7 +15,7 @@ import { ChangeEvent } from "react"
 import uniqid from "uniqid"
 import { capitalize } from "lodash"
 
-interface LetterPanelSettingsProps {
+export interface LetterPanelSettingsProps {
   panelId: number
   numberOfLetters: number
   locationInWord: LetterPanelLocations

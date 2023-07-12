@@ -37,18 +37,37 @@ export function HintPanel({ panel }: HintPanelProps) {
         return null
     }
   }
-  if (!panel.isCollapsed) {
-    return (
-      <div className="sb-hint-panel">
-        <PanelHeader panel={panel} />
-        <GeneralPanelSettings panel={panel} />
-        <div className="sb-hint-panel-content">{panelContent(panel)}</div>
-      </div>
-    )
+
+  const panelCSSClasses = () => {
+    let classList = "sb-hint-panel"
+    if (panel.isCollapsed) {
+      classList += " collapsed"
+    } else {
+      classList += " expanded"
+    }
+    return classList
   }
+
+  const contentCSSClasses = () => {
+    let classList = "sb-hint-panel-content"
+    if (panel.isCollapsed) {
+      classList += " display-none"
+    }
+    return classList
+  }
+
   return (
-    <div className="sb-hint-panel">
-      <PanelHeader panel={panel} />
+    <div className={panelCSSClasses()}>
+      <PanelHeader
+        panelId={panel.id}
+        panelName={panel.name}
+        isCollapsed={panel.isCollapsed}
+      />
+      <div
+        className={contentCSSClasses()}
+      >
+        {panelContent(panel)}
+      </div>
     </div>
   )
 }

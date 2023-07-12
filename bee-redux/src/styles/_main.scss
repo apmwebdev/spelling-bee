@@ -185,18 +185,39 @@ Header {
   gap: 8px;
 }
 
-.sb-hint-panel {
-  border: 1px dotted;
-  /*padding: 8px;*/
-}
-
 .sb-hint-panel-header {
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
+  display: flex;
+  //grid-template-columns: max-content 1fr max-content;
   align-items: center;
+  justify-content: space-between;
   /*border-bottom: 1px dotted;*/
   /*margin-bottom: 8px;*/
   padding: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sb-hint-panel-settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  //padding: 1px;
+}
+
+.header-disclosure-widget {
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  //border: 1px solid red;
+}
+
+.header-disclosure-widget-icon {
+  position: absolute;
+  justify-self: flex-start;
+  left: -18px;
 }
 
 .sb-hint-panel-header-buttons-left, .sb-hint-panel-header-buttons-right {
@@ -214,7 +235,7 @@ Header {
   grid-column: 3 / 4;
 }
 
-.hint-button-box {
+.button-box {
   cursor: pointer;
   padding: 2px;
   display: grid;
@@ -229,17 +250,30 @@ Header {
   font-weight: bold;
 }
 
+.sb-hint-panel-settings {
+  //padding: 8px 4px;
+}
+
 .sb-general-hint-settings {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
   gap: 8px;
-  margin: 0px 8px;
+  //margin: 0px 8px;
   padding: 8px 8px;
-  border-bottom: 1px dotted;
+  //border-bottom: 1px dotted;
+  > div {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .sb-hint-panel-content {
   padding: 8px;
+}
+
+.sb-hint-panel-output {
+  padding: 8px 0px;
 }
 
 .sb-basic-hints {
@@ -253,7 +287,7 @@ Header {
   justify-content: stretch;
   padding: 8px;
   gap: 8px;
-  margin-bottom: 8px;
+  //margin-bottom: 8px;
   > div {
     display: flex;
     justify-content: space-between;

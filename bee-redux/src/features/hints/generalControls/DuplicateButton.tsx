@@ -11,7 +11,7 @@ export function DuplicateButton({ panelId }: DuplicateButtonProps) {
 
   return (
     <div
-      className="sb-hint-duplicate-button-box hint-button-box"
+      className="sb-hint-duplicate-button-box button-box"
       onClick={() => dispatch(duplicatePanel({ panelId }))}
     >
       <Icon

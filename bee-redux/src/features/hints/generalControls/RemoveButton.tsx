@@ -11,7 +11,7 @@ export function RemoveButton({ panelId }: RemoveButtonProps) {
 
   return (
     <div
-      className="sb-hint-remove-button-box hint-button-box"
+      className="sb-hint-remove-button-box button-box"
       onClick={() => dispatch(removePanel({ panelId }))}
     >
       <Icon icon="mdi:close-thick" className="sb-hint-remove-button"></Icon>

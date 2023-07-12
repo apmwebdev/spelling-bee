@@ -1,7 +1,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #222;
+    --bg-color: #222;
+    --line-color: rgba(255, 255, 255, 0.87);
+    --disabled-line-color: rgba(255, 255, 255, 0.736);
+    color: var(--line-color);
+    background-color: var(--bg-color);
   }
 
   a {
@@ -32,28 +35,38 @@
     fill: #eee;
   }
 
+  .sb-hint-panel {
+    border: 1px dotted var(--line-color);
+    &.collapsed {
+      color: var(--disabled-line-color);
+      border: 1px dotted var(--disabled-line-color);
+    }
+  }
+
   .sb-hint-panel-header {
-    background-color: #333;
+    //background-color: #333;
+    background-color: hsl(240, 25%, 30%);
+    &.collapsed {
+      background-color: hsl(240, 15%, 26%);
+    }
   }
 
-  .sb-hint-remove-button-box {
-    /*background-color: #633;*/
+  .sb-hint-panel-settings {
+    background-color: hsl(0, 30%, 20%);
+    border: 1px solid hsl(0, 20%, 40%);
   }
 
-  .sb-hint-collapse-button-box {
-    /*background-color: #663;*/
+  .sb-hint-panel-settings-header {
+    background-color: hsl(0, 25%, 30%);
+    //background-color: #292929;
   }
 
-  .sb-hint-expand-button-box {
-    /*background-color: #363;*/
-  }
-
-  .sb-hint-duplicate-button-box {
-    /*background-color: #339;*/
+  .sb-general-hint-settings {
   }
 
   .sb-letter-panel-settings {
     border-bottom: 1px dotted;
+    //background-color: hsl(0, 30%, 20%);
   }
 
   .sb-wlg-content,

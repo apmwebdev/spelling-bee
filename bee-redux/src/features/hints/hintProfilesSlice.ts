@@ -93,6 +93,7 @@ export interface HintPanelFormat {
   id: number
   name: string
   isCollapsed: boolean
+  settingsAreCollapsed: boolean
   isBlurred: boolean
   tracking: TrackingOptions
   initialDisplay: PanelInitialDisplayOptions
@@ -152,6 +153,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
       //   id: 0,
       //   name: "Basic Info",
       //   isCollapsed: false,
+      //   settingsAreCollapsed: true
       //   isBlurred: false,
       //   tracking: TrackingOptions.FoundOfTotal,
       //   initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -167,6 +169,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 1,
         name: "Answer Lengths x First Letter",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -182,6 +185,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 2,
         name: "First Two Letters Word Count",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -197,6 +201,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 3,
         name: "Word Obscurity Ranking",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -207,6 +212,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 4,
         name: "String Search",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -221,6 +227,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 5,
         name: "Definitions",
         isCollapsed: true,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
@@ -231,6 +238,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         id: 6,
         name: "Excluded Words",
         isCollapsed: true,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
@@ -253,6 +261,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         id: 7,
         name: "Basic Info",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -268,6 +277,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         id: 8,
         name: "Your Grid of Remaining Words",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -283,6 +293,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         id: 9,
         name: "Your Two-Letter List",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: false,
         tracking: TrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
@@ -298,6 +309,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         id: 10,
         name: "Word Obscurity Ranking",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: true,
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
@@ -308,6 +320,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         id: 11,
         name: "Definitions",
         isCollapsed: false,
+        settingsAreCollapsed: true,
         isBlurred: true,
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
@@ -423,6 +436,19 @@ export const hintProfilesSlice = createSlice({
       newPanel.id = newPanel.id + 20
       state.data.currentProfile.panels.push(newPanel)
     },
+    setSettingsAreCollapsed: (
+      state,
+      action: {
+        payload: { panelId: number; settingsAreCollapsed: boolean }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel) {
+        return
+      }
+      panel.settingsAreCollapsed = action.payload.settingsAreCollapsed
+    },
     setTracking: (
       state,
       action: {
@@ -526,6 +552,7 @@ export const {
   setCurrentProfile,
   removePanel,
   setIsCollapsed,
+  setSettingsAreCollapsed,
   duplicatePanel,
   setTracking,
   setInitialDisplay,

@@ -12,6 +12,8 @@ import { LettersOnly } from "./letter/LettersOnly"
 import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
 import { useAppSelector } from "../../../app/hooks"
 import { selectAnswers } from "../../puzzle/puzzleSlice"
+import { GeneralPanelSettings } from '../GeneralPanelSettings';
+import { HintPanelSettings } from '../HintPanelSettings';
 
 export interface LetterHintSubsectionProps {
   answers: string[]
@@ -54,16 +56,23 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
       } else {
         hintContent = <div>hullo</div>
       }
+
+      const letterHints = () => (
+        <LetterPanelSettings
+          panelId={panel.id}
+          numberOfLetters={numberOfLetters}
+          locationInWord={locationInWord}
+          offset={offset}
+          display={display}
+        />
+      )
       return (
         <>
-          <LetterPanelSettings
-            panelId={panel.id}
-            numberOfLetters={numberOfLetters}
-            locationInWord={locationInWord}
-            offset={offset}
-            display={display}
+          <HintPanelSettings
+            panel={panel}
+            TypeSettingsComponent={letterHints}
           />
-          {hintContent}
+          <div className="sb-hint-panel-output">{hintContent}</div>
         </>
       )
     }
