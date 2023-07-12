@@ -109,10 +109,20 @@
     //background-color: hsl(0, 40%, 20%);
   }
 
+  .sb-word-count-list {
+    border-top: 1px dotted;
+  }
 
   .sb-wcl-fragment-count {
     border: 1px solid #666;
     background-color: #333;
+  }
+
+  .sb-lol-row {
+    border-bottom: 1px solid #666;
+    //&:first-child {
+    //  border-top: 1px solid #666;
+    //}
   }
 }
 

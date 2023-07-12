@@ -339,11 +339,11 @@ Header {
   }
 }
 
-.sb-word-count-list {
+.sb-word-count-list,
+.sb-letters-only-list {
   display: grid;
   align-items: center;
   //gap: 8px;
-  border-top: 1px dotted;
   padding: 12px 8px;
   margin-top: 4px;
 }
@@ -357,9 +357,15 @@ Header {
   column-gap: 16px;
   row-gap: 8px;
   padding: 8px;
-  //&:not(:last-child) {
-  //  border-bottom: 1px solid #666;
-  //}
+}
+
+.sb-lol-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 8px;
 }
 
 .sb-wcl-fragment-cell {
