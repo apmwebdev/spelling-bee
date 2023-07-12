@@ -3,7 +3,7 @@ import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswerLengths } from "../../../puzzle/puzzleSlice"
 import uniqid from "uniqid"
-import { WordLengthGridKey } from './WordLengthGridKey';
+import { WordLengthGridKey } from "./WordLengthGridKey"
 
 interface GridCell {
   answers: number
