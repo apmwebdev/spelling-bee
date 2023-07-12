@@ -108,6 +108,12 @@
     color: hsl(0, 85%, 87%);
     //background-color: hsl(0, 40%, 20%);
   }
+
+
+  .sb-wcl-fragment-count {
+    border: 1px solid #666;
+    background-color: #333;
+  }
 }
 
 @media (prefers-color-scheme: light) {
