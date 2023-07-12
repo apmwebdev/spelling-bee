@@ -252,6 +252,7 @@ Header {
 
 .sb-hint-panel-settings {
   //padding: 8px 4px;
+  font-size: 16px;
 }
 
 .sb-general-hint-settings {
@@ -304,24 +305,34 @@ Header {
 
 .sb-word-length-grid {
   display: grid;
+  //margin-top: 16px;
+  border-top: 1px dotted;
+  padding: 8px;
+  margin-top: 8px;
 }
 
 .sb-word-length-grid > div:not(.axis-label) {
   padding: 6px 2px;
 }
 
-.sb-wlg-col-header, .sb-wlg-row-header, .sb-wlg-total {
-  //font-weight: bold;
-}
-
-.sb-wlg-content {
-  //font-weight: bold;
-}
-
-//.sb-wlg-total {
-//  font-weight: bold;
-//}
-
 .sb-number-of-letters-control, .sb-offset-control {
   width: 3rem;
+}
+
+.sb-word-length-grid-key {
+  font-size: 16px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: start;
+  //align-self: flex-start;
+  padding: 4px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sb-wlg-tracking-key {
+    padding: 2px 8px;
+  }
 }

@@ -86,10 +86,10 @@ export function LetterPanelSettings({
     return (
       <select value={locationInWord} onChange={handleLocationInWordChange}>
         <option key={uniqid()} value={LetterPanelLocations.Beginning}>
-          {capitalize(LetterPanelLocations.Beginning)}
+          {capitalize(LetterPanelLocations.Beginning)} of word
         </option>
         <option key={uniqid()} value={LetterPanelLocations.End}>
-          {capitalize(LetterPanelLocations.End)}
+          {capitalize(LetterPanelLocations.End)} of word
         </option>
       </select>
     )

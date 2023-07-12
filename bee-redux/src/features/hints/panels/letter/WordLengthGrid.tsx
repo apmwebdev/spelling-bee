@@ -3,6 +3,7 @@ import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswerLengths } from "../../../puzzle/puzzleSlice"
 import uniqid from "uniqid"
+import { WordLengthGridKey } from './WordLengthGridKey';
 
 interface GridCell {
   answers: number
@@ -230,6 +231,7 @@ export function WordLengthGrid({
     )
     return (
       <div className="sb-word-length-grid-container">
+        <WordLengthGridKey tracking={tracking} />
         <div className="sb-word-length-grid" style={gridStyle}>
           {gridArr}
         </div>

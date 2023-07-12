@@ -62,10 +62,10 @@
   }
 
   .sb-general-hint-settings {
+    border-top: 1px solid hsl(0, 20%, 40%);
   }
 
   .sb-letter-panel-settings {
-    border-bottom: 1px dotted;
     //background-color: hsl(0, 30%, 20%);
   }
 
@@ -82,6 +82,11 @@
   .sb-wlg-total-row,
   {
     border-left: 1px solid #666;
+  }
+
+  .sb-wlg-tracking-key {
+    background-color: #333;
+    border: 1px solid #666;
   }
 
   .sb-wlg-content-full {
