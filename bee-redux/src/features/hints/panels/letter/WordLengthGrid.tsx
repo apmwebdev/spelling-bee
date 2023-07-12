@@ -109,12 +109,14 @@ export function WordLengthGrid({
           return "sb-wlg-content"
         }
         let returnStr = ""
-        if (cell.guesses === cell.answers) {
-          returnStr += "hint-completed"
-        } else if (cell.guesses === 0) {
-          returnStr += "hint-not-started"
-        } else {
-          returnStr += "hint-in-progress"
+        if (tracking !== TrackingOptions.Total) {
+          if (cell.guesses === cell.answers) {
+            returnStr += "hint-completed"
+          } else if (cell.guesses === 0) {
+            returnStr += "hint-not-started"
+          } else {
+            returnStr += "hint-in-progress"
+          }
         }
         if (!isTotalRow && !isTotalColumn) {
           return returnStr + " sb-wlg-content sb-wlg-content-full"
