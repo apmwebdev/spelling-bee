@@ -2,7 +2,7 @@
   :root {
     --bg-color: #222;
     --line-color: rgba(255, 255, 255, 0.87);
-    --disabled-line-color: rgba(255, 255, 255, 0.736);
+    --disabled-line-color: rgba(255, 255, 255, 0.730);
     color: var(--line-color);
     background-color: var(--bg-color);
   }
@@ -36,10 +36,11 @@
   }
 
   .sb-hint-panel {
-    border: 1px dotted var(--line-color);
+    //border: 2px solid hsl(240, 20%, 40%);
+    border: 2px solid hsl(240, 20%, 40%);
     &.collapsed {
       color: var(--disabled-line-color);
-      border: 1px dotted var(--disabled-line-color);
+      border: 2px solid hsl(240, 10%, 33%);
     }
   }
 
