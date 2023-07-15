@@ -66,6 +66,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
           display={display}
         />
       )
+
       return (
         <>
           <HintPanelSettings

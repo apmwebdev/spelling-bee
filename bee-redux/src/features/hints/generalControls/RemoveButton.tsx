@@ -10,11 +10,11 @@ export function RemoveButton({ panelId }: RemoveButtonProps) {
   const dispatch = useDispatch()
 
   return (
-    <div
-      className="sb-hint-remove-button-box button-box"
+    <button
+      className="button"
       onClick={() => dispatch(removePanel({ panelId }))}
     >
       <Icon icon="mdi:close-thick" className="sb-hint-remove-button"></Icon>
-    </div>
+    </button>
   )
 }

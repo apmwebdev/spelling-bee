@@ -10,14 +10,11 @@ export function DuplicateButton({ panelId }: DuplicateButtonProps) {
   const dispatch = useDispatch()
 
   return (
-    <div
-      className="sb-hint-duplicate-button-box button-box"
+    <button
+      className="button"
       onClick={() => dispatch(duplicatePanel({ panelId }))}
     >
-      <Icon
-        icon="mdi:content-copy"
-        className="sb-hint-duplicate-button"
-      ></Icon>
-    </div>
+      <Icon icon="mdi:content-copy" className="sb-hint-duplicate-button"></Icon>
+    </button>
   )
 }

@@ -8,18 +8,16 @@
   /*margin: 0 auto;*/
   /*padding: 2rem;*/
   text-align: center;
+  /* Border radius */
+  --br: 6px;
 }
 
-.display-none {
-  display: none;
+button {
+  border-radius: var(--br);
 }
 
 .App {
   min-height: 550px;
-}
-
-Header {
-  position: relative;
 }
 
 .sb-top-container {
@@ -178,6 +176,7 @@ Header {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  border-radius: var(--br);
 }
 
 .sb-hints {
@@ -186,33 +185,47 @@ Header {
   gap: 8px;
 }
 
-.sb-hint-panel-header {
-  display: flex;
-  //grid-template-columns: max-content 1fr max-content;
-  align-items: center;
-  justify-content: space-between;
-  /*border-bottom: 1px dotted;*/
-  /*margin-bottom: 8px;*/
-  padding: 8px;
-  cursor: pointer;
-  font-weight: bold;
+.sb-hint-panel {
+  border-radius: var(--br);
+  border: 2px solid;
+  overflow: hidden;
 }
 
-.sb-hint-panel-settings-header {
-  display: flex;
+.sb-hint-panel-header {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  //padding: 1px;
+  gap: 4px;
+  padding: 2px;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
 }
 
 .header-disclosure-widget {
   position: relative;
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
-  //border: 1px solid red;
+}
+
+.sb-hint-panel-settings-header {
+  //display: flex;
+  //justify-content: stretch;
+}
+
+.sb-hint-panel-settings-header-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px;
 }
 
 .header-disclosure-widget-icon {
@@ -236,15 +249,6 @@ Header {
   grid-column: 3 / 4;
 }
 
-.button-box {
-  cursor: pointer;
-  padding: 2px;
-  display: grid;
-  place-content: center;
-  border-radius: 4px;
-  /*border: 1px solid #555;*/
-}
-
 .sb-hint-panel-name {
   grid-column: 1 / 4;
   grid-row: 1 / 2;
@@ -254,6 +258,12 @@ Header {
 .sb-hint-panel-settings {
   //padding: 8px 4px;
   font-size: 16px;
+  border-radius: var(--br);
+  overflow: hidden;
+}
+
+.sb-hint-panel-settings-header {
+  padding: 2px;
 }
 
 .sb-general-hint-settings {

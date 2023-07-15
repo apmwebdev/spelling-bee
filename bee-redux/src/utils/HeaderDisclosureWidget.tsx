@@ -1,7 +1,7 @@
 import { HeaderDisclosureWidgetIcon } from "./HeaderDisclosureWidgetIcon"
 import uniqid from "uniqid"
 
-export function HeaderDisclosureWidgetButton({
+export function HeaderDisclosureWidget({
   title,
   isCollapsed,
 }: {

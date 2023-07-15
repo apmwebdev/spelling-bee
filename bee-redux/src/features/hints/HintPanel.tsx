@@ -56,16 +56,18 @@ export function HintPanel({ panel }: HintPanelProps) {
     return classList
   }
 
+  //Needed for accessibility (aria-controls on collapse button)
+  const contentID = `hint-panel-content-${panel.id}`
+
   return (
     <div className={panelCSSClasses()}>
       <PanelHeader
         panelId={panel.id}
         panelName={panel.name}
         isCollapsed={panel.isCollapsed}
+        contentID={contentID}
       />
-      <div
-        className={contentCSSClasses()}
-      >
+      <div id={contentID} className={contentCSSClasses()}>
         {panelContent(panel)}
       </div>
     </div>

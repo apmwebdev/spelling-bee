@@ -1,19 +1,17 @@
-import uniqid from "uniqid"
-import { HintSettingsCollapseExpandButton } from "./HintSettingsCollapseExpandButton"
-import { CollapseExpandButton } from '../../../utils/CollapseExpandButton';
-import { useDispatch } from 'react-redux';
-import { setIsCollapsed, setSettingsAreCollapsed } from '../hintProfilesSlice';
-import { Icon, InlineIcon } from '@iconify/react';
-import { HeaderDisclosureWidget } from '../../../utils/HeaderDisclosureWidget';
+import { useDispatch } from "react-redux"
+import { setSettingsAreCollapsed } from "../hintProfilesSlice"
+import { HeaderDisclosureWidget } from "../../../utils/HeaderDisclosureWidget"
 
 interface PanelHeaderProps {
   panelId: number
   settingsAreCollapsed: boolean
+  contentId: string
 }
 
 export function SettingsHeader({
   panelId,
   settingsAreCollapsed,
+  contentId,
 }: PanelHeaderProps) {
   const dispatch = useDispatch()
 
@@ -37,12 +35,18 @@ export function SettingsHeader({
   }
 
   return (
-    <div className={cssClasses()} onClick={toggleCollapsed}>
-      <HeaderDisclosureWidget
-        key={uniqid()}
-        title="Settings"
-        isCollapsed={settingsAreCollapsed}
-      />
-    </div>
+    <header className={cssClasses()}>
+      <button
+        className="sb-hint-panel-settings-header-button"
+        onClick={toggleCollapsed}
+        aria-controls={contentId}
+        aria-expanded={!settingsAreCollapsed}
+      >
+        <HeaderDisclosureWidget
+          title="Settings"
+          isCollapsed={settingsAreCollapsed}
+        />
+      </button>
+    </header>
   )
 }

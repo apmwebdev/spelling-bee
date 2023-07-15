@@ -19,14 +19,16 @@ export function HintPanelSettings({
     }
     return returnString
   }
+  const settingsContentId = `hint-settings-content-${panel.id}`
 
   return (
     <div className="sb-hint-panel-settings">
       <SettingsHeader
         panelId={panel.id}
         settingsAreCollapsed={panel.settingsAreCollapsed}
+        contentId={settingsContentId}
       />
-      <div className={cssClasses()}>
+      <div className={cssClasses()} id={settingsContentId}>
         <TypeSettingsComponent />
         <GeneralPanelSettings panel={panel} />
       </div>

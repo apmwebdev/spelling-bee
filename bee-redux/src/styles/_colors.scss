@@ -1,8 +1,24 @@
 @media (prefers-color-scheme: dark) {
+  $hint-hue: 240;
+  $settings-hue: 0;
+  $border-saturation: 20%;
+  $border-saturation-collapsed: 10%;
+  $border-lightness: 40%;
+  $border-lightness-collapsed: 33%;
+  $button-background-saturation: 27%;
+  $button-background-saturation-collapsed: 15%;
+  $button-background-lightness: 25%;
+  $button-background-lightness-collapsed: 22%;
+  $button-border-hover-lightness: 55%;
+  $button-border-hover-lightness-collapsed: 43%;
   :root {
+    /* Base variables */
     --bg-color: #222;
     --line-color: rgba(255, 255, 255, 0.87);
     --disabled-line-color: rgba(255, 255, 255, 0.730);
+
+    /* Compound variables */
+
     color: var(--line-color);
     background-color: var(--bg-color);
   }
@@ -15,12 +31,15 @@
     color: #535bf2;
   }
 
-  button {
-    background-color: #335;
-  }
+  //.button {
+    //background-color: #335; //hsl(240, 25%, 27%)
+  //}
+  //.collapsed .button {
+    //background-color:
+  //}
 
   button:hover {
-    border-color: #646cff;
+    //border-color: #646cff;
   }
 
   .hexagon polygon {
@@ -36,22 +55,63 @@
   }
 
   .sb-hint-panel {
-    //border: 2px solid hsl(240, 20%, 40%);
-    border: 2px solid hsl(240, 20%, 40%);
+    border-color: hsl($hint-hue, $border-saturation, $border-lightness);
+    button {
+      &.button {
+        background-color: hsl($hint-hue, $button-background-saturation, $button-background-lightness);
+      }
+      &:hover {
+        border-color: hsl($hint-hue, $border-saturation, $button-border-hover-lightness);
+      }
+    }
     &.collapsed {
       color: var(--disabled-line-color);
-      border: 2px solid hsl(240, 10%, 33%);
+      border-color: hsl($hint-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+      button {
+        color: var(--disabled-line-color);
+        &.button {
+          background-color: hsl($hint-hue, $button-background-saturation-collapsed, $button-background-lightness-collapsed);
+        }
+        &:hover {
+          border-color: hsl($hint-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
+        }
+      }
     }
   }
 
   .sb-hint-panel-header {
-    //background-color: #333;
     background-color: hsl(240, 25%, 30%);
     &.collapsed {
       background-color: hsl(240, 15%, 26%);
     }
   }
 
+  .sb-hint-panel-settings {
+    border-color: hsl($settings-hue, $border-saturation, $border-lightness);
+    button {
+      &.button {
+        background-color: hsl($settings-hue, $button-background-saturation, $button-background-lightness);
+      }
+      &:hover {
+        border-color: hsl($settings-hue, $border-saturation, $button-border-hover-lightness);
+        //border-color: transparent;
+      }
+    }
+    &.collapsed {
+      color: var(--disabled-line-color);
+      border-color: hsl($settings-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+      button {
+        color: var(--disabled-line-color);
+        &.button {
+          background-color: hsl($settings-hue, $button-background-saturation-collapsed, $button-background-lightness-collapsed);
+        }
+        &:hover {
+          border-color: hsl($settings-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
+          //border-color: transparent;
+        }
+      }
+    }
+  }
   .sb-hint-panel-settings {
     background-color: hsl(0, 30%, 20%);
     border: 1px solid hsl(0, 20%, 40%);
@@ -64,10 +124,6 @@
 
   .sb-general-hint-settings {
     border-top: 1px solid hsl(0, 20%, 40%);
-  }
-
-  .sb-letter-panel-settings {
-    //background-color: hsl(0, 30%, 20%);
   }
 
   .sb-wlg-content,
