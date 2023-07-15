@@ -1,7 +1,10 @@
-import { HintPanelFormat } from "./hintProfilesSlice"
+import { HintPanelFormat, setSettingsAreCollapsed } from "./hintProfilesSlice"
 import { GeneralPanelSettings } from "./GeneralPanelSettings"
 import { ComponentType } from "react"
 import { SettingsHeader } from "./generalControls/SettingsHeader"
+import * as Collapsible from "@radix-ui/react-collapsible"
+import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget"
+import { useDispatch } from "react-redux"
 
 interface HintPanelSettingsProps {
   panel: HintPanelFormat
@@ -12,26 +15,36 @@ export function HintPanelSettings({
   panel,
   TypeSettingsComponent,
 }: HintPanelSettingsProps) {
-  const cssClasses = () => {
-    let returnString = "sb-hint-panel-settings-content"
-    if (panel.settingsAreCollapsed) {
-      returnString += " display-none"
-    }
-    return returnString
+  const dispatch = useDispatch()
+  const toggleCollapsed = () => {
+    dispatch(
+      setSettingsAreCollapsed({
+        panelId: panel.id,
+        settingsAreCollapsed: !panel.settingsAreCollapsed,
+      }),
+    )
   }
-  const settingsContentId = `hint-settings-content-${panel.id}`
 
   return (
-    <div className="sb-hint-panel-settings">
-      <SettingsHeader
-        panelId={panel.id}
-        settingsAreCollapsed={panel.settingsAreCollapsed}
-        contentId={settingsContentId}
-      />
-      <div className={cssClasses()} id={settingsContentId}>
+    <Collapsible.Root
+      className="sb-hint-panel-settings"
+      open={!panel.settingsAreCollapsed}
+    >
+      <SettingsHeader>
+        <button
+          className="sb-hint-panel-settings-header-button"
+          onClick={toggleCollapsed}
+        >
+          <HeaderDisclosureWidget
+            title="Settings"
+            isCollapsed={panel.settingsAreCollapsed}
+          />
+        </button>
+      </SettingsHeader>
+      <Collapsible.Content className="sb-hint-panel-settings-content">
         <TypeSettingsComponent />
         <GeneralPanelSettings panel={panel} />
-      </div>
-    </div>
+      </Collapsible.Content>
+    </Collapsible.Root>
   )
 }

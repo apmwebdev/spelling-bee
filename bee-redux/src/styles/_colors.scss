@@ -56,6 +56,9 @@
 
   .sb-hint-panel {
     border-color: hsl($hint-hue, $border-saturation, $border-lightness);
+    .sb-hint-panel-header {
+      background-color: hsl($hint-hue, 25%, 30%);
+    }
     button {
       &.button {
         background-color: hsl($hint-hue, $button-background-saturation, $button-background-lightness);
@@ -67,6 +70,9 @@
     &[data-state="closed"] {
       color: var(--disabled-line-color);
       border-color: hsl($hint-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+      .sb-hint-panel-header {
+        background-color: hsl($hint-hue, 15%, 26%);
+      }
       button {
         color: var(--disabled-line-color);
         &.button {
@@ -79,15 +85,12 @@
     }
   }
 
-  .sb-hint-panel-header {
-    background-color: hsl(240, 25%, 30%);
-    &.collapsed {
-      background-color: hsl(240, 15%, 26%);
-    }
-  }
-
   .sb-hint-panel-settings {
+    background-color: hsl(0, 30%, 20%);
     border-color: hsl($settings-hue, $border-saturation, $border-lightness);
+    .sb-hint-panel-settings-header {
+      background-color: hsl($settings-hue, 25%, 30%);
+    }
     button {
       &.button {
         background-color: hsl($settings-hue, $button-background-saturation, $button-background-lightness);
@@ -97,28 +100,22 @@
         //border-color: transparent;
       }
     }
-    &.collapsed {
-      color: var(--disabled-line-color);
-      border-color: hsl($settings-hue, $border-saturation-collapsed, $border-lightness-collapsed);
-      button {
-        color: var(--disabled-line-color);
-        &.button {
-          background-color: hsl($settings-hue, $button-background-saturation-collapsed, $button-background-lightness-collapsed);
-        }
-        &:hover {
-          border-color: hsl($settings-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
-          //border-color: transparent;
-        }
-      }
-    }
-  }
-  .sb-hint-panel-settings {
-    background-color: hsl(0, 30%, 20%);
-    border: 1px solid hsl(0, 20%, 40%);
+    //&[data-state="closed"] {
+    //  color: var(--disabled-line-color);
+    //  border-color: hsl($settings-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+    //  .sb-hint-panel-settings-header {
+    //    background-color: hsl($settings-hue, 15%, 26%);
+    //  }
+    //  button {
+    //    color: var(--disabled-line-color);
+    //    &:hover {
+    //      border-color: hsl($settings-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
+    //    }
+    //  }
+    //}
   }
 
   .sb-hint-panel-settings-header {
-    background-color: hsl(0, 25%, 30%);
     //background-color: #292929;
   }
 
