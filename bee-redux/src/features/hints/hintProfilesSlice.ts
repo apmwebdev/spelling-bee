@@ -83,6 +83,10 @@ export interface SearchPanelSettings {
   display: StringHintDisplayOptions
 }
 
+export function isSearchPanelSettings(a: any): a is SearchPanelSettings {
+  return a.searchLocation !== undefined
+}
+
 export interface ExcludedWordsPanelSettings {}
 
 export interface WordObscurityPanelSettings {}

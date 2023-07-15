@@ -8,11 +8,11 @@ import { selectAnswerLengths } from "../../../puzzle/puzzleSlice"
 import uniqid from "uniqid"
 import { WordLengthGridKey } from "./WordLengthGridKey"
 
-interface GridRow {
+export interface GridRow {
   [index: number]: LetterHintDataCell
 }
 
-interface GridRows {
+export interface GridRows {
   [substring: string]: GridRow
 }
 

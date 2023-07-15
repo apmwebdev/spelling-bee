@@ -12,7 +12,6 @@ import {
 } from "../../hintProfilesSlice"
 import { useDispatch } from "react-redux"
 import { ChangeEvent } from "react"
-import uniqid from "uniqid"
 import { capitalize } from "lodash"
 
 export interface LetterPanelSettingsProps {

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux"
 
 interface HintPanelSettingsProps {
   panel: HintPanelFormat
-  TypeSettingsComponent: ComponentType
+  TypeSettingsComponent?: ComponentType
 }
 
 export function HintPanelSettings({
@@ -42,7 +42,7 @@ export function HintPanelSettings({
         </button>
       </SettingsHeader>
       <Collapsible.Content className="sb-hint-panel-settings-content">
-        <TypeSettingsComponent />
+        {TypeSettingsComponent && <TypeSettingsComponent />}
         <GeneralPanelSettings panel={panel} />
       </Collapsible.Content>
     </Collapsible.Root>

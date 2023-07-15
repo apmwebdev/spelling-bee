@@ -57,7 +57,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         hintContent = <div>hullo</div>
       }
 
-      const letterHints = () => (
+      const letterHintSettings = () => (
         <LetterPanelSettings
           panelId={panel.id}
           numberOfLetters={numberOfLetters}
@@ -71,7 +71,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         <>
           <HintPanelSettings
             panel={panel}
-            TypeSettingsComponent={letterHints}
+            TypeSettingsComponent={letterHintSettings}
           />
           <div className="sb-hint-panel-output">{hintContent}</div>
         </>
