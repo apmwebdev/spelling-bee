@@ -235,7 +235,7 @@ export function WordLengthGrid({
         <div className="sb-word-length-grid" style={gridStyle}>
           {gridArr}
         </div>
-        <div key={uniqid()}>Excluded words: {excludedAnswers}</div>
+        <div>Excluded words: {excludedAnswers}</div>
       </div>
     )
   }

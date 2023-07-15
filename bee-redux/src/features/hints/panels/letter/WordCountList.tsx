@@ -143,12 +143,12 @@ export function WordCountList({
     }
 
     return (
-      <div key={uniqid()} className="sb-word-count-list-container">
+      <div className="sb-word-count-list-container">
         <WordLengthGridKey tracking={tracking} />
-        <div key={uniqid()} className="sb-word-count-list">
+        <div className="sb-word-count-list">
           {startingLetterDivs}
         </div>
-        <div key={uniqid()}>Excluded words: {excludedAnswers}</div>
+        <div>Excluded words: {excludedAnswers}</div>
       </div>
     )
   }

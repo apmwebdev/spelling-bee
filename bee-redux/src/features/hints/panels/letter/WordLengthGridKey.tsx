@@ -19,9 +19,9 @@ export function WordLengthGridKey({ tracking }: { tracking: TrackingOptions }) {
 
   return (
     <div className="sb-word-length-grid-key">
-      <div key={uniqid()}>Key: Showing</div>
+      <div>Key: Showing</div>
       <div className="sb-wlg-tracking-key">{trackingKey()}</div>
-      {/*<div key={uniqid()}>*/}
+      {/*<div>*/}
       {/*  <div className="sb-wlg-content-full hint-completed">*/}
       {/*    Green = finished*/}
       {/*  </div>*/}

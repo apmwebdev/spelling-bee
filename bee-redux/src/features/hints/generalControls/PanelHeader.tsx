@@ -1,25 +1,18 @@
 import { RemoveButton } from "./RemoveButton"
-import uniqid from "uniqid"
-import { setIsCollapsed } from "../hintProfilesSlice"
 import { DuplicateButton } from "./DuplicateButton"
-import { useDispatch } from "react-redux"
-import { HeaderDisclosureWidget } from "../../../utils/HeaderDisclosureWidget"
+import { ReactNode } from "react"
 
 interface PanelHeaderProps {
   panelId: number
-  panelName: string
   isCollapsed: boolean
-  contentID: string
+  children: ReactNode
 }
 
 export function PanelHeader({
   panelId,
-  panelName,
   isCollapsed,
-  contentID,
+  children,
 }: PanelHeaderProps) {
-  const dispatch = useDispatch()
-
   const cssClasses = () => {
     let classList = "sb-hint-panel-header click-header-to-collapse"
     if (isCollapsed) {
@@ -30,24 +23,14 @@ export function PanelHeader({
     return classList
   }
 
-  const toggleCollapsed = () => {
-    dispatch(setIsCollapsed({ panelId, isCollapsed: !isCollapsed }))
-  }
   return (
     <header className={cssClasses()}>
       <div className="sb-hint-panel-header-buttons-left">
-        <RemoveButton key={uniqid()} panelId={panelId} />
+        <RemoveButton panelId={panelId} />
       </div>
-      <button
-        className="sb-hint-panel-header-collapse-button"
-        aria-controls={contentID}
-        aria-expanded={!isCollapsed}
-        onClick={toggleCollapsed}
-      >
-        <HeaderDisclosureWidget title={panelName} isCollapsed={isCollapsed} />
-      </button>
+      {children}
       <div className="sb-hint-panel-header-buttons-right">
-        <DuplicateButton key={uniqid()} panelId={panelId} />
+        <DuplicateButton panelId={panelId} />
       </div>
     </header>
   )

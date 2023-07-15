@@ -43,13 +43,13 @@ export function LetterPanelSettings({
   const displayControl = () => {
     return (
       <select value={display} onChange={handleDisplayChange}>
-        <option key={uniqid()} value={StringHintDisplayOptions.WordLengthGrid}>
+        <option value={StringHintDisplayOptions.WordLengthGrid}>
           Word Length Grid
         </option>
-        <option key={uniqid()} value={StringHintDisplayOptions.WordCountList}>
+        <option value={StringHintDisplayOptions.WordCountList}>
           Word Count List
         </option>
-        <option key={uniqid()} value={StringHintDisplayOptions.LettersOnly}>
+        <option value={StringHintDisplayOptions.LettersOnly}>
           Letters Only
         </option>
       </select>
@@ -85,10 +85,10 @@ export function LetterPanelSettings({
   const locationInWordControl = () => {
     return (
       <select value={locationInWord} onChange={handleLocationInWordChange}>
-        <option key={uniqid()} value={LetterPanelLocations.Beginning}>
+        <option value={LetterPanelLocations.Beginning}>
           {capitalize(LetterPanelLocations.Beginning)} of word
         </option>
-        <option key={uniqid()} value={LetterPanelLocations.End}>
+        <option value={LetterPanelLocations.End}>
           {capitalize(LetterPanelLocations.End)} of word
         </option>
       </select>
@@ -117,16 +117,16 @@ export function LetterPanelSettings({
   return (
     <div className="sb-letter-panel-settings">
       <div className="display-section">
-        <span key={uniqid()}>Type:</span> {displayControl()}
+        <span>Type:</span> {displayControl()}
       </div>
       <div className="number-of-letters-section">
-        <span key={uniqid()}>Number of letters:</span> {numOfLettersControl()}
+        <span>Number of letters:</span> {numOfLettersControl()}
       </div>
       <div className="location-in-word-section">
-        <span key={uniqid()}>Start from:</span> {locationInWordControl()}
+        <span>Start from:</span> {locationInWordControl()}
       </div>
       <div className="offset-section">
-        <span key={uniqid()}>Offset:</span> {offsetControl()}
+        <span>Offset:</span> {offsetControl()}
       </div>
     </div>
   )

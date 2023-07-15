@@ -73,12 +73,12 @@ export function LettersOnly({
     }
 
     return (
-      <div key={uniqid()} className="sb-letters-only-list-container">
+      <div className="sb-letters-only-list-container">
         {/*<WordLengthGridKey tracking={tracking} />*/}
-        <div key={uniqid()} className="sb-letters-only-list">
+        <div className="sb-letters-only-list">
           {startingLetterDivs}
         </div>
-        <div key={uniqid()}>Excluded words: {excludedAnswers}</div>
+        <div>Excluded words: {excludedAnswers}</div>
       </div>
     )
   }

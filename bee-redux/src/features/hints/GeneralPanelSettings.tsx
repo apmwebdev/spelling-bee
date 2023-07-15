@@ -26,19 +26,19 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
   const liveUpdateOptions = () => {
     return (
       <select value={panel.tracking} onChange={handleTrackingChange}>
-        <option key={uniqid()} value={TrackingOptions.RemainingOfTotal}>
+        <option value={TrackingOptions.RemainingOfTotal}>
           Remaining of total
         </option>
-        <option key={uniqid()} value={TrackingOptions.FoundOfTotal}>
+        <option value={TrackingOptions.FoundOfTotal}>
           Found of total
         </option>
-        <option key={uniqid()} value={TrackingOptions.Remaining}>
+        <option value={TrackingOptions.Remaining}>
           Remaining
         </option>
-        <option key={uniqid()} value={TrackingOptions.Found}>
+        <option value={TrackingOptions.Found}>
           Found
         </option>
-        <option key={uniqid()} value={TrackingOptions.Total}>
+        <option value={TrackingOptions.Total}>
           Total
         </option>
       </select>
@@ -59,16 +59,16 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
         value={panel.initialDisplay}
         onChange={handleInitialDisplayChange}
       >
-        <option key={uniqid()} value={PanelInitialDisplayOptions.Sticky}>
+        <option value={PanelInitialDisplayOptions.Sticky}>
           Sticky
         </option>
-        <option key={uniqid()} value={PanelInitialDisplayOptions.Expanded}>
+        <option value={PanelInitialDisplayOptions.Expanded}>
           Expanded
         </option>
-        <option key={uniqid()} value={PanelInitialDisplayOptions.Blurred}>
+        <option value={PanelInitialDisplayOptions.Blurred}>
           Blurred
         </option>
-        <option key={uniqid()} value={PanelInitialDisplayOptions.Collapsed}>
+        <option value={PanelInitialDisplayOptions.Collapsed}>
           Collapsed
         </option>
         {/*<option*/}

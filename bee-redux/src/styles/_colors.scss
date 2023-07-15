@@ -64,7 +64,7 @@
         border-color: hsl($hint-hue, $border-saturation, $button-border-hover-lightness);
       }
     }
-    &.collapsed {
+    &[data-state="closed"] {
       color: var(--disabled-line-color);
       border-color: hsl($hint-hue, $border-saturation-collapsed, $border-lightness-collapsed);
       button {

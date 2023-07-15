@@ -1,4 +1,8 @@
-import { HintPanelFormat, PanelTypes } from "./hintProfilesSlice"
+import {
+  HintPanelFormat,
+  PanelTypes,
+  setIsCollapsed,
+} from "./hintProfilesSlice"
 import { BasicHintPanel } from "./panels/BasicHintPanel"
 import { LetterHintPanel } from "./panels/LetterHintPanel"
 import { SearchHintPanel } from "./panels/SearchHintPanel"
@@ -7,14 +11,17 @@ import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel"
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel"
 import { useAppSelector } from "../../app/hooks"
 import { selectAnswers } from "../puzzle/puzzleSlice"
-import { GeneralPanelSettings } from "./GeneralPanelSettings"
 import { PanelHeader } from "./generalControls/PanelHeader"
+import * as Collapsible from "@radix-ui/react-collapsible"
+import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget"
+import { useDispatch } from "react-redux"
 
 export interface HintPanelProps {
   panel: HintPanelFormat
 }
 
 export function HintPanel({ panel }: HintPanelProps) {
+  const dispatch = useDispatch()
   const answers = useAppSelector(selectAnswers)
   const panelContent = (panel: HintPanelFormat) => {
     if (answers.length === 0) {
@@ -38,38 +45,30 @@ export function HintPanel({ panel }: HintPanelProps) {
     }
   }
 
-  const panelCSSClasses = () => {
-    let classList = "sb-hint-panel"
-    if (panel.isCollapsed) {
-      classList += " collapsed"
-    } else {
-      classList += " expanded"
-    }
-    return classList
+  const toggleCollapsed = () => {
+    dispatch(
+      setIsCollapsed({ panelId: panel.id, isCollapsed: !panel.isCollapsed }),
+    )
   }
-
-  const contentCSSClasses = () => {
-    let classList = "sb-hint-panel-content"
-    if (panel.isCollapsed) {
-      classList += " display-none"
-    }
-    return classList
-  }
-
-  //Needed for accessibility (aria-controls on collapse button)
-  const contentID = `hint-panel-content-${panel.id}`
 
   return (
-    <div className={panelCSSClasses()}>
-      <PanelHeader
-        panelId={panel.id}
-        panelName={panel.name}
-        isCollapsed={panel.isCollapsed}
-        contentID={contentID}
-      />
-      <div id={contentID} className={contentCSSClasses()}>
+    <Collapsible.Root className="sb-hint-panel" open={!panel.isCollapsed}>
+      <PanelHeader panelId={panel.id} isCollapsed={panel.isCollapsed}>
+        <Collapsible.Trigger asChild>
+          <button
+            className="sb-hint-panel-header-collapse-button"
+            onClick={toggleCollapsed}
+          >
+            <HeaderDisclosureWidget
+              title={panel.name}
+              isCollapsed={panel.isCollapsed}
+            />
+          </button>
+        </Collapsible.Trigger>
+      </PanelHeader>
+      <Collapsible.Content className="sb-hint-panel-content">
         {panelContent(panel)}
-      </div>
-    </div>
+      </Collapsible.Content>
+    </Collapsible.Root>
   )
 }
