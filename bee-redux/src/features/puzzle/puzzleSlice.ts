@@ -15,9 +15,9 @@ export interface PuzzleFormat {
 
 export const BlankPuzzle: PuzzleFormat = {
   printDate: "01-01-1600",
-  centerLetter: "B",
-  outerLetters: ["C", "D", "F", "G", "H", "J"],
-  validLetters: ["B", "C", "D", "F", "G", "H", "J"],
+  centerLetter: "_",
+  outerLetters: ["_", "_", "_", "_", "_", "_"],
+  validLetters: ["_", "_", "_", "_", "_", "_", "_"],
   pangrams: [],
   perfectPangrams: [],
   answers: [],
