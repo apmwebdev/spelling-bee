@@ -87,7 +87,9 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="standard-button">
+            Search
+          </button>
         </form>
       </div>
     </>

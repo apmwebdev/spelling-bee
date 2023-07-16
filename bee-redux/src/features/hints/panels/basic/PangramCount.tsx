@@ -58,7 +58,7 @@ export function PangramCount({
   return (
     <div>
       {content()}
-      <button type="button" onClick={handleClick}>
+      <button type="button" className="standard-button" onClick={handleClick}>
         {showPangramCount ? "Hide" : "Show"}
       </button>
     </div>

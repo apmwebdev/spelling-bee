@@ -131,6 +131,7 @@ export function Guess() {
         <button
           type="submit"
           id="sb-guess-input-submit"
+          className="standard-button"
           name="sb-guess-input-submit"
         >
           Submit

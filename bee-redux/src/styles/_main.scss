@@ -12,10 +12,6 @@
   --br: 6px;
 }
 
-button {
-  border-radius: var(--br);
-}
-
 .App {
   min-height: 550px;
 }
@@ -24,6 +20,18 @@ button {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.sb-header {
+  padding: 8px;
+  border-bottom: 2px solid;
+  margin-bottom: 8px;
+  form {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .sb-main-container {
@@ -69,6 +77,12 @@ button {
   /*max-height: 100%;*/
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.sb-guess-input-container form {
+  display: flex;
+  gap: 8px;
   align-items: center;
 }
 
@@ -170,6 +184,14 @@ button {
   text-transform: uppercase;
 }
 
+
+
+/*****************/
+/***   HINTS   ***/
+/*****************/
+
+
+
 .sb-hint-section {
   border: 1px dotted;
   padding: 8px;
@@ -203,6 +225,7 @@ button {
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
+    //padding is 8px from base styles
   }
 }
 
@@ -214,8 +237,7 @@ button {
 }
 
 .sb-hint-panel-settings-header {
-  //display: flex;
-  //justify-content: stretch;
+  padding: 2px;
 }
 
 .sb-hint-panel-settings-header-button {
@@ -225,7 +247,7 @@ button {
   justify-content: center;
   cursor: pointer;
   font-weight: bold;
-  padding: 6px;
+  padding: 4px;
 }
 
 .header-disclosure-widget-icon {
@@ -261,10 +283,6 @@ button {
   border-radius: var(--br);
   overflow: hidden;
   border: 1px solid;
-}
-
-.sb-hint-panel-settings-header {
-  padding: 2px;
 }
 
 .sb-general-hint-settings {
@@ -389,4 +407,14 @@ button {
   padding: 2px 8px;
   width: 4em;
   //text-align: left;
+}
+
+.sb-search-hints {
+  padding: 8px;
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
 }

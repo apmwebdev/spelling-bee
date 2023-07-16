@@ -53,7 +53,7 @@ export function TotalPoints({
   return (
     <div>
       {content()}
-      <button type="button" onClick={handleClick}>
+      <button type="button" className="standard-button" onClick={handleClick}>
         {showTotalPoints ? "Hide" : "Show"}
       </button>
     </div>

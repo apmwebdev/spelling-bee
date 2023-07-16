@@ -55,7 +55,7 @@ export function WordCount({
   return (
     <div>
       {content()}
-      <button type="button" onClick={handleClick}>
+      <button type="button" className="standard-button" onClick={handleClick}>
         {showWordCount ? "Hide" : "Show"}
       </button>
     </div>

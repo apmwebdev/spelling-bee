@@ -21,7 +21,9 @@ export function Header() {
           value={puzzleDate}
           onChange={(e) => setPuzzleDate(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" className="standard-button">
+          Submit
+        </button>
       </form>
     </header>
   )

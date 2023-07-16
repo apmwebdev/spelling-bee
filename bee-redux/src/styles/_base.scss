@@ -1,4 +1,7 @@
 :root {
+  /* Border radius variable */
+  --br: 6px;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -33,6 +36,7 @@ h1 {
 
 button {
   padding: 8px;
+  border-radius: var(--br);
   border: 1px solid transparent;
   cursor: pointer;
   transition: border-color 0.25s;

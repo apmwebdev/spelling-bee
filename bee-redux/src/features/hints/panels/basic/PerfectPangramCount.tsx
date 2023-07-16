@@ -58,7 +58,7 @@ export function PerfectPangramCount({
   return (
     <div>
       {content()}
-      <button type="button" onClick={handleClick}>
+      <button type="button" className="standard-button" onClick={handleClick}>
         {showPerfectPangramCount ? "Hide" : "Show"}
       </button>
     </div>
