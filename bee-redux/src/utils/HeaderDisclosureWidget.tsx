@@ -1,16 +1,13 @@
-import { HeaderDisclosureWidgetIcon } from "./HeaderDisclosureWidgetIcon"
-import uniqid from "uniqid"
+import { Icon } from "@iconify/react"
 
-export function HeaderDisclosureWidget({
-  title,
-  // isCollapsed,
-}: {
-  title: string
-  // isCollapsed: boolean
-}) {
+export function HeaderDisclosureWidget({ title }: { title: string }) {
+  // Note: icon is rotated in CSS to indicate collapsed state.
   return (
     <div className="header-disclosure-widget">
-      <HeaderDisclosureWidgetIcon />
+      <Icon
+        icon="mdi:chevron-right"
+        className="header-disclosure-widget-icon"
+      ></Icon>
       <div>{title}</div>
     </div>
   )
