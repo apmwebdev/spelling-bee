@@ -3,14 +3,14 @@ import uniqid from "uniqid"
 
 export function HeaderDisclosureWidget({
   title,
-  isCollapsed,
+  // isCollapsed,
 }: {
   title: string
-  isCollapsed: boolean
+  // isCollapsed: boolean
 }) {
   return (
     <div className="header-disclosure-widget">
-      <HeaderDisclosureWidgetIcon isCollapsed={isCollapsed} />
+      <HeaderDisclosureWidgetIcon />
       <div>{title}</div>
     </div>
   )

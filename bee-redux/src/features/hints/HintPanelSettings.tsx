@@ -35,10 +35,7 @@ export function HintPanelSettings({
           className="sb-hint-panel-settings-header-button"
           onClick={toggleCollapsed}
         >
-          <HeaderDisclosureWidget
-            title="Settings"
-            isCollapsed={panel.settingsAreCollapsed}
-          />
+          <HeaderDisclosureWidget title="Settings" />
         </button>
       </SettingsHeader>
       <Collapsible.Content className="sb-hint-panel-settings-content">

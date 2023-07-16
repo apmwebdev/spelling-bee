@@ -59,10 +59,7 @@ export function HintPanel({ panel }: HintPanelProps) {
             className="sb-hint-panel-header-collapse-button"
             onClick={toggleCollapsed}
           >
-            <HeaderDisclosureWidget
-              title={panel.name}
-              isCollapsed={panel.isCollapsed}
-            />
+            <HeaderDisclosureWidget title={panel.name} />
           </button>
         </Collapsible.Trigger>
       </PanelHeader>

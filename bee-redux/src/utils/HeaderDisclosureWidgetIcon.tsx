@@ -1,20 +1,20 @@
 import { Icon } from "@iconify/react"
 
 export function HeaderDisclosureWidgetIcon({
-  isCollapsed,
+  // isCollapsed,
 }: {
-  isCollapsed: boolean
+  // isCollapsed: boolean
 }) {
   const determineIcon = () => {
-    if (isCollapsed) {
-      return "mdi:chevron-right"
-    }
-    return "mdi:chevron-down"
+    // if (isCollapsed) {
+    //   return "mdi:chevron-right"
+    // }
+    // return "mdi:chevron-right"
   }
 
   return (
     <Icon
-      icon={determineIcon()}
+      icon="mdi:chevron-right"
       className="header-disclosure-widget-icon"
     ></Icon>
   )

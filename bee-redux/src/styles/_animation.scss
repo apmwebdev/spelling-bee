@@ -1,0 +1,37 @@
+@keyframes expand {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(90deg)
+  }
+}
+
+@keyframes collapse {
+  from {
+    transform: rotate(90deg)
+  }
+  to {
+    transform: rotate(0deg)
+  }
+}
+
+.header-disclosure-widget-icon {
+  transition: transform 200ms;
+}
+
+.sb-hint-panel[data-state="open"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
+  transform: rotate(90deg);
+}
+
+.sb-hint-panel[data-state="closed"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
+  transform: rotate(0deg);
+}
+
+.sb-hint-panel-settings[data-state="open"] .sb-hint-panel-settings-header-button .header-disclosure-widget-icon {
+  transform: rotate(90deg);
+}
+
+.sb-hint-panel-settings[data-state="closed"] .sb-hint-panel-settings-header-button .header-disclosure-widget-icon {
+  transform: rotate(0deg);
+}
