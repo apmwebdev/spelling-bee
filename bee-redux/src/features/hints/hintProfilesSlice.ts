@@ -154,6 +154,21 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     trackingDefault: TrackingOptions.RemainingOfTotal,
     panels: [
       {
+        id: 4,
+        name: "String Search",
+        isCollapsed: false,
+        settingsAreCollapsed: true,
+        isBlurred: false,
+        tracking: TrackingOptions.FoundOfTotal,
+        initialDisplay: PanelInitialDisplayOptions.Expanded,
+        type: PanelTypes.Search,
+        typeOptions: {
+          searchLocation: SearchPanelLocations.Anywhere,
+          offset: 0,
+          display: StringHintDisplayOptions.LettersOnly,
+        },
+      },
+      {
         id: 1,
         name: "Answer Lengths x First Letter",
         isCollapsed: false,
@@ -183,21 +198,6 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
           display: StringHintDisplayOptions.WordCountList,
-        },
-      },
-      {
-        id: 4,
-        name: "String Search",
-        isCollapsed: false,
-        settingsAreCollapsed: true,
-        isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Expanded,
-        type: PanelTypes.Search,
-        typeOptions: {
-          searchLocation: SearchPanelLocations.Anywhere,
-          offset: 0,
-          display: StringHintDisplayOptions.LettersOnly,
         },
       },
       {
