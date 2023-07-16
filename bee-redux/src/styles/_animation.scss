@@ -1,21 +1,3 @@
-@keyframes expand {
-  from {
-    transform: rotate(0deg)
-  }
-  to {
-    transform: rotate(90deg)
-  }
-}
-
-@keyframes collapse {
-  from {
-    transform: rotate(90deg)
-  }
-  to {
-    transform: rotate(0deg)
-  }
-}
-
 .header-disclosure-widget-icon {
   transition: transform 200ms;
 }
