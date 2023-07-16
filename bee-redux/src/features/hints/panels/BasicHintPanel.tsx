@@ -7,13 +7,13 @@ import { TotalPoints } from "./basic/TotalPoints"
 
 export function BasicHintPanel({ panel }: HintPanelProps) {
   const content = () => {
-    if (isBasicPanelSettings(panel.typeOptions)) {
+    if (isBasicPanelSettings(panel.typeSpecificData)) {
       const {
         showWordCount,
         showTotalPoints,
         showPangramCount,
         showPerfectPangramCount,
-      } = panel.typeOptions
+      } = panel.typeSpecificData
 
       return (
         <div className="sb-basic-hints">

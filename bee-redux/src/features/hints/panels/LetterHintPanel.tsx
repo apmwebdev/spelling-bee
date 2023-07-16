@@ -32,9 +32,9 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
   const answers = useAppSelector(selectAnswers)
   const correctGuessWords = useAppSelector(selectCorrectGuessWords)
   const content = () => {
-    if (isLetterPanelSettings(panel.typeOptions)) {
+    if (isLetterPanelSettings(panel.typeSpecificData)) {
       const { numberOfLetters, locationInWord, offset, display } =
-        panel.typeOptions
+        panel.typeSpecificData
 
       const subsectionProps: LetterHintSubsectionProps = {
         answers,

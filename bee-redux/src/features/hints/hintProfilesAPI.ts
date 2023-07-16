@@ -23,7 +23,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Basic,
-//         typeOptions: {
+//         typeSpecificData: {
 //           showWordCount: true,
 //           showTotalPoints: true,
 //           showPangramCount: true,
@@ -37,7 +37,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Letter,
-//         typeOptions: {
+//         typeSpecificData: {
 //           numberOfLetters: 1,
 //           locationInWord: LetterPanelLocations.Beginning,
 //           offset: 0,
@@ -51,7 +51,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Letter,
-//         typeOptions: {
+//         typeSpecificData: {
 //           numberOfLetters: 2,
 //           locationInWord: LetterPanelLocations.Beginning,
 //           offset: 0,
@@ -65,7 +65,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.WordObscurity,
-//         typeOptions: {},
+//         typeSpecificData: {},
 //       },
 //       {
 //         name: "String Search",
@@ -74,7 +74,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Search,
-//         typeOptions: {
+//         typeSpecificData: {
 //           searchLocation: SearchPanelLocations.Anywhere,
 //           offset: 0,
 //           display: StringHintDisplayOptions.LettersOnly,
@@ -87,7 +87,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Collapsed,
 //         type: PanelTypes.Definitions,
-//         typeOptions: {},
+//         typeSpecificData: {},
 //       },
 //       {
 //         name: "Excluded Words",
@@ -96,7 +96,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Collapsed,
 //         type: PanelTypes.ExcludedWords,
-//         typeOptions: {},
+//         typeSpecificData: {},
 //       },
 //     ],
 //   },
@@ -113,7 +113,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Basic,
-//         typeOptions: {
+//         typeSpecificData: {
 //           showWordCount: true,
 //           showTotalPoints: true,
 //           showPangramCount: true,
@@ -127,7 +127,7 @@
 //         tracking: TrackingOptions.Remaining,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Letter,
-//         typeOptions: {
+//         typeSpecificData: {
 //           numberOfLetters: 1,
 //           locationInWord: LetterPanelLocations.Beginning,
 //           offset: 0,
@@ -141,7 +141,7 @@
 //         tracking: TrackingOptions.Remaining,
 //         initialDisplay: PanelInitialDisplayOptions.Expanded,
 //         type: PanelTypes.Letter,
-//         typeOptions: {
+//         typeSpecificData: {
 //           numberOfLetters: 2,
 //           locationInWord: LetterPanelLocations.Beginning,
 //           offset: 0,
@@ -155,7 +155,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Blurred,
 //         type: PanelTypes.WordObscurity,
-//         typeOptions: {},
+//         typeSpecificData: {},
 //       },
 //       {
 //         name: "Definitions",
@@ -164,7 +164,7 @@
 //         tracking: TrackingOptions.Both,
 //         initialDisplay: PanelInitialDisplayOptions.Blurred,
 //         type: PanelTypes.Definitions,
-//         typeOptions: {},
+//         typeSpecificData: {},
 //       },
 //     ],
 //   },

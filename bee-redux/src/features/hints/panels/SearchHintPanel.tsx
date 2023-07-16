@@ -3,7 +3,11 @@ import { useAppSelector } from "../../../app/hooks"
 import { selectAnswerLengths, selectAnswers } from "../../puzzle/puzzleSlice"
 import { FormEvent, useState } from "react"
 import { HintPanelSettings } from "../HintPanelSettings"
-import { isSearchPanelSettings, SearchPanelLocations, } from '../hintProfilesSlice';
+import {
+  isSearchPanelData,
+  isSearchPanelSettings,
+  SearchPanelLocations,
+} from '../hintProfilesSlice';
 import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
 import { GridRow } from "./letter/WordLengthGrid"
 import { SearchPanelSettings } from "./search/SearchPanelSettings"
@@ -27,8 +31,9 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
       }
       return returnObject
     }
-    if (isSearchPanelSettings(panel.typeOptions)) {
-      const { searchLocation, offset, display } = panel.typeOptions
+    if (isSearchPanelData(panel.typeSpecificData)) {
+      const { searchLocation, offset, display } =
+        panel.typeSpecificData.currentSettings
       const results = createResultsContainer()
       let excludedAnswers = 0
       for (const answer of answers) {
@@ -64,6 +69,8 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
       return { excludedAnswers, results }
     }
   }
+
+
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

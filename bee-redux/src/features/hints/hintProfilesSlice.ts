@@ -83,8 +83,22 @@ export interface SearchPanelSettings {
   display: StringHintDisplayOptions
 }
 
+export interface SearchPanelSearch extends SearchPanelSettings {
+  searchId: number
+  searchString: string
+}
+
+export interface SearchPanelData {
+  currentSettings: SearchPanelSettings
+  searches: SearchPanelSearch[]
+}
+
 export function isSearchPanelSettings(a: any): a is SearchPanelSettings {
   return a.searchLocation !== undefined
+}
+
+export function isSearchPanelData(a: any): a is SearchPanelData {
+  return a.currentSettings !== undefined && a.searches !== undefined
 }
 
 export interface ExcludedWordsPanelSettings {}
@@ -102,10 +116,10 @@ export interface HintPanelFormat {
   tracking: TrackingOptions
   initialDisplay: PanelInitialDisplayOptions
   type: PanelTypes
-  typeOptions:
+  typeSpecificData:
     | BasicPanelSettings
     | LetterPanelSettings
-    | SearchPanelSettings
+    | SearchPanelData
     | ExcludedWordsPanelSettings
     | WordObscurityPanelSettings
     | DefinitionsPanelSettings
@@ -162,10 +176,42 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Search,
-        typeOptions: {
-          searchLocation: SearchPanelLocations.Anywhere,
-          offset: 0,
-          display: StringHintDisplayOptions.LettersOnly,
+        typeSpecificData: {
+          currentSettings: {
+            searchLocation: SearchPanelLocations.Anywhere,
+            offset: 0,
+            display: StringHintDisplayOptions.LettersOnly,
+          },
+          searches: [
+            {
+              searchId: 0,
+              searchString: "eem",
+              searchLocation: SearchPanelLocations.Anywhere,
+              offset: 0,
+              display: StringHintDisplayOptions.WordLengthGrid,
+            },
+            {
+              searchId: 1,
+              searchString: "mot",
+              searchLocation: SearchPanelLocations.Beginning,
+              offset: 0,
+              display: StringHintDisplayOptions.WordCountList,
+            },
+            {
+              searchId: 2,
+              searchString: "ed",
+              searchLocation: SearchPanelLocations.End,
+              offset: 0,
+              display: StringHintDisplayOptions.WordCountList,
+            },
+            {
+              searchId: 3,
+              searchString: "met",
+              searchLocation: SearchPanelLocations.Anywhere,
+              offset: 0,
+              display: StringHintDisplayOptions.LettersOnly,
+            },
+          ],
         },
       },
       {
@@ -177,7 +223,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
-        typeOptions: {
+        typeSpecificData: {
           numberOfLetters: 1,
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
@@ -193,7 +239,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
-        typeOptions: {
+        typeSpecificData: {
           numberOfLetters: 2,
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
@@ -209,7 +255,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Basic,
-        typeOptions: {
+        typeSpecificData: {
           showWordCount: true,
           showTotalPoints: true,
           showPangramCount: true,
@@ -225,7 +271,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.WordObscurity,
-        typeOptions: {},
+        typeSpecificData: {},
       },
       {
         id: 5,
@@ -236,7 +282,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.Definitions,
-        typeOptions: {},
+        typeSpecificData: {},
       },
       {
         id: 6,
@@ -247,7 +293,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.ExcludedWords,
-        typeOptions: {},
+        typeSpecificData: {},
       },
     ],
   }
@@ -270,7 +316,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Basic,
-        typeOptions: {
+        typeSpecificData: {
           showWordCount: true,
           showTotalPoints: true,
           showPangramCount: true,
@@ -286,7 +332,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
-        typeOptions: {
+        typeSpecificData: {
           numberOfLetters: 1,
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
@@ -302,7 +348,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
-        typeOptions: {
+        typeSpecificData: {
           numberOfLetters: 2,
           locationInWord: LetterPanelLocations.Beginning,
           offset: 0,
@@ -318,7 +364,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.WordObscurity,
-        typeOptions: {},
+        typeSpecificData: {},
       },
       {
         id: 11,
@@ -329,7 +375,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         tracking: TrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.Definitions,
-        typeOptions: {},
+        typeSpecificData: {},
       },
     ],
   }
@@ -487,12 +533,12 @@ export const hintProfilesSlice = createSlice({
       },
     ) => {
       const panel = findPanel(state, action.payload.panelId)
-      if (!panel || !isBasicPanelSettings(panel.typeOptions)) {
+      if (!panel || !isBasicPanelSettings(panel.typeSpecificData)) {
         return
       }
-      for (const property in panel.typeOptions) {
+      for (const property in panel.typeSpecificData) {
         if (property === action.payload.settingName) {
-          panel.typeOptions[property] = action.payload.newValue
+          panel.typeSpecificData[property] = action.payload.newValue
         }
       }
     },
@@ -504,10 +550,10 @@ export const hintProfilesSlice = createSlice({
       },
     ) => {
       const panel = findPanel(state, action.payload.panelId)
-      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+      if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
         return
       }
-      panel.typeOptions.numberOfLetters = action.payload.newValue
+      panel.typeSpecificData.numberOfLetters = action.payload.newValue
     },
     changeLetterPanelLocationInWord: (
       state,
@@ -517,10 +563,10 @@ export const hintProfilesSlice = createSlice({
       },
     ) => {
       const panel = findPanel(state, action.payload.panelId)
-      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+      if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
         return
       }
-      panel.typeOptions.locationInWord = action.payload.newValue
+      panel.typeSpecificData.locationInWord = action.payload.newValue
     },
     changeLetterPanelOffset: (
       state,
@@ -530,10 +576,10 @@ export const hintProfilesSlice = createSlice({
       },
     ) => {
       const panel = findPanel(state, action.payload.panelId)
-      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+      if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
         return
       }
-      panel.typeOptions.offset = action.payload.newValue
+      panel.typeSpecificData.offset = action.payload.newValue
     },
     changeLetterPanelDisplay: (
       state,
@@ -543,10 +589,10 @@ export const hintProfilesSlice = createSlice({
       },
     ) => {
       const panel = findPanel(state, action.payload.panelId)
-      if (!panel || !isLetterPanelSettings(panel.typeOptions)) {
+      if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
         return
       }
-      panel.typeOptions.display = action.payload.newValue
+      panel.typeSpecificData.display = action.payload.newValue
     },
   },
   extraReducers: (builder) => {},
