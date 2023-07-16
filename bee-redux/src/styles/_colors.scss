@@ -15,6 +15,7 @@
   :root {
     /* Base variables */
     --bg-color: #222;
+    --bg-color-standout: #333;
     --main-line-color: rgba(255, 255, 255, 0.87);
     --secondary-line-color: rgba(255, 255, 255, 0.3); //#666
     --disabled-line-color: rgba(255, 255, 255, 0.730);
@@ -50,6 +51,7 @@
 
   .sb-header {
     border-color: var(--secondary-line-color);
+    background-color: var(--bg-color-standout);
   }
 
   .hexagon polygon {
@@ -149,12 +151,12 @@
   }
 
   .sb-wlg-tracking-key {
-    background-color: #333;
+    background-color: var(--bg-color-standout);
     border: 1px solid var(--secondary-line-color);
   }
 
   .sb-wlg-content-full {
-    background-color: #333;
+    background-color: var(--bg-color-standout);
   }
 
   .hint-completed {
@@ -179,7 +181,7 @@
 
   .sb-wcl-fragment-count {
     border: 1px solid var(--secondary-line-color);
-    background-color: #333;
+    background-color: var(--bg-color-standout);
   }
 
   .sb-lol-row {
