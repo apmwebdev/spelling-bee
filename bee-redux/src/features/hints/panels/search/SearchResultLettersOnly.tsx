@@ -1,13 +1,13 @@
-import { SearchPanelResultSubsectionProps } from "./SearchPanelResults"
+import { SearchResultProps } from "./SearchPanelResults"
 
 export function SearchResultLettersOnly({
   resultData,
   tracking,
-}: SearchPanelResultSubsectionProps) {
+}: SearchResultProps) {
   return (
     <div>
       <h2>SearchResultLettersOnly</h2>
-      search: {resultData.searchObject.searchString}
+      search: {resultData.searchObject.searchString.toUpperCase()}
     </div>
   )
 }

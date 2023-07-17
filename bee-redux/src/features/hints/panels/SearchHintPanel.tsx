@@ -63,7 +63,11 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
             Search
           </button>
         </form>
-        <SearchPanelResults results={searches()} tracking={panel.tracking} />
+        <SearchPanelResults
+          panelId={panel.id}
+          results={searches()}
+          tracking={panel.tracking}
+        />
       </div>
     </>
   )

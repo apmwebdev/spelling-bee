@@ -1,16 +1,13 @@
 import {
   SearchPanelLocations,
   SearchPanelSearch,
-  StringHintDisplayOptions,
   TrackingOptions,
 } from "../../hintProfilesSlice"
 import { GridRow } from "../letter/WordLengthGrid"
-import { SearchResultWordLengths } from "./SearchResultWordLengths"
-import { SearchResultWordCount } from "./SearchResultWordCount"
-import { SearchResultLettersOnly } from "./SearchResultLettersOnly"
 import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswerLengths, selectAnswers } from "../../../puzzle/puzzleSlice"
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice"
+import { SearchResult } from "./SearchResult"
 
 interface ResultData {
   searchObject: SearchPanelSearch
@@ -18,15 +15,18 @@ interface ResultData {
   excludedAnswers: number
 }
 
-export interface SearchPanelResultSubsectionProps {
+export interface SearchResultProps {
+  panelId?: number
   resultData: ResultData
   tracking: TrackingOptions
 }
 
 export function SearchPanelResults({
+  panelId,
   results,
   tracking,
 }: {
+  panelId: number
   results: SearchPanelSearch[]
   tracking: TrackingOptions
 }) {
@@ -77,35 +77,19 @@ export function SearchPanelResults({
     return { searchObject, results, excludedAnswers }
   }
 
-  const generateSearchResultOutput = (searchObject: SearchPanelSearch) => {
-    const resultData = generateSearchResultData(searchObject)
-    switch (resultData.searchObject.display) {
-      case StringHintDisplayOptions.WordLengthGrid:
-        return (
-          <SearchResultWordLengths
-            resultData={resultData}
-            tracking={tracking}
-          />
-        )
-      case StringHintDisplayOptions.WordCountList:
-        return (
-          <SearchResultWordCount resultData={resultData} tracking={tracking} />
-        )
-      case StringHintDisplayOptions.LettersOnly:
-        return (
-          <SearchResultLettersOnly
-            resultData={resultData}
-            tracking={tracking}
-          />
-        )
-    }
-  }
-
   const content = () => {
     const resultDivs = results.map((searchObject) => {
-      return generateSearchResultOutput(searchObject)
+      const resultData = generateSearchResultData(searchObject)
+      return (
+        <SearchResult
+          panelId={panelId}
+          resultData={resultData}
+          tracking={tracking}
+        />
+      )
     })
     return <div className="sb-search-hints-results">{resultDivs}</div>
   }
+
   return content()
 }

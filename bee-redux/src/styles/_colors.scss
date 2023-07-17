@@ -190,6 +190,16 @@
     //  border-top: 1px solid #666;
     //}
   }
+
+  .sb-search-hints-search-result-header {
+    background-color: var(--bg-color-standout);
+    .header-remove-button {
+      background-color: var(--bg-color);
+      &:hover {
+        border-color: var(--secondary-line-color)
+      }
+    }
+  }
 }
 
 @media (prefers-color-scheme: light) {

@@ -194,14 +194,14 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
               searchId: 1,
               searchString: "mot",
               searchLocation: SearchPanelLocations.Beginning,
-              offset: 0,
+              offset: 2,
               display: StringHintDisplayOptions.WordCountList,
             },
             {
               searchId: 2,
               searchString: "ed",
               searchLocation: SearchPanelLocations.End,
-              offset: 0,
+              offset: 1,
               display: StringHintDisplayOptions.WordCountList,
             },
             {
@@ -607,6 +607,29 @@ export const hintProfilesSlice = createSlice({
       }
       panel.typeSpecificData.searches.push(action.payload.search)
     },
+    removeSearch: (
+      state,
+      action: {
+        payload: { panelId: number; searchId: number }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isSearchPanelData(panel.typeSpecificData)) {
+        return
+      }
+      const searchToRemove = panel.typeSpecificData.searches.find(
+        (searchObject) => {
+          return searchObject.searchId === action.payload.searchId
+        },
+      )
+      if (!searchToRemove) {
+        return
+      }
+      const searchIndex =
+        panel.typeSpecificData.searches.indexOf(searchToRemove)
+      panel.typeSpecificData.searches.splice(searchIndex, 1)
+    },
   },
   extraReducers: (builder) => {},
 })
@@ -625,6 +648,7 @@ export const {
   changeLetterPanelOffset,
   changeLetterPanelDisplay,
   addSearch,
+  removeSearch,
 } = hintProfilesSlice.actions
 
 export const selectHintProfiles = (state: RootState) => state.hintProfiles.data

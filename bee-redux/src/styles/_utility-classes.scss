@@ -17,6 +17,12 @@
   outline: 2px auto -webkit-focus-ring-color;
 }
 
+.header-remove-button {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
 .capitalize {
   text-transform: lowercase;
   ::first-letter {
