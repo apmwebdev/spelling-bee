@@ -2,6 +2,7 @@ import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
 import { fetchPuzzle } from "./puzzleAPI"
 import { RootState } from "../../app/store"
 import { calculateScore } from "../../utils/utils"
+import { sortBy } from 'lodash';
 
 export interface PuzzleFormat {
   printDate: string
@@ -85,7 +86,7 @@ export const selectAnswerLengths = createSelector(
         answerLengths.push(answer.length)
       }
     }
-    return answerLengths.sort()
+    return sortBy(answerLengths)
   },
 )
 
