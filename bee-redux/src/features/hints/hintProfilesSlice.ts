@@ -594,6 +594,19 @@ export const hintProfilesSlice = createSlice({
       }
       panel.typeSpecificData.display = action.payload.newValue
     },
+    addSearch: (
+      state,
+      action: {
+        payload: { panelId: number; search: SearchPanelSearch }
+        type: string
+      },
+    ) => {
+      const panel = findPanel(state, action.payload.panelId)
+      if (!panel || !isSearchPanelData(panel.typeSpecificData)) {
+        return
+      }
+      panel.typeSpecificData.searches.push(action.payload.search)
+    },
   },
   extraReducers: (builder) => {},
 })
@@ -611,6 +624,7 @@ export const {
   changeLetterPanelLocationInWord,
   changeLetterPanelOffset,
   changeLetterPanelDisplay,
+  addSearch,
 } = hintProfilesSlice.actions
 
 export const selectHintProfiles = (state: RootState) => state.hintProfiles.data

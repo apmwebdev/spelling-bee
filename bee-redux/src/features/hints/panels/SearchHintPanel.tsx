@@ -1,83 +1,48 @@
 import { HintPanelProps } from "../HintPanel"
-import { useAppSelector } from "../../../app/hooks"
-import { selectAnswerLengths, selectAnswers } from "../../puzzle/puzzleSlice"
 import { FormEvent, useState } from "react"
 import { HintPanelSettings } from "../HintPanelSettings"
 import {
+  addSearch,
   isSearchPanelData,
-  isSearchPanelSettings,
-  SearchPanelLocations,
-} from '../hintProfilesSlice';
-import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
-import { GridRow } from "./letter/WordLengthGrid"
+} from "../hintProfilesSlice"
 import { SearchPanelSettings } from "./search/SearchPanelSettings"
-
-interface ResultsData {
-  excludedAnswers: number
-  results: GridRow
-}
+import { useDispatch } from "react-redux"
+import { random } from "lodash"
+import { SearchPanelResults } from "./search/SearchPanelResults"
 
 export function SearchHintPanel({ panel }: HintPanelProps) {
-  const answers = useAppSelector(selectAnswers)
-  const answerLengths = useAppSelector(selectAnswerLengths)
-  const correctGuessWords = useAppSelector(selectCorrectGuessWords)
+  const dispatch = useDispatch()
   const [searchValue, setSearchValue] = useState("")
 
-  const search = (): ResultsData | undefined => {
-    const createResultsContainer = () => {
-      const returnObject: GridRow = {}
-      for (const answerLength of answerLengths) {
-        returnObject[answerLength] = { answers: 0, guesses: 0 }
-      }
-      return returnObject
+  const addSearchToPanel = () => {
+    if (!isSearchPanelData(panel.typeSpecificData)) {
+      return
     }
-    if (isSearchPanelData(panel.typeSpecificData)) {
-      const { searchLocation, offset, display } =
-        panel.typeSpecificData.currentSettings
-      const results = createResultsContainer()
-      let excludedAnswers = 0
-      for (const answer of answers) {
-        if (
-          (searchLocation === SearchPanelLocations.Anywhere &&
-            searchValue.length > answer.length) ||
-          (searchLocation !== SearchPanelLocations.Anywhere &&
-            offset + searchValue.length > answer.length)
-        ) {
-          excludedAnswers++
-          continue
-        }
-        let answerFragment: string
-        if (searchLocation === SearchPanelLocations.Beginning) {
-          answerFragment = answer.slice(offset, offset + searchValue.length)
-        } else if (searchLocation === SearchPanelLocations.End && offset > 0) {
-          answerFragment = answer.slice(-searchValue.length - offset, -offset)
-        } else if (
-          searchLocation === SearchPanelLocations.End &&
-          offset === 0
-        ) {
-          answerFragment = answer.slice(-searchValue.length)
-        } else {
-          answerFragment = answer
-        }
-        if (answerFragment.toUpperCase().includes(searchValue.toUpperCase())) {
-          results[answer.length].answers++
-        }
-        if (correctGuessWords.includes(answer.toUpperCase())) {
-          results[answer.length].guesses++
-        }
-      }
-      return { excludedAnswers, results }
+    const { searchLocation, offset, display } =
+      panel.typeSpecificData.currentSettings
+    const payload = {
+      panelId: panel.id,
+      search: {
+        searchId: random(1000),
+        searchString: searchValue,
+        searchLocation,
+        offset,
+        display,
+      },
     }
+    dispatch(addSearch(payload))
   }
 
-
-
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const resultsData = search()
-    if (resultsData) {
-      //do stuff
+    addSearchToPanel()
+  }
+
+  const searches = () => {
+    if (!isSearchPanelData(panel.typeSpecificData)) {
+      return []
     }
+    return panel.typeSpecificData.searches
   }
 
   const searchSettings = () => (
@@ -85,9 +50,9 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
   )
   return (
     <>
-      <HintPanelSettings panel={panel} TypeSettingsComponent={searchSettings}/>
+      <HintPanelSettings panel={panel} TypeSettingsComponent={searchSettings} />
       <div className="sb-search-hints">
-        <form onSubmit={handleSearch}>
+        <form onSubmit={handleSubmit}>
           <input
             type="search"
             className="sb-search-hint-input"
@@ -98,6 +63,7 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
             Search
           </button>
         </form>
+        <SearchPanelResults results={searches()} tracking={panel.tracking} />
       </div>
     </>
   )
