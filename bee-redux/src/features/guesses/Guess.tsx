@@ -125,6 +125,7 @@ export function Guess() {
           type="text"
           id="sb-guess-input"
           name="sb-guess-input"
+          autoComplete="off"
           value={guessValue}
           onChange={(e) => validateInput(e.target.value.toUpperCase())}
         />
