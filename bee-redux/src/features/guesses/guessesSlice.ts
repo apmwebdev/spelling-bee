@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
-import { fetchGuesses } from "./guessesAPI"
+import { fetchGuesses, guessesSampleData } from './guessesAPI';
 import { RootState } from "../../app/store"
 import { calculateScore } from "../../utils/utils"
 
@@ -35,6 +35,7 @@ export interface GuessesState {
 
 const initialState: GuessesState = {
   data: { userId: 0, puzzleId: "a", guesses: [] },
+  // data: guessesSampleData[0],
   status: Status.Initial,
 }
 

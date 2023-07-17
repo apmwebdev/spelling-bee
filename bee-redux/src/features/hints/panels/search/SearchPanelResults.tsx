@@ -45,7 +45,7 @@ export function SearchPanelResults({
       }
       return returnObject
     }
-    const { searchString, searchLocation, offset, display } = searchObject
+    const { searchString, searchLocation, offset } = searchObject
     const results = createResultsContainer()
     let excludedAnswers = 0
     for (const answer of answers) {
@@ -68,11 +68,11 @@ export function SearchPanelResults({
       } else {
         answerFragment = answer
       }
-      if (answerFragment.toUpperCase().includes(searchString.toUpperCase())) {
+      if (answerFragment.includes(searchString)) {
         results[answer.length].answers++
-      }
-      if (correctGuessWords.includes(answer.toUpperCase())) {
-        results[answer.length].guesses++
+        if (correctGuessWords.includes(answer)) {
+          results[answer.length].guesses++
+        }
       }
     }
     return { searchObject, results, excludedAnswers }

@@ -50,7 +50,7 @@ export const generateData = ({
       listRows[startingLetter][answerFragment] = { answers: 0, guesses: 0 }
     }
     listRows[startingLetter][answerFragment].answers++
-    if (correctGuessWords.includes(answer.toUpperCase())) {
+    if (correctGuessWords.includes(answer)) {
       listRows[startingLetter][answerFragment].guesses++
     }
   }

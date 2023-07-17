@@ -23,28 +23,103 @@ export const guessesSampleData: GuessesFormat[] = [
     puzzleId: "1234",
     guesses: [
       {
-        word: "MOUTHED",
+        word: "mouthed",
         timestamp: 0,
         isAnswer: true,
       },
       {
-        word: "DEHM",
+        word: "dehm",
         timestamp: 1,
         isAnswer: false,
       },
       {
-        word: "DEEM",
+        word: "deem",
         timestamp: 2,
         isAnswer: true,
       },
       {
-        word: "MOTU",
+        word: "motu",
         timestamp: 3,
         isAnswer: false,
       },
       {
-        word: "DEEMED",
+        word: "deemed",
         timestamp: 4,
+        isAnswer: true,
+      },
+      {
+        word: "demo",
+        timestamp: 5,
+        isAnswer: true,
+      },
+      {
+        word: "demoed",
+        timestamp: 6,
+        isAnswer: true,
+      },
+      {
+        word: "demote",
+        timestamp: 7,
+        isAnswer: true,
+      },
+      {
+        word: "demoted",
+        timestamp: 8,
+        isAnswer: true,
+      },
+      {
+        word: "dome",
+        timestamp: 9,
+        isAnswer: true,
+      },
+      {
+        word: "domed",
+        timestamp: 10,
+        isAnswer: true,
+      },
+      {
+        word: "doom",
+        timestamp: 11,
+        isAnswer: true,
+      },
+      {
+        word: "doomed",
+        timestamp: 12,
+        isAnswer: true,
+      },
+      {
+        word: "dumdum",
+        timestamp: 13,
+        isAnswer: true,
+      },
+      {
+        word: "emote",
+        timestamp: 14,
+        isAnswer: true,
+      },
+      {
+        word: "emoted",
+        timestamp: 15,
+        isAnswer: true,
+      },
+      {
+        word: "heme",
+        timestamp: 16,
+        isAnswer: true,
+      },
+      {
+        word: "hemmed",
+        timestamp: 17,
+        isAnswer: true,
+      },
+      {
+        word: "home",
+        timestamp: 18,
+        isAnswer: true,
+      },
+      {
+        word: "homed",
+        timestamp: 19,
         isAnswer: true,
       },
     ],

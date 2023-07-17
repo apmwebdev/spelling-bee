@@ -7,6 +7,7 @@ import {
   SortOrder,
   SortType,
 } from "./guessListSettingsSlice"
+import uniqid from 'uniqid';
 
 export function GuessList() {
   const guessesData = useAppSelector(selectGuessesData)
@@ -58,7 +59,7 @@ export function GuessList() {
       return (
         <ul className="sb-guess-list">
           {displayGuessList.map((guess) => {
-            return <li key={guess.word}>{guess.word}</li>
+            return <li key={uniqid()}>{guess.word}</li>
           })}
         </ul>
       )
@@ -68,7 +69,7 @@ export function GuessList() {
   return (
     <div className="sb-guess-list-section">
       <GuessListSettings />
-      {guessListContent()}
+      <div className="sb-guess-list-container">{guessListContent()}</div>
     </div>
   )
 }

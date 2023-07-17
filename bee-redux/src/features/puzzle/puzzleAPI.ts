@@ -28,7 +28,7 @@ const puzzleSampleData: PuzzleFormat[] = [
   {
     printDate: "2023-06-20",
     centerLetter: "m",
-    outerLetters: ["s", "e", "h", "o", "t", "u"],
+    outerLetters: ["d", "e", "h", "o", "t", "u"],
     validLetters: ["d", "e", "h", "m", "o", "t", "u"],
     pangrams: ["mouthed"],
     perfectPangrams: ["mouthed"],
@@ -92,7 +92,7 @@ const puzzleSampleData: PuzzleFormat[] = [
     printDate: "2023-07-16",
     centerLetter: "n",
     outerLetters: ["a", "d", "o", "r", "t", "u"],
-    validLetters: ["n", "a", "d", "o", "r", "t", "u"],
+    validLetters: ["a", "d", "n", "o", "r", "t", "u"],
     pangrams: ["rotunda", "turnaround"],
     perfectPangrams: ["rotunda"],
     answers: [
