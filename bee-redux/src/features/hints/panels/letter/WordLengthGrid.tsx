@@ -63,7 +63,7 @@ export function WordLengthGrid({
       }
       gridRows[substring][answer.length].answers++
       totalRow[answer.length].answers++
-      if (correctGuessWords.includes(answer.toUpperCase())) {
+      if (correctGuessWords.includes(answer)) {
         gridRows[substring][answer.length].guesses++
         totalRow[answer.length].guesses++
       }

@@ -17,10 +17,8 @@ const LetterCell: FC<LetterCellProps> = (props) => {
         strokeWidth="8.75"
       ></polygon>
       <text x="50%" y="50%" dy="0.35em">
-        {props.letter}
+        {letter.toUpperCase()}
       </text>
     </svg>
   )
 }
-
-export default LetterCell

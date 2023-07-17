@@ -127,7 +127,7 @@ export function Guess() {
           name="sb-guess-input"
           autoComplete="off"
           value={guessValue}
-          onChange={(e) => validateInput(e.target.value.toUpperCase())}
+          onChange={(e) => validateInput(e.target.value.toLowerCase())}
         />
         <button
           type="submit"
