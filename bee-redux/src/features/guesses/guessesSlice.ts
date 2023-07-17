@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { fetchGuesses, guessesSampleData } from "./guessesAPI"
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
+import { fetchGuesses } from "./guessesAPI"
 import { RootState } from "../../app/store"
-import { calculateScore } from '../../utils/utils';
+import { calculateScore } from "../../utils/utils"
 
 export enum Status {
   Initial = "Not Fetched",
@@ -34,7 +34,7 @@ export interface GuessesState {
 }
 
 const initialState: GuessesState = {
-  data: guessesSampleData[0],
+  data: { userId: 0, puzzleId: "a", guesses: [] },
   status: Status.Initial,
 }
 
