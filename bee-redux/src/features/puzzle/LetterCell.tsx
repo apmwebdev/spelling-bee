@@ -1,14 +1,13 @@
-import { FC } from "react"
 
 interface LetterCellProps {
   letter: string
   isCenter: boolean
 }
 
-const LetterCell: FC<LetterCellProps> = (props) => {
+export default function LetterCell({ letter, isCenter }: LetterCellProps) {
   return (
     <svg
-      className={props.isCenter ? "hexagon center-letter" : "hexagon"}
+      className={isCenter ? "hexagon center-letter" : "hexagon"}
       viewBox="0 0 140 121.2435565"
     >
       <polygon

@@ -8,6 +8,7 @@ import { useAppSelector } from "../../../../app/hooks"
 import { selectAnswerLengths, selectAnswers } from "../../../puzzle/puzzleSlice"
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice"
 import { SearchResult } from "./SearchResult"
+import uniqid from 'uniqid';
 
 interface ResultData {
   searchObject: SearchPanelSearch
@@ -82,6 +83,7 @@ export function SearchPanelResults({
       const resultData = generateSearchResultData(searchObject)
       return (
         <SearchResult
+          key={uniqid()}
           panelId={panelId}
           resultData={resultData}
           tracking={tracking}

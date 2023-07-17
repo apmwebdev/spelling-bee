@@ -1,6 +1,7 @@
-import { SearchResultProps } from './SearchPanelResults';
-import { LetterHintDataCell } from '../LetterHintPanel';
-import { TrackingOptions } from '../../hintProfilesSlice';
+import { SearchResultProps } from "./SearchPanelResults"
+import { LetterHintDataCell } from "../LetterHintPanel"
+import { TrackingOptions } from "../../hintProfilesSlice"
+import uniqid from "uniqid"
 
 export function SearchResultWordLengths({
   resultData,
@@ -51,7 +52,11 @@ export function SearchResultWordLengths({
             cellText = "" + total
         }
       }
-      return <div className={cssClasses}>{cellText}</div>
+      return (
+        <div className={cssClasses} key={uniqid()}>
+          {cellText}
+        </div>
+      )
     }
 
     const contentRowHeaderText = () => {
@@ -71,14 +76,22 @@ export function SearchResultWordLengths({
 
     const headerRowDivs = []
     headerRowDivs.push(
-      <div className="header-cell row-header">Word Length</div>,
+      <div className="header-cell row-header" key={uniqid()}>
+        Word Length
+      </div>,
     )
     const contentRowDivs = []
     contentRowDivs.push(
-      <div className="content-cell row-header">{contentRowHeaderText()}</div>
+      <div className="content-cell row-header" key={uniqid()}>
+        {contentRowHeaderText()}
+      </div>,
     )
     for (const lengthProp in resultData.results) {
-      headerRowDivs.push(<div className="header-cell">{lengthProp}</div>)
+      headerRowDivs.push(
+        <div className="header-cell" key={uniqid()}>
+          {lengthProp}
+        </div>,
+      )
       contentRowDivs.push(createCell(resultData.results[lengthProp]))
     }
 
