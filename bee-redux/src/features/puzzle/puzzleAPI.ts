@@ -1,25 +1,24 @@
 import { BlankPuzzle, PuzzleFormat } from "./puzzleSlice"
 
-const getPerfectPangrams = (puzzle: PuzzleFormat) => {
-  return puzzle.pangrams.filter((pangram) => {
-    return (
-      pangram.toUpperCase().split("").sort().toString() ===
-      puzzle.validLetters.toString()
-    )
-  })
-}
+// const getPerfectPangrams = (puzzle: PuzzleFormat) => {
+//   return puzzle.pangrams.filter((pangram) => {
+//     return (
+//       pangram.toUpperCase().split("").sort().toString() ===
+//       puzzle.validLetters.toString()
+//     )
+//   })
+// }
 
 const getPuzzleSampleData = (inputDate: string): PuzzleFormat => {
   const puzzle = puzzleSampleData.find((el) => el.printDate === inputDate)
-  console.log(puzzle)
   if (puzzle) {
     /* Probably just an artifact of using hardcoded dummy data, but if you
     remove the following guard condition, TypeScript will complain that the
     perfectPangrams property is read-only.
      */
-    if (puzzle.perfectPangrams.length === 0) {
-      puzzle.perfectPangrams = getPerfectPangrams(puzzle)
-    }
+    // if (puzzle.perfectPangrams.length === 0) {
+    //   puzzle.perfectPangrams = getPerfectPangrams(puzzle)
+    // }
     return puzzle
   }
   return BlankPuzzle
