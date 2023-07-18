@@ -39,4 +39,10 @@ module SBSolverScraperService
 
     return_object
   end
+
+  def self.seed_puzzles(end_id)
+    1.upto(end_id) do |id|
+    #   do stuff
+    end
+  end
 end

@@ -14,6 +14,38 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: answers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.answers (
+    id bigint NOT NULL,
+    puzzle_id bigint NOT NULL,
+    word_text character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.answers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.answers_id_seq OWNED BY public.answers.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -146,6 +178,13 @@ CREATE TABLE public.words (
 
 
 --
+-- Name: answers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers ALTER COLUMN id SET DEFAULT nextval('public.answers_id_seq'::regclass);
+
+
+--
 -- Name: nyt_puzzles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -164,6 +203,14 @@ ALTER TABLE ONLY public.puzzles ALTER COLUMN id SET DEFAULT nextval('public.puzz
 --
 
 ALTER TABLE ONLY public.sb_solver_puzzles ALTER COLUMN id SET DEFAULT nextval('public.sb_solver_puzzles_id_seq'::regclass);
+
+
+--
+-- Name: answers answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT answers_pkey PRIMARY KEY (id);
 
 
 --
@@ -207,6 +254,20 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: index_answers_on_puzzle_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_answers_on_puzzle_id ON public.answers USING btree (puzzle_id);
+
+
+--
+-- Name: index_answers_on_word_text; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_answers_on_word_text ON public.answers USING btree (word_text);
+
+
+--
 -- Name: index_puzzles_on_origin; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -235,6 +296,22 @@ CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
 
 
 --
+-- Name: answers fk_rails_c827d6894b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT fk_rails_c827d6894b FOREIGN KEY (puzzle_id) REFERENCES public.puzzles(id);
+
+
+--
+-- Name: answers fk_rails_ddccab9dee; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT fk_rails_ddccab9dee FOREIGN KEY (word_text) REFERENCES public.words(text);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -246,6 +323,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230718042515'),
 ('20230718061549'),
 ('20230718071300'),
-('20230718072005');
+('20230718072005'),
+('20230718075800');
 
 
