@@ -14,9 +14,7 @@ module DatamuseAPIService
     frequency_prop = json[0]["tags"].find do |tag|
       tag[0..1] == "f:"
     end
-    return_object[:frequency] = frequency_prop[2..].to_f
-    return_object[:definitions] = json[0]["defs"]
-    p return_object
+    return_object[:frequency] = frequency_prop[2..].to_f unless frequency_prop.nil?
+    return_object[:definitions] = json[0]["defs"] unless json[0]["defs"].nil?
   end
-  get_word_data("orotund")
 end
