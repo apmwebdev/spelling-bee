@@ -1,0 +1,2 @@
+class NytPuzzle < ApplicationRecord
+end

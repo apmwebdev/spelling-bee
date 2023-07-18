@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nyt_id: 1
+  json_data: MyString
+
+two:
+  nyt_id: 1
+  json_data: MyString
