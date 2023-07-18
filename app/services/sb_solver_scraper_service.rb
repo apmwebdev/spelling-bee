@@ -2,14 +2,14 @@
 require "open-uri"
 require "nokogiri"
 
-module SBSolverScraperService
+module SbSolverScraperService
   def self.get_puzzle(id)
     return_object = {
       date: nil,
       center_letter: "",
       outer_letters: [],
       answers: [],
-      sb_solver_url: "",
+      sb_solver_id: id,
     }
     url = "https://www.sbsolver.com/s/#{id}"
     return_object[:sb_solver_url] = url
@@ -42,7 +42,25 @@ module SBSolverScraperService
 
   def self.seed_puzzles(end_id)
     1.upto(end_id) do |id|
-    #   do stuff
+      puzzle_data = get_puzzle(id)
+      sb_solver_puzzle = SbSolverPuzzle.create_or_find_by({ sb_solver_id: id })
+      puzzle = Puzzle.create_or_find_by({
+        date: puzzle_data[:date],
+        center_letter: puzzle_data[:center_letter],
+        outer_letters: puzzle_data[:outer_letters],
+        origin: sb_solver_puzzle
+      })
+      puzzle_data[:answers].each do |item|
+        word = Word.create_or_find_by({text: item})
+        if word.frequency.nil?
+          datamuse_data = DatamuseApiService.get_word_data(item)
+          word.frequency = datamuse_data[:frequency]
+          word.definitions = datamuse_data[:definitions]
+          word.save
+        end
+        Answer.create_or_find_by({puzzle: puzzle, word_text: item})
+      end
+      puts "Finished importing puzzle #{id}"
     end
   end
 end

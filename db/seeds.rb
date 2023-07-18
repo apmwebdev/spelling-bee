@@ -6,4 +6,5 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-WordsSeederService.seed_from_file
+# WordsSeederService.seed_from_file
+SbSolverScraperService.seed_puzzles(3)

@@ -2,7 +2,7 @@
 require "open-uri"
 require "json"
 
-module DatamuseAPIService
+module DatamuseApiService
   def self.get_word_data(word)
     return_object = {
       text: word,
@@ -16,5 +16,6 @@ module DatamuseAPIService
     end
     return_object[:frequency] = frequency_prop[2..].to_f unless frequency_prop.nil?
     return_object[:definitions] = json[0]["defs"] unless json[0]["defs"].nil?
+    return_object
   end
 end
