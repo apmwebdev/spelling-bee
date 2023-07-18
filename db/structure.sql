@@ -58,6 +58,72 @@ ALTER SEQUENCE public.nyt_puzzles_id_seq OWNED BY public.nyt_puzzles.id;
 
 
 --
+-- Name: puzzles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.puzzles (
+    id bigint NOT NULL,
+    date date,
+    center_letter character varying(1),
+    outer_letters character varying[],
+    origin_type character varying,
+    origin_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: puzzles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.puzzles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: puzzles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.puzzles_id_seq OWNED BY public.puzzles.id;
+
+
+--
+-- Name: sb_solver_puzzles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sb_solver_puzzles (
+    id bigint NOT NULL,
+    sb_solver_id character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sb_solver_puzzles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sb_solver_puzzles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sb_solver_puzzles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sb_solver_puzzles_id_seq OWNED BY public.sb_solver_puzzles.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -87,6 +153,20 @@ ALTER TABLE ONLY public.nyt_puzzles ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: puzzles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.puzzles ALTER COLUMN id SET DEFAULT nextval('public.puzzles_id_seq'::regclass);
+
+
+--
+-- Name: sb_solver_puzzles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sb_solver_puzzles ALTER COLUMN id SET DEFAULT nextval('public.sb_solver_puzzles_id_seq'::regclass);
+
+
+--
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -103,11 +183,41 @@ ALTER TABLE ONLY public.nyt_puzzles
 
 
 --
+-- Name: puzzles puzzles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.puzzles
+    ADD CONSTRAINT puzzles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sb_solver_puzzles sb_solver_puzzles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sb_solver_puzzles
+    ADD CONSTRAINT sb_solver_puzzles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: index_puzzles_on_origin; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_puzzles_on_origin ON public.puzzles USING btree (origin_type, origin_id);
+
+
+--
+-- Name: index_puzzles_on_outer_letters; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_puzzles_on_outer_letters ON public.puzzles USING gin (outer_letters);
 
 
 --
@@ -134,6 +244,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230606230237'),
 ('20230718021604'),
 ('20230718042515'),
-('20230718061549');
+('20230718061549'),
+('20230718071300'),
+('20230718072005');
 
 

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2023-07-18
+  center_letter: MyString
+  outer_letters: MyString
+  origin: MyString
+
+two:
+  date: 2023-07-18
+  center_letter: MyString
+  outer_letters: MyString
+  origin: MyString
