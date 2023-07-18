@@ -1,2 +1,2 @@
-class NytPuzzle < ApplicationRecord
+class NYTPuzzle < ApplicationRecord
 end

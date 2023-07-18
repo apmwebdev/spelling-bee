@@ -1,6 +1,6 @@
 require "test_helper"
 
-class NYTPuzzleTest < ActiveSupport::TestCase
+class SBSolverPuzzleTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
