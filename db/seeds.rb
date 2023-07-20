@@ -7,4 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # WordsSeederService.seed_from_file
-SbSolverScraperService.seed_puzzles(3)
+
+# Need to adjust second number
+# SbSolverScraperService.seed_puzzles(1, 1887)

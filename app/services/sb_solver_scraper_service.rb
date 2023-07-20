@@ -16,7 +16,7 @@ module SbSolverScraperService
     doc = Nokogiri::HTML(URI.open(url))
 
     # Date
-    date_string = doc.css(".bee-date a").text
+    date_string = doc.css(".bee-date a").first.text
     return_object[:date] = Date.parse(date_string)
 
     # Letters
@@ -40,27 +40,57 @@ module SbSolverScraperService
     return_object
   end
 
-  def self.seed_puzzles(end_id)
-    1.upto(end_id) do |id|
-      puzzle_data = get_puzzle(id)
-      sb_solver_puzzle = SbSolverPuzzle.create_or_find_by({ sb_solver_id: id })
-      puzzle = Puzzle.create_or_find_by({
-        date: puzzle_data[:date],
-        center_letter: puzzle_data[:center_letter],
-        outer_letters: puzzle_data[:outer_letters],
-        origin: sb_solver_puzzle
-      })
-      puzzle_data[:answers].each do |item|
-        word = Word.create_or_find_by({text: item})
-        if word.frequency.nil?
-          datamuse_data = DatamuseApiService.get_word_data(item)
-          word.frequency = datamuse_data[:frequency]
-          word.definitions = datamuse_data[:definitions]
-          word.save
+  def self.write_log(to_log)
+    File.write("log/sb_solver_scraper_log.txt", "#{to_log}\n", mode: "a")
+  end
+
+  def self.seed_puzzles(start_id, end_id)
+    file = File.new("log/sb_solver_scraper_log.txt", "a")
+    file.close
+    write_log "Seed Puzzles: Starting at #{DateTime.now}"
+    start_id.upto(end_id) do |id|
+      write_log "Starting import for puzzle #{id}"
+      if Puzzle.find_by(id: id).nil?
+        sleep(rand(0..2))
+        puzzle_data = get_puzzle(id)
+        write_log "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
+        sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
+        puzzle = Puzzle.create({
+          date: puzzle_data[:date],
+          center_letter: puzzle_data[:center_letter],
+          outer_letters: puzzle_data[:outer_letters],
+          origin: sb_solver_puzzle
+        })
+        puzzle_data[:answers].each do |item|
+          word = Word.create_or_find_by({text: item})
+          if word.frequency.nil?
+            write_log "Fetching datamuse data for \"#{item}\""
+            datamuse_data = DatamuseApiService.get_word_data(item)
+            word.frequency = datamuse_data[:frequency]
+            word.definitions = datamuse_data[:definitions]
+            word.save
+          else
+            write_log "Datamuse data already exists for \"#{item}\""
+          end
+          Answer.create({puzzle: puzzle, word_text: item})
         end
-        Answer.create_or_find_by({puzzle: puzzle, word_text: item})
+        write_log "Finished importing puzzle #{id}"
+      else
+        write_log "Puzzle #{id} already exists. Moving to next puzzle."
       end
-      puts "Finished importing puzzle #{id}"
     end
+  end
+
+  def self.log_test
+    1.upto(20) do |i|
+      sleep(1)
+      write_log(i)
+    end
+    write_log("blah")
+    write_log("blah2")
+    log_file = File.new("log/test_log.txt", "a")
+    log_file.puts "Date is #{DateTime.now}"
+    log_file.close
+    nil
   end
 end
