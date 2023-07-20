@@ -1,12 +1,18 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+## Seed the words table
 
 # WordsSeederService.seed_from_file
 
-# Need to adjust second number
-# SbSolverScraperService.seed_puzzles(1, 1887)
+## Seed puzzle data
+
+##
+# Need to adjust arguments. First argument is SB Solver ID to start at
+# which is typically 1 (the first puzzle). Second argument is ID to stop at.
+# 1888 is July 9, 2023.
+
+# SbSolverScraperService.seed_puzzles(1, 1888)
+
+##
+# Get latest puzzles from NYT directly. This will seed the current week and
+# previous week only.
+
+# NytScraperService.seed_all_puzzles_json

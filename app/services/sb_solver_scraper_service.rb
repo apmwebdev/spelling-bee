@@ -59,7 +59,7 @@ module SbSolverScraperService
           date: puzzle_data[:date],
           center_letter: puzzle_data[:center_letter],
           outer_letters: puzzle_data[:outer_letters],
-          origin: sb_solver_puzzle
+          origin: sb_solver_puzzle,
         })
         puzzle_data[:answers].each do |item|
           word = Word.create_or_find_by({text: item})
