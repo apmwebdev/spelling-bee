@@ -97,9 +97,12 @@ export const selectPerfectPangrams = (state: RootState) =>
 export const selectAnswers = (state: RootState) => state.puzzle.data.answers
 
 // Derived data
-export const selectAnswerWords = createSelector([selectAnswers], (answers) =>
-  answers.map((answer) => answer.word),
-)
+export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
+  if (answers && answers.length > 0) {
+    return answers.map((answer) => answer.word)
+  }
+  return []
+})
 
 export const selectTotalPoints = createSelector(
   [selectAnswerWords],
