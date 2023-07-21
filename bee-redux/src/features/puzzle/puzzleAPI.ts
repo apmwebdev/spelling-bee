@@ -150,17 +150,17 @@ export async function fetchPuzzle(identifier: string) {
     .then((response) => response.json())
     .catch((error) => {
       console.error("Error: ", error)
-      return {} as PuzzleState
+      return BlankPuzzle
     })
 }
 
-export function fetchPuzzleOld(
-  identifier: string,
-): Promise<{ data: PuzzleFormat }> {
-  return new Promise<{ data: PuzzleFormat }>((resolve) => {
-    return setTimeout(
-      () => resolve({ data: getPuzzleSampleData(identifier) }),
-      500,
-    )
-  })
-}
+// export function fetchPuzzleOld(
+//   identifier: string,
+// ): Promise<{ data: PuzzleFormat }> {
+//   return new Promise<{ data: PuzzleFormat }>((resolve) => {
+//     return setTimeout(
+//       () => resolve({ data: getPuzzleSampleData(identifier) }),
+//       500,
+//     )
+//   })
+// }
