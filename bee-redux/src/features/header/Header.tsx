@@ -1,15 +1,14 @@
 import { FormEvent, useState } from "react"
 
-import { useAppDispatch } from "../../app/hooks"
-import { fetchPuzzleAsync } from "../puzzle/puzzleSlice"
+import { redirect, useNavigate } from "react-router-dom"
 
 export function Header() {
-  const dispatch = useAppDispatch()
-  const [puzzleIdentifier, setPuzzleIdentifier] = useState("2023-06-20")
+  const [puzzleIdentifier, setPuzzleIdentifier] = useState("")
+  const navigate = useNavigate()
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(fetchPuzzleAsync(puzzleIdentifier))
+    return navigate(`/puzzle/${puzzleIdentifier}`)
   }
 
   return (

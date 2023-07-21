@@ -52,7 +52,8 @@ const initialState: PuzzleState = {
 export const fetchPuzzleAsync = createAsyncThunk(
   "puzzle/fetchPuzzle",
   async (identifier: string) => {
-    return await fetchPuzzle(identifier)
+    const response = await fetchPuzzle(identifier)
+    return response
   },
 )
 

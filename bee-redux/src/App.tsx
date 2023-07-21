@@ -1,21 +1,37 @@
-import { Puzzle } from "./features/puzzle/Puzzle"
 import { Header } from "./features/header/Header"
-import { Status } from "./features/status/Status"
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
+import { PuzzleRoute } from "./routes/PuzzleRoute"
 
-function App() {
-  return (
+export default function App() {
+  const rootElement = (
     <div className="App">
       <div className="sb-top-container">
         <Header />
-        <div className="sb-main-container">
-          <div className="sb-main">
-            <Puzzle />
-            <Status />
-          </div>
-        </div>
+        <Outlet />
       </div>
     </div>
   )
-}
 
-export default App
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: rootElement,
+      children: [
+        {
+          index: true,
+          element: <PuzzleRoute />,
+        },
+        {
+          path: "puzzles/:identifier",
+          element: <PuzzleRoute />,
+        },
+        {
+          path: "puzzle/:identifier",
+          element: <PuzzleRoute />,
+        },
+      ],
+    },
+  ])
+
+  return <RouterProvider router={router} />
+}
