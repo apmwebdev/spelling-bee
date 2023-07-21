@@ -68,7 +68,9 @@ export const puzzleSlice = createSlice({
       })
       .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
         state.status = Statuses.Succeeded
-        state.data = action.payload
+        if (!action.payload.error) {
+          state.data = action.payload
+        }
       })
       .addCase(fetchPuzzleAsync.rejected, (state, action) => {
         state.status = Statuses.Failed
