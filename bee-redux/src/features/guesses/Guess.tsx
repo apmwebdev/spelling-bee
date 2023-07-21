@@ -8,10 +8,10 @@ import {
 } from "./guessesSlice"
 import { useAppSelector } from "../../app/hooks"
 import {
-  selectAnswers,
+  selectAnswerWords,
   selectCenterLetter,
   selectValidLetters,
-} from "../puzzle/puzzleSlice"
+} from '../puzzle/puzzleSlice';
 import { GuessAlerts } from "./GuessAlerts"
 
 export function Guess() {
@@ -19,7 +19,7 @@ export function Guess() {
   const guesses = useAppSelector(selectGuessesData)
   const validLetters = useAppSelector(selectValidLetters)
   const centerLetter = useAppSelector(selectCenterLetter)
-  const answers = useAppSelector(selectAnswers)
+  const answers = useAppSelector(selectAnswerWords)
   const [guessValue, setGuessValue] = useState("")
   const [guessIsValid, setGuessIsValid] = useState(false)
   const [errorMessages, setErrorMessages] = useState<string[]>([])

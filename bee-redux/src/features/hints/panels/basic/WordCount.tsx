@@ -4,7 +4,7 @@ import {
   TrackingOptions,
 } from "../../hintProfilesSlice"
 import { useAppSelector } from "../../../../app/hooks"
-import { selectAnswers } from "../../../puzzle/puzzleSlice"
+import { selectAnswerWords } from "../../../puzzle/puzzleSlice"
 import { selectCorrectGuesses } from "../../../guesses/guessesSlice"
 import { useDispatch } from "react-redux"
 
@@ -20,7 +20,7 @@ export function WordCount({
   tracking,
 }: WordCountProps) {
   const dispatch = useDispatch()
-  const answers = useAppSelector(selectAnswers)
+  const answers = useAppSelector(selectAnswerWords)
   const correctGuesses = useAppSelector(selectCorrectGuesses)
   const answerCount = answers.length
   const correctGuessCount = correctGuesses.length

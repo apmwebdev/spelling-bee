@@ -5,10 +5,13 @@ import {
 } from "../../hintProfilesSlice"
 import { GridRow } from "../letter/WordLengthGrid"
 import { useAppSelector } from "../../../../app/hooks"
-import { selectAnswerLengths, selectAnswers } from "../../../puzzle/puzzleSlice"
+import {
+  selectAnswerLengths,
+  selectAnswerWords,
+} from "../../../puzzle/puzzleSlice"
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice"
 import { SearchResult } from "./SearchResult"
-import uniqid from 'uniqid';
+import uniqid from "uniqid"
 
 interface ResultData {
   searchObject: SearchPanelSearch
@@ -31,7 +34,7 @@ export function SearchPanelResults({
   results: SearchPanelSearch[]
   tracking: TrackingOptions
 }) {
-  const answers = useAppSelector(selectAnswers)
+  const answers = useAppSelector(selectAnswerWords)
   const answerLengths = useAppSelector(selectAnswerLengths)
   const correctGuessWords = useAppSelector(selectCorrectGuessWords)
 

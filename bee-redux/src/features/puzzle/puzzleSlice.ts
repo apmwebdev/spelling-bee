@@ -2,20 +2,26 @@ import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
 import { fetchPuzzle } from "./puzzleAPI"
 import { RootState } from "../../app/store"
 import { calculateScore } from "../../utils/utils"
-import { sortBy } from 'lodash';
+import { sortBy } from "lodash"
+
+export interface AnswerFormat {
+  word: string
+  frequency: number
+  definitions: string[]
+}
 
 export interface PuzzleFormat {
-  printDate: string
+  date: string
   centerLetter: string
   outerLetters: string[]
   validLetters: string[]
   pangrams: string[]
   perfectPangrams: string[]
-  answers: string[]
+  answers: AnswerFormat[]
 }
 
 export const BlankPuzzle: PuzzleFormat = {
-  printDate: "01-01-1600",
+  date: "01-01-1600",
   centerLetter: "_",
   outerLetters: ["_", "_", "_", "_", "_", "_"],
   validLetters: ["_", "_", "_", "_", "_", "_", "_"],
@@ -24,21 +30,29 @@ export const BlankPuzzle: PuzzleFormat = {
   answers: [],
 }
 
+export enum Statuses {
+  Initial = "Not Fetched",
+  Pending = "Loading...",
+  Succeeded = "Up To Date",
+  Failed = "Error",
+}
+
 export interface PuzzleState {
   data: PuzzleFormat
-  status: "idle" | "loading" | "failed"
+  status: Statuses
+  error: string | null
 }
 
 const initialState: PuzzleState = {
   data: BlankPuzzle,
-  status: "idle",
+  status: Statuses.Initial,
+  error: null,
 }
 
 export const fetchPuzzleAsync = createAsyncThunk(
   "puzzle/fetchPuzzle",
-  async (dateString: string) => {
-    const response = await fetchPuzzle(dateString)
-    return response.data
+  async (identifier: string) => {
+    return await fetchPuzzle(identifier)
   },
 )
 
@@ -49,14 +63,17 @@ export const puzzleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPuzzleAsync.pending, (state) => {
-        state.status = "loading"
+        state.status = Statuses.Pending
       })
       .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
-        state.status = "idle"
+        state.status = Statuses.Succeeded
         state.data = action.payload
       })
-      .addCase(fetchPuzzleAsync.rejected, (state) => {
-        state.status = "failed"
+      .addCase(fetchPuzzleAsync.rejected, (state, action) => {
+        state.status = Statuses.Failed
+        if (action.error.message) {
+          state.error = action.error.message
+        }
       })
   },
 })
@@ -64,7 +81,7 @@ export const puzzleSlice = createSlice({
 export const {} = puzzleSlice.actions
 
 export const selectPuzzle = (state: RootState) => state.puzzle.data
-export const selectPrintDate = (state: RootState) => state.puzzle.data.printDate
+export const selectDate = (state: RootState) => state.puzzle.data.date
 export const selectCenterLetter = (state: RootState) =>
   state.puzzle.data.centerLetter
 export const selectOuterLetters = (state: RootState) =>
@@ -75,13 +92,22 @@ export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams
 export const selectPerfectPangrams = (state: RootState) =>
   state.puzzle.data.perfectPangrams
 export const selectAnswers = (state: RootState) => state.puzzle.data.answers
-export const selectTotalPoints = (state: RootState) =>
-  calculateScore(state.puzzle.data.answers)
+
+// Derived data
+export const selectAnswerWords = createSelector([selectAnswers], (answers) =>
+  answers.map((answer) => answer.word),
+)
+
+export const selectTotalPoints = createSelector(
+  [selectAnswerWords],
+  (answerWords) => calculateScore(answerWords),
+)
+
 export const selectAnswerLengths = createSelector(
-  [selectAnswers],
-  (answers) => {
+  [selectAnswerWords],
+  (answerWords) => {
     const answerLengths: number[] = []
-    for (const answer of answers) {
+    for (const answer of answerWords) {
       if (!answerLengths.includes(answer.length)) {
         answerLengths.push(answer.length)
       }

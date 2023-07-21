@@ -10,7 +10,7 @@ import { ExcludedWordsHintPanel } from "./panels/ExcludedWordsHintPanel"
 import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel"
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel"
 import { useAppSelector } from "../../app/hooks"
-import { selectAnswers } from "../puzzle/puzzleSlice"
+import { selectAnswerWords } from "../puzzle/puzzleSlice"
 import { PanelHeader } from "./generalControls/PanelHeader"
 import * as Collapsible from "@radix-ui/react-collapsible"
 import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget"
@@ -22,7 +22,7 @@ export interface HintPanelProps {
 
 export function HintPanel({ panel }: HintPanelProps) {
   const dispatch = useDispatch()
-  const answers = useAppSelector(selectAnswers)
+  const answers = useAppSelector(selectAnswerWords)
   const panelContent = (panel: HintPanelFormat) => {
     if (answers.length === 0) {
       return

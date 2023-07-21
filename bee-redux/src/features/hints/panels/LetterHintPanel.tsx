@@ -11,7 +11,7 @@ import { WordLengthGrid } from "./letter/WordLengthGrid"
 import { LettersOnly } from "./letter/LettersOnly"
 import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
 import { useAppSelector } from "../../../app/hooks"
-import { selectAnswers } from "../../puzzle/puzzleSlice"
+import { selectAnswerWords } from "../../puzzle/puzzleSlice"
 import { HintPanelSettings } from "../HintPanelSettings"
 
 export interface LetterHintSubsectionProps {
@@ -29,7 +29,7 @@ export interface LetterHintDataCell {
 }
 
 export function LetterHintPanel({ panel }: HintPanelProps) {
-  const answers = useAppSelector(selectAnswers)
+  const answers = useAppSelector(selectAnswerWords)
   const correctGuessWords = useAppSelector(selectCorrectGuessWords)
   const content = () => {
     if (isLetterPanelSettings(panel.typeSpecificData)) {

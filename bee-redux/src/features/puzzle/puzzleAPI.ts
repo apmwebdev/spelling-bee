@@ -1,24 +1,8 @@
-import { BlankPuzzle, PuzzleFormat } from "./puzzleSlice"
-
-// const getPerfectPangrams = (puzzle: PuzzleFormat) => {
-//   return puzzle.pangrams.filter((pangram) => {
-//     return (
-//       pangram.toUpperCase().split("").sort().toString() ===
-//       puzzle.validLetters.toString()
-//     )
-//   })
-// }
+import { BlankPuzzle, PuzzleFormat, PuzzleState } from './puzzleSlice';
 
 const getPuzzleSampleData = (inputDate: string): PuzzleFormat => {
   const puzzle = puzzleSampleData.find((el) => el.printDate === inputDate)
   if (puzzle) {
-    /* Probably just an artifact of using hardcoded dummy data, but if you
-    remove the following guard condition, TypeScript will complain that the
-    perfectPangrams property is read-only.
-     */
-    // if (puzzle.perfectPangrams.length === 0) {
-    //   puzzle.perfectPangrams = getPerfectPangrams(puzzle)
-    // }
     return puzzle
   }
   return BlankPuzzle
@@ -26,7 +10,7 @@ const getPuzzleSampleData = (inputDate: string): PuzzleFormat => {
 
 const puzzleSampleData: PuzzleFormat[] = [
   {
-    printDate: "2023-06-20",
+    date: "2023-06-20",
     centerLetter: "m",
     outerLetters: ["d", "e", "h", "o", "t", "u"],
     validLetters: ["d", "e", "h", "m", "o", "t", "u"],
@@ -89,7 +73,7 @@ const puzzleSampleData: PuzzleFormat[] = [
     ],
   },
   {
-    printDate: "2023-07-16",
+    date: "2023-07-16",
     centerLetter: "n",
     outerLetters: ["a", "d", "o", "r", "t", "u"],
     validLetters: ["a", "d", "n", "o", "r", "t", "u"],
@@ -154,12 +138,28 @@ const puzzleSampleData: PuzzleFormat[] = [
   },
 ]
 
-export function fetchPuzzle(
-  dateString: string,
+const API_URL = "http://localhost:3000/api/v1/"
+
+export async function fetchPuzzle(identifier: string) {
+  return fetch(`${API_URL}/puzzles/${identifier}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error("Error: ", error)
+      return {} as PuzzleState
+    })
+}
+
+export function fetchPuzzleOld(
+  identifier: string,
 ): Promise<{ data: PuzzleFormat }> {
   return new Promise<{ data: PuzzleFormat }>((resolve) => {
     return setTimeout(
-      () => resolve({ data: getPuzzleSampleData(dateString) }),
+      () => resolve({ data: getPuzzleSampleData(identifier) }),
       500,
     )
   })
