@@ -52,6 +52,9 @@
   .sb-header {
     border-color: var(--secondary-line-color);
     background-color: var(--bg-color-standout);
+    .sb-subheader {
+      border-color: var(--secondary-line-color);
+    }
   }
 
   .hexagon polygon {

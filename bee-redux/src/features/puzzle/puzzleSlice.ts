@@ -30,7 +30,7 @@ export const BlankPuzzle: PuzzleFormat = {
   answers: [],
 }
 
-export enum Statuses {
+export enum PuzzleStatuses {
   Initial = "Not Fetched",
   Pending = "Loading...",
   Succeeded = "Up To Date",
@@ -39,13 +39,13 @@ export enum Statuses {
 
 export interface PuzzleState {
   data: PuzzleFormat
-  status: Statuses
+  status: PuzzleStatuses
   error: string | null
 }
 
 const initialState: PuzzleState = {
   data: BlankPuzzle,
-  status: Statuses.Initial,
+  status: PuzzleStatuses.Initial,
   error: null,
 }
 
@@ -64,16 +64,16 @@ export const puzzleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPuzzleAsync.pending, (state) => {
-        state.status = Statuses.Pending
+        state.status = PuzzleStatuses.Pending
       })
       .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
-        state.status = Statuses.Succeeded
+        state.status = PuzzleStatuses.Succeeded
         if (!action.payload.error) {
           state.data = action.payload
         }
       })
       .addCase(fetchPuzzleAsync.rejected, (state, action) => {
-        state.status = Statuses.Failed
+        state.status = PuzzleStatuses.Failed
         if (action.error.message) {
           state.error = action.error.message
         }
@@ -83,6 +83,7 @@ export const puzzleSlice = createSlice({
 
 export const {} = puzzleSlice.actions
 
+export const selectPuzzleStatus = (state: RootState) => state.puzzle.status
 export const selectPuzzle = (state: RootState) => state.puzzle.data
 export const selectDate = (state: RootState) => state.puzzle.data.date
 export const selectCenterLetter = (state: RootState) =>

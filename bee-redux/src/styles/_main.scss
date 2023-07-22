@@ -26,13 +26,21 @@
   padding: 8px;
   //border-bottom: 1px solid;
   margin-bottom: 8px;
+  position: relative;
   form {
     display: flex;
     gap: 16px;
     align-items: center;
     justify-content: center;
   }
+  .title {
+    position: absolute;
+    padding: 8px;
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
+
 
 .sb-main-container {
   display: flex;
