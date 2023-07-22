@@ -1,5 +1,5 @@
-import { HintProfile } from "./HintProfile"
-import { Hints } from "./Hints"
+import { HintProfile } from "./HintProfile";
+import { Hints } from "./Hints";
 
 export function HintSection() {
   return (
@@ -7,5 +7,5 @@ export function HintSection() {
       <HintProfile />
       <Hints />
     </div>
-  )
+  );
 }

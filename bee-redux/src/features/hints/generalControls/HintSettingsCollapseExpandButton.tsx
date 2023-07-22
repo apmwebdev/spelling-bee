@@ -1,17 +1,17 @@
-import { useDispatch } from "react-redux"
-import { setSettingsAreCollapsed } from "../hintProfilesSlice"
-import { CollapseExpandButton } from "../../../utils/CollapseExpandButton"
+import { useDispatch } from "react-redux";
+import { setSettingsAreCollapsed } from "../hintProfilesSlice";
+import { CollapseExpandButton } from "../../../utils/CollapseExpandButton";
 
 interface HintSettingsCollapseExpandButtonProps {
-  panelId: number
-  settingsAreCollapsed: boolean
+  panelId: number;
+  settingsAreCollapsed: boolean;
 }
 
 export function HintSettingsCollapseExpandButton({
   panelId,
   settingsAreCollapsed,
 }: HintSettingsCollapseExpandButtonProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <CollapseExpandButton
@@ -25,5 +25,5 @@ export function HintSettingsCollapseExpandButton({
         )
       }
     />
-  )
+  );
 }

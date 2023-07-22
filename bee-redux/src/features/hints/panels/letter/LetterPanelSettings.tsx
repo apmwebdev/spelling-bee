@@ -9,17 +9,17 @@ import {
   ChangeLetterPanelOffsetPayload,
   LetterPanelLocations,
   StringHintDisplayOptions,
-} from "../../hintProfilesSlice"
-import { useDispatch } from "react-redux"
-import { ChangeEvent } from "react"
-import { capitalize } from "lodash"
+} from "../../hintProfilesSlice";
+import { useDispatch } from "react-redux";
+import { ChangeEvent } from "react";
+import { capitalize } from "lodash";
 
 export interface LetterPanelSettingsProps {
-  panelId: number
-  numberOfLetters: number
-  locationInWord: LetterPanelLocations
-  offset: number
-  display: StringHintDisplayOptions
+  panelId: number;
+  numberOfLetters: number;
+  locationInWord: LetterPanelLocations;
+  offset: number;
+  display: StringHintDisplayOptions;
 }
 
 export function LetterPanelSettings({
@@ -29,15 +29,15 @@ export function LetterPanelSettings({
   offset,
   display,
 }: LetterPanelSettingsProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload: ChangeLetterPanelDisplayPayload = {
       panelId,
       newValue: e.target.value as StringHintDisplayOptions,
-    }
-    dispatch(changeLetterPanelDisplay(payload))
-  }
+    };
+    dispatch(changeLetterPanelDisplay(payload));
+  };
 
   const displayControl = () => {
     return (
@@ -52,16 +52,16 @@ export function LetterPanelSettings({
           Letters Only
         </option>
       </select>
-    )
-  }
+    );
+  };
 
   const handleNumberOfLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
     const payload: ChangeLetterPanelNumberOfLettersPayload = {
       panelId,
       newValue: Number(e.target.value),
-    }
-    dispatch(changeLetterPanelNumberOfLetters(payload))
-  }
+    };
+    dispatch(changeLetterPanelNumberOfLetters(payload));
+  };
   const numOfLettersControl = () => {
     return (
       <input
@@ -70,16 +70,16 @@ export function LetterPanelSettings({
         value={numberOfLetters}
         onChange={handleNumberOfLettersChange}
       />
-    )
-  }
+    );
+  };
 
   const handleLocationInWordChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload: ChangeLetterPanelLocationInWordPayload = {
       panelId,
       newValue: e.target.value as LetterPanelLocations,
-    }
-    dispatch(changeLetterPanelLocationInWord(payload))
-  }
+    };
+    dispatch(changeLetterPanelLocationInWord(payload));
+  };
 
   const locationInWordControl = () => {
     return (
@@ -91,16 +91,16 @@ export function LetterPanelSettings({
           {capitalize(LetterPanelLocations.End)} of word
         </option>
       </select>
-    )
-  }
+    );
+  };
 
   const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
     const payload: ChangeLetterPanelOffsetPayload = {
       panelId,
       newValue: Number(e.target.value),
-    }
-    dispatch(changeLetterPanelOffset(payload))
-  }
+    };
+    dispatch(changeLetterPanelOffset(payload));
+  };
 
   const offsetControl = () => {
     return (
@@ -110,8 +110,8 @@ export function LetterPanelSettings({
         value={offset}
         onChange={handleOffsetChange}
       />
-    )
-  }
+    );
+  };
 
   return (
     <div className="sb-letter-panel-settings">
@@ -128,5 +128,5 @@ export function LetterPanelSettings({
         <span>Offset:</span> {offsetControl()}
       </div>
     </div>
-  )
+  );
 }

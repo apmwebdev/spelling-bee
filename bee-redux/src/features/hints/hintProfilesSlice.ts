@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "../../app/store"
-import cloneDeep from "lodash/cloneDeep"
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import cloneDeep from "lodash/cloneDeep";
 // import { defaultProfiles } from "./hintProfilesAPI"
 
 /**
@@ -39,14 +39,14 @@ export enum PanelTypes {
 }
 
 export interface BasicPanelSettings {
-  showWordCount: boolean
-  showTotalPoints: boolean
-  showPangramCount: boolean
-  showPerfectPangramCount: boolean
+  showWordCount: boolean;
+  showTotalPoints: boolean;
+  showPangramCount: boolean;
+  showPerfectPangramCount: boolean;
 }
 
 export function isBasicPanelSettings(a: any): a is BasicPanelSettings {
-  return a.showWordCount !== undefined
+  return a.showWordCount !== undefined;
 }
 
 export enum LetterPanelLocations {
@@ -61,14 +61,14 @@ export enum StringHintDisplayOptions {
 }
 
 export interface LetterPanelSettings {
-  numberOfLetters: number
-  locationInWord: LetterPanelLocations
-  offset: number
-  display: StringHintDisplayOptions
+  numberOfLetters: number;
+  locationInWord: LetterPanelLocations;
+  offset: number;
+  display: StringHintDisplayOptions;
 }
 
 export function isLetterPanelSettings(a: any): a is LetterPanelSettings {
-  return a.numberOfLetters !== undefined
+  return a.numberOfLetters !== undefined;
 }
 
 export enum SearchPanelLocations {
@@ -78,27 +78,27 @@ export enum SearchPanelLocations {
 }
 
 export interface SearchPanelSettings {
-  searchLocation: SearchPanelLocations
-  offset: number
-  display: StringHintDisplayOptions
+  searchLocation: SearchPanelLocations;
+  offset: number;
+  display: StringHintDisplayOptions;
 }
 
 export interface SearchPanelSearch extends SearchPanelSettings {
-  searchId: number
-  searchString: string
+  searchId: number;
+  searchString: string;
 }
 
 export interface SearchPanelData {
-  currentSettings: SearchPanelSettings
-  searches: SearchPanelSearch[]
+  currentSettings: SearchPanelSettings;
+  searches: SearchPanelSearch[];
 }
 
 export function isSearchPanelSettings(a: any): a is SearchPanelSettings {
-  return a.searchLocation !== undefined
+  return a.searchLocation !== undefined;
 }
 
 export function isSearchPanelData(a: any): a is SearchPanelData {
-  return a.currentSettings !== undefined && a.searches !== undefined
+  return a.currentSettings !== undefined && a.searches !== undefined;
 }
 
 export interface ExcludedWordsPanelSettings {}
@@ -108,21 +108,21 @@ export interface WordObscurityPanelSettings {}
 export interface DefinitionsPanelSettings {}
 
 export interface HintPanelFormat {
-  id: number
-  name: string
-  isCollapsed: boolean
-  settingsAreCollapsed: boolean
-  isBlurred: boolean
-  tracking: TrackingOptions
-  initialDisplay: PanelInitialDisplayOptions
-  type: PanelTypes
+  id: number;
+  name: string;
+  isCollapsed: boolean;
+  settingsAreCollapsed: boolean;
+  isBlurred: boolean;
+  tracking: TrackingOptions;
+  initialDisplay: PanelInitialDisplayOptions;
+  type: PanelTypes;
   typeSpecificData:
     | BasicPanelSettings
     | LetterPanelSettings
     | SearchPanelData
     | ExcludedWordsPanelSettings
     | WordObscurityPanelSettings
-    | DefinitionsPanelSettings
+    | DefinitionsPanelSettings;
 }
 
 export enum ProfileDisplayDefaults {
@@ -132,12 +132,12 @@ export enum ProfileDisplayDefaults {
 }
 
 export interface HintProfileFormat {
-  id: number
-  name: string
-  isUserCreated: boolean
-  displayDefault: ProfileDisplayDefaults
-  trackingDefault: TrackingOptions
-  panels: HintPanelFormat[]
+  id: number;
+  name: string;
+  isUserCreated: boolean;
+  displayDefault: ProfileDisplayDefaults;
+  trackingDefault: TrackingOptions;
+  panels: HintPanelFormat[];
 }
 
 export const blankHintProfile: HintProfileFormat = {
@@ -147,16 +147,16 @@ export const blankHintProfile: HintProfileFormat = {
   displayDefault: ProfileDisplayDefaults.Expanded,
   trackingDefault: TrackingOptions.RemainingOfTotal,
   panels: [],
-}
+};
 
 export interface HintProfilesStateData {
-  currentProfile: HintProfileFormat
-  profiles: HintProfileFormat[]
+  currentProfile: HintProfileFormat;
+  profiles: HintProfileFormat[];
 }
 
 export interface HintProfilesState {
-  data: HintProfilesStateData
-  status: string
+  data: HintProfilesStateData;
+  status: string;
 }
 
 const superSpellingBeeProfile = (): HintProfileFormat => {
@@ -296,8 +296,8 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         typeSpecificData: {},
       },
     ],
-  }
-}
+  };
+};
 
 const spellingBeeBuddyProfile = (): HintProfileFormat => {
   return {
@@ -378,59 +378,59 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         typeSpecificData: {},
       },
     ],
-  }
-}
+  };
+};
 
 const initialState = (): HintProfilesState => {
-  const ssbProfile = superSpellingBeeProfile()
+  const ssbProfile = superSpellingBeeProfile();
   return {
     data: {
       currentProfile: ssbProfile,
       profiles: [ssbProfile, spellingBeeBuddyProfile()],
     },
     status: "stub",
-  }
-}
+  };
+};
 
 export interface ChangeProfilePayload {
-  newId: number
+  newId: number;
 }
 
 export interface ChangeBasicPanelSubsectionDisplayPayload {
-  panelId: number
+  panelId: number;
   settingName:
     | "showWordCount"
     | "showTotalPoints"
     | "showPangramCount"
-    | "showPerfectPangramCount"
-  newValue: boolean
+    | "showPerfectPangramCount";
+  newValue: boolean;
 }
 
 export interface ChangeLetterPanelNumberOfLettersPayload {
-  panelId: number
-  newValue: number
+  panelId: number;
+  newValue: number;
 }
 
 export interface ChangeLetterPanelLocationInWordPayload {
-  panelId: number
-  newValue: LetterPanelLocations
+  panelId: number;
+  newValue: LetterPanelLocations;
 }
 
 export interface ChangeLetterPanelOffsetPayload {
-  panelId: number
-  newValue: number
+  panelId: number;
+  newValue: number;
 }
 
 export interface ChangeLetterPanelDisplayPayload {
-  panelId: number
-  newValue: StringHintDisplayOptions
+  panelId: number;
+  newValue: StringHintDisplayOptions;
 }
 
 const findPanel = (state: HintProfilesState, panelId: number) => {
   return state.data.currentProfile.panels.find((panel) => {
-    return panel.id === panelId
-  })
-}
+    return panel.id === panelId;
+  });
+};
 
 export const hintProfilesSlice = createSlice({
   name: "hintProfiles",
@@ -442,197 +442,200 @@ export const hintProfilesSlice = createSlice({
     ) => {
       const newCurrent = state.data.profiles.find(
         (profile) => profile.id === action.payload.newId,
-      )
+      );
       if (newCurrent) {
-        state.data.currentProfile = newCurrent
+        state.data.currentProfile = newCurrent;
       }
     },
     removePanel: (
       state,
       action: { payload: { panelId: number }; type: string },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      const panelIndex = state.data.currentProfile.panels.indexOf(panel)
-      state.data.currentProfile.panels.splice(panelIndex, 1)
+      const panelIndex = state.data.currentProfile.panels.indexOf(panel);
+      state.data.currentProfile.panels.splice(panelIndex, 1);
     },
     setIsCollapsed: (
       state,
       action: {
-        payload: { panelId: number; isCollapsed: boolean }
-        type: string
+        payload: { panelId: number; isCollapsed: boolean };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      panel.isCollapsed = action.payload.isCollapsed
+      panel.isCollapsed = action.payload.isCollapsed;
     },
     duplicatePanel: (
       state,
       action: {
-        payload: { panelId: number }
-        type: string
+        payload: { panelId: number };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      const newPanel = cloneDeep(panel)
-      newPanel.id = newPanel.id + 20
-      state.data.currentProfile.panels.push(newPanel)
+      const newPanel = cloneDeep(panel);
+      newPanel.id = newPanel.id + 20;
+      state.data.currentProfile.panels.push(newPanel);
     },
     setSettingsAreCollapsed: (
       state,
       action: {
-        payload: { panelId: number; settingsAreCollapsed: boolean }
-        type: string
+        payload: { panelId: number; settingsAreCollapsed: boolean };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      panel.settingsAreCollapsed = action.payload.settingsAreCollapsed
+      panel.settingsAreCollapsed = action.payload.settingsAreCollapsed;
     },
     setTracking: (
       state,
       action: {
-        payload: { panelId: number; tracking: TrackingOptions }
-        type: string
+        payload: { panelId: number; tracking: TrackingOptions };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      panel.tracking = action.payload.tracking
+      panel.tracking = action.payload.tracking;
     },
     setInitialDisplay: (
       state,
       action: {
-        payload: { panelId: number; initialDisplay: PanelInitialDisplayOptions }
-        type: string
+        payload: {
+          panelId: number;
+          initialDisplay: PanelInitialDisplayOptions;
+        };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel) {
-        return
+        return;
       }
-      panel.initialDisplay = action.payload.initialDisplay
+      panel.initialDisplay = action.payload.initialDisplay;
     },
     changeBasicPanelSubsectionDisplay: (
       state,
       action: {
-        payload: ChangeBasicPanelSubsectionDisplayPayload
-        type: string
+        payload: ChangeBasicPanelSubsectionDisplayPayload;
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isBasicPanelSettings(panel.typeSpecificData)) {
-        return
+        return;
       }
       for (const property in panel.typeSpecificData) {
         if (property === action.payload.settingName) {
-          panel.typeSpecificData[property] = action.payload.newValue
+          panel.typeSpecificData[property] = action.payload.newValue;
         }
       }
     },
     changeLetterPanelNumberOfLetters: (
       state,
       action: {
-        payload: ChangeLetterPanelNumberOfLettersPayload
-        type: string
+        payload: ChangeLetterPanelNumberOfLettersPayload;
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
-        return
+        return;
       }
-      panel.typeSpecificData.numberOfLetters = action.payload.newValue
+      panel.typeSpecificData.numberOfLetters = action.payload.newValue;
     },
     changeLetterPanelLocationInWord: (
       state,
       action: {
-        payload: ChangeLetterPanelLocationInWordPayload
-        type: string
+        payload: ChangeLetterPanelLocationInWordPayload;
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
-        return
+        return;
       }
-      panel.typeSpecificData.locationInWord = action.payload.newValue
+      panel.typeSpecificData.locationInWord = action.payload.newValue;
     },
     changeLetterPanelOffset: (
       state,
       action: {
-        payload: ChangeLetterPanelOffsetPayload
-        type: string
+        payload: ChangeLetterPanelOffsetPayload;
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
-        return
+        return;
       }
-      panel.typeSpecificData.offset = action.payload.newValue
+      panel.typeSpecificData.offset = action.payload.newValue;
     },
     changeLetterPanelDisplay: (
       state,
       action: {
-        payload: ChangeLetterPanelDisplayPayload
-        type: string
+        payload: ChangeLetterPanelDisplayPayload;
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isLetterPanelSettings(panel.typeSpecificData)) {
-        return
+        return;
       }
-      panel.typeSpecificData.display = action.payload.newValue
+      panel.typeSpecificData.display = action.payload.newValue;
     },
     addSearch: (
       state,
       action: {
-        payload: { panelId: number; search: SearchPanelSearch }
-        type: string
+        payload: { panelId: number; search: SearchPanelSearch };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isSearchPanelData(panel.typeSpecificData)) {
-        return
+        return;
       }
-      panel.typeSpecificData.searches.push(action.payload.search)
+      panel.typeSpecificData.searches.push(action.payload.search);
     },
     removeSearch: (
       state,
       action: {
-        payload: { panelId: number; searchId: number }
-        type: string
+        payload: { panelId: number; searchId: number };
+        type: string;
       },
     ) => {
-      const panel = findPanel(state, action.payload.panelId)
+      const panel = findPanel(state, action.payload.panelId);
       if (!panel || !isSearchPanelData(panel.typeSpecificData)) {
-        return
+        return;
       }
       const searchToRemove = panel.typeSpecificData.searches.find(
         (searchObject) => {
-          return searchObject.searchId === action.payload.searchId
+          return searchObject.searchId === action.payload.searchId;
         },
-      )
+      );
       if (!searchToRemove) {
-        return
+        return;
       }
       const searchIndex =
-        panel.typeSpecificData.searches.indexOf(searchToRemove)
-      panel.typeSpecificData.searches.splice(searchIndex, 1)
+        panel.typeSpecificData.searches.indexOf(searchToRemove);
+      panel.typeSpecificData.searches.splice(searchIndex, 1);
     },
   },
   extraReducers: (builder) => {},
-})
+});
 
 export const {
   setCurrentProfile,
@@ -649,8 +652,8 @@ export const {
   changeLetterPanelDisplay,
   addSearch,
   removeSearch,
-} = hintProfilesSlice.actions
+} = hintProfilesSlice.actions;
 
-export const selectHintProfiles = (state: RootState) => state.hintProfiles.data
+export const selectHintProfiles = (state: RootState) => state.hintProfiles.data;
 
-export default hintProfilesSlice.reducer
+export default hintProfilesSlice.reducer;

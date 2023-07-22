@@ -1,13 +1,13 @@
-import { duplicatePanel } from "../hintProfilesSlice"
-import { Icon } from "@iconify/react"
-import { useDispatch } from "react-redux"
+import { duplicatePanel } from "../hintProfilesSlice";
+import { Icon } from "@iconify/react";
+import { useDispatch } from "react-redux";
 
 interface DuplicateButtonProps {
-  panelId: number
+  panelId: number;
 }
 
 export function DuplicateButton({ panelId }: DuplicateButtonProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <button
@@ -16,5 +16,5 @@ export function DuplicateButton({ panelId }: DuplicateButtonProps) {
     >
       <Icon icon="mdi:content-copy" className="sb-hint-duplicate-button"></Icon>
     </button>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { Progress } from "./Progress"
-import { HintSection } from "../hints/HintSection"
-import { GuessList } from "../guesses/GuessList"
+import { Progress } from "./Progress";
+import { HintSection } from "../hints/HintSection";
+import { GuessList } from "../guesses/GuessList";
 
 export function Status() {
   return (
@@ -8,5 +8,5 @@ export function Status() {
       <Progress />
       <HintSection />
     </div>
-  )
+  );
 }

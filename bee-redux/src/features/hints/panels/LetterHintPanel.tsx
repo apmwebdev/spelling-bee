@@ -1,40 +1,40 @@
-import { HintPanelProps } from "../HintPanel"
+import { HintPanelProps } from "../HintPanel";
 import {
   isLetterPanelSettings,
   LetterPanelLocations,
   StringHintDisplayOptions,
   TrackingOptions,
-} from "../hintProfilesSlice"
-import { LetterPanelSettings } from "./letter/LetterPanelSettings"
-import { WordCountList } from "./letter/WordCountList"
-import { WordLengthGrid } from "./letter/WordLengthGrid"
-import { LettersOnly } from "./letter/LettersOnly"
-import { selectCorrectGuessWords } from "../../guesses/guessesSlice"
-import { useAppSelector } from "../../../app/hooks"
-import { selectAnswerWords } from "../../puzzle/puzzleSlice"
-import { HintPanelSettings } from "../HintPanelSettings"
+} from "../hintProfilesSlice";
+import { LetterPanelSettings } from "./letter/LetterPanelSettings";
+import { WordCountList } from "./letter/WordCountList";
+import { WordLengthGrid } from "./letter/WordLengthGrid";
+import { LettersOnly } from "./letter/LettersOnly";
+import { selectCorrectGuessWords } from "../../guesses/guessesSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAnswerWords } from "../../puzzle/puzzleSlice";
+import { HintPanelSettings } from "../HintPanelSettings";
 
 export interface LetterHintSubsectionProps {
-  answers: string[]
-  correctGuessWords: string[]
-  numberOfLetters: number
-  locationInWord: LetterPanelLocations
-  offset: number
-  tracking: TrackingOptions
+  answers: string[];
+  correctGuessWords: string[];
+  numberOfLetters: number;
+  locationInWord: LetterPanelLocations;
+  offset: number;
+  tracking: TrackingOptions;
 }
 
 export interface LetterHintDataCell {
-  answers: number
-  guesses: number
+  answers: number;
+  guesses: number;
 }
 
 export function LetterHintPanel({ panel }: HintPanelProps) {
-  const answers = useAppSelector(selectAnswerWords)
-  const correctGuessWords = useAppSelector(selectCorrectGuessWords)
+  const answers = useAppSelector(selectAnswerWords);
+  const correctGuessWords = useAppSelector(selectCorrectGuessWords);
   const content = () => {
     if (isLetterPanelSettings(panel.typeSpecificData)) {
       const { numberOfLetters, locationInWord, offset, display } =
-        panel.typeSpecificData
+        panel.typeSpecificData;
 
       const subsectionProps: LetterHintSubsectionProps = {
         answers,
@@ -43,18 +43,18 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         locationInWord,
         offset,
         tracking: panel.tracking,
-      }
+      };
 
-      let hintContent
+      let hintContent;
 
       if (display === StringHintDisplayOptions.WordLengthGrid) {
-        hintContent = <WordLengthGrid {...subsectionProps} />
+        hintContent = <WordLengthGrid {...subsectionProps} />;
       } else if (display === StringHintDisplayOptions.WordCountList) {
-        hintContent = <WordCountList {...subsectionProps} />
+        hintContent = <WordCountList {...subsectionProps} />;
       } else if (display === StringHintDisplayOptions.LettersOnly) {
-        hintContent = <LettersOnly {...subsectionProps} />
+        hintContent = <LettersOnly {...subsectionProps} />;
       } else {
-        hintContent = <div>hullo</div>
+        hintContent = <div>hullo</div>;
       }
 
       const letterHintSettings = () => (
@@ -65,7 +65,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
           offset={offset}
           display={display}
         />
-      )
+      );
 
       return (
         <>
@@ -75,9 +75,9 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
           />
           <div className="sb-hint-panel-output">{hintContent}</div>
         </>
-      )
+      );
     }
-  }
+  };
 
-  return <div className="sb-letter-hints">{content()}</div>
+  return <div className="sb-letter-hints">{content()}</div>;
 }

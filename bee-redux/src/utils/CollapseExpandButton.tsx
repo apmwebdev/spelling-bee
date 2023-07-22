@@ -1,9 +1,9 @@
-import { ExpandButton } from "./ExpandButton"
-import { CollapseButton } from "./CollapseButton"
+import { ExpandButton } from "./ExpandButton";
+import { CollapseButton } from "./CollapseButton";
 
 interface CollapseExpandButtonProps {
-  isCollapsed: boolean
-  clickHandler?: Function
+  isCollapsed: boolean;
+  clickHandler?: Function;
 }
 
 export function CollapseExpandButton({
@@ -11,7 +11,7 @@ export function CollapseExpandButton({
   clickHandler,
 }: CollapseExpandButtonProps) {
   if (isCollapsed) {
-    return <ExpandButton clickHandler={clickHandler} />
+    return <ExpandButton clickHandler={clickHandler} />;
   }
-  return <CollapseButton clickHandler={clickHandler} />
+  return <CollapseButton clickHandler={clickHandler} />;
 }

@@ -1,11 +1,11 @@
-import { RemoveButton } from "./RemoveButton"
-import { DuplicateButton } from "./DuplicateButton"
-import { ReactNode } from "react"
+import { RemoveButton } from "./RemoveButton";
+import { DuplicateButton } from "./DuplicateButton";
+import { ReactNode } from "react";
 
 interface PanelHeaderProps {
-  panelId: number
-  isCollapsed: boolean
-  children: ReactNode
+  panelId: number;
+  isCollapsed: boolean;
+  children: ReactNode;
 }
 
 export function PanelHeader({
@@ -14,14 +14,14 @@ export function PanelHeader({
   children,
 }: PanelHeaderProps) {
   const cssClasses = () => {
-    let classList = "sb-hint-panel-header click-header-to-collapse"
+    let classList = "sb-hint-panel-header click-header-to-collapse";
     if (isCollapsed) {
-      classList += " collapsed"
+      classList += " collapsed";
     } else {
-      classList += " expanded"
+      classList += " expanded";
     }
-    return classList
-  }
+    return classList;
+  };
 
   return (
     <header className={cssClasses()}>
@@ -33,5 +33,5 @@ export function PanelHeader({
         <DuplicateButton panelId={panelId} />
       </div>
     </header>
-  )
+  );
 }

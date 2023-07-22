@@ -11,6 +11,13 @@ export function initialGuessAlerts(): GuessAlertsProps {
 }
 
 export function GuessAlerts({ messages, messagesType }: GuessAlertsProps) {
-  const messageOutput = messages.join("\n ")
-  return <div className="sb-guess-input-alerts">{messageOutput}</div>
+  const messageOutput = () => {
+    return messages.join("\n ")
+  }
+
+  return (
+    <div className="sb-guess-input-alerts-container">
+      {messageOutput()}
+    </div>
+  )
 }

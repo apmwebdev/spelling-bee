@@ -1,25 +1,22 @@
-import { HintPanelProps } from "../HintPanel"
-import { FormEvent, useState } from "react"
-import { HintPanelSettings } from "../HintPanelSettings"
-import {
-  addSearch,
-  isSearchPanelData,
-} from "../hintProfilesSlice"
-import { SearchPanelSettings } from "./search/SearchPanelSettings"
-import { useDispatch } from "react-redux"
-import { random } from "lodash"
-import { SearchPanelResults } from "./search/SearchPanelResults"
+import { HintPanelProps } from "../HintPanel";
+import { FormEvent, useState } from "react";
+import { HintPanelSettings } from "../HintPanelSettings";
+import { addSearch, isSearchPanelData } from "../hintProfilesSlice";
+import { SearchPanelSettings } from "./search/SearchPanelSettings";
+import { useDispatch } from "react-redux";
+import { random } from "lodash";
+import { SearchPanelResults } from "./search/SearchPanelResults";
 
 export function SearchHintPanel({ panel }: HintPanelProps) {
-  const dispatch = useDispatch()
-  const [searchValue, setSearchValue] = useState("")
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState("");
 
   const addSearchToPanel = () => {
     if (!isSearchPanelData(panel.typeSpecificData)) {
-      return
+      return;
     }
     const { searchLocation, offset, display } =
-      panel.typeSpecificData.currentSettings
+      panel.typeSpecificData.currentSettings;
     const payload = {
       panelId: panel.id,
       search: {
@@ -29,25 +26,23 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
         offset,
         display,
       },
-    }
-    dispatch(addSearch(payload))
-  }
+    };
+    dispatch(addSearch(payload));
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    addSearchToPanel()
-  }
+    e.preventDefault();
+    addSearchToPanel();
+  };
 
   const searches = () => {
     if (!isSearchPanelData(panel.typeSpecificData)) {
-      return []
+      return [];
     }
-    return panel.typeSpecificData.searches
-  }
+    return panel.typeSpecificData.searches;
+  };
 
-  const searchSettings = () => (
-    <SearchPanelSettings />
-  )
+  const searchSettings = () => <SearchPanelSettings />;
   return (
     <>
       <HintPanelSettings panel={panel} TypeSettingsComponent={searchSettings} />
@@ -70,5 +65,5 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
         />
       </div>
     </>
-  )
+  );
 }

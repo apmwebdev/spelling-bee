@@ -1,9 +1,9 @@
-import { SearchResultProps } from "./SearchPanelResults"
-import { StringHintDisplayOptions } from "../../hintProfilesSlice"
-import { SearchResultWordLengths } from "./SearchResultWordLengths"
-import { SearchResultWordCount } from "./SearchResultWordCount"
-import { SearchResultLettersOnly } from "./SearchResultLettersOnly"
-import { SearchResultHeader } from "./SearchResultHeader"
+import { SearchResultProps } from "./SearchPanelResults";
+import { StringHintDisplayOptions } from "../../hintProfilesSlice";
+import { SearchResultWordLengths } from "./SearchResultWordLengths";
+import { SearchResultWordCount } from "./SearchResultWordCount";
+import { SearchResultLettersOnly } from "./SearchResultLettersOnly";
+import { SearchResultHeader } from "./SearchResultHeader";
 
 export function SearchResult({
   panelId,
@@ -18,20 +18,20 @@ export function SearchResult({
             resultData={resultData}
             tracking={tracking}
           />
-        )
+        );
       case StringHintDisplayOptions.WordCountList:
         return (
           <SearchResultWordCount resultData={resultData} tracking={tracking} />
-        )
+        );
       case StringHintDisplayOptions.LettersOnly:
         return (
           <SearchResultLettersOnly
             resultData={resultData}
             tracking={tracking}
           />
-        )
+        );
     }
-  }
+  };
 
   return (
     <div className="sb-search-panel-result">
@@ -41,5 +41,5 @@ export function SearchResult({
       />
       <div className="result-content">{content()}</div>
     </div>
-  )
+  );
 }

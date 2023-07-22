@@ -1,23 +1,27 @@
-import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
-import { fetchPuzzle } from "./puzzleAPI"
-import { RootState } from "../../app/store"
-import { calculateScore } from "../../utils/utils"
-import { sortBy } from "lodash"
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { fetchPuzzle } from "./puzzleAPI";
+import { RootState } from "../../app/store";
+import { calculateScore } from "../../utils/utils";
+import { sortBy } from "lodash";
 
 export interface AnswerFormat {
-  word: string
-  frequency: number
-  definitions: string[]
+  word: string;
+  frequency: number;
+  definitions: string[];
 }
 
 export interface PuzzleFormat {
-  date: string
-  centerLetter: string
-  outerLetters: string[]
-  validLetters: string[]
-  pangrams: string[]
-  perfectPangrams: string[]
-  answers: AnswerFormat[]
+  date: string;
+  centerLetter: string;
+  outerLetters: string[];
+  validLetters: string[];
+  pangrams: string[];
+  perfectPangrams: string[];
+  answers: AnswerFormat[];
 }
 
 export const BlankPuzzle: PuzzleFormat = {
@@ -28,7 +32,7 @@ export const BlankPuzzle: PuzzleFormat = {
   pangrams: [],
   perfectPangrams: [],
   answers: [],
-}
+};
 
 export enum PuzzleStatuses {
   Initial = "Not Fetched",
@@ -38,24 +42,24 @@ export enum PuzzleStatuses {
 }
 
 export interface PuzzleState {
-  data: PuzzleFormat
-  status: PuzzleStatuses
-  error: string | null
+  data: PuzzleFormat;
+  status: PuzzleStatuses;
+  error: string | null;
 }
 
 const initialState: PuzzleState = {
   data: BlankPuzzle,
   status: PuzzleStatuses.Initial,
   error: null,
-}
+};
 
 export const fetchPuzzleAsync = createAsyncThunk(
   "puzzle/fetchPuzzle",
   async (identifier: string) => {
-    const response = await fetchPuzzle(identifier)
-    return response
+    const response = await fetchPuzzle(identifier);
+    return response;
   },
-)
+);
 
 export const puzzleSlice = createSlice({
   name: "puzzle",
@@ -64,63 +68,63 @@ export const puzzleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPuzzleAsync.pending, (state) => {
-        state.status = PuzzleStatuses.Pending
+        state.status = PuzzleStatuses.Pending;
       })
       .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
-        state.status = PuzzleStatuses.Succeeded
+        state.status = PuzzleStatuses.Succeeded;
         if (!action.payload.error) {
-          state.data = action.payload
+          state.data = action.payload;
         }
       })
       .addCase(fetchPuzzleAsync.rejected, (state, action) => {
-        state.status = PuzzleStatuses.Failed
+        state.status = PuzzleStatuses.Failed;
         if (action.error.message) {
-          state.error = action.error.message
+          state.error = action.error.message;
         }
-      })
+      });
   },
-})
+});
 
-export const {} = puzzleSlice.actions
+export const {} = puzzleSlice.actions;
 
-export const selectPuzzleStatus = (state: RootState) => state.puzzle.status
-export const selectPuzzle = (state: RootState) => state.puzzle.data
-export const selectDate = (state: RootState) => state.puzzle.data.date
+export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
+export const selectPuzzle = (state: RootState) => state.puzzle.data;
+export const selectDate = (state: RootState) => state.puzzle.data.date;
 export const selectCenterLetter = (state: RootState) =>
-  state.puzzle.data.centerLetter
+  state.puzzle.data.centerLetter;
 export const selectOuterLetters = (state: RootState) =>
-  state.puzzle.data.outerLetters
+  state.puzzle.data.outerLetters;
 export const selectValidLetters = (state: RootState) =>
-  state.puzzle.data.validLetters
-export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams
+  state.puzzle.data.validLetters;
+export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams;
 export const selectPerfectPangrams = (state: RootState) =>
-  state.puzzle.data.perfectPangrams
-export const selectAnswers = (state: RootState) => state.puzzle.data.answers
+  state.puzzle.data.perfectPangrams;
+export const selectAnswers = (state: RootState) => state.puzzle.data.answers;
 
 // Derived data
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
   if (answers && answers.length > 0) {
-    return answers.map((answer) => answer.word)
+    return answers.map((answer) => answer.word);
   }
-  return []
-})
+  return [];
+});
 
 export const selectTotalPoints = createSelector(
   [selectAnswerWords],
   (answerWords) => calculateScore(answerWords),
-)
+);
 
 export const selectAnswerLengths = createSelector(
   [selectAnswerWords],
   (answerWords) => {
-    const answerLengths: number[] = []
+    const answerLengths: number[] = [];
     for (const answer of answerWords) {
       if (!answerLengths.includes(answer.length)) {
-        answerLengths.push(answer.length)
+        answerLengths.push(answer.length);
       }
     }
-    return sortBy(answerLengths)
+    return sortBy(answerLengths);
   },
-)
+);
 
-export default puzzleSlice.reducer
+export default puzzleSlice.reducer;

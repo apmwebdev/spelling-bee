@@ -1,5 +1,5 @@
-import { HintPanelProps } from "../HintPanel"
+import { HintPanelProps } from "../HintPanel";
 
 export function DefinitionsHintPanel({ panel }: HintPanelProps) {
-  return <div className="sb-definition-hints"></div>
+  return <div className="sb-definition-hints"></div>;
 }

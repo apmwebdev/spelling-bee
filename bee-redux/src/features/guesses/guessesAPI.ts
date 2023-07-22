@@ -1,4 +1,4 @@
-import { GuessesFormat } from "./guessesSlice"
+import { GuessesFormat } from "./guessesSlice";
 
 const getGuessesSampleData = (
   userId: number,
@@ -6,16 +6,16 @@ const getGuessesSampleData = (
 ): GuessesFormat => {
   const result = guessesSampleData.find(
     (el) => el.puzzleId === puzzleId && el.userId === userId,
-  )
+  );
   if (result) {
-    return result
+    return result;
   }
   return {
     userId: 0,
     puzzleId: "not found",
     guesses: [],
-  }
-}
+  };
+};
 
 export const guessesSampleData: GuessesFormat[] = [
   {
@@ -133,7 +133,7 @@ export const guessesSampleData: GuessesFormat[] = [
     //   )
     // },
   },
-]
+];
 
 export function fetchGuesses(
   userId: number,
@@ -143,6 +143,6 @@ export function fetchGuesses(
     return setTimeout(
       () => resolve({ data: getGuessesSampleData(userId, puzzleId) }),
       500,
-    )
-  })
+    );
+  });
 }

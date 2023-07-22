@@ -1,9 +1,9 @@
-import { HintPanelProps } from "../HintPanel"
-import { isBasicPanelSettings } from "../hintProfilesSlice"
-import { WordCount } from "./basic/WordCount"
-import { PangramCount } from "./basic/PangramCount"
-import { PerfectPangramCount } from "./basic/PerfectPangramCount"
-import { TotalPoints } from "./basic/TotalPoints"
+import { HintPanelProps } from "../HintPanel";
+import { isBasicPanelSettings } from "../hintProfilesSlice";
+import { WordCount } from "./basic/WordCount";
+import { PangramCount } from "./basic/PangramCount";
+import { PerfectPangramCount } from "./basic/PerfectPangramCount";
+import { TotalPoints } from "./basic/TotalPoints";
 
 export function BasicHintPanel({ panel }: HintPanelProps) {
   const content = () => {
@@ -13,7 +13,7 @@ export function BasicHintPanel({ panel }: HintPanelProps) {
         showTotalPoints,
         showPangramCount,
         showPerfectPangramCount,
-      } = panel.typeSpecificData
+      } = panel.typeSpecificData;
 
       return (
         <div className="sb-basic-hints">
@@ -46,9 +46,9 @@ export function BasicHintPanel({ panel }: HintPanelProps) {
             />
           </div>
         </div>
-      )
+      );
     }
-  }
+  };
 
-  return content()
+  return content();
 }

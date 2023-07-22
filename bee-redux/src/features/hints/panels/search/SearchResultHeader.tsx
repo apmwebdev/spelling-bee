@@ -3,58 +3,58 @@ import {
   SearchPanelLocations,
   SearchPanelSearch,
   StringHintDisplayOptions,
-} from "../../hintProfilesSlice"
-import { HeaderRemoveButton } from "../../../../utils/HeaderRemoveButton"
-import { useDispatch } from "react-redux"
+} from "../../hintProfilesSlice";
+import { HeaderRemoveButton } from "../../../../utils/HeaderRemoveButton";
+import { useDispatch } from "react-redux";
 
 export function SearchResultHeader({
   panelId,
   searchObject,
 }: {
-  panelId: number
-  searchObject: SearchPanelSearch
+  panelId: number;
+  searchObject: SearchPanelSearch;
 }) {
   const { searchId, searchString, searchLocation, offset, display } =
-    searchObject
-  const dispatch = useDispatch()
+    searchObject;
+  const dispatch = useDispatch();
 
   const title = () => {
     const offsetString = () => {
-      let returnString = ""
+      let returnString = "";
       for (let i = 0; i < offset; i++) {
-        returnString += "-"
+        returnString += "-";
       }
-      return returnString
-    }
+      return returnString;
+    };
 
-    let titleString = ""
+    let titleString = "";
 
     if (searchLocation === SearchPanelLocations.Anywhere) {
-      titleString += `...${searchString.toUpperCase()}... `
+      titleString += `...${searchString.toUpperCase()}... `;
     } else if (searchLocation === SearchPanelLocations.Beginning) {
-      titleString += `${offsetString()}${searchString.toUpperCase()}... `
+      titleString += `${offsetString()}${searchString.toUpperCase()}... `;
     } else if (searchLocation === SearchPanelLocations.End) {
-      titleString += `...${searchString.toUpperCase()}${offsetString()} `
+      titleString += `...${searchString.toUpperCase()}${offsetString()} `;
     }
 
     if (display === StringHintDisplayOptions.WordLengthGrid) {
-      titleString += " Word Lengths"
+      titleString += " Word Lengths";
     } else if (display === StringHintDisplayOptions.WordCountList) {
-      titleString += " Word Count"
+      titleString += " Word Count";
     } else {
-      titleString += " Yes or No"
+      titleString += " Yes or No";
     }
-    return titleString
-  }
+    return titleString;
+  };
 
   const handleClickRemoveButton = () => {
-    dispatch(removeSearch({ panelId, searchId }))
-  }
+    dispatch(removeSearch({ panelId, searchId }));
+  };
 
   return (
     <header className="sb-search-hints-search-result-header">
       <HeaderRemoveButton clickHandler={handleClickRemoveButton} />
       <div className="search-result-title">{title()}</div>
     </header>
-  )
+  );
 }

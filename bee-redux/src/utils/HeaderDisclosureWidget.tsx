@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react"
+import { Icon } from "@iconify/react";
 
 export function HeaderDisclosureWidget({ title }: { title: string }) {
   // Note: icon is rotated in CSS to indicate collapsed state.
@@ -10,5 +10,5 @@ export function HeaderDisclosureWidget({ title }: { title: string }) {
       ></Icon>
       <div>{title}</div>
     </div>
-  )
+  );
 }

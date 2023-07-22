@@ -1,4 +1,4 @@
-import { BlankPuzzle, PuzzleFormat, PuzzleState } from './puzzleSlice';
+import { BlankPuzzle, PuzzleFormat, PuzzleState } from "./puzzleSlice";
 
 // const getPuzzleSampleData = (inputDate: string): PuzzleFormat => {
 //   const puzzle = puzzleSampleData.find((el) => el.printDate === inputDate)
@@ -138,7 +138,7 @@ import { BlankPuzzle, PuzzleFormat, PuzzleState } from './puzzleSlice';
 //   },
 // ]
 
-const API_URL = "http://localhost:3000/api/v1/"
+const API_URL = "http://localhost:3000/api/v1/";
 
 export async function fetchPuzzle(identifier: string) {
   return fetch(`${API_URL}/puzzles/${identifier}`, {
@@ -149,9 +149,9 @@ export async function fetchPuzzle(identifier: string) {
   })
     .then((response) => response.json())
     .catch((error) => {
-      console.error("Error: ", error)
-      return BlankPuzzle
-    })
+      console.error("Error: ", error);
+      return BlankPuzzle;
+    });
 }
 
 // export function fetchPuzzleOld(

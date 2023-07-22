@@ -1,4 +1,4 @@
-import { SearchResultProps } from "./SearchPanelResults"
+import { SearchResultProps } from "./SearchPanelResults";
 
 export function SearchResultWordCount({
   resultData,
@@ -9,5 +9,5 @@ export function SearchResultWordCount({
       <h2>SearchResultWordCount</h2>
       search: {resultData.searchObject.searchString.toUpperCase()}
     </div>
-  )
+  );
 }

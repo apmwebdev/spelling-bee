@@ -1,21 +1,21 @@
-import { TrackingOptions } from "../../hintProfilesSlice"
-import uniqid from "uniqid"
+import { TrackingOptions } from "../../hintProfilesSlice";
+import uniqid from "uniqid";
 
 export function WordLengthGridKey({ tracking }: { tracking: TrackingOptions }) {
   const trackingKey = () => {
     switch (tracking) {
       case TrackingOptions.RemainingOfTotal:
-        return "Remaining / Total"
+        return "Remaining / Total";
       case TrackingOptions.FoundOfTotal:
-        return "Found / Total"
+        return "Found / Total";
       case TrackingOptions.Remaining:
-        return "Remaining"
+        return "Remaining";
       case TrackingOptions.Found:
-        return "Found"
+        return "Found";
       case TrackingOptions.Total:
-        return "Total"
+        return "Total";
     }
-  }
+  };
 
   return (
     <div className="sb-word-length-grid-key">
@@ -33,5 +33,5 @@ export function WordLengthGridKey({ tracking }: { tracking: TrackingOptions }) {
       {/*  </div>*/}
       {/*</div>*/}
     </div>
-  )
+  );
 }

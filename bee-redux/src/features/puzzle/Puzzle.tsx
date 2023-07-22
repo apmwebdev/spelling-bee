@@ -1,6 +1,6 @@
-import { Guess } from "../guesses/Guess"
-import Hive from "./Hive"
-import { GuessList } from "../guesses/GuessList"
+import { Guess } from "../guesses/Guess";
+import Hive from "./Hive";
+import { GuessList } from "../guesses/GuessList";
 
 export function Puzzle() {
   return (
@@ -11,5 +11,5 @@ export function Puzzle() {
       </div>
       <GuessList />
     </div>
-  )
+  );
 }

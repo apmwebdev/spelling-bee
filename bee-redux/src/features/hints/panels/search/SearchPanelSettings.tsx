@@ -1,3 +1,3 @@
 export function SearchPanelSettings() {
-  return <div>SearchPanelSettings</div>
+  return <div>SearchPanelSettings</div>;
 }

@@ -1,10 +1,10 @@
 import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
-} from "../LetterHintPanel"
-import { TrackingOptions } from "../../hintProfilesSlice"
-import uniqid from "uniqid"
-import { generateData } from "./WordCountList"
+} from "../LetterHintPanel";
+import { TrackingOptions } from "../../hintProfilesSlice";
+import uniqid from "uniqid";
+import { generateData } from "./WordCountList";
 
 export function LettersOnly({
   answers,
@@ -20,31 +20,31 @@ export function LettersOnly({
       fragment,
       fragmentDivs,
     }: {
-      cell: LetterHintDataCell
-      fragment: string
-      fragmentDivs: any[]
+      cell: LetterHintDataCell;
+      fragment: string;
+      fragmentDivs: any[];
     }) => {
       const cellClasses = () => {
-        let classList = "sb-lol-fragment"
+        let classList = "sb-lol-fragment";
         if (tracking === TrackingOptions.Total) {
-          return classList
+          return classList;
         }
         if (cell.guesses === cell.answers) {
-          classList += " hint-completed"
+          classList += " hint-completed";
         } else if (cell.guesses === 0) {
-          classList += " hint-not-started"
+          classList += " hint-not-started";
         } else {
-          classList += " hint-in-progress"
+          classList += " hint-in-progress";
         }
-        return classList
-      }
+        return classList;
+      };
 
       fragmentDivs.push(
         <div key={uniqid()} className={cellClasses()}>
           {fragment}
         </div>,
-      )
-    }
+      );
+    };
 
     const { excludedAnswers, listRows } = generateData({
       answers,
@@ -53,35 +53,33 @@ export function LettersOnly({
       locationInWord,
       offset,
       tracking,
-    })
-    const startingLetterDivs = []
+    });
+    const startingLetterDivs = [];
 
     for (const startingLetter in listRows) {
-      const listRow = listRows[startingLetter]
-      const fragmentDivs: any[] = []
+      const listRow = listRows[startingLetter];
+      const fragmentDivs: any[] = [];
 
       for (const fragment in listRow) {
-        const dataCell = listRow[fragment]
-        createCell({ cell: dataCell, fragment, fragmentDivs })
+        const dataCell = listRow[fragment];
+        createCell({ cell: dataCell, fragment, fragmentDivs });
       }
 
       startingLetterDivs.push(
         <div key={uniqid()} className="sb-lol-row">
           {fragmentDivs}
         </div>,
-      )
+      );
     }
 
     return (
       <div className="sb-letters-only-list-container">
         {/*<WordLengthGridKey tracking={tracking} />*/}
-        <div className="sb-letters-only-list">
-          {startingLetterDivs}
-        </div>
+        <div className="sb-letters-only-list">{startingLetterDivs}</div>
         <div>Excluded words: {excludedAnswers}</div>
       </div>
-    )
-  }
+    );
+  };
 
-  return generateOutput()
+  return generateOutput();
 }

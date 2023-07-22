@@ -2,54 +2,54 @@ import {
   HintPanelFormat,
   PanelTypes,
   setIsCollapsed,
-} from "./hintProfilesSlice"
-import { BasicHintPanel } from "./panels/BasicHintPanel"
-import { LetterHintPanel } from "./panels/LetterHintPanel"
-import { SearchHintPanel } from "./panels/SearchHintPanel"
-import { ExcludedWordsHintPanel } from "./panels/ExcludedWordsHintPanel"
-import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel"
-import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel"
-import { useAppSelector } from "../../app/hooks"
-import { selectAnswerWords } from "../puzzle/puzzleSlice"
-import { PanelHeader } from "./generalControls/PanelHeader"
-import * as Collapsible from "@radix-ui/react-collapsible"
-import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget"
-import { useDispatch } from "react-redux"
+} from "./hintProfilesSlice";
+import { BasicHintPanel } from "./panels/BasicHintPanel";
+import { LetterHintPanel } from "./panels/LetterHintPanel";
+import { SearchHintPanel } from "./panels/SearchHintPanel";
+import { ExcludedWordsHintPanel } from "./panels/ExcludedWordsHintPanel";
+import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel";
+import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel";
+import { useAppSelector } from "../../app/hooks";
+import { selectAnswerWords } from "../puzzle/puzzleSlice";
+import { PanelHeader } from "./generalControls/PanelHeader";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget";
+import { useDispatch } from "react-redux";
 
 export interface HintPanelProps {
-  panel: HintPanelFormat
+  panel: HintPanelFormat;
 }
 
 export function HintPanel({ panel }: HintPanelProps) {
-  const dispatch = useDispatch()
-  const answers = useAppSelector(selectAnswerWords)
+  const dispatch = useDispatch();
+  const answers = useAppSelector(selectAnswerWords);
   const panelContent = (panel: HintPanelFormat) => {
     if (answers.length === 0) {
-      return
+      return;
     }
     switch (panel.type) {
       case PanelTypes.Basic:
-        return <BasicHintPanel panel={panel} />
+        return <BasicHintPanel panel={panel} />;
       case PanelTypes.Letter:
-        return <LetterHintPanel panel={panel} />
+        return <LetterHintPanel panel={panel} />;
       case PanelTypes.Search:
-        return <SearchHintPanel panel={panel} />
+        return <SearchHintPanel panel={panel} />;
       case PanelTypes.ExcludedWords:
-        return <ExcludedWordsHintPanel panel={panel} />
+        return <ExcludedWordsHintPanel panel={panel} />;
       case PanelTypes.WordObscurity:
-        return <WordObscurityHintPanel panel={panel} />
+        return <WordObscurityHintPanel panel={panel} />;
       case PanelTypes.Definitions:
-        return <DefinitionsHintPanel panel={panel} />
+        return <DefinitionsHintPanel panel={panel} />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const toggleCollapsed = () => {
     dispatch(
       setIsCollapsed({ panelId: panel.id, isCollapsed: !panel.isCollapsed }),
-    )
-  }
+    );
+  };
 
   return (
     <Collapsible.Root className="sb-hint-panel" open={!panel.isCollapsed}>
@@ -67,5 +67,5 @@ export function HintPanel({ panel }: HintPanelProps) {
         {panelContent(panel)}
       </Collapsible.Content>
     </Collapsible.Root>
-  )
+  );
 }

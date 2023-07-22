@@ -1,31 +1,30 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useState } from "react";
 
-import { useNavigate } from "react-router-dom"
-import { useAppSelector } from '../../app/hooks';
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 import {
   PuzzleStatuses,
   selectDate,
-  selectPuzzle,
-  selectPuzzleStatus
-} from '../puzzle/puzzleSlice';
+  selectPuzzleStatus,
+} from "../puzzle/puzzleSlice";
 
 export function Header() {
-  const [puzzleIdentifier, setPuzzleIdentifier] = useState("")
-  const navigate = useNavigate()
-  const status = useAppSelector(selectPuzzleStatus)
-  const puzzleDate = useAppSelector(selectDate)
+  const [puzzleIdentifier, setPuzzleIdentifier] = useState("");
+  const navigate = useNavigate();
+  const status = useAppSelector(selectPuzzleStatus);
+  const puzzleDate = useAppSelector(selectDate);
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    return navigate(`/puzzle/${puzzleIdentifier}`)
-  }
+    e.preventDefault();
+    return navigate(`/puzzle/${puzzleIdentifier}`);
+  };
 
   const subheaderText = () => {
     if (status === PuzzleStatuses.Succeeded) {
-      return `Spelling Bee for ${puzzleDate}`
+      return `Spelling Bee for ${puzzleDate}`;
     }
-    return "No puzzle to show"
-  }
+    return "No puzzle to show";
+  };
 
   return (
     <header className="sb-header">
@@ -43,5 +42,5 @@ export function Header() {
         </button>
       </form>
     </header>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import { Icon } from "@iconify/react"
+import { Icon } from "@iconify/react";
 
 export function HeaderRemoveButton({
   cssClasses,
   clickHandler,
 }: {
-  cssClasses?: string
-  clickHandler: Function
+  cssClasses?: string;
+  clickHandler: Function;
 }) {
   return (
     <button
@@ -14,5 +14,5 @@ export function HeaderRemoveButton({
     >
       <Icon icon="mdi:close-thick"></Icon>
     </button>
-  )
+  );
 }

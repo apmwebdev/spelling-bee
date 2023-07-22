@@ -1,29 +1,29 @@
-import { HintPanelFormat, setSettingsAreCollapsed } from "./hintProfilesSlice"
-import { GeneralPanelSettings } from "./GeneralPanelSettings"
-import { ComponentType } from "react"
-import { SettingsHeader } from "./generalControls/SettingsHeader"
-import * as Collapsible from "@radix-ui/react-collapsible"
-import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget"
-import { useDispatch } from "react-redux"
+import { HintPanelFormat, setSettingsAreCollapsed } from "./hintProfilesSlice";
+import { GeneralPanelSettings } from "./GeneralPanelSettings";
+import { ComponentType } from "react";
+import { SettingsHeader } from "./generalControls/SettingsHeader";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget";
+import { useDispatch } from "react-redux";
 
 interface HintPanelSettingsProps {
-  panel: HintPanelFormat
-  TypeSettingsComponent?: ComponentType
+  panel: HintPanelFormat;
+  TypeSettingsComponent?: ComponentType;
 }
 
 export function HintPanelSettings({
   panel,
   TypeSettingsComponent,
 }: HintPanelSettingsProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const toggleCollapsed = () => {
     dispatch(
       setSettingsAreCollapsed({
         panelId: panel.id,
         settingsAreCollapsed: !panel.settingsAreCollapsed,
       }),
-    )
-  }
+    );
+  };
 
   return (
     <Collapsible.Root
@@ -43,5 +43,5 @@ export function HintPanelSettings({
         <GeneralPanelSettings panel={panel} />
       </Collapsible.Content>
     </Collapsible.Root>
-  )
+  );
 }

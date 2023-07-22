@@ -1,6 +1,6 @@
-import { Header } from "./features/header/Header"
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
-import { PuzzleRoute } from "./routes/PuzzleRoute"
+import { Header } from "./features/header/Header";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { PuzzleRoute } from "./routes/PuzzleRoute";
 
 export default function App() {
   const rootElement = (
@@ -10,7 +10,7 @@ export default function App() {
         <Outlet />
       </div>
     </div>
-  )
+  );
 
   const router = createBrowserRouter([
     {
@@ -31,7 +31,7 @@ export default function App() {
         },
       ],
     },
-  ])
+  ]);
 
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }

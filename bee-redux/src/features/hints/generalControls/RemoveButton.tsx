@@ -1,13 +1,13 @@
-import { Icon } from "@iconify/react"
-import { useDispatch } from "react-redux"
-import { removePanel } from "../hintProfilesSlice"
+import { Icon } from "@iconify/react";
+import { useDispatch } from "react-redux";
+import { removePanel } from "../hintProfilesSlice";
 
 interface RemoveButtonProps {
-  panelId: number
+  panelId: number;
 }
 
 export function RemoveButton({ panelId }: RemoveButtonProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <button
@@ -16,5 +16,5 @@ export function RemoveButton({ panelId }: RemoveButtonProps) {
     >
       <Icon icon="mdi:close-thick" className="sb-hint-remove-button"></Icon>
     </button>
-  )
+  );
 }

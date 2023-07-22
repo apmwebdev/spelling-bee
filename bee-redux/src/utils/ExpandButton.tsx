@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react"
+import { Icon } from "@iconify/react";
 
 export function ExpandButton({ clickHandler }: { clickHandler?: Function }) {
   return (
@@ -8,5 +8,5 @@ export function ExpandButton({ clickHandler }: { clickHandler?: Function }) {
     >
       <Icon icon="mdi:arrow-expand" className="sb-hint-expand-button"></Icon>
     </div>
-  )
+  );
 }

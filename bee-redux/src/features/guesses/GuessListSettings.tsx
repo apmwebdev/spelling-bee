@@ -1,25 +1,24 @@
-import { useDispatch } from "react-redux"
-import { useAppSelector } from "../../app/hooks"
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import {
   selectGuessListSettings,
   setSortType,
   setSortOrder,
   toggleShowWrongGuesses,
-  toggleSeparateWrongGuesses,
   SortOrder,
   SortType,
   toggleIsCollapsed,
-} from "./guessListSettingsSlice"
+} from "./guessListSettingsSlice";
 
 export function GuessListSettings() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     sortType,
     sortOrder,
     showWrongGuesses,
     separateWrongGuesses,
     isCollapsed,
-  } = useAppSelector(selectGuessListSettings)
+  } = useAppSelector(selectGuessListSettings);
 
   return (
     <div className="sb-guess-list-settings">
@@ -97,5 +96,5 @@ export function GuessListSettings() {
         </div>
       </div>
     </div>
-  )
+  );
 }

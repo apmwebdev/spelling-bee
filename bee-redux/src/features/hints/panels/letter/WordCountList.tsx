@@ -1,22 +1,22 @@
 import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
-} from "../LetterHintPanel"
-import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice"
-import uniqid from "uniqid"
-import { WordLengthGridKey } from "./WordLengthGridKey"
+} from "../LetterHintPanel";
+import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice";
+import uniqid from "uniqid";
+import { WordLengthGridKey } from "./WordLengthGridKey";
 
 export interface ListRow {
-  [substring: string]: LetterHintDataCell
+  [substring: string]: LetterHintDataCell;
 }
 
 export interface ListRows {
-  [startingLetter: string]: ListRow
+  [startingLetter: string]: ListRow;
 }
 
 export interface ListData {
-  excludedAnswers: number
-  listRows: ListRows
+  excludedAnswers: number;
+  listRows: ListRows;
 }
 
 export const generateData = ({
@@ -26,36 +26,36 @@ export const generateData = ({
   locationInWord,
   offset,
 }: LetterHintSubsectionProps): ListData => {
-  const listRows: ListRows = {}
-  let excludedAnswers = 0
+  const listRows: ListRows = {};
+  let excludedAnswers = 0;
 
   for (const answer of answers) {
     if (offset + numberOfLetters > answer.length) {
-      excludedAnswers++
-      continue
+      excludedAnswers++;
+      continue;
     }
-    let answerFragment: string
+    let answerFragment: string;
     if (locationInWord === LetterPanelLocations.Beginning) {
-      answerFragment = answer.slice(offset, offset + numberOfLetters)
+      answerFragment = answer.slice(offset, offset + numberOfLetters);
     } else if (offset > 0) {
-      answerFragment = answer.slice(-numberOfLetters - offset, -offset)
+      answerFragment = answer.slice(-numberOfLetters - offset, -offset);
     } else {
-      answerFragment = answer.slice(-numberOfLetters)
+      answerFragment = answer.slice(-numberOfLetters);
     }
-    const startingLetter = answerFragment.charAt(0)
+    const startingLetter = answerFragment.charAt(0);
     if (listRows[startingLetter] === undefined) {
-      listRows[startingLetter] = {}
+      listRows[startingLetter] = {};
     }
     if (listRows[startingLetter][answerFragment] === undefined) {
-      listRows[startingLetter][answerFragment] = { answers: 0, guesses: 0 }
+      listRows[startingLetter][answerFragment] = { answers: 0, guesses: 0 };
     }
-    listRows[startingLetter][answerFragment].answers++
+    listRows[startingLetter][answerFragment].answers++;
     if (correctGuessWords.includes(answer)) {
-      listRows[startingLetter][answerFragment].guesses++
+      listRows[startingLetter][answerFragment].guesses++;
     }
   }
-  return { excludedAnswers, listRows }
-}
+  return { excludedAnswers, listRows };
+};
 export function WordCountList({
   answers,
   correctGuessWords,
@@ -70,51 +70,51 @@ export function WordCountList({
       fragment,
       fragmentDivs,
     }: {
-      cell: LetterHintDataCell
-      fragment: string
-      fragmentDivs: any[]
+      cell: LetterHintDataCell;
+      fragment: string;
+      fragmentDivs: any[];
     }) => {
-      const found = cell.guesses
-      const total = cell.answers
-      const remaining = total - found
+      const found = cell.guesses;
+      const total = cell.answers;
+      const remaining = total - found;
 
       const cellText = () => {
         switch (tracking) {
           case TrackingOptions.RemainingOfTotal:
-            return `${remaining}/${total}`
+            return `${remaining}/${total}`;
           case TrackingOptions.FoundOfTotal:
-            return `${found}/${total}`
+            return `${found}/${total}`;
           case TrackingOptions.Remaining:
-            return `${remaining}`
+            return `${remaining}`;
           case TrackingOptions.Found:
-            return `${found}`
+            return `${found}`;
           case TrackingOptions.Total:
-            return `${total}`
+            return `${total}`;
         }
-      }
+      };
 
       const cellClasses = () => {
-        let classList = "sb-wcl-fragment-count"
+        let classList = "sb-wcl-fragment-count";
         if (tracking === TrackingOptions.Total) {
-          return classList
+          return classList;
         }
         if (found === total) {
-          classList += " hint-completed"
+          classList += " hint-completed";
         } else if (found === 0) {
-          classList += " hint-not-started"
+          classList += " hint-not-started";
         } else {
-          classList += " hint-in-progress"
+          classList += " hint-in-progress";
         }
-        return classList
-      }
+        return classList;
+      };
 
       fragmentDivs.push(
         <div key={uniqid()} className="sb-wcl-fragment-cell">
           <div className="sb-wcl-fragment-label">{fragment}</div>
           <div className={cellClasses()}>{cellText()}</div>
         </div>,
-      )
-    }
+      );
+    };
 
     const { excludedAnswers, listRows } = generateData({
       answers,
@@ -123,35 +123,33 @@ export function WordCountList({
       locationInWord,
       offset,
       tracking,
-    })
-    const startingLetterDivs = []
+    });
+    const startingLetterDivs = [];
 
     for (const startingLetter in listRows) {
-      const listRow = listRows[startingLetter]
-      const fragmentDivs: any[] = []
+      const listRow = listRows[startingLetter];
+      const fragmentDivs: any[] = [];
 
       for (const fragment in listRow) {
-        const dataCell = listRow[fragment]
-        createCell({ cell: dataCell, fragment, fragmentDivs })
+        const dataCell = listRow[fragment];
+        createCell({ cell: dataCell, fragment, fragmentDivs });
       }
 
       startingLetterDivs.push(
         <div key={uniqid()} className="sb-wcl-row">
           {fragmentDivs}
         </div>,
-      )
+      );
     }
 
     return (
       <div className="sb-word-count-list-container">
         <WordLengthGridKey tracking={tracking} />
-        <div className="sb-word-count-list">
-          {startingLetterDivs}
-        </div>
+        <div className="sb-word-count-list">{startingLetterDivs}</div>
         <div>Excluded words: {excludedAnswers}</div>
       </div>
-    )
-  }
+    );
+  };
 
-  return generateOutput()
+  return generateOutput();
 }

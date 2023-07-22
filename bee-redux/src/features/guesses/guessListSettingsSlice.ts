@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "../../app/store"
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 enum Status {
   Initial = "Not Fetched",
@@ -19,16 +19,16 @@ export enum SortOrder {
 }
 
 export interface GuessListSettingsFormat {
-  sortType: SortType
-  sortOrder: SortOrder
-  showWrongGuesses: boolean
-  separateWrongGuesses: boolean
-  isCollapsed: boolean
+  sortType: SortType;
+  sortOrder: SortOrder;
+  showWrongGuesses: boolean;
+  separateWrongGuesses: boolean;
+  isCollapsed: boolean;
 }
 
 export interface GuessListSettingsState {
-  data: GuessListSettingsFormat
-  status: Status
+  data: GuessListSettingsFormat;
+  status: Status;
 }
 
 const initialState: GuessListSettingsState = {
@@ -40,30 +40,30 @@ const initialState: GuessListSettingsState = {
     isCollapsed: true,
   },
   status: Status.Initial,
-}
+};
 
 export const guessListSettingsSlice = createSlice({
   name: "guessListSettings",
   initialState,
   reducers: {
     setSortType: (state, action) => {
-      state.data.sortType = action.payload
+      state.data.sortType = action.payload;
     },
     setSortOrder: (state, action) => {
-      state.data.sortOrder = action.payload
+      state.data.sortOrder = action.payload;
     },
     toggleShowWrongGuesses: (state) => {
-      state.data.showWrongGuesses = !state.data.showWrongGuesses
+      state.data.showWrongGuesses = !state.data.showWrongGuesses;
     },
     toggleSeparateWrongGuesses: (state) => {
-      state.data.separateWrongGuesses = !state.data.separateWrongGuesses
+      state.data.separateWrongGuesses = !state.data.separateWrongGuesses;
     },
     toggleIsCollapsed: (state) => {
-      state.data.isCollapsed = !state.data.isCollapsed
+      state.data.isCollapsed = !state.data.isCollapsed;
     },
   },
   extraReducers: (builder) => {},
-})
+});
 
 export const {
   setSortType,
@@ -71,11 +71,11 @@ export const {
   toggleShowWrongGuesses,
   toggleSeparateWrongGuesses,
   toggleIsCollapsed,
-} = guessListSettingsSlice.actions
+} = guessListSettingsSlice.actions;
 
 export const selectGuessListSettings = (state: RootState) =>
-  state.guessListSettings.data
+  state.guessListSettings.data;
 export const selectGuessListShowWrongGuesses = (state: RootState) =>
-  state.guessListSettings.data.showWrongGuesses
+  state.guessListSettings.data.showWrongGuesses;
 
-export default guessListSettingsSlice.reducer
+export default guessListSettingsSlice.reducer;

@@ -2,16 +2,16 @@ import {
   changeBasicPanelSubsectionDisplay,
   ChangeBasicPanelSubsectionDisplayPayload,
   TrackingOptions,
-} from "../../hintProfilesSlice"
-import { useAppSelector } from "../../../../app/hooks"
-import { selectAnswerWords } from "../../../puzzle/puzzleSlice"
-import { selectCorrectGuesses } from "../../../guesses/guessesSlice"
-import { useDispatch } from "react-redux"
+} from "../../hintProfilesSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
+import { selectCorrectGuesses } from "../../../guesses/guessesSlice";
+import { useDispatch } from "react-redux";
 
 interface WordCountProps {
-  panelId: number
-  showWordCount: boolean
-  tracking: TrackingOptions
+  panelId: number;
+  showWordCount: boolean;
+  tracking: TrackingOptions;
 }
 
 export function WordCount({
@@ -19,39 +19,39 @@ export function WordCount({
   showWordCount,
   tracking,
 }: WordCountProps) {
-  const dispatch = useDispatch()
-  const answers = useAppSelector(selectAnswerWords)
-  const correctGuesses = useAppSelector(selectCorrectGuesses)
-  const answerCount = answers.length
-  const correctGuessCount = correctGuesses.length
-  const remaining = answerCount - correctGuessCount
+  const dispatch = useDispatch();
+  const answers = useAppSelector(selectAnswerWords);
+  const correctGuesses = useAppSelector(selectCorrectGuesses);
+  const answerCount = answers.length;
+  const correctGuessCount = correctGuesses.length;
+  const remaining = answerCount - correctGuessCount;
 
   const handleClick = () => {
     const payload: ChangeBasicPanelSubsectionDisplayPayload = {
       panelId: panelId,
       settingName: "showWordCount",
       newValue: !showWordCount,
-    }
-    dispatch(changeBasicPanelSubsectionDisplay(payload))
-  }
+    };
+    dispatch(changeBasicPanelSubsectionDisplay(payload));
+  };
 
   const content = () => {
     if (showWordCount) {
       switch (tracking) {
         case TrackingOptions.RemainingOfTotal:
-          return `Words: ${remaining} / ${answerCount} remaining`
+          return `Words: ${remaining} / ${answerCount} remaining`;
         case TrackingOptions.FoundOfTotal:
-          return `Words: ${correctGuessCount} / ${answerCount} found`
+          return `Words: ${correctGuessCount} / ${answerCount} found`;
         case TrackingOptions.Remaining:
-          return `Remaining words: ${remaining}`
+          return `Remaining words: ${remaining}`;
         case TrackingOptions.Found:
-          return `Found words: ${correctGuessCount}`
+          return `Found words: ${correctGuessCount}`;
         case TrackingOptions.Total:
-          return `Total words: ${answerCount}`
+          return `Total words: ${answerCount}`;
       }
     }
-    return "Words: hidden"
-  }
+    return "Words: hidden";
+  };
   return (
     <div>
       {content()}
@@ -59,5 +59,5 @@ export function WordCount({
         {showWordCount ? "Hide" : "Show"}
       </button>
     </div>
-  )
+  );
 }

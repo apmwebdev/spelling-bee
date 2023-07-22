@@ -1,9 +1,9 @@
-import { ReactNode } from "react"
+import { ReactNode } from "react";
 
 interface SettingsHeaderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function SettingsHeader({ children }: SettingsHeaderProps) {
-  return <header className="sb-hint-panel-settings-header">{children}</header>
+  return <header className="sb-hint-panel-settings-header">{children}</header>;
 }

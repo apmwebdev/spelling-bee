@@ -1,4 +1,4 @@
-import { SearchResultProps } from "./SearchPanelResults"
+import { SearchResultProps } from "./SearchPanelResults";
 
 export function SearchResultLettersOnly({
   resultData,
@@ -9,5 +9,5 @@ export function SearchResultLettersOnly({
       <h2>SearchResultLettersOnly</h2>
       search: {resultData.searchObject.searchString.toUpperCase()}
     </div>
-  )
+  );
 }

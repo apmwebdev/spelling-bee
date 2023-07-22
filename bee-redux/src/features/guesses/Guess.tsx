@@ -1,29 +1,29 @@
-import { FormEvent, useCallback, useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   addGuess,
   GuessesFormat,
   GuessFormat,
   selectGuessesData,
-} from "./guessesSlice"
-import { useAppSelector } from "../../app/hooks"
+} from "./guessesSlice";
+import { useAppSelector } from "../../app/hooks";
 import {
   selectAnswerWords,
   selectCenterLetter,
   selectValidLetters,
-} from "../puzzle/puzzleSlice"
-import { GuessAlerts } from "./GuessAlerts"
+} from "../puzzle/puzzleSlice";
+import { GuessAlerts } from "./GuessAlerts";
 
 export function Guess() {
-  const dispatch = useDispatch()
-  const guesses = useAppSelector(selectGuessesData)
-  const validLetters = useAppSelector(selectValidLetters)
-  const centerLetter = useAppSelector(selectCenterLetter)
-  const answers = useAppSelector(selectAnswerWords)
-  const [guessValue, setGuessValue] = useState("")
-  const [guessIsValid, setGuessIsValid] = useState(false)
-  const [messages, setMessages] = useState<string[]>([])
-  const [messagesType, setMessagesType] = useState<"" | "answer" | "error">("")
+  const dispatch = useDispatch();
+  const guesses = useAppSelector(selectGuessesData);
+  const validLetters = useAppSelector(selectValidLetters);
+  const centerLetter = useAppSelector(selectCenterLetter);
+  const answers = useAppSelector(selectAnswerWords);
+  const [guessValue, setGuessValue] = useState("");
+  const [guessIsValid, setGuessIsValid] = useState(false);
+  const [messages, setMessages] = useState<string[]>([]);
+  const [messagesType, setMessagesType] = useState<"" | "answer" | "error">("");
 
   enum ErrorTypes {
     TooShort = "Must be at least 4 letters",
@@ -34,42 +34,42 @@ export function Guess() {
   }
 
   const resetMessages = () => {
-    setMessages([])
-    setMessagesType("")
-    setGuessIsValid(true)
-  }
+    setMessages([]);
+    setMessagesType("");
+    setGuessIsValid(true);
+  };
 
   /*
   This callback version of addError is necessary in order to use it inside the
   useEffect hook. It doesn't work properly otherwise.
    */
   const addErrorCallback = useCallback((errorMessage: ErrorTypes) => {
-    setMessages((current) => [...current, errorMessage])
-    setMessagesType("error")
-    setGuessIsValid(false)
-  }, [])
+    setMessages((current) => [...current, errorMessage]);
+    setMessagesType("error");
+    setGuessIsValid(false);
+  }, []);
 
   const addError = (errorMessage: ErrorTypes) => {
-    setMessages((current) => [...current, errorMessage])
-    setMessagesType("error")
-    setGuessIsValid(false)
-  }
+    setMessages((current) => [...current, errorMessage]);
+    setMessagesType("error");
+    setGuessIsValid(false);
+  };
 
   const changeHandler = (userInput: string): void => {
     if (userInput.length < 16) {
-      setGuessValue(userInput)
+      setGuessValue(userInput);
     }
-  }
+  };
 
   useEffect(() => {
     if (guessValue !== "") {
-      resetMessages()
+      resetMessages();
     }
     if (
       guessValue !== "" &&
       !guessValue.match(new RegExp(`^[${validLetters.join("")}]+$`))
     ) {
-      addErrorCallback(ErrorTypes.InvalidLetter)
+      addErrorCallback(ErrorTypes.InvalidLetter);
     }
   }, [
     ErrorTypes.InvalidLetter,
@@ -77,54 +77,54 @@ export function Guess() {
     guessValue,
     messagesType,
     validLetters,
-  ])
+  ]);
 
   const validateSubmission = () => {
     const getMatchingGuess = (guesses: GuessesFormat, guessValue: string) => {
-      let matchingGuess: GuessFormat | null = null
+      let matchingGuess: GuessFormat | null = null;
       for (const guessObject of guesses.guesses) {
         if (guessObject.word === guessValue) {
-          matchingGuess = guessObject
-          break
+          matchingGuess = guessObject;
+          break;
         }
       }
-      return matchingGuess
-    }
+      return matchingGuess;
+    };
 
     if (guessValue.length < 4) {
-      addError(ErrorTypes.TooShort)
+      addError(ErrorTypes.TooShort);
     }
     if (centerLetter && !guessValue.includes(centerLetter)) {
-      addError(ErrorTypes.MissingCenterLetter)
+      addError(ErrorTypes.MissingCenterLetter);
     }
-    const matchingGuess = getMatchingGuess(guesses, guessValue)
+    const matchingGuess = getMatchingGuess(guesses, guessValue);
     if (matchingGuess) {
       if (matchingGuess.isAnswer) {
-        addError(ErrorTypes.AlreadyFound)
+        addError(ErrorTypes.AlreadyFound);
       } else {
-        addError(ErrorTypes.AlreadyGuessed)
+        addError(ErrorTypes.AlreadyGuessed);
       }
     }
-    return guessIsValid
-  }
+    return guessIsValid;
+  };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (validateSubmission()) {
-      const isAnswer = answers.includes(guessValue.toLowerCase())
+      const isAnswer = answers.includes(guessValue.toLowerCase());
       dispatch(
         addGuess({
           word: guessValue,
           isAnswer,
         }),
-      )
+      );
       if (isAnswer) {
-        setMessages([`${guessValue}`])
-        setMessagesType("answer")
+        setMessages([`${guessValue}`]);
+        setMessagesType("answer");
       }
     }
-    setGuessValue("")
-  }
+    setGuessValue("");
+  };
 
   return (
     <div className="sb-guess-input-container">
@@ -152,5 +152,5 @@ export function Guess() {
         </button>
       </form>
     </div>
-  )
+  );
 }

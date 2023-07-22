@@ -1,7 +1,6 @@
-
 interface LetterCellProps {
-  letter: string
-  isCenter: boolean
+  letter: string;
+  isCenter: boolean;
 }
 
 export default function LetterCell({ letter, isCenter }: LetterCellProps) {
@@ -19,5 +18,5 @@ export default function LetterCell({ letter, isCenter }: LetterCellProps) {
         {letter.toUpperCase()}
       </text>
     </svg>
-  )
+  );
 }
