@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useCallback, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import {
   addGuess,
@@ -23,9 +23,9 @@ export function Guess() {
   const [guessValue, setGuessValue] = useState("")
   const [guessIsValid, setGuessIsValid] = useState(false)
   const [messages, setMessages] = useState<string[]>([])
+  const [messagesType, setMessagesType] = useState<"" | "answer" | "error">("")
 
   enum ErrorTypes {
-    None = "",
     TooShort = "Must be at least 4 letters",
     InvalidLetter = "Contains invalid letter(s)",
     MissingCenterLetter = "Must contain center letter",
@@ -33,86 +33,102 @@ export function Guess() {
     AlreadyFound = "Already found",
   }
 
-  const validateInput = (userInput: string): void => {
+  const resetMessages = () => {
+    setMessages([])
+    setMessagesType("")
+    setGuessIsValid(true)
+  }
+
+  /*
+  This callback version of addError is necessary in order to use it inside the
+  useEffect hook. It doesn't work properly otherwise.
+   */
+  const addErrorCallback = useCallback((errorMessage: ErrorTypes) => {
+    setMessages((current) => [...current, errorMessage])
+    setMessagesType("error")
+    setGuessIsValid(false)
+  }, [])
+
+  const addError = (errorMessage: ErrorTypes) => {
+    setMessages((current) => [...current, errorMessage])
+    setMessagesType("error")
+    setGuessIsValid(false)
+  }
+
+  const changeHandler = (userInput: string): void => {
     if (userInput.length < 16) {
       setGuessValue(userInput)
     }
   }
 
   useEffect(() => {
-    setGuessIsValid(true)
-    setMessages([])
-    const lettersAreValid = (validLetters: string[] | undefined) => {
-      let returnVal = true
-      const guessSplit = guessValue.split("")
-      for (const letter of guessSplit) {
-        if (validLetters && !validLetters.includes(letter)) {
-          returnVal = false
+    if (guessValue !== "") {
+      resetMessages()
+    }
+    if (
+      guessValue !== "" &&
+      !guessValue.match(new RegExp(`^[${validLetters.join("")}]+$`))
+    ) {
+      addErrorCallback(ErrorTypes.InvalidLetter)
+    }
+  }, [
+    ErrorTypes.InvalidLetter,
+    addErrorCallback,
+    guessValue,
+    messagesType,
+    validLetters,
+  ])
+
+  const validateSubmission = () => {
+    const getMatchingGuess = (guesses: GuessesFormat, guessValue: string) => {
+      let matchingGuess: GuessFormat | null = null
+      for (const guessObject of guesses.guesses) {
+        if (guessObject.word === guessValue) {
+          matchingGuess = guessObject
           break
         }
       }
-      return returnVal
+      return matchingGuess
     }
 
-    if (!lettersAreValid(validLetters)) {
-      setGuessIsValid(false)
-      setMessages((current) => [...current, ErrorTypes.InvalidLetter])
-    }
-  }, [ErrorTypes.InvalidLetter, guessValue, validLetters])
-
-  const getMatchingGuess = (guesses: GuessesFormat, guessValue: string) => {
-    let matchingGuess: GuessFormat | null = null
-    for (const guessObject of guesses.guesses) {
-      if (guessObject.word === guessValue) {
-        matchingGuess = guessObject
-        break
-      }
-    }
-    return matchingGuess
-  }
-
-  const validateSubmission = () => {
-    let submissionIsValid = guessIsValid
     if (guessValue.length < 4) {
-      submissionIsValid = false
-      setMessages((current) => [...current, ErrorTypes.TooShort])
+      addError(ErrorTypes.TooShort)
     }
     if (centerLetter && !guessValue.includes(centerLetter)) {
-      submissionIsValid = false
-      setMessages((current) => [...current, ErrorTypes.MissingCenterLetter])
+      addError(ErrorTypes.MissingCenterLetter)
     }
     const matchingGuess = getMatchingGuess(guesses, guessValue)
     if (matchingGuess) {
-      submissionIsValid = false
       if (matchingGuess.isAnswer) {
-        setMessages((current) => [...current, ErrorTypes.AlreadyFound])
+        addError(ErrorTypes.AlreadyFound)
       } else {
-        setMessages((current) => [...current, ErrorTypes.AlreadyGuessed])
+        addError(ErrorTypes.AlreadyGuessed)
       }
     }
-    return submissionIsValid
-  }
-
-  const guessIsAnswer = (userInput: string, answers: string[] | undefined) => {
-    return !!(answers && answers.includes(userInput.toLowerCase()))
+    return guessIsValid
   }
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateSubmission()) {
+      const isAnswer = answers.includes(guessValue.toLowerCase())
       dispatch(
         addGuess({
           word: guessValue,
-          isAnswer: guessIsAnswer(guessValue, answers),
+          isAnswer,
         }),
       )
-      setGuessValue("")
+      if (isAnswer) {
+        setMessages([`${guessValue}`])
+        setMessagesType("answer")
+      }
     }
+    setGuessValue("")
   }
 
   return (
     <div className="sb-guess-input-container">
-      <GuessAlerts messages={messages} />
+      <GuessAlerts messages={messages} messagesType={messagesType} />
       <form
         id="sb-guess-input-form"
         name="sb-guess-input-form"
@@ -124,7 +140,7 @@ export function Guess() {
           name="sb-guess-input"
           autoComplete="off"
           value={guessValue}
-          onChange={(e) => validateInput(e.target.value.toLowerCase())}
+          onChange={(e) => changeHandler(e.target.value.toLowerCase())}
         />
         <button
           type="submit"
