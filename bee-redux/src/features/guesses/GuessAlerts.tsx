@@ -1,8 +1,8 @@
 interface GuessAlertsProps {
-  errorMessages: string[]
+  messages: string[]
 }
 
-export function GuessAlerts({ errorMessages }: GuessAlertsProps) {
-  const errorOutput = errorMessages.join("\n ")
-  return <div className="sb-guess-input-alerts">{errorOutput}</div>
+export function GuessAlerts({ messages }: GuessAlertsProps) {
+  const messageOutput = messages.join("\n ")
+  return <div className="sb-guess-input-alerts">{messageOutput}</div>
 }

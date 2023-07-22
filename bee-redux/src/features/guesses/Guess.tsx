@@ -11,7 +11,7 @@ import {
   selectAnswerWords,
   selectCenterLetter,
   selectValidLetters,
-} from '../puzzle/puzzleSlice';
+} from "../puzzle/puzzleSlice"
 import { GuessAlerts } from "./GuessAlerts"
 
 export function Guess() {
@@ -22,7 +22,7 @@ export function Guess() {
   const answers = useAppSelector(selectAnswerWords)
   const [guessValue, setGuessValue] = useState("")
   const [guessIsValid, setGuessIsValid] = useState(false)
-  const [errorMessages, setErrorMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<string[]>([])
 
   enum ErrorTypes {
     None = "",
@@ -41,7 +41,7 @@ export function Guess() {
 
   useEffect(() => {
     setGuessIsValid(true)
-    setErrorMessages([])
+    setMessages([])
     const lettersAreValid = (validLetters: string[] | undefined) => {
       let returnVal = true
       const guessSplit = guessValue.split("")
@@ -56,7 +56,7 @@ export function Guess() {
 
     if (!lettersAreValid(validLetters)) {
       setGuessIsValid(false)
-      setErrorMessages((current) => [...current, ErrorTypes.InvalidLetter])
+      setMessages((current) => [...current, ErrorTypes.InvalidLetter])
     }
   }, [ErrorTypes.InvalidLetter, guessValue, validLetters])
 
@@ -75,22 +75,19 @@ export function Guess() {
     let submissionIsValid = guessIsValid
     if (guessValue.length < 4) {
       submissionIsValid = false
-      setErrorMessages((current) => [...current, ErrorTypes.TooShort])
+      setMessages((current) => [...current, ErrorTypes.TooShort])
     }
     if (centerLetter && !guessValue.includes(centerLetter)) {
       submissionIsValid = false
-      setErrorMessages((current) => [
-        ...current,
-        ErrorTypes.MissingCenterLetter,
-      ])
+      setMessages((current) => [...current, ErrorTypes.MissingCenterLetter])
     }
     const matchingGuess = getMatchingGuess(guesses, guessValue)
     if (matchingGuess) {
       submissionIsValid = false
       if (matchingGuess.isAnswer) {
-        setErrorMessages((current) => [...current, ErrorTypes.AlreadyFound])
+        setMessages((current) => [...current, ErrorTypes.AlreadyFound])
       } else {
-        setErrorMessages((current) => [...current, ErrorTypes.AlreadyGuessed])
+        setMessages((current) => [...current, ErrorTypes.AlreadyGuessed])
       }
     }
     return submissionIsValid
@@ -115,7 +112,7 @@ export function Guess() {
 
   return (
     <div className="sb-guess-input-container">
-      <GuessAlerts errorMessages={errorMessages} />
+      <GuessAlerts messages={messages} />
       <form
         id="sb-guess-input-form"
         name="sb-guess-input-form"

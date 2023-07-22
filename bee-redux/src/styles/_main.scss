@@ -88,6 +88,13 @@
   align-items: center;
 }
 
+.sb-guess-input-alerts {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .sb-guess-input-container form {
   display: flex;
   gap: 8px;
