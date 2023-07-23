@@ -19,11 +19,16 @@ module NytScraperService
   end
 
   def self.create_puzzle_from_json(puzzle_json)
-    write_log "Starting import of puzzle for #{puzzle_json["displayDate"]}"
+    write_log "Checking if puzzle already exists in database..."
+    puzzle_date = Date.parse(puzzle_json["displayDate"])
+    if Puzzle.exists?(date: puzzle_date)
+      return write_log "Puzzle already present. Exiting importer."
+    end
+    write_log "Puzzle not present. Starting import of puzzle for #{puzzle_json["displayDate"]}"
     nyt_puzzle = NytPuzzle.create!({nyt_id: puzzle_json["id"], json_data: puzzle_json})
     write_log "Created NytPuzzle"
     puzzle = Puzzle.create!({
-      date: Date.parse(puzzle_json["displayDate"]),
+      date: puzzle_date,
       center_letter: puzzle_json["centerLetter"],
       outer_letters: puzzle_json["outerLetters"],
       origin: nyt_puzzle,
