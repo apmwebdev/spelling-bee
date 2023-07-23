@@ -1,3 +1,6 @@
+import { AnswerAlert } from "./guessAlerts/AnswerAlert";
+import { ErrorAlert } from "./guessAlerts/ErrorAlert";
+
 export interface GuessAlertsProps {
   messages: string[];
   messagesType: "answer" | "error" | "";
@@ -12,7 +15,12 @@ export function initialGuessAlerts(): GuessAlertsProps {
 
 export function GuessAlerts({ messages, messagesType }: GuessAlertsProps) {
   const messageOutput = () => {
-    return messages.join("\n ");
+    if (messagesType === "answer") {
+      return <AnswerAlert answerWord={messages[0]} />;
+    } else if (messagesType === "error") {
+      return <ErrorAlert errorMessages={messages} />;
+    }
+    return null;
   };
 
   return (

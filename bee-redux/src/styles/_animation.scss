@@ -17,3 +17,50 @@
 .sb-hint-panel-settings[data-state="closed"] .sb-hint-panel-settings-header-button .header-disclosure-widget-icon {
   transform: rotate(0deg);
 }
+
+.sb-answer-alert-message, .sb-answer-alert-score {
+  animation-duration: 0.7s;
+  animation-timing-function:
+          cubic-bezier(0.33, 1, 0.68, 1),
+          cubic-bezier(0.5, 0, 0.75, 0);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.sb-answer-alert-message {
+  animation-name: float-up-slow, fade-out;
+
+  @keyframes float-up-slow {
+    from {
+      //opacity: 100%;
+      bottom: 0px;
+    }
+    to {
+      //opacity: 0%;
+      bottom: 4px;
+    }
+  }
+}
+.sb-answer-alert-score {
+  animation-name: float-up-fast, fade-out;
+
+  @keyframes float-up-fast {
+    from {
+      //opacity: 100%;
+      bottom: 0px;
+    }
+    to {
+      //opacity: 0%;
+      bottom: 8px;
+    }
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}

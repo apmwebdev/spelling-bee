@@ -67,7 +67,7 @@
 
 .sb-controls-container {
   position: sticky;
-  top: 4px;
+  top: 8px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -89,10 +89,24 @@
 }
 
 .sb-guess-input-alerts-container {
-  height: 2rem;
+  position: relative;
+  height: 2.5rem;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 16px;
+}
+
+.sb-answer-alert-message {
+  position: relative;
+  border: 1px solid;
+  padding: 8px;
+}
+
+.sb-answer-alert-score {
+  position: relative;
+  font-weight: bold;
 }
 
 .sb-guess-input-container form {
@@ -166,6 +180,13 @@
 .sb-progress {
   border: 1px dotted;
 }
+
+
+/**********************/
+/***   GUESS LIST   ***/
+/**********************/
+
+
 
 .sb-guess-list-section {
   display: flex;

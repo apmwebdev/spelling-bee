@@ -16,3 +16,7 @@ export const calculateScore = (words: string[]) => {
     return score + wordScore;
   }, 0);
 };
+
+export const calculateWordScore = (word: string) => {
+  return calculateScore([word]);
+};
