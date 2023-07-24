@@ -32,11 +32,9 @@
 
   @keyframes float-up-slow {
     from {
-      //opacity: 100%;
       bottom: 0px;
     }
     to {
-      //opacity: 0%;
       bottom: 4px;
     }
   }
@@ -46,12 +44,10 @@
 
   @keyframes float-up-fast {
     from {
-      //opacity: 100%;
-      bottom: 0px;
+      bottom: 23px;
     }
     to {
-      //opacity: 0%;
-      bottom: 8px;
+      bottom: 37px;
     }
   }
 }
@@ -62,5 +58,40 @@
   }
   to {
     opacity: 0%;
+  }
+}
+
+.sb-guess-input {
+  &.error {
+    animation-name: shake;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+  }
+  @keyframes shake {
+    12.5% {
+      left: -6px;
+    }
+    37.5% {
+      left: 6px;
+    }
+    62.5% {
+      left: -6px;
+    }
+    87.5% {
+      left: 6px;
+    }
+    100% {
+      left: 0px;
+    }
+  }
+  &:after {
+    animation: blink 1s steps(2) infinite;
+
+  }
+  @keyframes blink {
+    0% {
+      opacity: 0%;
+    }
   }
 }

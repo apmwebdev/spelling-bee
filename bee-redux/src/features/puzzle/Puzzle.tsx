@@ -1,15 +1,18 @@
-import { Guess } from "../guesses/Guess";
 import Hive from "./Hive";
 import { GuessList } from "../guesses/GuessList";
+import { GuessInputProvider } from "../../app/GuessInputProvider";
+import { GuessInput } from "../guesses/GuessInput";
 
 export function Puzzle() {
   return (
-    <div className="sb-controls-container">
-      <div className="sb-controls">
-        <Guess />
-        <Hive />
+    <GuessInputProvider>
+      <div className="sb-controls-container">
+        <div className="sb-controls">
+          <GuessInput />
+          <Hive />
+        </div>
+        <GuessList />
       </div>
-      <GuessList />
-    </div>
+    </GuessInputProvider>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import uniqid from "uniqid";
 
 export function ErrorAlert({ errorMessages }: { errorMessages: string[] }) {
   const [isActive, setIsActive] = useState(true);
@@ -14,9 +15,11 @@ export function ErrorAlert({ errorMessages }: { errorMessages: string[] }) {
   }
 
   return (
-    <ul className="sb-error-alerts">
+    <ul className="sb-error-alert-message">
       {errorMessages.map((errorMessage) => (
-        <li className="sb-answer-alert-item">{errorMessage}</li>
+        <li className="sb-error-alert-item" key={uniqid()}>
+          {errorMessage}
+        </li>
       ))}
     </ul>
   );
