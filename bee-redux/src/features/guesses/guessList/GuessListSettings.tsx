@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import {
   selectGuessListSettings,
   setSortType,

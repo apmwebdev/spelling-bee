@@ -1,13 +1,14 @@
 import { useAppSelector } from "../../app/hooks";
 import { GuessFormat, selectGuessesData } from "./guessesSlice";
-import { GuessListSettings } from "./GuessListSettings";
+import { GuessListSettings } from "./guessList/GuessListSettings";
 import {
   GuessListSettingsFormat,
   selectGuessListSettings,
   SortOrder,
   SortType,
-} from "./guessListSettingsSlice";
+} from "./guessList/guessListSettingsSlice";
 import uniqid from "uniqid";
+import { Progress } from "../status/Progress";
 
 export function GuessList() {
   const guessesData = useAppSelector(selectGuessesData);
@@ -68,6 +69,7 @@ export function GuessList() {
   };
   return (
     <div className="sb-guess-list-section">
+      <Progress />
       <GuessListSettings />
       <div className="sb-guess-list-container">{guessListContent()}</div>
     </div>
