@@ -173,6 +173,9 @@
   /*height: 100px;*/
   /*width: calc(var(--height) * 1.1547);*/
   /*margin: 4px;*/
+  &:focus {
+    z-index: 2;
+  }
 }
 
 .hexagon text {
@@ -206,6 +209,16 @@
 
 .hexagon:nth-child(7) {
   transform: translate(-75%, 50%);
+}
+
+.sb-guess-input-controls {
+  display: grid;
+  //width: 100%;
+  grid-template-columns: 1fr max-content 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
 }
 
 .sb-status {
