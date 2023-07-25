@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { GuessInputContext } from "../../app/GuessInputProvider";
 import { GuessOutput } from "./GuessOutput";
 import { addGuess, GuessFormat, selectGuesses } from "./guessesSlice";
@@ -22,6 +22,8 @@ export function GuessInput() {
   const [messages, setMessages] = useState<string[]>([]);
   const [messagesType, setMessagesType] = useState<"" | "answer" | "error">("");
   const [guessCssClasses, setGuessCssClasses] = useState("");
+  const clearMessagesTimeout = useRef<TimeoutId | null>(null);
+  const clearGuessTimeout = useRef<TimeoutId | null>(null);
 
   useEffect(() => {
     enum ErrorTypes {
@@ -40,26 +42,31 @@ export function GuessInput() {
       );
     };
 
-    let clearMessagesTimeout: TimeoutId | null;
-    let clearGuessTimeout: TimeoutId | null;
+    // let clearMessagesTimeout: TimeoutId | null;
+    // let clearGuessTimeout: TimeoutId | null;
 
     const clearMessages = () => {
       setMessages([]);
       setMessagesType("");
       setGuessCssClasses("");
-      clearMessagesTimeout = null;
+      clearMessagesTimeout.current = null;
+    };
+
+    const clearGuess = () => {
+      setGuessValue("");
+      clearGuessTimeout.current = null;
     };
 
     const displayMessages = (
       newMessages: string[],
       newMessagesType: "" | "answer" | "error",
     ) => {
-      clearMessagesTimeout = setTimeout(() => {
+      clearMessagesTimeout.current = setTimeout(() => {
         clearMessages();
       }, 1000);
 
-      clearGuessTimeout = setTimeout(() => {
-        setGuessValue("");
+      clearGuessTimeout.current = setTimeout(() => {
+        clearGuess();
       }, 1000);
 
       setMessages(() => newMessages);
@@ -114,12 +121,13 @@ export function GuessInput() {
     };
 
     const handleSubmit = () => {
-      if (clearMessagesTimeout) {
+      if (clearMessagesTimeout.current) {
+        clearTimeout(clearMessagesTimeout.current);
         clearMessages();
       }
-      if (clearGuessTimeout) {
-        clearTimeout(clearGuessTimeout);
-        clearGuessTimeout = null;
+      if (clearGuessTimeout.current) {
+        clearTimeout(clearGuessTimeout.current);
+        clearGuess();
       }
       if (validateSubmission(guessValue, guesses, centerLetter)) {
         const isAnswer = answers.includes(guessValue);
@@ -145,10 +153,9 @@ export function GuessInput() {
       if (interactiveElementFocus(e)) {
         return;
       }
-      if (clearGuessTimeout) {
-        setGuessValue("");
-        clearTimeout(clearGuessTimeout);
-        clearGuessTimeout = null;
+      if (clearGuessTimeout.current) {
+        clearTimeout(clearGuessTimeout.current);
+        clearGuess();
       }
       if (e.key === "Backspace") {
         guessBackspace();
@@ -172,11 +179,11 @@ export function GuessInput() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("enterPressed", handleEnterPressed, false);
+    window.addEventListener("enterPressed", handleEnterPressed);
     // Cleanup
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("enterPressed", handleEnterPressed, false);
+      window.removeEventListener("enterPressed", handleEnterPressed);
     };
   }, [
     answers,
