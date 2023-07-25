@@ -1,8 +1,8 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectCenterLetter, selectValidLetters } from "../puzzle/puzzleSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectCenterLetter, selectValidLetters } from "../../puzzle/puzzleSlice";
 import uniqid from "uniqid";
 
-export function GuessOutput({
+export function GuessInputDisplay({
   guessValue,
   additionalCssClasses,
 }: {
@@ -44,7 +44,10 @@ export function GuessOutput({
   };
 
   return (
-    <div className={containerClasses(guessValue, additionalCssClasses)}>
+    <div
+      id="sb-guess-input"
+      className={containerClasses(guessValue, additionalCssClasses)}
+    >
       {content(guessValue)}
     </div>
   );

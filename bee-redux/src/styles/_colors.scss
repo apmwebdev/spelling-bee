@@ -29,6 +29,11 @@
     background-color: var(--bg-color);
   }
 
+  *:focus {
+    outline: 1px dotted var(--main-line-color);
+  }
+
+
   a {
     color: #646cff;
   }

@@ -13,7 +13,7 @@ export default function LetterCell({ letter, isCenter }: LetterCellProps) {
       className={isCenter ? "hexagon center-letter" : "hexagon"}
       viewBox="0 0 140 121.2435565"
       onClick={handleClick}
-      tabIndex={0}
+      // tabIndex={0}
       role="button"
     >
       <polygon

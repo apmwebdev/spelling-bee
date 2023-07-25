@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { GuessInputContext } from "../../app/GuessInputProvider";
-import { GuessOutput } from "./GuessOutput";
+import { GuessInputDisplay } from "./guessInput/GuessInputDisplay";
 import { addGuess, GuessFormat, selectGuesses } from "./guessesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -150,12 +150,21 @@ export function GuessInput() {
       if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) {
         return;
       }
-      if (interactiveElementFocus(e)) {
+      if (document.activeElement?.tagName === "INPUT") {
+        return;
+      }
+      if (interactiveElementFocus(e) && !e.key.match(/^[A-Za-z]$/)) {
         return;
       }
       if (clearGuessTimeout.current) {
         clearTimeout(clearGuessTimeout.current);
         clearGuess();
+      }
+      if (
+        document.activeElement?.tagName === "BUTTON" &&
+        e.key.match(/^[A-Za-z]$/)
+      ) {
+        (document.activeElement as HTMLElement).blur();
       }
       if (e.key === "Backspace") {
         guessBackspace();
@@ -200,7 +209,7 @@ export function GuessInput() {
   return (
     <div className="sb-guess-input-container">
       <GuessAlerts messages={messages} messagesType={messagesType} />
-      <GuessOutput
+      <GuessInputDisplay
         guessValue={guessValue}
         additionalCssClasses={guessCssClasses}
       />
