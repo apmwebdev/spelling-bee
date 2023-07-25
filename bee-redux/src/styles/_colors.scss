@@ -16,6 +16,7 @@
     /* Base variables */
     --bg-color: #222;
     --bg-color-standout: #333;
+    --bg-color-light: #555;
     --main-line-color: rgba(255, 255, 255, 0.87);
     --disabled-line-color: rgba(255, 255, 255, 0.36);
     --secondary-line-color: rgba(255, 255, 255, 0.3); //#666
@@ -107,15 +108,22 @@
   }
 
   .hexagon polygon {
-    fill: #555;
+    //fill: #555;
+    fill: var(--bg-color-light);
   }
 
   .hexagon.center-letter polygon {
-    fill: hsl($yellow-hue, 78%, 30%); //#887711
+    fill: var(--main-yellow); //#887711
   }
 
   .hexagon text {
     fill: #eee;
+  }
+
+  .sb-guess-input-controls {
+    .standard-button {
+      background-color: var(--bg-color-light);
+    }
   }
 
   .sb-hint-panel {
