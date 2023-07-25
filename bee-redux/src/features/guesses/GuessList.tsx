@@ -70,8 +70,10 @@ export function GuessList() {
   return (
     <div className="sb-guess-list-section">
       <Progress />
-      <GuessListSettings />
-      <div className="sb-guess-list-container">{guessListContent()}</div>
+      <div className="sb-guess-list-container">
+        <GuessListSettings />
+        {guessListContent()}
+      </div>
     </div>
   );
 }

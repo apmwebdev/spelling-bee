@@ -27,16 +27,18 @@ export function HintPanelSettings({
 
   return (
     <Collapsible.Root
-      className="sb-hint-panel-settings"
+      className="sb-hint-panel-settings collapsible-settings"
       open={!panel.settingsAreCollapsed}
     >
       <SettingsHeader>
-        <button
-          className="sb-hint-panel-settings-header-button"
-          onClick={toggleCollapsed}
-        >
-          <HeaderDisclosureWidget title="Settings" />
-        </button>
+        <Collapsible.Trigger asChild>
+          <button
+            className="sb-hint-panel-settings-header-button collapsible-settings-header-button"
+            onClick={toggleCollapsed}
+          >
+            <HeaderDisclosureWidget title="Settings" />
+          </button>
+        </Collapsible.Trigger>
       </SettingsHeader>
       <Collapsible.Content className="sb-hint-panel-settings-content">
         {TypeSettingsComponent && <TypeSettingsComponent />}

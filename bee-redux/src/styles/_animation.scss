@@ -10,11 +10,11 @@
   transform: rotate(0deg);
 }
 
-.sb-hint-panel-settings[data-state="open"] .sb-hint-panel-settings-header-button .header-disclosure-widget-icon {
+.collapsible-settings[data-state="open"] .collapsible-settings-header-button .header-disclosure-widget-icon {
   transform: rotate(90deg);
 }
 
-.sb-hint-panel-settings[data-state="closed"] .sb-hint-panel-settings-header-button .header-disclosure-widget-icon {
+.collapsible-settings[data-state="closed"] .collapsible-settings-header-button .header-disclosure-widget-icon {
   transform: rotate(0deg);
 }
 

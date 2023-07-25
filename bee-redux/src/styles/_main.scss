@@ -101,7 +101,7 @@
 
 .sb-answer-alert-message, .sb-error-alert-message {
   border: 1px solid;
-  padding: 12px 20px;
+  padding: 10px 14px;
 }
 
 .sb-answer-alert-message {
@@ -262,20 +262,22 @@
 }
 
 .sb-guess-list-container {
-  border: 1px dotted;
+  border: 2px solid;
+  border-radius: var(--br);
   margin: 0px;
   padding: 8px;
 }
 
 .sb-guess-list {
+  padding: 8px;
   font-size: 16px;
   list-style: none;
   text-align: left;
-  height: calc(23px * 15);
+  height: calc(24px * 15 + 16px);
   column-count: 3;
   column-fill: auto;
   li {
-    height: 23px;
+    height: 24px;
     text-transform: lowercase;
     &:first-letter {
       text-transform: uppercase;
@@ -335,11 +337,19 @@
   justify-content: center;
 }
 
-.sb-hint-panel-settings-header {
+.sb-hint-panel-settings, .collapsible-settings {
+  //padding: 8px 4px;
+  font-size: 16px;
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 1px solid;
+}
+
+.sb-hint-panel-settings-header, .collapsible-settings-header {
   padding: 2px;
 }
 
-.sb-hint-panel-settings-header-button {
+.sb-hint-panel-settings-header-button, .collapsible-settings-header-button {
   display: flex;
   width: 100%;
   align-items: center;
@@ -374,14 +384,6 @@
   grid-column: 1 / 4;
   grid-row: 1 / 2;
   font-weight: bold;
-}
-
-.sb-hint-panel-settings {
-  //padding: 8px 4px;
-  font-size: 16px;
-  border-radius: var(--br);
-  overflow: hidden;
-  border: 1px solid;
 }
 
 .sb-general-hint-settings {

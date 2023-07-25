@@ -60,9 +60,18 @@
     }
   }
 
-  .sb-answer-alert-message {
+  .sb-guess-list-container {
     border-color: var(--secondary-line-color);
   }
+
+  .sb-answer-alert-message {
+    border-color: var(--secondary-line-color);
+    &.pangram-alert-message {
+      border-color: var(--main-yellow);
+      background-color: var(--main-yellow);
+    }
+  }
+
 
   .sb-error-alert-message {
     border-color: var(--main-line-color);
@@ -135,10 +144,10 @@
     }
   }
 
-  .sb-hint-panel-settings {
+  .sb-hint-panel-settings, .collapsible-settings {
     background-color: hsl(0, 30%, 20%);
     border-color: hsl($settings-hue, $border-saturation, $border-lightness);
-    .sb-hint-panel-settings-header {
+    .sb-hint-panel-settings-header, .collapsible-settings-header {
       background-color: hsl($settings-hue, 25%, 30%);
       button {
         &.button {
@@ -153,7 +162,7 @@
     &[data-state="closed"] {
       color: var(--collapsed-line-color);
       border-color: hsl($settings-hue, $border-saturation-collapsed, $border-lightness-collapsed);
-      .sb-hint-panel-settings-header {
+      .sb-hint-panel-settings-header, .collapsible-settings-header {
         background-color: hsl($settings-hue, 15%, 26%);
         button {
           color: var(--collapsed-line-color);
