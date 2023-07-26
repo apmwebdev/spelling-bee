@@ -9,13 +9,14 @@ import {
 } from "./guessList/guessListSettingsSlice";
 import uniqid from "uniqid";
 import { Progress } from "../status/Progress";
+import { GuessListStatus } from "./guessList/GuessListStatus";
 
 export function GuessList() {
   const guessesData = useAppSelector(selectGuessesData);
   const guestListSettings = useAppSelector(selectGuessListSettings);
 
   const generateDisplayGuessList = (
-    { sortType, sortOrder, showWrongGuesses }: GuessListSettingsFormat,
+    { sortType, sortOrder, wrongGuessesShow }: GuessListSettingsFormat,
     guesses: GuessFormat[],
   ) => {
     let displayGuessList: GuessFormat[] = [];
@@ -23,7 +24,7 @@ export function GuessList() {
       return displayGuessList;
     }
 
-    if (!showWrongGuesses) {
+    if (!wrongGuessesShow) {
       displayGuessList = guesses.filter((guess) => guess.isAnswer);
     } else {
       displayGuessList = [...guesses];
@@ -58,20 +59,21 @@ export function GuessList() {
     );
     if (displayGuessList.length > 0) {
       return (
-        <ul className="sb-guess-list">
+        <ul className="sb-guess-list has-content">
           {displayGuessList.map((guess) => {
             return <li key={uniqid()}>{guess.word}</li>;
           })}
         </ul>
       );
     }
-    return <div>No guesses</div>;
+    return <div className="sb-guess-list empty">No guesses</div>;
   };
   return (
     <div className="sb-guess-list-section">
       <Progress />
       <div className="sb-guess-list-container">
         <GuessListSettings />
+        <GuessListStatus />
         {guessListContent()}
       </div>
     </div>
