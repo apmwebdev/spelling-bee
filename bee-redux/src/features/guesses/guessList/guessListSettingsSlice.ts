@@ -62,7 +62,7 @@ const initialState: GuessListSettingsState = {
     foundWordsSortType: SortType.Alphabetical,
     foundWordsSortOrder: SortOrder.Ascending,
     foundWordsFilter: [],
-    wrongGuessesShow: true,
+    wrongGuessesShow: false,
     wrongGuessesSeparate: true,
     wrongGuessesSortType: SortType.FoundOrder,
     wrongGuessesSortOrder: SortOrder.Descending,

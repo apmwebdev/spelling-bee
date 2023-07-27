@@ -16,7 +16,11 @@ export function GuessList() {
   const guestListSettings = useAppSelector(selectGuessListSettings);
 
   const generateDisplayGuessList = (
-    { sortType, sortOrder, wrongGuessesShow }: GuessListSettingsFormat,
+    {
+      foundWordsSortType,
+      foundWordsSortOrder,
+      wrongGuessesShow,
+    }: GuessListSettingsFormat,
     guesses: GuessFormat[],
   ) => {
     let displayGuessList: GuessFormat[] = [];
@@ -30,19 +34,19 @@ export function GuessList() {
       displayGuessList = [...guesses];
     }
 
-    if (sortType === SortType.Alphabetical) {
+    if (foundWordsSortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
         if (a.word < b.word) {
-          return sortOrder === SortOrder.Ascending ? -1 : 1;
+          return foundWordsSortOrder === SortOrder.Ascending ? -1 : 1;
         }
         if (a.word > b.word) {
-          return sortOrder === SortOrder.Ascending ? 1 : -1;
+          return foundWordsSortOrder === SortOrder.Ascending ? 1 : -1;
         }
         return 0;
       });
     } else {
       displayGuessList.sort((a, b) => {
-        if (sortOrder === SortOrder.Ascending) {
+        if (foundWordsSortOrder === SortOrder.Ascending) {
           return a.timestamp - b.timestamp;
         }
         return b.timestamp - a.timestamp;
@@ -69,13 +73,10 @@ export function GuessList() {
     return <div className="sb-guess-list empty">No guesses</div>;
   };
   return (
-    <div className="sb-guess-list-section">
-      <Progress />
-      <div className="sb-guess-list-container">
-        <GuessListSettings />
-        <GuessListStatus />
-        {guessListContent()}
-      </div>
+    <div className="sb-guess-list-container">
+      <GuessListSettings />
+      <GuessListStatus />
+      {guessListContent()}
     </div>
   );
 }

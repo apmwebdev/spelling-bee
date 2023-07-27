@@ -70,7 +70,7 @@ export function GuessListSettingsContent() {
           Show incorrect guesses
           <input
             type="checkbox"
-            name="showWrongGuesses"
+            name="wrongGuessesShow"
             value="blah"
             checked={wrongGuessesShow}
             onChange={(e) => dispatch(toggleWrongGuessesShow())}

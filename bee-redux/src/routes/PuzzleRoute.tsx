@@ -5,6 +5,7 @@ import { fetchPuzzleAsync } from "../features/puzzle/puzzleSlice";
 import { useAppDispatch } from "../app/hooks";
 import { useEffect } from "react";
 import { GuessList } from "../features/guesses/GuessList";
+import { HintSection } from "../features/hints/HintSection";
 
 export function PuzzleRoute() {
   const params = useParams();
@@ -21,9 +22,9 @@ export function PuzzleRoute() {
   return (
     <div className="sb-main-container">
       <div className="sb-main">
-        <GuessList />
-        <Puzzle />
         <Status />
+        <Puzzle />
+        <HintSection />
       </div>
     </div>
   );
