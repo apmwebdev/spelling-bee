@@ -3,7 +3,7 @@ class Puzzle < ApplicationRecord
   has_many :answers
   has_many :words, through: :answers
 
-  attr_accessor :pangrams, :perfect_pangrams, :valid_letters
+  attr_accessor :pangrams, :perfect_pangrams, :valid_letters, :excluded_words
 
   def set_valid_letters
     @valid_letters ||= [self.center_letter, *self.outer_letters].sort
@@ -31,10 +31,25 @@ class Puzzle < ApplicationRecord
     @perfect_pangrams
   end
 
+  def set_excluded_words
+    set_valid_letters
+    @excluded_words ||= []
+    return unless @excluded_words.empty?
+    Word
+      .where("CHAR_LENGTH(text) >= 4")
+      .where("text ~ '^[#{@valid_letters.join("")}]+$'")
+      .find_each do |checked_word|
+      unless self.words.include?(checked_word)
+        @excluded_words.push(checked_word.text)
+      end
+    end
+  end
+
   def set_derived_fields
     set_valid_letters
     set_pangrams
     set_perfect_pangrams
+    set_excluded_words
   end
 
   def to_front_end
@@ -50,6 +65,7 @@ class Puzzle < ApplicationRecord
       answers: self.answers.map do |answer|
         answer.to_front_end
       end.sort{ |a, b| a[:word] <=> b[:word]},
+      excluded_words: @excluded_words
     }
   end
 end
