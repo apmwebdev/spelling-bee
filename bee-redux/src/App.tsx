@@ -1,6 +1,8 @@
 import { Header } from "./features/header/Header";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
+import { Signup } from "./features/user/Signup";
+import { Login } from "./features/user/Login";
 
 export default function App() {
   const rootElement = (
@@ -28,6 +30,14 @@ export default function App() {
         {
           path: "puzzle/:identifier",
           element: <PuzzleRoute />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
+        },
+        {
+          path: "login",
+          element: <Login />,
         },
       ],
     },
