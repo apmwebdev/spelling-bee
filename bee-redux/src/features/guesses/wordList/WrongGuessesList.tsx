@@ -6,6 +6,7 @@ import {
   SortType,
 } from "./wordListSettingsSlice";
 import uniqid from "uniqid";
+import { WordListScroller } from "./WordListScroller";
 
 export function WrongGuessesList() {
   const guessesData = useAppSelector(selectGuessesData);
@@ -46,13 +47,8 @@ export function WrongGuessesList() {
   const guessListContent = () => {
     const displayGuessList = generateDisplayGuessList();
     if (displayGuessList.length > 0) {
-      return (
-        <ul className="sb-guess-list has-content">
-          {displayGuessList.map((guess) => {
-            return <li key={uniqid()}>{guess.word}</li>;
-          })}
-        </ul>
-      );
+      const wordsOnly = displayGuessList.map((guess) => guess.word);
+      return <WordListScroller wordList={wordsOnly} />;
     }
     return <div className="sb-word-list empty">No guesses</div>;
   };
