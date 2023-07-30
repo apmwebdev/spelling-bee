@@ -2,6 +2,7 @@
 
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
+  wrap_parameters :api_v1_user
   respond_to :json
   # before_action :configure_sign_up_params, only: [:create]
 

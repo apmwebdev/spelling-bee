@@ -2,7 +2,7 @@
 
 class Api::V1::Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
-
+  wrap_parameters :api_v1_user
   respond_to :json
 
   private
@@ -34,6 +34,10 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
       }, status: :unauthorized
     end
   end
+
+  # def sign_in_params
+  #   params.require(:user).permit(:email, :password)
+  # end
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
