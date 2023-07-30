@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../app/hooks";
 import {
-  selectGuessListSettingsCollapsed,
+  selectWordListSettingsCollapsed,
   toggleSettingsCollapsed,
-} from "./guessListSettingsSlice";
+} from "./wordListSettingsSlice";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SettingsHeader } from "../../hints/generalControls/SettingsHeader";
 import { HeaderDisclosureWidget } from "../../../utils/HeaderDisclosureWidget";
-import { GuessListSettingsContent } from "./GuessListSettingsContent";
+import { WordListSettingsContent } from "./WordListSettingsContent";
 
-export function GuessListSettings() {
+export function WordListSettings() {
   const dispatch = useDispatch();
-  const settingsCollapsed = useAppSelector(selectGuessListSettingsCollapsed);
+  const settingsCollapsed = useAppSelector(selectWordListSettingsCollapsed);
 
   return (
     <Collapsible.Root
@@ -29,7 +29,7 @@ export function GuessListSettings() {
         </Collapsible.Trigger>
       </SettingsHeader>
       <Collapsible.Content className="sb-guess-list-settings-controls">
-        <GuessListSettingsContent />
+        <WordListSettingsContent />
       </Collapsible.Content>
     </Collapsible.Root>
   );

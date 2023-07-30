@@ -1,7 +1,7 @@
-export function GuessListStatus() {
+export function WordListStatus() {
   return (
     <div className="sb-guess-list-status">
-      GuessListStatus
+      WordListStatus
     </div>
   );
 }

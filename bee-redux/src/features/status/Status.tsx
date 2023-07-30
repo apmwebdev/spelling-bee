@@ -1,11 +1,11 @@
 import { Progress } from "./Progress";
-import { GuessList } from "../guesses/GuessList";
+import { WordList } from "../guesses/WordList";
 
 export function Status() {
   return (
     <div className="sb-status">
       <Progress />
-      <GuessList />
+      <WordList />
     </div>
   );
 }

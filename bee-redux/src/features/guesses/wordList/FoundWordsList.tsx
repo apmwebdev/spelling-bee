@@ -1,26 +1,24 @@
-import { useAppSelector } from "../../app/hooks";
-import { GuessFormat, selectGuessesData } from "./guessesSlice";
-import { GuessListSettings } from "./guessList/GuessListSettings";
+import { useAppSelector } from "../../../app/hooks";
+import { GuessFormat, selectGuessesData } from "../guessesSlice";
 import {
-  GuessListSettingsFormat,
-  selectGuessListSettings,
+  WordListSettingsFormat,
+  selectWordListSettings,
   SortOrder,
   SortType,
-} from "./guessList/guessListSettingsSlice";
+} from "./wordListSettingsSlice";
 import uniqid from "uniqid";
-import { Progress } from "../status/Progress";
-import { GuessListStatus } from "./guessList/GuessListStatus";
+import { WordListScroller } from "./WordListScroller";
 
-export function GuessList() {
+export function FoundWordsList() {
   const guessesData = useAppSelector(selectGuessesData);
-  const guestListSettings = useAppSelector(selectGuessListSettings);
+  const wordListSettings = useAppSelector(selectWordListSettings);
 
   const generateDisplayGuessList = (
     {
       foundWordsSortType,
       foundWordsSortOrder,
       wrongGuessesShow,
-    }: GuessListSettingsFormat,
+    }: WordListSettingsFormat,
     guesses: GuessFormat[],
   ) => {
     let displayGuessList: GuessFormat[] = [];
@@ -58,25 +56,14 @@ export function GuessList() {
 
   const guessListContent = () => {
     const displayGuessList = generateDisplayGuessList(
-      guestListSettings,
+      wordListSettings,
       guessesData.guesses,
     );
-    if (displayGuessList.length > 0) {
-      return (
-        <ul className="sb-guess-list has-content">
-          {displayGuessList.map((guess) => {
-            return <li key={uniqid()}>{guess.word}</li>;
-          })}
-        </ul>
-      );
+    const wordsOnly = displayGuessList.map((guess) => guess.word);
+    if (wordsOnly.length > 0) {
+      return <WordListScroller wordList={wordsOnly} />;
     }
-    return <div className="sb-guess-list empty">No guesses</div>;
+    return <div className="sb-word-list empty">No guesses</div>;
   };
-  return (
-    <div className="sb-guess-list-container">
-      <GuessListSettings />
-      <GuessListStatus />
-      {guessListContent()}
-    </div>
-  );
+  return guessListContent();
 }

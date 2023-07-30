@@ -1,22 +1,22 @@
 import {
-  selectGuessListSettings,
+  selectWordListSettings,
   setFoundWordsSortOrder,
   setFoundWordsSortType,
   SortOrder,
   SortType,
   toggleWrongGuessesShow,
-} from "./guessListSettingsSlice";
+} from "./wordListSettingsSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../app/hooks";
 
-export function GuessListSettingsContent() {
+export function WordListSettingsContent() {
   const dispatch = useDispatch();
   const {
     foundWordsSortType,
     foundWordsSortOrder,
     wrongGuessesShow,
     wrongGuessesSeparate,
-  } = useAppSelector(selectGuessListSettings);
+  } = useAppSelector(selectWordListSettings);
   return (
     <>
       <div className="sb-guess-list-sort-type">

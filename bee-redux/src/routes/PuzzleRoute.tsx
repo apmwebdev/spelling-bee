@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { fetchPuzzleAsync } from "../features/puzzle/puzzleSlice";
 import { useAppDispatch } from "../app/hooks";
 import { useEffect } from "react";
-import { GuessList } from "../features/guesses/GuessList";
 import { HintSection } from "../features/hints/HintSection";
 
 export function PuzzleRoute() {

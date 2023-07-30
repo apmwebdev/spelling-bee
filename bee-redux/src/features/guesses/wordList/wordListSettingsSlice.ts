@@ -19,7 +19,7 @@ export enum SortOrder {
   Descending = "descending",
 }
 
-export interface GuessListSettingsFormat {
+export interface WordListSettingsFormat {
   //Found Words
   foundWordsSortType: SortType;
   foundWordsSortOrder: SortOrder;
@@ -52,12 +52,12 @@ export interface GuessListSettingsFormat {
   settingsCollapsed: boolean;
 }
 
-export interface GuessListSettingsState {
-  data: GuessListSettingsFormat;
+export interface WordListSettingsState {
+  data: WordListSettingsFormat;
   status: Status;
 }
 
-const initialState: GuessListSettingsState = {
+const initialState: WordListSettingsState = {
   data: {
     foundWordsSortType: SortType.Alphabetical,
     foundWordsSortOrder: SortOrder.Ascending,
@@ -86,8 +86,8 @@ const initialState: GuessListSettingsState = {
   status: Status.Initial,
 };
 
-export const guessListSettingsSlice = createSlice({
-  name: "guessListSettings",
+export const wordListSettingsSlice = createSlice({
+  name: "wordListSettings",
   initialState,
   reducers: {
     setFoundWordsSortType: (state, action) => {
@@ -115,11 +115,11 @@ export const {
   toggleWrongGuessesShow,
   toggleWrongGuessesSeparate,
   toggleSettingsCollapsed,
-} = guessListSettingsSlice.actions;
+} = wordListSettingsSlice.actions;
 
-export const selectGuessListSettings = (state: RootState) =>
-  state.guessListSettings.data;
-export const selectGuessListSettingsCollapsed = (state: RootState) =>
-  state.guessListSettings.data.settingsCollapsed;
+export const selectWordListSettings = (state: RootState) =>
+  state.wordListSettings.data;
+export const selectWordListSettingsCollapsed = (state: RootState) =>
+  state.wordListSettings.data.settingsCollapsed;
 
-export default guessListSettingsSlice.reducer;
+export default wordListSettingsSlice.reducer;

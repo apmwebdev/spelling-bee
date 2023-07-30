@@ -65,7 +65,7 @@ class Puzzle < ApplicationRecord
       answers: self.answers.map do |answer|
         answer.to_front_end
       end.sort{ |a, b| a[:word] <=> b[:word]},
-      excluded_words: @excluded_words
+      excludedWords: @excluded_words
     }
   end
 end

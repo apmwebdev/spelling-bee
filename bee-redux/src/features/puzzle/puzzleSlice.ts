@@ -22,6 +22,7 @@ export interface PuzzleFormat {
   pangrams: string[];
   perfectPangrams: string[];
   answers: AnswerFormat[];
+  excludedWords: string[];
 }
 
 export const BlankPuzzle: PuzzleFormat = {
@@ -32,6 +33,7 @@ export const BlankPuzzle: PuzzleFormat = {
   pangrams: [],
   perfectPangrams: [],
   answers: [],
+  excludedWords: [],
 };
 
 export enum PuzzleStatuses {
@@ -100,6 +102,8 @@ export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams;
 export const selectPerfectPangrams = (state: RootState) =>
   state.puzzle.data.perfectPangrams;
 export const selectAnswers = (state: RootState) => state.puzzle.data.answers;
+export const selectExcludedWords = (state: RootState) =>
+  state.puzzle.data.excludedWords;
 
 // Derived data
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
