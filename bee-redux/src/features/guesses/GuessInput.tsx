@@ -177,7 +177,7 @@ export function GuessInput() {
       if (!e.key.match(/^[A-Za-z]$/)) {
         return;
       }
-      if (guessValue.length > 15) {
+      if (guessValue.length >= 15) {
         return;
       }
       setGuessValue((current) => current + e.key.toLowerCase());

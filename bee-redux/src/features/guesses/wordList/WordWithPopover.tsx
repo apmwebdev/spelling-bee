@@ -1,15 +1,23 @@
 import * as Popover from "@radix-ui/react-popover";
 import { useAppSelector } from "../../../app/hooks";
-import { selectAnswers } from "../../puzzle/puzzleSlice";
-import { HeaderRemoveButton } from "../../../utils/HeaderRemoveButton";
+import { selectAnswers, selectPangrams } from "../../puzzle/puzzleSlice";
 import { Icon } from "@iconify/react";
 
 export function WordWithPopover({ word }: { word: string }) {
   const completeWord = useAppSelector(selectAnswers).find(
     (answer) => answer.word === word,
   );
+  const pangrams = useAppSelector(selectPangrams);
+  const isPangram = pangrams.includes(word);
+  const isPerfect = isPangram && word.length === 7;
+  let liClasses = "has-popover";
+  if (isPerfect) {
+    liClasses += " perfect";
+  } else if (isPangram) {
+    liClasses += " pangram";
+  }
   return (
-    <li className="has-popover">
+    <li className={liClasses}>
       <Popover.Root>
         <Popover.Trigger className="word-popover-trigger">
           {word}

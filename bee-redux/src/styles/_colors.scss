@@ -12,6 +12,7 @@
   $button-background-lightness-collapsed: 22%;
   $button-border-hover-lightness: 55%;
   $button-border-hover-lightness-collapsed: 43%;
+  $hint-completed: hsl(120, 85%, 87%);
   :root {
     /* Base variables */
     --bg-color: #222;
@@ -23,7 +24,7 @@
     --secondary-line-color: rgba(255, 255, 255, 0.3); //#666
     --collapsed-line-color: rgba(255, 255, 255, 0.730);
     --main-yellow: hsl(51, 78%, 30%);
-    --yellow-line: hsl(51, 78%, 40%);
+    --yellow-line: hsl(51, 78%, 50%);
 
     /* Compound variables */
 
@@ -79,6 +80,15 @@
           border-color: hsl($hint-hue, $border-saturation, 55%);
         }
       }
+    }
+  }
+
+  .has-popover {
+    &.perfect, &.pangram {
+      button {
+        color: $hint-completed;
+      }
+      //font-weight: bold;
     }
   }
 
