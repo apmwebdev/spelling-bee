@@ -5,12 +5,12 @@ export function HeaderRemoveButton({
   clickHandler,
 }: {
   cssClasses?: string;
-  clickHandler: Function;
+  clickHandler?: Function;
 }) {
   return (
     <button
       className={`button header-remove-button ${cssClasses}`}
-      onClick={() => clickHandler()}
+      onClick={() => (clickHandler ? clickHandler() : null)}
     >
       <Icon icon="mdi:close-thick"></Icon>
     </button>

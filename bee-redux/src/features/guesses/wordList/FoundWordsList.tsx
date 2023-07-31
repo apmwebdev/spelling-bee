@@ -54,7 +54,7 @@ export function FoundWordsList() {
     );
     const wordsOnly = displayGuessList.map((guess) => guess.word);
     if (wordsOnly.length > 0) {
-      return <WordListScroller wordList={wordsOnly} />;
+      return <WordListScroller wordList={wordsOnly} allowPopovers={true} />;
     }
     return <div className="sb-word-list empty">No guesses</div>;
   };

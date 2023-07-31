@@ -344,6 +344,58 @@
   }
 }
 
+.sb-word-list-status {
+  text-align: left;
+  padding: 16px 8px;
+  border-bottom: 1px solid #666;
+  margin-bottom: 8px;
+}
+
+.sb-word-list .has-popover {
+  button {
+    text-decoration: underline;
+    padding: 3px 8px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.sb-word-popover-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px 12px 12px;
+  max-width: 40rem;
+  background-color: #666;
+  border-radius: var(--br);
+  box-shadow: 0 0 0px 4px #222;
+  border: 2px solid #999;
+  &:focus {
+    outline: none;
+  }
+  span {
+    align-self: center;
+    display: flex;
+    align-items: center;
+  }
+  .popover-arrow {
+    z-index: 1;
+    fill: #999;
+  }
+  .popover-close-button {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #999;
+  }
+}
+
 
 
 /*****************/

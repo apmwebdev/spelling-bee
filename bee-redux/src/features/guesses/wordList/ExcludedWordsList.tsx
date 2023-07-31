@@ -7,7 +7,7 @@ export function ExcludedWordsList() {
 
   const content = () => {
     if (excludedWords) {
-      return <WordListScroller wordList={excludedWords} />;
+      return <WordListScroller wordList={excludedWords} allowPopovers={false} />;
     }
     return <div className="sb-word-list empty">No puzzle</div>;
   };

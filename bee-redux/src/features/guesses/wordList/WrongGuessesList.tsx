@@ -47,7 +47,7 @@ export function WrongGuessesList() {
     const displayGuessList = generateDisplayGuessList();
     if (displayGuessList.length > 0) {
       const wordsOnly = displayGuessList.map((guess) => guess.word);
-      return <WordListScroller wordList={wordsOnly} />;
+      return <WordListScroller wordList={wordsOnly} allowPopovers={false} />;
     }
     return <div className="sb-word-list empty">No guesses</div>;
   };

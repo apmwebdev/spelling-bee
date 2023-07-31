@@ -6,7 +6,7 @@ export function AnswerList() {
   const answerWords = useAppSelector(selectAnswerWords);
   const content = () => {
     if (answerWords) {
-      return <WordListScroller wordList={answerWords} />;
+      return <WordListScroller wordList={answerWords} allowPopovers={true} />;
     }
     return <div className="sb-word-list empty">No puzzle</div>;
   };
