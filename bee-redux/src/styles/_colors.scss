@@ -19,6 +19,7 @@
     --bg-color-light: #555;
     --main-line-color: rgba(255, 255, 255, 0.87);
     --disabled-line-color: rgba(255, 255, 255, 0.36);
+    --disabled-text-color: rgba(255, 255, 255, 0.49);
     --secondary-line-color: rgba(255, 255, 255, 0.3); //#666
     --collapsed-line-color: rgba(255, 255, 255, 0.730);
     --main-yellow: hsl(51, 78%, 30%);
@@ -171,6 +172,9 @@
   .sb-hint-panel-settings, .collapsible-settings {
     background-color: hsl(0, 30%, 20%);
     border-color: hsl($settings-hue, $border-saturation, $border-lightness);
+    span.disabled {
+      color: var(--disabled-text-color);
+    }
     .sb-hint-panel-settings-header, .collapsible-settings-header {
       background-color: hsl($settings-hue, 25%, 30%);
       button {

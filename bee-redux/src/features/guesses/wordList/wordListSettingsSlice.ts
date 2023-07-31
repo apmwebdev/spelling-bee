@@ -43,7 +43,7 @@ export interface WordListSettingsFormat {
   includePerfectPangrams: boolean;
   perfectPangramsIncludeTotal: boolean;
   //State
-  settingsCollapsed: boolean;
+  foundSettingsCollapsed: boolean;
 }
 
 export interface WordListSettingsState {
@@ -70,7 +70,7 @@ const initialState: WordListSettingsState = {
     pangramsIncludeTotal: true,
     includePerfectPangrams: true,
     perfectPangramsIncludeTotal: true,
-    settingsCollapsed: true,
+    foundSettingsCollapsed: true,
   },
   status: Status.Initial,
 };
@@ -91,8 +91,32 @@ export const wordListSettingsSlice = createSlice({
     // toggleWrongGuessesSeparate: (state) => {
     //   state.data.wrongGuessesSeparate = !state.data.wrongGuessesSeparate;
     // },
-    toggleSettingsCollapsed: (state) => {
-      state.data.settingsCollapsed = !state.data.settingsCollapsed;
+    toggleFoundSettingsCollapsed: (state) => {
+      state.data.foundSettingsCollapsed = !state.data.foundSettingsCollapsed;
+    },
+    setFoundWordsIncludeTotal: (
+      state,
+      action: { payload: boolean; type: string },
+    ) => {
+      state.data.foundWordsIncludeTotal = action.payload;
+    },
+    setPangramsIncludeTotal: (
+      state,
+      action: { payload: boolean; type: string },
+    ) => {
+      state.data.pangramsIncludeTotal = action.payload;
+    },
+    setIncludePerfectPangrams: (
+      state,
+      action: { payload: boolean; type: string },
+    ) => {
+      state.data.includePerfectPangrams = action.payload;
+    },
+    setPerfectPangramsIncludeTotal: (
+      state,
+      action: { payload: boolean; type: string },
+    ) => {
+      state.data.perfectPangramsIncludeTotal = action.payload;
     },
   },
   extraReducers: (builder) => {},
@@ -103,12 +127,16 @@ export const {
   setFoundWordsSortOrder,
   // toggleWrongGuessesShow,
   // toggleWrongGuessesSeparate,
-  toggleSettingsCollapsed,
+  toggleFoundSettingsCollapsed,
+  setFoundWordsIncludeTotal,
+  setPangramsIncludeTotal,
+  setIncludePerfectPangrams,
+  setPerfectPangramsIncludeTotal,
 } = wordListSettingsSlice.actions;
 
 export const selectWordListSettings = (state: RootState) =>
   state.wordListSettings.data;
-export const selectWordListSettingsCollapsed = (state: RootState) =>
-  state.wordListSettings.data.settingsCollapsed;
+export const selectWordListFoundSettingsCollapsed = (state: RootState) =>
+  state.wordListSettings.data.foundSettingsCollapsed;
 
 export default wordListSettingsSlice.reducer;

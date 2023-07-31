@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../app/hooks";
 import {
-  selectWordListSettingsCollapsed,
-  toggleSettingsCollapsed,
+  selectWordListFoundSettingsCollapsed,
+  toggleFoundSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SettingsHeader } from "../../../hints/generalControls/SettingsHeader";
@@ -11,7 +11,9 @@ import { FoundWordsSettingsContent } from "./FoundWordsSettingsContent";
 
 export function FoundWordsSettings() {
   const dispatch = useDispatch();
-  const settingsCollapsed = useAppSelector(selectWordListSettingsCollapsed);
+  const settingsCollapsed = useAppSelector(
+    selectWordListFoundSettingsCollapsed,
+  );
 
   return (
     <Collapsible.Root
@@ -22,7 +24,7 @@ export function FoundWordsSettings() {
         <Collapsible.Trigger asChild>
           <button
             className="sb-hint-panel-settings-header-button collapsible-settings-header-button"
-            onClick={() => dispatch(toggleSettingsCollapsed())}
+            onClick={() => dispatch(toggleFoundSettingsCollapsed())}
           >
             <HeaderDisclosureWidget title="Settings" />
           </button>
