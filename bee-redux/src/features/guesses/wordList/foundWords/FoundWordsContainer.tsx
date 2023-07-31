@@ -69,7 +69,7 @@ export function FoundWordsContainer() {
   };
   return (
     <div className="sb-found-words-container">
-      {/*<FoundWordsSettings />*/}
+      <FoundWordsSettings />
       <FoundWordsStatus
         foundWordsIncludeTotal={wordListSettings.foundWordsIncludeTotal}
         pangramsIncludeTotal={wordListSettings.pangramsIncludeTotal}

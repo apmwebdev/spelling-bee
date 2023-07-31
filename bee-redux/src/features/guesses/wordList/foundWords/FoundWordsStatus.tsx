@@ -27,19 +27,42 @@ export function FoundWordsStatus({
   const currentPoints = useAppSelector(selectScore);
   const totalPoints = useAppSelector(selectTotalPoints);
 
-  const foundWordsTrackingText = () => {
-    const correctCount = correctGuessWords.length;
-    const answerCount = answers.length;
+  const correctCount = correctGuessWords.length;
+  const answerCount = answers.length;
+  let countClass = "word-list-status-count ";
+  let foundPointsCountClasses = countClass;
+  if (correctCount === 0) {
+    foundPointsCountClasses += "hint-not-started";
+  } else if (correctCount === answerCount) {
+    foundPointsCountClasses += "hint-completed";
+  } else {
+    foundPointsCountClasses += "hint-in-progress";
+  }
 
-    let text = `Words: ${correctCount}`;
+  const foundWordsTrackingText = () => {
+
+    let text = `${correctCount}`;
     if (foundWordsIncludeTotal) {
       text += `/${answerCount}`;
     }
-    return text + " | ";
+
+    return (
+      <div className="words">
+        <span>Words:</span>
+        <span className={foundPointsCountClasses}>{text}</span>
+      </div>
+    );
   };
 
   const pointsTrackingText = () => {
-    return `Points: ${currentPoints}/${totalPoints} | `;
+    return (
+      <div className="points">
+        <span>Points:</span>
+        <span
+          className={foundPointsCountClasses}
+        >{`${currentPoints}/${totalPoints}`}</span>
+      </div>
+    );
   };
 
   const pangramsTrackingText = () => {
@@ -47,11 +70,24 @@ export function FoundWordsStatus({
       correctGuessWords.includes(p),
     ).length;
     const totalPangrams = pangrams.length;
-    let text = `Pangrams: ${currentPangrams}`;
+    let text = `${currentPangrams}`;
     if (pangramsIncludeTotal) {
       text += `/${totalPangrams}`;
     }
-    return text;
+    let pangramCountClasses = countClass;
+    if (currentPangrams === 0) {
+      pangramCountClasses += "hint-not-started";
+    } else if (currentPangrams === totalPangrams) {
+      pangramCountClasses += "hint-completed";
+    } else {
+      pangramCountClasses += "hint-in-progress";
+    }
+    return (
+      <div className="pangrams">
+        <span>Pangrams:</span>
+        <span className={pangramCountClasses}>{text}</span>
+      </div>
+    );
   };
 
   const perfectPangramsTrackingText = () => {
@@ -61,20 +97,37 @@ export function FoundWordsStatus({
       ).length;
       const totalPerfectPangrams = perfectPangrams.length;
       if (totalPerfectPangrams === 0) {
-        return " (no perfect)";
+        return <div className="perfect">(no perfect)</div>;
       }
-      let text = ` (Perfect: ${currentPerfectPangrams}`;
+      let text = `${currentPerfectPangrams}`;
       if (perfectPangramsIncludeTotal) {
         text += `/${totalPerfectPangrams}`;
       }
-      return text + ")";
+      let perfectClasses = countClass;
+      if (currentPerfectPangrams === 0) {
+        perfectClasses += "hint-not-started";
+      } else if (currentPerfectPangrams === totalPerfectPangrams) {
+        perfectClasses += "hint-completed";
+      } else {
+        perfectClasses += "hint-in-progress";
+      }
+      return (
+        <div className="perfect">
+          <span>(Perfect: </span>
+          <span className={perfectClasses}>{text}</span>
+          <span>)</span>
+        </div>
+      );
     }
     return "";
   };
 
   return (
     <div className="sb-found-words-status sb-word-list-status">
-      {`${foundWordsTrackingText()} ${pointsTrackingText()} ${pangramsTrackingText()}${perfectPangramsTrackingText()}`}
+      {foundWordsTrackingText()}
+      {pointsTrackingText()}
+      {pangramsTrackingText()}
+      {perfectPangramsTrackingText()}
     </div>
   );
 }
