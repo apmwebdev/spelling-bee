@@ -15,11 +15,7 @@ export function FoundWordsList() {
   const wordListSettings = useAppSelector(selectWordListSettings);
 
   const generateDisplayGuessList = (
-    {
-      foundWordsSortType,
-      foundWordsSortOrder,
-      wrongGuessesShow,
-    }: WordListSettingsFormat,
+    { foundWordsSortType, foundWordsSortOrder }: WordListSettingsFormat,
     guesses: GuessFormat[],
   ) => {
     let displayGuessList: GuessFormat[] = [];
@@ -27,11 +23,7 @@ export function FoundWordsList() {
       return displayGuessList;
     }
 
-    if (!wrongGuessesShow) {
-      displayGuessList = guesses.filter((guess) => guess.isAnswer);
-    } else {
-      displayGuessList = [...guesses];
-    }
+    displayGuessList = [...guesses];
 
     if (foundWordsSortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {

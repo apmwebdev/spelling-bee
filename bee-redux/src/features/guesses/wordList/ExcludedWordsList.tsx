@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../../app/hooks";
 import { selectExcludedWords } from "../../puzzle/puzzleSlice";
-import uniqid from "uniqid";
 import { WordListScroller } from "./WordListScroller";
 
 export function ExcludedWordsList() {

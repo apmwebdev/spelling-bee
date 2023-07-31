@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
-import { TrackingOptions } from "../../hints/hintProfilesSlice";
 
 enum Status {
   Initial = "Not Fetched",
@@ -57,16 +56,11 @@ const initialState: WordListSettingsState = {
     foundWordsSortType: SortType.Alphabetical,
     foundWordsSortOrder: SortOrder.Ascending,
     foundWordsFilter: [],
-    wrongGuessesShow: false,
-    wrongGuessesSeparate: true,
     wrongGuessesSortType: SortType.FoundOrder,
     wrongGuessesSortOrder: SortOrder.Descending,
     wrongGuessesFilter: [],
-    excludedWordsShow: true,
-    excludedWordsSeparate: true,
     excludedWordsSortOrder: SortOrder.Ascending,
     excludedWordsFilter: [],
-    answerTabShow: true,
     answerTabSortOrder: SortOrder.Ascending,
     answerTabRemainingOnly: true,
     answerTabRevealAll: false,
@@ -91,12 +85,12 @@ export const wordListSettingsSlice = createSlice({
     setFoundWordsSortOrder: (state, action) => {
       state.data.foundWordsSortOrder = action.payload;
     },
-    toggleWrongGuessesShow: (state) => {
-      state.data.wrongGuessesShow = !state.data.wrongGuessesShow;
-    },
-    toggleWrongGuessesSeparate: (state) => {
-      state.data.wrongGuessesSeparate = !state.data.wrongGuessesSeparate;
-    },
+    // toggleWrongGuessesShow: (state) => {
+    //   state.data.wrongGuessesShow = !state.data.wrongGuessesShow;
+    // },
+    // toggleWrongGuessesSeparate: (state) => {
+    //   state.data.wrongGuessesSeparate = !state.data.wrongGuessesSeparate;
+    // },
     toggleSettingsCollapsed: (state) => {
       state.data.settingsCollapsed = !state.data.settingsCollapsed;
     },
@@ -107,8 +101,8 @@ export const wordListSettingsSlice = createSlice({
 export const {
   setFoundWordsSortType,
   setFoundWordsSortOrder,
-  toggleWrongGuessesShow,
-  toggleWrongGuessesSeparate,
+  // toggleWrongGuessesShow,
+  // toggleWrongGuessesSeparate,
   toggleSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 

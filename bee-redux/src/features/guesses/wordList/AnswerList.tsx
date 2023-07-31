@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../../app/hooks";
 import { selectAnswerWords } from "../../puzzle/puzzleSlice";
-import uniqid from "uniqid";
 import { WordListScroller } from "./WordListScroller";
 
 export function AnswerList() {

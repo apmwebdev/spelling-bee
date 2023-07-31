@@ -4,19 +4,15 @@ import {
   setFoundWordsSortType,
   SortOrder,
   SortType,
-  toggleWrongGuessesShow,
 } from "./wordListSettingsSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../app/hooks";
 
 export function FoundWordsSettingsContent() {
   const dispatch = useDispatch();
-  const {
-    foundWordsSortType,
-    foundWordsSortOrder,
-    wrongGuessesShow,
-    wrongGuessesSeparate,
-  } = useAppSelector(selectWordListSettings);
+  const { foundWordsSortType, foundWordsSortOrder } = useAppSelector(
+    selectWordListSettings,
+  );
   return (
     <>
       <div className="sb-guess-list-sort-type">
@@ -62,18 +58,6 @@ export function FoundWordsSettingsContent() {
             name="found-words-sort-order"
             checked={foundWordsSortOrder === SortOrder.Descending}
             onChange={(e) => dispatch(setFoundWordsSortOrder(e.target.value))}
-          />
-        </label>
-      </div>
-      <div className="sb-show-wrong-guesses">
-        <label>
-          Show incorrect guesses
-          <input
-            type="checkbox"
-            name="wrongGuessesShow"
-            value="blah"
-            checked={wrongGuessesShow}
-            onChange={(e) => dispatch(toggleWrongGuessesShow())}
           />
         </label>
       </div>
