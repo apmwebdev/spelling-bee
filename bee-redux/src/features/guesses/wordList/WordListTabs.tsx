@@ -1,5 +1,5 @@
 import * as Tabs from "@radix-ui/react-tabs";
-import { FoundWordsList } from "./FoundWordsList";
+import { FoundWordsContainer } from "./foundWords/FoundWordsContainer";
 import { WrongGuessesList } from "./WrongGuessesList";
 import { ExcludedWordsList } from "./ExcludedWordsList";
 import { AnswerList } from "./AnswerList";
@@ -22,7 +22,7 @@ export function WordListTabs() {
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="tab-content" value="foundWords">
-        <FoundWordsList />
+        <FoundWordsContainer />
       </Tabs.Content>
       <Tabs.Content className="tab-content" value="wrongGuesses">
         <WrongGuessesList />

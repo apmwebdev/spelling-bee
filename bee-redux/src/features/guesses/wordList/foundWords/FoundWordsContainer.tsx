@@ -1,17 +1,18 @@
-import { useAppSelector } from "../../../app/hooks";
-import { GuessFormat, selectGuessesData } from "../guessesSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { GuessFormat, selectCorrectGuesses } from "../../guessesSlice";
 import {
   WordListSettingsFormat,
   selectWordListSettings,
   SortOrder,
   SortType,
-} from "./wordListSettingsSlice";
-import { WordListScroller } from "./WordListScroller";
+} from "../wordListSettingsSlice";
+import { WordListScroller } from "../WordListScroller";
 import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsSettings } from "./FoundWordsSettings";
+import { FoundWordsListHeader } from "./FoundWordsListHeader";
 
-export function FoundWordsList() {
-  const guessesData = useAppSelector(selectGuessesData);
+export function FoundWordsContainer() {
+  const correctGuesses = useAppSelector(selectCorrectGuesses);
   const wordListSettings = useAppSelector(selectWordListSettings);
 
   const generateDisplayGuessList = (
@@ -50,17 +51,25 @@ export function FoundWordsList() {
   const guessListContent = () => {
     const displayGuessList = generateDisplayGuessList(
       wordListSettings,
-      guessesData.guesses,
+      correctGuesses,
     );
     const wordsOnly = displayGuessList.map((guess) => guess.word);
     if (wordsOnly.length > 0) {
-      return <WordListScroller wordList={wordsOnly} allowPopovers={true} />;
+      return (
+        <div className="sb-word-list-container">
+          <FoundWordsListHeader
+            sortType={wordListSettings.foundWordsSortType}
+            sortOrder={wordListSettings.foundWordsSortOrder}
+          />
+          <WordListScroller wordList={wordsOnly} allowPopovers={true} />
+        </div>
+      );
     }
-    return <div className="sb-word-list empty">No guesses</div>;
+    return <div className="sb-word-list empty">No found words</div>;
   };
   return (
     <div className="sb-found-words-container">
-      <FoundWordsSettings />
+      {/*<FoundWordsSettings />*/}
       <FoundWordsStatus
         foundWordsIncludeTotal={wordListSettings.foundWordsIncludeTotal}
         pangramsIncludeTotal={wordListSettings.pangramsIncludeTotal}

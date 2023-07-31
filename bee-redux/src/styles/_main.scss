@@ -250,19 +250,83 @@
   border: 1px dotted;
 }
 
-.sb-word-list-container {
+.sb-word-list-section-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border: 2px solid;
-  border-radius: var(--br);
+  //border: 2px solid;
+  //border-radius: var(--br);
   margin: 0px;
-  padding: 8px;
+  //padding: 8px;
+}
+
+.sb-word-tabs-root {
+  .tabs-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    .tab-trigger {
+      border-top: 2px solid #666;
+      border-left: 2px solid #666;
+      border-right: 2px solid #666;
+      border-bottom: none;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      &[data-state="active"] {
+        background-color: #535bf2;
+      }
+    }
+  }
+  .tab-content {
+    border: 2px solid #666;
+    border-bottom-left-radius: var(--br);
+    border-bottom-right-radius: var(--br);
+    padding: 8px;
+  }
 }
 
 .sb-word-list-status {
-  padding: 8px;
-  //border: 1px dotted;
+  font-size: 16px;
+  text-align: left;
+  padding: 16px 8px;
+  //border-bottom: 1px solid #666;
+  //margin-bottom: 8px;
+}
+
+.sb-word-list-container {
+  border-radius: var(--br);
+  border: 1px solid #666;
+  overflow: hidden;
+  header {
+    font-size: 16px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #666;
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+.sb-word-list-toggle {
+  border-radius: var(--br);
+  border: 1px solid #666;
+  background-color: #666;
+  overflow: hidden;
+  display: flex;
+  gap: 1px;
+  button {
+    border-radius: 0;
+    background-color: #333;
+    padding: 4px 12px;
+    &[data-state="on"] {
+      background-color: var(--main-yellow);
+    }
+  }
 }
 
 .sb-word-list {
@@ -283,31 +347,6 @@
         text-transform: uppercase;
       }
     }
-  }
-}
-
-.sb-word-tabs-root {
-  .tabs-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    .tab-trigger {
-      border-top: 1px solid #666;
-      border-left: 1px solid #666;
-      border-right: 1px solid #666;
-      border-bottom: none;
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-      &[data-state="active"] {
-        background-color: #535bf2;
-      }
-    }
-  }
-  .tab-content {
-    border: 1px solid #666;
-    border-bottom-left-radius: var(--br);
-    border-bottom-right-radius: var(--br);
-    padding: 8px;
   }
 }
 
@@ -344,17 +383,10 @@
   }
 }
 
-.sb-word-list-status {
-  text-align: left;
-  padding: 16px 8px;
-  border-bottom: 1px solid #666;
-  margin-bottom: 8px;
-}
-
 .sb-word-list .has-popover {
   button {
     text-decoration: underline;
-    padding: 3px 8px;
+    padding: 0px;
     &:focus {
       outline: none;
     }

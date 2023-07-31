@@ -1,11 +1,11 @@
-import { useAppSelector } from "../../../app/hooks";
-import { selectCorrectGuessWords, selectScore } from "../guessesSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectCorrectGuessWords, selectScore } from "../../guessesSlice";
 import {
   selectAnswers,
   selectPangrams,
   selectPerfectPangrams,
   selectTotalPoints,
-} from "../../puzzle/puzzleSlice";
+} from "../../../puzzle/puzzleSlice";
 
 export interface FoundWordsStatusProps {
   foundWordsIncludeTotal: boolean;

@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../../app/hooks";
 import {
   selectWordListSettingsCollapsed,
   toggleSettingsCollapsed,
-} from "./wordListSettingsSlice";
+} from "../wordListSettingsSlice";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { SettingsHeader } from "../../hints/generalControls/SettingsHeader";
-import { HeaderDisclosureWidget } from "../../../utils/HeaderDisclosureWidget";
+import { SettingsHeader } from "../../../hints/generalControls/SettingsHeader";
+import { HeaderDisclosureWidget } from "../../../../utils/HeaderDisclosureWidget";
 import { FoundWordsSettingsContent } from "./FoundWordsSettingsContent";
 
 export function FoundWordsSettings() {
