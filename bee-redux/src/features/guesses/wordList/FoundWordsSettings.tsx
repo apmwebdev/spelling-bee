@@ -7,9 +7,9 @@ import {
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SettingsHeader } from "../../hints/generalControls/SettingsHeader";
 import { HeaderDisclosureWidget } from "../../../utils/HeaderDisclosureWidget";
-import { WordListSettingsContent } from "./WordListSettingsContent";
+import { FoundWordsSettingsContent } from "./FoundWordsSettingsContent";
 
-export function WordListSettings() {
+export function FoundWordsSettings() {
   const dispatch = useDispatch();
   const settingsCollapsed = useAppSelector(selectWordListSettingsCollapsed);
 
@@ -29,7 +29,7 @@ export function WordListSettings() {
         </Collapsible.Trigger>
       </SettingsHeader>
       <Collapsible.Content className="sb-guess-list-settings-controls">
-        <WordListSettingsContent />
+        <FoundWordsSettingsContent />
       </Collapsible.Content>
     </Collapsible.Root>
   );

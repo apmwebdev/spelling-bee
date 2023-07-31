@@ -66,8 +66,19 @@
     }
   }
 
-  .sb-guess-list-container {
+  .sb-word-list-container {
     border-color: var(--secondary-line-color);
+  }
+
+  .sb-word-tabs-root {
+    .tabs-list {
+      .tab-trigger {
+        &[data-state="active"] {
+          background-color: hsl($hint-hue, $button-background-saturation, $button-background-lightness);
+          border-color: hsl($hint-hue, $border-saturation, 55%);
+        }
+      }
+    }
   }
 
   .sb-answer-alert-message {

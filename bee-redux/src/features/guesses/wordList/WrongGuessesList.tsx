@@ -5,7 +5,6 @@ import {
   SortOrder,
   SortType,
 } from "./wordListSettingsSlice";
-import uniqid from "uniqid";
 import { WordListScroller } from "./WordListScroller";
 
 export function WrongGuessesList() {
@@ -52,5 +51,7 @@ export function WrongGuessesList() {
     }
     return <div className="sb-word-list empty">No guesses</div>;
   };
-  return guessListContent();
+  return (
+    guessListContent()
+  );
 }

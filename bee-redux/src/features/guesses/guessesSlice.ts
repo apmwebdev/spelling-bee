@@ -99,11 +99,9 @@ export const selectCorrectGuessWords = createSelector(
       .filter((guessObj) => guessObj.isAnswer)
       .map((guessObj) => guessObj.word),
 );
-export const selectScore = (state: RootState) => {
-  const correctGuesses = state.guesses.data.guesses
-    .filter((guessObject) => guessObject.isAnswer)
-    .map((guessObject) => guessObject.word);
-  return calculateScore(correctGuesses);
-};
+export const selectScore = createSelector(
+  [selectCorrectGuessWords],
+  (correctGuessWords) => calculateScore(correctGuessWords),
+);
 
 export default guessesSlice.reducer;

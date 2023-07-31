@@ -250,14 +250,17 @@
   border: 1px dotted;
 }
 
-.sb-guess-list-container {
+.sb-word-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   border: 2px solid;
   border-radius: var(--br);
   margin: 0px;
   padding: 8px;
 }
 
-.sb-guess-list-status {
+.sb-word-list-status {
   padding: 8px;
   //border: 1px dotted;
 }
@@ -292,6 +295,7 @@
       border-top: 1px solid #666;
       border-left: 1px solid #666;
       border-right: 1px solid #666;
+      border-bottom: none;
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
       &[data-state="active"] {
@@ -303,7 +307,7 @@
     border: 1px solid #666;
     border-bottom-left-radius: var(--br);
     border-bottom-right-radius: var(--br);
-    //padding: 8px;
+    padding: 8px;
   }
 }
 

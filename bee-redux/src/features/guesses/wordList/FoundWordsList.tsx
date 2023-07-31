@@ -6,8 +6,9 @@ import {
   SortOrder,
   SortType,
 } from "./wordListSettingsSlice";
-import uniqid from "uniqid";
 import { WordListScroller } from "./WordListScroller";
+import { FoundWordsStatus } from "./FoundWordsStatus";
+import { FoundWordsSettings } from "./FoundWordsSettings";
 
 export function FoundWordsList() {
   const guessesData = useAppSelector(selectGuessesData);
@@ -65,5 +66,18 @@ export function FoundWordsList() {
     }
     return <div className="sb-word-list empty">No guesses</div>;
   };
-  return guessListContent();
+  return (
+    <div className="sb-found-words-container">
+      <FoundWordsSettings />
+      <FoundWordsStatus
+        foundWordsIncludeTotal={wordListSettings.foundWordsIncludeTotal}
+        pangramsIncludeTotal={wordListSettings.pangramsIncludeTotal}
+        includePerfectPangrams={wordListSettings.includePerfectPangrams}
+        perfectPangramsIncludeTotal={
+          wordListSettings.perfectPangramsIncludeTotal
+        }
+      />
+      {guessListContent()}
+    </div>
+  );
 }

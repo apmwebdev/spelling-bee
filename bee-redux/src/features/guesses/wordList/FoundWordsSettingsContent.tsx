@@ -9,7 +9,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../app/hooks";
 
-export function WordListSettingsContent() {
+export function FoundWordsSettingsContent() {
   const dispatch = useDispatch();
   const {
     foundWordsSortType,

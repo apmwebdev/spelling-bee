@@ -25,18 +25,13 @@ export interface WordListSettingsFormat {
   foundWordsSortOrder: SortOrder;
   foundWordsFilter: string[];
   //Wrong Guesses
-  wrongGuessesShow: boolean;
-  wrongGuessesSeparate: boolean;
   wrongGuessesSortType: SortType;
   wrongGuessesSortOrder: SortOrder;
   wrongGuessesFilter: string[];
   //Excluded Words
-  excludedWordsShow: boolean;
-  excludedWordsSeparate: boolean;
   excludedWordsSortOrder: SortOrder;
   excludedWordsFilter: string[];
   //Answer Tab
-  answerTabShow: boolean;
   answerTabSortOrder: SortOrder;
   answerTabRemainingOnly: boolean;
   answerTabRevealAll: boolean;
@@ -44,10 +39,10 @@ export interface WordListSettingsFormat {
   //General
   groupByFirstLetter: boolean;
   //Status Box
-  foundWordsTracking: TrackingOptions;
-  pointsTracking: TrackingOptions;
-  pangramsTracking: TrackingOptions;
-  showPerfectPangrams: boolean;
+  foundWordsIncludeTotal: boolean;
+  pangramsIncludeTotal: boolean;
+  includePerfectPangrams: boolean;
+  perfectPangramsIncludeTotal: boolean;
   //State
   settingsCollapsed: boolean;
 }
@@ -77,10 +72,10 @@ const initialState: WordListSettingsState = {
     answerTabRevealAll: false,
     answerTabFilter: [],
     groupByFirstLetter: true,
-    foundWordsTracking: TrackingOptions.FoundOfTotal,
-    pointsTracking: TrackingOptions.FoundOfTotal,
-    pangramsTracking: TrackingOptions.FoundOfTotal,
-    showPerfectPangrams: true,
+    foundWordsIncludeTotal: true,
+    pangramsIncludeTotal: true,
+    includePerfectPangrams: true,
+    perfectPangramsIncludeTotal: true,
     settingsCollapsed: true,
   },
   status: Status.Initial,
