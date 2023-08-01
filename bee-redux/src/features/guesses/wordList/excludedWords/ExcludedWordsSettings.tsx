@@ -1,27 +1,25 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SettingsHeader } from "../../../hints/generalControls/SettingsHeader";
 import {
-  selectWrongGuessesListSettings,
-  toggleWrongGuessesSettingsCollapsed,
+  selectExcludedWordsListSettings,
+  toggleExcludedWordsSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import { HeaderDisclosureWidget } from "../../../../utils/HeaderDisclosureWidget";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
-export function WrongGuessesSettings() {
+export function ExcludedWordsSettings() {
   const dispatch = useAppDispatch();
-  const { wrongGuessesSettingsCollapsed } = useAppSelector(
-    selectWrongGuessesListSettings,
-  );
+  const { settingsCollapsed } = useAppSelector(selectExcludedWordsListSettings);
   return (
     <Collapsible.Root
       className="collapsible-settings"
-      open={!wrongGuessesSettingsCollapsed}
+      open={!settingsCollapsed}
     >
       <SettingsHeader>
         <Collapsible.Trigger asChild>
           <button
             className="collapsible-settings-header-button"
-            onClick={() => dispatch(toggleWrongGuessesSettingsCollapsed())}
+            onClick={() => dispatch(toggleExcludedWordsSettingsCollapsed())}
           >
             <HeaderDisclosureWidget title="Settings" />
           </button>

@@ -37,8 +37,9 @@ export interface WrongGuessesSettingsFormat {
 }
 
 export interface ExcludedWordsSettingsFormat {
-  excludedWordsSortOrder: SortOrder;
-  excludedWordsLetterFilter: string[];
+  sortOrder: SortOrder;
+  letterFilter: string[];
+  settingsCollapsed: boolean;
 }
 
 export interface AnswerListSettingsFormat {
@@ -82,8 +83,9 @@ const initialState: WordListSettingsState = {
       wrongGuessesSettingsCollapsed: true,
     },
     excludedWords: {
-      excludedWordsSortOrder: SortOrder.Ascending,
-      excludedWordsLetterFilter: [],
+      sortOrder: SortOrder.Ascending,
+      letterFilter: [],
+      settingsCollapsed: true,
     },
     answers: {
       answerListSortOrder: SortOrder.Ascending,
@@ -152,6 +154,13 @@ export const wordListSettingsSlice = createSlice({
       state.data.wrongGuesses.wrongGuessesSettingsCollapsed =
         !state.data.wrongGuesses.wrongGuessesSettingsCollapsed;
     },
+    setExcludedWordsSortOrder: (state, action) => {
+      state.data.excludedWords.sortOrder = action.payload;
+    },
+    toggleExcludedWordsSettingsCollapsed: (state) => {
+      state.data.excludedWords.settingsCollapsed =
+        !state.data.excludedWords.settingsCollapsed;
+    },
   },
   extraReducers: (builder) => {},
 });
@@ -169,6 +178,8 @@ export const {
   setWrongGuessesSortType,
   setWrongGuessesSortOrder,
   toggleWrongGuessesSettingsCollapsed,
+  setExcludedWordsSortOrder,
+  toggleExcludedWordsSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 
 export const selectWordListSettings = (state: RootState) =>
@@ -179,5 +190,7 @@ export const selectWordListFoundSettingsCollapsed = (state: RootState) =>
   state.wordListSettings.data.foundWords.foundSettingsCollapsed;
 export const selectWrongGuessesListSettings = (state: RootState) =>
   state.wordListSettings.data.wrongGuesses;
+export const selectExcludedWordsListSettings = (state: RootState) =>
+  state.wordListSettings.data.excludedWords;
 
 export default wordListSettingsSlice.reducer;

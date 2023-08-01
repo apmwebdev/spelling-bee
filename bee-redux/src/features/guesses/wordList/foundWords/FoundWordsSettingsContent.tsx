@@ -1,14 +1,9 @@
 import {
   selectFoundWordsListSettings,
-  selectWordListSettings,
   setFoundWordsIncludeTotal,
-  setFoundWordsSortOrder,
-  setFoundWordsSortType,
   setIncludePerfectPangrams,
   setPangramsIncludeTotal,
   setPerfectPangramsIncludeTotal,
-  SortOrder,
-  SortType,
 } from "../wordListSettingsSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../app/hooks";
@@ -37,9 +32,7 @@ export function FoundWordsSettingsContent() {
         <input
           type="checkbox"
           checked={pangramsIncludeTotal}
-          onChange={(e) =>
-            dispatch(setPangramsIncludeTotal(e.target.checked))
-          }
+          onChange={(e) => dispatch(setPangramsIncludeTotal(e.target.checked))}
         />
         <span>Show total pangrams</span>
       </label>
