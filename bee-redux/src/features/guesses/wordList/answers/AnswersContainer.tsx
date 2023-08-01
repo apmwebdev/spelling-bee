@@ -13,6 +13,7 @@ import {
 import answerSorter from "./answerSorter";
 import { selectKnownWords, selectSpoiledWords } from "../../guessesSlice";
 import { AnswersSettings } from "./AnswersSettings";
+import { AnswersListHeader } from "./AnswersListHeader";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();
@@ -58,6 +59,7 @@ export function AnswersContainer() {
         answers for this puzzle.
       </div>
       <div className="sb-word-list-container">
+        <AnswersListHeader />
         <WordListScroller
           wordList={displayList}
           allowPopovers={true}
