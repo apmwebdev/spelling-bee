@@ -7,7 +7,7 @@ import { fetchPuzzle } from "./puzzleAPI";
 import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
-import { selectCorrectGuessWords } from "../guesses/guessesSlice";
+import { selectRevealedWords } from "../guesses/guessesSlice";
 
 interface Rank {
   id: string;
@@ -206,10 +206,10 @@ export const selectAnswerLengths = createSelector(
 );
 
 export const selectRemainingAnswerWords = createSelector(
-  [selectAnswerWords, selectCorrectGuessWords],
-  (answerWords, correctGuessWords) => {
+  [selectAnswerWords, selectRevealedWords],
+  (answerWords, revealedWords) => {
     return answerWords.filter(
-      (answerWord) => !correctGuessWords.includes(answerWord),
+      (answerWord) => !revealedWords.includes(answerWord),
     );
   },
 );

@@ -17,12 +17,16 @@ export enum Status {
 export interface GuessFormData {
   word: string;
   isAnswer: boolean;
+  isExcluded: boolean;
+  isSpoiled: boolean;
 }
 
 export interface GuessFormat {
   word: string;
   timestamp: number;
   isAnswer: boolean;
+  isExcluded: boolean;
+  isSpoiled: boolean;
 }
 
 export interface GuessesFormat {
@@ -56,6 +60,8 @@ const createGuessObject = (guessData: GuessFormData): GuessFormat => {
     word: guessData.word,
     timestamp: Date.now(),
     isAnswer: guessData.isAnswer,
+    isExcluded: guessData.isExcluded,
+    isSpoiled: guessData.isSpoiled,
   };
 };
 
@@ -63,7 +69,10 @@ export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    addGuess: (state, action) => {
+    addGuess: (state, action: { payload: GuessFormData; type: string }) => {
+      state.data.guesses.push(createGuessObject(action.payload));
+    },
+    spoilWord: (state, action: { payload: GuessFormData; type: string }) => {
       state.data.guesses.push(createGuessObject(action.payload));
     },
   },
@@ -82,26 +91,31 @@ export const guessesSlice = createSlice({
   },
 });
 
-export const { addGuess } = guessesSlice.actions;
+export const { addGuess, spoilWord } = guessesSlice.actions;
 
 export const selectGuessesData = (state: RootState) => state.guesses.data;
 export const selectGuesses = (state: RootState) => state.guesses.data.guesses;
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
-  guesses.map((guessObj) => guessObj.word),
+  guesses.map((guess) => guess.word),
 );
 export const selectCorrectGuesses = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => guess.isAnswer),
+  guesses.filter((guess) => guess.isAnswer && !guess.isSpoiled),
 );
 export const selectCorrectGuessWords = createSelector(
   [selectCorrectGuesses],
-  (guessObjects) =>
-    guessObjects
-      .filter((guessObj) => guessObj.isAnswer)
-      .map((guessObj) => guessObj.word),
+  (guesses) =>
+    guesses
+      .filter((guess) => guess.isAnswer && !guess.isSpoiled)
+      .map((guess) => guess.word),
+);
+export const selectRevealedWords = createSelector(
+  [selectGuesses],
+  (guesses) =>
+  guesses.filter((guess) => guess.isAnswer).map((guess) => guess.word),
 );
 export const selectWrongGuesses = createSelector(
   [selectGuesses],
-  (guessObjects) => guessObjects.filter((guessObj) => !guessObj.isAnswer),
+  (guesses) => guesses.filter((guess) => !guess.isAnswer),
 );
 export const selectScore = createSelector(
   [selectCorrectGuessWords],

@@ -85,10 +85,7 @@
 
   .has-popover {
     &.perfect, &.pangram {
-      button {
-        color: $hint-completed;
-      }
-      font-weight: bold;
+      color: var(--yellow-line);
     }
   }
 

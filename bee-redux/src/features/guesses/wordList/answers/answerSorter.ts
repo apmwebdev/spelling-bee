@@ -30,9 +30,8 @@ interface LetterGrouperFormat {
 
 //Function assumes all arrays are already sorted using default sort
 interface answerSorterParams {
-  answerWords: string[];
   remainingWords: string[];
-  correctGuessWords: string[];
+  revealedWords: string[];
   validLetters: string[];
   sortOrder: SortOrder;
   remainingOnly: boolean;
@@ -43,9 +42,8 @@ interface answerSorterParams {
 }
 
 export default function answerSorter({
-  answerWords,
   remainingWords,
-  correctGuessWords,
+  revealedWords,
   validLetters,
   sortOrder,
   remainingOnly,
@@ -173,8 +171,6 @@ export default function answerSorter({
     }
   } else {
     // remainingOnly = false. Sort remaining answers with found answers
-    let result: string[] = [];
-
     if (remainingGroupWithLetter && remainingRevealFirstLetter) {
       //remainingOnly false, revealFirstLetter true, groupWithLetter true
       //Only variables are location, length, and sort order
@@ -183,7 +179,7 @@ export default function answerSorter({
       for (const answer of remainingWords) {
         grouper[answer[0]].remaining.push(answer);
       }
-      for (const guess of correctGuessWords) {
+      for (const guess of revealedWords) {
         grouper[guess[0]].found.push(guess);
       }
 
@@ -194,7 +190,7 @@ export default function answerSorter({
             return lengthSort(a, b) || random(-1, 1);
           });
         }
-        result = grouperLocationAndOrderCases(
+        return grouperLocationAndOrderCases(
           grouper,
           sortOrder,
           remainingLocation,
@@ -204,7 +200,7 @@ export default function answerSorter({
         for (const letter in grouper) {
           shuffle(grouper[letter].remaining);
         }
-        result = grouperLocationAndOrderCases(
+        return grouperLocationAndOrderCases(
           grouper,
           sortOrder,
           remainingLocation,
@@ -216,41 +212,40 @@ export default function answerSorter({
       //Variables are firstLetter, length, location, order
       //16 cases
       if (!remainingRevealFirstLetter && !remainingRevealLength) {
-        result = separateLocationAndOrderCases(
+        return separateLocationAndOrderCases(
           shuffle(remainingWords),
-          correctGuessWords,
+          revealedWords,
           remainingLocation,
           sortOrder,
         );
       } else if (remainingRevealFirstLetter && !remainingRevealLength) {
-        result = separateLocationAndOrderCases(
+        return separateLocationAndOrderCases(
           remainingWords.sort((a, b) => {
             return flSort(a, b) || random(-1, 1);
           }),
-          correctGuessWords,
+          revealedWords,
           remainingLocation,
           sortOrder,
         );
       } else if (!remainingRevealFirstLetter && remainingRevealLength) {
-        result = separateLocationAndOrderCases(
+        return separateLocationAndOrderCases(
           remainingWords.sort((a, b) => {
             return lengthSort(a, b) || random(-1, 1);
           }),
-          correctGuessWords,
+          revealedWords,
           remainingLocation,
           sortOrder,
         );
       } else {
-        result = separateLocationAndOrderCases(
+        return separateLocationAndOrderCases(
           remainingWords.sort((a, b) => {
             return flSort(a, b) || lengthSort(a, b);
           }),
-          correctGuessWords,
+          revealedWords,
           remainingLocation,
           sortOrder,
         );
       }
     }
-    return result;
   }
 }

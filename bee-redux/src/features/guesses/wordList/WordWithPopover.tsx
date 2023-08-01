@@ -10,35 +10,33 @@ export function WordWithPopover({ word }: { word: string }) {
   const pangrams = useAppSelector(selectPangrams);
   const isPangram = pangrams.includes(word);
   const isPerfect = isPangram && word.length === 7;
-  let liClasses = "has-popover";
+  let spanClasses = "has-popover";
   if (isPerfect) {
-    liClasses += " perfect";
+    spanClasses += " perfect";
   } else if (isPangram) {
-    liClasses += " pangram";
+    spanClasses += " pangram";
   }
   return (
-    <li className={liClasses}>
-      <Popover.Root>
-        <Popover.Trigger className="word-popover-trigger">
-          <span>{word}</span>
-        </Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content
-            className="sb-word-popover-content"
-            side="top"
-            avoidCollisions={true}
-            collisionPadding={16}
-          >
-            <span>{completeWord?.definitions[0]}</span>
-            <Popover.Close asChild>
-              <button type="button" className="popover-close-button">
-                <Icon icon="mdi:close-thick"></Icon>
-              </button>
-            </Popover.Close>
-            <Popover.Arrow className="popover-arrow" width={12} height={8} />
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
-    </li>
+    <Popover.Root>
+      <Popover.Trigger className="word-popover-trigger">
+        <span className={spanClasses}>{word}</span>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          className="sb-word-popover-content"
+          side="top"
+          avoidCollisions={true}
+          collisionPadding={16}
+        >
+          <span>{completeWord?.definitions[0]}</span>
+          <Popover.Close asChild>
+            <button type="button" className="popover-close-button">
+              <Icon icon="mdi:close-thick"></Icon>
+            </button>
+          </Popover.Close>
+          <Popover.Arrow className="popover-arrow" width={12} height={8} />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

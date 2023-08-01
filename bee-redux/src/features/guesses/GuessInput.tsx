@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectAnswerWords,
   selectCenterLetter,
+  selectExcludedWords,
   selectValidLetters,
 } from "../puzzle/puzzleSlice";
 import { GuessAlerts } from "./guessInput/GuessAlerts";
@@ -16,6 +17,7 @@ export function GuessInput() {
   const { guessValue, setGuessValue, guessBackspace, enterPressedEvent } =
     useContext(GuessInputContext);
   const answers = useAppSelector(selectAnswerWords);
+  const excludedWords = useAppSelector(selectExcludedWords);
   const validLetters = useAppSelector(selectValidLetters);
   const centerLetter = useAppSelector(selectCenterLetter);
   const guesses = useAppSelector(selectGuesses);
@@ -32,6 +34,7 @@ export function GuessInput() {
       MissingCenterLetter = "Must contain center letter",
       AlreadyGuessed = "Already guessed",
       AlreadyFound = "Already found",
+      AlreadySpoiled = "Already spoiled",
     }
 
     const interactiveElementFocus = (e: KeyboardEvent) => {
@@ -110,6 +113,8 @@ export function GuessInput() {
       if (matchingGuess) {
         if (matchingGuess.isAnswer) {
           errorMessages.push(ErrorTypes.AlreadyFound);
+        } else if (matchingGuess.isSpoiled) {
+          errorMessages.push(ErrorTypes.AlreadySpoiled);
         } else {
           errorMessages.push(ErrorTypes.AlreadyGuessed);
         }
@@ -131,15 +136,20 @@ export function GuessInput() {
       }
       if (validateSubmission(guessValue, guesses, centerLetter)) {
         const isAnswer = answers.includes(guessValue);
+        const isExcluded = excludedWords.includes(guessValue);
         dispatch(
           addGuess({
             word: guessValue,
             isAnswer,
+            isExcluded,
+            isSpoiled: false,
           }),
         );
         if (isAnswer) {
           displayMessages([guessValue], "answer");
           setGuessValue("");
+        } else if (isExcluded) {
+          displayMessages(["Excluded from word list"], "error");
         } else {
           displayMessages(["Not in word list"], "error");
         }

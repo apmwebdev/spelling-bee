@@ -172,6 +172,21 @@ export const wordListSettingsSlice = createSlice({
     setAnswersSortOrder: (state, action) => {
       state.data.answers.sortOrder = action.payload;
     },
+    setAnswersRemainingOnly: (state, action) => {
+      state.data.answers.remainingOnly = action.payload;
+    },
+    setAnswersRemainingRevealFirstLetter: (state, action) => {
+      state.data.answers.remainingRevealFirstLetter = action.payload;
+    },
+    setAnswersRemainingRevealLength: (state, action) => {
+      state.data.answers.remainingRevealLength = action.payload;
+    },
+    setAnswersRemainingLocation: (state, action) => {
+      state.data.answers.remainingLocation = action.payload;
+    },
+    setAnswersRemainingGroupWithLetter: (state, action) => {
+      state.data.answers.remainingGroupWithLetter = action.payload;
+    },
     toggleAnswersSettingsCollapsed: (state) => {
       console.log("trigger");
       state.data.answers.settingsCollapsed =
@@ -197,6 +212,11 @@ export const {
   setExcludedWordsSortOrder,
   toggleExcludedWordsSettingsCollapsed,
   setAnswersSortOrder,
+  setAnswersRemainingOnly,
+  setAnswersRemainingRevealFirstLetter,
+  setAnswersRemainingRevealLength,
+  setAnswersRemainingLocation,
+  setAnswersRemainingGroupWithLetter,
   toggleAnswersSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 

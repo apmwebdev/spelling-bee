@@ -283,15 +283,26 @@
 
 .sb-word-list-settings-content {
   padding: 8px;
+  label, > div {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    //justify-content: space-between;
+  }
   &.found {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px;
-    label {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      //justify-content: space-between;
+  }
+  &.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sb-word-list-toggle {
+    font-size: 16px;
+    button {
+      padding: 2px 8px;
     }
   }
 }
@@ -370,8 +381,7 @@
           text-transform: uppercase;
         }
       }
-      button {
-        text-decoration: underline;
+      button.word-popover-trigger {
         padding: 0px;
         border: none;
         display: flex;
@@ -381,10 +391,18 @@
           outline: none;
         }
         span {
+          text-decoration: underline;
           display: block;
           text-align: left;
           &:first-letter {
             text-transform: uppercase;
+          }
+          &.perfect {
+            font-style: italic;
+            font-weight: bold;
+          }
+          &.pangram {
+            font-weight: bold;
           }
         }
       }
@@ -425,11 +443,6 @@
   }
 }
 
-.sb-word-list .has-popover {
-  button {
-  }
-}
-
 .sb-word-popover-content {
   position: relative;
   z-index: 3;
@@ -462,6 +475,17 @@
     align-items: center;
     justify-content: center;
     border: 1px solid #999;
+  }
+}
+
+button.sb-revealer {
+  padding: 3px 8px;
+  border: 1px solid #666;
+  //border-radius: 0px;
+  text-align: left;
+  background-color: #333;
+  &:hover, &:active {
+    text-decoration: underline;
   }
 }
 
