@@ -44,8 +44,12 @@ export interface ExcludedWordsSettingsFormat {
 
 export interface AnswerListSettingsFormat {
   sortOrder: SortOrder;
-  remainingOnly: boolean;
   letterFilter: string[];
+  remainingOnly: boolean;
+  remainingRevealFirstLetter: boolean;
+  remainingRevealLength: boolean;
+  remainingLocation: "beginning" | "end";
+  remainingGroupWithLetter: boolean;
   settingsCollapsed: boolean;
 }
 
@@ -89,8 +93,12 @@ const initialState: WordListSettingsState = {
     },
     answers: {
       sortOrder: SortOrder.Ascending,
-      remainingOnly: true,
       letterFilter: [],
+      remainingOnly: false,
+      remainingRevealFirstLetter: true,
+      remainingRevealLength: true,
+      remainingLocation: "beginning",
+      remainingGroupWithLetter: true,
       settingsCollapsed: true,
     },
     general: {
