@@ -1,17 +1,17 @@
 import {
-  selectFoundWordsListSettings,
-  setFoundWordsSortOrder,
-  setFoundWordsSortType,
+  selectWrongGuessesListSettings,
+  setWrongGuessesSortOrder,
+  setWrongGuessesSortType,
   SortOrder,
   SortType,
 } from "../wordListSettingsSlice";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
-export function FoundWordsListHeader() {
+export function WrongGuessesListHeader() {
   const dispatch = useAppDispatch();
-  const { foundWordsSortType, foundWordsSortOrder } = useAppSelector(
-    selectFoundWordsListSettings,
+  const { wrongGuessesSortType, wrongGuessesSortOrder } = useAppSelector(
+    selectWrongGuessesListSettings,
   );
 
   return (
@@ -20,15 +20,15 @@ export function FoundWordsListHeader() {
         <span>Sort</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-order sb-word-list-toggle"
-          value={foundWordsSortType}
-          onValueChange={(val) => dispatch(setFoundWordsSortType(val))}
+          className="sb-wrong-guesses-sort-type sb-word-list-toggle"
+          value={wrongGuessesSortType}
+          onValueChange={(val) => dispatch(setWrongGuessesSortType(val))}
         >
           <ToggleGroup.Item value={SortType.Alphabetical}>
             Alphabetical
           </ToggleGroup.Item>
           <ToggleGroup.Item value={SortType.FoundOrder}>
-            Found Order
+            Guess Order
           </ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
@@ -36,9 +36,9 @@ export function FoundWordsListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-type sb-word-list-toggle"
-          value={foundWordsSortOrder}
-          onValueChange={(val) => dispatch(setFoundWordsSortOrder(val))}
+          className="sb-wrong-guesses-sort-order sb-word-list-toggle"
+          value={wrongGuessesSortOrder}
+          onValueChange={(val) => dispatch(setWrongGuessesSortOrder(val))}
         >
           <ToggleGroup.Item value={SortOrder.Ascending}>Asc</ToggleGroup.Item>
           <ToggleGroup.Item value={SortOrder.Descending}>Desc</ToggleGroup.Item>

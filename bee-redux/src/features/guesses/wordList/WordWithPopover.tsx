@@ -20,7 +20,7 @@ export function WordWithPopover({ word }: { word: string }) {
     <li className={liClasses}>
       <Popover.Root>
         <Popover.Trigger className="word-popover-trigger">
-          {word}
+          <span>{word}</span>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content

@@ -17,7 +17,11 @@ export function WordListScroller({
             if (allowPopovers) {
               return <WordWithPopover key={uniqid()} word={word} />;
             }
-            return <li key={uniqid()}>{word}</li>;
+            return (
+              <li key={uniqid()}>
+                <span>{word}</span>
+              </li>
+            );
           })}
         </ul>
       </ScrollArea.Viewport>

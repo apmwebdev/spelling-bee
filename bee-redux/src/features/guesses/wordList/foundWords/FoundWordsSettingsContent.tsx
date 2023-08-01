@@ -1,4 +1,5 @@
 import {
+  selectFoundWordsListSettings,
   selectWordListSettings,
   setFoundWordsIncludeTotal,
   setFoundWordsSortOrder,
@@ -19,7 +20,7 @@ export function FoundWordsSettingsContent() {
     pangramsIncludeTotal,
     includePerfectPangrams,
     perfectPangramsIncludeTotal,
-  } = useAppSelector(selectWordListSettings);
+  } = useAppSelector(selectFoundWordsListSettings);
   return (
     <div className="sb-word-list-settings-content found">
       <label>

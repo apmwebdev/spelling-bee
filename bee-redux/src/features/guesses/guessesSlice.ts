@@ -99,6 +99,10 @@ export const selectCorrectGuessWords = createSelector(
       .filter((guessObj) => guessObj.isAnswer)
       .map((guessObj) => guessObj.word),
 );
+export const selectWrongGuesses = createSelector(
+  [selectGuesses],
+  (guessObjects) => guessObjects.filter((guessObj) => !guessObj.isAnswer),
+);
 export const selectScore = createSelector(
   [selectCorrectGuessWords],
   (correctGuessWords) => calculateScore(correctGuessWords),

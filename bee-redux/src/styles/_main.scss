@@ -297,17 +297,17 @@
 }
 
 .sb-word-list-status {
-  font-size: 16px;
-  text-align: left;
   padding: 16px 8px;
-  display: flex;
-  gap: 20px;
   align-items: center;
-  //border-bottom: 1px solid #666;
-  //margin-bottom: 8px;
-  > div:not(.perfect) {
+  font-size: 16px;
+  &.sb-found-words-status {
     display: flex;
-    gap: 4px;
+    justify-content: center;
+    gap: 20px;
+    > div:not(.perfect) {
+      display: flex;
+      gap: 4px;
+    }
   }
   .word-list-status-count {
     font-weight: bold;
@@ -362,9 +362,31 @@
     column-fill: auto;
     li {
       height: 26px;
-      text-transform: lowercase;
-      &:first-letter {
-        text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span {
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+      button {
+        text-decoration: underline;
+        padding: 0px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        &:focus {
+          outline: none;
+        }
+        span {
+          display: block;
+          text-align: left;
+          &:first-letter {
+            text-transform: uppercase;
+          }
+        }
       }
     }
   }
@@ -405,11 +427,6 @@
 
 .sb-word-list .has-popover {
   button {
-    text-decoration: underline;
-    padding: 0px;
-    &:focus {
-      outline: none;
-    }
   }
 }
 

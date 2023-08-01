@@ -1,10 +1,10 @@
 import { useAppSelector } from "../../../../app/hooks";
 import { GuessFormat, selectCorrectGuesses } from "../../guessesSlice";
 import {
-  WordListSettingsFormat,
-  selectWordListSettings,
   SortOrder,
   SortType,
+  selectFoundWordsListSettings,
+  FoundWordsSettingsFormat,
 } from "../wordListSettingsSlice";
 import { WordListScroller } from "../WordListScroller";
 import { FoundWordsStatus } from "./FoundWordsStatus";
@@ -13,10 +13,10 @@ import { FoundWordsListHeader } from "./FoundWordsListHeader";
 
 export function FoundWordsContainer() {
   const correctGuesses = useAppSelector(selectCorrectGuesses);
-  const wordListSettings = useAppSelector(selectWordListSettings);
+  const foundWordsSettings = useAppSelector(selectFoundWordsListSettings);
 
   const generateDisplayGuessList = (
-    { foundWordsSortType, foundWordsSortOrder }: WordListSettingsFormat,
+    { foundWordsSortType, foundWordsSortOrder }: FoundWordsSettingsFormat,
     guesses: GuessFormat[],
   ) => {
     let displayGuessList: GuessFormat[] = [];
@@ -50,17 +50,14 @@ export function FoundWordsContainer() {
 
   const guessListContent = () => {
     const displayGuessList = generateDisplayGuessList(
-      wordListSettings,
+      foundWordsSettings,
       correctGuesses,
     );
     const wordsOnly = displayGuessList.map((guess) => guess.word);
     if (wordsOnly.length > 0) {
       return (
         <div className="sb-word-list-container">
-          <FoundWordsListHeader
-            sortType={wordListSettings.foundWordsSortType}
-            sortOrder={wordListSettings.foundWordsSortOrder}
-          />
+          <FoundWordsListHeader />
           <WordListScroller wordList={wordsOnly} allowPopovers={true} />
         </div>
       );
@@ -71,11 +68,11 @@ export function FoundWordsContainer() {
     <div className="sb-found-words-container">
       <FoundWordsSettings />
       <FoundWordsStatus
-        foundWordsIncludeTotal={wordListSettings.foundWordsIncludeTotal}
-        pangramsIncludeTotal={wordListSettings.pangramsIncludeTotal}
-        includePerfectPangrams={wordListSettings.includePerfectPangrams}
+        foundWordsIncludeTotal={foundWordsSettings.foundWordsIncludeTotal}
+        pangramsIncludeTotal={foundWordsSettings.pangramsIncludeTotal}
+        includePerfectPangrams={foundWordsSettings.includePerfectPangrams}
         perfectPangramsIncludeTotal={
-          wordListSettings.perfectPangramsIncludeTotal
+          foundWordsSettings.perfectPangramsIncludeTotal
         }
       />
       {guessListContent()}

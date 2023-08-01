@@ -30,6 +30,7 @@ export function FoundWordsStatus({
   const correctCount = correctGuessWords.length;
   const answerCount = answers.length;
   let countClass = "word-list-status-count ";
+
   let foundPointsCountClasses = countClass;
   if (correctCount === 0) {
     foundPointsCountClasses += "hint-not-started";
@@ -40,7 +41,6 @@ export function FoundWordsStatus({
   }
 
   const foundWordsTrackingText = () => {
-
     let text = `${correctCount}`;
     if (foundWordsIncludeTotal) {
       text += `/${answerCount}`;
