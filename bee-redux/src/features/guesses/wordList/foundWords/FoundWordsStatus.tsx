@@ -6,20 +6,15 @@ import {
   selectPerfectPangrams,
   selectTotalPoints,
 } from "../../../puzzle/puzzleSlice";
+import { selectFoundWordsListSettings } from "../wordListSettingsSlice";
 
-export interface FoundWordsStatusProps {
-  foundWordsIncludeTotal: boolean;
-  pangramsIncludeTotal: boolean;
-  includePerfectPangrams: boolean;
-  perfectPangramsIncludeTotal: boolean;
-}
-
-export function FoundWordsStatus({
-  foundWordsIncludeTotal,
-  pangramsIncludeTotal,
-  includePerfectPangrams,
-  perfectPangramsIncludeTotal,
-}: FoundWordsStatusProps) {
+export function FoundWordsStatus() {
+  const {
+    wordsShowTotal,
+    pangramsShowTotal,
+    showPerfectPangrams,
+    perfectPangramsShowTotal,
+  } = useAppSelector(selectFoundWordsListSettings);
   const answers = useAppSelector(selectAnswers);
   const correctGuessWords = useAppSelector(selectCorrectGuessWords);
   const pangrams = useAppSelector(selectPangrams);
@@ -42,7 +37,7 @@ export function FoundWordsStatus({
 
   const foundWordsTrackingText = () => {
     let text = `${correctCount}`;
-    if (foundWordsIncludeTotal) {
+    if (wordsShowTotal) {
       text += `/${answerCount}`;
     }
 
@@ -71,7 +66,7 @@ export function FoundWordsStatus({
     ).length;
     const totalPangrams = pangrams.length;
     let text = `${currentPangrams}`;
-    if (pangramsIncludeTotal) {
+    if (pangramsShowTotal) {
       text += `/${totalPangrams}`;
     }
     let pangramCountClasses = countClass;
@@ -91,7 +86,7 @@ export function FoundWordsStatus({
   };
 
   const perfectPangramsTrackingText = () => {
-    if (includePerfectPangrams) {
+    if (showPerfectPangrams) {
       const currentPerfectPangrams = perfectPangrams.filter((p) =>
         correctGuessWords.includes(p),
       ).length;
@@ -100,7 +95,7 @@ export function FoundWordsStatus({
         return <div className="perfect">(no perfect)</div>;
       }
       let text = `${currentPerfectPangrams}`;
-      if (perfectPangramsIncludeTotal) {
+      if (perfectPangramsShowTotal) {
         text += `/${totalPerfectPangrams}`;
       }
       let perfectClasses = countClass;

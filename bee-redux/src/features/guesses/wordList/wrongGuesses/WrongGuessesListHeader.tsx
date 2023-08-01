@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 export function WrongGuessesListHeader() {
   const dispatch = useAppDispatch();
-  const { wrongGuessesSortType, wrongGuessesSortOrder } = useAppSelector(
+  const { sortType, sortOrder } = useAppSelector(
     selectWrongGuessesListSettings,
   );
 
@@ -21,7 +21,7 @@ export function WrongGuessesListHeader() {
         <ToggleGroup.Root
           type="single"
           className="sb-wrong-guesses-sort-type sb-word-list-toggle"
-          value={wrongGuessesSortType}
+          value={sortType}
           onValueChange={(val) => dispatch(setWrongGuessesSortType(val))}
         >
           <ToggleGroup.Item value={SortType.Alphabetical}>
@@ -37,7 +37,7 @@ export function WrongGuessesListHeader() {
         <ToggleGroup.Root
           type="single"
           className="sb-wrong-guesses-sort-order sb-word-list-toggle"
-          value={wrongGuessesSortOrder}
+          value={sortOrder}
           onValueChange={(val) => dispatch(setWrongGuessesSortOrder(val))}
         >
           <ToggleGroup.Item value={SortOrder.Ascending}>Asc</ToggleGroup.Item>

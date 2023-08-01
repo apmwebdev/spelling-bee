@@ -10,9 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 export function FoundWordsListHeader() {
   const dispatch = useAppDispatch();
-  const { foundWordsSortType, foundWordsSortOrder } = useAppSelector(
-    selectFoundWordsListSettings,
-  );
+  const { sortType, sortOrder } = useAppSelector(selectFoundWordsListSettings);
 
   return (
     <header className="header">
@@ -21,7 +19,7 @@ export function FoundWordsListHeader() {
         <ToggleGroup.Root
           type="single"
           className="sb-found-words-sort-order sb-word-list-toggle"
-          value={foundWordsSortType}
+          value={sortType}
           onValueChange={(val) => dispatch(setFoundWordsSortType(val))}
         >
           <ToggleGroup.Item value={SortType.Alphabetical}>
@@ -37,7 +35,7 @@ export function FoundWordsListHeader() {
         <ToggleGroup.Root
           type="single"
           className="sb-found-words-sort-type sb-word-list-toggle"
-          value={foundWordsSortOrder}
+          value={sortOrder}
           onValueChange={(val) => dispatch(setFoundWordsSortOrder(val))}
         >
           <ToggleGroup.Item value={SortOrder.Ascending}>Asc</ToggleGroup.Item>

@@ -19,21 +19,21 @@ export enum SortOrder {
 }
 
 export interface FoundWordsSettingsFormat {
-  foundWordsSortType: SortType;
-  foundWordsSortOrder: SortOrder;
-  foundWordsLetterFilter: string[];
-  foundWordsIncludeTotal: boolean;
-  pangramsIncludeTotal: boolean;
-  includePerfectPangrams: boolean;
-  perfectPangramsIncludeTotal: boolean;
-  foundSettingsCollapsed: boolean;
+  sortType: SortType;
+  sortOrder: SortOrder;
+  letterFilter: string[];
+  wordsShowTotal: boolean;
+  pangramsShowTotal: boolean;
+  showPerfectPangrams: boolean;
+  perfectPangramsShowTotal: boolean;
+  settingsCollapsed: boolean;
 }
 
 export interface WrongGuessesSettingsFormat {
-  wrongGuessesSortType: SortType;
-  wrongGuessesSortOrder: SortOrder;
-  wrongGuessesLetterFilter: string[];
-  wrongGuessesSettingsCollapsed: boolean;
+  sortType: SortType;
+  sortOrder: SortOrder;
+  letterFilter: string[];
+  settingsCollapsed: boolean;
 }
 
 export interface ExcludedWordsSettingsFormat {
@@ -43,10 +43,10 @@ export interface ExcludedWordsSettingsFormat {
 }
 
 export interface AnswerListSettingsFormat {
-  answerListSortOrder: SortOrder;
-  answerListRemainingOnly: boolean;
-  answerListRevealAll: boolean;
-  answerListLetterFilter: string[];
+  sortOrder: SortOrder;
+  remainingOnly: boolean;
+  letterFilter: string[];
+  settingsCollapsed: boolean;
 }
 
 export interface WordListSettingsFormat {
@@ -67,20 +67,20 @@ export interface WordListSettingsState {
 const initialState: WordListSettingsState = {
   data: {
     foundWords: {
-      foundWordsSortType: SortType.Alphabetical,
-      foundWordsSortOrder: SortOrder.Ascending,
-      foundWordsLetterFilter: [],
-      foundWordsIncludeTotal: true,
-      pangramsIncludeTotal: true,
-      includePerfectPangrams: true,
-      perfectPangramsIncludeTotal: true,
-      foundSettingsCollapsed: true,
+      sortType: SortType.Alphabetical,
+      sortOrder: SortOrder.Ascending,
+      letterFilter: [],
+      wordsShowTotal: true,
+      pangramsShowTotal: true,
+      showPerfectPangrams: true,
+      perfectPangramsShowTotal: true,
+      settingsCollapsed: true,
     },
     wrongGuesses: {
-      wrongGuessesSortType: SortType.FoundOrder,
-      wrongGuessesSortOrder: SortOrder.Descending,
-      wrongGuessesLetterFilter: [],
-      wrongGuessesSettingsCollapsed: true,
+      sortType: SortType.FoundOrder,
+      sortOrder: SortOrder.Descending,
+      letterFilter: [],
+      settingsCollapsed: true,
     },
     excludedWords: {
       sortOrder: SortOrder.Ascending,
@@ -88,10 +88,10 @@ const initialState: WordListSettingsState = {
       settingsCollapsed: true,
     },
     answers: {
-      answerListSortOrder: SortOrder.Ascending,
-      answerListRemainingOnly: true,
-      answerListRevealAll: false,
-      answerListLetterFilter: [],
+      sortOrder: SortOrder.Ascending,
+      remainingOnly: true,
+      letterFilter: [],
+      settingsCollapsed: true,
     },
     general: {
       groupByFirstLetter: true,
@@ -105,10 +105,10 @@ export const wordListSettingsSlice = createSlice({
   initialState,
   reducers: {
     setFoundWordsSortType: (state, action) => {
-      state.data.foundWords.foundWordsSortType = action.payload;
+      state.data.foundWords.sortType = action.payload;
     },
     setFoundWordsSortOrder: (state, action) => {
-      state.data.foundWords.foundWordsSortOrder = action.payload;
+      state.data.foundWords.sortOrder = action.payload;
     },
     // toggleWrongGuessesShow: (state) => {
     //   state.data.wrongGuessesShow = !state.data.wrongGuessesShow;
@@ -116,43 +116,43 @@ export const wordListSettingsSlice = createSlice({
     // toggleWrongGuessesSeparate: (state) => {
     //   state.data.wrongGuessesSeparate = !state.data.wrongGuessesSeparate;
     // },
-    setFoundWordsIncludeTotal: (
+    setFoundWordsWordsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.foundWordsIncludeTotal = action.payload;
+      state.data.foundWords.wordsShowTotal = action.payload;
     },
-    setPangramsIncludeTotal: (
+    setFoundWordsPangramsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.pangramsIncludeTotal = action.payload;
+      state.data.foundWords.pangramsShowTotal = action.payload;
     },
-    setIncludePerfectPangrams: (
+    setFoundWordsShowPerfectPangrams: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.includePerfectPangrams = action.payload;
+      state.data.foundWords.showPerfectPangrams = action.payload;
     },
-    setPerfectPangramsIncludeTotal: (
+    setFoundWordsPerfectPangramsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.perfectPangramsIncludeTotal = action.payload;
+      state.data.foundWords.perfectPangramsShowTotal = action.payload;
     },
-    toggleFoundSettingsCollapsed: (state) => {
-      state.data.foundWords.foundSettingsCollapsed =
-        !state.data.foundWords.foundSettingsCollapsed;
+    toggleFoundWordsSettingsCollapsed: (state) => {
+      state.data.foundWords.settingsCollapsed =
+        !state.data.foundWords.settingsCollapsed;
     },
     setWrongGuessesSortType: (state, action) => {
-      state.data.wrongGuesses.wrongGuessesSortType = action.payload;
+      state.data.wrongGuesses.sortType = action.payload;
     },
     setWrongGuessesSortOrder: (state, action) => {
-      state.data.wrongGuesses.wrongGuessesSortOrder = action.payload;
+      state.data.wrongGuesses.sortOrder = action.payload;
     },
     toggleWrongGuessesSettingsCollapsed: (state) => {
-      state.data.wrongGuesses.wrongGuessesSettingsCollapsed =
-        !state.data.wrongGuesses.wrongGuessesSettingsCollapsed;
+      state.data.wrongGuesses.settingsCollapsed =
+        !state.data.wrongGuesses.settingsCollapsed;
     },
     setExcludedWordsSortOrder: (state, action) => {
       state.data.excludedWords.sortOrder = action.payload;
@@ -160,6 +160,14 @@ export const wordListSettingsSlice = createSlice({
     toggleExcludedWordsSettingsCollapsed: (state) => {
       state.data.excludedWords.settingsCollapsed =
         !state.data.excludedWords.settingsCollapsed;
+    },
+    setAnswersSortOrder: (state, action) => {
+      state.data.answers.sortOrder = action.payload;
+    },
+    toggleAnswersSettingsCollapsed: (state) => {
+      console.log("trigger");
+      state.data.answers.settingsCollapsed =
+        !state.data.answers.settingsCollapsed;
     },
   },
   extraReducers: (builder) => {},
@@ -170,27 +178,29 @@ export const {
   setFoundWordsSortOrder,
   // toggleWrongGuessesShow,
   // toggleWrongGuessesSeparate,
-  toggleFoundSettingsCollapsed,
-  setFoundWordsIncludeTotal,
-  setPangramsIncludeTotal,
-  setIncludePerfectPangrams,
-  setPerfectPangramsIncludeTotal,
+  setFoundWordsWordsShowTotal,
+  setFoundWordsPangramsShowTotal,
+  setFoundWordsShowPerfectPangrams,
+  setFoundWordsPerfectPangramsShowTotal,
+  toggleFoundWordsSettingsCollapsed,
   setWrongGuessesSortType,
   setWrongGuessesSortOrder,
   toggleWrongGuessesSettingsCollapsed,
   setExcludedWordsSortOrder,
   toggleExcludedWordsSettingsCollapsed,
+  setAnswersSortOrder,
+  toggleAnswersSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 
 export const selectWordListSettings = (state: RootState) =>
   state.wordListSettings.data;
 export const selectFoundWordsListSettings = (state: RootState) =>
   state.wordListSettings.data.foundWords;
-export const selectWordListFoundSettingsCollapsed = (state: RootState) =>
-  state.wordListSettings.data.foundWords.foundSettingsCollapsed;
 export const selectWrongGuessesListSettings = (state: RootState) =>
   state.wordListSettings.data.wrongGuesses;
 export const selectExcludedWordsListSettings = (state: RootState) =>
   state.wordListSettings.data.excludedWords;
+export const selectAnswersListSettings = (state: RootState) =>
+  state.wordListSettings.data.answers;
 
 export default wordListSettingsSlice.reducer;

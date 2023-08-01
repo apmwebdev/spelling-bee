@@ -1,21 +1,32 @@
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { selectExcludedWords } from "../../../puzzle/puzzleSlice";
 import { WordListScroller } from "../WordListScroller";
-import { ExcludedWordsSettings } from "./ExcludedWordsSettings";
 import { ExcludedWordsListHeader } from "./ExcludedWordsListHeader";
 import {
   selectExcludedWordsListSettings,
   SortOrder,
+  toggleExcludedWordsSettingsCollapsed,
 } from "../wordListSettingsSlice";
+import { SettingsCollapsible } from "../SettingsCollapsible";
 
 export function ExcludedWordsContainer() {
+  const dispatch = useAppDispatch();
   const excludedWords = useAppSelector(selectExcludedWords);
-  const { sortOrder } = useAppSelector(selectExcludedWordsListSettings);
+  const { sortOrder, settingsCollapsed } = useAppSelector(
+    selectExcludedWordsListSettings,
+  );
   const displayList = [...excludedWords];
 
   return (
     <div className="sb-excluded-words-container">
-      <ExcludedWordsSettings />
+      <SettingsCollapsible
+        isCollapsed={settingsCollapsed}
+        toggleIsCollapsed={() =>
+          dispatch(toggleExcludedWordsSettingsCollapsed())
+        }
+      >
+        blah
+      </SettingsCollapsible>
       <div className="sb-excluded-words-status sb-word-list-status">
         There are{" "}
         <span className="word-list-status-count">{excludedWords.length}</span>{" "}

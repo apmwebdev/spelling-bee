@@ -1,44 +1,45 @@
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { GuessFormat, selectCorrectGuesses } from "../../guessesSlice";
 import {
   SortOrder,
   SortType,
   selectFoundWordsListSettings,
-  FoundWordsSettingsFormat,
+  toggleFoundWordsSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import { WordListScroller } from "../WordListScroller";
 import { FoundWordsStatus } from "./FoundWordsStatus";
-import { FoundWordsSettings } from "./FoundWordsSettings";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
+import { SettingsCollapsible } from "../SettingsCollapsible";
+import { FoundWordsSettings } from "./FoundWordsSettings";
 
 export function FoundWordsContainer() {
+  const dispatch = useAppDispatch();
   const correctGuesses = useAppSelector(selectCorrectGuesses);
-  const foundWordsSettings = useAppSelector(selectFoundWordsListSettings);
+  const { sortType, sortOrder, settingsCollapsed } = useAppSelector(
+    selectFoundWordsListSettings,
+  );
 
-  const generateDisplayGuessList = (
-    { foundWordsSortType, foundWordsSortOrder }: FoundWordsSettingsFormat,
-    guesses: GuessFormat[],
-  ) => {
+  const generateDisplayGuessList = () => {
     let displayGuessList: GuessFormat[] = [];
-    if (guesses.length === 0) {
+    if (correctGuesses.length === 0) {
       return displayGuessList;
     }
 
-    displayGuessList = [...guesses];
+    displayGuessList = [...correctGuesses];
 
-    if (foundWordsSortType === SortType.Alphabetical) {
+    if (sortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
         if (a.word < b.word) {
-          return foundWordsSortOrder === SortOrder.Ascending ? -1 : 1;
+          return sortOrder === SortOrder.Ascending ? -1 : 1;
         }
         if (a.word > b.word) {
-          return foundWordsSortOrder === SortOrder.Ascending ? 1 : -1;
+          return sortOrder === SortOrder.Ascending ? 1 : -1;
         }
         return 0;
       });
     } else {
       displayGuessList.sort((a, b) => {
-        if (foundWordsSortOrder === SortOrder.Ascending) {
+        if (sortOrder === SortOrder.Ascending) {
           return a.timestamp - b.timestamp;
         }
         return b.timestamp - a.timestamp;
@@ -49,10 +50,7 @@ export function FoundWordsContainer() {
   };
 
   const guessListContent = () => {
-    const displayGuessList = generateDisplayGuessList(
-      foundWordsSettings,
-      correctGuesses,
-    );
+    const displayGuessList = generateDisplayGuessList();
     const wordsOnly = displayGuessList.map((guess) => guess.word);
     if (wordsOnly.length > 0) {
       return (
@@ -66,15 +64,13 @@ export function FoundWordsContainer() {
   };
   return (
     <div className="sb-found-words-container">
-      <FoundWordsSettings />
-      <FoundWordsStatus
-        foundWordsIncludeTotal={foundWordsSettings.foundWordsIncludeTotal}
-        pangramsIncludeTotal={foundWordsSettings.pangramsIncludeTotal}
-        includePerfectPangrams={foundWordsSettings.includePerfectPangrams}
-        perfectPangramsIncludeTotal={
-          foundWordsSettings.perfectPangramsIncludeTotal
-        }
-      />
+      <SettingsCollapsible
+        isCollapsed={settingsCollapsed}
+        toggleIsCollapsed={() => dispatch(toggleFoundWordsSettingsCollapsed())}
+      >
+        <FoundWordsSettings />
+      </SettingsCollapsible>
+      <FoundWordsStatus />
       {guessListContent()}
     </div>
   );
