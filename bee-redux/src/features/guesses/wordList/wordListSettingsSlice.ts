@@ -45,7 +45,7 @@ export interface ExcludedWordsSettingsFormat {
 export interface AnswerListSettingsFormat {
   sortOrder: SortOrder;
   letterFilter: string[];
-  remainingOnly: boolean;
+  remainingAndSpoiledOnly: boolean;
   remainingRevealFirstLetter: boolean;
   remainingRevealLength: boolean;
   remainingLocation: "beginning" | "end";
@@ -94,7 +94,7 @@ const initialState: WordListSettingsState = {
     answers: {
       sortOrder: SortOrder.Ascending,
       letterFilter: [],
-      remainingOnly: false,
+      remainingAndSpoiledOnly: false,
       remainingRevealFirstLetter: true,
       remainingRevealLength: true,
       remainingLocation: "beginning",
@@ -172,8 +172,8 @@ export const wordListSettingsSlice = createSlice({
     setAnswersSortOrder: (state, action) => {
       state.data.answers.sortOrder = action.payload;
     },
-    setAnswersRemainingOnly: (state, action) => {
-      state.data.answers.remainingOnly = action.payload;
+    setAnswersRemainingAndSpoiledOnly: (state, action) => {
+      state.data.answers.remainingAndSpoiledOnly = action.payload;
     },
     setAnswersRemainingRevealFirstLetter: (state, action) => {
       state.data.answers.remainingRevealFirstLetter = action.payload;
@@ -212,7 +212,7 @@ export const {
   setExcludedWordsSortOrder,
   toggleExcludedWordsSettingsCollapsed,
   setAnswersSortOrder,
-  setAnswersRemainingOnly,
+  setAnswersRemainingAndSpoiledOnly,
   setAnswersRemainingRevealFirstLetter,
   setAnswersRemainingRevealLength,
   setAnswersRemainingLocation,

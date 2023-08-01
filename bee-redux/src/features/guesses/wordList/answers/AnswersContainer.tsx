@@ -11,19 +11,20 @@ import {
   toggleAnswersSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import answerSorter from "./answerSorter";
-import { selectRevealedWords } from "../../guessesSlice";
+import { selectKnownWords, selectSpoiledWords } from "../../guessesSlice";
 import { AnswersSettings } from "./AnswersSettings";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();
   const answerWords = useAppSelector(selectAnswerWords);
   const remainingWords = useAppSelector(selectRemainingAnswerWords);
-  const revealedWords = useAppSelector(selectRevealedWords);
+  const knownWords = useAppSelector(selectKnownWords);
+  const spoiledWords = useAppSelector(selectSpoiledWords);
   const validLetters = useAppSelector(selectValidLetters);
   const {
     settingsCollapsed,
     sortOrder,
-    remainingOnly,
+    remainingAndSpoiledOnly,
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
@@ -32,10 +33,11 @@ export function AnswersContainer() {
 
   const displayList = answerSorter({
     remainingWords: [...remainingWords],
-    revealedWords: [...revealedWords].sort(),
+    knownWords: [...knownWords].sort(),
+    spoiledWords: [...spoiledWords].sort(),
     validLetters: [...validLetters],
     sortOrder,
-    remainingOnly,
+    remainingAndSpoiledOnly,
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,

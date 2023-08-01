@@ -1,14 +1,18 @@
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import {
-  selectAnswersListSettings, setAnswersRemainingGroupWithLetter, setAnswersRemainingLocation,
-  setAnswersRemainingOnly, setAnswersRemainingRevealFirstLetter, setAnswersRemainingRevealLength,
+  selectAnswersListSettings,
+  setAnswersRemainingAndSpoiledOnly,
+  setAnswersRemainingGroupWithLetter,
+  setAnswersRemainingLocation,
+  setAnswersRemainingRevealFirstLetter,
+  setAnswersRemainingRevealLength,
 } from "../wordListSettingsSlice";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 
 export function AnswersSettings() {
   const dispatch = useAppDispatch();
   const {
-    remainingOnly,
+    remainingAndSpoiledOnly,
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
@@ -19,10 +23,12 @@ export function AnswersSettings() {
       <label>
         <input
           type="checkbox"
-          checked={remainingOnly}
-          onChange={(e) => dispatch(setAnswersRemainingOnly(e.target.checked))}
+          checked={remainingAndSpoiledOnly}
+          onChange={(e) =>
+            dispatch(setAnswersRemainingAndSpoiledOnly(e.target.checked))
+          }
         />
-        <span>Show remaining (unrevealed) answers only</span>
+        <span>Show spoiled and unrevealed answers only</span>
       </label>
       <label>
         <input

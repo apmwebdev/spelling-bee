@@ -108,14 +108,14 @@ export const selectCorrectGuessWords = createSelector(
       .filter((guess) => guess.isAnswer && !guess.isSpoiled)
       .map((guess) => guess.word),
 );
-export const selectRevealedWords = createSelector(
-  [selectGuesses],
-  (guesses) =>
+export const selectKnownWords = createSelector([selectGuesses], (guesses) =>
   guesses.filter((guess) => guess.isAnswer).map((guess) => guess.word),
 );
-export const selectWrongGuesses = createSelector(
-  [selectGuesses],
-  (guesses) => guesses.filter((guess) => !guess.isAnswer),
+export const selectSpoiledWords = createSelector([selectGuesses], (guesses) =>
+  guesses.filter((guess) => guess.isSpoiled).map((guess) => guess.word),
+);
+export const selectWrongGuesses = createSelector([selectGuesses], (guesses) =>
+  guesses.filter((guess) => !guess.isAnswer),
 );
 export const selectScore = createSelector(
   [selectCorrectGuessWords],
