@@ -38,6 +38,7 @@ class Puzzle < ApplicationRecord
     Word
       .where("CHAR_LENGTH(text) >= 4")
       .where("text ~ '^[#{@valid_letters.join("")}]+$'")
+      .where("text LIKE '%#{self.center_letter}%'")
       .find_each do |checked_word|
       unless self.words.include?(checked_word)
         @excluded_words.push(checked_word.text)
