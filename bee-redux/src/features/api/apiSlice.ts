@@ -8,13 +8,13 @@ import { RootState } from "../../app/store";
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api/v1",
-    // prepareHeaders: (headers, { getState }) => {
-      // const token = (getState() as RootState).auth.token;
-      // if (token) {
-      //   headers.set("Authorization", `Bearer ${token}`);
-      // }
-      // return headers;
-    // },
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     credentials: "include",
   }),
   endpoints: (builder) => ({
@@ -42,14 +42,10 @@ export const apiSlice = createApi({
         };
       },
     }),
-    getPuzzle: builder.query({
-      query: (identifier) => `/puzzles/${identifier}`,
-    }),
   }),
 });
 
 export const {
   useSignupMutation,
   useLoginMutation,
-  useGetPuzzleQuery,
 } = apiSlice;

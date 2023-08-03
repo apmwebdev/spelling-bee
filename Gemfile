@@ -15,6 +15,7 @@ gem "puma", "~> 5.0"
 gem 'rack-cors'
 gem 'nokogiri'
 gem 'devise'
+gem 'devise-jwt'
 gem 'jsonapi-serializer'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -50,3 +51,4 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+

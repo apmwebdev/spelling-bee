@@ -8,7 +8,6 @@ import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
-import { apiSlice } from "../api/apiSlice";
 
 interface Rank {
   id: string;
@@ -158,14 +157,7 @@ export const puzzleSlice = createSlice({
         if (action.error.message) {
           state.error = action.error.message;
         }
-      })
-      .addMatcher(
-        apiSlice.endpoints.getPuzzle.matchFulfilled,
-        (state, payload) => {
-          console.log("puzzleSlice payload: ", payload);
-          state.data = payload as unknown as PuzzleFormat;
-        },
-      );
+      });
   },
 });
 
