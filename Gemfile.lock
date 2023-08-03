@@ -1,3 +1,11 @@
+PATH
+  remote: /Users/austin/Projects/devise-jwt-cookie
+  specs:
+    devise-jwt-cookie (0.5.1)
+      devise-jwt (~> 0.10.0)
+      dry-auto_inject (~> 1.0, >= 1.0.1)
+      dry-configurable (~> 1.0, >= 1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -82,9 +90,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-jwt (0.11.0)
+    devise-jwt (0.10.0)
       devise (~> 4.0)
-      warden-jwt_auth (~> 0.8)
+      warden-jwt_auth (~> 0.6)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -198,6 +206,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  devise-jwt-cookie!
   jsonapi-serializer
   nokogiri
   pg (~> 1.1)

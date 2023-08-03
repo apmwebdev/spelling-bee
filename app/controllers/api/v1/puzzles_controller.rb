@@ -1,4 +1,5 @@
 class Api::V1::PuzzlesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_puzzle, only: %i[ show update destroy ]
   # before_action :set_puzzle_by_date_string, only: :show_by_date
   # before_action :set_puzzle_by_letters, only: :show_by_letters

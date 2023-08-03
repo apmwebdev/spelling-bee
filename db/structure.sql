@@ -179,6 +179,10 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
     username character varying NOT NULL,
+    provider character varying DEFAULT 'email'::character varying NOT NULL,
+    uid character varying DEFAULT ''::character varying NOT NULL,
+    allow_password_change boolean DEFAULT true,
+    tokens json,
     jti character varying NOT NULL
 );
 
@@ -410,6 +414,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230726041156'),
 ('20230726041910'),
 ('20230726043150'),
-('20230726045405');
+('20230726045405'),
+('20230803182425'),
+('20230803205319');
 
 
