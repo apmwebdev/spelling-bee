@@ -20,8 +20,10 @@ export function Login() {
     e.preventDefault();
     if (canSubmit()) {
       const formData = {
-        username: usernameValue,
-        password: passwordValue,
+        user: {
+          username: usernameValue,
+          password: passwordValue,
+        },
       };
       try {
         await login(formData).then((response) => console.log(response));

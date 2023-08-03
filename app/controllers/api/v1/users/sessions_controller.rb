@@ -2,7 +2,6 @@
 
 class Api::V1::Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
-  wrap_parameters :api_v1_user
   respond_to :json
 
   private
