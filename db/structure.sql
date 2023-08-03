@@ -178,8 +178,7 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
-    username character varying NOT NULL,
-    jti character varying NOT NULL
+    username character varying NOT NULL
 );
 
 
@@ -342,13 +341,6 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
--- Name: index_users_on_jti; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
-
-
---
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -409,7 +401,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230726033728'),
 ('20230726041156'),
 ('20230726041910'),
-('20230726043150'),
-('20230726045405');
+('20230726043150');
 
 
