@@ -146,6 +146,7 @@ export async function fetchPuzzle(identifier: string) {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   })
     .then((response) => response.json())
     .catch((error) => {

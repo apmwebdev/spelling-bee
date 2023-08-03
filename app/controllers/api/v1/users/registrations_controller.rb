@@ -2,7 +2,6 @@
 
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
-  wrap_parameters :api_v1_user
   respond_to :json
   # before_action :configure_sign_up_params, only: [:create]
 
@@ -21,10 +20,10 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def sign_up_params
-    # devise_parameter_sanitizer.permit(:sign_up, keys: %i[name username])
-    params.require(:user).permit(:email, :password, :username, :name)
-  end
+  # def sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: %i[name username])
+    # params.require(:user).permit(:email, :password, :username, :name)
+  # end
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
