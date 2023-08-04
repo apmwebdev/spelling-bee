@@ -16,7 +16,7 @@ gem 'rack-cors'
 gem 'nokogiri'
 gem 'devise'
 gem 'devise-jwt'
-gem 'devise-jwt-cookie', path: "/Users/austin/Projects/devise-jwt-cookie"
+gem 'devise-jwt-cookie', git: "https://github.com/apmwebdev/devise-jwt-cookie", ref: "acc4cc9"
 gem 'jsonapi-serializer'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

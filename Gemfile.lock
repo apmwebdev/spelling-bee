@@ -1,7 +1,9 @@
-PATH
-  remote: /Users/austin/Projects/devise-jwt-cookie
+GIT
+  remote: https://github.com/apmwebdev/devise-jwt-cookie
+  revision: acc4cc9d59334ef763f8c238c8b7d207fd79d828
+  ref: acc4cc9
   specs:
-    devise-jwt-cookie (0.5.1)
+    devise-jwt-cookie (0.6.0)
       devise-jwt (~> 0.10.0)
       dry-auto_inject (~> 1.0, >= 1.0.1)
       dry-configurable (~> 1.0, >= 1.1.0)
