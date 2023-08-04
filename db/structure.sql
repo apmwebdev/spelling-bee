@@ -58,6 +58,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: guesses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.guesses (
+    id bigint NOT NULL,
+    user_puzzle_attempts_id bigint NOT NULL,
+    text character varying(15),
+    is_spoiled boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: guesses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.guesses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: guesses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.guesses_id_seq OWNED BY public.guesses.id;
+
+
+--
 -- Name: nyt_puzzles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -165,6 +198,38 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: user_puzzle_attempts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_puzzle_attempts (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    puzzle_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_puzzle_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_puzzle_attempts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_puzzle_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_puzzle_attempts_id_seq OWNED BY public.user_puzzle_attempts.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -227,6 +292,13 @@ ALTER TABLE ONLY public.answers ALTER COLUMN id SET DEFAULT nextval('public.answ
 
 
 --
+-- Name: guesses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.guesses ALTER COLUMN id SET DEFAULT nextval('public.guesses_id_seq'::regclass);
+
+
+--
 -- Name: nyt_puzzles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -245,6 +317,13 @@ ALTER TABLE ONLY public.puzzles ALTER COLUMN id SET DEFAULT nextval('public.puzz
 --
 
 ALTER TABLE ONLY public.sb_solver_puzzles ALTER COLUMN id SET DEFAULT nextval('public.sb_solver_puzzles_id_seq'::regclass);
+
+
+--
+-- Name: user_puzzle_attempts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_puzzle_attempts ALTER COLUMN id SET DEFAULT nextval('public.user_puzzle_attempts_id_seq'::regclass);
 
 
 --
@@ -268,6 +347,14 @@ ALTER TABLE ONLY public.answers
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: guesses guesses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.guesses
+    ADD CONSTRAINT guesses_pkey PRIMARY KEY (id);
 
 
 --
@@ -303,6 +390,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: user_puzzle_attempts user_puzzle_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_puzzle_attempts
+    ADD CONSTRAINT user_puzzle_attempts_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -325,6 +420,20 @@ CREATE INDEX index_answers_on_word_text ON public.answers USING btree (word_text
 
 
 --
+-- Name: index_guesses_on_user_puzzle_attempts_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_guesses_on_user_puzzle_attempts_id ON public.guesses USING btree (user_puzzle_attempts_id);
+
+
+--
+-- Name: index_guesses_on_user_puzzle_attempts_id_and_text; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_guesses_on_user_puzzle_attempts_id_and_text ON public.guesses USING btree (user_puzzle_attempts_id, text);
+
+
+--
 -- Name: index_puzzles_on_origin; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -336,6 +445,20 @@ CREATE INDEX index_puzzles_on_origin ON public.puzzles USING btree (origin_type,
 --
 
 CREATE INDEX index_puzzles_on_outer_letters ON public.puzzles USING gin (outer_letters);
+
+
+--
+-- Name: index_user_puzzle_attempts_on_puzzle_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_puzzle_attempts_on_puzzle_id ON public.user_puzzle_attempts USING btree (puzzle_id);
+
+
+--
+-- Name: index_user_puzzle_attempts_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_puzzle_attempts_on_user_id ON public.user_puzzle_attempts USING btree (user_id);
 
 
 --
@@ -381,11 +504,35 @@ CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
 
 
 --
+-- Name: user_puzzle_attempts fk_rails_6b159d673b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_puzzle_attempts
+    ADD CONSTRAINT fk_rails_6b159d673b FOREIGN KEY (puzzle_id) REFERENCES public.puzzles(id);
+
+
+--
 -- Name: answers fk_rails_c827d6894b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.answers
     ADD CONSTRAINT fk_rails_c827d6894b FOREIGN KEY (puzzle_id) REFERENCES public.puzzles(id);
+
+
+--
+-- Name: user_puzzle_attempts fk_rails_cac5f49fbc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_puzzle_attempts
+    ADD CONSTRAINT fk_rails_cac5f49fbc FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: guesses fk_rails_db185d310c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.guesses
+    ADD CONSTRAINT fk_rails_db185d310c FOREIGN KEY (user_puzzle_attempts_id) REFERENCES public.user_puzzle_attempts(id);
 
 
 --
@@ -416,6 +563,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230726043150'),
 ('20230726045405'),
 ('20230803182425'),
-('20230803205319');
+('20230803205319'),
+('20230804013313'),
+('20230804013314');
 
 

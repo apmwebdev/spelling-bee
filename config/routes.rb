@@ -14,10 +14,12 @@ Rails.application.routes.draw do
       get "puzzles/latest", to: "puzzles#latest"
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
+      resources :user_puzzle_attempts
+      resources :guesses
+      # Root
       root "puzzles#latest"
     end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   root "api/v1/puzzles#latest"

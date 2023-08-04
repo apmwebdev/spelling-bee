@@ -2,6 +2,7 @@ class Puzzle < ApplicationRecord
   belongs_to :origin, polymorphic: true
   has_many :answers
   has_many :words, through: :answers
+  has_many :user_puzzle_attempts
 
   attr_accessor :pangrams, :perfect_pangrams, :valid_letters, :excluded_words
 
