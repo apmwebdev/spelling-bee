@@ -320,7 +320,7 @@ Devise.setup do |config|
     jwt.revocation_requests = [
       ['DELETE', %r{\A/logout\z}]
     ]
-    jwt.expiration_time = 60.minutes.to_i
+    jwt.expiration_time = 2.weeks.to_i
   end
   config.jwt_cookie do |jwt_cookie|
     jwt_cookie.secure = false if Rails.env.development?
