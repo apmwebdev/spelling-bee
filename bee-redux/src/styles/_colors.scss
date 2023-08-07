@@ -1,116 +1,257 @@
 @media (prefers-color-scheme: dark) {
+  //Hues
   $yellow-hue: 51;
-  $hint-hue: 240;
-  $settings-hue: 0;
-  $border-saturation: 20%;
-  $border-saturation-collapsed: 10%;
-  $border-lightness: 40%;
-  $border-lightness-collapsed: 33%;
-  $button-background-saturation: 27%;
-  $button-background-saturation-collapsed: 15%;
-  $button-background-lightness: 25%;
-  $button-background-lightness-collapsed: 22%;
-  $button-border-hover-lightness: 55%;
-  $button-border-hover-lightness-collapsed: 43%;
-  $hint-completed: hsl(120, 85%, 87%);
+  $blue-hue: $yellow-hue + 180;
+  $accent-hue: $blue-hue - 30;
+  $alt-bg-hue: $blue-hue - 30;
+
+  $success-hue: 130;
+  $warning-hue: 56;
+  $error-hue: 0;
+
+  //Backgrounds
+  @function bg-color($hue) {
+    @return hsl($hue, 25%, 30%);
+  }
+
+  @function bg-color-disabled($hue) {
+    @return hsl($hue, 18%, 26%);
+  }
+
+  @function bg-color-main($hue) {
+    @return hsl($hue, 30%, 20%);
+  }
+
+  @function bg-color-dark($hue) {
+    @return hsl($hue, 17%, 21%);
+  }
+
+  @function bg-color-darker($hue) {
+    @return hsl($hue, 18%, 15%);
+  }
+
+  @function bg-color-extra($hue) {
+    @return hsl($hue, 27%, 25%);
+  }
+
+  @function bg-color-extra-disabled($hue) {
+    @return hsl($hue, 18%, 22%);
+  }
+
+  //Borders
+  @function border-color($hue) {
+    @return hsl($hue, 20%, 40%);
+  }
+
+  @function border-color-hover($hue) {
+    @return hsl($hue, 20%, 55%);
+  }
+
+  @function border-color-disabled($hue) {
+    @return hsl($hue, 12%, 33%);
+  }
+
+  @function border-color-disabled-hover($hue) {
+    @return hsl($hue, 12%, 43%);
+  }
+
+  //Interactive Element Colors
+
+  //Designed for white text
+  @function ui-bg-color($hue) {
+    @return hsl($hue, 60%, 40%);
+  }
+
+  //Designed for dark background
+  @function ui-line-color($hue) {
+    @return hsl($hue, 60%, 70%);
+  }
+
+  @function ui-line-hover-color($hue) {
+    @return hsl($hue, 70%, 60%);
+  }
+
+  @function ui-line-focus-color($hue) {
+    @return hsl($hue, 80%, 50%);
+  }
+
+  //Status Text
+  @function status-text($hue) {
+    @return hsl($hue, 85%, 82%);
+  }
+
+  //Gray Backgrounds
+  $dark-gray: #222;
+  $dark-gray-lighter: #333;
+  $mid-gray-darker: #555;
+  $mid-gray: #666;
+  $mid-gray-lighter: #777;
+  $light-gray: #999;
+
+  //Gray Lines
+  $line-bright: rgba(255, 255, 255, 0.87);
+  $line-darker: rgba(255, 255, 255, 0.730);
+  $line-disabled: rgba(255, 255, 255, 0.36);
+  $line-darkest: rgba(255, 255, 255, 0.3);
+
+  //Disabled text must be lighter so that it is still legible
+  $text-disabled: rgba(255, 255, 255, 0.49);
+
+  //One-off colors
+  $yellow-main: hsl($yellow-hue, 78%, 30%);
+  $yellow-line: hsl($yellow-hue, 78%, 50%);
+  $accent-title: hsl($yellow-hue, 60%, 60%);
+  $accent-title-hover: hsl($yellow-hue, 80%, 50%);
+
   :root {
-    /* Base variables */
-    --bg-color: #222;
-    --bg-color-standout: #333;
-    --bg-color-light: #555;
-    --main-line-color: rgba(255, 255, 255, 0.87);
-    --disabled-line-color: rgba(255, 255, 255, 0.36);
-    --disabled-text-color: rgba(255, 255, 255, 0.49);
-    --secondary-line-color: rgba(255, 255, 255, 0.3); //#666
-    --collapsed-line-color: rgba(255, 255, 255, 0.730);
-    --main-yellow: hsl(51, 78%, 30%);
-    --yellow-line: hsl(51, 78%, 50%);
-
-    /* Compound variables */
-
-    color: var(--main-line-color);
-    background-color: var(--bg-color);
+    color: $line-bright;
+    background-color: $dark-gray;
   }
 
   *:focus {
     outline: none;
   }
 
-
   a {
-    //color: #646cff;
-  }
-
-  a:hover {
-    //color: #535bf2;
-  }
-
-  //.button {
-    //background-color: #335; //hsl(240, 25%, 27%)
-  //}
-  //.collapsed .button {
-    //background-color:
-  //}
-
-  button:hover {
-    //border-color: #646cff;
-  }
-
-  .standard-button {
-    background-color: var(--main-yellow);
-  }
-
-  .sb-header {
-    border-color: var(--secondary-line-color);
-    background-color: var(--bg-color-standout);
-    .sb-subheader {
-      border-color: var(--secondary-line-color);
+    $this-hue: $accent-hue;
+    color: ui-line-color($this-hue);
+    //background-color: $accent-bg;
+    &:hover {
+      color: ui-line-hover-color($this-hue);
+    }
+    &:focus {
+      color: ui-line-focus-color($this-hue);
+    }
+    .dark-theme & {
+      color: red;
     }
   }
 
-  .sb-word-list-container {
-    border-color: var(--secondary-line-color);
+  label > span {
+    //color: ui-line-color($accent-hue);
+  }
+
+  .standard-button {
+    background-color: ui-bg-color($accent-hue);
+  }
+
+  .sb-header {
+    border-color: $line-darkest;
+    background-color: bg-color-darker($blue-hue);
+    .title {
+      color: $accent-title;
+      &:hover {
+        color: $accent-title-hover;
+      }
+    }
+    .subheader {
+      background-color: bg-color-dark($blue-hue);
+      //border-top: 1px solid $blue-border;
+      //border-bottom: 1px solid $blue-border;
+    }
+    .puzzle-nav-link {
+      &.disabled {
+        color: $line-disabled;
+      }
+    }
+    .sb-puzzle-search {
+      input {
+        background-color: inherit;
+        border-bottom-color: $mid-gray-lighter;
+      }
+    }
+  }
+
+  .user-menu-content {
+    background-color: $mid-gray-darker;
+    .menu-item {
+      &:hover {
+        background-color: $mid-gray-lighter;
+      }
+    }
+    .separator {
+      background-color: $light-gray;
+    }
+    .arrow {
+      fill: $mid-gray-darker;
+    }
   }
 
   .sb-word-tabs-root {
     .tabs-list {
       .tab-trigger {
+        border-color: $mid-gray;
         &[data-state="active"] {
-          background-color: hsl($hint-hue, $button-background-saturation, $button-background-lightness);
-          border-color: hsl($hint-hue, $border-saturation, 55%);
+          background-color: bg-color-extra($blue-hue);
+          border-color: border-color-hover($blue-hue);
         }
+      }
+      .tab-content {
+        border-color: $mid-gray;
+      }
+    }
+  }
+
+  .sb-word-list-container {
+    border-color: $line-darkest;
+    header {
+      border-bottom-color: $mid-gray;
+    }
+  }
+
+  .sb-word-list-toggle {
+    border-color: $mid-gray;
+    background-color: $mid-gray;
+    button {
+      background-color: $dark-gray;
+      &[data-state="on"] {
+        background-color: ui-bg-color($accent-hue);
       }
     }
   }
 
   .has-popover {
     &.perfect, &.pangram {
-      color: var(--yellow-line);
+      color: $yellow-line;
     }
+  }
+
+  .sb-word-popover-content {
+    background-color: $mid-gray;
+    box-shadow: 0 0 0px 4px $dark-gray;
+    border-color: $light-gray;
+    .popover-arrow {
+      fill: $light-gray;
+    }
+    .popover-close-button {
+      border-color: $light-gray;
+    }
+  }
+
+  button.sb-revealer {
+    border-color: $mid-gray;
+    background-color: $dark-gray-lighter;
   }
 
   .sb-answer-alert-message {
-    border-color: var(--secondary-line-color);
+    border-color: $line-darkest;
     &.pangram-alert-message {
-      border-color: var(--main-yellow);
-      background-color: var(--main-yellow);
+      border-color: $yellow-main;
+      background-color: $yellow-main;
     }
   }
 
-
   .sb-error-alert-message {
-    border-color: var(--main-line-color);
-    background-color: var(--main-line-color);
-    color: var(--bg-color);
+    border-color: $line-bright;
+    background-color: $line-bright;
+    color: $dark-gray;
   }
 
   .sb-guess-input {
-    //border-color: transparent;
     &.error {
-      //border-color: red;
     }
     &:after {
-      background-color: var(--yellow-line);
+      background-color: $yellow-line;
     }
   }
 
@@ -119,57 +260,58 @@
       color: white;
     }
     &.center-letter {
-      color: var(--yellow-line);
+      color: $yellow-line;
     }
     &.invalid {
-      color: var(--disabled-line-color);
+      color: $line-disabled;
     }
   }
 
   .hexagon polygon {
-    //fill: #555;
-    fill: var(--bg-color-light);
+    fill: $mid-gray-darker;
+    stroke: $dark-gray;
   }
 
   .hexagon.center-letter polygon {
-    fill: var(--main-yellow); //#887711
+    fill: $yellow-main; //#887711
   }
 
   .hexagon text {
-    fill: #eee;
+    fill: $line-bright;
   }
 
   .sb-guess-input-controls {
     .standard-button {
-      background-color: var(--bg-color-light);
+      background-color: $mid-gray-darker;
     }
   }
 
   .sb-hint-panel {
-    border-color: hsl($hint-hue, $border-saturation, $border-lightness);
+    $this-hue: $blue-hue;
+    border-color: border-color($this-hue);
     .sb-hint-panel-header {
-      background-color: hsl($hint-hue, 25%, 30%);
+      background-color: bg-color($this-hue);
       button {
         &.button {
-          background-color: hsl($hint-hue, $button-background-saturation, $button-background-lightness);
+          background-color: bg-color-extra($this-hue);
         }
         &:hover {
-          border-color: hsl($hint-hue, $border-saturation, $button-border-hover-lightness);
+          border-color: border-color-hover($this-hue);
         }
       }
     }
     &[data-state="closed"] {
-      color: var(--collapsed-line-color);
-      border-color: hsl($hint-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+      color: $line-darker;
+      border-color: border-color-disabled($this-hue);
       .sb-hint-panel-header {
-        background-color: hsl($hint-hue, 15%, 26%);
+        background-color: bg-color-disabled($this-hue);
         button {
-          color: var(--collapsed-line-color);
+          color: $line-darker;
           &.button {
-            background-color: hsl($hint-hue, $button-background-saturation-collapsed, $button-background-lightness-collapsed);
+            background-color: bg-color-disabled($this-hue);
           }
           &:hover {
-            border-color: hsl($hint-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
+            border-color: border-color-disabled-hover($this-hue);
           }
         }
       }
@@ -177,40 +319,37 @@
   }
 
   .sb-hint-panel-settings, .collapsible-settings {
-    background-color: hsl(0, 30%, 20%);
-    border-color: hsl($settings-hue, $border-saturation, $border-lightness);
+    $this-hue: $alt-bg-hue;
+    background-color: bg-color-main($this-hue);
+    border-color: border-color($this-hue);
     span.disabled {
-      color: var(--disabled-text-color);
+      color: $text-disabled;
     }
     .sb-hint-panel-settings-header, .collapsible-settings-header {
-      background-color: hsl($settings-hue, 25%, 30%);
+      background-color: bg-color($this-hue);
       button {
         &.button {
-          background-color: hsl($settings-hue, $button-background-saturation, $button-background-lightness);
+          background-color: bg-color-extra($this-hue);
         }
         &:hover {
-          border-color: hsl($settings-hue, $border-saturation, $button-border-hover-lightness);
+          border-color: border-color-hover($this-hue);
           //border-color: transparent;
         }
       }
     }
     &[data-state="closed"] {
-      color: var(--collapsed-line-color);
-      border-color: hsl($settings-hue, $border-saturation-collapsed, $border-lightness-collapsed);
+      color: $line-darker;
+      border-color: border-color-disabled($this-hue);
       .sb-hint-panel-settings-header, .collapsible-settings-header {
-        background-color: hsl($settings-hue, 15%, 26%);
+        background-color: bg-color-disabled($this-hue);
         button {
-          color: var(--collapsed-line-color);
+          color: $line-darker;
           &:hover {
-            border-color: hsl($settings-hue, $border-saturation-collapsed, $button-border-hover-lightness-collapsed);
+            border-color: border-color-disabled-hover($this-hue);
           }
         }
       }
     }
-  }
-
-  .sb-hint-panel-settings-header {
-    //background-color: #292929;
   }
 
   .sb-general-hint-settings {
@@ -222,38 +361,38 @@
   .sb-wlg-row-header:not(:nth-child(-n + 1 of div.sb-wlg-row-header)),
   .sb-wlg-total-row,
   {
-    border-top: 1px solid var(--secondary-line-color);
+    border-top: 1px solid $line-darkest;
   }
 
   .sb-wlg-content,
   .sb-wlg-total-column,
   .sb-wlg-total-row,
   {
-    border-left: 1px solid var(--secondary-line-color);
+    border-left: 1px solid $line-darkest;
   }
 
   .sb-wlg-tracking-key {
-    background-color: var(--bg-color-standout);
-    border: 1px solid var(--secondary-line-color);
+    background-color: $dark-gray-lighter;
+    border: 1px solid $line-darkest;
   }
 
   .sb-wlg-content-full {
-    background-color: var(--bg-color-standout);
+    background-color: $dark-gray-lighter;
   }
 
   .hint-completed {
-    color: hsl(120, 85%, 87%);
+    color: status-text($success-hue);
     //background-color: hsl(120, 40%, 20%);
     font-style: italic;
   }
 
   .hint-in-progress {
-    color: hsl(60, 85%, 87%)
+    color: status-text($warning-hue)
     //background-color: hsl(60, 60%, 20%);
   }
 
   .hint-not-started {
-    color: hsl(0, 85%, 87%);
+    color: status-text($error-hue);
     //background-color: hsl(0, 40%, 20%);
   }
 
@@ -262,23 +401,23 @@
   }
 
   .sb-wcl-fragment-count {
-    border: 1px solid var(--secondary-line-color);
-    background-color: var(--bg-color-standout);
+    border: 1px solid $line-darkest;
+    background-color: $dark-gray-lighter;
   }
 
   .sb-lol-row {
-    border-bottom: 1px solid var(--secondary-line-color);
+    border-bottom: 1px solid $line-darkest;
     //&:first-child {
     //  border-top: 1px solid #666;
     //}
   }
 
   .sb-search-hints-search-result-header {
-    background-color: var(--bg-color-standout);
+    background-color: $dark-gray-lighter;
     .header-remove-button {
-      background-color: var(--bg-color);
+      background-color: $dark-gray;
       &:hover {
-        border-color: var(--secondary-line-color)
+        border-color: $line-darkest
       }
     }
   }

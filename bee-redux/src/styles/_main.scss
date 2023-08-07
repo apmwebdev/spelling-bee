@@ -12,6 +12,15 @@
   --br: 6px;
 }
 
+a {
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
 .App {
   min-height: 550px;
 }
@@ -33,69 +42,83 @@
       &:hover {
         text-decoration: underline;
       }
-
-      color: inherit;
     }
-
     .header-left {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 16px;
+      a {
+        display: flex;
+        justify-content: flex-start;
+        padding: 4px 8px;
+      }
     }
-
     .title {
       display: flex;
       justify-content: flex-start;
       padding: 8px;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
     }
-
-    form {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: center;
-    }
-
     .header-auth {
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 16px;
-
+      gap: 8px;
       .user-menu-trigger {
         padding: 0px;
         border: none;
       }
-
       .account-icon {
-        font-size: 30px;
+        font-size: 32px;
       }
     }
   }
   .subheader {
-    //font-weight: bold;
-    background-color: #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
     padding: 8px;
-    gap: 16px;
-    .puzzle-nav-link {
-      color: inherit;
-      border-radius: var(--br);
+    .sb-puzzle-nav {
+      grid-column: 2 / 3;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 12px;
-      gap: 4px;
-      border: 1px solid;
-      &.disabled {
-        color: var(--disabled-line-color);
+      //padding: 8px;
+      gap: 16px;
+      .puzzle-nav-link {
+        border-radius: var(--br);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 12px;
+        gap: 4px;
+        border: 1px solid;
+        span {
+          font-size: 14px;
+        }
       }
-      span {
+    }
+    .sb-puzzle-search {
+      grid-column: 3 / 4;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+      .iconify {
+        font-size: 20px;
+      }
+      input {
+        //border-top-left-radius: var(--br);
+        //border-top-right-radius: var(--br);
         font-size: 14px;
+        padding: 4px 16px;
+        border: none;
+        border-bottom: 1px solid;
       }
     }
   }
@@ -104,14 +127,10 @@
 .user-menu-content {
   padding: 4px 0px 2px;
   border-radius: var(--br);
-  background-color: #555;
   font-size: 16px;
   .menu-item {
     padding: 8px 12px;
     cursor: pointer;
-    &:hover {
-      background-color: #777;
-    }
     .iconify {
       font-size: 1.2em;
       margin-right: 8px;
@@ -119,11 +138,7 @@
   }
   .separator {
     height: 1px;
-    background-color: #999;
     margin: 4px 0px;
-  }
-  .arrow {
-    fill: #555;
   }
 }
 
@@ -347,19 +362,16 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 2px;
     .tab-trigger {
-      border-top: 2px solid #666;
-      border-left: 2px solid #666;
-      border-right: 2px solid #666;
+      border-top: 2px solid;
+      border-left: 2px solid;
+      border-right: 2px solid;
       border-bottom: none;
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
-      &[data-state="active"] {
-        background-color: #535bf2;
-      }
     }
   }
   .tab-content {
-    border: 2px solid #666;
+    border: 2px solid;
     border-bottom-left-radius: var(--br);
     border-bottom-right-radius: var(--br);
     padding: 8px;
@@ -412,7 +424,7 @@
 
 .sb-word-list-container {
   border-radius: var(--br);
-  border: 1px solid #666;
+  border: 1px solid;
   overflow: hidden;
   header {
     font-size: 16px;
@@ -420,7 +432,7 @@
     gap: 20px;
     align-items: center;
     padding: 8px;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid;
     > div {
       display: flex;
       align-items: center;
@@ -431,18 +443,13 @@
 
 .sb-word-list-toggle {
   border-radius: var(--br);
-  border: 1px solid #666;
-  background-color: #666;
+  border: 1px solid;
   overflow: hidden;
   display: flex;
   gap: 1px;
   button {
     border-radius: 0;
-    background-color: #333;
     padding: 4px 12px;
-    &[data-state="on"] {
-      background-color: var(--main-yellow);
-    }
   }
 }
 
@@ -536,10 +543,8 @@
   gap: 8px;
   padding: 8px 12px 12px 12px;
   max-width: 40rem;
-  background-color: #666;
   border-radius: var(--br);
-  box-shadow: 0 0 0px 4px #222;
-  border: 2px solid #999;
+  border: 2px solid;
   &:focus {
     outline: none;
   }
@@ -550,7 +555,6 @@
   }
   .popover-arrow {
     z-index: 1;
-    fill: #999;
   }
   .popover-close-button {
     align-self: flex-start;
@@ -559,16 +563,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #999;
+    border: 1px solid;
   }
 }
 
 button.sb-revealer {
   padding: 3px 8px;
-  border: 1px solid #666;
+  border: 1px solid;
   //border-radius: 0px;
   text-align: left;
-  background-color: #333;
   &:hover, &:active {
     text-decoration: underline;
   }
