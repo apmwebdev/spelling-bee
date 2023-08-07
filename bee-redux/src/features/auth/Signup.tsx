@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useSignupMutation } from "../api/apiSlice";
+import { useSignupMutation } from "./authApiSlice";
 
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");

@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useLoginMutation } from "../api/apiSlice";
+import { useLoginMutation } from "./authApiSlice";
 
 export function Login() {
   const [usernameValue, setUsernameValue] = useState("");

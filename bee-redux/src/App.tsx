@@ -6,21 +6,23 @@ import { Login } from "./features/auth/Login";
 import { SubheaderProvider } from "./app/SubheaderProvider";
 
 export default function App() {
-  const rootElement = (
-    <SubheaderProvider>
-      <div className="App">
-        <div className="sb-top-container">
-          <Header />
-          <Outlet />
+  const rootElement = () => {
+    return (
+      <SubheaderProvider>
+        <div className="App">
+          <div className="sb-top-container">
+            <Header />
+            <Outlet />
+          </div>
         </div>
-      </div>
-    </SubheaderProvider>
-  );
+      </SubheaderProvider>
+    );
+  };
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: rootElement,
+      element: rootElement(),
       children: [
         {
           index: true,
