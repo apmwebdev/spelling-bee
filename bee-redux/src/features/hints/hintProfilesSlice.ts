@@ -30,23 +30,10 @@ export enum PanelInitialDisplayOptions {
 }
 
 export enum PanelTypes {
-  Basic = "BASIC",
   Letter = "LETTER",
   Search = "SEARCH",
-  ExcludedWords = "EXCLUDED_WORDS",
   WordObscurity = "WORD_OBSCURITY",
   Definitions = "DEFINITIONS",
-}
-
-export interface BasicPanelSettings {
-  showWordCount: boolean;
-  showTotalPoints: boolean;
-  showPangramCount: boolean;
-  showPerfectPangramCount: boolean;
-}
-
-export function isBasicPanelSettings(a: any): a is BasicPanelSettings {
-  return a.showWordCount !== undefined;
 }
 
 export enum LetterPanelLocations {
@@ -101,8 +88,6 @@ export function isSearchPanelData(a: any): a is SearchPanelData {
   return a.currentSettings !== undefined && a.searches !== undefined;
 }
 
-export interface ExcludedWordsPanelSettings {}
-
 export interface WordObscurityPanelSettings {}
 
 export interface DefinitionsPanelSettings {}
@@ -117,10 +102,8 @@ export interface HintPanelFormat {
   initialDisplay: PanelInitialDisplayOptions;
   type: PanelTypes;
   typeSpecificData:
-    | BasicPanelSettings
     | LetterPanelSettings
     | SearchPanelData
-    | ExcludedWordsPanelSettings
     | WordObscurityPanelSettings
     | DefinitionsPanelSettings;
 }
@@ -247,22 +230,6 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         },
       },
       {
-        id: 0,
-        name: "Basic Info",
-        isCollapsed: false,
-        settingsAreCollapsed: true,
-        isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Expanded,
-        type: PanelTypes.Basic,
-        typeSpecificData: {
-          showWordCount: true,
-          showTotalPoints: true,
-          showPangramCount: true,
-          showPerfectPangramCount: true,
-        },
-      },
-      {
         id: 3,
         name: "Word Obscurity Ranking",
         isCollapsed: false,
@@ -284,17 +251,6 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         type: PanelTypes.Definitions,
         typeSpecificData: {},
       },
-      {
-        id: 6,
-        name: "Excluded Words",
-        isCollapsed: true,
-        settingsAreCollapsed: true,
-        isBlurred: false,
-        tracking: TrackingOptions.RemainingOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Collapsed,
-        type: PanelTypes.ExcludedWords,
-        typeSpecificData: {},
-      },
     ],
   };
 };
@@ -307,22 +263,6 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
     displayDefault: ProfileDisplayDefaults.Blurred,
     trackingDefault: TrackingOptions.Remaining,
     panels: [
-      {
-        id: 7,
-        name: "Basic Info",
-        isCollapsed: false,
-        settingsAreCollapsed: true,
-        isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
-        initialDisplay: PanelInitialDisplayOptions.Expanded,
-        type: PanelTypes.Basic,
-        typeSpecificData: {
-          showWordCount: true,
-          showTotalPoints: true,
-          showPangramCount: true,
-          showPerfectPangramCount: false,
-        },
-      },
       {
         id: 8,
         name: "Your Grid of Remaining Words",
@@ -394,16 +334,6 @@ const initialState = (): HintProfilesState => {
 
 export interface ChangeProfilePayload {
   newId: number;
-}
-
-export interface ChangeBasicPanelSubsectionDisplayPayload {
-  panelId: number;
-  settingName:
-    | "showWordCount"
-    | "showTotalPoints"
-    | "showPangramCount"
-    | "showPerfectPangramCount";
-  newValue: boolean;
 }
 
 export interface ChangeLetterPanelNumberOfLettersPayload {
@@ -528,23 +458,6 @@ export const hintProfilesSlice = createSlice({
       }
       panel.initialDisplay = action.payload.initialDisplay;
     },
-    changeBasicPanelSubsectionDisplay: (
-      state,
-      action: {
-        payload: ChangeBasicPanelSubsectionDisplayPayload;
-        type: string;
-      },
-    ) => {
-      const panel = findPanel(state, action.payload.panelId);
-      if (!panel || !isBasicPanelSettings(panel.typeSpecificData)) {
-        return;
-      }
-      for (const property in panel.typeSpecificData) {
-        if (property === action.payload.settingName) {
-          panel.typeSpecificData[property] = action.payload.newValue;
-        }
-      }
-    },
     changeLetterPanelNumberOfLetters: (
       state,
       action: {
@@ -645,7 +558,6 @@ export const {
   duplicatePanel,
   setTracking,
   setInitialDisplay,
-  changeBasicPanelSubsectionDisplay,
   changeLetterPanelNumberOfLetters,
   changeLetterPanelLocationInWord,
   changeLetterPanelOffset,
