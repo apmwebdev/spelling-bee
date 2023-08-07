@@ -18,12 +18,35 @@ export function PuzzleSubheader() {
     return null;
   }
 
+  const firstPuzzleLink = () => {
+    if (puzzleId === 1) {
+      return (
+        <div className="puzzle-nav-link disabled">
+          <Icon icon="mdi:arrow-collapse-left" />
+          {/*<span>First</span>*/}
+        </div>
+      );
+    }
+    let urlString = "puzzles/";
+    if (params.identifier?.match(dateRegex)) {
+      urlString += "20180509";
+    } else {
+      urlString += "1";
+    }
+    return (
+      <Link className="puzzle-nav-link" to={urlString}>
+        <Icon icon="mdi:arrow-collapse-left" />
+        {/*<span>First</span>*/}
+      </Link>
+    );
+  };
+
   const previousPuzzleLink = () => {
     if (puzzleId === 1) {
       return (
         <div className="puzzle-nav-link disabled">
           <Icon icon="mdi:arrow-left" />
-          <span>Prev</span>
+          {/*<span>Prev</span>*/}
         </div>
       );
     }
@@ -36,7 +59,7 @@ export function PuzzleSubheader() {
     return (
       <Link className="puzzle-nav-link" to={urlString}>
         <Icon icon="mdi:arrow-left" />
-        <span>Prev</span>
+        {/*<span>Prev</span>*/}
       </Link>
     );
   };
@@ -45,7 +68,7 @@ export function PuzzleSubheader() {
     if (isLatest) {
       return (
         <div className="puzzle-nav-link disabled">
-          <span>Next</span>
+          {/*<span>Next</span>*/}
           <Icon icon="mdi:arrow-right" />
         </div>
       );
@@ -58,19 +81,38 @@ export function PuzzleSubheader() {
     }
     return (
       <Link className="puzzle-nav-link" to={urlString}>
-        <span>Next</span>
+        {/*<span>Next</span>*/}
         <Icon icon="mdi:arrow-right" />
+      </Link>
+    );
+  };
+
+  const latestPuzzleLink = () => {
+    if (isLatest) {
+      return (
+        <div className="puzzle-nav-link disabled">
+          {/*<span>Latest</span>*/}
+          <Icon icon="mdi:arrow-collapse-right" />
+        </div>
+      );
+    }
+    return (
+      <Link className="puzzle-nav-link" to="puzzles/latest">
+        {/*<span>Latest</span>*/}
+        <Icon icon="mdi:arrow-collapse-right" />
       </Link>
     );
   };
 
   return (
     <>
+      {firstPuzzleLink()}
       {previousPuzzleLink()}
       <span>
         Spelling Bee #{puzzleId}: {puzzleDate}
       </span>
       {nextPuzzleLink()}
+      {latestPuzzleLink()}
     </>
   );
 }
