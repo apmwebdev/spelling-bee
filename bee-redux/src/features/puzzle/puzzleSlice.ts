@@ -89,6 +89,7 @@ export interface AnswerFormat {
 }
 
 export interface PuzzleFormat {
+  id: number;
   date: string;
   centerLetter: string;
   outerLetters: string[];
@@ -100,6 +101,7 @@ export interface PuzzleFormat {
 }
 
 export const BlankPuzzle: PuzzleFormat = {
+  id: 0,
   date: "01-01-1600",
   centerLetter: "_",
   outerLetters: ["_", "_", "_", "_", "_", "_"],
@@ -165,11 +167,10 @@ export const {} = puzzleSlice.actions;
 
 export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
+export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
 export const selectDate = (state: RootState) => state.puzzle.data.date;
 export const selectCenterLetter = (state: RootState) =>
   state.puzzle.data.centerLetter;
-export const selectOuterLetters = (state: RootState) =>
-  state.puzzle.data.outerLetters;
 export const selectValidLetters = (state: RootState) =>
   state.puzzle.data.validLetters;
 export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams;

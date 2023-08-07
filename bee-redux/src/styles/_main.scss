@@ -23,24 +23,109 @@
 }
 
 .sb-header {
-  padding: 8px;
-  //border-bottom: 1px solid;
   margin-bottom: 8px;
-  position: relative;
-  form {
+  .main-header {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+
+      color: inherit;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .title {
+      display: flex;
+      justify-content: flex-start;
+      padding: 8px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    form {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-auth {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+
+      .user-menu-trigger {
+        padding: 0px;
+        border: none;
+      }
+
+      .account-icon {
+        font-size: 30px;
+      }
+    }
+  }
+  .subheader {
+    //font-weight: bold;
+    background-color: #555;
+    display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .title {
-    position: absolute;
     padding: 8px;
-    font-size: 20px;
-    font-weight: bold;
+    gap: 16px;
+    .puzzle-nav-link {
+      color: inherit;
+      border-radius: var(--br);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 12px;
+      gap: 4px;
+      border: 1px solid;
+      &.disabled {
+        color: var(--disabled-line-color);
+      }
+      span {
+        font-size: 14px;
+      }
+    }
   }
 }
 
+.user-menu-content {
+  padding: 4px 0px 2px;
+  border-radius: var(--br);
+  background-color: #555;
+  font-size: 16px;
+  .menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    &:hover {
+      background-color: #777;
+    }
+    .iconify {
+      font-size: 1.2em;
+      margin-right: 8px;
+    }
+  }
+  .separator {
+    height: 1px;
+    background-color: #999;
+    margin: 4px 0px;
+  }
+  .arrow {
+    fill: #555;
+  }
+}
 
 .sb-main-container {
   display: flex;

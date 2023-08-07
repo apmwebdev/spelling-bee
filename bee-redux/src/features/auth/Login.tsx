@@ -5,7 +5,7 @@ export function Login() {
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const resetForm = () => {
     setUsernameValue("");
@@ -33,9 +33,23 @@ export function Login() {
     }
   };
 
+  const logInAsAdmin = async () => {
+    try {
+      await login({ user: { username: "admin", password: "admin1" } }).then(
+        (response) => console.log(response),
+      );
+    } catch (error) {
+      console.log("Failed to log in: ", error);
+    }
+  };
+
   return (
     <div className="sb-login">
-      <form className="sb-login-form" onSubmit={handleSubmit}>
+      <form
+        id="sb-page-login-form"
+        className="sb-login-form"
+        onSubmit={handleSubmit}
+      >
         <div className="login-username-container">
           <label htmlFor="login-username">Username:</label>
           <input
@@ -58,6 +72,9 @@ export function Login() {
         </div>
         <button type="submit">Log in</button>
       </form>
+      <button type="button" onClick={logInAsAdmin}>
+        Log in as admin
+      </button>
     </div>
   );
 }

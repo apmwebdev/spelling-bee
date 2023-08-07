@@ -8,29 +8,32 @@ export interface User {
   name: string;
 }
 
-type AuthState = {
+interface AuthState {
   user: User | null;
-  token: string | null;
+}
+
+const InitialState: AuthState = {
+  user: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, token: null } as AuthState,
+  initialState: InitialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(
-      apiSlice.endpoints.login.matchFulfilled,
-      (state, { payload }) => {
-        console.log("Payload: ", payload);
-        if (payload.auth_header) {
-          state.token = payload.auth_header;
-        }
-        state.user = payload.user;
-      },
-    );
+    builder
+      .addMatcher(
+        apiSlice.endpoints.login.matchFulfilled,
+        (state, { payload }) => {
+          state.user = payload.user;
+        },
+      )
+      .addMatcher(apiSlice.endpoints.logout.matchFulfilled, (state) => {
+        state.user = null;
+      });
   },
 });
 
-export const selectCurrentUser = (state: RootState) => state.auth.user;
+export const selectUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;

@@ -1,17 +1,20 @@
 import { Header } from "./features/header/Header";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
-import { Signup } from "./features/./auth/Signup";
-import { Login } from "./features/./auth/Login";
+import { Signup } from "./features/auth/Signup";
+import { Login } from "./features/auth/Login";
+import { SubheaderProvider } from "./app/SubheaderProvider";
 
 export default function App() {
   const rootElement = (
-    <div className="App">
-      <div className="sb-top-container">
-        <Header />
-        <Outlet />
+    <SubheaderProvider>
+      <div className="App">
+        <div className="sb-top-container">
+          <Header />
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </SubheaderProvider>
   );
 
   const router = createBrowserRouter([

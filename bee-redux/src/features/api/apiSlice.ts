@@ -3,18 +3,10 @@ import {
   fetchBaseQuery,
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../../app/store";
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api/v1",
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
     credentials: "include",
   }),
   endpoints: (builder) => ({
@@ -32,15 +24,16 @@ export const apiSlice = createApi({
         body: formData,
       }),
       transformResponse(response: any, meta: FetchBaseQueryMeta) {
-        console.log("Response: ", response);
-        console.log("Meta: ", meta);
         return {
           user: response.status.data.user,
-          auth_header: meta
-            ? meta.response?.headers.get("Authorization")
-            : null,
         };
       },
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "DELETE",
+      }),
     }),
   }),
 });
@@ -48,4 +41,5 @@ export const apiSlice = createApi({
 export const {
   useSignupMutation,
   useLoginMutation,
+  useLogoutMutation,
 } = apiSlice;
