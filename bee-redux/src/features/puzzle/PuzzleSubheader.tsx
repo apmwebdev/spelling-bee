@@ -1,11 +1,9 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectDate, selectPuzzleId } from "./puzzleSlice";
+import { selectDate, selectIsLatest, selectPuzzleId } from "./puzzleSlice";
 import { Icon } from "@iconify/react";
 import { Link, useParams } from "react-router-dom";
 import {
   dateRegex,
-  getDateFromString,
-  getDateString,
   getNextPuzzleDateString,
   getPreviousPuzzleDateString,
 } from "../../utils/utils";
@@ -14,6 +12,7 @@ export function PuzzleSubheader() {
   const params = useParams();
   const puzzleDate = useAppSelector(selectDate);
   const puzzleId = useAppSelector(selectPuzzleId);
+  const isLatest = useAppSelector(selectIsLatest);
 
   if (puzzleId === 0) {
     return null;
@@ -43,11 +42,7 @@ export function PuzzleSubheader() {
   };
 
   const nextPuzzleLink = () => {
-    const puzzleDateObj = getDateFromString(puzzleDate);
-    const currentDate = new Date(Date.now());
-    // Add offset for when the NYTimes publishes new puzzles
-    currentDate.setHours(currentDate.getHours() - 8);
-    if (getDateString(puzzleDateObj) === getDateString(currentDate)) {
+    if (isLatest) {
       return (
         <div className="puzzle-nav-link disabled">
           <span>Next</span>

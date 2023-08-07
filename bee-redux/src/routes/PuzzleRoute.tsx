@@ -1,8 +1,8 @@
 import { Puzzle } from "../features/puzzle/Puzzle";
 import { Status } from "../features/status/Status";
 import { useParams } from "react-router-dom";
-import { fetchPuzzleAsync, selectAnswers } from "../features/puzzle/puzzleSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchPuzzleAsync } from "../features/puzzle/puzzleSlice";
+import { useAppDispatch } from "../app/hooks";
 import { useContext, useEffect } from "react";
 import { HintSection } from "../features/hints/HintSection";
 import { SubheaderContext } from "../app/SubheaderProvider";

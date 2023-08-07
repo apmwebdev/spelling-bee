@@ -98,11 +98,12 @@ export interface PuzzleFormat {
   perfectPangrams: string[];
   answers: AnswerFormat[];
   excludedWords: string[];
+  isLatest: boolean;
 }
 
 export const BlankPuzzle: PuzzleFormat = {
   id: 0,
-  date: "01-01-1600",
+  date: "00-00-0000",
   centerLetter: "_",
   outerLetters: ["_", "_", "_", "_", "_", "_"],
   validLetters: ["_", "_", "_", "_", "_", "_", "_"],
@@ -110,6 +111,7 @@ export const BlankPuzzle: PuzzleFormat = {
   perfectPangrams: [],
   answers: [],
   excludedWords: [],
+  isLatest: false,
 };
 
 export enum PuzzleStatuses {
@@ -179,6 +181,7 @@ export const selectPerfectPangrams = (state: RootState) =>
 export const selectAnswers = (state: RootState) => state.puzzle.data.answers;
 export const selectExcludedWords = (state: RootState) =>
   state.puzzle.data.excludedWords;
+export const selectIsLatest = (state: RootState) => state.puzzle.data.isLatest;
 
 // Derived data
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {

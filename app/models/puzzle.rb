@@ -4,7 +4,8 @@ class Puzzle < ApplicationRecord
   has_many :words, through: :answers
   has_many :user_puzzle_attempts
 
-  attr_accessor :pangrams, :perfect_pangrams, :valid_letters, :excluded_words
+  attr_accessor :pangrams, :perfect_pangrams, :valid_letters, :excluded_words,
+    :is_latest
 
   def set_valid_letters
     @valid_letters ||= [self.center_letter, *self.outer_letters].sort
@@ -47,11 +48,16 @@ class Puzzle < ApplicationRecord
     end
   end
 
+  def set_is_latest
+    @is_latest = Puzzle.last === self;
+  end
+
   def set_derived_fields
     set_valid_letters
     set_pangrams
     set_perfect_pangrams
     set_excluded_words
+    set_is_latest
   end
 
   def to_front_end
@@ -67,7 +73,8 @@ class Puzzle < ApplicationRecord
       answers: self.answers.map do |answer|
         answer.to_front_end
       end.sort{ |a, b| a[:word] <=> b[:word]},
-      excludedWords: @excluded_words
+      excludedWords: @excluded_words,
+      isLatest: @is_latest,
     }
   end
 end
