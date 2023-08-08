@@ -119,7 +119,7 @@ export function PuzzleSubheader() {
   };
 
   return (
-    <>
+    <div className="subheader">
       <nav className="sb-puzzle-nav">
         {firstPuzzleLink()}
         {previousPuzzleLink()}
@@ -139,6 +139,6 @@ export function PuzzleSubheader() {
           onChange={(e) => handleSearchInput(e)}
         />
       </form>
-    </>
+    </div>
   );
 }

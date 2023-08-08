@@ -1,7 +1,6 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectUser } from "./authSlice";
-import { Icon } from "@iconify/react";
-import { Link, NavLink } from "react-router-dom";
+import { useAppSelector } from "../../../app/hooks";
+import { selectUser } from "../authSlice";
+import { Link } from "react-router-dom";
 import { UserMenu } from "./UserMenu";
 
 export function HeaderAuth() {
@@ -24,9 +23,5 @@ export function HeaderAuth() {
     );
   };
 
-  return (
-    <div className="header-auth">
-      {content()}
-    </div>
-  );
+  return <div className="header-auth">{content()}</div>;
 }

@@ -1,13 +1,22 @@
-import { FormEvent, useContext, useState } from "react";
+import { useContext } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
-import { HeaderAuth } from "../auth/HeaderAuth";
+import { Link, useLocation } from "react-router-dom";
+import { HeaderAuth } from "../auth/headerAuth/HeaderAuth";
 import { SubheaderContext } from "../../app/SubheaderProvider";
-import { Icon } from "@iconify/react";
+import { useAppSelector } from "../../app/hooks";
+import { selectAnswers } from "../puzzle/puzzleSlice";
 
 export function Header() {
-  const navigate = useNavigate();
   const { subheader } = useContext(SubheaderContext);
+  const { pathname } = useLocation();
+  const answers = useAppSelector(selectAnswers);
+
+  const subheaderContent = () => {
+    const pathArr = pathname.split("/");
+    if (pathArr[1].match(/^puzzle(s)?$/) && answers.length > 0) {
+      return subheader;
+    }
+  };
 
   return (
     <header className="sb-header">
@@ -23,7 +32,7 @@ export function Header() {
         </div>
         <HeaderAuth />
       </div>
-      {subheader ? <div className="subheader">{subheader}</div> : null}
+      {subheaderContent()}
     </header>
   );
 }

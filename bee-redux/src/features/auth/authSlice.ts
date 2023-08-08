@@ -28,9 +28,7 @@ const authSlice = createSlice({
     populateUserDataFromStorage: (state) => {
       if (state.user) return;
       const storedUser = localStorage.getItem("user");
-      console.log("storedUser:", storedUser);
       if (storedUser) {
-        console.log("storedUser is true");
         state.user = JSON.parse(storedUser);
       }
     },
@@ -40,7 +38,6 @@ const authSlice = createSlice({
       .addMatcher(
         authApiSlice.endpoints.login.matchFulfilled,
         (state, { payload }) => {
-          console.log(payload);
           const userData = payload.status.data.user;
           state.user = userData;
           try {
