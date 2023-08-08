@@ -1,115 +1,117 @@
+//Hues
+$yellow-hue: 51;
+$blue-hue: $yellow-hue + 180;
+$accent-hue: $blue-hue - 30;
+$alt-bg-hue: $blue-hue - 30;
+$title-hue: $yellow-hue - 50;
+
+$success-hue: 130;
+$warning-hue: 56;
+$error-hue: 0;
+
+//Backgrounds
+@function bg-color($hue) {
+  @return hsl($hue, 25%, 30%);
+}
+
+@function bg-color-disabled($hue) {
+  @return hsl($hue, 18%, 26%);
+}
+
+@function bg-color-main($hue) {
+  @return hsl($hue, 30%, 20%);
+}
+
+@function bg-color-dark($hue) {
+  @return hsl($hue, 17%, 21%);
+}
+
+@function bg-color-darker($hue) {
+  @return hsl($hue, 18%, 15%);
+}
+
+@function bg-color-extra($hue) {
+  @return hsl($hue, 27%, 25%);
+}
+
+@function bg-color-extra-disabled($hue) {
+  @return hsl($hue, 18%, 22%);
+}
+
+//Borders
+@function border-color($hue) {
+  @return hsl($hue, 20%, 40%);
+}
+
+@function border-color-hover($hue) {
+  @return hsl($hue, 20%, 55%);
+}
+
+@function border-color-disabled($hue) {
+  @return hsl($hue, 12%, 33%);
+}
+
+@function border-color-disabled-hover($hue) {
+  @return hsl($hue, 12%, 43%);
+}
+
+//Interactive Element Colors
+
+//Designed for white text
+@function ui-bg-color($hue) {
+  @return hsl($hue, 60%, 40%);
+}
+
+//Designed for dark background
+@function ui-line-color($hue) {
+  @return hsl($hue, 60%, 70%);
+}
+
+@function ui-line-hover-color($hue) {
+  @return hsl($hue, 70%, 60%);
+}
+
+@function ui-line-focus-color($hue) {
+  @return hsl($hue, 80%, 50%);
+}
+
+//Status Text
+@function status-text($hue) {
+  @return hsl($hue, 85%, 82%);
+}
+
+//Gray Backgrounds
+$dark-gray: #222;
+$dark-gray-lighter: #333;
+$mid-gray-darker: #555;
+$mid-gray: #666;
+$mid-gray-lighter: #777;
+$light-gray: #999;
+
+//Gray Lines
+$line-bright: rgba(255, 255, 255, 0.87);
+$line-darker: rgba(255, 255, 255, 0.730);
+$line-disabled: rgba(255, 255, 255, 0.36);
+$line-darkest: rgba(255, 255, 255, 0.3);
+
+//Disabled text must be lighter so that it is still legible
+$text-disabled: rgba(255, 255, 255, 0.49);
+
+//One-off colors
+$yellow-main: hsl($yellow-hue, 78%, 30%);
+$yellow-line: hsl($yellow-hue, 78%, 50%);
+$accent-title: hsl($title-hue, 50%, 60%);
+$accent-title-hover: hsl($title-hue, 60%, 50%);
+
 @media (prefers-color-scheme: dark) {
-  //Hues
-  $yellow-hue: 51;
-  $blue-hue: $yellow-hue + 180;
-  $accent-hue: $blue-hue - 30;
-  $alt-bg-hue: $blue-hue - 30;
-
-  $success-hue: 130;
-  $warning-hue: 56;
-  $error-hue: 0;
-
-  //Backgrounds
-  @function bg-color($hue) {
-    @return hsl($hue, 25%, 30%);
-  }
-
-  @function bg-color-disabled($hue) {
-    @return hsl($hue, 18%, 26%);
-  }
-
-  @function bg-color-main($hue) {
-    @return hsl($hue, 30%, 20%);
-  }
-
-  @function bg-color-dark($hue) {
-    @return hsl($hue, 17%, 21%);
-  }
-
-  @function bg-color-darker($hue) {
-    @return hsl($hue, 18%, 15%);
-  }
-
-  @function bg-color-extra($hue) {
-    @return hsl($hue, 27%, 25%);
-  }
-
-  @function bg-color-extra-disabled($hue) {
-    @return hsl($hue, 18%, 22%);
-  }
-
-  //Borders
-  @function border-color($hue) {
-    @return hsl($hue, 20%, 40%);
-  }
-
-  @function border-color-hover($hue) {
-    @return hsl($hue, 20%, 55%);
-  }
-
-  @function border-color-disabled($hue) {
-    @return hsl($hue, 12%, 33%);
-  }
-
-  @function border-color-disabled-hover($hue) {
-    @return hsl($hue, 12%, 43%);
-  }
-
-  //Interactive Element Colors
-
-  //Designed for white text
-  @function ui-bg-color($hue) {
-    @return hsl($hue, 60%, 40%);
-  }
-
-  //Designed for dark background
-  @function ui-line-color($hue) {
-    @return hsl($hue, 60%, 70%);
-  }
-
-  @function ui-line-hover-color($hue) {
-    @return hsl($hue, 70%, 60%);
-  }
-
-  @function ui-line-focus-color($hue) {
-    @return hsl($hue, 80%, 50%);
-  }
-
-  //Status Text
-  @function status-text($hue) {
-    @return hsl($hue, 85%, 82%);
-  }
-
-  //Gray Backgrounds
-  $dark-gray: #222;
-  $dark-gray-lighter: #333;
-  $mid-gray-darker: #555;
-  $mid-gray: #666;
-  $mid-gray-lighter: #777;
-  $light-gray: #999;
-
-  //Gray Lines
-  $line-bright: rgba(255, 255, 255, 0.87);
-  $line-darker: rgba(255, 255, 255, 0.730);
-  $line-disabled: rgba(255, 255, 255, 0.36);
-  $line-darkest: rgba(255, 255, 255, 0.3);
-
-  //Disabled text must be lighter so that it is still legible
-  $text-disabled: rgba(255, 255, 255, 0.49);
-
-  //One-off colors
-  $yellow-main: hsl($yellow-hue, 78%, 30%);
-  $yellow-line: hsl($yellow-hue, 78%, 50%);
-  $accent-title: hsl($yellow-hue, 60%, 60%);
-  $accent-title-hover: hsl($yellow-hue, 80%, 50%);
 
   :root {
-    color: $line-bright;
-    background-color: $dark-gray;
+    //color: $line-bright;
+    //background-color: $dark-gray;
   }
 
   *:focus {
-    outline: none;
+    //outline: none;
   }
 
   a {
@@ -153,8 +155,8 @@
     }
     .sb-puzzle-search {
       input {
-        background-color: inherit;
-        border-bottom-color: $mid-gray-lighter;
+        //background-color: inherit;
+        //border-bottom-color: $mid-gray-lighter;
       }
     }
   }
@@ -177,7 +179,7 @@
   .sb-word-tabs-root {
     .tabs-list {
       .tab-trigger {
-        border-color: $mid-gray;
+        //border-color: $mid-gray;
         &[data-state="active"] {
           background-color: bg-color-extra($blue-hue);
           border-color: border-color-hover($blue-hue);
@@ -185,19 +187,19 @@
       }
     }
     .tab-content {
-      border-color: $mid-gray;
+      //border-color: $mid-gray;
     }
   }
 
   .sb-word-list-container {
-    border-color: $line-darkest;
+    //border-color: $line-darkest;
     header {
-      border-bottom-color: $mid-gray;
+      //border-bottom-color: $mid-gray;
     }
   }
 
   .sb-word-list-toggle {
-    border-color: $mid-gray;
+    //border-color: $mid-gray;
     background-color: $mid-gray;
     button {
       background-color: $dark-gray;
@@ -216,22 +218,22 @@
   .sb-word-popover-content {
     background-color: $mid-gray;
     box-shadow: 0 0 0px 4px $dark-gray;
-    border-color: $light-gray;
+    //border-color: $light-gray;
     .popover-arrow {
       fill: $light-gray;
     }
     .popover-close-button {
-      border-color: $light-gray;
+      //border-color: $light-gray;
     }
   }
 
   button.sb-revealer {
-    border-color: $mid-gray;
+    //border-color: $mid-gray;
     background-color: $dark-gray-lighter;
   }
 
   .sb-answer-alert-message {
-    border-color: $line-darkest;
+    //border-color: $line-darkest;
     &.pangram-alert-message {
       border-color: $yellow-main;
       background-color: $yellow-main;
@@ -285,7 +287,7 @@
 
   .sb-hint-panel {
     $this-hue: $blue-hue;
-    border-color: border-color($this-hue);
+    //border-color: border-color($this-hue);
     .sb-hint-panel-header {
       background-color: bg-color($this-hue);
       button {
@@ -318,7 +320,7 @@
   .sb-hint-panel-settings, .collapsible-settings {
     $this-hue: $alt-bg-hue;
     background-color: bg-color-main($this-hue);
-    border-color: border-color($this-hue);
+    //border-color: border-color($this-hue);
     span.disabled {
       color: $text-disabled;
     }

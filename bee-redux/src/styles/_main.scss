@@ -1,6 +1,16 @@
+@use 'colors' as *;
+
 * {
   box-sizing: border-box;
+  &:focus {
+    outline: none;
+  }
 }
+:root {
+  color: $line-bright;
+  background-color: $dark-gray;
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
@@ -19,6 +29,14 @@ a {
   &:focus {
     text-decoration: underline;
   }
+}
+
+button {
+  padding: 8px;
+  border-radius: var(--br);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.1s;
 }
 
 .App {
@@ -77,7 +95,14 @@ a {
       border: none;
     }
     .account-icon {
-      font-size: 32px;
+      font-size: 30px;
+      .svg-fg {
+        fill: ui-bg-color($accent-hue);
+      }
+      .svg-bg {
+        fill: $line-bright;
+      }
+      //background-color: $line-bright;
     }
   }
 }
@@ -120,7 +145,8 @@ a {
       font-size: 14px;
       padding: 4px 16px;
       border: none;
-      border-bottom: 1px solid;
+      background-color: inherit;
+      border-bottom: 1px solid $mid-gray-lighter;
     }
   }
 }
@@ -200,7 +226,7 @@ a {
 }
 
 .sb-answer-alert-message, .sb-error-alert-message {
-  border: 1px solid;
+  border: 1px solid $line-darkest;
   padding: 10px 14px;
 }
 
@@ -367,12 +393,13 @@ a {
       border-left: 2px solid;
       border-right: 2px solid;
       border-bottom: none;
+      border-color: $mid-gray;
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
     }
   }
   .tab-content {
-    border: 2px solid;
+    border: 2px solid $mid-gray;
     border-bottom-left-radius: var(--br);
     border-bottom-right-radius: var(--br);
     padding: 8px;
@@ -425,7 +452,7 @@ a {
 
 .sb-word-list-container {
   border-radius: var(--br);
-  border: 1px solid;
+  border: 1px solid $line-darkest;
   overflow: hidden;
   header {
     font-size: 16px;
@@ -433,7 +460,7 @@ a {
     gap: 20px;
     align-items: center;
     padding: 8px;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid $mid-gray;
     > div {
       display: flex;
       align-items: center;
@@ -444,7 +471,7 @@ a {
 
 .sb-word-list-toggle {
   border-radius: var(--br);
-  border: 1px solid;
+  border: 1px solid $mid-gray;
   overflow: hidden;
   display: flex;
   gap: 1px;
@@ -545,7 +572,7 @@ a {
   padding: 8px 12px 12px 12px;
   max-width: 40rem;
   border-radius: var(--br);
-  border: 2px solid;
+  border: 2px solid $light-gray;
   &:focus {
     outline: none;
   }
@@ -564,13 +591,13 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid;
+    border: 1px solid $light-gray;
   }
 }
 
 button.sb-revealer {
   padding: 3px 8px;
-  border: 1px solid;
+  border: 1px solid $mid-gray;
   //border-radius: 0px;
   text-align: left;
   &:hover, &:active {
@@ -602,8 +629,9 @@ button.sb-revealer {
 }
 
 .sb-hint-panel {
+  $this-hue: $blue-hue;
   border-radius: var(--br);
-  border: 2px solid;
+  border: 2px solid border-color($this-hue);
   overflow: hidden;
 }
 
@@ -631,11 +659,12 @@ button.sb-revealer {
 }
 
 .sb-hint-panel-settings, .collapsible-settings {
+  $this-hue: $alt-bg-hue;
   //padding: 8px 4px;
   font-size: 16px;
   border-radius: var(--br);
   overflow: hidden;
-  border: 1px solid;
+  border: 1px solid border-color($this-hue);
 }
 
 .sb-hint-panel-settings-header, .collapsible-settings-header {

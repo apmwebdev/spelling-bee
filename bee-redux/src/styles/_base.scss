@@ -16,11 +16,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  text-decoration: inherit;
-}
-
 body {
   margin: 0;
   display: flex;
@@ -32,12 +27,4 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-button {
-  padding: 8px;
-  border-radius: var(--br);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: border-color 0.1s;
 }
