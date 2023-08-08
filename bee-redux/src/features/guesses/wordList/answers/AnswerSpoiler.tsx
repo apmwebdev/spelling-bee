@@ -12,11 +12,16 @@ export function AnswerSpoiler({ word }: { word: string }) {
   const determineWidth = () => {
     const minWidth = 72;
     const widthMultiplier = 16;
+    const maxWidth = 136;
     if (!remainingRevealLength) {
       return minWidth;
     }
     const customWidth = word.length * widthMultiplier + 8;
-    return customWidth > minWidth ? customWidth : minWidth;
+    if (maxWidth > customWidth && customWidth > minWidth) {
+      return customWidth;
+    }
+    if (customWidth > maxWidth) return maxWidth;
+    return minWidth;
   };
 
   const spoiler = (spoilerText: string) => {

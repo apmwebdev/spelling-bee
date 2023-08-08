@@ -4,17 +4,23 @@ import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { Signup } from "./features/auth/Signup";
 import { Login } from "./features/auth/Login";
 import { SubheaderProvider } from "./app/SubheaderProvider";
+import * as ScrollArea  from "@radix-ui/react-scroll-area";
 
 export default function App() {
   const rootElement = () => {
     return (
       <SubheaderProvider>
-        <div className="App">
-          <div className="sb-top-container">
-            <Header />
-            <Outlet />
-          </div>
-        </div>
+        <ScrollArea.Root type="auto">
+          <ScrollArea.Viewport className="App">
+            <div className="sb-top-container">
+              <Header />
+              <Outlet />
+            </div>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar orientation="vertical" className="scrollbar">
+            <ScrollArea.Thumb className="scrollbar-thumb" />
+          </ScrollArea.Scrollbar>
+        </ScrollArea.Root>
       </SubheaderProvider>
     );
   };
