@@ -14,22 +14,14 @@ export default function App() {
     const darkMode = "App dark-theme";
     const lightMode = "App light-theme";
     if (prefsQuery.isError || prefsQuery.isLoading) {
-      console.log("loading or error");
       if (matchMedia("(prefers-color-scheme: light)").matches) return lightMode;
-      console.log("not light mode");
       return darkMode;
     }
     if (prefsQuery.isSuccess) {
-      console.log("success");
       const colorPref = prefsQuery.data.colorScheme;
-      console.log("colorPref:", colorPref);
       if (colorPref === "light") return lightMode;
-      console.log("not light mode");
       if (colorPref === "dark") return darkMode;
-      console.log("not dark mode");
-      console.log(matchMedia("(prefers-color-scheme: light)"));
       if (matchMedia("(prefers-color-scheme: light)").matches) return lightMode;
-      console.log("not auto light mode");
     }
     return darkMode;
   };
