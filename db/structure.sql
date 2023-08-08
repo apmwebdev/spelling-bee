@@ -9,6 +9,17 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: user_color_scheme; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.user_color_scheme AS ENUM (
+    'auto',
+    'dark',
+    'light'
+);
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -198,6 +209,38 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: user_prefs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_prefs (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    color_scheme public.user_color_scheme DEFAULT 'auto'::public.user_color_scheme NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_prefs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_prefs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_prefs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_prefs_id_seq OWNED BY public.user_prefs.id;
+
+
+--
 -- Name: user_puzzle_attempts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -320,6 +363,13 @@ ALTER TABLE ONLY public.sb_solver_puzzles ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: user_prefs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_prefs ALTER COLUMN id SET DEFAULT nextval('public.user_prefs_id_seq'::regclass);
+
+
+--
 -- Name: user_puzzle_attempts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -390,6 +440,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: user_prefs user_prefs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_prefs
+    ADD CONSTRAINT user_prefs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_puzzle_attempts user_puzzle_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -448,6 +506,13 @@ CREATE INDEX index_puzzles_on_outer_letters ON public.puzzles USING gin (outer_l
 
 
 --
+-- Name: index_user_prefs_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_prefs_on_user_id ON public.user_prefs USING btree (user_id);
+
+
+--
 -- Name: index_user_puzzle_attempts_on_puzzle_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -501,6 +566,14 @@ CREATE INDEX index_words_on_definitions ON public.words USING gin (definitions);
 --
 
 CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
+
+
+--
+-- Name: user_prefs fk_rails_2b2e5eb793; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_prefs
+    ADD CONSTRAINT fk_rails_2b2e5eb793 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -565,6 +638,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230803182425'),
 ('20230803205319'),
 ('20230804013313'),
-('20230804013314');
+('20230804013314'),
+('20230808012355');
 
 

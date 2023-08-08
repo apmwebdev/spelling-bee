@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :puzzles, only: [:index]
       resources :user_puzzle_attempts
       resources :guesses
+      resources :user_prefs, except: [:index, :destroy]
       # Root
       root "puzzles#latest"
     end

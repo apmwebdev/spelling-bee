@@ -4,6 +4,13 @@ class User < ApplicationRecord
     :validatable, :jwt_cookie_authenticatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   # Associations
+  has_one :user_pref
   has_many :user_puzzle_attempts
   has_many :guesses, through: :user_puzzle_attempts
+
+  after_create_commit :create_prefs
+
+  def create_prefs
+    UserPref.create(user_id: self.id)
+  end
 end
