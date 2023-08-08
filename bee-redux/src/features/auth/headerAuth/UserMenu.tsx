@@ -1,4 +1,4 @@
-import { Icon, InlineIcon } from "@iconify/react";
+import { InlineIcon } from "@iconify/react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useLogoutMutation } from "../authApiSlice";
 
@@ -16,7 +16,23 @@ export function UserMenu() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="user-menu-trigger">
-        <Icon icon="mdi:account-circle" className="account-icon" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          className="account-icon"
+          width="1em"
+          height="1em"
+          viewBox="0 0 24 24"
+        >
+          <circle className="svg-bg" r="7" cx="12" cy="12"></circle>
+          <path
+            className="svg-fg"
+            d="M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.232 7.232 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10Z"
+          ></path>
+        </svg>
+        {/*<Icon icon="mdi:account-circle" className="account-icon" />*/}
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content

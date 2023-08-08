@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiSlice } from "../api/apiSlice";
 import type { RootState } from "../../app/store";
 import { authApiSlice } from "./authApiSlice";
 
