@@ -3,7 +3,7 @@ $yellow-hue: 51;
 $blue-hue: $yellow-hue + 180;
 $accent-hue: $blue-hue - 30;
 $alt-bg-hue: $blue-hue - 30;
-$title-hue: $yellow-hue - 50;
+$title-hue: $yellow-hue - 0;
 
 $success-hue: 130;
 $warning-hue: 56;
@@ -27,7 +27,7 @@ $error-hue: 0;
 }
 
 @function bg-color-darker($hue) {
-  @return hsl($hue, 18%, 15%);
+  @return hsl($hue, 16%, 17%);
 }
 
 @function bg-color-extra($hue) {
@@ -64,15 +64,15 @@ $error-hue: 0;
 
 //Designed for dark background
 @function ui-line-color($hue) {
-  @return hsl($hue, 60%, 70%);
+  @return hsl($hue, 55%, 70%);
 }
 
 @function ui-line-hover-color($hue) {
-  @return hsl($hue, 70%, 60%);
+  @return hsl($hue, 65%, 65%);
 }
 
 @function ui-line-focus-color($hue) {
-  @return hsl($hue, 80%, 50%);
+  @return hsl($hue, 75%, 60%);
 }
 
 //Status Text
@@ -105,30 +105,30 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 
 @media (prefers-color-scheme: dark) {
 
-  :root {
+  //:root {
     //color: $line-bright;
     //background-color: $dark-gray;
-  }
+  //}
 
-  *:focus {
+  //*:focus {
     //outline: none;
-  }
+  //}
 
-  a {
-    $this-hue: $accent-hue;
-    color: ui-line-color($this-hue);
+  //a {
+    //$this-hue: $accent-hue;
+    //color: ui-line-color($this-hue);
     //background-color: $accent-bg;
-    &:hover {
-      color: ui-line-hover-color($this-hue);
-    }
-    &:focus {
-      color: ui-line-focus-color($this-hue);
-    }
-  }
+    //&:hover {
+      //color: ui-line-hover-color($this-hue);
+    //}
+    //&:focus {
+      //color: ui-line-focus-color($this-hue);
+    //}
+  //}
 
-  label > span {
+  //label > span {
     //color: ui-line-color($accent-hue);
-  }
+  //}
 
   .standard-button {
     background-color: ui-bg-color($accent-hue);

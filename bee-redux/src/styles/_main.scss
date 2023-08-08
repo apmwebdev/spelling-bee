@@ -6,6 +6,7 @@
     outline: none;
   }
 }
+
 :root {
   color: $line-bright;
   background-color: $dark-gray;
@@ -23,11 +24,16 @@
 }
 
 a {
+  $this-hue: $accent-hue;
+  text-decoration: inherit;
+  color: ui-line-color($this-hue);
   &:hover {
     text-decoration: underline;
+    color: ui-line-hover-color($this-hue);
   }
   &:focus {
     text-decoration: underline;
+    color: ui-line-focus-color($this-hue);
   }
 }
 
@@ -48,6 +54,14 @@ button {
   flex-direction: column;
   position: relative;
 }
+
+
+
+/******************/
+/***   HEADER   ***/
+/******************/
+
+
 
 .sb-header {
   margin-bottom: 8px;
@@ -124,7 +138,11 @@ button {
       justify-content: center;
       padding: 4px 12px;
       gap: 4px;
-      border: 1px solid;
+      border: 1.5px solid border-color($accent-hue);
+      &.disabled {
+        color: border-color-disabled($accent-hue);
+        border-color: border-color-disabled($accent-hue);
+      }
       span {
         font-size: 14px;
       }
@@ -191,6 +209,14 @@ button {
 .sb-main > * {
   max-width: 33.3333333333vw;
 }
+
+
+
+/********************/
+/***   CONTROLS   ***/
+/********************/
+
+
 
 .sb-controls-container {
   position: sticky;
@@ -348,6 +374,14 @@ button {
   padding: 16px;
 }
 
+
+
+/******************/
+/***   STATUS   ***/
+/******************/
+
+
+
 .sb-status {
   /*border: 1px solid #ccc;*/
   position: sticky;
@@ -365,13 +399,6 @@ button {
 .sb-progress {
   border: 1px dotted;
 }
-
-
-/**********************/
-/***   WORD LISTS   ***/
-/**********************/
-
-
 
 .sb-word-list-section-container {
   display: flex;
@@ -664,7 +691,7 @@ button.sb-revealer {
   font-size: 16px;
   border-radius: var(--br);
   overflow: hidden;
-  border: 1px solid border-color($this-hue);
+  border: 2px solid border-color($this-hue);
 }
 
 .sb-hint-panel-settings-header, .collapsible-settings-header {
