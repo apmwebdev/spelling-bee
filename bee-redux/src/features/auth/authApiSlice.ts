@@ -16,11 +16,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: formData,
       }),
-      transformResponse(response: any, meta: FetchBaseQueryMeta) {
-        return {
-          user: response.status.data.user,
-        };
-      },
     }),
     logout: builder.mutation({
       query: () => ({

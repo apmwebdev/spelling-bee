@@ -20,20 +20,47 @@ const InitialState: AuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState: InitialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      localStorage.removeItem("user");
+    },
+    populateUserDataFromStorage: (state) => {
+      if (state.user) return;
+      const storedUser = localStorage.getItem("user");
+      console.log("storedUser:", storedUser);
+      if (storedUser) {
+        console.log("storedUser is true");
+        state.user = JSON.parse(storedUser);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
         authApiSlice.endpoints.login.matchFulfilled,
         (state, { payload }) => {
-          state.user = payload.user;
+          console.log(payload);
+          const userData = payload.status.data.user;
+          state.user = userData;
+          try {
+            localStorage.setItem("user", JSON.stringify(userData));
+          } catch (err) {
+            console.log(
+              "Couldn't save public user info to local storage:",
+              err,
+            );
+          }
         },
       )
       .addMatcher(authApiSlice.endpoints.logout.matchFulfilled, (state) => {
         state.user = null;
+        localStorage.removeItem("user");
       });
   },
 });
+
+export const { logout, populateUserDataFromStorage } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
 

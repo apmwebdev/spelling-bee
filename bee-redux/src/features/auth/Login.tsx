@@ -35,9 +35,12 @@ export function Login() {
 
   const logInAsAdmin = async () => {
     try {
-      await login({ user: { username: "admin", password: "admin1" } }).then(
-        (response) => console.log(response),
-      );
+      const response = await login({
+        user: { username: "admin", password: "admin1" },
+      });
+      if (response.isError) {
+        console.log("Error:", response.error);
+      }
     } catch (error) {
       console.log("Failed to log in: ", error);
     }
