@@ -13,7 +13,10 @@ export function Header() {
 
   const subheaderContent = () => {
     const pathArr = pathname.split("/");
-    if (pathArr[1].match(/^puzzle(s)?$/) && answers.length > 0) {
+    if (
+      (pathArr[1].match(/^puzzle(s)?$/) || pathname === "/") &&
+      answers.length > 0
+    ) {
       return subheader;
     }
   };
