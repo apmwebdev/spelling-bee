@@ -4,7 +4,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPrefs: builder.query({
       query: () => ({
-        url: "/userPrefs",
+        url: "/user_prefs",
       }),
     }),
   }),

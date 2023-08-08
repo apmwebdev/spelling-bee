@@ -122,9 +122,6 @@
     &:focus {
       color: ui-line-focus-color($this-hue);
     }
-    .dark-theme & {
-      color: red;
-    }
   }
 
   label > span {
