@@ -1,26 +1,14 @@
 import { Puzzle } from "../features/puzzle/Puzzle";
 import { Status } from "../features/status/Status";
 import { useParams } from "react-router-dom";
-import { fetchPuzzleAsync } from "../features/puzzle/puzzleSlice";
-import { useAppDispatch } from "../app/hooks";
-import { useContext, useEffect } from "react";
 import { HintSection } from "../features/hints/HintSection";
-import { SubheaderContext } from "../app/SubheaderProvider";
-import { PuzzleSubheader } from "../features/puzzle/PuzzleSubheader";
+import { useGetPuzzleQuery } from "../features/puzzle/puzzleApiSlice";
 
 export function PuzzleRoute() {
   const params = useParams();
-  const dispatch = useAppDispatch();
-  const { setSubheader } = useContext(SubheaderContext);
-
-  useEffect(() => {
-    if (!params.identifier) {
-      dispatch(fetchPuzzleAsync("latest"));
-    } else {
-      dispatch(fetchPuzzleAsync(params.identifier));
-    }
-    setSubheader(<PuzzleSubheader />);
-  }, [dispatch, params.identifier, setSubheader]);
+  useGetPuzzleQuery(params.identifier ? params.identifier : "latest", {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <div className="sb-main-container">

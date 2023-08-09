@@ -1,5 +1,4 @@
 import { apiSlice } from "../api/apiSlice";
-import { FetchBaseQueryMeta } from "@reduxjs/toolkit/dist/query/react";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

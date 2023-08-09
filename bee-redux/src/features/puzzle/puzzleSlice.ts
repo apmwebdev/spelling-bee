@@ -1,13 +1,10 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
-import { fetchPuzzle } from "./puzzleAPI";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
+import { puzzleApiSlice } from "./puzzleApiSlice";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 interface Rank {
   id: string;
@@ -124,22 +121,14 @@ export enum PuzzleStatuses {
 export interface PuzzleState {
   data: PuzzleFormat;
   status: PuzzleStatuses;
-  error: string | null;
+  error: FetchBaseQueryError | undefined;
 }
 
 const initialState: PuzzleState = {
   data: BlankPuzzle,
   status: PuzzleStatuses.Initial,
-  error: null,
+  error: undefined,
 };
-
-export const fetchPuzzleAsync = createAsyncThunk(
-  "puzzle/fetchPuzzle",
-  async (identifier: string) => {
-    const response = await fetchPuzzle(identifier);
-    return response;
-  },
-);
 
 export const puzzleSlice = createSlice({
   name: "puzzle",
@@ -147,20 +136,28 @@ export const puzzleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPuzzleAsync.pending, (state) => {
+      .addMatcher(
+        puzzleApiSlice.endpoints.getPuzzle.matchFulfilled,
+        (state, { payload }) => {
+          state.data = payload;
+          state.status = PuzzleStatuses.Succeeded;
+          state.error = undefined;
+        },
+      )
+      // TODO: Add error handling
+      .addMatcher(
+        puzzleApiSlice.endpoints.getPuzzle.matchRejected,
+        (state, { payload }) => {
+          state.data = BlankPuzzle;
+          state.status = PuzzleStatuses.Failed;
+          state.error = payload;
+          console.log("puzzleSlice: getPuzzle.matchRejected:", payload);
+        },
+      )
+      // TODO: Add loading state handling
+      .addMatcher(puzzleApiSlice.endpoints.getPuzzle.matchPending, (state) => {
         state.status = PuzzleStatuses.Pending;
-      })
-      .addCase(fetchPuzzleAsync.fulfilled, (state, action) => {
-        state.status = PuzzleStatuses.Succeeded;
-        if (!action.payload.error) {
-          state.data = action.payload;
-        }
-      })
-      .addCase(fetchPuzzleAsync.rejected, (state, action) => {
-        state.status = PuzzleStatuses.Failed;
-        if (action.error.message) {
-          state.error = action.error.message;
-        }
+        state.error = undefined;
       });
   },
 });
