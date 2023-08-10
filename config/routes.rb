@@ -14,8 +14,9 @@ Rails.application.routes.draw do
       get "puzzles/latest", to: "puzzles#latest"
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
-      resources :user_puzzle_attempts
-      resources :guesses
+      get "/user_puzzle_attempts_for_puzzle/:puzzle_id", to: "user_puzzle_attempts#index_for_puzzle"
+      resources :user_puzzle_attempts, except: [:update]
+      resources :guesses, only: :create
       get "user_prefs", to: "user_prefs#show"
       match "user_prefs", to: "user_prefs#update", via: [:put, :patch]
       # Root

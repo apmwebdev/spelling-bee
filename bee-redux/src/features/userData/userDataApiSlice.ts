@@ -7,6 +7,11 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         url: "/user_prefs",
       }),
     }),
+    getUserPuzzleData: builder.query({
+      query: (puzzleId: number) => ({
+        url: `/user_puzzle_data/${puzzleId}`,
+      }),
+    }),
   }),
 });
 

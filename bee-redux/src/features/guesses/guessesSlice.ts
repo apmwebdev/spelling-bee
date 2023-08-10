@@ -6,6 +6,8 @@ import {
 import { fetchGuesses } from "./guessesAPI";
 import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
+import { puzzleApiSlice } from "../puzzle/puzzleApiSlice";
+import { guessesApiSlice } from "./guessesApiSlice";
 
 export enum Status {
   Initial = "Not Fetched",
@@ -87,7 +89,13 @@ export const guessesSlice = createSlice({
       })
       .addCase(fetchGuessesAsync.rejected, (state) => {
         state.status = Status.Error;
-      });
+      })
+      .addMatcher(
+        guessesApiSlice.endpoints.getCurrentAttempts.matchFulfilled,
+        (state, { payload }) => {
+          console.log("Get attempts:", payload);
+        },
+      );
   },
 });
 

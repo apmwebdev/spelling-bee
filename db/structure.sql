@@ -74,7 +74,7 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.guesses (
     id bigint NOT NULL,
-    user_puzzle_attempts_id bigint NOT NULL,
+    user_puzzle_attempt_id bigint NOT NULL,
     text character varying(15),
     is_spoiled boolean,
     created_at timestamp(6) without time zone NOT NULL,
@@ -478,17 +478,17 @@ CREATE INDEX index_answers_on_word_text ON public.answers USING btree (word_text
 
 
 --
--- Name: index_guesses_on_user_puzzle_attempts_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_guesses_on_user_puzzle_attempt_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_guesses_on_user_puzzle_attempts_id ON public.guesses USING btree (user_puzzle_attempts_id);
+CREATE INDEX index_guesses_on_user_puzzle_attempt_id ON public.guesses USING btree (user_puzzle_attempt_id);
 
 
 --
--- Name: index_guesses_on_user_puzzle_attempts_id_and_text; Type: INDEX; Schema: public; Owner: -
+-- Name: index_guesses_on_user_puzzle_attempt_id_and_text; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_guesses_on_user_puzzle_attempts_id_and_text ON public.guesses USING btree (user_puzzle_attempts_id, text);
+CREATE UNIQUE INDEX index_guesses_on_user_puzzle_attempt_id_and_text ON public.guesses USING btree (user_puzzle_attempt_id, text);
 
 
 --
@@ -577,6 +577,14 @@ ALTER TABLE ONLY public.user_prefs
 
 
 --
+-- Name: guesses fk_rails_4a9154fa82; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.guesses
+    ADD CONSTRAINT fk_rails_4a9154fa82 FOREIGN KEY (user_puzzle_attempt_id) REFERENCES public.user_puzzle_attempts(id);
+
+
+--
 -- Name: user_puzzle_attempts fk_rails_6b159d673b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -598,14 +606,6 @@ ALTER TABLE ONLY public.answers
 
 ALTER TABLE ONLY public.user_puzzle_attempts
     ADD CONSTRAINT fk_rails_cac5f49fbc FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: guesses fk_rails_db185d310c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.guesses
-    ADD CONSTRAINT fk_rails_db185d310c FOREIGN KEY (user_puzzle_attempts_id) REFERENCES public.user_puzzle_attempts(id);
 
 
 --
