@@ -1,12 +1,16 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { GuessInputContext } from "../../app/GuessInputProvider";
 import { GuessInputDisplay } from "./guessInput/GuessInputDisplay";
-import { addGuess, GuessFormat, selectCurrentAttempt, selectGuesses } from "./guessesSlice";
+import {
+  GuessFormat,
+  selectCurrentAttempt,
+  selectGuesses,
+} from "./guessesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectAnswerWords,
   selectCenterLetter,
-  selectExcludedWords, selectPuzzleId,
+  selectExcludedWords,
   selectValidLetters,
 } from "../puzzle/puzzleSlice";
 import { GuessAlerts } from "./guessInput/GuessAlerts";
@@ -90,7 +94,7 @@ export function GuessInput() {
       const getMatchingGuess = (guesses: GuessFormat[], guessValue: string) => {
         let matchingGuess: GuessFormat | null = null;
         for (const guessObject of guesses) {
-          if (guessObject.word === guessValue) {
+          if (guessObject.text === guessValue) {
             matchingGuess = guessObject;
             break;
           }
