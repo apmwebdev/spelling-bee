@@ -1,16 +1,17 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { GuessInputContext } from "../../app/GuessInputProvider";
 import { GuessInputDisplay } from "./guessInput/GuessInputDisplay";
-import { addGuess, GuessFormat, selectGuesses } from "./guessesSlice";
+import { addGuess, GuessFormat, selectCurrentAttempt, selectGuesses } from "./guessesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectAnswerWords,
   selectCenterLetter,
-  selectExcludedWords,
+  selectExcludedWords, selectPuzzleId,
   selectValidLetters,
 } from "../puzzle/puzzleSlice";
 import { GuessAlerts } from "./guessInput/GuessAlerts";
 import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
+import { useAddGuessMutation } from "./guessesApiSlice";
 
 export function GuessInput() {
   const dispatch = useAppDispatch();
@@ -21,11 +22,13 @@ export function GuessInput() {
   const validLetters = useAppSelector(selectValidLetters);
   const centerLetter = useAppSelector(selectCenterLetter);
   const guesses = useAppSelector(selectGuesses);
+  const currentAttempt = useAppSelector(selectCurrentAttempt);
   const [messages, setMessages] = useState<string[]>([]);
   const [messagesType, setMessagesType] = useState<"" | "answer" | "error">("");
   const [guessCssClasses, setGuessCssClasses] = useState("");
   const clearMessagesTimeout = useRef<TimeoutId | null>(null);
   const clearGuessTimeout = useRef<TimeoutId | null>(null);
+  const [addGuess] = useAddGuessMutation();
 
   useEffect(() => {
     enum ErrorTypes {
@@ -137,14 +140,13 @@ export function GuessInput() {
       if (validateSubmission(guessValue, guesses, centerLetter)) {
         const isAnswer = answers.includes(guessValue);
         const isExcluded = excludedWords.includes(guessValue);
-        dispatch(
-          addGuess({
-            word: guessValue,
-            isAnswer,
-            isExcluded,
-            isSpoiled: false,
-          }),
-        );
+        addGuess({
+          guess: {
+            user_puzzle_attempt_id: currentAttempt.id,
+            text: guessValue,
+            is_spoiled: false,
+          },
+        });
         if (isAnswer) {
           displayMessages([guessValue], "answer");
           setGuessValue("");
@@ -209,6 +211,7 @@ export function GuessInput() {
     centerLetter,
     dispatch,
     enterPressedEvent,
+    excludedWords,
     guessBackspace,
     guessValue,
     guesses,

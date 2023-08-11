@@ -1,10 +1,4 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
-import { fetchGuesses } from "./guessesAPI";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { guessesApiSlice } from "./guessesApiSlice";
@@ -15,6 +9,12 @@ export enum Status {
   Loading = "Loading...",
   UpToDate = "Up to Date",
   Error = "Error",
+}
+
+export interface RawAttemptFormat {
+  id: number;
+  puzzleId: number;
+  guesses: RawGuessFormat[];
 }
 
 export interface AttemptFormat {
@@ -40,26 +40,45 @@ type CurrentAttemptsFulfilledResponse = PayloadAction<
   never
 >;
 
+type AddGuessFulfilledResponse = PayloadAction<
+  GuessFormat,
+  string,
+  {
+    arg: QueryThunkArg & {
+      originalArgs: any;
+    };
+    requestId: string;
+    requestStatus: "fulfilled";
+  } & {
+    fulfilledTimeStamp: number;
+    baseQueryMeta: unknown;
+    RTK_autoBatch: true;
+  },
+  never
+>;
+
 export interface GuessFormData {
-  word: string;
-  isAnswer: boolean;
-  isExcluded: boolean;
+  guess: {
+    user_puzzle_attempt_id: number;
+    text: string;
+    is_spoiled: boolean;
+  };
+}
+
+export interface RawGuessFormat {
+  attemptId: number;
+  text: string;
   isSpoiled: boolean;
+  createdAt: string;
 }
 
 export interface GuessFormat {
-  word: string;
+  attemptId: number;
+  text: string;
   createdAt: number;
   isSpoiled: boolean;
-  isAnswer?: boolean;
-  isExcluded?: boolean;
-}
-
-export interface GuessesFormat {
-  userId: number;
-  puzzleId: string;
-  guesses: GuessFormat[];
-  // includes: Function
+  isAnswer: boolean;
+  isExcluded: boolean;
 }
 
 export interface GuessesStateData {
@@ -92,30 +111,11 @@ const initialState: GuessesState = {
 //   },
 // );
 
-const createGuessObject = (guessData: GuessFormData): GuessFormat => {
-  return {
-    word: guessData.word,
-    createdAt: Date.now(),
-    isAnswer: guessData.isAnswer,
-    isExcluded: guessData.isExcluded,
-    isSpoiled: guessData.isSpoiled,
-  };
-};
-
 export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    addGuess: (state, action: { payload: GuessFormData; type: string }) => {
-      state.data.currentAttempt.guesses.push(createGuessObject(action.payload));
-    },
-    spoilWord: (state, action: { payload: GuessFormData; type: string }) => {
-      state.data.currentAttempt.guesses.push(createGuessObject(action.payload));
-    },
-    setCurrentAttempt: (
-      state,
-      action: { payload: number; type: string },
-    ) => {
+    setCurrentAttempt: (state, action: { payload: number; type: string }) => {
       const newCurrent = state.data.attempts.find(
         (attempt) => attempt.id === action.payload,
       );
@@ -126,28 +126,24 @@ export const guessesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchGuessesAsync.pending, (state) => {
-      //   state.status = Status.Loading;
-      // })
-      // .addCase(fetchGuessesAsync.fulfilled, (state, action) => {
-      //   state.status = Status.UpToDate;
-      //   state.data = action.payload;
-      // })
-      // .addCase(fetchGuessesAsync.rejected, (state) => {
-      //   state.status = Status.Error;
-      // })
+      .addMatcher<AddGuessFulfilledResponse>(
+        guessesApiSlice.endpoints.addGuess.matchFulfilled,
+        (state, { payload }) => {
+          state.data.currentAttempt.guesses.push(payload);
+        },
+      )
       .addMatcher<CurrentAttemptsFulfilledResponse>(
         guessesApiSlice.endpoints.getCurrentAttempts.matchFulfilled,
         (state, { payload }) => {
           state.data.attempts = payload;
-          state.data.currentAttempt = payload.slice(-1)[0] as AttemptFormat;
+          state.data.currentAttempt = payload.slice(-1)[0];
           state.status = Status.UpToDate;
         },
       );
   },
 });
 
-export const { addGuess, spoilWord, setCurrentAttempt } = guessesSlice.actions;
+export const { setCurrentAttempt } = guessesSlice.actions;
 
 export const selectGuessesData = (state: RootState) => state.guesses.data;
 export const selectCurrentAttempt = (state: RootState) =>
@@ -156,7 +152,7 @@ export const selectAttempts = (state: RootState) => state.guesses.data.attempts;
 export const selectGuesses = (state: RootState) =>
   state.guesses.data.currentAttempt.guesses;
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
-  guesses.map((guess) => guess.word),
+  guesses.map((guess) => guess.text),
 );
 export const selectCorrectGuesses = createSelector([selectGuesses], (guesses) =>
   guesses.filter((guess) => guess.isAnswer && !guess.isSpoiled),
@@ -166,13 +162,13 @@ export const selectCorrectGuessWords = createSelector(
   (guesses) =>
     guesses
       .filter((guess) => guess.isAnswer && !guess.isSpoiled)
-      .map((guess) => guess.word),
+      .map((guess) => guess.text),
 );
 export const selectKnownWords = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => guess.isAnswer).map((guess) => guess.word),
+  guesses.filter((guess) => guess.isAnswer).map((guess) => guess.text),
 );
 export const selectSpoiledWords = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => guess.isSpoiled).map((guess) => guess.word),
+  guesses.filter((guess) => guess.isSpoiled).map((guess) => guess.text),
 );
 export const selectWrongGuesses = createSelector([selectGuesses], (guesses) =>
   guesses.filter((guess) => !guess.isAnswer),

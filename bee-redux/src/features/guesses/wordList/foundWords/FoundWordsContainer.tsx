@@ -29,10 +29,10 @@ export function FoundWordsContainer() {
 
     if (sortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
-        if (a.word < b.word) {
+        if (a.text < b.text) {
           return sortOrder === SortOrder.Ascending ? -1 : 1;
         }
-        if (a.word > b.word) {
+        if (a.text > b.text) {
           return sortOrder === SortOrder.Ascending ? 1 : -1;
         }
         return 0;
@@ -40,9 +40,9 @@ export function FoundWordsContainer() {
     } else {
       displayGuessList.sort((a, b) => {
         if (sortOrder === SortOrder.Ascending) {
-          return a.timestamp - b.timestamp;
+          return a.createdAt - b.createdAt;
         }
-        return b.timestamp - a.timestamp;
+        return b.createdAt - a.createdAt;
       });
     }
 
@@ -51,7 +51,7 @@ export function FoundWordsContainer() {
 
   const guessListContent = () => {
     const displayGuessList = generateDisplayGuessList();
-    const wordsOnly = displayGuessList.map((guess) => guess.word);
+    const wordsOnly = displayGuessList.map((guess) => guess.text);
     if (wordsOnly.length > 0) {
       return (
         <div className="sb-word-list-container">

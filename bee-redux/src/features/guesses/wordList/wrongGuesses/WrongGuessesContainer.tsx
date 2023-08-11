@@ -24,10 +24,10 @@ export function WrongGuessesContainer() {
     const displayGuessList = [...wrongGuesses];
     if (sortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
-        if (a.word < b.word) {
+        if (a.text < b.text) {
           return sortOrder === SortOrder.Ascending ? -1 : 1;
         }
-        if (a.word > b.word) {
+        if (a.text > b.text) {
           return sortOrder === SortOrder.Ascending ? 1 : -1;
         }
         return 0;
@@ -35,13 +35,13 @@ export function WrongGuessesContainer() {
     } else {
       displayGuessList.sort((a, b) => {
         if (sortOrder === SortOrder.Ascending) {
-          return a.timestamp - b.timestamp;
+          return a.createdAt - b.createdAt;
         }
-        return b.timestamp - a.timestamp;
+        return b.createdAt - a.createdAt;
       });
     }
 
-    return displayGuessList.map((guess) => guess.word);
+    return displayGuessList.map((guess) => guess.text);
   };
 
   return (

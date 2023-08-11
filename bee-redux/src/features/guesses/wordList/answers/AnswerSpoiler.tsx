@@ -1,10 +1,11 @@
 import { useAppSelector } from "../../../../app/hooks";
 import { selectAnswersListSettings } from "../wordListSettingsSlice";
-import { useDispatch } from "react-redux";
-import { GuessFormData, spoilWord } from "../../guessesSlice";
+import { GuessFormData, selectCurrentAttempt } from "../../guessesSlice";
+import { useAddGuessMutation } from "../../guessesApiSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
-  const dispatch = useDispatch();
+  const currentAttempt = useAppSelector(selectCurrentAttempt);
+  const [addGuess] = useAddGuessMutation();
   const { remainingRevealFirstLetter, remainingRevealLength } = useAppSelector(
     selectAnswersListSettings,
   );
@@ -26,17 +27,18 @@ export function AnswerSpoiler({ word }: { word: string }) {
 
   const spoiler = (spoilerText: string) => {
     const spoilerData: GuessFormData = {
-      word,
-      isAnswer: true,
-      isExcluded: false,
-      isSpoiled: true,
+      guess: {
+        user_puzzle_attempt_id: currentAttempt.id,
+        text: word,
+        is_spoiled: true,
+      },
     };
 
     return (
       <button
         className="sb-revealer"
         style={{ width: `${determineWidth()}px` }}
-        onClick={() => dispatch(spoilWord(spoilerData))}
+        onClick={() => addGuess(spoilerData)}
       >
         {spoilerText}
       </button>

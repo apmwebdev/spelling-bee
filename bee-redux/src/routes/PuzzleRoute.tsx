@@ -16,7 +16,7 @@ export function PuzzleRoute() {
 
   useEffect(() => {
     if (puzzleQ.isSuccess) {
-      getCurrentAttempts(null);
+      getCurrentAttempts();
     }
   }, [getCurrentAttempts, puzzleQ]);
 
