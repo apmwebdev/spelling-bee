@@ -1,9 +1,11 @@
 import { InlineIcon } from "@iconify/react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useLogoutMutation } from "../authApiSlice";
+import { useState } from "react";
 
 export function UserMenu() {
   const [logout] = useLogoutMutation();
+  const [buttonClasses, setButtonClasses] = useState("user-menu-trigger");
 
   const handleLogoutSelect = async () => {
     try {
@@ -15,17 +17,22 @@ export function UserMenu() {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="user-menu-trigger">
+      <DropdownMenu.Trigger
+        className={buttonClasses}
+        onMouseEnter={() => setButtonClasses("user-menu-trigger umt-hover")}
+        onMouseLeave={() => setButtonClasses("user-menu-trigger")}
+      >
         <svg
+          className="account-icon"
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           aria-hidden="true"
           role="img"
-          className="account-icon"
           width="1em"
           height="1em"
           viewBox="0 0 24 24"
         >
+          <circle className="svg-border" r="11" cx="12" cy="12"></circle>
           <circle className="svg-bg" r="7" cx="12" cy="12"></circle>
           <path
             className="svg-fg"

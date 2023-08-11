@@ -1,12 +1,10 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState, store } from "../../app/store";
+import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
 import { puzzleApiSlice } from "./puzzleApiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { apiSlice } from "../api/apiSlice";
-import { guessesApiSlice } from "../guesses/guessesApiSlice";
 
 interface Rank {
   id: string;
@@ -144,9 +142,6 @@ export const puzzleSlice = createSlice({
           state.data = payload;
           state.status = PuzzleStatuses.Succeeded;
           state.error = undefined;
-          // store.dispatch(
-          //   guessesApiSlice.endpoints.getCurrentAttempts.initiate(null),
-          // );
         },
       )
       // TODO: Add error handling

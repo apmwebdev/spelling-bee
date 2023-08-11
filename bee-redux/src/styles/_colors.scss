@@ -15,7 +15,7 @@ $error-hue: 0;
 }
 
 @function bg-color-disabled($hue) {
-  @return hsl($hue, 18%, 26%);
+  @return hsl($hue, 15%, 26%);
 }
 
 @function bg-color-main($hue) {
@@ -23,11 +23,11 @@ $error-hue: 0;
 }
 
 @function bg-color-dark($hue) {
-  @return hsl($hue, 17%, 21%);
+  @return hsl($hue, 19%, 23%);
 }
 
 @function bg-color-darker($hue) {
-  @return hsl($hue, 16%, 17%);
+  @return hsl($hue, 18%, 18%);
 }
 
 @function bg-color-extra($hue) {
@@ -35,7 +35,7 @@ $error-hue: 0;
 }
 
 @function bg-color-extra-disabled($hue) {
-  @return hsl($hue, 18%, 22%);
+  @return hsl($hue, 15%, 22%);
 }
 
 //Borders
@@ -48,11 +48,11 @@ $error-hue: 0;
 }
 
 @function border-color-disabled($hue) {
-  @return hsl($hue, 12%, 33%);
+  @return hsl($hue, 11%, 33%);
 }
 
 @function border-color-disabled-hover($hue) {
-  @return hsl($hue, 12%, 43%);
+  @return hsl($hue, 11%, 43%);
 }
 
 //Interactive Element Colors
@@ -60,6 +60,14 @@ $error-hue: 0;
 //Designed for white text
 @function ui-bg-color($hue) {
   @return hsl($hue, 60%, 40%);
+}
+
+@function ui-border-color($hue) {
+  @return hsl($hue, 25%, 45%);
+}
+
+@function ui-bg-color-muted($hue) {
+  @return hsl($hue, 35%, 32%);
 }
 
 //Designed for dark background
@@ -131,7 +139,7 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   //}
 
   .standard-button {
-    background-color: ui-bg-color($accent-hue);
+    //background-color: ui-bg-color($accent-hue);
   }
 
   .sb-header {
@@ -285,75 +293,75 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     }
   }
 
-  .sb-hint-panel {
-    $this-hue: $blue-hue;
-    //border-color: border-color($this-hue);
-    .sb-hint-panel-header {
-      background-color: bg-color($this-hue);
-      button {
-        &.button {
-          background-color: bg-color-extra($this-hue);
-        }
-        &:hover {
-          border-color: border-color-hover($this-hue);
-        }
-      }
-    }
-    &[data-state="closed"] {
-      color: $line-darker;
-      border-color: border-color-disabled($this-hue);
-      .sb-hint-panel-header {
-        background-color: bg-color-disabled($this-hue);
-        button {
-          color: $line-darker;
-          &.button {
-            background-color: bg-color-disabled($this-hue);
-          }
-          &:hover {
-            border-color: border-color-disabled-hover($this-hue);
-          }
-        }
-      }
-    }
-  }
+  //.sb-hint-panel {
+  //  $this-hue: $blue-hue;
+  //  //border-color: border-color($this-hue);
+  //  .sb-hint-panel-header {
+  //    background-color: bg-color($this-hue);
+  //    button {
+  //      &.button {
+  //        background-color: bg-color-extra($this-hue);
+  //      }
+  //      &:hover {
+  //        border-color: border-color($this-hue);
+  //      }
+  //    }
+  //  }
+  //  &[data-state="closed"] {
+  //    color: $line-darker;
+  //    border-color: border-color-disabled($this-hue);
+  //    .sb-hint-panel-header {
+  //      background-color: bg-color-disabled($this-hue);
+  //      button {
+  //        color: $line-darker;
+  //        &.button {
+  //          background-color: bg-color-disabled($this-hue);
+  //        }
+  //        &:hover {
+  //          border-color: border-color-disabled($this-hue);
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
 
-  .sb-hint-panel-settings, .collapsible-settings {
-    $this-hue: $alt-bg-hue;
-    background-color: bg-color-main($this-hue);
-    //border-color: border-color($this-hue);
-    span.disabled {
-      color: $text-disabled;
-    }
-    .sb-hint-panel-settings-header, .collapsible-settings-header {
-      background-color: bg-color($this-hue);
-      button {
-        &.button {
-          background-color: bg-color-extra($this-hue);
-        }
-        &:hover {
-          border-color: border-color-hover($this-hue);
-          //border-color: transparent;
-        }
-      }
-    }
-    &[data-state="closed"] {
-      color: $line-darker;
-      border-color: border-color-disabled($this-hue);
-      .sb-hint-panel-settings-header, .collapsible-settings-header {
-        background-color: bg-color-disabled($this-hue);
-        button {
-          color: $line-darker;
-          &:hover {
-            border-color: border-color-disabled-hover($this-hue);
-          }
-        }
-      }
-    }
-  }
-
-  .sb-general-hint-settings {
-    border-top: 1px solid hsl(0, 20%, 40%);
-  }
+  //.sb-hint-panel-settings, .collapsible-settings {
+  //  $this-hue: $alt-bg-hue;
+  //  background-color: bg-color-main($this-hue);
+  //  //border-color: border-color($this-hue);
+  //  span.disabled {
+  //    color: $text-disabled;
+  //  }
+  //  .sb-hint-panel-settings-header, .collapsible-settings-header {
+  //    background-color: bg-color($this-hue);
+  //    button {
+  //      &.button {
+  //        background-color: bg-color-extra($this-hue);
+  //      }
+  //      &:hover {
+  //        border-color: border-color($this-hue);
+  //        //border-color: transparent;
+  //      }
+  //    }
+  //  }
+  //  &[data-state="closed"] {
+  //    color: $line-darker;
+  //    border-color: border-color-disabled($this-hue);
+  //    .sb-hint-panel-settings-header, .collapsible-settings-header {
+  //      background-color: bg-color-disabled($this-hue);
+  //      button {
+  //        color: $line-darker;
+  //        &:hover {
+  //          border-color: border-color-disabled($this-hue);
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
+  //
+  //.sb-general-hint-settings {
+  //  border-top: 1px solid hsl(0, 20%, 40%);
+  //}
 
   .sb-wlg-content,
   .sb-wlg-total-column,

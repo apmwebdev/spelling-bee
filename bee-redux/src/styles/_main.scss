@@ -38,11 +38,22 @@ a {
 }
 
 button {
-  padding: 8px;
+  //padding: 8px;
   border-radius: var(--br);
-  border: 1px solid transparent;
+  //border: 2px solid transparent;
   cursor: pointer;
-  transition: border-color 0.1s;
+  //transition: border-color 0.05s;
+}
+
+.standard-button {
+  font-size: 16px;
+  padding: 8px 16px;
+  background-color: ui-bg-color($accent-hue);
+}
+
+.standard-button:focus,
+.standard-button:focus-visible {
+  outline: 2px auto -webkit-focus-ring-color;
 }
 
 .App {
@@ -68,6 +79,7 @@ button {
 }
 
 .main-header {
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,7 +103,7 @@ button {
     display: flex;
     justify-content: flex-start;
     padding: 8px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     text-decoration: none;
     &:hover {
@@ -99,7 +111,7 @@ button {
     }
   }
   .header-auth {
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -108,24 +120,29 @@ button {
       padding: 0px;
       border: none;
     }
-    .account-icon {
-      font-size: 30px;
-      .svg-fg {
-        fill: ui-bg-color($accent-hue);
-      }
-      .svg-bg {
-        fill: $line-bright;
-      }
-      //background-color: $line-bright;
-    }
+  }
+}
+.account-icon {
+  font-size: 30px;
+  //background-color: $line-bright;
+}
+.svg-fg {
+  fill: ui-bg-color($accent-hue);
+}
+.svg-bg {
+  fill: $line-bright;
+}
+.svg-border {
+  fill: transparent;
+  .umt-hover & {
+    fill: ui-line-hover-color($accent-hue);
   }
 }
 .subheader {
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
-  padding: 8px;
+  padding: 8px 12px;
   .sb-puzzle-nav {
-    grid-column: 2 / 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,7 +153,7 @@ button {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 12px;
+      padding: 6px 16px;
       gap: 4px;
       border: 1.5px solid border-color($accent-hue);
       &.disabled {
@@ -149,7 +166,6 @@ button {
     }
   }
   .sb-puzzle-search {
-    grid-column: 3 / 4;
     display: flex;
     gap: 8px;
     align-items: center;
@@ -168,6 +184,55 @@ button {
     }
   }
 }
+.sb-attempt-controls {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  .small-button {
+    font-size: 16px;
+    padding: 6px 12px;
+    background-color: ui-bg-color-muted($accent-hue);
+    border: 1.5px solid transparent;
+    &:hover {
+      border-color: ui-border-color($accent-hue);
+    }
+  }
+}
+
+.SelectTrigger {
+  font-size: 16px;
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-dark($accent-hue);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+}
+
+.SelectContent {
+  cursor: pointer;
+  border-radius: var(--br);
+  overflow: hidden;
+  font-size: 16px;
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-dark($accent-hue);
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+}
+
+.SelectItem {
+  padding: 6px 16px;
+  &[data-highlighted] {
+    background-color: ui-bg-color($accent-hue);
+  }
+}
+
 .user-menu-content {
   padding: 4px 0px 2px;
   border-radius: var(--br);
@@ -423,6 +488,7 @@ button {
       border-color: $mid-gray;
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
+      padding: 8px;
     }
   }
   .tab-content {
@@ -660,6 +726,35 @@ button.sb-revealer {
   border-radius: var(--br);
   border: 2px solid border-color($this-hue);
   overflow: hidden;
+  //border-color: border-color($this-hue);
+  .sb-hint-panel-header {
+    background-color: bg-color($this-hue);
+    button {
+      border: 1.5px solid transparent;
+      &.button {
+        background-color: bg-color-extra($this-hue);
+      }
+      &:hover {
+        border-color: border-color($this-hue);
+      }
+    }
+  }
+  &[data-state="closed"] {
+    color: $line-darker;
+    border-color: border-color-disabled($this-hue);
+    .sb-hint-panel-header {
+      background-color: bg-color-disabled($this-hue);
+      button {
+        color: $line-darker;
+        &.button {
+          background-color: bg-color-disabled($this-hue);
+        }
+        &:hover {
+          border-color: border-color-disabled($this-hue);
+        }
+      }
+    }
+  }
 }
 
 .sb-hint-panel-header {
@@ -674,8 +769,14 @@ button.sb-revealer {
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
-    //padding is 8px from base styles
+    padding: 8px;
   }
+}
+
+.header-remove-button {
+  display: flex;
+  align-items: center;
+  padding: 4px;
 }
 
 .header-disclosure-widget {
@@ -687,13 +788,46 @@ button.sb-revealer {
 
 .sb-hint-panel-settings, .collapsible-settings {
   $this-hue: $alt-bg-hue;
-  //padding: 8px 4px;
   font-size: 16px;
   border-radius: var(--br);
   overflow: hidden;
   border: 2px solid border-color($this-hue);
+  background-color: bg-color-main($this-hue);
+  //border-color: border-color($this-hue);
+  span.disabled {
+    color: $text-disabled;
+  }
+  .sb-hint-panel-settings-header, .collapsible-settings-header {
+    background-color: bg-color($this-hue);
+    button {
+      border: 1.5px solid transparent;
+      &.button {
+        background-color: bg-color-extra($this-hue);
+      }
+      &:hover {
+        border-color: border-color($this-hue);
+        //border-color: transparent;
+      }
+    }
+  }
+  &[data-state="closed"] {
+    color: $line-darker;
+    border-color: border-color-disabled($this-hue);
+    .sb-hint-panel-settings-header, .collapsible-settings-header {
+      background-color: bg-color-disabled($this-hue);
+      button {
+        color: $line-darker;
+        &:hover {
+          border-color: border-color-disabled($this-hue);
+        }
+      }
+    }
+  }
 }
 
+.sb-general-hint-settings {
+  border-top: 2px solid border-color($alt-bg-hue);
+}
 .sb-hint-panel-settings-header, .collapsible-settings-header {
   padding: 2px;
 }

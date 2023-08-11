@@ -10,13 +10,15 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
     }),
     getCurrentAttempts: builder.query({
       queryFn: async (_args, api, _extraOptions, baseQuery) => {
-        console.log("getCurrentAttempts");
         const state = api.getState() as RootState;
         const puzzleId = state.puzzle.data.id;
         if (puzzleId === 0) {
           return { error: { status: 404, data: "No puzzle loaded" } };
         }
-        return await baseQuery(`/user_puzzle_attempts_for_puzzle/${puzzleId}`);
+        const response = await baseQuery(
+          `/user_puzzle_attempts_for_puzzle/${puzzleId}`,
+        );
+        return response;
       },
     }),
     addAttempt: builder.mutation({

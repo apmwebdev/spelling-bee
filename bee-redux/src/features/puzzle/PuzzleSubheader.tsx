@@ -8,6 +8,7 @@ import {
   getPreviousPuzzleDateString,
 } from "../../utils/utils";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { AttemptControls } from "../guesses/AttemptControls";
 
 export function PuzzleSubheader() {
   const params = useParams();
@@ -120,6 +121,7 @@ export function PuzzleSubheader() {
 
   return (
     <>
+      <AttemptControls />
       <nav className="sb-puzzle-nav">
         {firstPuzzleLink()}
         {previousPuzzleLink()}
