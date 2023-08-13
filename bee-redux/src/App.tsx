@@ -29,17 +29,12 @@ export default function App() {
   const rootElement = () => {
     return (
       <SubheaderProvider>
-        <ScrollArea.Root type="auto">
-          <ScrollArea.Viewport className={appClasses()}>
-            <div className="sb-top-container">
-              <Header />
-              <Outlet />
-            </div>
-          </ScrollArea.Viewport>
-          <ScrollArea.Scrollbar orientation="vertical" className="scrollbar">
-            <ScrollArea.Thumb className="scrollbar-thumb" />
-          </ScrollArea.Scrollbar>
-        </ScrollArea.Root>
+        <div className={appClasses()}>
+          <div className="sb-top-container">
+            <Header />
+            <Outlet />
+          </div>
+        </div>
       </SubheaderProvider>
     );
   };
