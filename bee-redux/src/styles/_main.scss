@@ -462,8 +462,34 @@ button {
   max-width: 33.333333333vw;
 }
 
-.sb-progress {
+.Progress {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 4px;
   border: 1px dotted;
+}
+
+.ProgressBar {
+  margin-left: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.rank-tic {
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  background-color: $mid-gray;
+  &.active {
+    background-color: ui-bg-color($yellow-hue);
+  }
+  &:not(.active):not(.active ~ .rank-tic) {
+    background-color: $yellow-line;
+  }
 }
 
 .sb-word-list-section-container {

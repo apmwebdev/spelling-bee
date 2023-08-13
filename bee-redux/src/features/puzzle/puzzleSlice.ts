@@ -6,7 +6,7 @@ import { selectKnownWords } from "../guesses/guessesSlice";
 import { puzzleApiSlice } from "./puzzleApiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
-interface Rank {
+export interface Rank {
   id: string;
   name: string;
   multiplier: number;
@@ -19,61 +19,61 @@ type RanksType = [Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank];
 const Ranks: RanksType = [
   {
     id: "beginner",
-    name: "beginner",
+    name: "Beginner",
     multiplier: 0,
     rank: 1,
   },
   {
     id: "goodStart",
-    name: "good start",
+    name: "Good Start",
     multiplier: 0.02,
     rank: 2,
   },
   {
     id: "movingUp",
-    name: "moving up",
+    name: "Moving Up",
     multiplier: 0.05,
     rank: 3,
   },
   {
     id: "good",
-    name: "good",
+    name: "Good",
     multiplier: 0.08,
     rank: 4,
   },
   {
     id: "solid",
-    name: "solid",
+    name: "Solid",
     multiplier: 0.15,
     rank: 5,
   },
   {
     id: "nice",
-    name: "nice",
+    name: "Nice",
     multiplier: 0.25,
     rank: 6,
   },
   {
     id: "great",
-    name: "great",
+    name: "Great",
     multiplier: 0.4,
     rank: 7,
   },
   {
     id: "amazing",
-    name: "amazing",
+    name: "Amazing",
     multiplier: 0.5,
     rank: 8,
   },
   {
     id: "genius",
-    name: "genius",
+    name: "Genius",
     multiplier: 0.7,
     rank: 9,
   },
   {
     id: "queenBee",
-    name: "queen bee",
+    name: "Queen Bee",
     multiplier: 1,
     rank: 10,
   },

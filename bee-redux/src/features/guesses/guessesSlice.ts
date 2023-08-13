@@ -3,6 +3,7 @@ import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
+import { selectRanks, selectTotalPoints } from "../puzzle/puzzleSlice";
 
 export enum Status {
   Initial = "Not Fetched",
