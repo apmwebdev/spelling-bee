@@ -76,11 +76,6 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     addGuess: builder.mutation<GuessFormat, GuessFormData>({
-      // query: (guessData: GuessFormData) => ({
-      //   url: "/guesses",
-      //   method: "POST",
-      //   body: guessData,
-      // }),
       queryFn: async (
         guessData: GuessFormData,
         api,
@@ -88,7 +83,7 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
         baseQuery,
       ) => {
         const state = api.getState() as RootState;
-        const { data, error } = await baseQuery({
+        const { data } = await baseQuery({
           url: "/guesses",
           method: "POST",
           body: guessData,
