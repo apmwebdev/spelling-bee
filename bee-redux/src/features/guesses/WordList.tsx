@@ -7,7 +7,6 @@ import { AnswersContainer } from "./wordList/answers/AnswersContainer";
 export function WordList() {
   return (
     <div className="sb-word-list-section-container">
-      <h2>Words</h2>
       {/*<WordListTabs />*/}
       <Tabs.Root className="sb-word-tabs-root" defaultValue="foundWords">
         <Tabs.List className="tabs-list">

@@ -463,32 +463,62 @@ button {
 }
 
 .Progress {
+  border-radius: var(--br);
+  //border: 1px dotted;
+  padding: 12px 16px;
+  .sb-found-words-status {
+    padding-bottom: 4px;
+  }
+}
+
+.progress-rank {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  padding: 8px 16px;
   gap: 4px;
-  border: 1px dotted;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $mid-gray;
+}
+
+.current-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
 }
 
 .ProgressBar {
+  position: relative;
   margin-left: 16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .rank-tic {
-  height: 12px;
-  width: 12px;
-  border-radius: 12px;
+  position: relative;
+  height: 14px;
+  width: 14px;
+  border-radius: 14px;
   background-color: $mid-gray;
   &.active {
-    background-color: ui-bg-color($yellow-hue);
+    //background-color: ui-bg-color($yellow-hue);
   }
-  &:not(.active):not(.active ~ .rank-tic) {
+  &:not(:first-child):before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    left: -20px;
+    top: 6px;
+    background-color: $mid-gray;
+  }
+  &:not(.active ~ .rank-tic) {
     background-color: $yellow-line;
+    &:not(:first-child):before {
+      background-color: $yellow-line;
+    }
   }
 }
 
