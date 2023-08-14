@@ -1,6 +1,9 @@
 import { apiSlice } from "../api/apiSlice";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
+import { UseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export interface Rank {
   id: string;
@@ -130,6 +133,16 @@ export interface PuzzleFormat extends PuzzleFormatRaw {
   ranks: RanksType | [Rank];
 }
 
+export interface PuzzleWithQueryStatusFormat extends PuzzleFormat {
+  status: {
+    isLoading: boolean;
+    isFetching: boolean;
+    isSuccess: boolean;
+    isError: boolean;
+    error?: FetchBaseQueryError | SerializedError;
+  };
+}
+
 export const BlankPuzzle: PuzzleFormat = {
   id: 0,
   date: "00-00-0000",
@@ -144,7 +157,7 @@ export const BlankPuzzle: PuzzleFormat = {
   answerWords: [],
   totalPoints: 0,
   answerLengths: [],
-  ranks: [BlankRank],
+  ranks: Ranks,
 };
 
 export const puzzleApiSlice = apiSlice.injectEndpoints({
