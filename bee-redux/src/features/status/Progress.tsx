@@ -1,18 +1,21 @@
 import { useAppSelector } from "../../app/hooks";
-import { Rank, selectRanks, selectTotalPoints } from "../puzzle/puzzleSlice";
+import { Rank } from "../puzzle/puzzleApiSlice";
 import { selectScore } from "../guesses/guessesSlice";
 import { ProgressBar } from "./ProgressBar";
 import { FoundWordsStatus } from "../guesses/wordList/foundWords/FoundWordsStatus";
 import { useCurrentPuzzle } from "../puzzle/useCurrentPuzzle";
+import { BlankRank } from "../puzzle/puzzleApiSlice";
 
 export function Progress() {
   const puzzleQ = useCurrentPuzzle();
-  const ranks = useAppSelector(selectRanks);
+  const ranks = puzzleQ.data?.ranks ?? [BlankRank];
   const score = useAppSelector(selectScore);
-  const totalPoints = useAppSelector(selectTotalPoints);
+  const totalPoints = puzzleQ.data?.totalPoints ?? 0;
 
   const currentRank = (): Rank => {
-    if (totalPoints === 0) return ranks[0];
+    if (!puzzleQ.isSuccess || score > totalPoints) {
+      return ranks[0];
+    }
     let returnRank = ranks[0];
     for (const [i, rank] of ranks.entries()) {
       if (score === rank.score || score < ranks[i + 1].score) {
