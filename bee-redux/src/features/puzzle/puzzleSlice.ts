@@ -3,113 +3,13 @@ import { RootState } from "../../app/store";
 import { calculateScore } from "../../utils/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
-import { puzzleApiSlice } from "./puzzleApiSlice";
+import {
+  BlankPuzzle,
+  puzzleApiSlice,
+  PuzzleFormat,
+  Ranks,
+} from "./puzzleApiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-
-export interface Rank {
-  id: string;
-  name: string;
-  multiplier: number;
-  rank: number;
-  score?: number;
-}
-
-type RanksType = [Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank, Rank];
-
-const Ranks: RanksType = [
-  {
-    id: "beginner",
-    name: "Beginner",
-    multiplier: 0,
-    rank: 1,
-  },
-  {
-    id: "goodStart",
-    name: "Good Start",
-    multiplier: 0.02,
-    rank: 2,
-  },
-  {
-    id: "movingUp",
-    name: "Moving Up",
-    multiplier: 0.05,
-    rank: 3,
-  },
-  {
-    id: "good",
-    name: "Good",
-    multiplier: 0.08,
-    rank: 4,
-  },
-  {
-    id: "solid",
-    name: "Solid",
-    multiplier: 0.15,
-    rank: 5,
-  },
-  {
-    id: "nice",
-    name: "Nice",
-    multiplier: 0.25,
-    rank: 6,
-  },
-  {
-    id: "great",
-    name: "Great",
-    multiplier: 0.4,
-    rank: 7,
-  },
-  {
-    id: "amazing",
-    name: "Amazing",
-    multiplier: 0.5,
-    rank: 8,
-  },
-  {
-    id: "genius",
-    name: "Genius",
-    multiplier: 0.7,
-    rank: 9,
-  },
-  {
-    id: "queenBee",
-    name: "Queen Bee",
-    multiplier: 1,
-    rank: 10,
-  },
-];
-
-export interface AnswerFormat {
-  word: string;
-  frequency: number;
-  definitions: string[];
-}
-
-export interface PuzzleFormat {
-  id: number;
-  date: string;
-  centerLetter: string;
-  outerLetters: string[];
-  validLetters: string[];
-  pangrams: string[];
-  perfectPangrams: string[];
-  answers: AnswerFormat[];
-  excludedWords: string[];
-  isLatest: boolean;
-}
-
-export const BlankPuzzle: PuzzleFormat = {
-  id: 0,
-  date: "00-00-0000",
-  centerLetter: "_",
-  outerLetters: ["_", "_", "_", "_", "_", "_"],
-  validLetters: ["_", "_", "_", "_", "_", "_", "_"],
-  pangrams: [],
-  perfectPangrams: [],
-  answers: [],
-  excludedWords: [],
-  isLatest: false,
-};
 
 export enum PuzzleStatuses {
   Initial = "Not Fetched",

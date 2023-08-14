@@ -3,8 +3,10 @@ import { Rank, selectRanks, selectTotalPoints } from "../puzzle/puzzleSlice";
 import { selectScore } from "../guesses/guessesSlice";
 import { ProgressBar } from "./ProgressBar";
 import { FoundWordsStatus } from "../guesses/wordList/foundWords/FoundWordsStatus";
+import { useCurrentPuzzle } from "../puzzle/useCurrentPuzzle";
 
 export function Progress() {
+  const puzzleQ = useCurrentPuzzle();
   const ranks = useAppSelector(selectRanks);
   const score = useAppSelector(selectScore);
   const totalPoints = useAppSelector(selectTotalPoints);
