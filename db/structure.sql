@@ -10,6 +10,48 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: letter_panel_locations; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.letter_panel_locations AS ENUM (
+    'start',
+    'end'
+);
+
+
+--
+-- Name: search_panel_locations; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.search_panel_locations AS ENUM (
+    'start',
+    'end',
+    'anywhere'
+);
+
+
+--
+-- Name: sort_order_options; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.sort_order_options AS ENUM (
+    'asc',
+    'desc'
+);
+
+
+--
+-- Name: substring_hint_output_types; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.substring_hint_output_types AS ENUM (
+    'word_length_grid',
+    'word_count_list',
+    'letters_list'
+);
+
+
+--
 -- Name: user_color_scheme; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -69,6 +111,71 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: default_hint_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.default_hint_profiles (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: default_hint_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.default_hint_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: default_hint_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.default_hint_profiles_id_seq OWNED BY public.default_hint_profiles.id;
+
+
+--
+-- Name: definition_panels; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.definition_panels (
+    id bigint NOT NULL,
+    show_known boolean DEFAULT true NOT NULL,
+    reveal_length boolean DEFAULT true NOT NULL,
+    show_obscurity boolean DEFAULT false NOT NULL,
+    sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: definition_panels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.definition_panels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: definition_panels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.definition_panels_id_seq OWNED BY public.definition_panels.id;
+
+
+--
 -- Name: guesses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -102,6 +209,81 @@ ALTER SEQUENCE public.guesses_id_seq OWNED BY public.guesses.id;
 
 
 --
+-- Name: hint_panels; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.hint_panels (
+    id bigint NOT NULL,
+    name character varying,
+    hint_profile_type character varying NOT NULL,
+    hint_profile_id bigint NOT NULL,
+    initial_display_state_id bigint NOT NULL,
+    current_display_state_id bigint NOT NULL,
+    status_tracking character varying NOT NULL,
+    panel_subtype_type character varying NOT NULL,
+    panel_subtype_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: hint_panels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.hint_panels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hint_panels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.hint_panels_id_seq OWNED BY public.hint_panels.id;
+
+
+--
+-- Name: letter_panels; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.letter_panels (
+    id bigint NOT NULL,
+    location public.letter_panel_locations DEFAULT 'start'::public.letter_panel_locations NOT NULL,
+    output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
+    number_of_letters integer DEFAULT 1 NOT NULL,
+    letters_offset integer DEFAULT 0 NOT NULL,
+    show_known boolean DEFAULT true NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0)),
+    CONSTRAINT positive_number_of_letters CHECK ((number_of_letters > 0))
+);
+
+
+--
+-- Name: letter_panels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.letter_panels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: letter_panels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.letter_panels_id_seq OWNED BY public.letter_panels.id;
+
+
+--
 -- Name: nyt_puzzles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -131,6 +313,77 @@ CREATE SEQUENCE public.nyt_puzzles_id_seq
 --
 
 ALTER SEQUENCE public.nyt_puzzles_id_seq OWNED BY public.nyt_puzzles.id;
+
+
+--
+-- Name: obscurity_panels; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.obscurity_panels (
+    id bigint NOT NULL,
+    show_known boolean DEFAULT true NOT NULL,
+    separate_known boolean DEFAULT false NOT NULL,
+    reveal_first_letter boolean DEFAULT true NOT NULL,
+    reveal_length boolean DEFAULT true NOT NULL,
+    click_to_define boolean DEFAULT false NOT NULL,
+    sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: obscurity_panels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.obscurity_panels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: obscurity_panels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.obscurity_panels_id_seq OWNED BY public.obscurity_panels.id;
+
+
+--
+-- Name: panel_display_states; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.panel_display_states (
+    id bigint NOT NULL,
+    is_expanded boolean,
+    is_blurred boolean,
+    is_sticky boolean,
+    is_settings_expanded boolean,
+    is_settings_sticky boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: panel_display_states_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.panel_display_states_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: panel_display_states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.panel_display_states_id_seq OWNED BY public.panel_display_states.id;
 
 
 --
@@ -209,6 +462,76 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: search_panel_searches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.search_panel_searches (
+    id bigint NOT NULL,
+    search_panel_id bigint NOT NULL,
+    user_puzzle_attempt_id bigint NOT NULL,
+    location public.search_panel_locations DEFAULT 'anywhere'::public.search_panel_locations NOT NULL,
+    output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
+    letters_offset integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
+);
+
+
+--
+-- Name: search_panel_searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.search_panel_searches_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: search_panel_searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.search_panel_searches_id_seq OWNED BY public.search_panel_searches.id;
+
+
+--
+-- Name: search_panels; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.search_panels (
+    id bigint NOT NULL,
+    location public.search_panel_locations DEFAULT 'anywhere'::public.search_panel_locations NOT NULL,
+    output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
+    letters_offset integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
+);
+
+
+--
+-- Name: search_panels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.search_panels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: search_panels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.search_panels_id_seq OWNED BY public.search_panels.id;
+
+
+--
 -- Name: status_tracking_options; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -218,6 +541,40 @@ CREATE TABLE public.status_tracking_options (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: user_hint_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_hint_profiles (
+    id bigint NOT NULL,
+    name character varying,
+    user_id bigint NOT NULL,
+    default_panel_tracking character varying NOT NULL,
+    default_panel_display_state_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_hint_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_hint_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_hint_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_hint_profiles_id_seq OWNED BY public.user_hint_profiles.id;
 
 
 --
@@ -347,6 +704,20 @@ ALTER TABLE ONLY public.answers ALTER COLUMN id SET DEFAULT nextval('public.answ
 
 
 --
+-- Name: default_hint_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.default_hint_profiles ALTER COLUMN id SET DEFAULT nextval('public.default_hint_profiles_id_seq'::regclass);
+
+
+--
+-- Name: definition_panels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.definition_panels ALTER COLUMN id SET DEFAULT nextval('public.definition_panels_id_seq'::regclass);
+
+
+--
 -- Name: guesses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -354,10 +725,38 @@ ALTER TABLE ONLY public.guesses ALTER COLUMN id SET DEFAULT nextval('public.gues
 
 
 --
+-- Name: hint_panels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels ALTER COLUMN id SET DEFAULT nextval('public.hint_panels_id_seq'::regclass);
+
+
+--
+-- Name: letter_panels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.letter_panels ALTER COLUMN id SET DEFAULT nextval('public.letter_panels_id_seq'::regclass);
+
+
+--
 -- Name: nyt_puzzles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.nyt_puzzles ALTER COLUMN id SET DEFAULT nextval('public.nyt_puzzles_id_seq'::regclass);
+
+
+--
+-- Name: obscurity_panels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.obscurity_panels ALTER COLUMN id SET DEFAULT nextval('public.obscurity_panels_id_seq'::regclass);
+
+
+--
+-- Name: panel_display_states id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.panel_display_states ALTER COLUMN id SET DEFAULT nextval('public.panel_display_states_id_seq'::regclass);
 
 
 --
@@ -372,6 +771,27 @@ ALTER TABLE ONLY public.puzzles ALTER COLUMN id SET DEFAULT nextval('public.puzz
 --
 
 ALTER TABLE ONLY public.sb_solver_puzzles ALTER COLUMN id SET DEFAULT nextval('public.sb_solver_puzzles_id_seq'::regclass);
+
+
+--
+-- Name: search_panel_searches id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches ALTER COLUMN id SET DEFAULT nextval('public.search_panel_searches_id_seq'::regclass);
+
+
+--
+-- Name: search_panels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panels ALTER COLUMN id SET DEFAULT nextval('public.search_panels_id_seq'::regclass);
+
+
+--
+-- Name: user_hint_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles ALTER COLUMN id SET DEFAULT nextval('public.user_hint_profiles_id_seq'::regclass);
 
 
 --
@@ -412,6 +832,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: default_hint_profiles default_hint_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.default_hint_profiles
+    ADD CONSTRAINT default_hint_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: definition_panels definition_panels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.definition_panels
+    ADD CONSTRAINT definition_panels_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: guesses guesses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -420,11 +856,43 @@ ALTER TABLE ONLY public.guesses
 
 
 --
+-- Name: hint_panels hint_panels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels
+    ADD CONSTRAINT hint_panels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: letter_panels letter_panels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.letter_panels
+    ADD CONSTRAINT letter_panels_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: nyt_puzzles nyt_puzzles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.nyt_puzzles
     ADD CONSTRAINT nyt_puzzles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: obscurity_panels obscurity_panels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.obscurity_panels
+    ADD CONSTRAINT obscurity_panels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: panel_display_states panel_display_states_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.panel_display_states
+    ADD CONSTRAINT panel_display_states_pkey PRIMARY KEY (id);
 
 
 --
@@ -449,6 +917,30 @@ ALTER TABLE ONLY public.sb_solver_puzzles
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: search_panel_searches search_panel_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches
+    ADD CONSTRAINT search_panel_searches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: search_panels search_panels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panels
+    ADD CONSTRAINT search_panels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_hint_profiles user_hint_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles
+    ADD CONSTRAINT user_hint_profiles_pkey PRIMARY KEY (id);
 
 
 --
@@ -504,6 +996,41 @@ CREATE UNIQUE INDEX index_guesses_on_user_puzzle_attempt_id_and_text ON public.g
 
 
 --
+-- Name: index_hint_panels_on_current_display_state_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_current_display_state_id ON public.hint_panels USING btree (current_display_state_id);
+
+
+--
+-- Name: index_hint_panels_on_hint_profile; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_hint_profile ON public.hint_panels USING btree (hint_profile_type, hint_profile_id);
+
+
+--
+-- Name: index_hint_panels_on_initial_display_state_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_initial_display_state_id ON public.hint_panels USING btree (initial_display_state_id);
+
+
+--
+-- Name: index_hint_panels_on_panel_subtype; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_panel_subtype ON public.hint_panels USING btree (panel_subtype_type, panel_subtype_id);
+
+
+--
+-- Name: index_hint_panels_on_status_tracking; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_status_tracking ON public.hint_panels USING btree (status_tracking);
+
+
+--
 -- Name: index_puzzles_on_origin; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -518,10 +1045,45 @@ CREATE INDEX index_puzzles_on_outer_letters ON public.puzzles USING gin (outer_l
 
 
 --
+-- Name: index_search_panel_searches_on_search_panel_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_search_panel_searches_on_search_panel_id ON public.search_panel_searches USING btree (search_panel_id);
+
+
+--
+-- Name: index_search_panel_searches_on_user_puzzle_attempt_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_search_panel_searches_on_user_puzzle_attempt_id ON public.search_panel_searches USING btree (user_puzzle_attempt_id);
+
+
+--
 -- Name: index_status_tracking_options_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_status_tracking_options_on_key ON public.status_tracking_options USING btree (key);
+
+
+--
+-- Name: index_user_hint_profiles_on_default_panel_display_state_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_hint_profiles_on_default_panel_display_state_id ON public.user_hint_profiles USING btree (default_panel_display_state_id);
+
+
+--
+-- Name: index_user_hint_profiles_on_default_panel_tracking; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_hint_profiles_on_default_panel_tracking ON public.user_hint_profiles USING btree (default_panel_tracking);
+
+
+--
+-- Name: index_user_hint_profiles_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_hint_profiles_on_user_id ON public.user_hint_profiles USING btree (user_id);
 
 
 --
@@ -588,6 +1150,14 @@ CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
 
 
 --
+-- Name: search_panel_searches fk_rails_153f638c99; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches
+    ADD CONSTRAINT fk_rails_153f638c99 FOREIGN KEY (user_puzzle_attempt_id) REFERENCES public.user_puzzle_attempts(id);
+
+
+--
 -- Name: user_prefs fk_rails_2b2e5eb793; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -609,6 +1179,46 @@ ALTER TABLE ONLY public.guesses
 
 ALTER TABLE ONLY public.user_puzzle_attempts
     ADD CONSTRAINT fk_rails_6b159d673b FOREIGN KEY (puzzle_id) REFERENCES public.puzzles(id);
+
+
+--
+-- Name: search_panel_searches fk_rails_90b0eead18; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches
+    ADD CONSTRAINT fk_rails_90b0eead18 FOREIGN KEY (search_panel_id) REFERENCES public.search_panels(id);
+
+
+--
+-- Name: user_hint_profiles fk_rails_964518a402; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles
+    ADD CONSTRAINT fk_rails_964518a402 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: hint_panels fk_rails_9a68662294; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels
+    ADD CONSTRAINT fk_rails_9a68662294 FOREIGN KEY (status_tracking) REFERENCES public.status_tracking_options(key);
+
+
+--
+-- Name: user_hint_profiles fk_rails_b0ab1b718f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles
+    ADD CONSTRAINT fk_rails_b0ab1b718f FOREIGN KEY (default_panel_display_state_id) REFERENCES public.panel_display_states(id);
+
+
+--
+-- Name: hint_panels fk_rails_c1e169d339; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels
+    ADD CONSTRAINT fk_rails_c1e169d339 FOREIGN KEY (initial_display_state_id) REFERENCES public.panel_display_states(id);
 
 
 --
@@ -636,6 +1246,22 @@ ALTER TABLE ONLY public.answers
 
 
 --
+-- Name: user_hint_profiles fk_rails_ea7cf43e6d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles
+    ADD CONSTRAINT fk_rails_ea7cf43e6d FOREIGN KEY (default_panel_tracking) REFERENCES public.status_tracking_options(key);
+
+
+--
+-- Name: hint_panels fk_rails_fe2308349e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels
+    ADD CONSTRAINT fk_rails_fe2308349e FOREIGN KEY (current_display_state_id) REFERENCES public.panel_display_states(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -659,6 +1285,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230804013313'),
 ('20230804013314'),
 ('20230808012355'),
-('20230815032425');
+('20230815032425'),
+('20230815050500'),
+('20230815052132'),
+('20230815052939'),
+('20230815055235'),
+('20230815055236'),
+('20230815062841'),
+('20230815063617'),
+('20230815064048'),
+('20230815064457'),
+('20230815065033'),
+('20230815073035');
 
 

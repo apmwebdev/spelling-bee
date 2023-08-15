@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_one :user_pref
   has_many :user_puzzle_attempts
   has_many :guesses, through: :user_puzzle_attempts
+  has_many :user_hint_profiles
+  has_many :hint_panels, through: :user_hint_profiles
 
   after_create_commit :create_prefs
 

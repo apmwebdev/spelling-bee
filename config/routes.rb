@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       resources :guesses, only: :create
       get "user_prefs", to: "user_prefs#show"
       match "user_prefs", to: "user_prefs#update", via: [:put, :patch]
+      resources :user_hint_profiles
+      resources :hint_panels, except: [:index, :show]
       # Root
       root "puzzles#latest"
     end

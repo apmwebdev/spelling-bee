@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  output_type: MyString
+  number_of_letters: 1
+  offset: 1
+  show_known: false
+
+two:
+  location: MyString
+  output_type: MyString
+  number_of_letters: 1
+  offset: 1
+  show_known: false

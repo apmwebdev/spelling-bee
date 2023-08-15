@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  hint_profile: one
+  initial_display_state: one
+  current_display_state: one
+  status_tracking: one
+  panel_subtype: one
+  panel_subtype_type: Panel subtype
+
+two:
+  name: MyString
+  hint_profile: two
+  initial_display_state: two
+  current_display_state: two
+  status_tracking: two
+  panel_subtype: two
+  panel_subtype_type: Panel subtype

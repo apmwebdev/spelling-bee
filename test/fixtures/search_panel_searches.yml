@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  search_panel: one
+  user_puzzle_attempt: one
+  location: MyString
+  output_type: MyString
+  letters_offset: 1
+
+two:
+  search_panel: two
+  user_puzzle_attempt: two
+  location: MyString
+  output_type: MyString
+  letters_offset: 1

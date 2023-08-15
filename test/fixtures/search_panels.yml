@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  letters_offset: 1
+  output_type: MyString
+
+two:
+  location: MyString
+  letters_offset: 1
+  output_type: MyString

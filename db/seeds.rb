@@ -16,3 +16,4 @@
 # previous week only.
 
 # NytScraperService.seed_all_puzzles_json
+# TODO: Add StatusTrackingOptions, PanelDisplayStates, DefaultProfiles

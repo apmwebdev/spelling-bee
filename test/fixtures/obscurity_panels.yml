@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  show_known: false
+  separate_known: false
+  reveal_first_letter: false
+  reveal_length: false
+  click_to_define: false
+  sort_order: 
+
+two:
+  show_known: false
+  separate_known: false
+  reveal_first_letter: false
+  reveal_length: false
+  click_to_define: false
+  sort_order: 
