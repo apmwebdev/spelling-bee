@@ -6,14 +6,14 @@ import { useEffect } from "react";
 import { useCurrentPuzzle } from "../features/puzzle/useCurrentPuzzle";
 
 export function PuzzleRoute() {
-  const puzzle = useCurrentPuzzle();
+  const puzzleQ = useCurrentPuzzle();
   const [getCurrentAttempts] = useLazyGetCurrentAttemptsQuery();
 
   useEffect(() => {
-    if (puzzle.status.isSuccess) {
+    if (puzzleQ.isSuccess) {
       getCurrentAttempts();
     }
-  }, [getCurrentAttempts, puzzle]);
+  }, [getCurrentAttempts, puzzleQ]);
 
   return (
     <div className="sb-main-container">
