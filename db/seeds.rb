@@ -1,8 +1,6 @@
-## Seed the words table
+require "./db/seeds/seed_default_profiles"
 
 # WordsSeederService.seed_from_file
-
-## Seed puzzle data
 
 ##
 # Need to adjust arguments. First argument is SB Solver ID to start at
@@ -16,4 +14,7 @@
 # previous week only.
 
 # NytScraperService.seed_all_puzzles_json
-# TODO: Add StatusTrackingOptions, PanelDisplayStates, DefaultProfiles
+
+# SeedStatusTrackingOptions.seed
+
+# SeedDefaultProfiles.seed

@@ -1,3 +1,3 @@
 class DefaultHintProfile < ApplicationRecord
-  has_many :hint_panels, as: :hint_profile
+  has_many :hint_panels, as: :hint_profile, dependent: :destroy
 end
