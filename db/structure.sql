@@ -209,6 +209,18 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: status_tracking_options; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.status_tracking_options (
+    key character varying NOT NULL,
+    title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: user_prefs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -506,6 +518,13 @@ CREATE INDEX index_puzzles_on_outer_letters ON public.puzzles USING gin (outer_l
 
 
 --
+-- Name: index_status_tracking_options_on_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_status_tracking_options_on_key ON public.status_tracking_options USING btree (key);
+
+
+--
 -- Name: index_user_prefs_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -639,6 +658,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230803205319'),
 ('20230804013313'),
 ('20230804013314'),
-('20230808012355');
+('20230808012355'),
+('20230815032425');
 
 

@@ -29,6 +29,14 @@ export enum PanelInitialDisplayOptions {
   Sticky = "STICKY",
 }
 
+export interface PanelDisplayState {
+  isExpanded: boolean;
+  isBlurred: boolean;
+  isSticky: boolean;
+  isSettingsExpanded: boolean;
+  isSettingsDisplaySticky: boolean;
+}
+
 export enum PanelTypes {
   Letter = "LETTER",
   Search = "SEARCH",
