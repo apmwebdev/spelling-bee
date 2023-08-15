@@ -502,6 +502,9 @@ button {
   width: 14px;
   border-radius: 14px;
   background-color: $mid-gray;
+  &.active {
+    //background-color: ui-bg-color($yellow-hue);
+  }
   &:not(:first-child):before {
     content: "";
     position: absolute;
@@ -511,7 +514,7 @@ button {
     top: 6px;
     background-color: $mid-gray;
   }
-  &:not(.skeleton):not(.active ~ .rank-tic) {
+  &:not(.active ~ .rank-tic) {
     background-color: $yellow-line;
     &:not(:first-child):before {
       background-color: $yellow-line;

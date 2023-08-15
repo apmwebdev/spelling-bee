@@ -4,25 +4,18 @@ import { selectScore } from "../guesses/guessesSlice";
 import { ProgressBar } from "./ProgressBar";
 import { FoundWordsStatus } from "../guesses/wordList/foundWords/FoundWordsStatus";
 import { useCurrentPuzzle } from "../puzzle/useCurrentPuzzle";
+import { BlankRank } from "../puzzle/puzzleApiSlice";
 
 export function Progress() {
-  const puzzle = useCurrentPuzzle();
-  const ranks = puzzle.ranks;
+  const puzzleQ = useCurrentPuzzle();
+  const ranks = puzzleQ.data?.ranks ?? [BlankRank];
   const score = useAppSelector(selectScore);
-  const totalPoints = puzzle.totalPoints;
-
-  if (!puzzle.status.isSuccess || score > totalPoints) {
-    return (
-      <div className="Progress">
-        <div className="progress-rank">
-          <ProgressBar />
-        </div>
-        <FoundWordsStatus />
-      </div>
-    );
-  }
+  const totalPoints = puzzleQ.data?.totalPoints ?? 0;
 
   const currentRank = (): Rank => {
+    if (!puzzleQ.isSuccess || score > totalPoints) {
+      return ranks[0];
+    }
     let returnRank = ranks[0];
     for (const [i, rank] of ranks.entries()) {
       if (score === rank.score || score < ranks[i + 1].score) {
