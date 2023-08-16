@@ -63,10 +63,10 @@ class Puzzle < ApplicationRecord
   def to_front_end
     set_derived_fields
     {
-      id: self.id,
-      date: self.date,
-      centerLetter: self.center_letter,
-      outerLetters: self.outer_letters,
+      id:,
+      date:,
+      centerLetter: center_letter,
+      outerLetters: outer_letters,
       validLetters: @valid_letters,
       pangrams: @pangrams,
       perfectPangrams: @perfect_pangrams,

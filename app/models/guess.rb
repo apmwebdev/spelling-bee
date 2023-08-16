@@ -3,10 +3,10 @@ class Guess < ApplicationRecord
 
   def to_front_end
     {
-      attemptId: self.user_puzzle_attempt_id,
+      attemptId: user_puzzle_attempt_id,
       text:,
-      isSpoiled: self.is_spoiled,
-      createdAt: self.created_at,
+      isSpoiled: is_spoiled,
+      createdAt: created_at,
     }
   end
 end

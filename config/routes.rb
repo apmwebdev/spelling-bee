@@ -11,14 +11,23 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :words
+      # Puzzles
       get "puzzles/latest", to: "puzzles#latest"
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
-      get "/user_puzzle_attempts_for_puzzle/:puzzle_id", to: "user_puzzle_attempts#index_for_puzzle"
+      # Attempts and guesses
+      get "/user_puzzle_attempts_for_puzzle/:puzzle_id",
+        to: "user_puzzle_attempts#index_for_puzzle"
       resources :user_puzzle_attempts, except: [:update]
       resources :guesses, only: :create
+      # User preferences
       get "user_prefs", to: "user_prefs#show"
       match "user_prefs", to: "user_prefs#update", via: [:put, :patch]
+      match "current_hint_profile",
+        to: "user_prefs#set_current_hint_profile",
+        via: [:post, :put]
+      get "current_hint_profile", to: "user_prefs#get_current_hint_profile"
+      # Hints
       resources :user_hint_profiles
       resources :hint_panels, except: [:index, :show]
       # Root

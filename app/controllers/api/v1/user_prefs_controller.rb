@@ -15,6 +15,13 @@ class Api::V1::UserPrefsController < AuthRequiredController
     end
   end
 
+  def get_current_hint_profile
+
+  end
+
+  def set_current_hint_profile
+  end
+
   private
     def set_user_pref
       @user_pref = UserPref.find_by_user_id(current_user.id)

@@ -586,7 +586,9 @@ CREATE TABLE public.user_prefs (
     user_id bigint NOT NULL,
     color_scheme public.user_color_scheme DEFAULT 'auto'::public.user_color_scheme NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    current_hint_profile_type character varying,
+    current_hint_profile_id bigint
 );
 
 
@@ -1087,6 +1089,13 @@ CREATE INDEX index_user_hint_profiles_on_user_id ON public.user_hint_profiles US
 
 
 --
+-- Name: index_user_prefs_on_current_hint_profile; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_prefs_on_current_hint_profile ON public.user_prefs USING btree (current_hint_profile_type, current_hint_profile_id);
+
+
+--
 -- Name: index_user_prefs_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1296,6 +1305,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230815064048'),
 ('20230815064457'),
 ('20230815065033'),
-('20230815073035');
+('20230815073035'),
+('20230816121754');
 
 
