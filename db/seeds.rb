@@ -1,4 +1,4 @@
-require "./db/seeds/seed_default_profiles"
+require "./db/seeds/seed_hint_profiles"
 
 # WordsSeederService.seed_from_file
 
@@ -17,4 +17,4 @@ require "./db/seeds/seed_default_profiles"
 
 # SeedStatusTrackingOptions.seed
 
-# SeedDefaultProfiles.seed
+# SeedHintProfiles.seed
