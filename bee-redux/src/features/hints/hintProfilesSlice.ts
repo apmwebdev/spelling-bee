@@ -1,18 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import cloneDeep from "lodash/cloneDeep";
+import {
+  isSearchPanelData,
+  LetterPanelLocations,
+  SearchPanelData,
+  StatusTrackingOptions,
+} from "./types";
 // import { defaultProfiles } from "./hintProfilesAPI"
-
-/**
- * For determining how to live update the hints when correct guesses are made
- */
-export enum TrackingOptions {
-  RemainingOfTotal = "REMAINING_OF_TOTAL", //show "[remaining #] of [total #] of hint
-  FoundOfTotal = "FOUND_OF_TOTAL", //show "[found #] of [total #]" of hint
-  Remaining = "REMAINING", //show remaining # only
-  Found = "FOUND", //show found # only
-  Total = "TOTAL", //show total [hint] only, i.e., no live updates
-}
 
 /**
  * For determining how to load the hint panel initially.
@@ -29,24 +24,11 @@ export enum PanelInitialDisplayOptions {
   Sticky = "STICKY",
 }
 
-export interface PanelDisplayState {
-  isExpanded: boolean;
-  isBlurred: boolean;
-  isSticky: boolean;
-  isSettingsExpanded: boolean;
-  isSettingsDisplaySticky: boolean;
-}
-
 export enum PanelTypes {
   Letter = "LETTER",
   Search = "SEARCH",
   WordObscurity = "WORD_OBSCURITY",
   Definitions = "DEFINITIONS",
-}
-
-export enum LetterPanelLocations {
-  Beginning = "BEGINNING",
-  End = "END",
 }
 
 export enum StringHintDisplayOptions {
@@ -83,17 +65,8 @@ export interface SearchPanelSearch extends SearchPanelSettings {
   searchString: string;
 }
 
-export interface SearchPanelData {
-  currentSettings: SearchPanelSettings;
-  searches: SearchPanelSearch[];
-}
-
 export function isSearchPanelSettings(a: any): a is SearchPanelSettings {
   return a.searchLocation !== undefined;
-}
-
-export function isSearchPanelData(a: any): a is SearchPanelData {
-  return a.currentSettings !== undefined && a.searches !== undefined;
 }
 
 export interface WordObscurityPanelSettings {}
@@ -106,7 +79,7 @@ export interface HintPanelFormat {
   isCollapsed: boolean;
   settingsAreCollapsed: boolean;
   isBlurred: boolean;
-  tracking: TrackingOptions;
+  tracking: StatusTrackingOptions;
   initialDisplay: PanelInitialDisplayOptions;
   type: PanelTypes;
   typeSpecificData:
@@ -127,7 +100,7 @@ export interface HintProfileFormat {
   name: string;
   isUserCreated: boolean;
   displayDefault: ProfileDisplayDefaults;
-  trackingDefault: TrackingOptions;
+  trackingDefault: StatusTrackingOptions;
   panels: HintPanelFormat[];
 }
 
@@ -136,7 +109,7 @@ export const blankHintProfile: HintProfileFormat = {
   name: "None",
   isUserCreated: false,
   displayDefault: ProfileDisplayDefaults.Expanded,
-  trackingDefault: TrackingOptions.RemainingOfTotal,
+  trackingDefault: StatusTrackingOptions.RemainingOfTotal,
   panels: [],
 };
 
@@ -156,7 +129,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     name: "Super Spelling Bee",
     isUserCreated: false,
     displayDefault: ProfileDisplayDefaults.Expanded,
-    trackingDefault: TrackingOptions.RemainingOfTotal,
+    trackingDefault: StatusTrackingOptions.RemainingOfTotal,
     panels: [
       {
         id: 4,
@@ -164,7 +137,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Search,
         typeSpecificData: {
@@ -211,12 +184,12 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 1,
-          locationInWord: LetterPanelLocations.Beginning,
+          locationInWord: LetterPanelLocations.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordLengthGrid,
         },
@@ -227,12 +200,12 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 2,
-          locationInWord: LetterPanelLocations.Beginning,
+          locationInWord: LetterPanelLocations.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordCountList,
         },
@@ -243,7 +216,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.WordObscurity,
         typeSpecificData: {},
@@ -254,7 +227,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: true,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.Definitions,
         typeSpecificData: {},
@@ -269,7 +242,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
     name: "NYT Spelling Bee Buddy",
     isUserCreated: false,
     displayDefault: ProfileDisplayDefaults.Blurred,
-    trackingDefault: TrackingOptions.Remaining,
+    trackingDefault: StatusTrackingOptions.Remaining,
     panels: [
       {
         id: 8,
@@ -277,12 +250,12 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.Remaining,
+        tracking: StatusTrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 1,
-          locationInWord: LetterPanelLocations.Beginning,
+          locationInWord: LetterPanelLocations.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordLengthGrid,
         },
@@ -293,12 +266,12 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: TrackingOptions.Remaining,
+        tracking: StatusTrackingOptions.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 2,
-          locationInWord: LetterPanelLocations.Beginning,
+          locationInWord: LetterPanelLocations.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordCountList,
         },
@@ -309,7 +282,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: true,
-        tracking: TrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingOptions.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.WordObscurity,
         typeSpecificData: {},
@@ -320,7 +293,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: true,
-        tracking: TrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingOptions.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.Definitions,
         typeSpecificData: {},
@@ -440,7 +413,7 @@ export const hintProfilesSlice = createSlice({
     setTracking: (
       state,
       action: {
-        payload: { panelId: number; tracking: TrackingOptions };
+        payload: { panelId: number; tracking: StatusTrackingOptions };
         type: string;
       },
     ) => {

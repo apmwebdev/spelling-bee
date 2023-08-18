@@ -4,6 +4,7 @@ class SearchPanel < ApplicationRecord
 
   def to_front_end
     {
+      id:,
       location:,
       outputType: output_type,
       lettersOffset: letters_offset,

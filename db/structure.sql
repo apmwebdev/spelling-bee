@@ -474,6 +474,7 @@ CREATE TABLE public.search_panel_searches (
     letters_offset integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    search_string character varying,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
 );
 
@@ -1306,6 +1307,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230815064457'),
 ('20230815065033'),
 ('20230815073035'),
-('20230816121754');
+('20230816121754'),
+('20230818004354');
 
 
