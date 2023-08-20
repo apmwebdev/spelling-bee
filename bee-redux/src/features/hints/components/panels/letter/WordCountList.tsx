@@ -2,9 +2,9 @@ import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
 } from "../LetterHintPanel";
-import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice";
 import uniqid from "uniqid";
 import { WordLengthGridKey } from "./WordLengthGridKey";
+import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
 
 export interface ListRow {
   [substring: string]: LetterHintDataCell;
@@ -35,7 +35,7 @@ export const generateData = ({
       continue;
     }
     let answerFragment: string;
-    if (locationInWord === LetterPanelLocations.Beginning) {
+    if (locationInWord === LetterPanelLocations.Start) {
       answerFragment = answer.slice(offset, offset + numberOfLetters);
     } else if (offset > 0) {
       answerFragment = answer.slice(-numberOfLetters - offset, -offset);
@@ -80,22 +80,22 @@ export function WordCountList({
 
       const cellText = () => {
         switch (tracking) {
-          case TrackingOptions.RemainingOfTotal:
-            return `${remaining}/${total}`;
-          case TrackingOptions.FoundOfTotal:
+          case StatusTrackingOptions.FoundOfTotal:
             return `${found}/${total}`;
-          case TrackingOptions.Remaining:
-            return `${remaining}`;
-          case TrackingOptions.Found:
+          case StatusTrackingOptions.RemainingOfTotal:
+            return `${remaining}/${total}`;
+          case StatusTrackingOptions.Found:
             return `${found}`;
-          case TrackingOptions.Total:
+          case StatusTrackingOptions.Remaining:
+            return `${remaining}`;
+          case StatusTrackingOptions.Total:
             return `${total}`;
         }
       };
 
       const cellClasses = () => {
         let classList = "sb-wcl-fragment-count";
-        if (tracking === TrackingOptions.Total) {
+        if (tracking === StatusTrackingOptions.Total) {
           return classList;
         }
         if (found === total) {

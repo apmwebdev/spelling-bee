@@ -1,18 +1,17 @@
 import { HintPanelProps } from "../HintPanel";
 import {
   isLetterPanelSettings,
-  LetterPanelLocations,
   StringHintDisplayOptions,
-  TrackingOptions,
-} from "../hintProfilesSlice";
+} from "../../hintProfilesSlice";
 import { LetterPanelSettings } from "./letter/LetterPanelSettings";
 import { WordCountList } from "./letter/WordCountList";
 import { WordLengthGrid } from "./letter/WordLengthGrid";
 import { LettersOnly } from "./letter/LettersOnly";
-import { selectCorrectGuessWords } from "../../guesses/guessesSlice";
-import { useAppSelector } from "../../../app/hooks";
-import { selectAnswerWords } from "../../puzzle/puzzleSlice";
+import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
 import { HintPanelSettings } from "../HintPanelSettings";
+import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
 
 export interface LetterHintSubsectionProps {
   answers: string[];
@@ -20,7 +19,7 @@ export interface LetterHintSubsectionProps {
   numberOfLetters: number;
   locationInWord: LetterPanelLocations;
   offset: number;
-  tracking: TrackingOptions;
+  tracking: StatusTrackingOptions;
 }
 
 export interface LetterHintDataCell {
@@ -42,7 +41,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         numberOfLetters,
         locationInWord,
         offset,
-        tracking: panel.tracking,
+        tracking: panel.statusTracking,
       };
 
       let hintContent;

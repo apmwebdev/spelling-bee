@@ -3,8 +3,8 @@ import {
   SearchPanelLocations,
   SearchPanelSearch,
   StringHintDisplayOptions,
-} from "../../hintProfilesSlice";
-import { HeaderRemoveButton } from "../../../../utils/HeaderRemoveButton";
+} from "../../../hintProfilesSlice";
+import { HeaderRemoveButton } from "@/utils/HeaderRemoveButton";
 import { useDispatch } from "react-redux";
 
 export function SearchResultHeader({

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         via: [:post, :put]
       get "current_hint_profile", to: "user_prefs#get_current_hint_profile"
       # Hints
+      get "hint_profiles", to: "user_hint_profiles#get_all_hint_profiles"
       resources :user_hint_profiles
       resources :hint_panels, except: [:index, :show]
       # Root

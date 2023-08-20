@@ -12,7 +12,6 @@ class HintPanel < ApplicationRecord
       initialDisplayState: initial_display_state.to_front_end,
       currentDisplayState: current_display_state.to_front_end,
       statusTracking: status_tracking,
-      panelType: panel_subtype_type,
       panelTypeData: panel_subtype.to_front_end,
     }
   end

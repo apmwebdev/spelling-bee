@@ -3,6 +3,7 @@ class LetterPanel < ApplicationRecord
 
   def to_front_end
     {
+      panelType: "letter",
       location:,
       outputType: output_type,
       numberOfLetters: number_of_letters,

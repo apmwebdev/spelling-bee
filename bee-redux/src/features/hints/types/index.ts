@@ -1,5 +1,3 @@
-import { LetterPanelSettings } from "../hintProfilesSlice";
-
 /**
  * Determines how to live update hints when correct guesses are made.
  * The numbers being counted here are puzzle answers (number of found answers,
@@ -46,12 +44,18 @@ export interface PanelDisplayState {
 }
 
 export enum PanelTypes {
+  Letter = "letter",
+  Search = "search",
+  Obscurity = "obscurity",
+  Definition = "definition",
+}
+
+export enum PanelSubTypeTypes {
   Letter = "LetterPanel",
   Search = "SearchPanel",
   Obscurity = "ObscurityPanel",
   Definition = "DefinitionPanel",
 }
-
 /**
  * For letter panels, should it reveal letters at the start of the word or the end?
  * E.g., first letter, last two letters, etc.
@@ -82,8 +86,7 @@ export enum SubstringHintOutputTypes {
   LettersList = "letters_list",
 }
 
-/** Settings specific to letter panels */
-export interface LetterPanelData {
+export interface LetterPanelFormData {
   location: LetterPanelLocations;
   outputType: SubstringHintOutputTypes;
   /** How many letters to reveal */
@@ -99,8 +102,12 @@ export interface LetterPanelData {
   showKnown: boolean;
 }
 
+export interface LetterPanelData extends LetterPanelFormData {
+  panelType: string;
+}
+
 export function isLetterPanelData(a: any): a is LetterPanelData {
-  return a.numberOfLetters !== undefined;
+  return a.panelType === PanelTypes.Letter;
 }
 
 /**
@@ -113,32 +120,31 @@ export enum SearchPanelLocations {
   Anywhere = "anywhere",
 }
 
-export interface SearchPanelSettings {
-  // ID is necessary for search panels so that searches know which panel they
-  // belong to
-  id: number;
+export interface SearchPanelFormData {
   location: SearchPanelLocations;
   lettersOffset: number;
   outputType: SubstringHintOutputTypes;
 }
 
-export interface SearchPanelSearch extends SearchPanelSettings {
+export interface SearchPanelData extends SearchPanelFormData {
+  panelType: string;
+  // ID is necessary for search panels so that searches know which panel they
+  // belong to
+  id: number;
+}
+
+export interface SearchPanelSearch extends SearchPanelData {
   attemptId: number;
   searchPanelId: number;
   searchString: string;
   createdAt: string;
 }
 
-export interface SearchPanelData {
-  currentSettings: SearchPanelSettings;
-  searches: SearchPanelSearch[];
-}
-
 export function isSearchPanelData(a: any): a is SearchPanelData {
-  return a.currentSettings !== undefined && a.searches !== undefined;
+  return a.panelType === PanelTypes.Search;
 }
 
-export interface ObscurityPanelData {
+export interface ObscurityPanelFormData {
   showKnown: boolean;
   separateKnown: boolean;
   revealFirstLetter: boolean;
@@ -147,20 +153,35 @@ export interface ObscurityPanelData {
   sortOrder: "asc" | "desc";
 }
 
-export interface DefinitionPanelData {
+export interface ObscurityPanelData extends ObscurityPanelFormData {
+  panelType: string;
+}
+
+export function isObscurityPanelData(a: any): a is ObscurityPanelData {
+  return a.panelType === PanelTypes.Obscurity;
+}
+
+export interface DefinitionPanelFormData {
   showKnown: boolean;
   revealLength: boolean;
   showObscurity: boolean;
   sortOrder: "asc" | "desc";
 }
 
-export interface HintPanel {
+export interface DefinitionPanelData extends DefinitionPanelFormData {
+  panelType: string;
+}
+
+export function isDefinitionPanelData(a: any): a is DefinitionPanelData {
+  return a.panelType === PanelTypes.Definition;
+}
+
+export interface HintPanelData {
   id: number;
   name: string;
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
   statusTracking: StatusTrackingOptions;
-  panelType: PanelTypes;
   panelTypeData:
     | LetterPanelData
     | SearchPanelData
@@ -171,11 +192,54 @@ export interface HintPanel {
 /**
  * A user-created hint profile, as opposed to a default hint profile.
  */
-export interface UserHintProfile {
+export interface UserHintProfileBasic {
   id: number;
   name: string;
+}
+
+export interface UserHintProfileComplete extends UserHintProfileBasic {
   /** The status tracking that newly created panels come in with */
   defaultPanelTracking: StatusTrackingOptions;
   /** The display state that newly created panels come in with */
   defaultPanelDisplayState: PanelDisplayState;
+  panels: HintPanelData[];
+}
+
+export interface DefaultHintProfile {
+  id: number;
+  name: string;
+  panels: HintPanelData[];
+}
+
+export interface HintProfiles {
+  userHintProfiles: UserHintProfileBasic[];
+  defaultHintProfiles: DefaultHintProfile[];
+}
+
+export interface UserHintProfileForm {
+  name: string;
+  default_panel_tracking: StatusTrackingOptions;
+  default_panel_display_state: PanelDisplayState;
+  panels: HintPanelData[];
+}
+
+interface HintPanelCommonForm {
+  name: string;
+  initial_display_state: PanelDisplayState;
+  current_display_state: PanelDisplayState;
+  status_tracking: StatusTrackingOptions;
+  panel_subtype:
+    | LetterPanelFormData
+    | SearchPanelFormData
+    | ObscurityPanelFormData
+    | DefinitionPanelFormData;
+}
+
+export interface HintPanelCreateForm extends HintPanelCommonForm {
+  user_hint_profile_id: number;
+  panel_subtype_type: PanelSubTypeTypes;
+}
+
+export interface HintPanelUpdateForm extends HintPanelCommonForm {
+  id: number;
 }

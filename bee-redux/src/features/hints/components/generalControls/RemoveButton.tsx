@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
-import { removePanel } from "../hintProfilesSlice";
+import { removePanel } from "../../hintProfilesSlice";
 
 interface RemoveButtonProps {
   panelId: number;

@@ -2,9 +2,9 @@ import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
 } from "../LetterHintPanel";
-import { TrackingOptions } from "../../hintProfilesSlice";
 import uniqid from "uniqid";
 import { generateData } from "./WordCountList";
+import { StatusTrackingOptions } from "@/features/hints";
 
 export function LettersOnly({
   answers,
@@ -26,7 +26,7 @@ export function LettersOnly({
     }) => {
       const cellClasses = () => {
         let classList = "sb-lol-fragment";
-        if (tracking === TrackingOptions.Total) {
+        if (tracking === StatusTrackingOptions.Total) {
           return classList;
         }
         if (cell.guesses === cell.answers) {

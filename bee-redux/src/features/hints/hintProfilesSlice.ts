@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { RootState } from "@/app/store";
 import cloneDeep from "lodash/cloneDeep";
 import {
   isSearchPanelData,

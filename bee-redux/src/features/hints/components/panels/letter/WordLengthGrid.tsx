@@ -2,11 +2,11 @@ import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
 } from "../LetterHintPanel";
-import { LetterPanelLocations, TrackingOptions } from "../../hintProfilesSlice";
-import { useAppSelector } from "../../../../app/hooks";
-import { selectAnswerLengths } from "../../../puzzle/puzzleSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
 import uniqid from "uniqid";
 import { WordLengthGridKey } from "./WordLengthGridKey";
+import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
 
 export interface GridRow {
   [index: number]: LetterHintDataCell;
@@ -51,7 +51,7 @@ export function WordLengthGrid({
         continue;
       }
       let substring: string;
-      if (locationInWord === LetterPanelLocations.Beginning) {
+      if (locationInWord === LetterPanelLocations.Start) {
         substring = answer.slice(offset, offset + numberOfLetters);
       } else if (offset > 0) {
         substring = answer.slice(-numberOfLetters - offset, -offset);
@@ -107,7 +107,7 @@ export function WordLengthGrid({
           return "sb-wlg-content";
         }
         let returnStr = "";
-        if (tracking !== TrackingOptions.Total) {
+        if (tracking !== StatusTrackingOptions.Total) {
           if (cell.guesses === cell.answers) {
             returnStr += "hint-completed";
           } else if (cell.guesses === 0) {
@@ -139,19 +139,19 @@ export function WordLengthGrid({
         return;
       }
       switch (tracking) {
-        case TrackingOptions.RemainingOfTotal:
-          createCell(`${remaining}/${total}`, getCellClasses(...args));
-          break;
-        case TrackingOptions.FoundOfTotal:
+        case StatusTrackingOptions.FoundOfTotal:
           createCell(`${found}/${total}`, getCellClasses(...args));
           break;
-        case TrackingOptions.Remaining:
-          createCell(`${remaining}`, getCellClasses(...args));
+        case StatusTrackingOptions.RemainingOfTotal:
+          createCell(`${remaining}/${total}`, getCellClasses(...args));
           break;
-        case TrackingOptions.Found:
+        case StatusTrackingOptions.Found:
           createCell(`${found}`, getCellClasses(...args));
           break;
-        case TrackingOptions.Total:
+        case StatusTrackingOptions.Remaining:
+          createCell(`${remaining}`, getCellClasses(...args));
+          break;
+        case StatusTrackingOptions.Total:
           createCell(`${total}`, getCellClasses(...args));
       }
     };

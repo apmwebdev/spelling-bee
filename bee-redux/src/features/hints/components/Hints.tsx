@@ -1,5 +1,5 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectHintProfiles } from "./hintProfilesSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectHintProfiles } from "../hintProfilesSlice";
 import { HintPanel } from "./HintPanel";
 
 export function Hints() {

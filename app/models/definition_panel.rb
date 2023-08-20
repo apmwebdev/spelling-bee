@@ -3,6 +3,7 @@ class DefinitionPanel < ApplicationRecord
 
   def to_front_end
     {
+      panelType: "definition",
       showKnown: show_known,
       revealLength: reveal_length,
       showObscurity: show_obscurity,

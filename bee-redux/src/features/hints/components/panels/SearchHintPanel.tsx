@@ -1,11 +1,12 @@
 import { HintPanelProps } from "../HintPanel";
 import { FormEvent, useState } from "react";
 import { HintPanelSettings } from "../HintPanelSettings";
-import { addSearch, isSearchPanelData } from "../hintProfilesSlice";
+import { addSearch } from "../../hintProfilesSlice";
 import { SearchPanelSettings } from "./search/SearchPanelSettings";
 import { useDispatch } from "react-redux";
 import { random } from "lodash";
 import { SearchPanelResults } from "./search/SearchPanelResults";
+import { isSearchPanelData } from "@/features/hints";
 
 export function SearchHintPanel({ panel }: HintPanelProps) {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
         <SearchPanelResults
           panelId={panel.id}
           results={searches()}
-          tracking={panel.tracking}
+          tracking={panel.statusTracking}
         />
       </div>
     </>

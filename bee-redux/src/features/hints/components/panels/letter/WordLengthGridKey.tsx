@@ -1,18 +1,21 @@
-import { TrackingOptions } from "../../hintProfilesSlice";
-import uniqid from "uniqid";
+import { StatusTrackingOptions } from "@/features/hints";
 
-export function WordLengthGridKey({ tracking }: { tracking: TrackingOptions }) {
+export function WordLengthGridKey({
+  tracking,
+}: {
+  tracking: StatusTrackingOptions;
+}) {
   const trackingKey = () => {
     switch (tracking) {
-      case TrackingOptions.RemainingOfTotal:
-        return "Remaining / Total";
-      case TrackingOptions.FoundOfTotal:
+      case StatusTrackingOptions.FoundOfTotal:
         return "Found / Total";
-      case TrackingOptions.Remaining:
-        return "Remaining";
-      case TrackingOptions.Found:
+      case StatusTrackingOptions.RemainingOfTotal:
+        return "Remaining / Total";
+      case StatusTrackingOptions.Found:
         return "Found";
-      case TrackingOptions.Total:
+      case StatusTrackingOptions.Remaining:
+        return "Remaining";
+      case StatusTrackingOptions.Total:
         return "Total";
     }
   };

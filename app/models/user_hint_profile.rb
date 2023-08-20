@@ -5,7 +5,7 @@ class UserHintProfile < ApplicationRecord
   has_many :hint_panels, as: :hint_profile
   has_one :user_pref, as: :current_hint_profile
 
-  def to_front_end
+  def to_front_end_complete
     {
       id:,
       name:,

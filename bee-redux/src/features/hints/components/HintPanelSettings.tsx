@@ -1,9 +1,9 @@
-import { HintPanelFormat, setSettingsAreCollapsed } from "./hintProfilesSlice";
+import { HintPanelFormat, setSettingsAreCollapsed } from "../hintProfilesSlice";
 import { GeneralPanelSettings } from "./GeneralPanelSettings";
 import { ComponentType } from "react";
 import { SettingsHeader } from "./generalControls/SettingsHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget";
+import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
 import { useDispatch } from "react-redux";
 
 interface HintPanelSettingsProps {

@@ -3,11 +3,10 @@ import {
   PanelInitialDisplayOptions,
   setInitialDisplay,
   setTracking,
-  TrackingOptions,
-} from "./hintProfilesSlice";
-import uniqid from "uniqid";
+} from "@/features/hints/hintProfilesSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
+import { StatusTrackingOptions } from "@/features/hints";
 
 interface GeneralPanelSettingsProps {
   panel: HintPanelFormat;
@@ -19,7 +18,7 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
   const handleTrackingChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload = {
       panelId: panel.id,
-      tracking: e.target.value as TrackingOptions,
+      tracking: e.target.value as StatusTrackingOptions,
     };
     dispatch(setTracking(payload));
   };
@@ -27,13 +26,15 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
   const liveUpdateOptions = () => {
     return (
       <select value={panel.tracking} onChange={handleTrackingChange}>
-        <option value={TrackingOptions.RemainingOfTotal}>
+        <option value={StatusTrackingOptions.RemainingOfTotal}>
           Remaining of total
         </option>
-        <option value={TrackingOptions.FoundOfTotal}>Found of total</option>
-        <option value={TrackingOptions.Remaining}>Remaining</option>
-        <option value={TrackingOptions.Found}>Found</option>
-        <option value={TrackingOptions.Total}>Total</option>
+        <option value={StatusTrackingOptions.FoundOfTotal}>
+          Found of total
+        </option>
+        <option value={StatusTrackingOptions.Remaining}>Remaining</option>
+        <option value={StatusTrackingOptions.Found}>Found</option>
+        <option value={StatusTrackingOptions.Total}>Total</option>
       </select>
     );
   };

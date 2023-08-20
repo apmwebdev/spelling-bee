@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { setIsCollapsed } from "../hintProfilesSlice";
-import { CollapseExpandButton } from "../../../utils/CollapseExpandButton";
+import { setIsCollapsed } from "../../hintProfilesSlice";
+import { CollapseExpandButton } from "@/utils/CollapseExpandButton";
 
 interface CollapseButtonProps {
   panelId: number;

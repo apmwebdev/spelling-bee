@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import {
   ChangeProfilePayload,
   selectHintProfiles,
   setCurrentProfile,
-} from "./hintProfilesSlice";
+} from "../hintProfilesSlice";
 import { ChangeEvent } from "react";
 
 export function HintProfile() {

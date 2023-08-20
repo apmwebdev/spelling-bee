@@ -1,27 +1,27 @@
 import {
-  HintPanelFormat,
   PanelTypes,
   setIsCollapsed,
-} from "./hintProfilesSlice";
+} from "../hintProfilesSlice";
 import { LetterHintPanel } from "./panels/LetterHintPanel";
 import { SearchHintPanel } from "./panels/SearchHintPanel";
 import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel";
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel";
-import { useAppSelector } from "../../app/hooks";
-import { selectAnswerWords } from "../puzzle/puzzleSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectAnswerWords } from "../../puzzle/puzzleSlice";
 import { PanelHeader } from "./generalControls/PanelHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { HeaderDisclosureWidget } from "../../utils/HeaderDisclosureWidget";
+import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
 import { useDispatch } from "react-redux";
+import { HintPanelData } from "@/features/hints";
 
 export interface HintPanelProps {
-  panel: HintPanelFormat;
+  panel: HintPanelData;
 }
 
 export function HintPanel({ panel }: HintPanelProps) {
   const dispatch = useDispatch();
   const answers = useAppSelector(selectAnswerWords);
-  const panelContent = (panel: HintPanelFormat) => {
+  const panelContent = (panel: HintPanelData) => {
     if (answers.length === 0) {
       return;
     }

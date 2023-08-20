@@ -1,17 +1,17 @@
 import {
   SearchPanelLocations,
   SearchPanelSearch,
-  TrackingOptions,
-} from "../../hintProfilesSlice";
+} from "../../../hintProfilesSlice";
 import { GridRow } from "../letter/WordLengthGrid";
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import {
   selectAnswerLengths,
   selectAnswerWords,
-} from "../../../puzzle/puzzleSlice";
-import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
+} from "@/features/puzzle/puzzleSlice";
+import { selectCorrectGuessWords } from "@/features/guesses/guessesSlice";
 import { SearchResult } from "./SearchResult";
 import uniqid from "uniqid";
+import { StatusTrackingOptions } from "@/features/hints";
 
 interface ResultData {
   searchObject: SearchPanelSearch;
@@ -22,7 +22,7 @@ interface ResultData {
 export interface SearchResultProps {
   panelId?: number;
   resultData: ResultData;
-  tracking: TrackingOptions;
+  tracking: StatusTrackingOptions;
 }
 
 export function SearchPanelResults({
@@ -32,7 +32,7 @@ export function SearchPanelResults({
 }: {
   panelId: number;
   results: SearchPanelSearch[];
-  tracking: TrackingOptions;
+  tracking: StatusTrackingOptions;
 }) {
   const answers = useAppSelector(selectAnswerWords);
   const answerLengths = useAppSelector(selectAnswerLengths);

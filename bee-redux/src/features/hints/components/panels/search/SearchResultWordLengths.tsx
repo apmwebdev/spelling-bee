@@ -1,7 +1,7 @@
 import { SearchResultProps } from "./SearchPanelResults";
 import { LetterHintDataCell } from "../LetterHintPanel";
-import { TrackingOptions } from "../../hintProfilesSlice";
 import uniqid from "uniqid";
+import { StatusTrackingOptions } from "@/features/hints";
 
 export function SearchResultWordLengths({
   resultData,
@@ -14,7 +14,7 @@ export function SearchResultWordLengths({
         return classList;
       }
       classList += " has-content";
-      if (tracking !== TrackingOptions.Total) {
+      if (tracking !== StatusTrackingOptions.Total) {
         if (dataCell.guesses === dataCell.answers) {
           classList += " hint-completed";
         } else if (dataCell.guesses === 0) {
@@ -36,19 +36,19 @@ export function SearchResultWordLengths({
         cellText = "-";
       } else {
         switch (tracking) {
-          case TrackingOptions.RemainingOfTotal:
-            cellText = `${remaining}/${total}`;
-            break;
-          case TrackingOptions.FoundOfTotal:
+          case StatusTrackingOptions.FoundOfTotal:
             cellText = `${found}/${total}`;
             break;
-          case TrackingOptions.Remaining:
-            cellText = "" + remaining;
+          case StatusTrackingOptions.RemainingOfTotal:
+            cellText = `${remaining}/${total}`;
             break;
-          case TrackingOptions.Found:
+          case StatusTrackingOptions.Found:
             cellText = "" + found;
             break;
-          case TrackingOptions.Total:
+          case StatusTrackingOptions.Remaining:
+            cellText = "" + remaining;
+            break;
+          case StatusTrackingOptions.Total:
             cellText = "" + total;
         }
       }
@@ -61,15 +61,15 @@ export function SearchResultWordLengths({
 
     const contentRowHeaderText = () => {
       switch (tracking) {
-        case TrackingOptions.RemainingOfTotal:
-          return "Remaining / Total";
-        case TrackingOptions.FoundOfTotal:
+        case StatusTrackingOptions.FoundOfTotal:
           return "Found / Total";
-        case TrackingOptions.Remaining:
-          return "Remaining";
-        case TrackingOptions.Found:
+        case StatusTrackingOptions.RemainingOfTotal:
+          return "Remaining / Total";
+        case StatusTrackingOptions.Found:
           return "Found";
-        case TrackingOptions.Total:
+        case StatusTrackingOptions.Remaining:
+          return "Remaining";
+        case StatusTrackingOptions.Total:
           return "Total";
       }
     };

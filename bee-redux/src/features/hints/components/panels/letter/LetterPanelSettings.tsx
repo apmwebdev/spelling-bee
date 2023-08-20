@@ -7,12 +7,12 @@ import {
   ChangeLetterPanelNumberOfLettersPayload,
   changeLetterPanelOffset,
   ChangeLetterPanelOffsetPayload,
-  LetterPanelLocations,
   StringHintDisplayOptions,
-} from "../../hintProfilesSlice";
+} from "../../../hintProfilesSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
 import { capitalize } from "lodash";
+import { LetterPanelLocations } from "@/features/hints";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
@@ -84,8 +84,8 @@ export function LetterPanelSettings({
   const locationInWordControl = () => {
     return (
       <select value={locationInWord} onChange={handleLocationInWordChange}>
-        <option value={LetterPanelLocations.Beginning}>
-          {capitalize(LetterPanelLocations.Beginning)} of word
+        <option value={LetterPanelLocations.Start}>
+          {capitalize(LetterPanelLocations.Start)} of word
         </option>
         <option value={LetterPanelLocations.End}>
           {capitalize(LetterPanelLocations.End)} of word

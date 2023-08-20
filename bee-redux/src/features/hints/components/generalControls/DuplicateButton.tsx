@@ -1,4 +1,4 @@
-import { duplicatePanel } from "../hintProfilesSlice";
+import { duplicatePanel } from "../../hintProfilesSlice";
 import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
 

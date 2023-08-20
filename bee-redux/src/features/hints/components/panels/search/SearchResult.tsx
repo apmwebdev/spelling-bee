@@ -1,5 +1,5 @@
 import { SearchResultProps } from "./SearchPanelResults";
-import { StringHintDisplayOptions } from "../../hintProfilesSlice";
+import { StringHintDisplayOptions } from "../../../hintProfilesSlice";
 import { SearchResultWordLengths } from "./SearchResultWordLengths";
 import { SearchResultWordCount } from "./SearchResultWordCount";
 import { SearchResultLettersOnly } from "./SearchResultLettersOnly";

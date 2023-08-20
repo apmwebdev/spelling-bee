@@ -1,6 +1,6 @@
 import { Puzzle } from "../features/puzzle/Puzzle";
 import { Status } from "../features/status/Status";
-import { HintSection } from "../features/hints/HintSection";
+import { HintSection } from "../features/hints/components/HintSection";
 import { useLazyGetCurrentAttemptsQuery } from "../features/guesses/guessesApiSlice";
 import { useEffect } from "react";
 import { useCurrentPuzzle } from "../features/puzzle/useCurrentPuzzle";
