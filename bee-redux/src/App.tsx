@@ -4,16 +4,20 @@ import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { Signup } from "./features/auth/Signup";
 import { Login } from "./features/auth/Login";
 import { SubheaderProvider } from "./app/SubheaderProvider";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
-import { useGetPrefsQuery } from "./features/userData/userDataApiSlice";
+import { userDataApiSlice } from "./features/userData/userDataApiSlice";
 
 export default function App() {
-  const prefsQuery = useGetPrefsQuery(null);
+  const prefsQuery =
+    userDataApiSlice.endpoints.getPrefs.useQueryState(undefined);
 
   const appClasses = () => {
     const darkMode = "App dark-theme";
     const lightMode = "App light-theme";
-    if (prefsQuery.isError || prefsQuery.isLoading) {
+    if (
+      prefsQuery.isError ||
+      prefsQuery.isLoading ||
+      prefsQuery.isUninitialized
+    ) {
       if (matchMedia("(prefers-color-scheme: light)").matches) return lightMode;
       return darkMode;
     }

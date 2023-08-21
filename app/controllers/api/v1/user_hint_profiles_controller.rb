@@ -2,13 +2,8 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
   before_action :set_user_hint_profile, only: %i[ show update destroy ]
 
   def get_all_hint_profiles
-    @user_hint_profiles = UserHintProfile.where(user_id: current_user.id).map do |profile|
-      profile.to_front_end_basic
-    end
-    default_hint_profiles = DefaultHintProfile.all.map do |profile|
-      profile.to_front_end
-    end
-    render json: {userHintProfiles: @user_hint_profiles, defaultHintProfiles: default_hint_profiles}
+    @user_hint_profiles = UserHintProfile.where(user_id: current_user.id)
+    render json: HintPresenter.present_all_profiles(current_user)
   end
 
   # GET /user_hint_profiles
@@ -21,7 +16,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
   # GET /user_hint_profiles/1
   def show
 
-    render json: @user_hint_profile
+    render json: @user_hint_profile.to_front_end_complete
   end
 
   # POST /user_hint_profiles

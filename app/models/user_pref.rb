@@ -6,7 +6,7 @@ class UserPref < ApplicationRecord
     {
       colorScheme: color_scheme,
       currentHintProfileType: current_hint_profile_type,
-      currentHintProfile: current_hint_profile.to_front_end_basic
+      currentHintProfileId: current_hint_profile_id
     }
   end
 end

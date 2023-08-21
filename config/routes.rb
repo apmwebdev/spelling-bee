@@ -20,6 +20,8 @@ Rails.application.routes.draw do
         to: "user_puzzle_attempts#index_for_puzzle"
       resources :user_puzzle_attempts, except: [:update]
       resources :guesses, only: :create
+      # General user data
+      get "user_base_data", to: "user_data#user_base_data"
       # User preferences
       get "user_prefs", to: "user_prefs#show"
       match "user_prefs", to: "user_prefs#update", via: [:put, :patch]

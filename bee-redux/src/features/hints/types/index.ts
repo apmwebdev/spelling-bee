@@ -243,3 +243,15 @@ export interface HintPanelCreateForm extends HintPanelCommonForm {
 export interface HintPanelUpdateForm extends HintPanelCommonForm {
   id: number;
 }
+
+export interface UserPrefsData {
+  colorScheme: "auto" | "light" | "dark";
+  currentHintProfileType: "DefaultHintProfile" | "UserHintProfile";
+  currentHintProfileId: number;
+}
+
+export interface UserBaseData {
+  prefs: UserPrefsData;
+  hintProfiles: HintProfiles;
+  currentUserHintProfile?: UserHintProfileComplete;
+}

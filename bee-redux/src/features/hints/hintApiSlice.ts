@@ -22,12 +22,15 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         url: "/user_hint_profiles",
       }),
     }),
+    getUserHintProfile: builder.query<UserHintProfileComplete, number>({
+      query: (id: number) => ({
+        url: `user_hint_profiles/${id}`,
+      }),
+    }),
     createUserHintProfile: builder.mutation<
       UserHintProfileComplete,
       UserHintProfileForm
     >({}),
-    getUserHintProfile: builder.query<UserHintProfileComplete, number>({}),
-    getUserHintProfilePanels: builder.query<HintPanelData[], number>({}),
     updateUserHintProfile: builder.mutation<
       UserHintProfileBasic,
       UserHintProfileForm

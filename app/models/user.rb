@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   # Associations
   has_one :user_pref
-  has_one :current_hint_profile, through: :user_pref
+  # has_one :current_hint_profile, through: :user_pref
   has_many :user_puzzle_attempts
   has_many :guesses, through: :user_puzzle_attempts
   has_many :user_hint_profiles

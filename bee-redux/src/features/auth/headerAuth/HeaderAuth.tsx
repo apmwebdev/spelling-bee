@@ -1,10 +1,12 @@
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "../authSlice";
 import { Link } from "react-router-dom";
 import { UserMenu } from "./UserMenu";
+import { useGetUserBaseDataQuery } from "@/features/userData/userDataApiSlice";
 
 export function HeaderAuth() {
   const user = useAppSelector(selectUser);
+  useGetUserBaseDataQuery();
 
   const content = () => {
     if (user) {
