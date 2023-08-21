@@ -11,8 +11,8 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
     /**
      * For initial page load. Can fetch before puzzle loads. Combines
      * - getPrefs
-     * - getHintProfiles
-     * - getUserHintProfile, if applicable
+     * - getHintProfiles from hintApiSlice
+     * - getUserHintProfile, if applicable, from hintApiSlice
      */
     getUserBaseData: builder.query<UserBaseData, void>({
       query: () => ({

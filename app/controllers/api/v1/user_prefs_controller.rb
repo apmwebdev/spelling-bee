@@ -15,6 +15,7 @@ class Api::V1::UserPrefsController < AuthRequiredController
     end
   end
 
+  # Might not be needed
   def get_current_hint_profile
     render json: {
       currentHintProfileType: @user_pref.current_hint_profile_type,
@@ -22,6 +23,7 @@ class Api::V1::UserPrefsController < AuthRequiredController
     }
   end
 
+  # Might not be needed
   def set_current_hint_profile
     if @user_pref.update(
       current_hint_profile_type: params[:current_hint_profile_type].to_s,

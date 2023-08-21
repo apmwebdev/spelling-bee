@@ -24,7 +24,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
     @user_hint_profile = UserHintProfile.new(user_hint_profile_params)
 
     if @user_hint_profile.save
-      render json: @user_hint_profile, status: :created, location: @user_hint_profile
+      render json: @user_hint_profile.to_front_end_complete, status: :created, location: @user_hint_profile
     else
       render json: @user_hint_profile.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
   # PATCH/PUT /user_hint_profiles/1
   def update
     if @user_hint_profile.update(user_hint_profile_params)
-      render json: @user_hint_profile
+      render json: @user_hint_profile.to_front_end_complete
     else
       render json: @user_hint_profile.errors, status: :unprocessable_entity
     end
@@ -57,6 +57,10 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
 
     # Only allow a list of trusted parameters through.
     def user_hint_profile_params
-      params.require(:user_hint_profile).permit(:name, :user_id, :default_panel_tracking, :default_panel_display_state_id)
+      params.require(:user_hint_profile).permit(
+        :name, :user_id, :default_panel_tracking,
+        default_panel_display_state_attributes: [:is_expanded, :is_blurred,
+          :is_sticky, :is_settings_expanded, :is_settings_sticky]
+      )
     end
 end
