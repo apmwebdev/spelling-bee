@@ -8,4 +8,8 @@ module SeedStatusTrackingOptions
     StatusTrackingOption.create!(key: "remaining", title: "Remaining")
     StatusTrackingOption.create!(key: "total", title: "Total")
   end
+
+  def self.unseed
+    StatusTrackingOption.destroy_all
+  end
 end

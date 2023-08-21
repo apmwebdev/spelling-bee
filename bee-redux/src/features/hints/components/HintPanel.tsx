@@ -1,7 +1,4 @@
-import {
-  PanelTypes,
-  setIsCollapsed,
-} from "../hintProfilesSlice";
+import { PanelTypes, setIsCollapsed } from "../hintProfilesSlice";
 import { LetterHintPanel } from "./panels/LetterHintPanel";
 import { SearchHintPanel } from "./panels/SearchHintPanel";
 import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel";

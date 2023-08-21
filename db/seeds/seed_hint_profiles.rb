@@ -168,7 +168,7 @@ module SeedHintProfiles
   def self.seed_user_profile_1
     prof_1 = UserHintProfile.create!(
       name: "Search Test",
-      user_id: 13,
+      user_id: User.first.id,
       default_panel_tracking: "found_of_total",
       default_panel_display_state: user_display_state,
     )
@@ -211,7 +211,7 @@ module SeedHintProfiles
   def self.seed_user_profile_2
     prof_2 = UserHintProfile.create!(
       name: "My Profile",
-      user_id: 13,
+      user_id: User.first.id,
       default_panel_tracking: "found_of_total",
       default_panel_display_state: user_display_state,
     )
@@ -254,14 +254,30 @@ module SeedHintProfiles
     seed_user_profiles
   end
 
+  def self.reset_dependent_ids
+    ResetId.reset(
+      HintPanel,
+      DefinitionPanel,
+      LetterPanel,
+      ObscurityPanel,
+      SearchPanel,
+      PanelDisplayState,
+      SearchPanelSearch
+    )
+  end
+
   def self.unseed_default_profiles
     DefaultHintProfile.destroy_all
+    ResetId.reset(DefaultHintProfile)
+    reset_dependent_ids
   end
 
   def self.unseed_user_profiles
-    UserHintProfile.where(user_id: 13, name: "Search Test").or(
-      UserHintProfile.where(user_id: 13, name: "My Profile")
+    UserHintProfile.where(user_id: 1, name: "Search Test").or(
+      UserHintProfile.where(user_id: 1, name: "My Profile")
     ).destroy_all
+    ResetId.reset(UserHintProfile)
+    reset_dependent_ids
   end
 
   def self.unseed

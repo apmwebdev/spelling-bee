@@ -16,10 +16,22 @@ class Api::V1::UserPrefsController < AuthRequiredController
   end
 
   def get_current_hint_profile
-
+    render json: {
+      currentHintProfileType: @user_pref.current_hint_profile_type,
+      currentHintProfileId: @user_pref.current_hint_profile_id
+    }
   end
 
   def set_current_hint_profile
+    if @user_pref.update(
+      current_hint_profile_type: params[:current_hint_profile_type].to_s,
+      current_hint_profile_id: params[:current_hint_profile_id].to_i
+    )
+      render json: {
+        currentHintProfileType: @user_pref.current_hint_profile_type,
+        currentHintProfileId: @user_pref.current_hint_profile_id
+      }
+    end
   end
 
   private
@@ -28,6 +40,6 @@ class Api::V1::UserPrefsController < AuthRequiredController
     end
 
     def user_pref_params
-      params.permit(:color_scheme)
+      params.permit(:color_scheme, :current_hint_profile_type, :current_hint_profile_id)
     end
 end

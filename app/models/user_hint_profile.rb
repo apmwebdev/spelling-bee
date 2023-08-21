@@ -1,8 +1,8 @@
 class UserHintProfile < ApplicationRecord
   belongs_to :user
   belongs_to :status_tracking_option, foreign_key: :default_panel_tracking
-  belongs_to :default_panel_display_state, class_name: "PanelDisplayState"
-  has_many :hint_panels, as: :hint_profile
+  belongs_to :default_panel_display_state, class_name: "PanelDisplayState", dependent: :destroy
+  has_many :hint_panels, as: :hint_profile, dependent: :destroy
   has_one :user_pref, as: :current_hint_profile
 
   def to_front_end_complete

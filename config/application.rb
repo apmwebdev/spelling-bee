@@ -25,5 +25,6 @@ module SpellingBee
     config.api_only = true
     config.active_record.schema_format = :sql
     config.middleware.use ActionDispatch::Cookies
+    config.autoload_paths << "#{root}/db/seeds"
   end
 end
