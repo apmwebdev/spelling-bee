@@ -1,6 +1,6 @@
 import { Puzzle } from "../features/puzzle/Puzzle";
 import { Status } from "../features/status/Status";
-import { HintSection } from "../features/hints/components/HintSection";
+import { Hints } from "../features/hints/components/Hints";
 import { useLazyGetCurrentAttemptsQuery } from "../features/guesses/guessesApiSlice";
 import { useEffect } from "react";
 import { useCurrentPuzzle } from "../features/puzzle/useCurrentPuzzle";
@@ -20,7 +20,7 @@ export function PuzzleRoute() {
       <div className="sb-main">
         <Status />
         <Puzzle />
-        <HintSection />
+        <Hints />
       </div>
     </div>
   );

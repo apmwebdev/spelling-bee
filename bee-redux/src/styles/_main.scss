@@ -869,9 +869,7 @@ button.sb-revealer {
 
 
 
-.sb-hint-section {
-  //border: 1px dotted;
-  //padding: 8px;
+.Hints {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -887,7 +885,7 @@ button.sb-revealer {
   }
 }
 
-.sb-hints {
+.HintPanels {
   display: flex;
   flex-direction: column;
   gap: 8px;

@@ -1,2 +1,2 @@
 export * from "./types";
-export * from "./components/HintSection";
+export * from "./components/Hints";
