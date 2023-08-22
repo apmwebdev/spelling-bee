@@ -1,11 +1,23 @@
 import { HintProfiles } from "./HintProfiles";
 import { HintPanels } from "./HintPanels";
+import { hintApiSlice } from "@/features/hints/hintApiSlice";
 
 export function Hints() {
-  return (
-    <div className="Hints">
-      <HintProfiles />
-      <HintPanels />
-    </div>
-  );
+  const currentProfile =
+    hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
+  const profiles =
+    hintApiSlice.endpoints.getHintProfiles.useQueryState(undefined);
+
+  const content = () => {
+    if (currentProfile.isSuccess && profiles.isSuccess) {
+      return (
+        <>
+          <HintProfiles />
+          <HintPanels />
+        </>
+      );
+    }
+  };
+
+  return <div className="Hints">{content()}</div>;
 }

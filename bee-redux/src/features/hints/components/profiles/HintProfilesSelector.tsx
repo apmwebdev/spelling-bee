@@ -1,33 +1,23 @@
 import * as Select from "@radix-ui/react-select";
 import {
-  userDataApiSlice,
-  useUpdateUserPrefsMutation,
-} from "@/features/userData/userDataApiSlice";
-import {
   SelectContentWithPortal,
   SelectItem,
   SelectLabel,
   SelectTrigger,
 } from "@/components/radix-ui/react-select";
 import uniqid from "uniqid";
-import { hintApiSlice } from "@/features/hints/hintApiSlice";
 import {
-  defaultCurrentHintProfile,
-  HintProfileBasicData,
-  HintProfileTypes,
-} from "@/features/hints";
+  hintApiSlice,
+  useSetCurrentHintProfileMutation,
+} from "@/features/hints/hintApiSlice";
+import { HintProfileBasicData, HintProfileTypes } from "@/features/hints";
 
 export function HintProfilesSelector() {
-  const currentProfile = userDataApiSlice.endpoints.getUserPrefs.useQueryState(
-    undefined,
-    {
-      selectFromResult: ({ data }) =>
-        data?.currentHintProfile ?? defaultCurrentHintProfile,
-    },
-  );
+  const currentProfile =
+    hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
   const profiles =
     hintApiSlice.endpoints.getHintProfiles.useQueryState(undefined);
-  const [updateUserPrefs] = useUpdateUserPrefsMutation();
+  const [setCurrentHintProfile] = useSetCurrentHintProfileMutation();
 
   const composeValueString = (profile: HintProfileBasicData): string => {
     return `${profile.type} ${profile.id}`;
@@ -43,15 +33,19 @@ export function HintProfilesSelector() {
 
   const handleSelect = (value: string) => {
     const parsedValue = parseValueString(value);
-    updateUserPrefs({
+    setCurrentHintProfile({
       current_hint_profile_type: parsedValue.type,
       current_hint_profile_id: parsedValue.id,
     });
   };
 
+  if (!currentProfile.isSuccess || !profiles.isSuccess) {
+    return <div>No data</div>;
+  }
+
   return (
     <Select.Root
-      value={composeValueString(currentProfile)}
+      value={composeValueString(currentProfile.data)}
       onValueChange={(value) => handleSelect(value)}
     >
       <SelectTrigger />

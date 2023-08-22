@@ -7,7 +7,23 @@ import {
   UserHintProfileBasic,
   UserHintProfileComplete,
   UserHintProfileForm,
+  DefaultHintProfile,
+  CompleteHintProfile,
+  CurrentHintProfileFormData,
+  HintProfileTypes,
 } from "./types";
+
+const maybeFindDefaultHintProfile = (
+  formData: CurrentHintProfileFormData,
+  profiles?: HintProfilesData,
+): CompleteHintProfile | undefined => {
+  if (!profiles) return;
+  if (formData.current_hint_profile_type === HintProfileTypes.Default) {
+    return profiles.defaultHintProfiles.find(
+      (profile) => profile.id === formData.current_hint_profile_id,
+    );
+  }
+};
 
 export const hintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -42,11 +58,50 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     >({}),
     // ⚠️
     deleteUserHintProfile: builder.mutation<boolean, number>({}),
-    // Current Profile. These might not be needed
-    // ❌
-    setCurrentHintProfile: builder.mutation<boolean, number>({}),
-    // ❌
-    getCurrentHintProfile: builder.query<number, void>({}),
+    getCurrentHintProfile: builder.query<CompleteHintProfile, void>({
+      query: () => ({
+        url: "/current_hint_profile",
+      }),
+    }),
+    setCurrentHintProfile: builder.mutation<
+      CompleteHintProfile,
+      CurrentHintProfileFormData
+    >({
+      query: (formData) => ({
+        url: "/current_hint_profile",
+        method: "POST",
+        body: formData,
+      }),
+      onQueryStarted: async (
+        formData,
+        { getState, dispatch, getCacheEntry, queryFulfilled },
+      ) => {
+        const profiles =
+          hintApiSlice.endpoints.getHintProfiles.select(undefined)(getState()).data;
+        const maybeProfile = maybeFindDefaultHintProfile(formData, profiles);
+        if (maybeProfile) {
+          dispatch(
+            hintApiSlice.util.upsertQueryData(
+              "getCurrentHintProfile",
+              undefined,
+              maybeProfile,
+            ),
+          );
+        } else {
+          await queryFulfilled;
+          const cacheEntry = getCacheEntry();
+          if (cacheEntry.isSuccess && cacheEntry.data) {
+            dispatch(
+              hintApiSlice.util.upsertQueryData(
+                "getCurrentHintProfile",
+                undefined,
+                cacheEntry.data,
+              ),
+            );
+          }
+        }
+      },
+    }),
     // Hint Panels
     // ⚠️
     createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
@@ -57,4 +112,4 @@ export const hintApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {} = hintApiSlice;
+export const { useSetCurrentHintProfileMutation } = hintApiSlice;

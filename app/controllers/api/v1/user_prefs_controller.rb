@@ -17,10 +17,7 @@ class Api::V1::UserPrefsController < AuthRequiredController
 
   # Might not be needed
   def get_current_hint_profile
-    render json: {
-      currentHintProfileType: @user_pref.current_hint_profile_type,
-      currentHintProfileId: @user_pref.current_hint_profile_id
-    }
+    render json: @user_pref.current_hint_profile.to_front_end_complete
   end
 
   # Might not be needed
@@ -29,10 +26,7 @@ class Api::V1::UserPrefsController < AuthRequiredController
       current_hint_profile_type: params[:current_hint_profile_type].to_s,
       current_hint_profile_id: params[:current_hint_profile_id].to_i
     )
-      render json: {
-        currentHintProfileType: @user_pref.current_hint_profile_type,
-        currentHintProfileId: @user_pref.current_hint_profile_id
-      }
+      render json: @user_pref.current_hint_profile.to_front_end_complete
     end
   end
 

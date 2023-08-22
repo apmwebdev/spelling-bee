@@ -195,8 +195,8 @@ export enum HintProfileTypes {
 }
 
 export interface HintProfileBasicData {
-  id: number;
   type: HintProfileTypes;
+  id: number;
 }
 
 export interface HintProfileData extends HintProfileBasicData {
@@ -223,6 +223,8 @@ export interface DefaultHintProfile extends HintProfileData {
   panels: HintPanelData[];
 }
 
+export type CompleteHintProfile = UserHintProfileComplete | DefaultHintProfile;
+
 export interface HintProfilesData {
   userHintProfiles: UserHintProfileBasic[];
   defaultHintProfiles: DefaultHintProfile[];
@@ -233,6 +235,11 @@ export interface UserHintProfileForm {
   default_panel_tracking: StatusTrackingOptions;
   default_panel_display_state: PanelDisplayState;
   panels: HintPanelData[];
+}
+
+export interface CurrentHintProfileFormData {
+  current_hint_profile_type: HintProfileTypes;
+  current_hint_profile_id: number;
 }
 
 interface HintPanelCommonForm {
@@ -270,17 +277,9 @@ export const defaultCurrentHintProfile: HintProfileBasicData = {
 // If either current_hint_profile_type OR current_hint_profile_id is defined,
 // they both must be defined. Current_hint_profile is a polymorphic
 // association in Rails, so it requires both fields.
-export type UserPrefsFormData =
-  | {
-      color_scheme?: ColorSchemes;
-      current_hint_profile_type: HintProfileTypes;
-      current_hint_profile_id: number;
-    }
-  | {
-      color_scheme?: ColorSchemes;
-      current_hint_profile_type: undefined;
-      current_hint_profile_id: undefined;
-    };
+export interface UserPrefsFormData {
+  color_scheme?: ColorSchemes;
+}
 
 export interface UserPrefsData {
   colorScheme: ColorSchemes;
@@ -290,5 +289,5 @@ export interface UserPrefsData {
 export interface UserBaseData {
   prefs: UserPrefsData;
   hintProfiles: HintProfilesData;
-  currentUserHintProfile?: UserHintProfileComplete;
+  currentHintProfile: CompleteHintProfile;
 }

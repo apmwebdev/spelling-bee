@@ -1,7 +1,10 @@
 import { apiSlice } from "../api/apiSlice";
 import {
+  CompleteHintProfile,
+  CurrentHintProfileFormData,
   defaultCurrentHintProfile,
   HintProfileBasicData,
+  HintProfilesData,
   HintProfileTypes,
   UserBaseData,
   UserPrefsData,
@@ -18,10 +21,6 @@ const mapUserPrefsFormDataToUserPrefs = (
   prefs: UserPrefsData,
 ) => {
   prefs.colorScheme = formData.color_scheme ?? prefs.colorScheme;
-  const currentProfile = prefs.currentHintProfile;
-  currentProfile.type =
-    formData.current_hint_profile_type ?? currentProfile.type;
-  currentProfile.id = formData.current_hint_profile_id ?? currentProfile.id;
 };
 
 export const userDataApiSlice = apiSlice.injectEndpoints({
@@ -31,19 +30,6 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: "/user_prefs",
       }),
-      onQueryStarted: async (
-        _arg,
-        { dispatch, getCacheEntry, queryFulfilled },
-      ) => {
-        await queryFulfilled;
-        const cacheEntry = getCacheEntry();
-        if (cacheEntry.isSuccess && cacheEntry.data) {
-          const { type, id } = cacheEntry.data.currentHintProfile;
-          if (type === HintProfileTypes.User) {
-            dispatch(hintApiSlice.endpoints.getUserHintProfile.initiate(id));
-          }
-        }
-      },
     }),
     /**
      * Needs to update getUserPrefs endpoint with response.
@@ -101,15 +87,13 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
               data.hintProfiles,
             ),
           );
-          if (data.currentUserHintProfile) {
-            dispatch(
-              hintApiSlice.util.upsertQueryData(
-                "getUserHintProfile",
-                data.prefs.currentHintProfile.id,
-                data.currentUserHintProfile,
-              ),
-            );
-          }
+          dispatch(
+            hintApiSlice.util.upsertQueryData(
+              "getCurrentHintProfile",
+              undefined,
+              data.currentHintProfile,
+            ),
+          );
         }
       },
     }),
