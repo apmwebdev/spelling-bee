@@ -1,5 +1,4 @@
 import * as Select from "@radix-ui/react-select";
-import uniqid from "uniqid";
 import { ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { composeClasses } from "@/utils/utils";
@@ -39,7 +38,6 @@ export const SelectItem = ({
   ...otherProps
 }: SelectItemProps) => (
   <Select.Item
-    key={uniqid()}
     value={value}
     className={composeClasses("SelectItem", className ?? "")}
     {...otherProps}

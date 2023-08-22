@@ -65,6 +65,7 @@ export function HintProfiles() {
               {profiles.data?.userHintProfiles.length ? (
                 profiles.data.userHintProfiles.map((profile) => (
                   <SelectItem
+                    key={uniqid()}
                     value={composeValueString(profile)}
                     itemText={profile.name}
                   />
@@ -81,7 +82,11 @@ export function HintProfiles() {
             <Select.Group>
               <SelectLabel>Default hint profiles</SelectLabel>
               {profiles.data?.defaultHintProfiles.map((profile) =>
-                createSelectItem(profile),
+                <SelectItem
+                  key={uniqid()}
+                  value={composeValueString(profile)}
+                  itemText={profile.name}
+                />
               )}
             </Select.Group>
           </Select.Viewport>

@@ -10,6 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/radix-ui/react-select";
+import uniqid from "uniqid";
 
 export function AttemptSelector() {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export function AttemptSelector() {
           {attempts.map((attempt, i) => {
             return (
               <SelectItem
+                key={uniqid()}
                 value={`${attempt.id}`}
                 itemText={`Attempt ${i + 1}`}
               />
