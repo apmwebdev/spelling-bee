@@ -6,7 +6,6 @@ import guessesReducer from "../features/guesses/guessesSlice";
 import wordListSettingsReducer from "../features/guesses/./wordList/wordListSettingsSlice";
 import hintProfilesReducer from "../features/hints/hintProfilesSlice";
 import { apiSlice } from "@/features/api/apiSlice";
-import { listenerMiddleware } from "@/app/listenerMiddleware";
 
 export const store = configureStore({
   reducer: {
@@ -19,9 +18,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .prepend(listenerMiddleware.middleware)
-      .concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

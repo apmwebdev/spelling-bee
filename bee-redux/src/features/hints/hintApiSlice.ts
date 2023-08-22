@@ -12,19 +12,19 @@ import {
 export const hintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Hint Profiles
-    // ✅
+    // ✅Get all hint profiles, including default profiles
     getHintProfiles: builder.query<HintProfilesData, void>({
       query: () => ({
         url: "/hint_profiles",
       }),
     }),
-    // ❌
+    // ❌ Get only user hint profiles
     getUserHintProfiles: builder.query<UserHintProfileBasic[], void>({
       query: () => ({
         url: "/user_hint_profiles",
       }),
     }),
-    // ✅
+    // ✅ Get complete data for a user hint profile
     getUserHintProfile: builder.query<UserHintProfileComplete, number>({
       query: (id: number) => ({
         url: `user_hint_profiles/${id}`,
