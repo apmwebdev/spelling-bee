@@ -67,6 +67,10 @@ $error-hue: 0;
 }
 
 @function ui-border-color($hue) {
+  @return hsl($hue, 48%, 61%);
+}
+
+@function ui-border-color-muted($hue) {
   @return hsl($hue, 25%, 45%);
 }
 

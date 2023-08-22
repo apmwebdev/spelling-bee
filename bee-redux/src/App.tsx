@@ -5,6 +5,7 @@ import { Signup } from "./features/auth/Signup";
 import { Login } from "./features/auth/Login";
 import { SubheaderProvider } from "./app/SubheaderProvider";
 import { userDataApiSlice } from "./features/userData/userDataApiSlice";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 export default function App() {
   const prefsQuery =
@@ -32,14 +33,14 @@ export default function App() {
 
   const rootElement = () => {
     return (
-      <SubheaderProvider>
+      <TooltipProvider delayDuration={900}>
         <div className={appClasses()}>
           <div className="sb-top-container">
             <Header />
             <Outlet />
           </div>
         </div>
-      </SubheaderProvider>
+      </TooltipProvider>
     );
   };
 

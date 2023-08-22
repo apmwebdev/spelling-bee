@@ -72,5 +72,47 @@ startAppListening({
     if (endpoint === "createUserHintProfile") {
       return;
     }
+
+    /**
+     * updateUserPrefs
+     * Needs to update getUserPrefs endpoint
+     */
+    if (endpoint === "updateUserPrefs") {
+      console.log("here");
+      listenerApi.dispatch(
+        userDataApiSlice.util.upsertQueryData("getUserPrefs", undefined, data),
+      );
+      return;
+    }
+  },
+});
+
+startAppListening({
+  type: "api/executeMutation/fulfilled",
+  effect: async (action: ApiSliceAction, listenerApi) => {
+    const endpoint = action.meta.arg.endpointName;
+    const data = action.payload;
+
+    /**
+     * createUserHintProfile mutation
+     * Creates a new profile, which is returned in the response. Then:
+     * 1. getHintProfiles is updated to include the new profile
+     * 2. getUserHintProfile is updated to be the new profile
+     * 3. getPrefs is updated to make the new profile the current profile
+     * */
+    if (endpoint === "createUserHintProfile") {
+      return;
+    }
+
+    /**
+     * updateUserPrefs
+     * Needs to update getUserPrefs endpoint
+     */
+    if (endpoint === "updateUserPrefs") {
+      listenerApi.dispatch(
+        userDataApiSlice.util.upsertQueryData("getUserPrefs", undefined, data),
+      );
+      return;
+    }
   },
 });

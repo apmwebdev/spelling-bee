@@ -45,6 +45,30 @@ button {
   //transition: border-color 0.05s;
 }
 
+.IconButton {
+  font-size: 20px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ui-bg-color($accent-hue);
+  border: 1.5px solid ui-bg-color($accent-hue);
+  &:hover {
+    border-color: ui-border-color($accent-hue);
+  }
+}
+
+.IconButton-group {
+  display: grid;
+  gap: 8px;
+  &.group-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  &.group-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
 .standard-button {
   font-size: 16px;
   padding: 8px 16px;
@@ -77,16 +101,28 @@ button {
 /***   Select   ***/
 
 .SelectTrigger {
+  width: 10em;
   font-size: 16px;
   border: 1.5px solid border-color($accent-hue);
   background-color: bg-color-darker($accent-hue);
   padding: 6px 12px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 8px;
   &:hover {
     border-color: border-color-hover($accent-hue);
   }
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.SelectIcon {
+  width: 1em;
+  height: 1em;
 }
 
 .SelectContent {
@@ -103,8 +139,6 @@ button {
 .SelectLabel {
   font-size: 15px;
   padding: 6px 16px;
-  //border-bottom: 1px solid;
-  //border-top: 1px solid;
   font-style: italic;
   color: $text-disabled;
   border-color: $line-disabled;
@@ -114,6 +148,7 @@ button {
   position: relative;
   cursor: pointer;
   padding: 6px 28px;
+  user-select: none;
   &[data-highlighted] {
     background-color: ui-bg-color($accent-hue);
   }
@@ -122,6 +157,21 @@ button {
 .SelectItemIndicator {
   position: absolute;
   left: 6px;
+}
+
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  height: 24px;
+  background-color: bg-color-darkest($accent-hue);
+  &.up {
+    border-bottom: 1.5px solid border-color($accent-hue);
+  }
+  &.down {
+    border-top: 1.5px solid border-color($accent-hue);
+  }
 }
 
 /*** Scroll Area ***/
@@ -203,6 +253,23 @@ button {
       background-color: ui-bg-color($accent-hue);
     }
   }
+}
+
+/***   Tooltip   ***/
+
+.TooltipContent {
+  display: flex;
+  align-items: center;
+  border-radius: var(--br);
+  font-size: 14px;
+  background-color: $dark-gray;
+  padding: 6px 12px;
+  border: 1px solid $dark-gray-lighter;
+  //box-shadow: 0px 0px 0px 3px $dark-gray;
+}
+
+.TooltipArrow {
+  fill: $dark-gray-lighter;
 }
 
 
@@ -334,9 +401,9 @@ button {
     font-size: 16px;
     padding: 6px 12px;
     background-color: ui-bg-color-muted($accent-hue);
-    border: 1.5px solid transparent;
+    border: 1.5px solid ui-bg-color-muted($accent-hue);
     &:hover {
-      border-color: ui-border-color($accent-hue);
+      border-color: ui-border-color-muted($accent-hue);
     }
   }
 }
@@ -640,9 +707,6 @@ button {
   //padding: 8px;
 }
 
-.sb-word-tabs-root {
-}
-
 .sb-word-list-settings-content {
   padding: 8px;
   label, > div {
@@ -816,8 +880,11 @@ button.sb-revealer {
 
 .HintProfiles {
   display: flex;
-  gap: 8px;
+  gap: 16px;
   align-items: center;
+  .SelectTrigger {
+    width: 16em;
+  }
 }
 
 .sb-hints {

@@ -6,6 +6,7 @@ import {
   UserPrefsData,
   UserPrefsFormData,
 } from "@/features/hints";
+import { store } from "@/app/store";
 
 export const userDataApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -45,10 +46,14 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUserPrefsQuery, useGetUserBaseDataQuery } =
-  userDataApiSlice;
+export const {
+  useGetUserPrefsQuery,
+  useUpdateUserPrefsMutation,
+  useGetUserBaseDataQuery,
+} = userDataApiSlice;
 
 export const getCurrentHintProfile = () => {
+  console.log("Hey! Listen!");
   return userDataApiSlice.endpoints.getUserPrefs.useQueryState(undefined, {
     selectFromResult: ({ data }) =>
       data?.currentHintProfile ?? defaultCurrentHintProfile,
@@ -56,8 +61,10 @@ export const getCurrentHintProfile = () => {
 };
 
 export const setCurrentHintProfile = (profile: HintProfileBasicData) => {
-  userDataApiSlice.endpoints.updateUserPrefs.initiate({
-    current_hint_profile_type: profile.type,
-    current_hint_profile_id: profile.id,
-  });
+  store.dispatch(
+    userDataApiSlice.endpoints.updateUserPrefs.initiate({
+      current_hint_profile_type: profile.type,
+      current_hint_profile_id: profile.id,
+    }),
+  );
 };

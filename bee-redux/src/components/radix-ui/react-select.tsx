@@ -18,7 +18,15 @@ export const SelectContentWithPortal = ({
       className={composeClasses("SelectContent", className ?? "")}
       {...otherProps}
     >
+      <Select.ScrollUpButton>
+        <div className="SelectScrollButton up">
+          <Icon icon="mdi:chevron-up" />
+        </div>
+      </Select.ScrollUpButton>
       {children}
+      <Select.ScrollUpButton className="SelectScrollButton down">
+        <Icon icon="mdi:chevron-down" />
+      </Select.ScrollUpButton>
     </Select.Content>
   </Select.Portal>
 );
@@ -45,7 +53,9 @@ export const SelectItem = ({
     <Select.ItemIndicator asChild>
       <Icon className="SelectItemIndicator" icon="mdi:check" />
     </Select.ItemIndicator>
-    {itemText ? <Select.ItemText>{itemText}</Select.ItemText> : null}
+    {itemText ? (
+      <Select.ItemText className="SelectItemText">{itemText}</Select.ItemText>
+    ) : null}
     {children}
   </Select.Item>
 );
@@ -64,7 +74,9 @@ export const SelectTrigger = ({
   >
     <Select.Value />
     <Select.Icon asChild>
-      <Icon icon="mdi:chevron-down" />
+      <div className="SelectIcon">
+        <Icon icon="mdi:chevron-down" />
+      </div>
     </Select.Icon>
   </Select.Trigger>
 );
