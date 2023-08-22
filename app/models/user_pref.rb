@@ -5,8 +5,10 @@ class UserPref < ApplicationRecord
   def to_front_end
     {
       colorScheme: color_scheme,
-      currentHintProfileType: current_hint_profile_type,
-      currentHintProfileId: current_hint_profile_id
+      currentHintProfile: {
+        type: current_hint_profile_type,
+        id: current_hint_profile_id
+      },
     }
   end
 end

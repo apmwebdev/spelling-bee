@@ -68,6 +68,146 @@ button {
 
 
 
+/**********************/
+/***   COMPONENTS   ***/
+/**********************/
+
+
+
+/***   Select   ***/
+
+.SelectTrigger {
+  font-size: 16px;
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+}
+
+.SelectContent {
+  border-radius: var(--br);
+  overflow: hidden;
+  font-size: 16px;
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+}
+
+.SelectLabel {
+  font-size: 15px;
+  padding: 6px 16px;
+  //border-bottom: 1px solid;
+  //border-top: 1px solid;
+  font-style: italic;
+  color: $text-disabled;
+  border-color: $line-disabled;
+}
+
+.SelectItem {
+  position: relative;
+  cursor: pointer;
+  padding: 6px 28px;
+  &[data-highlighted] {
+    background-color: ui-bg-color($accent-hue);
+  }
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 6px;
+}
+
+/*** Scroll Area ***/
+
+.ScrollAreaScrollbar {
+  display: flex;
+  user-select: none;
+  touch-action: none;
+  padding: 2px;
+  background: #333;
+  border-radius: 12px;
+  //transition: background 160ms ease-out;
+  &[data-orientation='horizontal'] {
+    flex-direction: column;
+    height: 12px;
+  }
+}
+
+.ScrollAreaThumb {
+  flex: 1;
+  background: #666;
+  border-radius: 12px;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/***   Tabs   ***/
+
+.TabsList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.TabsTrigger {
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-bottom: none;
+  border-color: $mid-gray;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding: 8px;
+  &[data-state="active"] {
+    background-color: bg-color-extra($blue-hue);
+    border-color: border-color-hover($blue-hue);
+  }
+}
+.TabsContent {
+  border: 2px solid $mid-gray;
+  border-bottom-left-radius: var(--br);
+  border-bottom-right-radius: var(--br);
+  padding: 8px;
+}
+
+/*** Toggle Group   ***/
+
+.ToggleGroup {
+  border-radius: var(--br);
+  border: 1px solid $mid-gray;
+  overflow: hidden;
+  display: flex;
+  gap: 1px;
+  background-color: $mid-gray;
+  button {
+    border-radius: 0;
+    padding: 4px 12px;
+    background-color: $dark-gray;
+    &[data-state="on"] {
+      background-color: ui-bg-color($accent-hue);
+    }
+  }
+}
+
+
+
+
 /******************/
 /***   HEADER   ***/
 /******************/
@@ -198,38 +338,6 @@ button {
     &:hover {
       border-color: ui-border-color($accent-hue);
     }
-  }
-}
-
-.SelectTrigger {
-  font-size: 16px;
-  border: 1.5px solid border-color($accent-hue);
-  background-color: bg-color-dark($accent-hue);
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  &:hover {
-    border-color: border-color-hover($accent-hue);
-  }
-}
-
-.SelectContent {
-  cursor: pointer;
-  border-radius: var(--br);
-  overflow: hidden;
-  font-size: 16px;
-  border: 1.5px solid border-color($accent-hue);
-  background-color: bg-color-dark($accent-hue);
-  &:hover {
-    border-color: border-color-hover($accent-hue);
-  }
-}
-
-.SelectItem {
-  padding: 6px 16px;
-  &[data-highlighted] {
-    background-color: ui-bg-color($accent-hue);
   }
 }
 
@@ -533,27 +641,6 @@ button {
 }
 
 .sb-word-tabs-root {
-  .tabs-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    .tab-trigger {
-      border-top: 2px solid;
-      border-left: 2px solid;
-      border-right: 2px solid;
-      border-bottom: none;
-      border-color: $mid-gray;
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-      padding: 8px;
-    }
-  }
-  .tab-content {
-    border: 2px solid $mid-gray;
-    border-bottom-left-radius: var(--br);
-    border-bottom-right-radius: var(--br);
-    padding: 8px;
-  }
 }
 
 .sb-word-list-settings-content {
@@ -619,18 +706,6 @@ button {
   }
 }
 
-.sb-word-list-toggle {
-  border-radius: var(--br);
-  border: 1px solid $mid-gray;
-  overflow: hidden;
-  display: flex;
-  gap: 1px;
-  button {
-    border-radius: 0;
-    padding: 4px 12px;
-  }
-}
-
 .sb-word-list {
   padding: 8px 8px 16px 8px;
   //border: 1px dotted;
@@ -676,39 +751,6 @@ button {
           }
         }
       }
-    }
-  }
-}
-
-.scrollbar {
-  display: flex;
-  /* ensures no selection */
-  user-select: none;
-  /* disable browser handling of all panning and zooming gestures on touch devices */
-  touch-action: none;
-  padding: 2px;
-  background: #333;
-  border-radius: 12px;
-  //transition: background 160ms ease-out;
-  &[data-orientation='horizontal'] {
-    flex-direction: column;
-    height: 12px;
-  }
-  .scrollbar-thumb {
-    flex: 1;
-    background: #666;
-    border-radius: 12px;
-    position: relative;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      min-width: 44px;
-      min-height: 44px;
     }
   }
 }
@@ -770,6 +812,12 @@ button.sb-revealer {
   flex-direction: column;
   gap: 8px;
   border-radius: var(--br);
+}
+
+.HintProfiles {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .sb-hints {

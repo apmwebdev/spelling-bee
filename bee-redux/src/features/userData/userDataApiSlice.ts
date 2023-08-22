@@ -1,11 +1,24 @@
 import { apiSlice } from "../api/apiSlice";
-import { UserBaseData, UserPrefsData } from "@/features/hints";
+import {
+  defaultCurrentHintProfile,
+  HintProfileBasicData,
+  UserBaseData,
+  UserPrefsData,
+  UserPrefsFormData,
+} from "@/features/hints";
 
 export const userDataApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPrefs: builder.query<UserPrefsData, void>({
+    getUserPrefs: builder.query<UserPrefsData, void>({
       query: () => ({
         url: "/user_prefs",
+      }),
+    }),
+    updateUserPrefs: builder.mutation<UserPrefsData, UserPrefsFormData>({
+      query: (formData) => ({
+        url: "/user_prefs",
+        method: "PATCH",
+        body: formData,
       }),
     }),
     /**
@@ -32,4 +45,19 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetPrefsQuery, useGetUserBaseDataQuery } = userDataApiSlice;
+export const { useGetUserPrefsQuery, useGetUserBaseDataQuery } =
+  userDataApiSlice;
+
+export const getCurrentHintProfile = () => {
+  return userDataApiSlice.endpoints.getUserPrefs.useQueryState(undefined, {
+    selectFromResult: ({ data }) =>
+      data?.currentHintProfile ?? defaultCurrentHintProfile,
+  });
+};
+
+export const setCurrentHintProfile = (profile: HintProfileBasicData) => {
+  userDataApiSlice.endpoints.updateUserPrefs.initiate({
+    current_hint_profile_type: profile.type,
+    current_hint_profile_id: profile.id,
+  });
+};

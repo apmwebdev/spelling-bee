@@ -30,6 +30,10 @@ $error-hue: 0;
   @return hsl($hue, 18%, 18%);
 }
 
+@function bg-color-darkest($hue) {
+  @return hsl($hue, 16%, 14%);
+}
+
 @function bg-color-extra($hue) {
   @return hsl($hue, 27%, 25%);
 }
@@ -103,7 +107,7 @@ $line-disabled: rgba(255, 255, 255, 0.36);
 $line-darkest: rgba(255, 255, 255, 0.3);
 
 //Disabled text must be lighter so that it is still legible
-$text-disabled: rgba(255, 255, 255, 0.49);
+$text-disabled: rgba(255, 255, 255, 0.5);
 
 //One-off colors
 $yellow-main: hsl($yellow-hue, 78%, 30%);
@@ -184,20 +188,20 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     }
   }
 
-  .sb-word-tabs-root {
-    .tabs-list {
-      .tab-trigger {
-        //border-color: $mid-gray;
-        &[data-state="active"] {
-          background-color: bg-color-extra($blue-hue);
-          border-color: border-color-hover($blue-hue);
-        }
-      }
-    }
-    .tab-content {
-      //border-color: $mid-gray;
-    }
-  }
+  //.sb-word-tabs-root {
+  //  .tabs-list {
+  //    .tab-trigger {
+  //      //border-color: $mid-gray;
+  //      &[data-state="active"] {
+  //        background-color: bg-color-extra($blue-hue);
+  //        border-color: border-color-hover($blue-hue);
+  //      }
+  //    }
+  //  }
+  //  .tab-content {
+  //    //border-color: $mid-gray;
+  //  }
+  //}
 
   .sb-word-list-container {
     //border-color: $line-darkest;
@@ -206,16 +210,16 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     }
   }
 
-  .sb-word-list-toggle {
-    //border-color: $mid-gray;
-    background-color: $mid-gray;
-    button {
-      background-color: $dark-gray;
-      &[data-state="on"] {
-        background-color: ui-bg-color($accent-hue);
-      }
-    }
-  }
+  //.sb-word-list-toggle {
+  //  //border-color: $mid-gray;
+  //  background-color: $mid-gray;
+  //  button {
+  //    background-color: $dark-gray;
+  //    &[data-state="on"] {
+  //      background-color: ui-bg-color($accent-hue);
+  //    }
+  //  }
+  //}
 
   .has-popover {
     &.perfect, &.pangram {

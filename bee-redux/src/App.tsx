@@ -8,7 +8,7 @@ import { userDataApiSlice } from "./features/userData/userDataApiSlice";
 
 export default function App() {
   const prefsQuery =
-    userDataApiSlice.endpoints.getPrefs.useQueryState(undefined);
+    userDataApiSlice.endpoints.getUserPrefs.useQueryState(undefined);
 
   const appClasses = () => {
     const darkMode = "App dark-theme";

@@ -38,7 +38,7 @@ startAppListening({
     if (endpoint === "getUserBaseData") {
       listenerApi.dispatch(
         userDataApiSlice.util.upsertQueryData(
-          "getPrefs",
+          "getUserPrefs",
           undefined,
           data.prefs,
         ),
@@ -47,14 +47,14 @@ startAppListening({
         hintApiSlice.util.upsertQueryData(
           "getHintProfiles",
           undefined,
-          data.profiles,
+          data.hintProfiles,
         ),
       );
       if (data.currentUserHintProfile) {
         listenerApi.dispatch(
           hintApiSlice.util.upsertQueryData(
             "getUserHintProfile",
-            data.prefs.currentHintProfileId,
+            data.prefs.currentHintProfile.id,
             data.currentUserHintProfile,
           ),
         );

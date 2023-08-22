@@ -16,7 +16,7 @@ export function AnswersListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-word-list-toggle"
+          className="ToggleGroup"
           value={sortOrder}
           onValueChange={(val) => dispatch(setAnswersSortOrder(val))}
         >

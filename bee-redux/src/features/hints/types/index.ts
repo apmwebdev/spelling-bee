@@ -189,12 +189,25 @@ export interface HintPanelData {
     | DefinitionPanelData;
 }
 
+export enum HintProfileTypes {
+  Default = "DefaultHintProfile",
+  User = "UserHintProfile",
+}
+
+export interface HintProfileBasicData {
+  id: number;
+  type: HintProfileTypes;
+}
+
+export interface HintProfileData extends HintProfileBasicData {
+  name: string;
+}
+
 /**
  * A user-created hint profile, as opposed to a default hint profile.
  */
-export interface UserHintProfileBasic {
-  id: number;
-  name: string;
+export interface UserHintProfileBasic extends HintProfileData {
+  type: HintProfileTypes.User;
 }
 
 export interface UserHintProfileComplete extends UserHintProfileBasic {
@@ -205,13 +218,12 @@ export interface UserHintProfileComplete extends UserHintProfileBasic {
   panels: HintPanelData[];
 }
 
-export interface DefaultHintProfile {
-  id: number;
-  name: string;
+export interface DefaultHintProfile extends HintProfileData {
+  type: HintProfileTypes.Default;
   panels: HintPanelData[];
 }
 
-export interface HintProfiles {
+export interface HintProfilesData {
   userHintProfiles: UserHintProfileBasic[];
   defaultHintProfiles: DefaultHintProfile[];
 }
@@ -244,14 +256,39 @@ export interface HintPanelUpdateForm extends HintPanelCommonForm {
   id: number;
 }
 
+export enum ColorSchemes {
+  Auto = "auto",
+  Light = "light",
+  Dark = "dark",
+}
+
+export const defaultCurrentHintProfile: HintProfileBasicData = {
+  type: HintProfileTypes.Default,
+  id: 1,
+};
+
+// If either current_hint_profile_type OR current_hint_profile_id is defined,
+// they both must be defined. Current_hint_profile is a polymorphic
+// association in Rails, so it requires both fields.
+export type UserPrefsFormData =
+  | {
+      color_scheme?: ColorSchemes;
+      current_hint_profile_type: HintProfileTypes;
+      current_hint_profile_id: number;
+    }
+  | {
+      color_scheme?: ColorSchemes;
+      current_hint_profile_type: undefined;
+      current_hint_profile_id: undefined;
+    };
+
 export interface UserPrefsData {
-  colorScheme: "auto" | "light" | "dark";
-  currentHintProfileType: "DefaultHintProfile" | "UserHintProfile";
-  currentHintProfileId: number;
+  colorScheme: ColorSchemes;
+  currentHintProfile: HintProfileBasicData;
 }
 
 export interface UserBaseData {
   prefs: UserPrefsData;
-  hintProfiles: HintProfiles;
+  hintProfiles: HintProfilesData;
   currentUserHintProfile?: UserHintProfileComplete;
 }

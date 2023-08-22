@@ -9,6 +9,7 @@ class UserHintProfile < ApplicationRecord
   def to_front_end_complete
     {
       id:,
+      type: self.class.name,
       name:,
       defaultPanelTracking: default_panel_tracking,
       defaultPanelDisplayState: default_panel_display_state.to_front_end,
@@ -21,6 +22,7 @@ class UserHintProfile < ApplicationRecord
   def to_front_end_basic
     {
       id:,
+      type: self.class.name,
       name:,
     }
   end

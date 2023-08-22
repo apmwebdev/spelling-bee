@@ -35,8 +35,11 @@ export function WordListScroller({
           ))}
         </ul>
       </ScrollArea.Viewport>
-      <ScrollArea.Scrollbar orientation="horizontal" className="scrollbar">
-        <ScrollArea.Thumb className="scrollbar-thumb" />
+      <ScrollArea.Scrollbar
+        orientation="horizontal"
+        className="ScrollAreaScrollbar"
+      >
+        <ScrollArea.Thumb className="ScrollAreaThumb" />
       </ScrollArea.Scrollbar>
     </ScrollArea.Root>
   );

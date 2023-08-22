@@ -6,7 +6,7 @@ import {
   SortType,
 } from "../wordListSettingsSlice";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function FoundWordsListHeader() {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export function FoundWordsListHeader() {
         <span>Sort</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-order sb-word-list-toggle"
+          className="sb-found-words-sort-order ToggleGroup"
           value={sortType}
           onValueChange={(val) => dispatch(setFoundWordsSortType(val))}
         >
@@ -34,7 +34,7 @@ export function FoundWordsListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-type sb-word-list-toggle"
+          className="sb-found-words-sort-type ToggleGroup"
           value={sortOrder}
           onValueChange={(val) => dispatch(setFoundWordsSortOrder(val))}
         >

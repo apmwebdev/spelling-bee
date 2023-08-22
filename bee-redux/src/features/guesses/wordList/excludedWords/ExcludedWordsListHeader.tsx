@@ -16,7 +16,7 @@ export function ExcludedWordsListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-order sb-word-list-toggle"
+          className="sb-wrong-guesses-sort-order ToggleGroup"
           value={sortOrder}
           onValueChange={(val) => dispatch(setExcludedWordsSortOrder(val))}
         >

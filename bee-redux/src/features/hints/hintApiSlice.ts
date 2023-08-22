@@ -3,7 +3,7 @@ import {
   HintPanelData,
   HintPanelCreateForm,
   HintPanelUpdateForm,
-  HintProfiles,
+  HintProfilesData,
   UserHintProfileBasic,
   UserHintProfileComplete,
   UserHintProfileForm,
@@ -13,7 +13,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Hint Profiles
     // ✅
-    getHintProfiles: builder.query<HintProfiles, void>({
+    getHintProfiles: builder.query<HintProfilesData, void>({
       query: () => ({
         url: "/hint_profiles",
       }),

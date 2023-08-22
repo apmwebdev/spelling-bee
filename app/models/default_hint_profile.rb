@@ -5,6 +5,7 @@ class DefaultHintProfile < ApplicationRecord
   def to_front_end_complete
     {
       id:,
+      type: self.class.name,
       name:,
       panels: hint_panels.map do |panel|
         panel.to_front_end
@@ -15,6 +16,7 @@ class DefaultHintProfile < ApplicationRecord
   def to_front_end_basic
     {
       id:,
+      type: self.class.name,
       name:,
     }
   end

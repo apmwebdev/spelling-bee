@@ -67,3 +67,16 @@ export const getNextPuzzleDateString = (dateString: string) => {
   }
   return getAdjacentDateString(dateString, "next");
 };
+
+export const composeClasses = (
+  baseClasses: string,
+  ...additionalClasses: string[]
+) => {
+  let finalClasses = baseClasses;
+  for (const additionalClass of additionalClasses) {
+    if (additionalClass.length > 0) {
+      finalClasses += ` ${additionalClass}`;
+    }
+  }
+  return finalClasses;
+};
