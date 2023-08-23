@@ -2,8 +2,8 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import uniqid from "uniqid";
 import { WordWithPopover } from "./WordWithPopover";
 import { AnswerSpoiler } from "./answers/AnswerSpoiler";
-import { useAppSelector } from "../../../app/hooks";
-import { selectRemainingAnswerWords } from "../../puzzle/puzzleSlice";
+import { useAppSelector } from "../../app/hooks";
+import { selectRemainingAnswerWords } from "../puzzle/puzzleSlice";
 
 export function WordListScroller({
   wordList,

@@ -1,13 +1,12 @@
 import * as Tabs from "@radix-ui/react-tabs";
-import { FoundWordsContainer } from "./wordList/foundWords/FoundWordsContainer";
-import { WrongGuessesContainer } from "./wordList/wrongGuesses/WrongGuessesContainer";
-import { ExcludedWordsContainer } from "./wordList/excludedWords/ExcludedWordsContainer";
-import { AnswersContainer } from "./wordList/answers/AnswersContainer";
+import { FoundWordsContainer } from "./foundWords/FoundWordsContainer";
+import { WrongGuessesContainer } from "./wrongGuesses/WrongGuessesContainer";
+import { ExcludedWordsContainer } from "./excludedWords/ExcludedWordsContainer";
+import { AnswersContainer } from "./answers/AnswersContainer";
 
-export function WordList() {
+export function WordLists() {
   return (
     <div className="sb-word-list-section-container">
-      {/*<WordListTabs />*/}
       <Tabs.Root className="sb-word-tabs-root" defaultValue="foundWords">
         <Tabs.List className="TabsList">
           <Tabs.Trigger className="TabsTrigger" value="foundWords">

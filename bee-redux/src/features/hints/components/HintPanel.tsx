@@ -43,7 +43,7 @@ export function HintPanel({ panel }: HintPanelProps) {
   };
 
   return (
-    <Collapsible.Root className="sb-hint-panel" open={!panel.isCollapsed}>
+    <Collapsible.Root className="HintPanel" open={!panel.isCollapsed}>
       <PanelHeader panelId={panel.id} isCollapsed={panel.isCollapsed}>
         <Collapsible.Trigger asChild>
           <button

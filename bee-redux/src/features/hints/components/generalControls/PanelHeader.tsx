@@ -14,7 +14,7 @@ export function PanelHeader({
   children,
 }: PanelHeaderProps) {
   const cssClasses = () => {
-    let classList = "sb-hint-panel-header click-header-to-collapse";
+    let classList = "HintPanelHeader click-header-to-collapse";
     if (isCollapsed) {
       classList += " collapsed";
     } else {

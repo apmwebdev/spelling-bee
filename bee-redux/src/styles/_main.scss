@@ -891,13 +891,13 @@ button.sb-revealer {
   gap: 8px;
 }
 
-.sb-hint-panel {
+.HintPanel {
   $this-hue: $blue-hue;
   border-radius: var(--br);
   border: 2px solid border-color($this-hue);
   overflow: hidden;
   //border-color: border-color($this-hue);
-  .sb-hint-panel-header {
+  .HintPanelHeader {
     background-color: bg-color($this-hue);
     button {
       border: 1.5px solid transparent;
@@ -912,7 +912,7 @@ button.sb-revealer {
   &[data-state="closed"] {
     color: $line-darker;
     border-color: border-color-disabled($this-hue);
-    .sb-hint-panel-header {
+    .HintPanelHeader {
       background-color: bg-color-disabled($this-hue);
       button {
         color: $line-darker;
@@ -927,7 +927,7 @@ button.sb-revealer {
   }
 }
 
-.sb-hint-panel-header {
+.HintPanelHeader {
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   align-items: center;

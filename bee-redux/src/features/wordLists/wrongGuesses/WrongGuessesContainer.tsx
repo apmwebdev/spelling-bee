@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { selectWrongGuesses } from "../../guessesSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { selectWrongGuesses } from "../../guesses/guessesSlice";
 import {
   selectWrongGuessesListSettings,
   SortOrder,

@@ -1,5 +1,5 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { SettingsHeader } from "../../hints/components/generalControls/SettingsHeader";
+import { SettingsHeader } from "../hints/components/generalControls/SettingsHeader";
 import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
 import React from "react";
 

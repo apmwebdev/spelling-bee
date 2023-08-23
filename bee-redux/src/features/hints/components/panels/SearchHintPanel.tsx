@@ -43,10 +43,11 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
     return [];
   };
 
-  const searchSettings = () => <SearchPanelSettings />;
   return (
     <>
-      <HintPanelSettings panel={panel} TypeSettingsComponent={searchSettings} />
+      <HintPanelSettings panel={panel}>
+        <SearchPanelSettings />
+      </HintPanelSettings>
       <div className="sb-search-hints">
         <form onSubmit={handleSubmit}>
           <input

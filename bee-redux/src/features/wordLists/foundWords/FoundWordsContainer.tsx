@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { GuessFormat, selectCorrectGuesses } from "../../guessesSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { GuessFormat, selectCorrectGuesses } from "../../guesses/guessesSlice";
 import {
   SortOrder,
   SortType,

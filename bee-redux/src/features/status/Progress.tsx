@@ -1,8 +1,8 @@
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { Rank } from "../puzzle/puzzleApiSlice";
 import { selectScore } from "../guesses/guessesSlice";
 import { ProgressBar } from "./ProgressBar";
-import { FoundWordsStatus } from "../guesses/wordList/foundWords/FoundWordsStatus";
+import { FoundWordsStatus } from "@/features/wordLists/foundWords/FoundWordsStatus";
 import { useCurrentPuzzle } from "../puzzle/useCurrentPuzzle";
 import { BlankRank } from "../puzzle/puzzleApiSlice";
 

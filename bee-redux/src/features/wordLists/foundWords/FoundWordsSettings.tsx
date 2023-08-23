@@ -6,7 +6,7 @@ import {
   setFoundWordsWordsShowTotal,
 } from "../wordListSettingsSlice";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 
 export function FoundWordsSettings() {
   const dispatch = useDispatch();

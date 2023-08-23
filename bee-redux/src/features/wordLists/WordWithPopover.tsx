@@ -1,6 +1,6 @@
 import * as Popover from "@radix-ui/react-popover";
-import { useAppSelector } from "../../../app/hooks";
-import { selectAnswers, selectPangrams } from "../../puzzle/puzzleSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectAnswers, selectPangrams } from "../puzzle/puzzleSlice";
 import { Icon } from "@iconify/react";
 
 export function WordWithPopover({ word }: { word: string }) {

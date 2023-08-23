@@ -31,33 +31,34 @@ export interface LetterHintDataCell {
 export function LetterHintPanel({ panel }: HintPanelProps) {
   const answers = useAppSelector(selectAnswerWords);
   const correctGuessWords = useAppSelector(selectCorrectGuessWords);
-  const content = () => {
-    if (isLetterPanelData(panel.typeData)) {
-      const { numberOfLetters, location, lettersOffset, outputType } =
-        panel.typeData;
 
-      const subsectionProps: LetterHintSubsectionProps = {
-        answers,
-        correctGuessWords,
-        numberOfLetters,
-        location,
-        lettersOffset,
-        statusTracking: panel.statusTracking,
-      };
+  if (!isLetterPanelData(panel.typeData)) return;
 
-      let hintContent;
+  const { numberOfLetters, location, lettersOffset, outputType } =
+    panel.typeData;
 
-      if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
-        hintContent = <WordLengthGrid {...subsectionProps} />;
-      } else if (outputType === SubstringHintOutputTypes.WordCountList) {
-        hintContent = <WordCountList {...subsectionProps} />;
-      } else if (outputType === SubstringHintOutputTypes.LettersList) {
-        hintContent = <LettersOnly {...subsectionProps} />;
-      } else {
-        hintContent = <div>hullo</div>;
-      }
+  const subsectionProps: LetterHintSubsectionProps = {
+    answers,
+    correctGuessWords,
+    numberOfLetters,
+    location,
+    lettersOffset,
+    statusTracking: panel.statusTracking,
+  };
 
-      const letterHintSettings = () => (
+  const hintOutput = () => {
+    if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
+      return <WordLengthGrid {...subsectionProps} />;
+    } else if (outputType === SubstringHintOutputTypes.WordCountList) {
+      return <WordCountList {...subsectionProps} />;
+    } else if (outputType === SubstringHintOutputTypes.LettersList) {
+      return <LettersOnly {...subsectionProps} />;
+    }
+  };
+
+  return (
+    <div className="sb-letter-hints">
+      <HintPanelSettings panel={panel}>
         <LetterPanelSettings
           panelId={panel.id}
           numberOfLetters={numberOfLetters}
@@ -65,19 +66,8 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
           lettersOffset={lettersOffset}
           outputType={outputType}
         />
-      );
-
-      return (
-        <>
-          <HintPanelSettings
-            panel={panel}
-            TypeSettingsComponent={letterHintSettings}
-          />
-          <div className="sb-hint-panel-output">{hintContent}</div>
-        </>
-      );
-    }
-  };
-
-  return <div className="sb-letter-hints">{content()}</div>;
+      </HintPanelSettings>
+      <div className="sb-hint-panel-output">{hintOutput()}</div>
+    </div>
+  );
 }

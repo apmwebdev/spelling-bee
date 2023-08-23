@@ -1,5 +1,5 @@
 import { GeneralPanelSettings } from "./GeneralPanelSettings";
-import { ComponentType } from "react";
+import { ReactNode } from "react";
 import { SettingsHeader } from "./generalControls/SettingsHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
@@ -8,21 +8,18 @@ import { HintPanelData } from "@/features/hints";
 
 interface HintPanelSettingsProps {
   panel: HintPanelData;
-  TypeSettingsComponent?: ComponentType;
+  children: ReactNode;
 }
 
-export function HintPanelSettings({
-  panel,
-  TypeSettingsComponent,
-}: HintPanelSettingsProps) {
+export function HintPanelSettings({ panel, children }: HintPanelSettingsProps) {
   const dispatch = useDispatch();
   const toggleCollapsed = () => {
-    dispatch(
-      setSettingsAreCollapsed({
-        panelId: panel.id,
-        settingsAreCollapsed: !panel.settingsAreCollapsed,
-      }),
-    );
+    // dispatch(
+    //   setSettingsAreCollapsed({
+    //     panelId: panel.id,
+    //     settingsAreCollapsed: !panel.settingsAreCollapsed,
+    //   }),
+    // );
   };
 
   return (
@@ -41,7 +38,7 @@ export function HintPanelSettings({
         </Collapsible.Trigger>
       </SettingsHeader>
       <Collapsible.Content className="sb-hint-panel-settings-content">
-        {TypeSettingsComponent && <TypeSettingsComponent />}
+        {children}
         <GeneralPanelSettings panel={panel} />
       </Collapsible.Content>
     </Collapsible.Root>

@@ -4,7 +4,7 @@ import {
   SortOrder,
 } from "../wordListSettingsSlice";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function AnswersListHeader() {
   const dispatch = useAppDispatch();
