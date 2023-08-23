@@ -1,12 +1,12 @@
 import { StatusTrackingOptions } from "@/features/hints";
 
 export function WordLengthGridKey({
-  tracking,
+  statusTracking,
 }: {
-  tracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingOptions;
 }) {
   const trackingKey = () => {
-    switch (tracking) {
+    switch (statusTracking) {
       case StatusTrackingOptions.FoundOfTotal:
         return "Found / Total";
       case StatusTrackingOptions.RemainingOfTotal:

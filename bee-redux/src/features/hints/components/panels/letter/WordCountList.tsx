@@ -23,22 +23,28 @@ export const generateData = ({
   answers,
   correctGuessWords,
   numberOfLetters,
-  locationInWord,
-  offset,
+  location,
+  lettersOffset,
 }: LetterHintSubsectionProps): ListData => {
   const listRows: ListRows = {};
   let excludedAnswers = 0;
 
   for (const answer of answers) {
-    if (offset + numberOfLetters > answer.length) {
+    if (lettersOffset + numberOfLetters > answer.length) {
       excludedAnswers++;
       continue;
     }
     let answerFragment: string;
-    if (locationInWord === LetterPanelLocations.Start) {
-      answerFragment = answer.slice(offset, offset + numberOfLetters);
-    } else if (offset > 0) {
-      answerFragment = answer.slice(-numberOfLetters - offset, -offset);
+    if (location === LetterPanelLocations.Start) {
+      answerFragment = answer.slice(
+        lettersOffset,
+        lettersOffset + numberOfLetters,
+      );
+    } else if (lettersOffset > 0) {
+      answerFragment = answer.slice(
+        -numberOfLetters - lettersOffset,
+        -lettersOffset,
+      );
     } else {
       answerFragment = answer.slice(-numberOfLetters);
     }
@@ -60,9 +66,9 @@ export function WordCountList({
   answers,
   correctGuessWords,
   numberOfLetters,
-  locationInWord,
-  offset,
-  tracking,
+  location,
+  lettersOffset,
+  statusTracking,
 }: LetterHintSubsectionProps) {
   const generateOutput = () => {
     const createCell = ({
@@ -79,7 +85,7 @@ export function WordCountList({
       const remaining = total - found;
 
       const cellText = () => {
-        switch (tracking) {
+        switch (statusTracking) {
           case StatusTrackingOptions.FoundOfTotal:
             return `${found}/${total}`;
           case StatusTrackingOptions.RemainingOfTotal:
@@ -95,7 +101,7 @@ export function WordCountList({
 
       const cellClasses = () => {
         let classList = "sb-wcl-fragment-count";
-        if (tracking === StatusTrackingOptions.Total) {
+        if (statusTracking === StatusTrackingOptions.Total) {
           return classList;
         }
         if (found === total) {
@@ -120,9 +126,9 @@ export function WordCountList({
       answers,
       correctGuessWords,
       numberOfLetters,
-      locationInWord,
-      offset,
-      tracking,
+      location,
+      lettersOffset,
+      statusTracking,
     });
     const startingLetterDivs = [];
 
@@ -144,7 +150,7 @@ export function WordCountList({
 
     return (
       <div className="sb-word-count-list-container">
-        <WordLengthGridKey tracking={tracking} />
+        <WordLengthGridKey statusTracking={statusTracking} />
         <div className="sb-word-count-list">{startingLetterDivs}</div>
         <div>Excluded words: {excludedAnswers}</div>
       </div>

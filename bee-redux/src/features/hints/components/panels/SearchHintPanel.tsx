@@ -35,12 +35,13 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
     // addSearchToPanel();
   };
 
-  // const searches = () => {
-  //   if (!isSearchPanelData(panel.typeData)) {
-  //     return [];
-  //   }
-  //   return panel.typeData.searches;
-  // };
+  const searches = () => {
+    if (!isSearchPanelData(panel.typeData)) {
+      return [];
+    }
+    // return panel.typeData.searches;
+    return [];
+  };
 
   const searchSettings = () => <SearchPanelSettings />;
   return (
@@ -58,11 +59,11 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
             Search
           </button>
         </form>
-        {/*<SearchPanelResults*/}
-        {/*  panelId={panel.id}*/}
-        {/*  results={searches()}*/}
-        {/*  tracking={panel.statusTracking}*/}
-        {/*/>*/}
+        <SearchPanelResults
+          panelId={panel.id}
+          results={searches()}
+          tracking={panel.statusTracking}
+        />
       </div>
     </>
   );

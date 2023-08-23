@@ -24,11 +24,12 @@ export function LetterPanelSettings({
   const dispatch = useDispatch();
 
   const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const payload: ChangeLetterPanelDisplayPayload = {
-      panelId,
-      newValue: e.target.value as SubstringHintOutputTypes,
-    };
-    dispatch(changeLetterPanelDisplay(payload));
+    e.preventDefault();
+    // const payload: ChangeLetterPanelDisplayPayload = {
+    //   panelId,
+    //   newValue: e.target.value as SubstringHintOutputTypes,
+    // };
+    // dispatch(changeLetterPanelDisplay(payload));
   };
 
   const displayControl = () => {
@@ -48,11 +49,12 @@ export function LetterPanelSettings({
   };
 
   const handleNumberOfLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const payload: ChangeLetterPanelNumberOfLettersPayload = {
-      panelId,
-      newValue: Number(e.target.value),
-    };
-    dispatch(changeLetterPanelNumberOfLetters(payload));
+    e.preventDefault();
+    // const payload: ChangeLetterPanelNumberOfLettersPayload = {
+    //   panelId,
+    //   newValue: Number(e.target.value),
+    // };
+    // dispatch(changeLetterPanelNumberOfLetters(payload));
   };
   const numOfLettersControl = () => {
     return (
@@ -66,11 +68,12 @@ export function LetterPanelSettings({
   };
 
   const handleLocationInWordChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const payload: ChangeLetterPanelLocationInWordPayload = {
-      panelId,
-      newValue: e.target.value as LetterPanelLocations,
-    };
-    dispatch(changeLetterPanelLocationInWord(payload));
+    e.preventDefault();
+    // const payload: ChangeLetterPanelLocationInWordPayload = {
+    //   panelId,
+    //   newValue: e.target.value as LetterPanelLocations,
+    // };
+    // dispatch(changeLetterPanelLocationInWord(payload));
   };
 
   const locationInWordControl = () => {
@@ -87,11 +90,12 @@ export function LetterPanelSettings({
   };
 
   const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const payload: ChangeLetterPanelOffsetPayload = {
-      panelId,
-      newValue: Number(e.target.value),
-    };
-    dispatch(changeLetterPanelOffset(payload));
+    e.preventDefault();
+    // const payload: ChangeLetterPanelOffsetPayload = {
+    //   panelId,
+    //   newValue: Number(e.target.value),
+    // };
+    // dispatch(changeLetterPanelOffset(payload));
   };
 
   const offsetControl = () => {

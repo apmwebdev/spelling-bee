@@ -10,9 +10,9 @@ export function LettersOnly({
   answers,
   correctGuessWords,
   numberOfLetters,
-  locationInWord,
-  offset,
-  tracking,
+  location,
+  lettersOffset,
+  statusTracking,
 }: LetterHintSubsectionProps) {
   const generateOutput = () => {
     const createCell = ({
@@ -26,7 +26,7 @@ export function LettersOnly({
     }) => {
       const cellClasses = () => {
         let classList = "sb-lol-fragment";
-        if (tracking === StatusTrackingOptions.Total) {
+        if (statusTracking === StatusTrackingOptions.Total) {
           return classList;
         }
         if (cell.guesses === cell.answers) {
@@ -50,9 +50,9 @@ export function LettersOnly({
       answers,
       correctGuessWords,
       numberOfLetters,
-      locationInWord,
-      offset,
-      tracking,
+      location,
+      lettersOffset,
+      statusTracking,
     });
     const startingLetterDivs = [];
 

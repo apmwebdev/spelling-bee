@@ -26,9 +26,9 @@ export function WordLengthGrid({
   answers,
   correctGuessWords,
   numberOfLetters,
-  locationInWord,
-  offset,
-  tracking,
+  location,
+  lettersOffset,
+  statusTracking,
 }: LetterHintSubsectionProps) {
   const answerLengths = useAppSelector(selectAnswerLengths);
 
@@ -46,15 +46,21 @@ export function WordLengthGrid({
     let excludedAnswers = 0;
 
     for (const answer of answers) {
-      if (offset + numberOfLetters > answer.length) {
+      if (lettersOffset + numberOfLetters > answer.length) {
         excludedAnswers++;
         continue;
       }
       let substring: string;
-      if (locationInWord === LetterPanelLocations.Start) {
-        substring = answer.slice(offset, offset + numberOfLetters);
-      } else if (offset > 0) {
-        substring = answer.slice(-numberOfLetters - offset, -offset);
+      if (location === LetterPanelLocations.Start) {
+        substring = answer.slice(
+          lettersOffset,
+          lettersOffset + numberOfLetters,
+        );
+      } else if (lettersOffset > 0) {
+        substring = answer.slice(
+          -numberOfLetters - lettersOffset,
+          -lettersOffset,
+        );
       } else {
         substring = answer.slice(-numberOfLetters);
       }
@@ -107,7 +113,7 @@ export function WordLengthGrid({
           return "sb-wlg-content";
         }
         let returnStr = "";
-        if (tracking !== StatusTrackingOptions.Total) {
+        if (statusTracking !== StatusTrackingOptions.Total) {
           if (cell.guesses === cell.answers) {
             returnStr += "hint-completed";
           } else if (cell.guesses === 0) {
@@ -138,7 +144,7 @@ export function WordLengthGrid({
         createCell("", getCellClasses(...args));
         return;
       }
-      switch (tracking) {
+      switch (statusTracking) {
         case StatusTrackingOptions.FoundOfTotal:
           createCell(`${found}/${total}`, getCellClasses(...args));
           break;
@@ -231,7 +237,7 @@ export function WordLengthGrid({
     );
     return (
       <div className="sb-word-length-grid-container">
-        <WordLengthGridKey tracking={tracking} />
+        <WordLengthGridKey statusTracking={statusTracking} />
         <div className="sb-word-length-grid" style={gridStyle}>
           {gridArr}
         </div>

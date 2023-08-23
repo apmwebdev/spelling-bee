@@ -115,20 +115,3 @@ export const {
   useUpdateUserPrefsMutation,
   useGetUserBaseDataQuery,
 } = userDataApiSlice;
-
-export const getCurrentHintProfile = () => {
-  console.log("Hey! Listen!");
-  return userDataApiSlice.endpoints.getUserPrefs.useQueryState(undefined, {
-    selectFromResult: ({ data }) =>
-      data?.currentHintProfile ?? defaultCurrentHintProfile,
-  });
-};
-
-export const setCurrentHintProfile = (profile: HintProfileBasicData) => {
-  store.dispatch(
-    userDataApiSlice.endpoints.updateUserPrefs.initiate({
-      current_hint_profile_type: profile.type,
-      current_hint_profile_id: profile.id,
-    }),
-  );
-};

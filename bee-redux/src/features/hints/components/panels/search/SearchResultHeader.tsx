@@ -1,11 +1,10 @@
-import {
-  removeSearch,
-  SearchPanelLocations,
-  SearchPanelSearch,
-  StringHintDisplayOptions,
-} from "../../../hintProfilesSlice";
 import { HeaderRemoveButton } from "@/utils/HeaderRemoveButton";
 import { useDispatch } from "react-redux";
+import {
+  SearchPanelLocations,
+  SearchPanelSearch,
+  SubstringHintOutputTypes,
+} from "@/features/hints";
 
 export function SearchResultHeader({
   panelId,
@@ -14,14 +13,14 @@ export function SearchResultHeader({
   panelId: number;
   searchObject: SearchPanelSearch;
 }) {
-  const { searchId, searchString, searchLocation, offset, display } =
+  const { id, searchString, location, lettersOffset, outputType } =
     searchObject;
   const dispatch = useDispatch();
 
   const title = () => {
     const offsetString = () => {
       let returnString = "";
-      for (let i = 0; i < offset; i++) {
+      for (let i = 0; i < lettersOffset; i++) {
         returnString += "-";
       }
       return returnString;
@@ -29,17 +28,17 @@ export function SearchResultHeader({
 
     let titleString = "";
 
-    if (searchLocation === SearchPanelLocations.Anywhere) {
+    if (location === SearchPanelLocations.Anywhere) {
       titleString += `...${searchString.toUpperCase()}... `;
-    } else if (searchLocation === SearchPanelLocations.Beginning) {
+    } else if (location === SearchPanelLocations.Start) {
       titleString += `${offsetString()}${searchString.toUpperCase()}... `;
-    } else if (searchLocation === SearchPanelLocations.End) {
+    } else if (location === SearchPanelLocations.End) {
       titleString += `...${searchString.toUpperCase()}${offsetString()} `;
     }
 
-    if (display === StringHintDisplayOptions.WordLengthGrid) {
+    if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
       titleString += " Word Lengths";
-    } else if (display === StringHintDisplayOptions.WordCountList) {
+    } else if (outputType === SubstringHintOutputTypes.WordCountList) {
       titleString += " Word Count";
     } else {
       titleString += " Yes or No";
@@ -48,7 +47,7 @@ export function SearchResultHeader({
   };
 
   const handleClickRemoveButton = () => {
-    dispatch(removeSearch({ panelId, searchId }));
+    // dispatch(removeSearch({ panelId, searchId }));
   };
 
   return (

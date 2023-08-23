@@ -1,7 +1,3 @@
-import {
-  SearchPanelLocations,
-  SearchPanelSearch,
-} from "../../../hintProfilesSlice";
 import { GridRow } from "../letter/WordLengthGrid";
 import { useAppSelector } from "@/app/hooks";
 import {
@@ -11,7 +7,11 @@ import {
 import { selectCorrectGuessWords } from "@/features/guesses/guessesSlice";
 import { SearchResult } from "./SearchResult";
 import uniqid from "uniqid";
-import { StatusTrackingOptions } from "@/features/hints";
+import {
+  SearchPanelLocations,
+  SearchPanelSearch,
+  StatusTrackingOptions,
+} from "@/features/hints";
 
 interface ResultData {
   searchObject: SearchPanelSearch;
@@ -48,25 +48,31 @@ export function SearchPanelResults({
       }
       return returnObject;
     };
-    const { searchString, searchLocation, offset } = searchObject;
+    const { searchString, location, lettersOffset } = searchObject;
     const results = createResultsContainer();
     let excludedAnswers = 0;
     for (const answer of answers) {
       if (
-        (searchLocation === SearchPanelLocations.Anywhere &&
+        (location === SearchPanelLocations.Anywhere &&
           searchString.length > answer.length) ||
-        (searchLocation !== SearchPanelLocations.Anywhere &&
-          offset + searchString.length > answer.length)
+        (location !== SearchPanelLocations.Anywhere &&
+          lettersOffset + searchString.length > answer.length)
       ) {
         excludedAnswers++;
         continue;
       }
       let answerFragment: string;
-      if (searchLocation === SearchPanelLocations.Beginning) {
-        answerFragment = answer.slice(offset, offset + searchString.length);
-      } else if (searchLocation === SearchPanelLocations.End && offset > 0) {
-        answerFragment = answer.slice(-searchString.length - offset, -offset);
-      } else if (searchLocation === SearchPanelLocations.End && offset === 0) {
+      if (location === SearchPanelLocations.Start) {
+        answerFragment = answer.slice(
+          lettersOffset,
+          lettersOffset + searchString.length,
+        );
+      } else if (location === SearchPanelLocations.End && lettersOffset > 0) {
+        answerFragment = answer.slice(
+          -searchString.length - lettersOffset,
+          -lettersOffset,
+        );
+      } else if (location === SearchPanelLocations.End && lettersOffset === 0) {
         answerFragment = answer.slice(-searchString.length);
       } else {
         answerFragment = answer;

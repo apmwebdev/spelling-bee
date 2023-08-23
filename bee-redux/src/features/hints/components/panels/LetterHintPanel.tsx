@@ -20,7 +20,7 @@ export interface LetterHintSubsectionProps {
   numberOfLetters: number;
   location: LetterPanelLocations;
   lettersOffset: number;
-  tracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingOptions;
 }
 
 export interface LetterHintDataCell {
@@ -42,7 +42,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         numberOfLetters,
         location,
         lettersOffset,
-        tracking: panel.statusTracking,
+        statusTracking: panel.statusTracking,
       };
 
       let hintContent;
