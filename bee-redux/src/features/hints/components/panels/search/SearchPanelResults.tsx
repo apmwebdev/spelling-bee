@@ -1,4 +1,4 @@
-import { GridRow } from "../letter/WordLengthGrid";
+import { GridRow } from "../letter/WordLengthGridContainer";
 import { useAppSelector } from "@/app/hooks";
 import {
   selectAnswerLengths,

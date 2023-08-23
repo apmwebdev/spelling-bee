@@ -1061,11 +1061,6 @@ button.sb-revealer {
   padding: 8px 0px;
 }
 
-.sb-basic-hints {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
 .sb-letter-panel-settings {
   display: grid;
   grid-template: 1fr 1fr / 1fr 1fr;
@@ -1078,6 +1073,20 @@ button.sb-revealer {
     justify-content: space-between;
     align-items: center;
    }
+}
+
+.WordLengthGridTable {
+  margin: 8px 0px;
+  td, th:not(.axis-label) {
+    padding: 6px 4px;
+  }
+  th.axis-label {
+    padding: 4px 0px;
+  }
+}
+
+.WlgTdCol, .WlgTotalCol {
+  width: 60px;
 }
 
 .sb-word-length-grid-container,

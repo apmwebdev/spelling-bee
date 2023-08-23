@@ -3,7 +3,7 @@ import {
   LetterHintSubsectionProps,
 } from "../LetterHintPanel";
 import uniqid from "uniqid";
-import { WordLengthGridKey } from "./WordLengthGridKey";
+import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
 import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
 
 export interface ListRow {

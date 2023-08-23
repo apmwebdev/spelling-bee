@@ -1,7 +1,7 @@
 import { HintPanelProps } from "../HintPanel";
 import { LetterPanelSettings } from "./letter/LetterPanelSettings";
 import { WordCountList } from "./letter/WordCountList";
-import { WordLengthGrid } from "./letter/WordLengthGrid";
+import { WordLengthGridContainer } from "./letter/WordLengthGridContainer";
 import { LettersOnly } from "./letter/LettersOnly";
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
@@ -48,7 +48,7 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
 
   const hintOutput = () => {
     if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
-      return <WordLengthGrid {...subsectionProps} />;
+      return <WordLengthGridContainer {...subsectionProps} />;
     } else if (outputType === SubstringHintOutputTypes.WordCountList) {
       return <WordCountList {...subsectionProps} />;
     } else if (outputType === SubstringHintOutputTypes.LettersList) {
