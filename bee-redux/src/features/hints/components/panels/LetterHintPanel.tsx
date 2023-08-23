@@ -1,8 +1,4 @@
 import { HintPanelProps } from "../HintPanel";
-import {
-  isLetterPanelSettings,
-  StringHintDisplayOptions,
-} from "../../hintProfilesSlice";
 import { LetterPanelSettings } from "./letter/LetterPanelSettings";
 import { WordCountList } from "./letter/WordCountList";
 import { WordLengthGrid } from "./letter/WordLengthGrid";
@@ -11,14 +7,19 @@ import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
 import { HintPanelSettings } from "../HintPanelSettings";
-import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
+import {
+  isLetterPanelData,
+  LetterPanelLocations,
+  StatusTrackingOptions,
+  SubstringHintOutputTypes,
+} from "@/features/hints";
 
 export interface LetterHintSubsectionProps {
   answers: string[];
   correctGuessWords: string[];
   numberOfLetters: number;
-  locationInWord: LetterPanelLocations;
-  offset: number;
+  location: LetterPanelLocations;
+  lettersOffset: number;
   tracking: StatusTrackingOptions;
 }
 
@@ -31,26 +32,26 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
   const answers = useAppSelector(selectAnswerWords);
   const correctGuessWords = useAppSelector(selectCorrectGuessWords);
   const content = () => {
-    if (isLetterPanelSettings(panel.typeSpecificData)) {
-      const { numberOfLetters, locationInWord, offset, display } =
-        panel.typeSpecificData;
+    if (isLetterPanelData(panel.typeData)) {
+      const { numberOfLetters, location, lettersOffset, outputType } =
+        panel.typeData;
 
       const subsectionProps: LetterHintSubsectionProps = {
         answers,
         correctGuessWords,
         numberOfLetters,
-        locationInWord,
-        offset,
+        location,
+        lettersOffset,
         tracking: panel.statusTracking,
       };
 
       let hintContent;
 
-      if (display === StringHintDisplayOptions.WordLengthGrid) {
+      if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
         hintContent = <WordLengthGrid {...subsectionProps} />;
-      } else if (display === StringHintDisplayOptions.WordCountList) {
+      } else if (outputType === SubstringHintOutputTypes.WordCountList) {
         hintContent = <WordCountList {...subsectionProps} />;
-      } else if (display === StringHintDisplayOptions.LettersOnly) {
+      } else if (outputType === SubstringHintOutputTypes.LettersList) {
         hintContent = <LettersOnly {...subsectionProps} />;
       } else {
         hintContent = <div>hullo</div>;
@@ -60,9 +61,9 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
         <LetterPanelSettings
           panelId={panel.id}
           numberOfLetters={numberOfLetters}
-          locationInWord={locationInWord}
-          offset={offset}
-          display={display}
+          location={location}
+          lettersOffset={lettersOffset}
+          outputType={outputType}
         />
       );
 

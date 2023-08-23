@@ -1,7 +1,6 @@
 import { HintPanelProps } from "../HintPanel";
 import { FormEvent, useState } from "react";
 import { HintPanelSettings } from "../HintPanelSettings";
-import { addSearch } from "../../hintProfilesSlice";
 import { SearchPanelSettings } from "./search/SearchPanelSettings";
 import { useDispatch } from "react-redux";
 import { random } from "lodash";
@@ -12,36 +11,36 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
 
-  const addSearchToPanel = () => {
-    if (!isSearchPanelData(panel.typeSpecificData)) {
-      return;
-    }
-    const { searchLocation, offset, display } =
-      panel.typeSpecificData.currentSettings;
-    const payload = {
-      panelId: panel.id,
-      search: {
-        searchId: random(1000),
-        searchString: searchValue,
-        searchLocation,
-        offset,
-        display,
-      },
-    };
-    dispatch(addSearch(payload));
-  };
+  // const addSearchToPanel = () => {
+  //   if (!isSearchPanelData(panel.typeData)) {
+  //     return;
+  //   }
+  //   const { location, lettersOffset, outputType } =
+  //     panel.typeData;
+  //   const payload = {
+  //     panelId: panel.id,
+  //     search: {
+  //       searchId: random(1000),
+  //       searchString: searchValue,
+  //       location,
+  //       lettersOffset,
+  //       outputType,
+  //     },
+  //   };
+  //   dispatch(addSearch(payload));
+  // };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addSearchToPanel();
+    // addSearchToPanel();
   };
 
-  const searches = () => {
-    if (!isSearchPanelData(panel.typeSpecificData)) {
-      return [];
-    }
-    return panel.typeSpecificData.searches;
-  };
+  // const searches = () => {
+  //   if (!isSearchPanelData(panel.typeData)) {
+  //     return [];
+  //   }
+  //   return panel.typeData.searches;
+  // };
 
   const searchSettings = () => <SearchPanelSettings />;
   return (
@@ -59,11 +58,11 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
             Search
           </button>
         </form>
-        <SearchPanelResults
-          panelId={panel.id}
-          results={searches()}
-          tracking={panel.statusTracking}
-        />
+        {/*<SearchPanelResults*/}
+        {/*  panelId={panel.id}*/}
+        {/*  results={searches()}*/}
+        {/*  tracking={panel.statusTracking}*/}
+        {/*/>*/}
       </div>
     </>
   );

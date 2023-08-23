@@ -1,54 +1,46 @@
-import {
-  changeLetterPanelDisplay,
-  ChangeLetterPanelDisplayPayload,
-  changeLetterPanelLocationInWord,
-  ChangeLetterPanelLocationInWordPayload,
-  changeLetterPanelNumberOfLetters,
-  ChangeLetterPanelNumberOfLettersPayload,
-  changeLetterPanelOffset,
-  ChangeLetterPanelOffsetPayload,
-  StringHintDisplayOptions,
-} from "../../../hintProfilesSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
 import { capitalize } from "lodash";
-import { LetterPanelLocations } from "@/features/hints";
+import {
+  LetterPanelLocations,
+  SubstringHintOutputTypes,
+} from "@/features/hints";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
   numberOfLetters: number;
-  locationInWord: LetterPanelLocations;
-  offset: number;
-  display: StringHintDisplayOptions;
+  location: LetterPanelLocations;
+  lettersOffset: number;
+  outputType: SubstringHintOutputTypes;
 }
 
 export function LetterPanelSettings({
   panelId,
   numberOfLetters,
-  locationInWord,
-  offset,
-  display,
+  location,
+  lettersOffset,
+  outputType,
 }: LetterPanelSettingsProps) {
   const dispatch = useDispatch();
 
   const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload: ChangeLetterPanelDisplayPayload = {
       panelId,
-      newValue: e.target.value as StringHintDisplayOptions,
+      newValue: e.target.value as SubstringHintOutputTypes,
     };
     dispatch(changeLetterPanelDisplay(payload));
   };
 
   const displayControl = () => {
     return (
-      <select value={display} onChange={handleDisplayChange}>
-        <option value={StringHintDisplayOptions.WordLengthGrid}>
+      <select value={outputType} onChange={handleDisplayChange}>
+        <option value={SubstringHintOutputTypes.WordLengthGrid}>
           Word Length Grid
         </option>
-        <option value={StringHintDisplayOptions.WordCountList}>
+        <option value={SubstringHintOutputTypes.WordCountList}>
           Word Count List
         </option>
-        <option value={StringHintDisplayOptions.LettersOnly}>
+        <option value={SubstringHintOutputTypes.LettersList}>
           Letters Only
         </option>
       </select>
@@ -83,7 +75,7 @@ export function LetterPanelSettings({
 
   const locationInWordControl = () => {
     return (
-      <select value={locationInWord} onChange={handleLocationInWordChange}>
+      <select value={location} onChange={handleLocationInWordChange}>
         <option value={LetterPanelLocations.Start}>
           {capitalize(LetterPanelLocations.Start)} of word
         </option>
@@ -107,7 +99,7 @@ export function LetterPanelSettings({
       <input
         className="sb-offset-control"
         type="number"
-        value={offset}
+        value={lettersOffset}
         onChange={handleOffsetChange}
       />
     );

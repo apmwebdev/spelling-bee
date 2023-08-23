@@ -1,14 +1,14 @@
-import { useAppSelector } from "@/app/hooks";
-import { selectHintProfiles } from "../hintProfilesSlice";
 import { HintPanel } from "./HintPanel";
+import { hintApiSlice } from "@/features/hints/hintApiSlice";
 
 export function HintPanels() {
-  const { currentProfile } = useAppSelector(selectHintProfiles);
+  const currentProfile =
+    hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
   return (
     <div className="HintPanels">
-      {/*{currentProfile.panels.map((panel, i) => {*/}
-      {/*  return <HintPanel key={`hintPanel ${i}`} panel={panel} />;*/}
-      {/*})}*/}
+      {currentProfile.data?.panels.map((panel, i) => {
+        return <HintPanel key={`hintPanel ${i}`} panel={panel} />;
+      })}
     </div>
   );
 }

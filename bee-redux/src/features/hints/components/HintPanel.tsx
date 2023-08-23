@@ -1,4 +1,4 @@
-import { PanelTypes, setIsCollapsed } from "../hintProfilesSlice";
+import { setIsCollapsed } from "../hintProfilesSlice";
 import { LetterHintPanel } from "./panels/LetterHintPanel";
 import { SearchHintPanel } from "./panels/SearchHintPanel";
 import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel";
@@ -9,7 +9,7 @@ import { PanelHeader } from "./generalControls/PanelHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
 import { useDispatch } from "react-redux";
-import { HintPanelData } from "@/features/hints";
+import { HintPanelData, PanelTypes } from "@/features/hints";
 
 export interface HintPanelProps {
   panel: HintPanelData;
@@ -22,14 +22,14 @@ export function HintPanel({ panel }: HintPanelProps) {
     if (answers.length === 0) {
       return;
     }
-    switch (panel.type) {
+    switch (panel.typeData.panelType) {
       case PanelTypes.Letter:
         return <LetterHintPanel panel={panel} />;
       case PanelTypes.Search:
         return <SearchHintPanel panel={panel} />;
-      case PanelTypes.WordObscurity:
+      case PanelTypes.Obscurity:
         return <WordObscurityHintPanel panel={panel} />;
-      case PanelTypes.Definitions:
+      case PanelTypes.Definition:
         return <DefinitionsHintPanel panel={panel} />;
       default:
         return null;

@@ -1,15 +1,14 @@
 import {
-  HintPanelFormat,
   PanelInitialDisplayOptions,
   setInitialDisplay,
   setTracking,
 } from "@/features/hints/hintProfilesSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
-import { StatusTrackingOptions } from "@/features/hints";
+import { HintPanelData, StatusTrackingOptions } from "@/features/hints";
 
 interface GeneralPanelSettingsProps {
-  panel: HintPanelFormat;
+  panel: HintPanelData;
 }
 
 export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
@@ -25,7 +24,7 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
 
   const liveUpdateOptions = () => {
     return (
-      <select value={panel.tracking} onChange={handleTrackingChange}>
+      <select value={panel.statusTracking} onChange={handleTrackingChange}>
         <option value={StatusTrackingOptions.RemainingOfTotal}>
           Remaining of total
         </option>
@@ -47,25 +46,25 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
     dispatch(setInitialDisplay(payload));
   };
 
-  const initialDisplayOptions = () => {
-    return (
-      <select
-        value={panel.initialDisplay}
-        onChange={handleInitialDisplayChange}
-      >
-        <option value={PanelInitialDisplayOptions.Sticky}>Sticky</option>
-        <option value={PanelInitialDisplayOptions.Expanded}>Expanded</option>
-        <option value={PanelInitialDisplayOptions.Blurred}>Blurred</option>
-        <option value={PanelInitialDisplayOptions.Collapsed}>Collapsed</option>
-        {/*<option*/}
-        {/*  key={uniqid()}*/}
-        {/*  value={PanelInitialDisplayOptions.CollapsedAndBlurred}*/}
-        {/*>*/}
-        {/*  Collapsed and blurred*/}
-        {/*</option>*/}
-      </select>
-    );
-  };
+  // const initialDisplayOptions = () => {
+  //   return (
+  //     <select
+  //       value={panel.initialDisplay}
+  //       onChange={handleInitialDisplayChange}
+  //     >
+  //       <option value={PanelInitialDisplayOptions.Sticky}>Sticky</option>
+  //       <option value={PanelInitialDisplayOptions.Expanded}>Expanded</option>
+  //       <option value={PanelInitialDisplayOptions.Blurred}>Blurred</option>
+  //       <option value={PanelInitialDisplayOptions.Collapsed}>Collapsed</option>
+  //       {/*<option*/}
+  //       {/*  key={uniqid()}*/}
+  //       {/*  value={PanelInitialDisplayOptions.CollapsedAndBlurred}*/}
+  //       {/*>*/}
+  //       {/*  Collapsed and blurred*/}
+  //       {/*</option>*/}
+  //     </select>
+  //   );
+  // };
 
   return (
     <div className="sb-general-hint-settings">
@@ -73,7 +72,7 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
         <span>Display:</span> {liveUpdateOptions()}
       </div>
       <div className="sb-hint-load-section">
-        <span>Load as:</span> {initialDisplayOptions()}
+        <span>Load as:</span> TODO
       </div>
     </div>
   );

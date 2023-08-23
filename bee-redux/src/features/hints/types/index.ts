@@ -103,7 +103,7 @@ export interface LetterPanelFormData {
 }
 
 export interface LetterPanelData extends LetterPanelFormData {
-  panelType: string;
+  panelType: PanelTypes;
 }
 
 export function isLetterPanelData(a: any): a is LetterPanelData {
@@ -127,7 +127,7 @@ export interface SearchPanelFormData {
 }
 
 export interface SearchPanelData extends SearchPanelFormData {
-  panelType: string;
+  panelType: PanelTypes;
   // ID is necessary for search panels so that searches know which panel they
   // belong to
   id: number;
@@ -154,7 +154,7 @@ export interface ObscurityPanelFormData {
 }
 
 export interface ObscurityPanelData extends ObscurityPanelFormData {
-  panelType: string;
+  panelType: PanelTypes;
 }
 
 export function isObscurityPanelData(a: any): a is ObscurityPanelData {
@@ -169,7 +169,7 @@ export interface DefinitionPanelFormData {
 }
 
 export interface DefinitionPanelData extends DefinitionPanelFormData {
-  panelType: string;
+  panelType: PanelTypes;
 }
 
 export function isDefinitionPanelData(a: any): a is DefinitionPanelData {
@@ -182,7 +182,7 @@ export interface HintPanelData {
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
   statusTracking: StatusTrackingOptions;
-  panelTypeData:
+  typeData:
     | LetterPanelData
     | SearchPanelData
     | ObscurityPanelData
