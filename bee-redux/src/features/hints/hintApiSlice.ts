@@ -7,7 +7,6 @@ import {
   UserHintProfileBasic,
   UserHintProfileComplete,
   UserHintProfileForm,
-  DefaultHintProfile,
   CompleteHintProfile,
   CurrentHintProfileFormData,
   HintProfileTypes,

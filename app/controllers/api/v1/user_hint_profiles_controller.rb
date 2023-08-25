@@ -1,9 +1,13 @@
 class Api::V1::UserHintProfilesController < AuthRequiredController
   before_action :set_user_hint_profile, only: %i[ show update destroy ]
+  skip_before_action :authenticate_user!, only: :get_all_hint_profiles
 
   def get_all_hint_profiles
-    @user_hint_profiles = UserHintProfile.where(user_id: current_user.id)
-    render json: HintPresenter.present_all_profiles(current_user)
+    if user_signed_in?
+      render json: HintPresenter.present_all_profiles(current_user)
+    else
+      render json: HintPresenter.present_default_profiles
+    end
   end
 
   # GET /user_hint_profiles

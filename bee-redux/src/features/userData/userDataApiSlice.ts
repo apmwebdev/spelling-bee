@@ -1,16 +1,9 @@
 import { apiSlice } from "../api/apiSlice";
 import {
-  CompleteHintProfile,
-  CurrentHintProfileFormData,
-  defaultCurrentHintProfile,
-  HintProfileBasicData,
-  HintProfilesData,
-  HintProfileTypes,
   UserBaseData,
   UserPrefsData,
   UserPrefsFormData,
 } from "@/features/hints";
-import { store } from "@/app/store";
 import { hintApiSlice } from "@/features/hints/hintApiSlice";
 
 // Meant to be used within an updateQueryData function to update state immutably.
@@ -58,7 +51,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
      * For initial page load. Can fetch before puzzle loads. Combines
      * - getPrefs
      * - getHintProfiles from hintApiSlice
-     * - getUserHintProfile, if applicable, from hintApiSlice
+     * - getCurrentHintProfile, if applicable, from hintApiSlice
      * Those 3 endpoints need to be updated with the returned data
      */
     getUserBaseData: builder.query<UserBaseData, void>({
@@ -99,7 +92,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
     }),
     /**
      * For after the puzzle loads, as it requires the puzzle ID. Combines
-     * - getGuesses
+     * - getCurrentAttempts
      * - getSearches
      */
     getUserPuzzleData: builder.query<any, number>({

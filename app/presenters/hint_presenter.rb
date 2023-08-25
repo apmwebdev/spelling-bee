@@ -7,4 +7,10 @@ module HintPresenter
       defaultHintProfiles: DefaultHintProfile.all.map { |profile| profile.to_front_end_complete },
     }
   end
+  def self.present_default_profiles
+    {
+      userHintProfiles: [],
+      defaultHintProfiles: DefaultHintProfile.all.map { |profile| profile.to_front_end_complete },
+    }
+  end
 end
