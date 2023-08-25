@@ -262,14 +262,15 @@ button {
   align-items: center;
   border-radius: var(--br);
   font-size: 14px;
-  background-color: $dark-gray;
+  background-color: $light-gray-bg;
+  color: $dark-gray;
   padding: 6px 12px;
-  border: 1px solid $dark-gray-lighter;
+  //border: 1px solid $dark-gray-lighter;
   //box-shadow: 0px 0px 0px 3px $dark-gray;
 }
 
 .TooltipArrow {
-  fill: $dark-gray-lighter;
+  fill: $light-gray-bg;
 }
 
 
