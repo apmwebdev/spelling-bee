@@ -15,6 +15,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: formData,
       }),
+      onQueryStarted: async (_arg, { queryFulfilled, getCacheEntry }) => {
+        await queryFulfilled;
+        const cacheEntry = getCacheEntry();
+        if (cacheEntry.isSuccess && cacheEntry.data) {
+          try {
+            localStorage.setItem("user", JSON.stringify(cacheEntry.data));
+            localStorage.setItem("isGuest", "false");
+          } catch (err) {
+            console.log(
+              "Couldn't save public user info to local storage:",
+              err,
+            );
+          }
+        }
+      },
     }),
     logout: builder.mutation({
       query: () => ({

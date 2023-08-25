@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { RootState } from "../../app/store";
+import { RootState } from "@/app/store";
 import {
   AttemptFormat,
   GuessFormat,

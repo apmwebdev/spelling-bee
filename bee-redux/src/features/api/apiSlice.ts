@@ -6,7 +6,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import { logout, populateUserDataFromStorage } from "../auth/authSlice";
+import { logoutThunk } from "../auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3000/api/v1",
@@ -18,17 +18,10 @@ const baseQueryWithAuth = async (
   api: BaseQueryApi,
   extraOptions: BaseQueryExtraOptions<BaseQueryFn>,
 ) => {
-  // @ts-ignore
-  if (!api.getState().auth?.user) {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      api.dispatch(populateUserDataFromStorage());
-    }
-  }
   const result = await baseQuery(args, api, extraOptions);
   // @ts-ignore
-  if (result?.error?.originalStatus === 401) {
-    api.dispatch(logout());
+  if (result.error?.originalStatus === 401) {
+    api.dispatch(logoutThunk);
   }
   return result;
 };

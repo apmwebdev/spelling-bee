@@ -58,11 +58,13 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     >({}),
     // ⚠️
     deleteUserHintProfile: builder.mutation<boolean, number>({}),
+    // ✅
     getCurrentHintProfile: builder.query<CompleteHintProfile, void>({
       query: () => ({
         url: "/current_hint_profile",
       }),
     }),
+    // ✅
     setCurrentHintProfile: builder.mutation<
       CompleteHintProfile,
       CurrentHintProfileFormData

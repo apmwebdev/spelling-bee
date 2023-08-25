@@ -21,8 +21,6 @@ export function LetterPanelSettings({
   lettersOffset,
   outputType,
 }: LetterPanelSettingsProps) {
-  const dispatch = useDispatch();
-
   const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     // const payload: ChangeLetterPanelDisplayPayload = {

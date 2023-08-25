@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "@/app/store";
+import type { AppDispatch, RootState } from "@/app/store";
 import { authApiSlice } from "./authApiSlice";
 
 export interface User {
@@ -10,26 +10,48 @@ export interface User {
 
 interface AuthState {
   user: User | null;
+  isGuest: boolean;
 }
 
-const InitialState: AuthState = {
-  user: null,
+const rehydrateAuthState = (): AuthState => {
+  const storedUser = localStorage.getItem("user");
+  const storedIsGuest = localStorage.getItem("isGuest");
+  const authState: AuthState = {
+    user: null,
+    isGuest: storedIsGuest === "true" || false,
+  };
+  if (storedUser) {
+    try {
+      const maybeUser = JSON.parse(storedUser);
+      if (
+        typeof maybeUser.email === "string" &&
+        typeof maybeUser.name === "string" &&
+        typeof maybeUser.username === "string"
+      ) {
+        authState.user = maybeUser;
+      }
+    } catch {}
+  }
+  return authState;
+};
+
+export const logoutThunk = (dispatch: AppDispatch) => {
+  dispatch(logoutLocal);
+  localStorage.removeItem("user");
+  try {
+    localStorage.setItem("isGuest", "true");
+  } catch (err) {
+    console.log("Couldn't save 'isGuest' to local storage:", err);
+  }
 };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: InitialState,
+  initialState: rehydrateAuthState(),
   reducers: {
-    logout: (state) => {
+    logoutLocal: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
-    },
-    populateUserDataFromStorage: (state) => {
-      if (state.user) return;
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        state.user = JSON.parse(storedUser);
-      }
+      state.isGuest = true;
     },
   },
   extraReducers: (builder) => {
@@ -37,26 +59,18 @@ const authSlice = createSlice({
       .addMatcher(
         authApiSlice.endpoints.login.matchFulfilled,
         (state, { payload }) => {
-          const userData = payload.status.data.user;
-          state.user = userData;
-          try {
-            localStorage.setItem("user", JSON.stringify(userData));
-          } catch (err) {
-            console.log(
-              "Couldn't save public user info to local storage:",
-              err,
-            );
-          }
+          state.user = payload.status.data.user;
+          state.isGuest = false;
         },
       )
       .addMatcher(authApiSlice.endpoints.logout.matchFulfilled, (state) => {
         state.user = null;
-        localStorage.removeItem("user");
+        state.isGuest = true;
       });
   },
 });
 
-export const { logout, populateUserDataFromStorage } = authSlice.actions;
+export const { logoutLocal } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
 
