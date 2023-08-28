@@ -7,6 +7,8 @@ class CreateHintPanels < ActiveRecord::Migration[7.0]
       t.references :current_display_state, null: false, foreign_key: {to_table: :panel_display_states}
       t.references :status_tracking, type: :string, null: false, foreign_key: {to_table: :status_tracking_options, primary_key: :key}
       t.references :panel_subtype, polymorphic: true, null: false
+      t.integer :display_index
+      t.check_constraint "display_index > 0", name: "positive_display_index"
 
       t.timestamps
     end

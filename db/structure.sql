@@ -223,7 +223,9 @@ CREATE TABLE public.hint_panels (
     panel_subtype_type character varying NOT NULL,
     panel_subtype_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    display_index integer,
+    CONSTRAINT positive_display_index CHECK ((display_index > 0))
 );
 
 
@@ -1308,6 +1310,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230815065033'),
 ('20230815073035'),
 ('20230816121754'),
-('20230818004354');
+('20230818004354'),
+('20230828060858');
 
 
