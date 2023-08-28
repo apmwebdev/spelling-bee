@@ -36,7 +36,6 @@ export function HintPanel({ panel }: HintPanelProps) {
   };
 
   const toggleExpanded = () => {
-    console.log("toggleExpanded");
     updatePanel({
       id: panel.id,
       debounceField: "currentIsExpanded",

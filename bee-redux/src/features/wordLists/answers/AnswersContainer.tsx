@@ -5,7 +5,7 @@ import {
   selectValidLetters,
 } from "../../puzzle/puzzleSlice";
 import { WordListScroller } from "../WordListScroller";
-import { SettingsCollapsible } from "../SettingsCollapsible";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import {
   selectAnswersListSettings,
   toggleAnswersSettingsCollapsed,
@@ -51,8 +51,8 @@ export function AnswersContainer() {
   return (
     <div className="sb-answers-container">
       <SettingsCollapsible
-        isCollapsed={settingsCollapsed}
-        toggleIsCollapsed={() => dispatch(toggleAnswersSettingsCollapsed())}
+        isExpanded={!settingsCollapsed}
+        toggleIsExpanded={() => dispatch(toggleAnswersSettingsCollapsed())}
       >
         <AnswersSettings />
       </SettingsCollapsible>

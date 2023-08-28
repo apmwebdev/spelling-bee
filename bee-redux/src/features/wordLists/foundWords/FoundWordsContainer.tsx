@@ -9,7 +9,7 @@ import {
 import { WordListScroller } from "../WordListScroller";
 import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
-import { SettingsCollapsible } from "../SettingsCollapsible";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { FoundWordsSettings } from "./FoundWordsSettings";
 
 export function FoundWordsContainer() {
@@ -65,8 +65,8 @@ export function FoundWordsContainer() {
   return (
     <div className="sb-found-words-container">
       <SettingsCollapsible
-        isCollapsed={settingsCollapsed}
-        toggleIsCollapsed={() => dispatch(toggleFoundWordsSettingsCollapsed())}
+        isExpanded={!settingsCollapsed}
+        toggleIsExpanded={() => dispatch(toggleFoundWordsSettingsCollapsed())}
       >
         <FoundWordsSettings />
       </SettingsCollapsible>

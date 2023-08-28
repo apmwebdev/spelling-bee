@@ -1,10 +1,11 @@
 import { GeneralPanelSettings } from "./GeneralPanelSettings";
 import { ReactNode } from "react";
-import { SettingsHeader } from "./generalControls/SettingsHeader";
+import { SettingsHeader } from "../../../components/SettingsHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
-import { useDispatch } from "react-redux";
 import { HintPanelData } from "@/features/hints";
+import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
 interface HintPanelSettingsProps {
   panel: HintPanelData;
@@ -12,35 +13,24 @@ interface HintPanelSettingsProps {
 }
 
 export function HintPanelSettings({ panel, children }: HintPanelSettingsProps) {
-  const dispatch = useDispatch();
-  const toggleCollapsed = () => {
-    // dispatch(
-    //   setSettingsAreCollapsed({
-    //     panelId: panel.id,
-    //     settingsAreCollapsed: !panel.settingsAreCollapsed,
-    //   }),
-    // );
+  const [updatePanel] = useUpdateHintPanelMutation();
+  const toggleExpanded = () => {
+    updatePanel({
+      id: panel.id,
+      debounceField: "currentIsSettingsExpanded",
+      currentDisplayState: {
+        isSettingsExpanded: !panel.currentDisplayState.isSettingsExpanded,
+      },
+    });
   };
 
   return (
-    <Collapsible.Root
-      className="SettingsCollapsible"
-      open={panel.currentDisplayState.isSettingsExpanded}
+    <SettingsCollapsible
+      isExpanded={panel.currentDisplayState.isSettingsExpanded}
+      toggleIsExpanded={toggleExpanded}
     >
-      <SettingsHeader>
-        <Collapsible.Trigger asChild>
-          <button
-            className="SettingsCollapsibleHeaderButton"
-            onClick={toggleCollapsed}
-          >
-            <HeaderDisclosureWidget title="Settings" />
-          </button>
-        </Collapsible.Trigger>
-      </SettingsHeader>
-      <Collapsible.Content className="sb-hint-panel-settings-content">
-        {children}
-        <GeneralPanelSettings panel={panel} />
-      </Collapsible.Content>
-    </Collapsible.Root>
+      {children}
+      <GeneralPanelSettings panel={panel} />
+    </SettingsCollapsible>
   );
 }

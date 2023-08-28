@@ -7,7 +7,7 @@ import {
   SortOrder,
   toggleExcludedWordsSettingsCollapsed,
 } from "../wordListSettingsSlice";
-import { SettingsCollapsible } from "../SettingsCollapsible";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
 export function ExcludedWordsContainer() {
   const dispatch = useAppDispatch();
@@ -20,8 +20,8 @@ export function ExcludedWordsContainer() {
   return (
     <div className="sb-excluded-words-container">
       <SettingsCollapsible
-        isCollapsed={settingsCollapsed}
-        toggleIsCollapsed={() =>
+        isExpanded={!settingsCollapsed}
+        toggleIsExpanded={() =>
           dispatch(toggleExcludedWordsSettingsCollapsed())
         }
       >

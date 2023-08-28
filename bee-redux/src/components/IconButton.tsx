@@ -64,7 +64,7 @@ export function IconButton({
     <BasicTooltip text={tooltip}>
       <button
         type="button"
-        // onClick={onClick ? onClick() : null}
+        onClick={onClick ? () => onClick() : undefined}
         className={composeClasses("IconButton", className ?? "")}
       >
         <Icon icon={IconButtonTypes[type].icon} />

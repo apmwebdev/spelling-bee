@@ -147,7 +147,18 @@ export const hintApiSlice = apiSlice.injectEndpoints({
                 (hintPanel) => hintPanel.id === formData.id,
               );
               if (!panel) return;
-              Object.assign(panel, formData);
+              if (formData.name) panel.name = formData.name;
+              if (formData.statusTracking)
+                panel.statusTracking = formData.statusTracking;
+              Object.assign(
+                panel.initialDisplayState,
+                formData.initialDisplayState,
+              );
+              Object.assign(
+                panel.currentDisplayState,
+                formData.currentDisplayState,
+              );
+              Object.assign(panel.typeData, formData.panelSubtype);
             },
           ),
         );
@@ -158,9 +169,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         ) {
           return { data: true };
         }
-        return { data: true };
         const query = async () => {
-          console.log("Running query...");
           try {
             await baseQuery({
               url: `/hint_panels/${formData.id}`,

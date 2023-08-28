@@ -1,24 +1,24 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { SettingsHeader } from "../hints/components/generalControls/SettingsHeader";
+import { SettingsHeader } from "./SettingsHeader";
 import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import React from "react";
 
 export function SettingsCollapsible({
-  isCollapsed,
-  toggleIsCollapsed,
+  isExpanded,
+  toggleIsExpanded,
   children,
 }: {
-  isCollapsed: boolean;
-  toggleIsCollapsed: Function;
+  isExpanded: boolean;
+  toggleIsExpanded: Function;
   children: React.ReactNode;
 }) {
   return (
-    <Collapsible.Root className="collapsible-settings" open={!isCollapsed}>
+    <Collapsible.Root className="SettingsCollapsible" open={isExpanded}>
       <SettingsHeader>
         <Collapsible.Trigger asChild>
           <button
-            className="collapsible-settings-header-button"
-            onClick={() => toggleIsCollapsed()}
+            className="SettingsCollapsibleHeaderButton"
+            onClick={() => toggleIsExpanded()}
           >
             <HeaderDisclosureWidget title="Settings" />
           </button>

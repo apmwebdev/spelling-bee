@@ -7,7 +7,7 @@ import {
   toggleWrongGuessesSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
-import { SettingsCollapsible } from "../SettingsCollapsible";
+import { SettingsCollapsible } from "../../../components/SettingsCollapsible";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();
@@ -47,10 +47,8 @@ export function WrongGuessesContainer() {
   return (
     <div className="sb-wrong-guesses-container">
       <SettingsCollapsible
-        isCollapsed={settingsCollapsed}
-        toggleIsCollapsed={() =>
-          dispatch(toggleWrongGuessesSettingsCollapsed())
-        }
+        isExpanded={!settingsCollapsed}
+        toggleIsExpanded={() => dispatch(toggleWrongGuessesSettingsCollapsed())}
       >
         No content
       </SettingsCollapsible>

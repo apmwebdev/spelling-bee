@@ -15,6 +15,5 @@ export const keysToSnakeCase = (obj: AnyObject) => {
       ? keysToSnakeCase(obj[key])
       : obj[key];
   }
-  console.log(newObject);
   return newObject;
 };
