@@ -1,20 +1,18 @@
-import { duplicatePanel } from "../../hintProfilesSlice";
-import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
+import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
 interface DuplicateButtonProps {
   panelId: number;
 }
 
 export function DuplicateButton({ panelId }: DuplicateButtonProps) {
-  const dispatch = useDispatch();
 
   return (
-    <button
-      className="button"
-      onClick={() => dispatch(duplicatePanel({ panelId }))}
-    >
-      <Icon icon="mdi:content-copy" className="sb-hint-duplicate-button"></Icon>
-    </button>
+    <IconButton
+      type={IconButtonTypeKeys.Duplicate}
+      className="HintPanelHeaderButton button"
+      // onClick={() => dispatch(duplicatePanel({ panelId }))}
+      tooltip="Duplicate panel"
+    />
   );
 }

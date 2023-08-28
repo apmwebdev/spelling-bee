@@ -3,7 +3,6 @@ import { StatusTrackingOptions } from "@/features/hints";
 import uniqid from "uniqid";
 import { GridData } from "@/features/hints/components/panels/letter/WordLengthGridContainer";
 import { WordLengthGridCell } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGridCell";
-import { store } from "@/app/store";
 
 type WordLengthGridTableProps = GridData & {
   statusTracking: StatusTrackingOptions;

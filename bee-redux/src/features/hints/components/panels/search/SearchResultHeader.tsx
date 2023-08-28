@@ -1,10 +1,10 @@
-import { HeaderRemoveButton } from "@/utils/HeaderRemoveButton";
 import { useDispatch } from "react-redux";
 import {
   SearchPanelLocations,
   SearchPanelSearch,
   SubstringHintOutputTypes,
 } from "@/features/hints";
+import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
 export function SearchResultHeader({
   panelId,
@@ -52,7 +52,12 @@ export function SearchResultHeader({
 
   return (
     <header className="sb-search-hints-search-result-header">
-      <HeaderRemoveButton clickHandler={handleClickRemoveButton} />
+      <IconButton
+        type={IconButtonTypeKeys.Close}
+        className="header-remove-button"
+        onClick={handleClickRemoveButton}
+        tooltip="Delete search"
+      />
       <div className="search-result-title">{title()}</div>
     </header>
   );

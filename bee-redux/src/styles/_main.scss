@@ -898,66 +898,65 @@ button.sb-revealer {
   border: 2px solid border-color($this-hue);
   overflow: hidden;
   //border-color: border-color($this-hue);
-  .HintPanelHeader {
-    background-color: bg-color($this-hue);
-    button {
-      border: 1.5px solid transparent;
-      &.button {
-        background-color: bg-color-extra($this-hue);
-      }
-      &:hover {
-        border-color: border-color($this-hue);
-      }
-    }
-  }
   &[data-state="closed"] {
     color: $line-darker;
     border-color: border-color-disabled($this-hue);
-    .HintPanelHeader {
-      background-color: bg-color-disabled($this-hue);
-      button {
-        color: $line-darker;
-        &.button {
-          background-color: bg-color-disabled($this-hue);
-        }
-        &:hover {
-          border-color: border-color-disabled($this-hue);
-        }
-      }
-    }
   }
 }
 
 .HintPanelHeader {
+  $this-hue: $blue_hue;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   align-items: center;
   gap: 4px;
   padding: 2px;
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 8px;
+  background-color: bg-color($this-hue);
+  .HintPanel[data-state="closed"] & {
+    background-color: bg-color-disabled($this-hue);
+
   }
 }
 
+.HintPanelHeader button {
+  $this-hue: $blue_hue;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 8px;
+  border: 1.5px solid transparent;
+  &.button {
+    background-color: bg-color-extra($this-hue);
+  }
+  &:hover {
+    border-color: border-color($this-hue);
+  }
+  .HintPanel[data-state="closed"] & {
+    color: $line-darker;
+    &.button {
+      background-color: bg-color-disabled($this-hue);
+    }
+    &:hover {
+      border-color: border-color-disabled($this-hue);
+    }
+  }
+}
 .header-remove-button {
   display: flex;
   align-items: center;
   padding: 4px;
 }
 
-.header-disclosure-widget {
+.HeaderDisclosureWidget {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.sb-hint-panel-settings, .collapsible-settings {
+.SettingsCollapsible {
   $this-hue: $alt-bg-hue;
   font-size: 16px;
   border-radius: var(--br);
@@ -968,7 +967,8 @@ button.sb-revealer {
   span.disabled {
     color: $text-disabled;
   }
-  .sb-hint-panel-settings-header, .collapsible-settings-header {
+  .SettingsCollapsibleHeader {
+    padding: 2px;
     background-color: bg-color($this-hue);
     button {
       border: 1.5px solid transparent;
@@ -984,7 +984,7 @@ button.sb-revealer {
   &[data-state="closed"] {
     color: $line-darker;
     border-color: border-color-disabled($this-hue);
-    .sb-hint-panel-settings-header, .collapsible-settings-header {
+    .SettingsCollapsibleHeader {
       background-color: bg-color-disabled($this-hue);
       button {
         color: $line-darker;
@@ -999,11 +999,8 @@ button.sb-revealer {
 .sb-general-hint-settings {
   border-top: 2px solid border-color($alt-bg-hue);
 }
-.sb-hint-panel-settings-header, .collapsible-settings-header {
-  padding: 2px;
-}
 
-.sb-hint-panel-settings-header-button, .collapsible-settings-header-button {
+.SettingsCollapsibleHeaderButton {
   display: flex;
   width: 100%;
   align-items: center;
@@ -1013,7 +1010,7 @@ button.sb-revealer {
   padding: 4px;
 }
 
-.header-disclosure-widget-icon {
+.HeaderDisclosureWidgetIcon {
   position: absolute;
   justify-self: flex-start;
   left: -18px;
@@ -1024,20 +1021,6 @@ button.sb-revealer {
   display: flex;
   gap: 8px;
   /*margin-bottom: 8px;*/
-}
-
-.sb-hint-panel-header-buttons-left {
-  grid-column: 1 / 2;
-}
-
-.sb-hint-panel-header-buttons-right {
-  grid-column: 3 / 4;
-}
-
-.sb-hint-panel-name {
-  grid-column: 1 / 4;
-  grid-row: 1 / 2;
-  font-weight: bold;
 }
 
 .sb-general-hint-settings {

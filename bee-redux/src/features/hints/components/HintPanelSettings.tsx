@@ -2,7 +2,7 @@ import { GeneralPanelSettings } from "./GeneralPanelSettings";
 import { ReactNode } from "react";
 import { SettingsHeader } from "./generalControls/SettingsHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
+import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import { useDispatch } from "react-redux";
 import { HintPanelData } from "@/features/hints";
 
@@ -24,13 +24,13 @@ export function HintPanelSettings({ panel, children }: HintPanelSettingsProps) {
 
   return (
     <Collapsible.Root
-      className="sb-hint-panel-settings collapsible-settings"
-      open={!panel.settingsAreCollapsed}
+      className="SettingsCollapsible"
+      open={panel.currentDisplayState.isSettingsExpanded}
     >
       <SettingsHeader>
         <Collapsible.Trigger asChild>
           <button
-            className="sb-hint-panel-settings-header-button collapsible-settings-header-button"
+            className="SettingsCollapsibleHeaderButton"
             onClick={toggleCollapsed}
           >
             <HeaderDisclosureWidget title="Settings" />

@@ -1,6 +1,6 @@
-import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
 import { removePanel } from "../../hintProfilesSlice";
+import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
 interface RemoveButtonProps {
   panelId: number;
@@ -10,11 +10,11 @@ export function RemoveButton({ panelId }: RemoveButtonProps) {
   const dispatch = useDispatch();
 
   return (
-    <button
-      className="button"
+    <IconButton
+      type={IconButtonTypeKeys.Close}
+      className="HintPanelHeaderButton button"
       onClick={() => dispatch(removePanel({ panelId }))}
-    >
-      <Icon icon="mdi:close-thick" className="sb-hint-remove-button"></Icon>
-    </button>
+      tooltip="Delete panel"
+    />
   );
 }

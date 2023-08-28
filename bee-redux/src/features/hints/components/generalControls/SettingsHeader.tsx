@@ -5,5 +5,9 @@ interface SettingsHeaderProps {
 }
 
 export function SettingsHeader({ children }: SettingsHeaderProps) {
-  return <header className="sb-hint-panel-settings-header collapsible-settings-header">{children}</header>;
+  return (
+    <header className="SettingsCollapsibleHeader">
+      {children}
+    </header>
+  );
 }

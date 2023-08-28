@@ -3,7 +3,6 @@ import { FormEvent, useState } from "react";
 import { HintPanelSettings } from "../HintPanelSettings";
 import { SearchPanelSettings } from "./search/SearchPanelSettings";
 import { useDispatch } from "react-redux";
-import { random } from "lodash";
 import { SearchPanelResults } from "./search/SearchPanelResults";
 import { isSearchPanelData } from "@/features/hints";
 

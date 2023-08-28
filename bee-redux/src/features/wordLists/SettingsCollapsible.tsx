@@ -1,6 +1,6 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SettingsHeader } from "../hints/components/generalControls/SettingsHeader";
-import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
+import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import React from "react";
 
 export function SettingsCollapsible({

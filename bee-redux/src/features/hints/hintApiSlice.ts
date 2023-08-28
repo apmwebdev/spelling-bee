@@ -128,7 +128,13 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // Hint Panels
     // ⚠️
     createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
-    // ⚠️
+    /**
+     * ✅Implemented
+     * Can debounce
+     * Uses optimistic updates
+     * Updates getCurrentHintProfile
+     * Guest users + modifications to default panels save only to local storage
+     */
     updateHintPanel: builder.mutation<boolean, HintPanelUpdateForm>({
       queryFn: async (formData, api, _opts, baseQuery) => {
         api.dispatch(
@@ -152,6 +158,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         ) {
           return { data: true };
         }
+        return { data: true };
         const query = async () => {
           console.log("Running query...");
           try {
