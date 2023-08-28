@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectCenterLetter, selectValidLetters } from "../../puzzle/puzzleSlice";
 import uniqid from "uniqid";
 

@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { calculateScore } from "../../utils/utils";
+import { calculateScore } from "@/utils";
 import { sortBy } from "lodash";
 
 export interface Rank {

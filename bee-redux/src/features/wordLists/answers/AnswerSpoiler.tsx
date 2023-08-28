@@ -1,6 +1,9 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "../wordListSettingsSlice";
-import { GuessFormData, selectCurrentAttempt } from "../../guesses/guessesSlice";
+import {
+  GuessFormData,
+  selectCurrentAttempt,
+} from "../../guesses/guessesSlice";
 import { useAddGuessMutation } from "../../guesses/guessesApiSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {

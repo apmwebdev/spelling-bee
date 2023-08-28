@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { calculateScore } from "../../utils/utils";
+import { RootState } from "@/app/store";
+import { calculateScore } from "@/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
 import {

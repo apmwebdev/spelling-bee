@@ -3,7 +3,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # POST /hint_panels
   def create
-    @hint_panel = HintPanel.new(hint_panel_params)
+    @hint_panel = HintPanel.new(hint_panel_create_params)
 
     if @hint_panel.save
       render json: @hint_panel, status: :created, location: @hint_panel
@@ -14,7 +14,10 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # PATCH/PUT /hint_panels/1
   def update
-    if @hint_panel.update(hint_panel_params)
+    if @hint_panel.hint_profile.class.name == "DefaultHintProfile"
+      render json: { error: "Can't change default profiles" }, status: 403
+    end
+    if @hint_panel.update(hint_panel_update_params)
       render json: @hint_panel
     else
       render json: @hint_panel.errors, status: :unprocessable_entity
@@ -37,8 +40,78 @@ class Api::V1::HintPanelsController < AuthRequiredController
       @hint_panel = panel
     end
 
+  def hint_panel_create_params
+    params.require(:hint_panel).permit(
+      :name,
+      :hint_profile_id,
+      :status_tracking,
+      :panel_subtype_type,
+      initial_display_state_attributes: [
+        :is_expanded,
+        :is_blurred,
+        :is_sticky,
+        :is_settings_expanded,
+        :is_settings_sticky,
+      ],
+      current_display_state_attributes: [
+        :is_expanded,
+        :is_blurred,
+        :is_sticky,
+        :is_settings_expanded,
+        :is_settings_sticky,
+      ],
+      panel_subtype_attributes: [
+        :show_known,
+        :reveal_length,
+        :show_obscurity,
+        :sort_order,
+        :location,
+        :output_type,
+        :number_of_letters,
+        :letters_offset,
+        :separate_known,
+        :reveal_first_letter,
+        :click_to_define,
+        :sort_order
+      ],
+    )
+  end
     # Only allow a list of trusted parameters through.
-    def hint_panel_params
-      params.require(:hint_panel).permit(:name, :hint_profile_id, :initial_display_state_id, :current_display_state_id, :status_tracking, :panel_subtype_id, :panel_subtype_type)
+    def hint_panel_update_params
+      params.require(:hint_panel).permit(
+        :id,
+        :name,
+        :hint_profile_id,
+        :status_tracking,
+        initial_display_state_attributes: [
+          :is_expanded,
+          :is_blurred,
+          :is_sticky,
+          :is_settings_expanded,
+          :is_settings_sticky,
+        ],
+        current_display_state_attributes: [
+          :is_expanded,
+          :is_blurred,
+          :is_sticky,
+          :is_settings_expanded,
+          :is_settings_sticky,
+        ],
+        panel_subtype_attributes: [
+          :panel_type,
+          :show_known,
+          :reveal_length,
+          :show_obscurity,
+          :sort_order,
+          :location,
+          :output_type,
+          :number_of_letters,
+          :letters_offset,
+          :separate_known,
+          :reveal_first_letter,
+          :click_to_define,
+          :sort_order
+        ],
+      )
     end
 end

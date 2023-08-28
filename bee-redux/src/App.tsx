@@ -3,7 +3,6 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { Signup } from "./features/auth/Signup";
 import { Login } from "./features/auth/Login";
-import { SubheaderProvider } from "./app/SubheaderProvider";
 import { userDataApiSlice } from "./features/userData/userDataApiSlice";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 

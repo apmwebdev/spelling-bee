@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
-import { GuessInputContext } from "../../app/GuessInputProvider";
+import { GuessInputContext } from "@/app/GuessInputProvider";
 import { GuessInputDisplay } from "./guessInput/GuessInputDisplay";
 import {
   GuessFormat,
   selectCurrentAttempt,
   selectGuesses,
 } from "./guessesSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   selectAnswerWords,
   selectCenterLetter,

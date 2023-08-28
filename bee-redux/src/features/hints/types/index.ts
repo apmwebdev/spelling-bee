@@ -1,3 +1,5 @@
+import { SortOrder } from "@/features/wordLists/wordListSettingsSlice";
+
 /**
  * Determines how to live update hints when correct guesses are made.
  * The numbers being counted here are puzzle answers (number of found answers,
@@ -41,6 +43,22 @@ export interface PanelDisplayState {
   isSticky: boolean;
   isSettingsExpanded: boolean;
   isSettingsSticky: boolean;
+}
+
+export interface PanelDisplayFormData {
+  isExpanded?: boolean;
+  isBlurred?: boolean;
+  isSticky?: boolean;
+  isSettingsExpanded?: boolean;
+  isSettingsSticky?: boolean;
+}
+
+export interface RailsPanelDisplayFormData {
+  is_expanded?: boolean;
+  is_blurred?: boolean;
+  is_sticky?: boolean;
+  is_settings_expanded?: boolean;
+  is_settings_sticky?: boolean;
 }
 
 export enum PanelTypes {
@@ -242,25 +260,62 @@ export interface CurrentHintProfileFormData {
   current_hint_profile_id: number;
 }
 
-interface HintPanelCommonForm {
+export interface HintPanelCreateForm {
+  userHintProfileId: number;
   name: string;
-  initial_display_state: PanelDisplayState;
-  current_display_state: PanelDisplayState;
-  status_tracking: StatusTrackingOptions;
-  panel_subtype:
+  initialDisplayState: PanelDisplayState;
+  currentDisplayState: PanelDisplayState;
+  statusTracking: StatusTrackingOptions;
+  panelSubtypeType: PanelSubTypeTypes;
+  panelSubtype:
     | LetterPanelFormData
     | SearchPanelFormData
     | ObscurityPanelFormData
     | DefinitionPanelFormData;
 }
 
-export interface HintPanelCreateForm extends HintPanelCommonForm {
-  user_hint_profile_id: number;
-  panel_subtype_type: PanelSubTypeTypes;
+export interface HintPanelUpdateForm {
+  id: number;
+  /**
+   * For setting a standardized key that can be accessed if you don't know whether
+   * the user has already queued up a mutation for a particular panel field. That
+   * way, a debounce can be set on a per-field basis rather than having to set a
+   * debounce for the entire updateHintPanel query.
+   */
+  debounceField?: string;
+  name?: string;
+  initialDisplayState?: PanelDisplayFormData;
+  currentDisplayState?: PanelDisplayFormData;
+  statusTracking?: StatusTrackingOptions;
+  panelSubtype?:
+    | LetterPanelFormData
+    | SearchPanelFormData
+    | ObscurityPanelFormData
+    | DefinitionPanelFormData;
 }
 
-export interface HintPanelUpdateForm extends HintPanelCommonForm {
-  id: number;
+export interface RailsHintPanelUpdateForm {
+  hint_panel: {
+    id: number;
+    name?: string;
+    initial_display_state_attributes?: RailsPanelDisplayFormData;
+    current_display_state_attributes?: RailsPanelDisplayFormData;
+    status_tracking?: StatusTrackingOptions;
+    panel_subtype_attributes?: {
+      panel_type?: PanelSubTypeTypes;
+      show_known?: boolean;
+      reveal_length?: boolean;
+      show_obscurity?: boolean;
+      sort_order?: SortOrder;
+      location?: SearchPanelLocations;
+      output_type?: SubstringHintOutputTypes;
+      number_of_letters?: number;
+      letters_offset?: number;
+      separate_known?: boolean;
+      reveal_first_letter?: boolean;
+      click_to_define?: boolean;
+    };
+  };
 }
 
 export enum ColorSchemes {

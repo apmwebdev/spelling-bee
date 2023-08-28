@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { composeClasses } from "@/utils/utils";
+import { composeClasses } from "@/utils";
 import { BasicTooltip } from "@/components/BasicTooltip";
 
 export interface IconButtonTypeData {

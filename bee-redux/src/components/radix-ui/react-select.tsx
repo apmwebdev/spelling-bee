@@ -1,7 +1,7 @@
 import * as Select from "@radix-ui/react-select";
 import { ReactNode } from "react";
 import { Icon } from "@iconify/react";
-import { composeClasses } from "@/utils/utils";
+import { composeClasses } from "@/utils";
 
 interface SelectContentProps extends Select.SelectContentProps {
   children: ReactNode;

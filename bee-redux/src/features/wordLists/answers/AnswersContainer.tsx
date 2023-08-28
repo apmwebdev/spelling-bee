@@ -11,7 +11,10 @@ import {
   toggleAnswersSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import answerSorter from "./answerSorter";
-import { selectKnownWords, selectSpoiledWords } from "../../guesses/guessesSlice";
+import {
+  selectKnownWords,
+  selectSpoiledWords,
+} from "../../guesses/guessesSlice";
 import { AnswersSettings } from "./AnswersSettings";
 import { AnswersListHeader } from "./AnswersListHeader";
 

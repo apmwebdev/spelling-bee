@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GuessInputContext } from "../../../../app/GuessInputProvider";
+import { GuessInputContext } from "@/app/GuessInputProvider";
 
 export function GuessInputBackspace() {
   const { guessBackspace } = useContext(GuessInputContext);

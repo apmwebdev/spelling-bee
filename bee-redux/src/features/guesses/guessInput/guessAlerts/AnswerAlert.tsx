@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectPangrams } from "../../../puzzle/puzzleSlice";
-import { calculateWordScore } from "../../../../utils/utils";
+import { calculateWordScore } from "@/utils";
 
 export function AnswerAlert({ answerWord }: { answerWord: string }) {
   const pangrams = useAppSelector(selectPangrams);

@@ -10,13 +10,14 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/utils/HeaderDisclosureWidget";
 import { useDispatch } from "react-redux";
 import { HintPanelData, PanelTypes } from "@/features/hints";
+import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 
 export interface HintPanelProps {
   panel: HintPanelData;
 }
 
 export function HintPanel({ panel }: HintPanelProps) {
-  const dispatch = useDispatch();
+  const [updatePanel] = useUpdateHintPanelMutation();
   const answers = useAppSelector(selectAnswerWords);
   const panelContent = (panel: HintPanelData) => {
     if (answers.length === 0) {
@@ -36,19 +37,29 @@ export function HintPanel({ panel }: HintPanelProps) {
     }
   };
 
-  const toggleCollapsed = () => {
-    dispatch(
-      setIsCollapsed({ panelId: panel.id, isCollapsed: !panel.isCollapsed }),
-    );
+  const toggleExpanded = () => {
+    updatePanel({
+      id: panel.id,
+      debounceField: "currentIsExpanded",
+      currentDisplayState: {
+        isExpanded: !panel.currentDisplayState.isExpanded,
+      },
+    });
   };
 
   return (
-    <Collapsible.Root className="HintPanel" open={!panel.isCollapsed}>
-      <PanelHeader panelId={panel.id} isCollapsed={panel.isCollapsed}>
+    <Collapsible.Root
+      className="HintPanel"
+      open={panel.currentDisplayState.isExpanded}
+    >
+      <PanelHeader
+        panelId={panel.id}
+        isExpanded={panel.currentDisplayState.isExpanded}
+      >
         <Collapsible.Trigger asChild>
           <button
             className="sb-hint-panel-header-collapse-button"
-            onClick={toggleCollapsed}
+            onClick={toggleExpanded}
           >
             <HeaderDisclosureWidget title={panel.name} />
           </button>

@@ -1,5 +1,5 @@
 import Hive from "./Hive";
-import { GuessInputProvider } from "../../app/GuessInputProvider";
+import { GuessInputProvider } from "@/app/GuessInputProvider";
 import { GuessInput } from "../guesses/GuessInput";
 import { GuessInputControls } from "../guesses/guessInput/GuessInputControls";
 

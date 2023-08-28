@@ -2,11 +2,11 @@
   transition: transform 200ms;
 }
 
-.sb-hint-panel[data-state="open"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
+.HintPanel[data-state="open"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
   transform: rotate(90deg);
 }
 
-.sb-hint-panel[data-state="closed"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
+.HintPanel[data-state="closed"] .sb-hint-panel-header-collapse-button .header-disclosure-widget-icon {
   transform: rotate(0deg);
 }
 

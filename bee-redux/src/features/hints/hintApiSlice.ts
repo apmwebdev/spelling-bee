@@ -10,7 +10,12 @@ import {
   CompleteHintProfile,
   CurrentHintProfileFormData,
   HintProfileTypes,
+  PanelDisplayState,
+  RailsHintPanelUpdateForm,
 } from "./types";
+import { AppDispatch, RootState, store } from "@/app/store";
+import { addDebouncer } from "@/features/api/util/debouncer";
+import { keysToSnakeCase } from "@/features/api/util";
 
 const maybeFindDefaultHintProfile = (
   formData: CurrentHintProfileFormData,
@@ -22,6 +27,23 @@ const maybeFindDefaultHintProfile = (
       (profile) => profile.id === formData.current_hint_profile_id,
     );
   }
+};
+
+const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
+  const railsData: RailsHintPanelUpdateForm = {
+    hint_panel: {
+      id: formData.id,
+      name: formData.name,
+      initial_display_state_attributes: formData.initialDisplayState
+        ? keysToSnakeCase(formData.initialDisplayState)
+        : undefined,
+      current_display_state_attributes: formData.currentDisplayState
+        ? keysToSnakeCase(formData.currentDisplayState)
+        : undefined,
+      status_tracking: formData.statusTracking,
+    },
+  };
+  return railsData;
 };
 
 export const hintApiSlice = apiSlice.injectEndpoints({
@@ -107,10 +129,88 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // ⚠️
     createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
     // ⚠️
-    updateHintPanel: builder.mutation<HintPanelData, HintPanelUpdateForm>({}),
+    updateHintPanel: builder.mutation<boolean, HintPanelUpdateForm>({
+      queryFn: async (formData, api, _opts, baseQuery) => {
+        api.dispatch(
+          hintApiSlice.util.updateQueryData(
+            "getCurrentHintProfile",
+            undefined,
+            (draftState) => {
+              if (!draftState) return;
+              const panel = draftState.panels.find(
+                (hintPanel) => hintPanel.id === formData.id,
+              );
+              if (!panel) return;
+              Object.assign(panel, formData);
+            },
+          ),
+        );
+        const state = api.getState() as RootState;
+        if (
+          state.auth.isGuest ||
+          selectCurrentHintProfile?.type === HintProfileTypes.Default
+        ) {
+          return { data: true };
+        }
+        const query = async () => {
+          console.log("Running query...");
+          try {
+            await baseQuery({
+              url: `/hint_panels/${formData.id}`,
+              method: "PATCH",
+              body: railsifyUpdatePanelData(formData),
+            });
+          } catch (err) {
+            console.log("Couldn't update DB with updated panel data:", err);
+          }
+        };
+        if (formData.debounceField) {
+          addDebouncer({
+            key: `${formData.debounceField}Panel${formData.id}`,
+            delay: 1000,
+            callback: query,
+          });
+        } else {
+          await query();
+        }
+        return { data: true };
+      },
+    }),
     // ⚠️
     deleteHintPanel: builder.mutation<boolean, number>({}),
   }),
 });
 
-export const { useSetCurrentHintProfileMutation } = hintApiSlice;
+export const { useUpdateHintPanelMutation, useSetCurrentHintProfileMutation } = hintApiSlice;
+
+export const selectCurrentHintProfile =
+  hintApiSlice.endpoints.getCurrentHintProfile.select()(store.getState()).data;
+
+enum PanelCurrentDisplayUpdateKeys {
+  isExpanded = "isExpanded",
+  isBlurred = "isBlurred",
+  isSticky = "isSticky",
+  isSettingsExpanded = "isSettingsExpanded",
+  isSettingsSticky = "isSettingsSticky",
+}
+
+export interface PanelCurrentDisplayParams {
+  id: number;
+  currentDisplayState: PanelDisplayState;
+  toUpdateKey: PanelCurrentDisplayUpdateKeys;
+  toUpdateValue: boolean;
+}
+
+export const updatePanelCurrentDisplay =
+  ({
+    id,
+    currentDisplayState,
+    toUpdateKey,
+    toUpdateValue,
+  }: PanelCurrentDisplayParams) =>
+    (dispatch: AppDispatch, getState: () => RootState) => {
+      if (toUpdateKey === PanelCurrentDisplayUpdateKeys.isExpanded) {
+        if (toUpdateValue === currentDisplayState.isExpanded) return;
+
+      }
+    };

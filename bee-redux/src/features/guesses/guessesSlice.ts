@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore } from "@/utils/utils";
+import { calculateScore } from "@/utils";
 import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { selectRanks, selectTotalPoints } from "../puzzle/puzzleSlice";

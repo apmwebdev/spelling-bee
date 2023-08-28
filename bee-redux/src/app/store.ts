@@ -1,4 +1,9 @@
-import { configureStore, ThunkAction, Action, combineReducers } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import counterReducer from "../features/counter/counterSlice";
 import puzzleReducer from "../features/puzzle/puzzleSlice";

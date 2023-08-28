@@ -4,21 +4,21 @@ import { ReactNode } from "react";
 
 interface PanelHeaderProps {
   panelId: number;
-  isCollapsed: boolean;
+  isExpanded: boolean;
   children: ReactNode;
 }
 
 export function PanelHeader({
   panelId,
-  isCollapsed,
+  isExpanded,
   children,
 }: PanelHeaderProps) {
   const cssClasses = () => {
     let classList = "HintPanelHeader click-header-to-collapse";
-    if (isCollapsed) {
-      classList += " collapsed";
-    } else {
+    if (isExpanded) {
       classList += " expanded";
+    } else {
+      classList += " collapsed";
     }
     return classList;
   };
@@ -26,11 +26,11 @@ export function PanelHeader({
   return (
     <header className={cssClasses()}>
       <div className="sb-hint-panel-header-buttons-left">
-        <RemoveButton panelId={panelId} />
+        <DuplicateButton panelId={panelId} />
       </div>
       {children}
       <div className="sb-hint-panel-header-buttons-right">
-        <DuplicateButton panelId={panelId} />
+        <RemoveButton panelId={panelId} />
       </div>
     </header>
   );

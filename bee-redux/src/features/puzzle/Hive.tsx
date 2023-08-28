@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import LetterCell from "./LetterCell";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectPuzzle } from "./puzzleSlice";
 import uniqid from "uniqid";
 

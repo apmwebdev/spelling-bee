@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectDate, selectIsLatest, selectPuzzleId } from "./puzzleSlice";
 import { Icon } from "@iconify/react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import {
   dateRegex,
   getNextPuzzleDateString,
   getPreviousPuzzleDateString,
-} from "../../utils/utils";
+} from "@/utils";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { AttemptControls } from "../guesses/AttemptControls";
 

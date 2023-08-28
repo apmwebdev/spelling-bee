@@ -4,6 +4,8 @@ class HintPanel < ApplicationRecord
   belongs_to :current_display_state, class_name: "PanelDisplayState", dependent: :destroy
   belongs_to :status_tracking_option, foreign_key: :status_tracking
   belongs_to :panel_subtype, polymorphic: true, dependent: :destroy
+  accepts_nested_attributes_for :initial_display_state, :current_display_state,
+    :panel_subtype
 
   def to_front_end
     {

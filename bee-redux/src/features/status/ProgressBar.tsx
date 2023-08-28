@@ -1,5 +1,5 @@
 import { selectRanks } from "../puzzle/puzzleSlice";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import uniqid from "uniqid";
 import { Rank } from "../puzzle/puzzleApiSlice";
 
