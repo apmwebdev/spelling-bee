@@ -25,6 +25,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Lengths - First Letter",
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -37,6 +38,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Count - First 2 Letters",
+      display_index: 2,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -49,6 +51,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Letter Search",
+      display_index: 3,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -59,6 +62,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Obscurity Ranking",
+      display_index: 4,
       panel_subtype: ObscurityPanel.new(
         show_known: true,
         separate_known: false,
@@ -72,6 +76,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Definitions",
+      display_index: 5,
       panel_subtype: DefinitionPanel.new(
         show_known: true,
         reveal_length: true,
@@ -87,6 +92,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Your Grid of Remaining Words",
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -102,6 +108,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Your Two-Letter List",
+      display_index: 2,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -117,6 +124,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Obscurity Ranking",
+      display_index: 3,
       panel_subtype: ObscurityPanel.new(
         show_known: true,
         separate_known: false,
@@ -133,6 +141,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Definitions",
+      display_index: 4,
       panel_subtype: DefinitionPanel.new(
         show_known: true,
         reveal_length: true,
@@ -175,6 +184,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Search",
+      display_index: 1,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -185,6 +195,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First Letter WLG",
+      display_index: 2,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -197,6 +208,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First 2 Letters WCL",
+      display_index: 3,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -218,6 +230,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First 2 Letters WLG",
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -230,6 +243,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Search",
+      display_index: 2,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -247,6 +261,9 @@ module SeedHintProfiles
   def self.seed_user_profiles
     seed_user_profile_1
     seed_user_profile_2
+    User.first.user_pref.current_hint_profile_type = "UserHintProfile"
+    User.first.user_pref.current_hint_profile_id = 1
+    User.first.user_pref.save
   end
 
   def self.seed
@@ -273,9 +290,7 @@ module SeedHintProfiles
   end
 
   def self.unseed_user_profiles
-    UserHintProfile.where(user_id: 1, name: "Search Test").or(
-      UserHintProfile.where(user_id: 1, name: "My Profile")
-    ).destroy_all
+    UserHintProfile.where(user_id: 1).destroy_all
     ResetId.reset(UserHintProfile)
     reset_dependent_ids
   end

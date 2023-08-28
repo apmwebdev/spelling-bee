@@ -359,11 +359,11 @@ ALTER SEQUENCE public.obscurity_panels_id_seq OWNED BY public.obscurity_panels.i
 
 CREATE TABLE public.panel_display_states (
     id bigint NOT NULL,
-    is_expanded boolean,
-    is_blurred boolean,
-    is_sticky boolean,
-    is_settings_expanded boolean,
-    is_settings_sticky boolean,
+    is_expanded boolean DEFAULT true NOT NULL,
+    is_blurred boolean DEFAULT true NOT NULL,
+    is_sticky boolean DEFAULT true NOT NULL,
+    is_settings_expanded boolean DEFAULT true NOT NULL,
+    is_settings_sticky boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1311,6 +1311,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230815073035'),
 ('20230816121754'),
 ('20230818004354'),
-('20230828060858');
+('20230828060858'),
+('20230828115156');
 
 

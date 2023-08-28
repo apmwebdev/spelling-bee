@@ -197,6 +197,7 @@ export function isDefinitionPanelData(a: any): a is DefinitionPanelData {
 export interface HintPanelData {
   id: number;
   name: string;
+  displayIndex: number;
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
   statusTracking: StatusTrackingOptions;
@@ -263,6 +264,7 @@ export interface CurrentHintProfileFormData {
 export interface HintPanelCreateForm {
   userHintProfileId: number;
   name: string;
+  displayIndex: number;
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
   statusTracking: StatusTrackingOptions;
@@ -284,6 +286,7 @@ export interface HintPanelUpdateForm {
    */
   debounceField?: string;
   name?: string;
+  displayIndex?: number;
   initialDisplayState?: PanelDisplayFormData;
   currentDisplayState?: PanelDisplayFormData;
   statusTracking?: StatusTrackingOptions;
@@ -298,6 +301,7 @@ export interface RailsHintPanelUpdateForm {
   hint_panel: {
     id: number;
     name?: string;
+    display_index?: number;
     initial_display_state_attributes?: RailsPanelDisplayFormData;
     current_display_state_attributes?: RailsPanelDisplayFormData;
     status_tracking?: StatusTrackingOptions;

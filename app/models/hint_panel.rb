@@ -11,6 +11,7 @@ class HintPanel < ApplicationRecord
     {
       id:,
       name:,
+      displayIndex: display_index,
       initialDisplayState: initial_display_state.to_front_end,
       currentDisplayState: current_display_state.to_front_end,
       statusTracking: status_tracking,

@@ -7,7 +7,7 @@ class UserHintProfile < ApplicationRecord
   has_one :user_pref, as: :current_hint_profile
 
   def to_front_end_complete
-    {
+    return_obj = {
       id:,
       type: self.class.name,
       name:,
@@ -17,6 +17,8 @@ class UserHintProfile < ApplicationRecord
         panel.to_front_end
       end
     }
+    return_obj[:panels].sort! { |a, b| a[:displayIndex] <=> b[:displayIndex] }
+    return_obj
   end
 
   def to_front_end_basic

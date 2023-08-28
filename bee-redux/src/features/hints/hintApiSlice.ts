@@ -10,10 +10,9 @@ import {
   CompleteHintProfile,
   CurrentHintProfileFormData,
   HintProfileTypes,
-  PanelDisplayState,
   RailsHintPanelUpdateForm,
 } from "./types";
-import { AppDispatch, RootState, store } from "@/app/store";
+import { RootState, store } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
 import { keysToSnakeCase } from "@/features/api/util";
 
@@ -34,6 +33,7 @@ const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
     hint_panel: {
       id: formData.id,
       name: formData.name,
+      display_index: formData.displayIndex,
       initial_display_state_attributes: formData.initialDisplayState
         ? keysToSnakeCase(formData.initialDisplayState)
         : undefined,
@@ -124,12 +124,18 @@ export const hintApiSlice = apiSlice.injectEndpoints({
           }
         }
       },
+      // transformResponse: (response: CompleteHintProfile, _meta, _arg) => {
+      //   response.panels.sort((a, b) => {
+      //     return a.displayIndex - b.displayIndex;
+      //   });
+      //   return response;
+      // },
     }),
     // Hint Panels
     // ⚠️
     createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
     /**
-     * ✅Implemented
+     * ✅
      * Can debounce
      * Uses optimistic updates
      * Updates getCurrentHintProfile
@@ -197,36 +203,11 @@ export const hintApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useUpdateHintPanelMutation, useSetCurrentHintProfileMutation } = hintApiSlice;
+export const {
+  useGetCurrentHintProfileQuery,
+  useUpdateHintPanelMutation,
+  useSetCurrentHintProfileMutation,
+} = hintApiSlice;
 
 export const selectCurrentHintProfile =
   hintApiSlice.endpoints.getCurrentHintProfile.select()(store.getState()).data;
-
-enum PanelCurrentDisplayUpdateKeys {
-  isExpanded = "isExpanded",
-  isBlurred = "isBlurred",
-  isSticky = "isSticky",
-  isSettingsExpanded = "isSettingsExpanded",
-  isSettingsSticky = "isSettingsSticky",
-}
-
-export interface PanelCurrentDisplayParams {
-  id: number;
-  currentDisplayState: PanelDisplayState;
-  toUpdateKey: PanelCurrentDisplayUpdateKeys;
-  toUpdateValue: boolean;
-}
-
-export const updatePanelCurrentDisplay =
-  ({
-    id,
-    currentDisplayState,
-    toUpdateKey,
-    toUpdateValue,
-  }: PanelCurrentDisplayParams) =>
-    (dispatch: AppDispatch, getState: () => RootState) => {
-      if (toUpdateKey === PanelCurrentDisplayUpdateKeys.isExpanded) {
-        if (toUpdateValue === currentDisplayState.isExpanded) return;
-
-      }
-    };
