@@ -5,7 +5,8 @@ import {
   isSearchPanelData,
   LetterPanelLocations,
   SearchPanelData,
-  StatusTrackingOptions,
+  StatusTrackingKeys,
+  // StatusTrackingKeys,
 } from "./types";
 // import { defaultProfiles } from "./hintProfilesAPI"
 
@@ -79,7 +80,7 @@ export interface HintPanelFormat {
   isCollapsed: boolean;
   settingsAreCollapsed: boolean;
   isBlurred: boolean;
-  tracking: StatusTrackingOptions;
+  tracking: StatusTrackingKeys;
   initialDisplay: PanelInitialDisplayOptions;
   type: PanelTypes;
   typeSpecificData:
@@ -100,7 +101,7 @@ export interface HintProfileFormat {
   name: string;
   isUserCreated: boolean;
   displayDefault: ProfileDisplayDefaults;
-  trackingDefault: StatusTrackingOptions;
+  trackingDefault: StatusTrackingKeys;
   panels: HintPanelFormat[];
 }
 
@@ -109,7 +110,7 @@ export const blankHintProfile: HintProfileFormat = {
   name: "None",
   isUserCreated: false,
   displayDefault: ProfileDisplayDefaults.Expanded,
-  trackingDefault: StatusTrackingOptions.RemainingOfTotal,
+  trackingDefault: StatusTrackingKeys.RemainingOfTotal,
   panels: [],
 };
 
@@ -129,7 +130,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
     name: "Super Spelling Bee",
     isUserCreated: false,
     displayDefault: ProfileDisplayDefaults.Expanded,
-    trackingDefault: StatusTrackingOptions.RemainingOfTotal,
+    trackingDefault: StatusTrackingKeys.RemainingOfTotal,
     panels: [
       {
         id: 4,
@@ -137,7 +138,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingKeys.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Search,
         typeSpecificData: {
@@ -184,7 +185,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingKeys.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
@@ -200,7 +201,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingKeys.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
@@ -216,7 +217,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingKeys.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.WordObscurity,
         typeSpecificData: {},
@@ -227,7 +228,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         isCollapsed: true,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingKeys.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Collapsed,
         type: PanelTypes.Definitions,
         typeSpecificData: {},
@@ -242,7 +243,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
     name: "NYT Spelling Bee Buddy",
     isUserCreated: false,
     displayDefault: ProfileDisplayDefaults.Blurred,
-    trackingDefault: StatusTrackingOptions.Remaining,
+    trackingDefault: StatusTrackingKeys.Remaining,
     panels: [
       {
         id: 8,
@@ -250,7 +251,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.Remaining,
+        tracking: StatusTrackingKeys.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
@@ -266,7 +267,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: false,
-        tracking: StatusTrackingOptions.Remaining,
+        tracking: StatusTrackingKeys.Remaining,
         initialDisplay: PanelInitialDisplayOptions.Expanded,
         type: PanelTypes.Letter,
         typeSpecificData: {
@@ -282,7 +283,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: true,
-        tracking: StatusTrackingOptions.FoundOfTotal,
+        tracking: StatusTrackingKeys.FoundOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.WordObscurity,
         typeSpecificData: {},
@@ -293,7 +294,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         isCollapsed: false,
         settingsAreCollapsed: true,
         isBlurred: true,
-        tracking: StatusTrackingOptions.RemainingOfTotal,
+        tracking: StatusTrackingKeys.RemainingOfTotal,
         initialDisplay: PanelInitialDisplayOptions.Blurred,
         type: PanelTypes.Definitions,
         typeSpecificData: {},
@@ -413,7 +414,7 @@ export const hintProfilesSlice = createSlice({
     setTracking: (
       state,
       action: {
-        payload: { panelId: number; tracking: StatusTrackingOptions };
+        payload: { panelId: number; tracking: StatusTrackingKeys };
         type: string;
       },
     ) => {

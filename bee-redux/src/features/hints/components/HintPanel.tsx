@@ -4,7 +4,7 @@ import { WordObscurityHintPanel } from "./panels/WordObscurityHintPanel";
 import { DefinitionsHintPanel } from "./panels/DefinitionsHintPanel";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "../../puzzle/puzzleSlice";
-import { PanelHeader } from "./generalControls/PanelHeader";
+import { PanelHeader } from "././shared/PanelHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import { HintPanelData, PanelTypes } from "@/features/hints";

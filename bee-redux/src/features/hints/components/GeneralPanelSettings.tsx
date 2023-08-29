@@ -5,37 +5,18 @@ import {
 } from "@/features/hints/hintProfilesSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
-import { HintPanelData, StatusTrackingOptions } from "@/features/hints";
+import { HintPanelData, StatusTrackingKeys } from "@/features/hints";
+import { StatusTracking } from "@/features/hints/components/StatusTracking";
 
-interface GeneralPanelSettingsProps {
-  panel: HintPanelData;
-}
-
-export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
+export function GeneralPanelSettings({ panel }: { panel: HintPanelData }) {
   const dispatch = useDispatch();
 
   const handleTrackingChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const payload = {
       panelId: panel.id,
-      tracking: e.target.value as StatusTrackingOptions,
+      tracking: e.target.value as StatusTrackingKeys,
     };
     dispatch(setTracking(payload));
-  };
-
-  const liveUpdateOptions = () => {
-    return (
-      <select value={panel.statusTracking} onChange={handleTrackingChange}>
-        <option value={StatusTrackingOptions.RemainingOfTotal}>
-          Remaining of total
-        </option>
-        <option value={StatusTrackingOptions.FoundOfTotal}>
-          Found of total
-        </option>
-        <option value={StatusTrackingOptions.Remaining}>Remaining</option>
-        <option value={StatusTrackingOptions.Found}>Found</option>
-        <option value={StatusTrackingOptions.Total}>Total</option>
-      </select>
-    );
   };
 
   const handleInitialDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -67,11 +48,11 @@ export function GeneralPanelSettings({ panel }: GeneralPanelSettingsProps) {
   // };
 
   return (
-    <div className="sb-general-hint-settings">
-      <div className="sb-hint-display-section">
-        <span>Display:</span> {liveUpdateOptions()}
+    <div className="GeneralPanelSettings">
+      <div className="GeneralPanelSettingsStatusTracking">
+        <span>Display:</span> <StatusTracking panel={panel} />
       </div>
-      <div className="sb-hint-load-section">
+      <div className="GeneralPanelSettingsInitialDisplay">
         <span>Load as:</span> TODO
       </div>
     </div>

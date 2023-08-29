@@ -1,12 +1,12 @@
 import { LetterHintDataCell } from "@/features/hints/components/panels/LetterHintPanel";
-import { StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
 import uniqid from "uniqid";
 
 interface WordLengthGridCellProps {
   cell: LetterHintDataCell;
   isTotalRow: boolean;
   isTotalColumn: boolean;
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
   getTdClasses: Function;
 }
 
@@ -25,36 +25,13 @@ export function WordLengthGridCell({
   if (total === 0) {
     return <td key={uniqid()} className={tdClasses}></td>;
   }
-  switch (statusTracking) {
-    case StatusTrackingOptions.FoundOfTotal:
-      return (
-        <td key={uniqid()} className={tdClasses}>
-          {found}/{total}
-        </td>
-      );
-    case StatusTrackingOptions.RemainingOfTotal:
-      return (
-        <td key={uniqid()} className={tdClasses}>
-          {remaining}/{total}
-        </td>
-      );
-    case StatusTrackingOptions.Found:
-      return (
-        <td key={uniqid()} className={tdClasses}>
-          {found}
-        </td>
-      );
-    case StatusTrackingOptions.Remaining:
-      return (
-        <td key={uniqid()} className={tdClasses}>
-          {remaining}
-        </td>
-      );
-    case StatusTrackingOptions.Total:
-      return (
-        <td key={uniqid()} className={tdClasses}>
-          {total}
-        </td>
-      );
-  }
+  return (
+    <td key={uniqid()} className={tdClasses}>
+      {StatusTrackingOptions[statusTracking].outputFn({
+        found,
+        total,
+        remaining,
+      })}
+    </td>
+  );
 }

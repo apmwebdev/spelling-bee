@@ -10,7 +10,7 @@ import uniqid from "uniqid";
 import {
   SearchPanelLocations,
   SearchPanelSearch,
-  StatusTrackingOptions,
+  StatusTrackingKeys,
 } from "@/features/hints";
 
 interface ResultData {
@@ -22,7 +22,7 @@ interface ResultData {
 export interface SearchResultProps {
   panelId?: number;
   resultData: ResultData;
-  tracking: StatusTrackingOptions;
+  tracking: StatusTrackingKeys;
 }
 
 export function SearchPanelResults({
@@ -32,7 +32,7 @@ export function SearchPanelResults({
 }: {
   panelId: number;
   results: SearchPanelSearch[];
-  tracking: StatusTrackingOptions;
+  tracking: StatusTrackingKeys;
 }) {
   const answers = useAppSelector(selectAnswerWords);
   const answerLengths = useAppSelector(selectAnswerLengths);

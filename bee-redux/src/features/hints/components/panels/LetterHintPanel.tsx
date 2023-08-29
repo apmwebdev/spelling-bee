@@ -10,7 +10,7 @@ import { HintPanelSettings } from "../HintPanelSettings";
 import {
   isLetterPanelData,
   LetterPanelLocations,
-  StatusTrackingOptions,
+  StatusTrackingKeys,
   SubstringHintOutputTypes,
 } from "@/features/hints";
 
@@ -20,7 +20,7 @@ export interface LetterHintSubsectionProps {
   numberOfLetters: number;
   location: LetterPanelLocations;
   lettersOffset: number;
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
 }
 
 export interface LetterHintDataCell {

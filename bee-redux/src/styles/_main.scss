@@ -113,6 +113,12 @@ button {
   &:hover {
     border-color: border-color-hover($accent-hue);
   }
+  &.SmallSelect {
+    font-size: 14px;
+    padding: 4px 8px;
+    width: 11em;
+    gap: 6px;
+  }
   span {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -129,10 +135,15 @@ button {
   border-radius: var(--br);
   overflow: hidden;
   font-size: 16px;
+  padding: 3px 0px;
   border: 1.5px solid border-color($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &:hover {
     border-color: border-color-hover($accent-hue);
+  }
+  &.SmallSelect {
+    font-size: 14px;
+    padding: 2px 0px;
   }
 }
 
@@ -142,21 +153,31 @@ button {
   font-style: italic;
   color: $text-disabled;
   border-color: $line-disabled;
+  .SmallSelect & {
+    font-size: 13px;
+    padding: 4px 12px;
+  }
 }
 
 .SelectItem {
   position: relative;
   cursor: pointer;
-  padding: 6px 28px;
+  padding: 6px 6px 6px 28px;
   user-select: none;
   &[data-highlighted] {
     background-color: ui-bg-color($accent-hue);
+  }
+  .SmallSelect & {
+    padding: 5px 5px 5px 24px;
   }
 }
 
 .SelectItemIndicator {
   position: absolute;
   left: 6px;
+  .SmallSelect & {
+    left: 4px;
+  }
 }
 
 .SelectScrollButton {
@@ -996,10 +1017,6 @@ button.sb-revealer {
   }
 }
 
-.sb-general-hint-settings {
-  border-top: 2px solid border-color($alt-bg-hue);
-}
-
 .SettingsCollapsibleHeaderButton {
   display: flex;
   width: 100%;
@@ -1023,17 +1040,18 @@ button.sb-revealer {
   /*margin-bottom: 8px;*/
 }
 
-.sb-general-hint-settings {
+.GeneralPanelSettings {
+  border-top: 2px solid border-color($alt-bg-hue);
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
+  align-items: center;
   gap: 8px;
-  //margin: 0px 8px;
   padding: 8px 8px;
-  //border-bottom: 1px dotted;
   > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 }
 

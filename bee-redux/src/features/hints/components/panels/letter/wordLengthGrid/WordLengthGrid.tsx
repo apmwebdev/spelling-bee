@@ -1,11 +1,11 @@
 import { LetterHintDataCell } from "@/features/hints/components/panels/LetterHintPanel";
-import { StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingKeys } from "@/features/hints";
 import uniqid from "uniqid";
 import { GridData } from "@/features/hints/components/panels/letter/WordLengthGridContainer";
 import { WordLengthGridCell } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGridCell";
 
 type WordLengthGridTableProps = GridData & {
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
   answerLengths: number[];
 };
 
@@ -24,7 +24,7 @@ export function WordLengthGrid({
       return "sb-wlg-content";
     }
     let returnStr = "";
-    if (statusTracking !== StatusTrackingOptions.Total) {
+    if (statusTracking !== "total") {
       if (cell.guesses === cell.answers) {
         returnStr += "hint-completed";
       } else if (cell.guesses === 0) {

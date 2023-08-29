@@ -49,22 +49,11 @@ const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
 export const hintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Hint Profiles
+
     // ✅Get all hint profiles, including default profiles
     getHintProfiles: builder.query<HintProfilesData, void>({
       query: () => ({
         url: "/hint_profiles",
-      }),
-    }),
-    // ❌ Get only user hint profiles
-    getUserHintProfiles: builder.query<UserHintProfileBasic[], void>({
-      query: () => ({
-        url: "/user_hint_profiles",
-      }),
-    }),
-    // ✅ Get complete data for a user hint profile
-    getUserHintProfile: builder.query<UserHintProfileComplete, number>({
-      query: (id: number) => ({
-        url: `user_hint_profiles/${id}`,
       }),
     }),
     // ✅
@@ -72,7 +61,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
       UserHintProfileComplete,
       UserHintProfileForm
     >({}),
-    // ✅
+    // ✅ Only for updating the profile itself. Updating panels is handled below.
     updateUserHintProfile: builder.mutation<
       UserHintProfileBasic,
       UserHintProfileForm
@@ -85,6 +74,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         url: "/current_hint_profile",
       }),
     }),
+
     // ✅
     setCurrentHintProfile: builder.mutation<
       CompleteHintProfile,
@@ -124,25 +114,23 @@ export const hintApiSlice = apiSlice.injectEndpoints({
           }
         }
       },
-      // transformResponse: (response: CompleteHintProfile, _meta, _arg) => {
-      //   response.panels.sort((a, b) => {
-      //     return a.displayIndex - b.displayIndex;
-      //   });
-      //   return response;
-      // },
     }),
+
     // Hint Panels
+
     // ⚠️
     createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
+
     /**
      * ✅
      * Can debounce
      * Uses optimistic updates
-     * Updates getCurrentHintProfile
+     * Manually updates getCurrentHintProfile endpoint data
      * Guest users + modifications to default panels save only to local storage
      */
     updateHintPanel: builder.mutation<boolean, HintPanelUpdateForm>({
       queryFn: async (formData, api, _opts, baseQuery) => {
+        //Optimistically update getCurrentHintProfile with panel mutations
         api.dispatch(
           hintApiSlice.util.updateQueryData(
             "getCurrentHintProfile",
@@ -168,6 +156,8 @@ export const hintApiSlice = apiSlice.injectEndpoints({
             },
           ),
         );
+        //Return early if user is guest user or current profile is a default profile
+        //Otherwise, run the actual query
         const state = api.getState() as RootState;
         if (
           state.auth.isGuest ||
@@ -176,16 +166,19 @@ export const hintApiSlice = apiSlice.injectEndpoints({
           return { data: true };
         }
         const query = async () => {
+          console.log("Running updateHintPanel query...");
           try {
-            await baseQuery({
+            const response = await baseQuery({
               url: `/hint_panels/${formData.id}`,
               method: "PATCH",
               body: railsifyUpdatePanelData(formData),
             });
+            console.log("Response:", response);
           } catch (err) {
             console.log("Couldn't update DB with updated panel data:", err);
           }
         };
+        //Debounce query if applicable. Otherwise, just run it.
         if (formData.debounceField) {
           addDebouncer({
             key: `${formData.debounceField}Panel${formData.id}`,
@@ -198,16 +191,29 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         return { data: true };
       },
     }),
+
     // ⚠️
     deleteHintPanel: builder.mutation<boolean, number>({}),
+
+    //Maybe not needed
+
+    // ❌ Get only user hint profiles
+    getUserHintProfiles: builder.query<UserHintProfileBasic[], void>({
+      query: () => ({
+        url: "/user_hint_profiles",
+      }),
+    }),
+    // ✅❌ Implemented, but maybe not needed?
+    getUserHintProfile: builder.query<UserHintProfileComplete, number>({
+      query: (id: number) => ({
+        url: `user_hint_profiles/${id}`,
+      }),
+    }),
   }),
 });
 
-export const {
-  useGetCurrentHintProfileQuery,
-  useUpdateHintPanelMutation,
-  useSetCurrentHintProfileMutation,
-} = hintApiSlice;
+export const { useUpdateHintPanelMutation, useSetCurrentHintProfileMutation } =
+  hintApiSlice;
 
 export const selectCurrentHintProfile =
   hintApiSlice.endpoints.getCurrentHintProfile.select()(store.getState()).data;

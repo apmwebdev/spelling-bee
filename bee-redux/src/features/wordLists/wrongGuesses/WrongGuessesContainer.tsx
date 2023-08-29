@@ -7,7 +7,7 @@ import {
   toggleWrongGuessesSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
-import { SettingsCollapsible } from "../../../components/SettingsCollapsible";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();

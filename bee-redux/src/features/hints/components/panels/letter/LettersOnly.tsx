@@ -4,7 +4,7 @@ import {
 } from "../LetterHintPanel";
 import uniqid from "uniqid";
 import { generateData } from "./WordCountList";
-import { StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingKeys } from "@/features/hints";
 
 export function LettersOnly({
   answers,
@@ -26,7 +26,7 @@ export function LettersOnly({
     }) => {
       const cellClasses = () => {
         let classList = "sb-lol-fragment";
-        if (statusTracking === StatusTrackingOptions.Total) {
+        if (statusTracking === "total") {
           return classList;
         }
         if (cell.guesses === cell.answers) {

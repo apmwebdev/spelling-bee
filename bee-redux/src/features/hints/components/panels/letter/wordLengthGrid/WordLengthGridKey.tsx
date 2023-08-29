@@ -1,29 +1,16 @@
-import { StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
 
 export function WordLengthGridKey({
   statusTracking,
 }: {
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
 }) {
-  const trackingKey = () => {
-    switch (statusTracking) {
-      case StatusTrackingOptions.FoundOfTotal:
-        return "Found / Total";
-      case StatusTrackingOptions.RemainingOfTotal:
-        return "Remaining / Total";
-      case StatusTrackingOptions.Found:
-        return "Found";
-      case StatusTrackingOptions.Remaining:
-        return "Remaining";
-      case StatusTrackingOptions.Total:
-        return "Total";
-    }
-  };
-
   return (
     <div className="sb-word-length-grid-key">
       <div>Key: Showing</div>
-      <div className="sb-wlg-tracking-key">{trackingKey()}</div>
+      <div className="sb-wlg-tracking-key">
+        {StatusTrackingOptions[statusTracking].compactTitle}
+      </div>
       {/*<div>*/}
       {/*  <div className="sb-wlg-content-full hint-completed">*/}
       {/*    Green = finished*/}

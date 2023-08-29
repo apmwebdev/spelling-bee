@@ -1,8 +1,5 @@
 import { GeneralPanelSettings } from "./GeneralPanelSettings";
 import { ReactNode } from "react";
-import { SettingsHeader } from "../../../components/SettingsHeader";
-import * as Collapsible from "@radix-ui/react-collapsible";
-import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import { HintPanelData } from "@/features/hints";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";

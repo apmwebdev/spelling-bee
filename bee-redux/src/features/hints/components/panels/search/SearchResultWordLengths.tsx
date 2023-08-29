@@ -1,7 +1,7 @@
 import { SearchResultProps } from "./SearchPanelResults";
 import { LetterHintDataCell } from "../LetterHintPanel";
 import uniqid from "uniqid";
-import { StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
 
 export function SearchResultWordLengths({
   resultData,
@@ -14,7 +14,7 @@ export function SearchResultWordLengths({
         return classList;
       }
       classList += " has-content";
-      if (tracking !== StatusTrackingOptions.Total) {
+      if (tracking !== "total") {
         if (dataCell.guesses === dataCell.answers) {
           classList += " hint-completed";
         } else if (dataCell.guesses === 0) {
@@ -35,43 +35,17 @@ export function SearchResultWordLengths({
       if (total === 0) {
         cellText = "-";
       } else {
-        switch (tracking) {
-          case StatusTrackingOptions.FoundOfTotal:
-            cellText = `${found}/${total}`;
-            break;
-          case StatusTrackingOptions.RemainingOfTotal:
-            cellText = `${remaining}/${total}`;
-            break;
-          case StatusTrackingOptions.Found:
-            cellText = "" + found;
-            break;
-          case StatusTrackingOptions.Remaining:
-            cellText = "" + remaining;
-            break;
-          case StatusTrackingOptions.Total:
-            cellText = "" + total;
-        }
+        cellText = StatusTrackingOptions[tracking].outputFn({
+          found,
+          remaining,
+          total,
+        });
       }
       return (
         <div className={cssClasses} key={uniqid()}>
           {cellText}
         </div>
       );
-    };
-
-    const contentRowHeaderText = () => {
-      switch (tracking) {
-        case StatusTrackingOptions.FoundOfTotal:
-          return "Found / Total";
-        case StatusTrackingOptions.RemainingOfTotal:
-          return "Remaining / Total";
-        case StatusTrackingOptions.Found:
-          return "Found";
-        case StatusTrackingOptions.Remaining:
-          return "Remaining";
-        case StatusTrackingOptions.Total:
-          return "Total";
-      }
     };
 
     const headerRowDivs = [];
@@ -83,7 +57,7 @@ export function SearchResultWordLengths({
     const contentRowDivs = [];
     contentRowDivs.push(
       <div className="content-cell row-header" key={uniqid()}>
-        {contentRowHeaderText()}
+        {StatusTrackingOptions[tracking].compactTitle}
       </div>,
     );
     for (const lengthProp in resultData.results) {

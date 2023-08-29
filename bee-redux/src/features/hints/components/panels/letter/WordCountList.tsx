@@ -4,7 +4,7 @@ import {
 } from "../LetterHintPanel";
 import uniqid from "uniqid";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
-import { LetterPanelLocations, StatusTrackingOptions } from "@/features/hints";
+import { LetterPanelLocations, StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
 
 export interface ListRow {
   [substring: string]: LetterHintDataCell;
@@ -84,24 +84,9 @@ export function WordCountList({
       const total = cell.answers;
       const remaining = total - found;
 
-      const cellText = () => {
-        switch (statusTracking) {
-          case StatusTrackingOptions.FoundOfTotal:
-            return `${found}/${total}`;
-          case StatusTrackingOptions.RemainingOfTotal:
-            return `${remaining}/${total}`;
-          case StatusTrackingOptions.Found:
-            return `${found}`;
-          case StatusTrackingOptions.Remaining:
-            return `${remaining}`;
-          case StatusTrackingOptions.Total:
-            return `${total}`;
-        }
-      };
-
       const cellClasses = () => {
         let classList = "sb-wcl-fragment-count";
-        if (statusTracking === StatusTrackingOptions.Total) {
+        if (statusTracking === "total") {
           return classList;
         }
         if (found === total) {
@@ -117,7 +102,13 @@ export function WordCountList({
       fragmentDivs.push(
         <div key={uniqid()} className="sb-wcl-fragment-cell">
           <div className="sb-wcl-fragment-label">{fragment}</div>
-          <div className={cellClasses()}>{cellText()}</div>
+          <div className={cellClasses()}>
+            {StatusTrackingOptions[statusTracking].outputFn({
+              found,
+              total,
+              remaining,
+            })}
+          </div>
         </div>,
       );
     };

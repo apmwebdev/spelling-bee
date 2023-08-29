@@ -11,14 +11,61 @@ import { SortOrder } from "@/features/wordLists/wordListSettingsSlice";
  * - Total
  * @enum {string}
  */
-export enum StatusTrackingOptions {
-  /** Shows "{Found answer count} / {Total answer count}" */
+export interface StatusTrackingOutputParams {
+  found?: number;
+  total?: number;
+  remaining?: number;
+}
+
+export interface StatusTrackingOption {
+  title: string;
+  compactTitle: string;
+  outputFn: (arg: StatusTrackingOutputParams) => string;
+}
+
+type StatusTrackingOptionsData = {
+  [key: string]: StatusTrackingOption;
+};
+
+export const StatusTrackingOptions: StatusTrackingOptionsData = {
+  found_of_total: {
+    title: "Found of Total",
+    compactTitle: "Found / Total",
+    outputFn: ({ found, total }) => {
+      if (found === undefined || total === undefined) return "";
+      return `${found}/${total}`;
+    },
+  },
+  remaining_of_total: {
+    title: "Remaining of Total",
+    compactTitle: "Remaining / Total",
+    outputFn: ({ remaining, total }) => {
+      if (remaining === undefined || total === undefined) return "";
+      return `${remaining}/${total}`;
+    },
+  },
+  found: {
+    title: "Found",
+    compactTitle: "Found",
+    outputFn: ({ found }) => found + "",
+  },
+  remaining: {
+    title: "Remaining",
+    compactTitle: "Remaining",
+    outputFn: ({ remaining }) => remaining + "",
+  },
+  total: {
+    title: "Total",
+    compactTitle: "Total",
+    outputFn: ({ total }) => total + "",
+  },
+};
+
+export enum StatusTrackingKeys {
   FoundOfTotal = "found_of_total",
-  /** Shows "{Remaining answer count} / {Total answer count}" */
   RemainingOfTotal = "remaining_of_total",
   Found = "found",
   Remaining = "remaining",
-  /** Shows total answer count only, i.e., no live updates */
   Total = "total",
 }
 
@@ -200,7 +247,7 @@ export interface HintPanelData {
   displayIndex: number;
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
   typeData:
     | LetterPanelData
     | SearchPanelData
@@ -231,7 +278,7 @@ export interface UserHintProfileBasic extends HintProfileData {
 
 export interface UserHintProfileComplete extends UserHintProfileBasic {
   /** The status tracking that newly created panels come in with */
-  defaultPanelTracking: StatusTrackingOptions;
+  defaultPanelTracking: StatusTrackingKeys;
   /** The display state that newly created panels come in with */
   defaultPanelDisplayState: PanelDisplayState;
   panels: HintPanelData[];
@@ -251,7 +298,7 @@ export interface HintProfilesData {
 
 export interface UserHintProfileForm {
   name: string;
-  default_panel_tracking: StatusTrackingOptions;
+  default_panel_tracking: StatusTrackingKeys;
   default_panel_display_state: PanelDisplayState;
   panels: HintPanelData[];
 }
@@ -267,7 +314,7 @@ export interface HintPanelCreateForm {
   displayIndex: number;
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
-  statusTracking: StatusTrackingOptions;
+  statusTracking: StatusTrackingKeys;
   panelSubtypeType: PanelSubTypeTypes;
   panelSubtype:
     | LetterPanelFormData
@@ -289,7 +336,7 @@ export interface HintPanelUpdateForm {
   displayIndex?: number;
   initialDisplayState?: PanelDisplayFormData;
   currentDisplayState?: PanelDisplayFormData;
-  statusTracking?: StatusTrackingOptions;
+  statusTracking?: StatusTrackingKeys;
   panelSubtype?:
     | LetterPanelFormData
     | SearchPanelFormData
@@ -304,7 +351,7 @@ export interface RailsHintPanelUpdateForm {
     display_index?: number;
     initial_display_state_attributes?: RailsPanelDisplayFormData;
     current_display_state_attributes?: RailsPanelDisplayFormData;
-    status_tracking?: StatusTrackingOptions;
+    status_tracking?: StatusTrackingKeys;
     panel_subtype_attributes?: {
       panel_type?: PanelSubTypeTypes;
       show_known?: boolean;
