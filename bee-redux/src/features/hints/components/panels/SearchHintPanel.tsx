@@ -1,13 +1,8 @@
-import { HintPanelProps } from "../HintPanel";
 import { FormEvent, useState } from "react";
-import { HintPanelSettings } from "../settings/HintPanelSettings";
-import { SearchPanelSettings } from "./search/SearchPanelSettings";
-import { useDispatch } from "react-redux";
 import { SearchPanelResults } from "./search/SearchPanelResults";
-import { isSearchPanelData } from "@/features/hints";
+import { HintPanelData, isSearchPanelData } from "@/features/hints";
 
-export function SearchHintPanel({ panel }: HintPanelProps) {
-  const dispatch = useDispatch();
+export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
   const [searchValue, setSearchValue] = useState("");
 
   // const addSearchToPanel = () => {
@@ -43,28 +38,23 @@ export function SearchHintPanel({ panel }: HintPanelProps) {
   };
 
   return (
-    <>
-      <HintPanelSettings panel={panel}>
-        <SearchPanelSettings />
-      </HintPanelSettings>
-      <div className="sb-search-hints">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="search"
-            className="sb-search-hint-input"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-          <button type="submit" className="standard-button">
-            Search
-          </button>
-        </form>
-        <SearchPanelResults
-          panelId={panel.id}
-          results={searches()}
-          tracking={panel.statusTracking}
+    <div className="sb-search-hints">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="search"
+          className="sb-search-hint-input"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
-      </div>
-    </>
+        <button type="submit" className="standard-button">
+          Search
+        </button>
+      </form>
+      <SearchPanelResults
+        panelId={panel.id}
+        results={searches()}
+        tracking={panel.statusTracking}
+      />
+    </div>
   );
 }

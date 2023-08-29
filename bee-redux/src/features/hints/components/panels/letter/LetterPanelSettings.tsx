@@ -1,25 +1,27 @@
 import { ChangeEvent } from "react";
 import { capitalize } from "lodash";
 import {
+  LetterPanelData,
   LetterPanelLocations,
   SubstringHintOutputTypes,
 } from "@/features/hints";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
-  numberOfLetters: number;
-  location: LetterPanelLocations;
-  lettersOffset: number;
-  outputType: SubstringHintOutputTypes;
+  typeData: LetterPanelData;
 }
 
 export function LetterPanelSettings({
   panelId,
-  numberOfLetters,
-  location,
-  lettersOffset,
-  outputType,
+  typeData,
 }: LetterPanelSettingsProps) {
+  const {
+    numberOfLetters,
+    location,
+    lettersOffset,
+    outputType,
+    showKnown
+  } = typeData;
   const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     // const payload: ChangeLetterPanelDisplayPayload = {

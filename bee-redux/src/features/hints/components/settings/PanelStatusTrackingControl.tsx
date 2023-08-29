@@ -29,24 +29,27 @@ export function PanelStatusTrackingControl({
   };
 
   return (
-    <Select.Root
-      value={panel.statusTracking as string}
-      onValueChange={handleChange}
-    >
-      <SelectTrigger className="SmallSelect" />
-      <SelectContentWithPortal className="SmallSelect">
-        <Select.Viewport>
-          {Object.keys(StatusTrackingOptions).map((key) => {
-            return (
-              <SelectItem
-                key={uniqid()}
-                value={key}
-                itemText={StatusTrackingOptions[key].compactTitle}
-              />
-            );
-          })}
-        </Select.Viewport>
-      </SelectContentWithPortal>
-    </Select.Root>
+    <div className="GeneralPanelSettingsStatusTracking">
+      <span>Display:</span>
+      <Select.Root
+        value={panel.statusTracking as string}
+        onValueChange={handleChange}
+      >
+        <SelectTrigger className="SmallSelect" />
+        <SelectContentWithPortal className="SmallSelect">
+          <Select.Viewport>
+            {Object.keys(StatusTrackingOptions).map((key) => {
+              return (
+                <SelectItem
+                  key={uniqid()}
+                  value={key}
+                  itemText={StatusTrackingOptions[key].compactTitle}
+                />
+              );
+            })}
+          </Select.Viewport>
+        </SelectContentWithPortal>
+      </Select.Root>
+    </div>
   );
 }

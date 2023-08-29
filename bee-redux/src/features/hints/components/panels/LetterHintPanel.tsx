@@ -1,13 +1,11 @@
-import { HintPanelProps } from "../HintPanel";
-import { LetterPanelSettings } from "./letter/LetterPanelSettings";
 import { WordCountList } from "./letter/WordCountList";
 import { WordLengthGridContainer } from "./letter/WordLengthGridContainer";
 import { LettersOnly } from "./letter/LettersOnly";
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
-import { HintPanelSettings } from "../settings/HintPanelSettings";
 import {
+  HintPanelData,
   isLetterPanelData,
   LetterPanelLocations,
   StatusTrackingKeys,
@@ -28,7 +26,7 @@ export interface LetterHintDataCell {
   guesses: number;
 }
 
-export function LetterHintPanel({ panel }: HintPanelProps) {
+export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
   const correctGuessWords = useAppSelector(selectCorrectGuessWords);
 
@@ -58,15 +56,6 @@ export function LetterHintPanel({ panel }: HintPanelProps) {
 
   return (
     <div className="sb-letter-hints">
-      <HintPanelSettings panel={panel}>
-        <LetterPanelSettings
-          panelId={panel.id}
-          numberOfLetters={numberOfLetters}
-          location={location}
-          lettersOffset={lettersOffset}
-          outputType={outputType}
-        />
-      </HintPanelSettings>
       <div className="sb-hint-panel-output">{hintOutput()}</div>
     </div>
   );

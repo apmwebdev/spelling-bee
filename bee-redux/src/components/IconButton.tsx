@@ -14,6 +14,8 @@ export enum IconButtonTypeKeys {
   Save = "Save",
   Duplicate = "Duplicate",
   Close = "Close",
+  Show = "Show",
+  Hide = "Hide",
 }
 
 type IconButtonTypesData = {
@@ -44,6 +46,14 @@ export const IconButtonTypes: IconButtonTypesData = {
   Close: {
     name: "close",
     icon: "mdi:close-thick",
+  },
+  Show: {
+    name: "show",
+    icon: "mdi:show",
+  },
+  Hide: {
+    name: "show",
+    icon: "mdi:hide",
   },
 };
 
