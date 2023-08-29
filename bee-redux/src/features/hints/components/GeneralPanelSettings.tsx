@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
 import { HintPanelData, StatusTrackingKeys } from "@/features/hints";
 import { StatusTracking } from "@/features/hints/components/StatusTracking";
+import { InitialDisplay } from "@/features/hints/components/InitialDisplay";
+import { PanelNameInputForm } from "@/features/hints/components/PanelNameInputForm";
+import uniqid from "uniqid";
 
 export function GeneralPanelSettings({ panel }: { panel: HintPanelData }) {
   const dispatch = useDispatch();
@@ -52,9 +55,8 @@ export function GeneralPanelSettings({ panel }: { panel: HintPanelData }) {
       <div className="GeneralPanelSettingsStatusTracking">
         <span>Display:</span> <StatusTracking panel={panel} />
       </div>
-      <div className="GeneralPanelSettingsInitialDisplay">
-        <span>Load as:</span> TODO
-      </div>
+      <PanelNameInputForm panel={panel} inputId={`PanelNameInput${uniqid()}`} />
+      <InitialDisplay />
     </div>
   );
 }

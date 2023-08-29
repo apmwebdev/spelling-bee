@@ -37,12 +37,29 @@ a {
   }
 }
 
+.App {
+  min-height: 550px;
+}
+
+.sb-top-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+
+/**********************/
+/***   COMPONENTS   ***/
+/**********************/
+
+
+
+/***   Buttons   ***/
+
 button {
-  //padding: 8px;
   border-radius: var(--br);
-  //border: 2px solid transparent;
   cursor: pointer;
-  //transition: border-color 0.05s;
 }
 
 .IconButton {
@@ -55,6 +72,14 @@ button {
   border: 1.5px solid ui-bg-color($accent-hue);
   &:hover {
     border-color: ui-border-color($accent-hue);
+  }
+  &.Square {
+    font-size: 20px;
+    padding: 4px;
+    &.Small {
+      font-size: 16px;
+      padding: 3px;
+    }
   }
 }
 
@@ -80,23 +105,27 @@ button {
   outline: 2px auto -webkit-focus-ring-color;
 }
 
-.App {
-  min-height: 550px;
+/***   Input   ***/
+
+input[type="text"] {
+  padding: 4px 8px;
+  border: 1.5px solid transparent;
+  color: $line-darker;
+  border-bottom-color: border-color($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  font-size: 14px;
+  &::placeholder {
+    font-style: italic;
+    color: $text-disabled;
+  }
+  &:hover {
+    border-bottom-color: border-color-hover($accent-hue);
+  }
+  &:focus {
+    background-color: bg-color-darkest($accent-hue);
+    //color: $line-bright;
+  }
 }
-
-.sb-top-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-
-
-/**********************/
-/***   COMPONENTS   ***/
-/**********************/
-
-
 
 /***   Select   ***/
 
@@ -1046,13 +1075,21 @@ button.sb-revealer {
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   padding: 8px 8px;
-  > div {
+  > div, form {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
     align-items: center;
   }
+}
+
+.PanelNameInputForm {
+  //display: grid;
+  //grid-template-columns: max-content 1fr max-content;
+  //align-items: center;
+  //gap: 8px;
 }
 
 .sb-hint-panel-content {

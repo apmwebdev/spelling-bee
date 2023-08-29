@@ -1,7 +1,6 @@
 import {
   HintPanelData,
   StatusTrackingKeys,
-  StatusTrackingOption,
   StatusTrackingOptions,
 } from "@/features/hints";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";

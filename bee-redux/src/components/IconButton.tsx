@@ -35,7 +35,7 @@ export const IconButtonTypes: IconButtonTypesData = {
   },
   Save: {
     name: "save",
-    icon: "",
+    icon: "material-symbols:edit",
   },
   Duplicate: {
     name: "duplicate",
