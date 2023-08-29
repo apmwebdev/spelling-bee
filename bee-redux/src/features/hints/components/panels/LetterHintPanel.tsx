@@ -6,7 +6,7 @@ import { LettersOnly } from "./letter/LettersOnly";
 import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
-import { HintPanelSettings } from "../HintPanelSettings";
+import { HintPanelSettings } from "../settings/HintPanelSettings";
 import {
   isLetterPanelData,
   LetterPanelLocations,

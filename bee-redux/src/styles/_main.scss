@@ -1075,7 +1075,8 @@ button.sb-revealer {
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
   align-items: center;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 8px;
   padding: 8px 8px;
   > div, form {
     display: flex;

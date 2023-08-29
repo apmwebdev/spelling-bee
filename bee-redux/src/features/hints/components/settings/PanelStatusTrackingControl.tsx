@@ -12,7 +12,11 @@ import {
 } from "@/components/radix-ui/react-select";
 import uniqid from "uniqid";
 
-export function StatusTracking({ panel }: { panel: HintPanelData }) {
+export function PanelStatusTrackingControl({
+  panel,
+}: {
+  panel: HintPanelData;
+}) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: string) => {
     //Trust me bro

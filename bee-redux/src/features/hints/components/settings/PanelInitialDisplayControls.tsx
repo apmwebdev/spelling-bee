@@ -1,4 +1,5 @@
 import { HintPanelData } from "@/features/hints";
+import { PanelInitDisplayIsExpandedToggle } from "./PanelInitDisplayIsExpandedToggle";
 
 export function PanelInitialDisplayControls({
   panel,
@@ -7,7 +8,8 @@ export function PanelInitialDisplayControls({
 }) {
   return (
     <div className="PanelInitialDisplayControls" style={{ gridColumn: "1/3" }}>
-      Initial Display:
+      <span>Initial Display:</span>
+      <PanelInitDisplayIsExpandedToggle panel={panel} />
     </div>
   );
 }

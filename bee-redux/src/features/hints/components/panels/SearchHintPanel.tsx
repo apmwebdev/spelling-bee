@@ -1,6 +1,6 @@
 import { HintPanelProps } from "../HintPanel";
 import { FormEvent, useState } from "react";
-import { HintPanelSettings } from "../HintPanelSettings";
+import { HintPanelSettings } from "../settings/HintPanelSettings";
 import { SearchPanelSettings } from "./search/SearchPanelSettings";
 import { useDispatch } from "react-redux";
 import { SearchPanelResults } from "./search/SearchPanelResults";
