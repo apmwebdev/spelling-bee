@@ -167,6 +167,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         }
         const query = async () => {
           console.log("Running updateHintPanel query...");
+          console.log("Form data:", formData);
           try {
             const response = await baseQuery({
               url: `/hint_panels/${formData.id}`,

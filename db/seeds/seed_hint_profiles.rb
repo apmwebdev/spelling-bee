@@ -283,6 +283,14 @@ module SeedHintProfiles
     )
   end
 
+  def self.reset_all_ids
+    ResetId.reset(
+      DefaultHintProfile,
+      UserHintProfile,
+    )
+    reset_dependent_ids
+  end
+
   def self.unseed_default_profiles
     DefaultHintProfile.destroy_all
     ResetId.reset(DefaultHintProfile)
@@ -298,5 +306,18 @@ module SeedHintProfiles
   def self.unseed
     unseed_default_profiles
     unseed_user_profiles
+  end
+
+  def self.hard_unseed
+    DefaultHintProfile.destroy_all
+    UserHintProfile.destroy_all
+    HintPanel.destroy_all
+    DefinitionPanel.destroy_all
+    LetterPanel.destroy_all
+    ObscurityPanel.destroy_all
+    SearchPanel.destroy_all
+    PanelDisplayState.destroy_all
+    SearchPanelSearch.destroy_all
+    reset_all_ids
   end
 end

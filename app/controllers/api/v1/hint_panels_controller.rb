@@ -17,8 +17,21 @@ class Api::V1::HintPanelsController < AuthRequiredController
     if @hint_panel.hint_profile.class.name == "DefaultHintProfile"
       render json: { error: "Can't change default profiles" }, status: 403
     end
-    if @hint_panel.update(hint_panel_update_params)
-      render json: @hint_panel
+    the_params = hint_panel_update_params
+    if the_params[:initial_display_state_attributes]
+      @hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
+    end
+    if the_params[:current_display_state_attributes]
+      @hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
+    end
+    if @hint_panel.update(
+      hint_panel_update_params.except(
+        :initial_display_state_attributes,
+        :current_display_state_attributes,
+        :panel_subtype_attributes,
+      )
+    )
+      render json: @hint_panel.to_front_end
     else
       render json: @hint_panel.errors, status: :unprocessable_entity
     end

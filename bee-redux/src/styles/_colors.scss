@@ -232,17 +232,17 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     }
   }
 
-  .sb-word-popover-content {
-    background-color: $mid-gray;
-    box-shadow: 0 0 0px 4px $dark-gray;
-    //border-color: $light-gray;
-    .popover-arrow {
-      fill: $light-gray;
-    }
-    .popover-close-button {
-      //border-color: $light-gray;
-    }
-  }
+  //.sb-word-popover-content {
+  //  background-color: $mid-gray;
+  //  box-shadow: 0 0 0px 4px $dark-gray;
+  //  //border-color: $light-gray;
+  //  .popover-arrow {
+  //    fill: $light-gray;
+  //  }
+  //  .popover-close-button {
+  //    //border-color: $light-gray;
+  //  }
+  //}
 
   button.sb-revealer {
     //border-color: $mid-gray;

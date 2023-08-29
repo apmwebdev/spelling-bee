@@ -23,7 +23,7 @@ export function WordWithPopover({ word }: { word: string }) {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          className="sb-word-popover-content"
+          className="PopoverContent"
           side="top"
           avoidCollisions={true}
           collisionPadding={16}
@@ -34,7 +34,7 @@ export function WordWithPopover({ word }: { word: string }) {
               <Icon icon="mdi:close-thick"></Icon>
             </button>
           </Popover.Close>
-          <Popover.Arrow className="popover-arrow" width={12} height={8} />
+          <Popover.Arrow className="PopoverArrow" width={12} height={8} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

@@ -108,6 +108,14 @@ export interface RailsPanelDisplayFormData {
   is_settings_sticky?: boolean;
 }
 
+export enum PanelDisplayStateKeys {
+  isExpanded = "isExpanded",
+  isBlurred = "isBlurred",
+  isSticky = "isSticky",
+  isSettingsExpanded = "isSettingsExpanded",
+  isSettingsSticky = "isSettingsSticky",
+}
+
 export enum PanelTypes {
   Letter = "letter",
   Search = "search",

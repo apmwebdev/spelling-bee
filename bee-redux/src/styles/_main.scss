@@ -105,6 +105,43 @@ button {
   outline: 2px auto -webkit-focus-ring-color;
 }
 
+/***   Checkbox   ***/
+
+.CheckboxRoot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  min-width: 1.5em;
+  height: 1.5em;
+  min-height: 1.5em;
+  //padding: 8px;
+  border-radius: var(--br);
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-darkest($accent-hue);
+  &[data-disabled] {
+    border-color: border-color-disabled($accent-hue);
+    background-color: bg-color-disabled($accent-hue);
+    cursor: not-allowed;
+  }
+}
+
+/***   Help Bubble   ***/
+
+.HelpBubbleTrigger {
+  height: 1.2em;
+  min-height: 1.2em;
+  width: 1.2em;
+  min-width: 1.2em;
+  border-radius: 1.2em;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background-color: inherit;
+}
+
 /***   Input   ***/
 
 input[type="text"] {
@@ -125,6 +162,44 @@ input[type="text"] {
     background-color: bg-color-darkest($accent-hue);
     //color: $line-bright;
   }
+}
+
+/***   Popover   ***/
+
+.PopoverContent {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px 12px 12px;
+  max-width: 40rem;
+  border-radius: var(--br);
+  border: 2px solid $light-gray;
+  background-color: $mid-gray;
+  //box-shadow: 0 0 0px 4px $dark-gray;
+  &:focus {
+    outline: none;
+  }
+  span {
+    align-self: center;
+    display: flex;
+    align-items: center;
+  }
+  .popover-close-button {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $light-gray;
+  }
+}
+
+.PopoverArrow {
+  z-index: 1;
+  fill: $light-gray;
 }
 
 /***   Select   ***/
@@ -870,38 +945,6 @@ input[type="text"] {
   }
 }
 
-.sb-word-popover-content {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 8px 12px 12px 12px;
-  max-width: 40rem;
-  border-radius: var(--br);
-  border: 2px solid $light-gray;
-  &:focus {
-    outline: none;
-  }
-  span {
-    align-self: center;
-    display: flex;
-    align-items: center;
-  }
-  .popover-arrow {
-    z-index: 1;
-  }
-  .popover-close-button {
-    align-self: flex-start;
-    margin-top: 4px;
-    padding: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid $light-gray;
-  }
-}
-
 button.sb-revealer {
   padding: 3px 8px;
   border: 1px solid $mid-gray;
@@ -1078,19 +1121,50 @@ button.sb-revealer {
   column-gap: 16px;
   row-gap: 8px;
   padding: 8px 8px;
-  > div, form {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    align-items: center;
+}
+
+.GeneralPanelSettingsStatusTracking, .PanelNameInputForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.PanelInitialDisplayControlsContainer {
+  display: grid;
+  align-items: center;
+  justify-content: stretch;
+  gap: 12px;
+  border-top: 1.5px solid border-color($accent-hue);
+  padding-top: 8px;
+}
+
+.PanelInitialDisplayControls {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  //grid-template-rows: 1fr 1fr;
+  align-items: flex-start;
+  justify-content: stretch;
+  gap: 12px;
+}
+
+.PanelInitDisplayControl label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  .CheckboxRoot[data-disabled] + div {
+    span {
+      color: $text-disabled;
+    }
   }
 }
 
-.PanelNameInputForm {
-  //display: grid;
-  //grid-template-columns: max-content 1fr max-content;
-  //align-items: center;
-  //gap: 8px;
+.PanelInitDisplayControlInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .sb-hint-panel-content {
