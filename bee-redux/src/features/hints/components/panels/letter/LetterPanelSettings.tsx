@@ -51,7 +51,7 @@ export function LetterPanelSettings({
           type="number"
           value={numberOfLetters}
           min={1}
-          max={answerLengths.slice(-1)[0]}
+          max={answerLengths.length ? answerLengths.slice(-1)[0] : 0}
           onChange={handleNumberOfLettersChange}
         />
       </div>
@@ -63,7 +63,11 @@ export function LetterPanelSettings({
           type="number"
           value={lettersOffset}
           min={0}
-          max={answerLengths.slice(-1)[0] - numberOfLetters}
+          max={
+            answerLengths.length
+              ? answerLengths.slice(-1)[0] - numberOfLetters
+              : 0
+          }
           onChange={handleOffsetChange}
         />
       </div>

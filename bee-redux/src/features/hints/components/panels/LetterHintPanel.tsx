@@ -7,24 +7,9 @@ import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
 import {
   HintPanelData,
   isLetterPanelData,
-  LetterPanelLocationKeys,
-  StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hints";
-
-export interface LetterHintSubsectionProps {
-  answers: string[];
-  correctGuessWords: string[];
-  numberOfLetters: number;
-  location: LetterPanelLocationKeys;
-  lettersOffset: number;
-  statusTracking: StatusTrackingKeys;
-}
-
-export interface LetterHintDataCell {
-  answers: number;
-  guesses: number;
-}
+import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
 
 export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
@@ -32,7 +17,7 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
 
   if (!isLetterPanelData(panel.typeData)) return;
 
-  const { numberOfLetters, location, lettersOffset, outputType } =
+  const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
     panel.typeData;
 
   const subsectionProps: LetterHintSubsectionProps = {
@@ -41,6 +26,7 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
     numberOfLetters,
     location,
     lettersOffset,
+    showKnown,
     statusTracking: panel.statusTracking,
   };
 

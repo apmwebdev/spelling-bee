@@ -1,10 +1,9 @@
+import uniqid from "uniqid";
 import {
   LetterHintDataCell,
   LetterHintSubsectionProps,
-} from "../LetterHintPanel";
-import uniqid from "uniqid";
-import { generateData } from "./WordCountList";
-import { StatusTrackingKeys } from "@/features/hints";
+} from "@/features/hints/components/panels/letter/types";
+import { generateListData } from "@/features/hints/components/panels/letter/util";
 
 export function LettersOnly({
   answers,
@@ -13,6 +12,7 @@ export function LettersOnly({
   location,
   lettersOffset,
   statusTracking,
+  showKnown,
 }: LetterHintSubsectionProps) {
   const generateOutput = () => {
     const createCell = ({
@@ -46,13 +46,14 @@ export function LettersOnly({
       );
     };
 
-    const { excludedAnswers, listRows } = generateData({
+    const { excludedAnswers, listRows } = generateListData({
       answers,
       correctGuessWords,
       numberOfLetters,
       location,
       lettersOffset,
       statusTracking,
+      showKnown,
     });
     const startingLetterDivs = [];
 

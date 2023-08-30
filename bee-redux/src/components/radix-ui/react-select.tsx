@@ -50,13 +50,16 @@ export const SelectContentWithPortal = (
   </Select.Portal>
 );
 
-interface SelectItemProps extends Select.SelectItemProps {
+interface SelectItemPropsExtended extends Select.SelectItemProps {
   itemText?: string;
 }
 
-export const SelectItem = (
-  props: IntrinsicAttributes & SelectItemProps & RefAttributes<HTMLDivElement>,
-) => (
+export const SelectItem = ({
+  itemText,
+  ...props
+}: IntrinsicAttributes &
+  SelectItemPropsExtended &
+  RefAttributes<HTMLDivElement>) => (
   <Select.Item
     {...props}
     className={composeClasses("SelectItem", props.className ?? "")}
@@ -64,10 +67,8 @@ export const SelectItem = (
     <Select.ItemIndicator asChild>
       <Icon className="SelectItemIndicator" icon="mdi:check" />
     </Select.ItemIndicator>
-    {props.itemText ? (
-      <Select.ItemText className="SelectItemText">
-        {props.itemText}
-      </Select.ItemText>
+    {itemText ? (
+      <Select.ItemText className="SelectItemText">{itemText}</Select.ItemText>
     ) : null}
     {props.children}
   </Select.Item>
