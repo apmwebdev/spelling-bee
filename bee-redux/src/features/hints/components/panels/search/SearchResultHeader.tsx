@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import {
   SearchPanelLocations,
   SearchPanelSearch,
-  SubstringHintOutputTypes,
+  SubstringHintOutputKeys,
 } from "@/features/hints";
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
@@ -36,9 +36,9 @@ export function SearchResultHeader({
       titleString += `...${searchString.toUpperCase()}${offsetString()} `;
     }
 
-    if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
+    if (outputType === SubstringHintOutputKeys.WordLengthGrid) {
       titleString += " Word Lengths";
-    } else if (outputType === SubstringHintOutputTypes.WordCountList) {
+    } else if (outputType === SubstringHintOutputKeys.WordCountList) {
       titleString += " Word Count";
     } else {
       titleString += " Yes or No";

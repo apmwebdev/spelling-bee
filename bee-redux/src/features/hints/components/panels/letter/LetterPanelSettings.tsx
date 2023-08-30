@@ -1,10 +1,7 @@
 import { ChangeEvent } from "react";
 import { capitalize } from "lodash";
-import {
-  LetterPanelData,
-  LetterPanelLocations,
-  SubstringHintOutputTypes,
-} from "@/features/hints";
+import { LetterPanelData, LetterPanelLocations } from "@/features/hints";
+import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
@@ -15,37 +12,8 @@ export function LetterPanelSettings({
   panelId,
   typeData,
 }: LetterPanelSettingsProps) {
-  const {
-    numberOfLetters,
-    location,
-    lettersOffset,
-    outputType,
-    showKnown
-  } = typeData;
-  const handleDisplayChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    // const payload: ChangeLetterPanelDisplayPayload = {
-    //   panelId,
-    //   newValue: e.target.value as SubstringHintOutputTypes,
-    // };
-    // dispatch(changeLetterPanelDisplay(payload));
-  };
-
-  const displayControl = () => {
-    return (
-      <select value={outputType} onChange={handleDisplayChange}>
-        <option value={SubstringHintOutputTypes.WordLengthGrid}>
-          Word Length Grid
-        </option>
-        <option value={SubstringHintOutputTypes.WordCountList}>
-          Word Count List
-        </option>
-        <option value={SubstringHintOutputTypes.LettersList}>
-          Letters Only
-        </option>
-      </select>
-    );
-  };
+  const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
+    typeData;
 
   const handleNumberOfLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -109,10 +77,8 @@ export function LetterPanelSettings({
   };
 
   return (
-    <div className="sb-letter-panel-settings">
-      <div className="display-section">
-        <span>Type:</span> {displayControl()}
-      </div>
+    <div className="LetterPanelSettings">
+      <HintOutputTypeControl panelId={panelId} outputType={outputType} />
       <div className="number-of-letters-section">
         <span>Number of letters:</span> {numOfLettersControl()}
       </div>

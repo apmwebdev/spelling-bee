@@ -153,15 +153,29 @@ export enum LetterPanelLocations {
  *   Essentially, it is just confirming that certain letter combinations exist
  *   among the answers.
  */
-export enum SubstringHintOutputTypes {
+export enum SubstringHintOutputKeys {
   WordLengthGrid = "word_length_grid",
   WordCountList = "word_count_list",
   LettersList = "letters_list",
 }
 
+interface SubstringHintOutputOption {
+  title: string;
+}
+
+interface SubstringHintOutputOptionsData {
+  [key: string]: SubstringHintOutputOption;
+}
+
+export const SubstringHintOutputOptions: SubstringHintOutputOptionsData = {
+  word_length_grid: { title: "Word Length Grid" },
+  word_count_list: { title: "Word Count List" },
+  letters_list: { title: "Letters List" },
+};
+
 export interface LetterPanelFormData {
   location: LetterPanelLocations;
-  outputType: SubstringHintOutputTypes;
+  outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */
   numberOfLetters: number;
   /**
@@ -196,7 +210,7 @@ export enum SearchPanelLocations {
 export interface SearchPanelFormData {
   location: SearchPanelLocations;
   lettersOffset: number;
-  outputType: SubstringHintOutputTypes;
+  outputType: SubstringHintOutputKeys;
 }
 
 export interface SearchPanelData extends SearchPanelFormData {
@@ -345,11 +359,20 @@ export interface HintPanelUpdateForm {
   initialDisplayState?: PanelDisplayFormData;
   currentDisplayState?: PanelDisplayFormData;
   statusTracking?: StatusTrackingKeys;
-  panelSubtype?:
-    | LetterPanelFormData
-    | SearchPanelFormData
-    | ObscurityPanelFormData
-    | DefinitionPanelFormData;
+  panelSubtype?: {
+    panelType?: PanelSubTypeTypes;
+    showKnown?: boolean;
+    revealLength?: boolean;
+    showObscurity?: boolean;
+    sortOrder?: boolean;
+    location?: boolean;
+    outputType?: SubstringHintOutputKeys;
+    numberOfLetters?: boolean;
+    lettersOffset?: number;
+    separateKnown?: boolean;
+    revealFirstLetter?: boolean;
+    clickToDefine?: boolean;
+  };
 }
 
 export interface RailsHintPanelUpdateForm {
@@ -367,7 +390,7 @@ export interface RailsHintPanelUpdateForm {
       show_obscurity?: boolean;
       sort_order?: SortOrder;
       location?: SearchPanelLocations;
-      output_type?: SubstringHintOutputTypes;
+      output_type?: SubstringHintOutputKeys;
       number_of_letters?: number;
       letters_offset?: number;
       separate_known?: boolean;

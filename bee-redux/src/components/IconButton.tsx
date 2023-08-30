@@ -29,7 +29,7 @@ export const IconButtonTypes: IconButtonTypesData = {
   },
   Edit: {
     name: "edit",
-    icon: "",
+    icon: "material-symbols:edit",
   },
   Delete: {
     name: "delete",
@@ -37,7 +37,7 @@ export const IconButtonTypes: IconButtonTypesData = {
   },
   Save: {
     name: "save",
-    icon: "material-symbols:edit",
+    icon: "mdi:checkbox-outline",
   },
   Duplicate: {
     name: "duplicate",

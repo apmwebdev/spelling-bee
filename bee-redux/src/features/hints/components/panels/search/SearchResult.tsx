@@ -3,7 +3,7 @@ import { SearchResultWordLengths } from "./SearchResultWordLengths";
 import { SearchResultWordCount } from "./SearchResultWordCount";
 import { SearchResultLettersOnly } from "./SearchResultLettersOnly";
 import { SearchResultHeader } from "./SearchResultHeader";
-import { SubstringHintOutputTypes } from "@/features/hints";
+import { SubstringHintOutputKeys } from "@/features/hints";
 
 export function SearchResult({
   panelId,
@@ -12,18 +12,18 @@ export function SearchResult({
 }: SearchResultProps) {
   const content = () => {
     switch (resultData.searchObject.outputType) {
-      case SubstringHintOutputTypes.WordLengthGrid:
+      case SubstringHintOutputKeys.WordLengthGrid:
         return (
           <SearchResultWordLengths
             resultData={resultData}
             tracking={tracking}
           />
         );
-      case SubstringHintOutputTypes.WordCountList:
+      case SubstringHintOutputKeys.WordCountList:
         return (
           <SearchResultWordCount resultData={resultData} tracking={tracking} />
         );
-      case SubstringHintOutputTypes.LettersList:
+      case SubstringHintOutputKeys.LettersList:
         return (
           <SearchResultLettersOnly
             resultData={resultData}

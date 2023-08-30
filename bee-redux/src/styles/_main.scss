@@ -214,6 +214,7 @@ input[type="text"] {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  line-height: 1.2;
   &:hover {
     border-color: border-color-hover($accent-hue);
   }
@@ -1200,7 +1201,7 @@ button.sb-revealer {
   padding: 8px 0px;
 }
 
-.sb-letter-panel-settings {
+.LetterPanelSettings {
   display: grid;
   grid-template: 1fr 1fr / 1fr 1fr;
   justify-content: stretch;

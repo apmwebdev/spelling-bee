@@ -1,19 +1,22 @@
 import * as Select from "@radix-ui/react-select";
-import { ReactNode } from "react";
+import { RefAttributes } from "react";
 import { Icon } from "@iconify/react";
 import { composeClasses } from "@/utils";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
+import {
+  SelectContentProps,
+  SelectLabelProps,
+  SelectTriggerProps,
+} from "@radix-ui/react-select";
 
-interface SelectTriggerProps extends Select.SelectTriggerProps {
-  className?: string;
-}
-
-export const SelectTrigger = ({
-  className,
-  ...otherProps
-}: SelectTriggerProps) => (
+export const SelectTrigger = (
+  props: IntrinsicAttributes &
+    SelectTriggerProps &
+    RefAttributes<HTMLButtonElement>,
+) => (
   <Select.Trigger
-    className={composeClasses("SelectTrigger", className ?? "")}
-    {...otherProps}
+    {...props}
+    className={composeClasses("SelectTrigger", props.className ?? "")}
   >
     <Select.Value />
     <Select.Icon asChild>
@@ -24,27 +27,22 @@ export const SelectTrigger = ({
   </Select.Trigger>
 );
 
-interface SelectContentProps extends Select.SelectContentProps {
-  children: ReactNode;
-  className?: string;
-}
-
-export const SelectContentWithPortal = ({
-  children,
-  className,
-  ...otherProps
-}: SelectContentProps) => (
+export const SelectContentWithPortal = (
+  props: IntrinsicAttributes &
+    SelectContentProps &
+    RefAttributes<HTMLDivElement>,
+) => (
   <Select.Portal>
     <Select.Content
-      className={composeClasses("SelectContent", className ?? "")}
-      {...otherProps}
+      {...props}
+      className={composeClasses("SelectContent", props.className ?? "")}
     >
       <Select.ScrollUpButton>
         <div className="SelectScrollButton up">
           <Icon icon="mdi:chevron-up" />
         </div>
       </Select.ScrollUpButton>
-      {children}
+      {props.children}
       <Select.ScrollUpButton className="SelectScrollButton down">
         <Icon icon="mdi:chevron-down" />
       </Select.ScrollUpButton>
@@ -53,47 +51,35 @@ export const SelectContentWithPortal = ({
 );
 
 interface SelectItemProps extends Select.SelectItemProps {
-  value: string;
-  className?: string;
   itemText?: string;
-  children?: ReactNode;
 }
 
-export const SelectItem = ({
-  value,
-  className,
-  itemText,
-  children,
-  ...otherProps
-}: SelectItemProps) => (
+export const SelectItem = (
+  props: IntrinsicAttributes & SelectItemProps & RefAttributes<HTMLDivElement>,
+) => (
   <Select.Item
-    value={value}
-    className={composeClasses("SelectItem", className ?? "")}
-    {...otherProps}
+    {...props}
+    className={composeClasses("SelectItem", props.className ?? "")}
   >
     <Select.ItemIndicator asChild>
       <Icon className="SelectItemIndicator" icon="mdi:check" />
     </Select.ItemIndicator>
-    {itemText ? (
-      <Select.ItemText className="SelectItemText">{itemText}</Select.ItemText>
+    {props.itemText ? (
+      <Select.ItemText className="SelectItemText">
+        {props.itemText}
+      </Select.ItemText>
     ) : null}
-    {children}
+    {props.children}
   </Select.Item>
 );
 
-interface SelectLabelProps extends Select.SelectLabelProps {
-  className?: string;
-}
-
-export const SelectLabel = ({
-  className,
-  children,
-  ...otherProps
-}: SelectLabelProps) => (
+export const SelectLabel = (
+  props: IntrinsicAttributes & SelectLabelProps & RefAttributes<HTMLDivElement>,
+) => (
   <Select.Label
-    className={composeClasses("SelectLabel", className ?? "")}
-    {...otherProps}
+    {...props}
+    className={composeClasses("SelectLabel", props.className ?? "")}
   >
-    {children}
+    {props.children}
   </Select.Label>
 );

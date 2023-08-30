@@ -9,7 +9,7 @@ import {
   isLetterPanelData,
   LetterPanelLocations,
   StatusTrackingKeys,
-  SubstringHintOutputTypes,
+  SubstringHintOutputKeys,
 } from "@/features/hints";
 
 export interface LetterHintSubsectionProps {
@@ -45,11 +45,11 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
   };
 
   const hintOutput = () => {
-    if (outputType === SubstringHintOutputTypes.WordLengthGrid) {
+    if (outputType === SubstringHintOutputKeys.WordLengthGrid) {
       return <WordLengthGridContainer {...subsectionProps} />;
-    } else if (outputType === SubstringHintOutputTypes.WordCountList) {
+    } else if (outputType === SubstringHintOutputKeys.WordCountList) {
       return <WordCountList {...subsectionProps} />;
-    } else if (outputType === SubstringHintOutputTypes.LettersList) {
+    } else if (outputType === SubstringHintOutputKeys.LettersList) {
       return <LettersOnly {...subsectionProps} />;
     }
   };
