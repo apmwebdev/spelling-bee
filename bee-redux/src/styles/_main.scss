@@ -164,6 +164,13 @@ input[type="text"] {
   }
 }
 
+input[type="number"] {
+  border-radius: var(--br);
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 1.5px solid border-color($accent-hue);
+}
+
 /***   Popover   ***/
 
 .PopoverContent {
@@ -1119,7 +1126,7 @@ button.sb-revealer {
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
   align-items: center;
-  column-gap: 16px;
+  column-gap: 8px;
   row-gap: 8px;
   padding: 8px 8px;
 }
@@ -1249,7 +1256,7 @@ button.sb-revealer {
   padding: 6px 2px;
 }
 
-.sb-number-of-letters-control, .sb-offset-control {
+.LetterPanelNumberOfLettersInput, .LetterPanelOffsetInput {
   width: 3rem;
 }
 

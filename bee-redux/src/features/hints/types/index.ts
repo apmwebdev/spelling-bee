@@ -380,7 +380,7 @@ export interface HintPanelUpdateForm {
     sortOrder?: boolean;
     location?: SearchPanelLocations | LetterPanelLocationKeys;
     outputType?: SubstringHintOutputKeys;
-    numberOfLetters?: boolean;
+    numberOfLetters?: number;
     lettersOffset?: number;
     separateKnown?: boolean;
     revealFirstLetter?: boolean;

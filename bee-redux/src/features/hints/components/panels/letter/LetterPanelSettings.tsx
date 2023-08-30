@@ -2,6 +2,9 @@ import { ChangeEvent } from "react";
 import { LetterPanelData } from "@/features/hints";
 import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
 import { LetterPanelLocationControl } from "@/features/hints/components/panels/letter/settings/LetterPanelLocationControl";
+import { useAppSelector } from "@/app/hooks";
+import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
+import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
@@ -14,55 +17,54 @@ export function LetterPanelSettings({
 }: LetterPanelSettingsProps) {
   const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
     typeData;
+  const answerLengths = useAppSelector(selectAnswerLengths);
+  const [updatePanel] = useUpdateHintPanelMutation();
 
   const handleNumberOfLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    // const payload: ChangeLetterPanelNumberOfLettersPayload = {
-    //   panelId,
-    //   newValue: Number(e.target.value),
-    // };
-    // dispatch(changeLetterPanelNumberOfLetters(payload));
-  };
-  const numOfLettersControl = () => {
-    return (
-      <input
-        className="sb-number-of-letters-control"
-        type="number"
-        value={numberOfLetters}
-        onChange={handleNumberOfLettersChange}
-      />
-    );
+    updatePanel({
+      id: panelId,
+      debounceField: "numberOfLetters",
+      panelSubtype: {
+        numberOfLetters: Number(e.target.value),
+      },
+    });
   };
 
   const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    // const payload: ChangeLetterPanelOffsetPayload = {
-    //   panelId,
-    //   newValue: Number(e.target.value),
-    // };
-    // dispatch(changeLetterPanelOffset(payload));
-  };
-
-  const offsetControl = () => {
-    return (
-      <input
-        className="sb-offset-control"
-        type="number"
-        value={lettersOffset}
-        onChange={handleOffsetChange}
-      />
-    );
+    updatePanel({
+      id: panelId,
+      debounceField: "offset",
+      panelSubtype: {
+        lettersOffset: Number(e.target.value),
+      },
+    });
   };
 
   return (
     <div className="LetterPanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
-      <div className="number-of-letters-section">
-        <span>Number of letters:</span> {numOfLettersControl()}
+      <div>
+        <span>Number of letters:</span>
+        <input
+          className="LetterPanelNumberOfLettersInput"
+          type="number"
+          value={numberOfLetters}
+          min={1}
+          max={answerLengths.slice(-1)[0]}
+          onChange={handleNumberOfLettersChange}
+        />
       </div>
       <LetterPanelLocationControl panelId={panelId} location={location} />
-      <div className="offset-section">
-        <span>Offset:</span> {offsetControl()}
+      <div>
+        <span>Offset:</span>
+        <input
+          className="LetterPanelOffsetInput"
+          type="number"
+          value={lettersOffset}
+          min={0}
+          max={answerLengths.slice(-1)[0] - numberOfLetters}
+          onChange={handleOffsetChange}
+        />
       </div>
     </div>
   );

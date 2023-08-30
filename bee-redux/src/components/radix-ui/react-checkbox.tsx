@@ -9,8 +9,8 @@ export const Checkbox = (
   props: IntrinsicAttributes & CheckboxProps & RefAttributes<HTMLButtonElement>,
 ) => (
   <RadixCheckbox.Root
-    className={composeClasses("CheckboxRoot", props.className ?? "")}
     {...props}
+    className={composeClasses("CheckboxRoot", props.className ?? "")}
   >
     <RadixCheckbox.Indicator className="CheckboxIndicator">
       <Icon icon="mdi:check-bold" />
