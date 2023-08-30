@@ -66,7 +66,7 @@ export function AnswersSettings() {
       <div>
         <ToggleGroup.Root
           type="single"
-          className="sb-word-list-toggle"
+          className="ToggleGroup"
           value={remainingLocation}
           onValueChange={(val) => dispatch(setAnswersRemainingLocation(val))}
         >

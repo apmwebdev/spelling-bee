@@ -5,6 +5,7 @@ import { LetterPanelLocationControl } from "@/features/hints/components/panels/l
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
@@ -66,6 +67,7 @@ export function LetterPanelSettings({
           onChange={handleOffsetChange}
         />
       </div>
+      <HintShowKnownControl panelId={panelId} showKnown={showKnown} />
     </div>
   );
 }

@@ -51,6 +51,10 @@ $error-hue: 0;
   @return hsl($hue, 20%, 55%);
 }
 
+@function shadow-color-focus($hue) {
+  @return hsl($hue, 20%, 70%, 0.2);
+}
+
 @function border-color-disabled($hue) {
   @return hsl($hue, 11%, 33%);
 }
@@ -120,6 +124,19 @@ $yellow-line: hsl($yellow-hue, 78%, 50%);
 $accent-title: hsl($title-hue, 50%, 60%);
 $accent-title-hover: hsl($title-hue, 60%, 50%);
 
+//Mixins
+@mixin basic-hover {
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+}
+
+@mixin basic-focus {
+  &:focus {
+    box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
+  }
+}
+
 @media (prefers-color-scheme: dark) {
 
   //:root {
@@ -165,17 +182,17 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
       //border-top: 1px solid $blue-border;
       //border-bottom: 1px solid $blue-border;
     }
-    .puzzle-nav-link {
-      &.disabled {
-        color: $line-disabled;
-      }
-    }
-    .sb-puzzle-search {
-      input {
+    //.puzzle-nav-link {
+      //&.disabled {
+      //  color: $line-disabled;
+      //}
+    //}
+    //.sb-puzzle-search {
+    //  input {
         //background-color: inherit;
         //border-bottom-color: $mid-gray-lighter;
-      }
-    }
+      //}
+    //}
   }
 
   .user-menu-content {

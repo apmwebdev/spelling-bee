@@ -4,9 +4,13 @@ import { ReactNode } from "react";
 export interface TooltipProps {
   text: string;
   children: ReactNode;
+  disabled?: boolean;
 }
 
-export function BasicTooltip({ text, children }: TooltipProps) {
+export function BasicTooltip({ text, children, disabled }: TooltipProps) {
+  if (disabled) {
+    return children;
+  }
   return (
     <Tooltip.Root>
       <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>

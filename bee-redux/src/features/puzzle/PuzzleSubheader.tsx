@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectDate, selectIsLatest, selectPuzzleId } from "./puzzleSlice";
 import { Icon } from "@iconify/react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   dateRegex,
   getNextPuzzleDateString,
@@ -9,6 +9,7 @@ import {
 } from "@/utils";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { AttemptControls } from "../guesses/AttemptControls";
+import { ButtonLink } from "@/components/ButtonLink";
 
 export function PuzzleSubheader() {
   const params = useParams();
@@ -23,14 +24,6 @@ export function PuzzleSubheader() {
   }
 
   const firstPuzzleLink = () => {
-    if (puzzleId === 1) {
-      return (
-        <div className="puzzle-nav-link disabled">
-          <Icon icon="mdi:arrow-collapse-left" />
-          {/*<span>First</span>*/}
-        </div>
-      );
-    }
     let urlString = "puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += "20180509";
@@ -38,22 +31,17 @@ export function PuzzleSubheader() {
       urlString += "1";
     }
     return (
-      <Link className="puzzle-nav-link" to={urlString}>
+      <ButtonLink
+        to={urlString}
+        className="puzzle-nav-link"
+        disabled={puzzleId === 1}
+      >
         <Icon icon="mdi:arrow-collapse-left" />
-        {/*<span>First</span>*/}
-      </Link>
+      </ButtonLink>
     );
   };
 
   const previousPuzzleLink = () => {
-    if (puzzleId === 1) {
-      return (
-        <div className="puzzle-nav-link disabled">
-          <Icon icon="mdi:arrow-left" />
-          {/*<span>Prev</span>*/}
-        </div>
-      );
-    }
     let urlString = "puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += getPreviousPuzzleDateString(params.identifier);
@@ -61,22 +49,17 @@ export function PuzzleSubheader() {
       urlString += `${puzzleId - 1}`;
     }
     return (
-      <Link className="puzzle-nav-link" to={urlString}>
+      <ButtonLink
+        to={urlString}
+        className="puzzle-nav-link"
+        disabled={puzzleId === 1}
+      >
         <Icon icon="mdi:arrow-left" />
-        {/*<span>Prev</span>*/}
-      </Link>
+      </ButtonLink>
     );
   };
 
   const nextPuzzleLink = () => {
-    if (isLatest) {
-      return (
-        <div className="puzzle-nav-link disabled">
-          {/*<span>Next</span>*/}
-          <Icon icon="mdi:arrow-right" />
-        </div>
-      );
-    }
     let urlString = "puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += getNextPuzzleDateString(params.identifier);
@@ -84,27 +67,25 @@ export function PuzzleSubheader() {
       urlString += `${puzzleId + 1}`;
     }
     return (
-      <Link className="puzzle-nav-link" to={urlString}>
-        {/*<span>Next</span>*/}
+      <ButtonLink
+        to={urlString}
+        className="puzzle-nav-link"
+        disabled={isLatest}
+      >
         <Icon icon="mdi:arrow-right" />
-      </Link>
+      </ButtonLink>
     );
   };
 
   const latestPuzzleLink = () => {
-    if (isLatest) {
-      return (
-        <div className="puzzle-nav-link disabled">
-          {/*<span>Latest</span>*/}
-          <Icon icon="mdi:arrow-collapse-right" />
-        </div>
-      );
-    }
     return (
-      <Link className="puzzle-nav-link" to="puzzles/latest">
-        {/*<span>Latest</span>*/}
+      <ButtonLink
+        to="puzzles/latest"
+        className="puzzle-nav-link"
+        disabled={isLatest}
+      >
         <Icon icon="mdi:arrow-collapse-right" />
-      </Link>
+      </ButtonLink>
     );
   };
 

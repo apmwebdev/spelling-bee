@@ -24,6 +24,7 @@
 }
 
 a {
+  border-radius: var(--br);
   $this-hue: $accent-hue;
   text-decoration: inherit;
   color: ui-line-color($this-hue);
@@ -33,7 +34,8 @@ a {
   }
   &:focus {
     text-decoration: underline;
-    color: ui-line-focus-color($this-hue);
+    box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
+    //color: ui-line-focus-color($this-hue);
   }
 }
 
@@ -63,6 +65,7 @@ button {
 }
 
 .IconButton {
+  @include basic-focus;
   font-size: 20px;
   padding: 4px 12px;
   display: flex;
@@ -95,19 +98,42 @@ button {
 }
 
 .standard-button {
+  @include basic-focus;
   font-size: 16px;
   padding: 8px 16px;
   background-color: ui-bg-color($accent-hue);
 }
 
-.standard-button:focus,
-.standard-button:focus-visible {
-  outline: 2px auto -webkit-focus-ring-color;
+a.ButtonLink, div.ButtonLink {
+  border-radius: var(--br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  gap: 4px;
+  border: 1.5px solid border-color($accent-hue);
+  //border: 1.5px solid;
+  &:hover {
+    color: ui-line-color($accent-hue);
+    border-color: border-color-hover($accent-hue);
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
+  }
+  &.disabled {
+    color: border-color-disabled($accent-hue);
+    border-color: border-color-disabled($accent-hue);
+  }
+  span {
+    font-size: 14px;
+  }
 }
 
 /***   Checkbox   ***/
 
 .CheckboxRoot {
+  @include basic-hover;
+  @include basic-focus;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,6 +155,7 @@ button {
 /***   Help Bubble   ***/
 
 .HelpBubbleTrigger {
+  @include basic-focus;
   height: 1.2em;
   min-height: 1.2em;
   width: 1.2em;
@@ -143,6 +170,15 @@ button {
 }
 
 /***   Input   ***/
+
+input, input[type="number"] {
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
+  }
+}
 
 input[type="text"] {
   padding: 4px 8px;
@@ -165,10 +201,13 @@ input[type="text"] {
 }
 
 input[type="number"] {
+  @include basic-hover;
+  @include basic-focus;
   border-radius: var(--br);
   font-size: 14px;
   padding: 4px 8px;
   border: 1.5px solid border-color($accent-hue);
+  //background-color: bg-color-darkest($accent-hue);
 }
 
 /***   Popover   ***/
@@ -212,6 +251,8 @@ input[type="number"] {
 /***   Select   ***/
 
 .SelectTrigger {
+  @include basic-hover;
+  @include basic-focus;
   width: 10em;
   font-size: 16px;
   border: 1.5px solid border-color($accent-hue);
@@ -222,9 +263,6 @@ input[type="number"] {
   justify-content: space-between;
   gap: 8px;
   line-height: 1.2;
-  &:hover {
-    border-color: border-color-hover($accent-hue);
-  }
   &.SmallSelect {
     font-size: 14px;
     padding: 4px 8px;
@@ -339,6 +377,37 @@ input[type="number"] {
     min-width: 44px;
     min-height: 44px;
   }
+}
+
+/***   Switch   ***/
+
+.SwitchRoot {
+  @include basic-hover;
+  @include basic-focus;
+  display: block;
+  position: relative;
+  border-radius: 9999px;
+  width: 42px;
+  height: 25px;
+  border: 1.5px solid border-color($accent-hue);
+  background-color: bg-color-darkest($accent-hue);
+}
+//.SwitchRoot[data-state='checked'] {
+//  background-color: ui-bg-color($accent-hue);
+//  border-color: border-color-hover($accent-hue);
+//}
+
+.SwitchThumb {
+  display: block;
+  position: relative;
+  border-radius: 9999px;
+  height: 18px;
+  width: 18px;
+  transform: translateX(-2px);
+  background-color: $line-bright;
+}
+.SwitchThumb[data-state='checked'] {
+  transform: translateX(15px);
 }
 
 /***   Tabs   ***/
@@ -489,22 +558,6 @@ input[type="number"] {
     justify-content: center;
     //padding: 8px;
     gap: 16px;
-    .puzzle-nav-link {
-      border-radius: var(--br);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 16px;
-      gap: 4px;
-      border: 1.5px solid border-color($accent-hue);
-      &.disabled {
-        color: border-color-disabled($accent-hue);
-        border-color: border-color-disabled($accent-hue);
-      }
-      span {
-        font-size: 14px;
-      }
-    }
   }
   .sb-puzzle-search {
     display: flex;
@@ -1030,6 +1083,9 @@ button.sb-revealer {
   border: 1.5px solid transparent;
   &.button {
     background-color: bg-color-extra($this-hue);
+    &:focus {
+      box-shadow: 0 0 0 1.5px border-color-hover($this-hue);
+    }
   }
   &:hover {
     border-color: border-color($this-hue);
