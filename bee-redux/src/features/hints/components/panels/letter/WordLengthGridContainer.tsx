@@ -5,7 +5,7 @@ import {
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
-import { LetterPanelLocations } from "@/features/hints";
+import { LetterPanelLocationKeys } from "@/features/hints";
 import { WordLengthGrid } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGrid";
 
 export interface GridRow {
@@ -51,7 +51,7 @@ export function WordLengthGridContainer({
         continue;
       }
       let substring: string;
-      if (location === LetterPanelLocations.Start) {
+      if (location === LetterPanelLocationKeys.Start) {
         substring = answer.slice(
           lettersOffset,
           lettersOffset + numberOfLetters,

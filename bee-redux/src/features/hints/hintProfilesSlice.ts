@@ -3,7 +3,7 @@ import { RootState } from "@/app/store";
 import cloneDeep from "lodash/cloneDeep";
 import {
   isSearchPanelData,
-  LetterPanelLocations,
+  LetterPanelLocationKeys,
   SearchPanelData,
   StatusTrackingKeys,
   // StatusTrackingKeys,
@@ -40,7 +40,7 @@ export enum StringHintDisplayOptions {
 
 export interface LetterPanelSettings {
   numberOfLetters: number;
-  locationInWord: LetterPanelLocations;
+  locationInWord: LetterPanelLocationKeys;
   offset: number;
   display: StringHintDisplayOptions;
 }
@@ -190,7 +190,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 1,
-          locationInWord: LetterPanelLocations.Start,
+          locationInWord: LetterPanelLocationKeys.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordLengthGrid,
         },
@@ -206,7 +206,7 @@ const superSpellingBeeProfile = (): HintProfileFormat => {
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 2,
-          locationInWord: LetterPanelLocations.Start,
+          locationInWord: LetterPanelLocationKeys.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordCountList,
         },
@@ -256,7 +256,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 1,
-          locationInWord: LetterPanelLocations.Start,
+          locationInWord: LetterPanelLocationKeys.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordLengthGrid,
         },
@@ -272,7 +272,7 @@ const spellingBeeBuddyProfile = (): HintProfileFormat => {
         type: PanelTypes.Letter,
         typeSpecificData: {
           numberOfLetters: 2,
-          locationInWord: LetterPanelLocations.Start,
+          locationInWord: LetterPanelLocationKeys.Start,
           offset: 0,
           display: StringHintDisplayOptions.WordCountList,
         },
@@ -325,7 +325,7 @@ export interface ChangeLetterPanelNumberOfLettersPayload {
 
 export interface ChangeLetterPanelLocationInWordPayload {
   panelId: number;
-  newValue: LetterPanelLocations;
+  newValue: LetterPanelLocationKeys;
 }
 
 export interface ChangeLetterPanelOffsetPayload {

@@ -7,7 +7,7 @@ import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
 import {
   HintPanelData,
   isLetterPanelData,
-  LetterPanelLocations,
+  LetterPanelLocationKeys,
   StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hints";
@@ -16,7 +16,7 @@ export interface LetterHintSubsectionProps {
   answers: string[];
   correctGuessWords: string[];
   numberOfLetters: number;
-  location: LetterPanelLocations;
+  location: LetterPanelLocationKeys;
   lettersOffset: number;
   statusTracking: StatusTrackingKeys;
 }

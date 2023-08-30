@@ -4,7 +4,10 @@ import {
 } from "../LetterHintPanel";
 import uniqid from "uniqid";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
-import { LetterPanelLocations, StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
+import {
+  LetterPanelLocationKeys,
+  StatusTrackingOptions,
+} from "@/features/hints";
 
 export interface ListRow {
   [substring: string]: LetterHintDataCell;
@@ -35,7 +38,7 @@ export const generateData = ({
       continue;
     }
     let answerFragment: string;
-    if (location === LetterPanelLocations.Start) {
+    if (location === LetterPanelLocationKeys.Start) {
       answerFragment = answer.slice(
         lettersOffset,
         lettersOffset + numberOfLetters,

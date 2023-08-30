@@ -136,10 +136,23 @@ export enum PanelSubTypeTypes {
  * @prop Start "start"
  * @prop End "end"
  */
-export enum LetterPanelLocations {
+export enum LetterPanelLocationKeys {
   Start = "start",
   End = "end",
 }
+
+interface EnumerableOption {
+  title: string;
+}
+
+interface EnumeratedOptions {
+  [key: string]: EnumerableOption;
+}
+
+export const LetterPanelLocationOptions: EnumeratedOptions = {
+  start: { title: "Start of Word" },
+  end: { title: "End of Word" },
+};
 
 /**
  * Output types for letter and search panels, i.e., the "substring" hint types
@@ -174,7 +187,7 @@ export const SubstringHintOutputOptions: SubstringHintOutputOptionsData = {
 };
 
 export interface LetterPanelFormData {
-  location: LetterPanelLocations;
+  location: LetterPanelLocationKeys;
   outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */
   numberOfLetters: number;
@@ -365,7 +378,7 @@ export interface HintPanelUpdateForm {
     revealLength?: boolean;
     showObscurity?: boolean;
     sortOrder?: boolean;
-    location?: boolean;
+    location?: SearchPanelLocations | LetterPanelLocationKeys;
     outputType?: SubstringHintOutputKeys;
     numberOfLetters?: boolean;
     lettersOffset?: number;
