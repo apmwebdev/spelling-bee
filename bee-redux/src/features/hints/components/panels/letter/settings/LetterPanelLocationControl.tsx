@@ -23,7 +23,7 @@ export function LetterPanelLocationControl({
     updatePanel({
       id: panelId,
       debounceField: "location",
-      panelSubtype: {
+      typeData: {
         location: value,
       },
     });

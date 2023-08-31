@@ -23,7 +23,7 @@ export function HintOutputTypeControl({
     updatePanel({
       id: panelId,
       debounceField: "outputType",
-      panelSubtype: {
+      typeData: {
         outputType: value,
       },
     });

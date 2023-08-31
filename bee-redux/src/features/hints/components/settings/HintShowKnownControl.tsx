@@ -13,7 +13,7 @@ export function HintShowKnownControl({
     updatePanel({
       id: panelId,
       debounceField: "showKnown",
-      panelSubtype: {
+      typeData: {
         showKnown: !showKnown,
       },
     });
@@ -21,10 +21,7 @@ export function HintShowKnownControl({
   return (
     <div className="HintShowKnownControl">
       <span>Show Known:</span>
-      <Switch
-        checked={showKnown}
-        onCheckedChange={handleChange}
-      />
+      <Switch checked={showKnown} onCheckedChange={handleChange} />
     </div>
   );
 }

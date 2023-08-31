@@ -290,6 +290,74 @@ export interface HintPanelData {
     | DefinitionPanelData;
 }
 
+export interface HintPanelCreateForm {
+  userHintProfileId: number;
+  name: string;
+  displayIndex: number;
+  initialDisplayState: PanelDisplayState;
+  currentDisplayState: PanelDisplayState;
+  statusTracking: StatusTrackingKeys;
+  panelSubtypeType: PanelSubTypeTypes;
+  typeData:
+    | LetterPanelFormData
+    | SearchPanelFormData
+    | ObscurityPanelFormData
+    | DefinitionPanelFormData;
+}
+
+export interface HintPanelUpdateForm {
+  id: number;
+  /**
+   * For setting a standardized key that can be accessed if you don't know whether
+   * the user has already queued up a mutation for a particular panel field. That
+   * way, a debounce can be set on a per-field basis rather than having to set a
+   * debounce for the entire updateHintPanel query.
+   */
+  debounceField?: string;
+  name?: string;
+  displayIndex?: number;
+  initialDisplayState?: PanelDisplayFormData;
+  currentDisplayState?: PanelDisplayFormData;
+  statusTracking?: StatusTrackingKeys;
+  typeData?: {
+    showKnown?: boolean;
+    revealLength?: boolean;
+    showObscurity?: boolean;
+    sortOrder?: boolean;
+    location?: SearchPanelLocations | LetterPanelLocationKeys;
+    outputType?: SubstringHintOutputKeys;
+    numberOfLetters?: number;
+    lettersOffset?: number;
+    separateKnown?: boolean;
+    revealFirstLetter?: boolean;
+    clickToDefine?: boolean;
+  };
+}
+
+export interface RailsHintPanelUpdateForm {
+  hint_panel: {
+    id: number;
+    name?: string;
+    display_index?: number;
+    initial_display_state_attributes?: RailsPanelDisplayFormData;
+    current_display_state_attributes?: RailsPanelDisplayFormData;
+    status_tracking?: StatusTrackingKeys;
+    panel_subtype_attributes?: {
+      show_known?: boolean;
+      reveal_length?: boolean;
+      show_obscurity?: boolean;
+      sort_order?: SortOrder;
+      location?: SearchPanelLocations;
+      output_type?: SubstringHintOutputKeys;
+      number_of_letters?: number;
+      letters_offset?: number;
+      separate_known?: boolean;
+      reveal_first_letter?: boolean;
+      click_to_define?: boolean;
+    };
+  };
+}
+
 export enum HintProfileTypes {
   Default = "DefaultHintProfile",
   User = "UserHintProfile",
@@ -341,76 +409,6 @@ export interface UserHintProfileForm {
 export interface CurrentHintProfileFormData {
   current_hint_profile_type: HintProfileTypes;
   current_hint_profile_id: number;
-}
-
-export interface HintPanelCreateForm {
-  userHintProfileId: number;
-  name: string;
-  displayIndex: number;
-  initialDisplayState: PanelDisplayState;
-  currentDisplayState: PanelDisplayState;
-  statusTracking: StatusTrackingKeys;
-  panelSubtypeType: PanelSubTypeTypes;
-  panelSubtype:
-    | LetterPanelFormData
-    | SearchPanelFormData
-    | ObscurityPanelFormData
-    | DefinitionPanelFormData;
-}
-
-export interface HintPanelUpdateForm {
-  id: number;
-  /**
-   * For setting a standardized key that can be accessed if you don't know whether
-   * the user has already queued up a mutation for a particular panel field. That
-   * way, a debounce can be set on a per-field basis rather than having to set a
-   * debounce for the entire updateHintPanel query.
-   */
-  debounceField?: string;
-  name?: string;
-  displayIndex?: number;
-  initialDisplayState?: PanelDisplayFormData;
-  currentDisplayState?: PanelDisplayFormData;
-  statusTracking?: StatusTrackingKeys;
-  panelSubtype?: {
-    panelType?: PanelSubTypeTypes;
-    showKnown?: boolean;
-    revealLength?: boolean;
-    showObscurity?: boolean;
-    sortOrder?: boolean;
-    location?: SearchPanelLocations | LetterPanelLocationKeys;
-    outputType?: SubstringHintOutputKeys;
-    numberOfLetters?: number;
-    lettersOffset?: number;
-    separateKnown?: boolean;
-    revealFirstLetter?: boolean;
-    clickToDefine?: boolean;
-  };
-}
-
-export interface RailsHintPanelUpdateForm {
-  hint_panel: {
-    id: number;
-    name?: string;
-    display_index?: number;
-    initial_display_state_attributes?: RailsPanelDisplayFormData;
-    current_display_state_attributes?: RailsPanelDisplayFormData;
-    status_tracking?: StatusTrackingKeys;
-    panel_subtype_attributes?: {
-      panel_type?: PanelSubTypeTypes;
-      show_known?: boolean;
-      reveal_length?: boolean;
-      show_obscurity?: boolean;
-      sort_order?: SortOrder;
-      location?: SearchPanelLocations;
-      output_type?: SubstringHintOutputKeys;
-      number_of_letters?: number;
-      letters_offset?: number;
-      separate_known?: boolean;
-      reveal_first_letter?: boolean;
-      click_to_define?: boolean;
-    };
-  };
 }
 
 export enum ColorSchemes {

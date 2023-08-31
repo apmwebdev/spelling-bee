@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { LetterPanelData } from "@/features/hints";
+import { LetterPanelData, PanelSubTypeTypes } from "@/features/hints";
 import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
 import { LetterPanelLocationControl } from "@/features/hints/components/panels/letter/settings/LetterPanelLocationControl";
 import { useAppSelector } from "@/app/hooks";
@@ -25,7 +25,7 @@ export function LetterPanelSettings({
     updatePanel({
       id: panelId,
       debounceField: "numberOfLetters",
-      panelSubtype: {
+      typeData: {
         numberOfLetters: Number(e.target.value),
       },
     });
@@ -35,7 +35,7 @@ export function LetterPanelSettings({
     updatePanel({
       id: panelId,
       debounceField: "offset",
-      panelSubtype: {
+      typeData: {
         lettersOffset: Number(e.target.value),
       },
     });

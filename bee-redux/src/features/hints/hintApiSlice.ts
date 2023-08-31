@@ -1,16 +1,17 @@
 import { apiSlice } from "../api/apiSlice";
 import {
-  HintPanelData,
+  CompleteHintProfile,
+  CurrentHintProfileFormData,
   HintPanelCreateForm,
+  HintPanelData,
   HintPanelUpdateForm,
   HintProfilesData,
+  HintProfileTypes,
+  PanelSubTypeTypes,
+  RailsHintPanelUpdateForm,
   UserHintProfileBasic,
   UserHintProfileComplete,
   UserHintProfileForm,
-  CompleteHintProfile,
-  CurrentHintProfileFormData,
-  HintProfileTypes,
-  RailsHintPanelUpdateForm,
 } from "./types";
 import { RootState, store } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
@@ -34,13 +35,14 @@ const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
       id: formData.id,
       name: formData.name,
       display_index: formData.displayIndex,
-      initial_display_state_attributes: formData.initialDisplayState
-        ? keysToSnakeCase(formData.initialDisplayState)
-        : undefined,
-      current_display_state_attributes: formData.currentDisplayState
-        ? keysToSnakeCase(formData.currentDisplayState)
-        : undefined,
       status_tracking: formData.statusTracking,
+      initial_display_state_attributes: keysToSnakeCase(
+        formData.initialDisplayState,
+      ),
+      current_display_state_attributes: keysToSnakeCase(
+        formData.currentDisplayState,
+      ),
+      panel_subtype_attributes: keysToSnakeCase(formData.typeData),
     },
   };
   return railsData;
@@ -152,7 +154,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
                 panel.currentDisplayState,
                 formData.currentDisplayState,
               );
-              Object.assign(panel.typeData, formData.panelSubtype);
+              Object.assign(panel.typeData, formData.typeData);
             },
           ),
         );

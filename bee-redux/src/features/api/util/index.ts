@@ -7,7 +7,8 @@ interface AnyObject {
 
 const isPlainObject = (thing: any) => thing?.constructor === Object;
 
-export const keysToSnakeCase = (obj: AnyObject) => {
+export const keysToSnakeCase = (obj?: AnyObject) => {
+  if (obj === undefined) return obj;
   const newObject: AnyObject = {};
   for (const key in obj) {
     const newKey = toSnakeCase(key);
