@@ -2,12 +2,16 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { ReactNode } from "react";
 
 export interface TooltipProps {
-  text: string;
+  tooltipContent: ReactNode;
   children: ReactNode;
   disabled?: boolean;
 }
 
-export function BasicTooltip({ text, children, disabled }: TooltipProps) {
+export function BasicTooltip({
+  tooltipContent,
+  children,
+  disabled,
+}: TooltipProps) {
   if (disabled) {
     return children;
   }
@@ -20,7 +24,7 @@ export function BasicTooltip({ text, children, disabled }: TooltipProps) {
           sideOffset={4}
           collisionPadding={8}
         >
-          {text}
+          {tooltipContent}
           <Tooltip.Arrow height={7} className="TooltipArrow" />
         </Tooltip.Content>
       </Tooltip.Portal>

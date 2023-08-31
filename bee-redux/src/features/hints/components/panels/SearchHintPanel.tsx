@@ -38,12 +38,13 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
   };
 
   return (
-    <div className="sb-search-hints">
+    <div className="SearchHintPanel">
       <form onSubmit={handleSubmit}>
         <input
           type="search"
-          className="sb-search-hint-input"
+          className="SearchHintInput"
           value={searchValue}
+          placeholder="Search..."
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <button type="submit" className="standard-button">

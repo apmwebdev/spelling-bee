@@ -19,10 +19,12 @@ export function HintLocationControl({
   panelId,
   location,
   panelType,
+  style,
 }: {
   panelId: number;
   location: LetterPanelLocationKeys | SearchPanelLocationKeys;
   panelType: PanelTypes;
+  style?: CSSProperties;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
 
@@ -39,7 +41,7 @@ export function HintLocationControl({
   };
 
   return (
-    <div className="LetterPanelLocationControl">
+    <div className="LetterPanelLocationControl" style={style}>
       <span>Location:</span>
       <Select.Root value={location} onValueChange={handleChange}>
         <SelectTrigger className="SmallSelect" style={{ width: "12em" }} />

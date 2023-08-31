@@ -1,7 +1,7 @@
 import { SearchResultProps } from "./SearchPanelResults";
-import { LetterHintDataCell } from "../LetterHintPanel";
 import uniqid from "uniqid";
-import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
+import { StatusTrackingOptions } from "@/features/hints";
+import { LetterHintDataCell } from "@/features/hints/components/panels/letter/types";
 
 export function SearchResultWordLengths({
   resultData,

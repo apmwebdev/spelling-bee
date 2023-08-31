@@ -35,16 +35,6 @@ export function LetterPanelSettings({
   return (
     <div className="LetterPanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
-      <HintLettersOffsetControl
-        panelId={panelId}
-        lettersOffset={lettersOffset}
-        numberOfLetters={numberOfLetters}
-      />
-      <HintLocationControl
-        panelId={panelId}
-        location={location}
-        panelType={PanelTypes.Letter}
-      />
       <div>
         <span>Number of letters:</span>
         <input
@@ -56,6 +46,16 @@ export function LetterPanelSettings({
           onChange={handleNumberOfLettersChange}
         />
       </div>
+      <HintLocationControl
+        panelId={panelId}
+        location={location}
+        panelType={PanelTypes.Letter}
+      />
+      <HintLettersOffsetControl
+        panelId={panelId}
+        lettersOffset={lettersOffset}
+        numberOfLetters={numberOfLetters}
+      />
       <HintShowKnownControl panelId={panelId} showKnown={showKnown} />
     </div>
   );

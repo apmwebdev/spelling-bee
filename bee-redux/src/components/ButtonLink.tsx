@@ -21,7 +21,7 @@ export function ButtonLink({
   if (disabled) {
     return (
       <BasicTooltip
-        text={disabledTooltip ? disabledTooltip : ""}
+        tooltipContent={disabledTooltip ? disabledTooltip : ""}
         disabled={disabledTooltip === undefined}
       >
         <div className={composeClasses("ButtonLink disabled", className ?? "")}>
@@ -32,7 +32,7 @@ export function ButtonLink({
   }
   return (
     <BasicTooltip
-      text={tooltip ? tooltip : ""}
+      tooltipContent={tooltip ? tooltip : ""}
       disabled={tooltip === undefined}
     >
       <Link to={to} className={composeClasses("ButtonLink", className ?? "")}>

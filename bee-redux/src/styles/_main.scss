@@ -172,15 +172,9 @@ a.ButtonLink, div.ButtonLink {
 /***   Input   ***/
 
 input, input[type="number"] {
-  &:hover {
-    border-color: border-color-hover($accent-hue);
-  }
-  &:focus {
-    box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
-  }
 }
 
-input[type="text"] {
+input[type="text"], input[type="search"] {
   padding: 4px 8px;
   border: 1.5px solid transparent;
   color: $line-darker;
@@ -208,6 +202,17 @@ input[type="number"] {
   padding: 4px 8px;
   border: 1.5px solid border-color($accent-hue);
   //background-color: bg-color-darkest($accent-hue);
+  &:hover {
+    border-color: border-color-hover($accent-hue);
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
+  }
+  &[disabled] {
+    color: $text-disabled;
+    border-color: border-color-disabled($accent-hue);
+    cursor: not-allowed;
+  }
 }
 
 /***   Popover   ***/
@@ -1231,6 +1236,12 @@ button.sb-revealer {
   gap: 4px;
 }
 
+.HintLettersOffsetControl {
+  &.disabled {
+    color: $text-disabled;
+  }
+}
+
 .HintPanelContentContainer {
   position: relative;
   margin-top: 8px;
@@ -1388,7 +1399,7 @@ button.sb-revealer {
   }
 }
 
-.sb-search-hints {
+.SearchHintPanel {
   padding: 8px;
   form {
     display: flex;

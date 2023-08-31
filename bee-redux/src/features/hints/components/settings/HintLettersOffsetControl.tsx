@@ -1,16 +1,24 @@
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
-import { ChangeEvent } from "react";
+import { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
+import { maybeDisable } from "@/utils";
+import { BasicTooltip } from "@/components/BasicTooltip";
 
 export function HintLettersOffsetControl({
   panelId,
   lettersOffset,
   numberOfLetters,
+  disabled,
+  disabledTooltip,
+  style,
 }: {
   panelId: number;
   lettersOffset: number;
   numberOfLetters?: number;
+  disabled?: boolean;
+  disabledTooltip?: ReactNode;
+  style?: CSSProperties;
 }) {
   const answerLengths = useAppSelector(selectAnswerLengths);
   const [updatePanel] = useUpdateHintPanelMutation();
@@ -26,20 +34,26 @@ export function HintLettersOffsetControl({
   };
 
   return (
-    <div className="HintLettersOffsetControl">
-      <span>Offset:</span>
-      <input
-        className="LetterPanelOffsetInput"
-        type="number"
-        value={lettersOffset}
-        min={0}
-        max={
-          answerLengths.length
-            ? answerLengths.slice(-1)[0] - (numberOfLetters ?? 0)
-            : 0
-        }
-        onChange={handleOffsetChange}
-      />
-    </div>
+    <BasicTooltip disabled={!disabled} tooltipContent={disabledTooltip}>
+      <div
+        className={maybeDisable("HintLettersOffsetControl", disabled)}
+        style={style}
+      >
+        <span>Offset:</span>
+        <input
+          className="LetterPanelOffsetInput"
+          type="number"
+          value={lettersOffset}
+          min={0}
+          max={
+            answerLengths.length
+              ? answerLengths.slice(-1)[0] - (numberOfLetters ?? 0)
+              : 0
+          }
+          disabled={disabled}
+          onChange={handleOffsetChange}
+        />
+      </div>
+    </BasicTooltip>
   );
 }

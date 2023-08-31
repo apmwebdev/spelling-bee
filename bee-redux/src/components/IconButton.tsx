@@ -71,7 +71,7 @@ export function IconButton({
   className,
 }: IconButtonProps) {
   return (
-    <BasicTooltip text={tooltip}>
+    <BasicTooltip tooltipContent={tooltip}>
       <button
         type="button"
         onClick={onClick ? () => onClick() : undefined}
