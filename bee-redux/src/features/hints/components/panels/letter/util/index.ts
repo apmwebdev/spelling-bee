@@ -85,5 +85,19 @@ export const generateListData = ({
       listRows[startingLetter][answerFragment].guesses++;
     }
   }
+  if (!showKnown) {
+    for (const letter in listRows) {
+      const row = listRows[letter];
+      for (const fragment in row) {
+        if (row[fragment].guesses === row[fragment].answers) {
+          delete row[fragment];
+        }
+      }
+      if (Object.values(row).length === 0) {
+        // delete row if empty
+        delete listRows[letter];
+      }
+    }
+  }
   return { excludedAnswers, listRows };
 };
