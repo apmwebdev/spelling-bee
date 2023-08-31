@@ -1,6 +1,9 @@
 import {
   LetterPanelLocationKeys,
   LetterPanelLocationOptions,
+  PanelTypes,
+  SearchPanelLocationKeys,
+  SearchPanelLocationOptions,
 } from "@/features/hints";
 import * as Select from "@radix-ui/react-select";
 import {
@@ -8,38 +11,53 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/radix-ui/react-select";
-import uniqid from "uniqid";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import uniqid from "uniqid";
+import { CSSProperties } from "react";
 
-export function LetterPanelLocationControl({
+export function HintLocationControl({
   panelId,
   location,
+  panelType,
 }: {
   panelId: number;
-  location: LetterPanelLocationKeys;
+  location: LetterPanelLocationKeys | SearchPanelLocationKeys;
+  panelType: PanelTypes;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = (value: LetterPanelLocationKeys) => {
+
+  const handleChange = (
+    newLocation: LetterPanelLocationKeys | SearchPanelLocationKeys,
+  ) => {
     updatePanel({
       id: panelId,
       debounceField: "location",
       typeData: {
-        location: value,
+        location: newLocation,
       },
     });
   };
+
   return (
     <div className="LetterPanelLocationControl">
       <span>Location:</span>
       <Select.Root value={location} onValueChange={handleChange}>
-        <SelectTrigger className="SmallSelect" />
+        <SelectTrigger className="SmallSelect" style={{ width: "12em" }} />
         <SelectContentWithPortal className="SmallSelect">
           <Select.Viewport>
-            {Object.keys(LetterPanelLocationOptions).map((key) => (
+            {Object.keys(
+              panelType === PanelTypes.Letter
+                ? LetterPanelLocationOptions
+                : SearchPanelLocationOptions,
+            ).map((key) => (
               <SelectItem
                 key={uniqid()}
                 value={key}
-                itemText={LetterPanelLocationOptions[key].title}
+                itemText={
+                  panelType === PanelTypes.Letter
+                    ? LetterPanelLocationOptions[key].title
+                    : SearchPanelLocationOptions[key].title
+                }
               />
             ))}
           </Select.Viewport>

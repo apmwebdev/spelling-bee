@@ -8,7 +8,7 @@ import { selectCorrectGuessWords } from "@/features/guesses/guessesSlice";
 import { SearchResult } from "./SearchResult";
 import uniqid from "uniqid";
 import {
-  SearchPanelLocations,
+  SearchPanelLocationKeys,
   SearchPanelSearch,
   StatusTrackingKeys,
 } from "@/features/hints";
@@ -53,26 +53,26 @@ export function SearchPanelResults({
     let excludedAnswers = 0;
     for (const answer of answers) {
       if (
-        (location === SearchPanelLocations.Anywhere &&
+        (location === SearchPanelLocationKeys.Anywhere &&
           searchString.length > answer.length) ||
-        (location !== SearchPanelLocations.Anywhere &&
+        (location !== SearchPanelLocationKeys.Anywhere &&
           lettersOffset + searchString.length > answer.length)
       ) {
         excludedAnswers++;
         continue;
       }
       let answerFragment: string;
-      if (location === SearchPanelLocations.Start) {
+      if (location === SearchPanelLocationKeys.Start) {
         answerFragment = answer.slice(
           lettersOffset,
           lettersOffset + searchString.length,
         );
-      } else if (location === SearchPanelLocations.End && lettersOffset > 0) {
+      } else if (location === SearchPanelLocationKeys.End && lettersOffset > 0) {
         answerFragment = answer.slice(
           -searchString.length - lettersOffset,
           -lettersOffset,
         );
-      } else if (location === SearchPanelLocations.End && lettersOffset === 0) {
+      } else if (location === SearchPanelLocationKeys.End && lettersOffset === 0) {
         answerFragment = answer.slice(-searchString.length);
       } else {
         answerFragment = answer;

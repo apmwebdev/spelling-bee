@@ -1266,15 +1266,15 @@ button.sb-revealer {
 
 .LetterPanelSettings {
   display: grid;
-  grid-template: 1fr 1fr / 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   justify-content: stretch;
   padding: 8px;
   gap: 8px;
   //margin-bottom: 8px;
   > div {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
    }
 }
 
@@ -1373,6 +1373,19 @@ button.sb-revealer {
   padding: 2px 8px;
   width: 4em;
   //text-align: left;
+}
+
+.SearchPanelSettings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
+  padding: 8px;
+  gap: 8px;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .sb-search-hints {

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import {
-  SearchPanelLocations,
+  SearchPanelLocationKeys,
   SearchPanelSearch,
   SubstringHintOutputKeys,
 } from "@/features/hints";
@@ -28,11 +28,11 @@ export function SearchResultHeader({
 
     let titleString = "";
 
-    if (location === SearchPanelLocations.Anywhere) {
+    if (location === SearchPanelLocationKeys.Anywhere) {
       titleString += `...${searchString.toUpperCase()}... `;
-    } else if (location === SearchPanelLocations.Start) {
+    } else if (location === SearchPanelLocationKeys.Start) {
       titleString += `${offsetString()}${searchString.toUpperCase()}... `;
-    } else if (location === SearchPanelLocations.End) {
+    } else if (location === SearchPanelLocationKeys.End) {
       titleString += `...${searchString.toUpperCase()}${offsetString()} `;
     }
 

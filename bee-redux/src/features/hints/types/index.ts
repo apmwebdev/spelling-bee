@@ -214,14 +214,20 @@ export function isLetterPanelData(a: any): a is LetterPanelData {
  * For search panels, should it search for the search string at the start,
  * end, or anywhere in the puzzle words?
  */
-export enum SearchPanelLocations {
+export enum SearchPanelLocationKeys {
   Start = "start",
   End = "end",
   Anywhere = "anywhere",
 }
 
+export const SearchPanelLocationOptions: EnumeratedOptions = {
+  start: { title: "Start of Word" },
+  end: { title: "End of Word" },
+  anywhere: { title: "Anywhere in Word" },
+};
+
 export interface SearchPanelFormData {
-  location: SearchPanelLocations;
+  location: SearchPanelLocationKeys;
   lettersOffset: number;
   outputType: SubstringHintOutputKeys;
 }
@@ -324,7 +330,7 @@ export interface HintPanelUpdateForm {
     revealLength?: boolean;
     showObscurity?: boolean;
     sortOrder?: boolean;
-    location?: SearchPanelLocations | LetterPanelLocationKeys;
+    location?: SearchPanelLocationKeys | LetterPanelLocationKeys;
     outputType?: SubstringHintOutputKeys;
     numberOfLetters?: number;
     lettersOffset?: number;
@@ -347,7 +353,7 @@ export interface RailsHintPanelUpdateForm {
       reveal_length?: boolean;
       show_obscurity?: boolean;
       sort_order?: SortOrder;
-      location?: SearchPanelLocations;
+      location?: SearchPanelLocationKeys;
       output_type?: SubstringHintOutputKeys;
       number_of_letters?: number;
       letters_offset?: number;

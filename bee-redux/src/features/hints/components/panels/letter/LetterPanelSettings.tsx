@@ -1,11 +1,12 @@
 import { ChangeEvent } from "react";
-import { LetterPanelData, PanelSubTypeTypes } from "@/features/hints";
+import { LetterPanelData, PanelTypes } from "@/features/hints";
 import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
-import { LetterPanelLocationControl } from "@/features/hints/components/panels/letter/settings/LetterPanelLocationControl";
+import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
+import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
 
 export interface LetterPanelSettingsProps {
   panelId: number;
@@ -31,19 +32,19 @@ export function LetterPanelSettings({
     });
   };
 
-  const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
-    updatePanel({
-      id: panelId,
-      debounceField: "offset",
-      typeData: {
-        lettersOffset: Number(e.target.value),
-      },
-    });
-  };
-
   return (
     <div className="LetterPanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
+      <HintLettersOffsetControl
+        panelId={panelId}
+        lettersOffset={lettersOffset}
+        numberOfLetters={numberOfLetters}
+      />
+      <HintLocationControl
+        panelId={panelId}
+        location={location}
+        panelType={PanelTypes.Letter}
+      />
       <div>
         <span>Number of letters:</span>
         <input
@@ -53,22 +54,6 @@ export function LetterPanelSettings({
           min={1}
           max={answerLengths.length ? answerLengths.slice(-1)[0] : 0}
           onChange={handleNumberOfLettersChange}
-        />
-      </div>
-      <LetterPanelLocationControl panelId={panelId} location={location} />
-      <div>
-        <span>Offset:</span>
-        <input
-          className="LetterPanelOffsetInput"
-          type="number"
-          value={lettersOffset}
-          min={0}
-          max={
-            answerLengths.length
-              ? answerLengths.slice(-1)[0] - numberOfLetters
-              : 0
-          }
-          onChange={handleOffsetChange}
         />
       </div>
       <HintShowKnownControl panelId={panelId} showKnown={showKnown} />
