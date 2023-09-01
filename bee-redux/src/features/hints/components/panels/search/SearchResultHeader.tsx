@@ -54,7 +54,7 @@ export function SearchResultHeader({
     <header className="sb-search-hints-search-result-header">
       <IconButton
         type={IconButtonTypeKeys.Close}
-        className="header-remove-button"
+        className="SearchResultHeaderRemoveButton"
         onClick={handleClickRemoveButton}
         tooltip="Delete search"
       />
