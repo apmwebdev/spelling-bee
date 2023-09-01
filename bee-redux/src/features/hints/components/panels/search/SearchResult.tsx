@@ -5,25 +5,31 @@ import { SearchResultLettersOnly } from "./SearchResultLettersOnly";
 import { SearchResultHeader } from "./SearchResultHeader";
 import { SubstringHintOutputKeys } from "@/features/hints";
 
-export function SearchResult({ resultData, tracking }: SearchResultProps) {
+export function SearchResult({
+  resultData,
+  statusTracking,
+}: SearchResultProps) {
   const content = () => {
     switch (resultData.searchObject.outputType) {
       case SubstringHintOutputKeys.WordLengthGrid:
         return (
           <SearchResultWordLengths
             resultData={resultData}
-            tracking={tracking}
+            statusTracking={statusTracking}
           />
         );
       case SubstringHintOutputKeys.WordCountList:
         return (
-          <SearchResultWordCount resultData={resultData} tracking={tracking} />
+          <SearchResultWordCount
+            resultData={resultData}
+            statusTracking={statusTracking}
+          />
         );
       case SubstringHintOutputKeys.LettersList:
         return (
           <SearchResultLettersOnly
             resultData={resultData}
-            tracking={tracking}
+            statusTracking={statusTracking}
           />
         );
     }

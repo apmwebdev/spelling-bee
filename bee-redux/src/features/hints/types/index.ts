@@ -1,5 +1,13 @@
 import { SortOrder } from "@/features/wordLists/wordListSettingsSlice";
 
+interface EnumerableOption {
+  title: string;
+}
+
+interface EnumeratedOptions {
+  [key: string]: EnumerableOption;
+}
+
 /**
  * Determines how to live update hints when correct guesses are made.
  * The numbers being counted here are puzzle answers (number of found answers,
@@ -11,16 +19,10 @@ import { SortOrder } from "@/features/wordLists/wordListSettingsSlice";
  * - Total
  * @enum {string}
  */
-export interface StatusTrackingOutputParams {
-  found?: number;
-  total?: number;
-  remaining?: number;
-}
-
 export interface StatusTrackingOption {
   title: string;
   compactTitle: string;
-  outputFn: (arg: StatusTrackingOutputParams) => string;
+  outputFn: (cell: SubstringHintDataCell) => string;
 }
 
 type StatusTrackingOptionsData = {
@@ -31,33 +33,31 @@ export const StatusTrackingOptions: StatusTrackingOptionsData = {
   found_of_total: {
     title: "Found of Total",
     compactTitle: "Found / Total",
-    outputFn: ({ found, total }) => {
-      if (found === undefined || total === undefined) return "";
-      return `${found}/${total}`;
+    outputFn: (cell) => {
+      return `${cell.guesses}/${cell.answers}`;
     },
   },
   remaining_of_total: {
     title: "Remaining of Total",
     compactTitle: "Remaining / Total",
-    outputFn: ({ remaining, total }) => {
-      if (remaining === undefined || total === undefined) return "";
-      return `${remaining}/${total}`;
+    outputFn: (cell) => {
+      return `${cell.answers - cell.guesses}/${cell.answers}`;
     },
   },
   found: {
     title: "Found",
     compactTitle: "Found",
-    outputFn: ({ found }) => found + "",
+    outputFn: (cell) => cell.guesses + "",
   },
   remaining: {
     title: "Remaining",
     compactTitle: "Remaining",
-    outputFn: ({ remaining }) => remaining + "",
+    outputFn: (cell) => cell.answers - cell.guesses + "",
   },
   total: {
     title: "Total",
     compactTitle: "Total",
-    outputFn: ({ total }) => total + "",
+    outputFn: (cell) => cell.answers + "",
   },
 };
 
@@ -129,6 +129,16 @@ export enum PanelSubTypeTypes {
   Obscurity = "ObscurityPanel",
   Definition = "DefinitionPanel",
 }
+
+export interface SubstringHintDataCell {
+  answers: number;
+  guesses: number;
+}
+
+export interface GridRow {
+  [index: number]: SubstringHintDataCell;
+}
+
 /**
  * For letter panels, should it reveal letters at the start of the word or the end?
  * E.g., first letter, last two letters, etc.
@@ -139,14 +149,6 @@ export enum PanelSubTypeTypes {
 export enum LetterPanelLocationKeys {
   Start = "start",
   End = "end",
-}
-
-interface EnumerableOption {
-  title: string;
-}
-
-interface EnumeratedOptions {
-  [key: string]: EnumerableOption;
 }
 
 export const LetterPanelLocationOptions: EnumeratedOptions = {

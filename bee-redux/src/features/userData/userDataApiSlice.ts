@@ -6,7 +6,8 @@ import {
   UserPrefsFormData,
   UserPuzzleData,
 } from "@/types";
-import { guessesApiSlice } from "@/features/guesses/guessesApiSlice";
+import { guessesApiSlice, processAttempts } from "@/features/guesses/guessesApiSlice";
+import { RootState } from "@/app/store";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -104,7 +105,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
       }),
       onQueryStarted: async (
         puzzleId,
-        { dispatch, getCacheEntry, queryFulfilled },
+        { dispatch, getState, getCacheEntry, queryFulfilled },
       ) => {
         await queryFulfilled;
         const cacheEntry = getCacheEntry();
@@ -114,7 +115,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
             guessesApiSlice.util.upsertQueryData(
               "getCurrentAttempts",
               undefined,
-              data.attempts,
+              processAttempts(data.attempts, getState() as RootState),
             ),
           );
           dispatch(

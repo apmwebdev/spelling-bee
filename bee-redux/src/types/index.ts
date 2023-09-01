@@ -4,7 +4,7 @@ import {
   HintProfilesData,
   SearchPanelSearch,
 } from "@/features/hints";
-import { AttemptFormat } from "@/features/guesses/guessesSlice";
+import { AttemptFormat, RawAttemptFormat } from "@/features/guesses/guessesSlice";
 
 export enum ColorSchemes {
   Auto = "auto",
@@ -31,6 +31,6 @@ export interface UserBaseData {
 
 export interface UserPuzzleData {
   searches: SearchPanelSearch[];
-  attempts: AttemptFormat[];
+  attempts: RawAttemptFormat[];
   currentAttempt: number;
 }

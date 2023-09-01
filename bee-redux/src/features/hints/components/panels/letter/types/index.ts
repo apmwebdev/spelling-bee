@@ -1,4 +1,9 @@
-import { LetterPanelLocationKeys, StatusTrackingKeys } from "@/features/hints";
+import {
+  GridRow,
+  LetterPanelLocationKeys,
+  StatusTrackingKeys,
+  SubstringHintDataCell,
+} from "@/features/hints";
 
 export interface LetterHintSubsectionProps {
   answers: string[];
@@ -10,27 +15,19 @@ export interface LetterHintSubsectionProps {
   statusTracking: StatusTrackingKeys;
 }
 
-export interface LetterHintDataCell {
-  answers: number;
-  guesses: number;
-}
-
-export interface GridRow {
-  [index: number]: LetterHintDataCell;
-}
 export interface GridRows {
   [substring: string]: GridRow;
 }
 
 export interface TotalColumn {
-  [substring: string]: LetterHintDataCell;
+  [substring: string]: SubstringHintDataCell;
 }
 
 export interface GridData {
   gridRows: GridRows;
   totalRow: GridRow;
   totalColumn: TotalColumn;
-  grandTotal: LetterHintDataCell;
+  grandTotal: SubstringHintDataCell;
   relevantAnswerLengths: number[];
   excludedAnswers: number;
 }

@@ -1,16 +1,18 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
-import { LetterPanelLocationKeys } from "@/features/hints";
+import {
+  createSubstringHintDataCell,
+  GridRow,
+  LetterPanelLocationKeys,
+} from "@/features/hints";
 import { WordLengthGrid } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGrid";
 import {
   GridData,
-  GridRow,
   GridRows,
   LetterHintSubsectionProps,
   TotalColumn,
 } from "@/features/hints/components/panels/letter/types";
-import { createLetterHintDataCell } from "@/features/hints/components/panels/letter/util";
 
 export function WordLengthGridContainer({
   answers,
@@ -30,7 +32,7 @@ export function WordLengthGridContainer({
     const createGridRow = () => {
       const gridRow: GridRow = {};
       for (const answerLength of relevantAnswerLengths) {
-        gridRow[answerLength] = createLetterHintDataCell();
+        gridRow[answerLength] = createSubstringHintDataCell();
       }
       return gridRow;
     };
@@ -38,7 +40,7 @@ export function WordLengthGridContainer({
     const gridRows: GridRows = {};
     const totalColumn: TotalColumn = {};
     const totalRow = createGridRow();
-    const grandTotal = createLetterHintDataCell();
+    const grandTotal = createSubstringHintDataCell();
     const gridData: GridData = {
       gridRows,
       totalRow,
@@ -73,7 +75,7 @@ export function WordLengthGridContainer({
          row for that substring is, but just in case, and to future-proof the
          logic, I'm putting it in its own if statement. */
       if (totalColumn[substring] === undefined) {
-        totalColumn[substring] = createLetterHintDataCell();
+        totalColumn[substring] = createSubstringHintDataCell();
       }
       gridRows[substring][answer.length].answers++;
       totalColumn[substring].answers++;
@@ -104,7 +106,7 @@ export function WordLengthGridContainer({
       }
       for (const substring in gridRows) {
         const row = gridRows[substring];
-        newTotalColumn[substring] = createLetterHintDataCell();
+        newTotalColumn[substring] = createSubstringHintDataCell();
         for (const answerLength in row) {
           const cell = row[answerLength];
           newTotalColumn[substring].answers += cell.answers;

@@ -1444,7 +1444,7 @@ button.sb-revealer {
   }
 }
 
-.sb-search-hints-result-wlg {
+.SearchHintResultWordLengthGrid {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1467,11 +1467,11 @@ button.sb-revealer {
       border-left: 1px solid #666;
     }
     border-bottom: 1px solid #666;
-    &:last-child {
-      border-right: 1px solid #666;
-    }
     &.has-content {
       background-color: #333;
+    }
+    &:last-child {
+      background-color: inherit;
     }
   }
 }

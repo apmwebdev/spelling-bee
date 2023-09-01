@@ -1,20 +1,19 @@
 import { SearchResultProps } from "./SearchPanelResults";
 import uniqid from "uniqid";
-import { StatusTrackingOptions } from "@/features/hints";
-import { LetterHintDataCell } from "@/features/hints/components/panels/letter/types";
+import { StatusTrackingOptions, SubstringHintDataCell } from "@/features/hints";
 
 export function SearchResultWordLengths({
   resultData,
-  tracking,
+  statusTracking,
 }: SearchResultProps) {
   const generateOutput = () => {
-    const getCellClasses = (dataCell: LetterHintDataCell) => {
+    const getCellClasses = (dataCell: SubstringHintDataCell) => {
       let classList = "content-cell";
       if (dataCell.answers === 0) {
         return classList;
       }
       classList += " has-content";
-      if (tracking !== "total") {
+      if (statusTracking !== "total") {
         if (dataCell.guesses === dataCell.answers) {
           classList += " hint-completed";
         } else if (dataCell.guesses === 0) {
@@ -26,20 +25,13 @@ export function SearchResultWordLengths({
       return classList;
     };
 
-    const createCell = (dataCell: LetterHintDataCell) => {
+    const createCell = (dataCell: SubstringHintDataCell) => {
       const cssClasses = getCellClasses(dataCell);
-      const total = dataCell.answers;
-      const found = dataCell.guesses;
-      const remaining = total - found;
       let cellText = "";
-      if (total === 0) {
+      if (dataCell.answers === 0) {
         cellText = "-";
       } else {
-        cellText = StatusTrackingOptions[tracking].outputFn({
-          found,
-          remaining,
-          total,
-        });
+        cellText = StatusTrackingOptions[statusTracking].outputFn(dataCell);
       }
       return (
         <div className={cssClasses} key={uniqid()}>
@@ -57,7 +49,7 @@ export function SearchResultWordLengths({
     const contentRowDivs = [];
     contentRowDivs.push(
       <div className="content-cell row-header" key={uniqid()}>
-        {StatusTrackingOptions[tracking].compactTitle}
+        {StatusTrackingOptions[statusTracking].compactTitle}
       </div>,
     );
     for (const lengthProp in resultData.results) {
@@ -68,12 +60,18 @@ export function SearchResultWordLengths({
       );
       contentRowDivs.push(createCell(resultData.results[lengthProp]));
     }
+    headerRowDivs.push(
+      <div className="header-cell" key={uniqid()}>
+        Total
+      </div>,
+    );
+    contentRowDivs.push(createCell(resultData.total));
 
     const headerRow = <div className="header-row">{headerRowDivs}</div>;
     const contentRow = <div className="content-row">{contentRowDivs}</div>;
 
     return (
-      <div className="sb-search-hints-result-wlg">
+      <div className="SearchHintResultWordLengthGrid">
         {headerRow}
         {contentRow}
         <div>Excluded words: {resultData.excludedAnswers}</div>

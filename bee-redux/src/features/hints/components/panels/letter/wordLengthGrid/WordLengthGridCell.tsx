@@ -1,10 +1,13 @@
-import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
+import {
+  StatusTrackingKeys,
+  StatusTrackingOptions,
+  SubstringHintDataCell,
+} from "@/features/hints";
 import uniqid from "uniqid";
 import { getTdClasses } from "@/features/hints/components/panels/letter/util";
-import { LetterHintDataCell } from "@/features/hints/components/panels/letter/types";
 
 interface WordLengthGridCellProps {
-  cell: LetterHintDataCell;
+  cell: SubstringHintDataCell;
   isTotalRow: boolean;
   isTotalColumn: boolean;
   statusTracking: StatusTrackingKeys;
@@ -16,9 +19,6 @@ export function WordLengthGridCell({
   isTotalColumn,
   statusTracking,
 }: WordLengthGridCellProps) {
-  const found = cell.guesses;
-  const total = cell.answers;
-  const remaining = total - found;
   const tdClasses = getTdClasses(
     cell,
     isTotalRow,
@@ -26,17 +26,13 @@ export function WordLengthGridCell({
     statusTracking,
   );
 
-  if (total === 0) {
+  if (cell.answers === 0) {
     return <td key={uniqid()} className={tdClasses}></td>;
   }
 
   return (
     <td key={uniqid()} className={tdClasses}>
-      {StatusTrackingOptions[statusTracking].outputFn({
-        found,
-        total,
-        remaining,
-      })}
+      {StatusTrackingOptions[statusTracking].outputFn(cell)}
     </td>
   );
 }

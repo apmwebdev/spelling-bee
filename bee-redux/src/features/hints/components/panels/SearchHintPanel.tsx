@@ -3,6 +3,7 @@ import { SearchPanelResults } from "./search/SearchPanelResults";
 import {
   HintPanelData,
   isSearchPanelData,
+  SearchPanelData,
   SearchPanelSearch,
 } from "@/features/hints";
 import { hintApiSlice } from "@/features/hints/hintApiSlice";
@@ -18,7 +19,9 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
 
   const getPanelSearches = (data: SearchPanelSearch[] | undefined) => {
     if (!data) return;
-    return data.filter((search) => search.searchPanelId === panel.typeData.id);
+    //For TypeScript
+    const searchPanelData = panel.typeData as SearchPanelData;
+    return data.filter((search) => search.searchPanelId === searchPanelData.id);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -41,8 +44,6 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
         </button>
       </form>
       <SearchPanelResults
-        panelId={panel.id}
-        searchPanelId={panel.typeData.id}
         searches={getPanelSearches(data) ?? []}
         tracking={panel.statusTracking}
       />

@@ -1,19 +1,16 @@
+import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
 import {
-  LetterHintDataCell,
-  LetterHintSubsectionProps,
-} from "@/features/hints/components/panels/letter/types";
-import { LetterPanelLocationKeys, StatusTrackingKeys } from "@/features/hints";
+  LetterPanelLocationKeys,
+  StatusTrackingKeys,
+  SubstringHintDataCell,
+} from "@/features/hints";
 import {
   ListData,
   ListRows,
 } from "@/features/hints/components/panels/letter/WordCountList";
 
-export const createLetterHintDataCell = (): LetterHintDataCell => {
-  return { answers: 0, guesses: 0 };
-};
-
 export const getTdClasses = (
-  cell: LetterHintDataCell,
+  cell: SubstringHintDataCell,
   isTotalRow: boolean = false,
   isTotalColumn: boolean = false,
   statusTracking: StatusTrackingKeys,

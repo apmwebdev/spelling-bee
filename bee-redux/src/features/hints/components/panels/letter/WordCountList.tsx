@@ -1,14 +1,15 @@
 import uniqid from "uniqid";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
-import { StatusTrackingOptions } from "@/features/hints";
 import {
-  LetterHintDataCell,
-  LetterHintSubsectionProps,
-} from "@/features/hints/components/panels/letter/types";
+  getSubstringHintStatusClasses,
+  StatusTrackingOptions,
+  SubstringHintDataCell,
+} from "@/features/hints";
+import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
 import { generateListData } from "@/features/hints/components/panels/letter/util";
 
 export interface ListRow {
-  [substring: string]: LetterHintDataCell;
+  [substring: string]: SubstringHintDataCell;
 }
 
 export interface ListRows {
@@ -35,38 +36,21 @@ export function WordCountList({
       fragment,
       fragmentDivs,
     }: {
-      cell: LetterHintDataCell;
+      cell: SubstringHintDataCell;
       fragment: string;
       fragmentDivs: any[];
     }) => {
-      const found = cell.guesses;
-      const total = cell.answers;
-      const remaining = total - found;
-
-      const cellClasses = () => {
-        let classList = "sb-wcl-fragment-count";
-        if (statusTracking === "total") {
-          return classList;
-        }
-        if (found === total) {
-          classList += " hint-completed";
-        } else if (found === 0) {
-          classList += " hint-not-started";
-        } else {
-          classList += " hint-in-progress";
-        }
-        return classList;
-      };
+      const cellClasses = getSubstringHintStatusClasses({
+        baseClasses: "sb-wcl-fragment-count",
+        cell,
+        statusTracking,
+      });
 
       fragmentDivs.push(
         <div key={uniqid()} className="sb-wcl-fragment-cell">
           <div className="sb-wcl-fragment-label">{fragment}</div>
-          <div className={cellClasses()}>
-            {StatusTrackingOptions[statusTracking].outputFn({
-              found,
-              total,
-              remaining,
-            })}
+          <div className={cellClasses}>
+            {StatusTrackingOptions[statusTracking].outputFn(cell)}
           </div>
         </div>,
       );

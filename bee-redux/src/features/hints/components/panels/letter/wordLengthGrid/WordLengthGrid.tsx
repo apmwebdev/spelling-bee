@@ -1,10 +1,7 @@
-import { StatusTrackingKeys } from "@/features/hints";
+import { StatusTrackingKeys, SubstringHintDataCell } from "@/features/hints";
 import uniqid from "uniqid";
 import { WordLengthGridCell } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGridCell";
-import {
-  GridData,
-  LetterHintDataCell,
-} from "@/features/hints/components/panels/letter/types";
+import { GridData } from "@/features/hints/components/panels/letter/types";
 
 type WordLengthGridTableProps = GridData & {
   statusTracking: StatusTrackingKeys;
@@ -20,7 +17,7 @@ export function WordLengthGrid({
   relevantAnswerLengths,
 }: WordLengthGridTableProps) {
   const createTd = (
-    cell: LetterHintDataCell,
+    cell: SubstringHintDataCell,
     isTotalRow: boolean = false,
     isTotalColumn: boolean = false,
   ) => (

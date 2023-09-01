@@ -1,13 +1,22 @@
 import { SearchResultProps } from "./SearchPanelResults";
+import { getSubstringHintStatusClasses, StatusTrackingOptions } from "@/features/hints";
 
 export function SearchResultLettersOnly({
   resultData,
-  tracking,
+  statusTracking,
 }: SearchResultProps) {
   return (
-    <div>
-      <h2>SearchResultLettersOnly</h2>
+    <div className="SearchResultLettersList">
       search: {resultData.searchObject.searchString.toUpperCase()}
+      <div
+        className={getSubstringHintStatusClasses({
+          baseClasses: "",
+          cell: resultData.total,
+          statusTracking,
+        })}
+      >
+        "{resultData.searchObject.searchString.toLowerCase()}"
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import {
 } from "./guessesSlice";
 import { selectAnswerWords, selectExcludedWords } from "../puzzle/puzzleSlice";
 
-const processGuess = (
+export const processGuess = (
   { attemptId, text, isSpoiled, createdAt }: RawGuessFormat,
   state: RootState,
 ): GuessFormat => {
@@ -30,7 +30,10 @@ const processGuess = (
   };
 };
 
-const processAttempts = (rawAttempts: RawAttemptFormat[], state: RootState) => {
+export const processAttempts = (
+  rawAttempts: RawAttemptFormat[],
+  state: RootState,
+) => {
   const processedAttempts: AttemptFormat[] = [];
   for (const attempt of rawAttempts) {
     processedAttempts.push({

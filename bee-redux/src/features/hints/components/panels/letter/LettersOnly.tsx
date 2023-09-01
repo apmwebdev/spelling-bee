@@ -1,9 +1,7 @@
 import uniqid from "uniqid";
-import {
-  LetterHintDataCell,
-  LetterHintSubsectionProps,
-} from "@/features/hints/components/panels/letter/types";
+import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
 import { generateListData } from "@/features/hints/components/panels/letter/util";
+import { SubstringHintDataCell } from "@/features/hints";
 
 export function LettersOnly({
   answers,
@@ -20,7 +18,7 @@ export function LettersOnly({
       fragment,
       fragmentDivs,
     }: {
-      cell: LetterHintDataCell;
+      cell: SubstringHintDataCell;
       fragment: string;
       fragmentDivs: any[];
     }) => {

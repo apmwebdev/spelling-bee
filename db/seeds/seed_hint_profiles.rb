@@ -220,6 +220,33 @@ module SeedHintProfiles
     )
   end
 
+  def self.seed_search_test_searches
+    SearchPanelSearch.create!(
+      search_panel_id: 2,
+      user_puzzle_attempt_id: 13,
+      location: "anywhere",
+      output_type: "word_length_grid",
+      letters_offset: 0,
+      search_string: "men",
+    )
+    SearchPanelSearch.create!(
+      search_panel_id: 2,
+      user_puzzle_attempt_id: 13,
+      location: "anywhere",
+      output_type: "word_count_list",
+      letters_offset: 0,
+      search_string: "men",
+    )
+    SearchPanelSearch.create!(
+      search_panel_id: 2,
+      user_puzzle_attempt_id: 13,
+      location: "anywhere",
+      output_type: "letters_list",
+      letters_offset: 0,
+      search_string: "men",
+    )
+  end
+
   def self.seed_user_profile_2
     prof_2 = UserHintProfile.create!(
       name: "My Profile",

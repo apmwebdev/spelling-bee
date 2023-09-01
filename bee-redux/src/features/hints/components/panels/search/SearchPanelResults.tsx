@@ -7,32 +7,31 @@ import { selectCorrectGuessWords } from "@/features/guesses/guessesSlice";
 import { SearchResult } from "./SearchResult";
 import uniqid from "uniqid";
 import {
+  createSubstringHintDataCell,
+  GridRow,
   SearchPanelLocationKeys,
   SearchPanelSearch,
   StatusTrackingKeys,
+  SubstringHintDataCell,
 } from "@/features/hints";
-import { GridRow } from "@/features/hints/components/panels/letter/types";
 
 interface ResultData {
   searchObject: SearchPanelSearch;
   results: GridRow;
+  total: SubstringHintDataCell;
   excludedAnswers: number;
 }
 
 export interface SearchResultProps {
   panelId?: number;
   resultData: ResultData;
-  tracking: StatusTrackingKeys;
+  statusTracking: StatusTrackingKeys;
 }
 
 export function SearchPanelResults({
-  panelId,
-  searchPanelId,
   searches,
   tracking,
 }: {
-  panelId: number;
-  searchPanelId: number;
   searches: SearchPanelSearch[];
   tracking: StatusTrackingKeys;
 }) {
@@ -46,12 +45,13 @@ export function SearchPanelResults({
     const createResultsContainer = () => {
       const returnObject: GridRow = {};
       for (const answerLength of answerLengths) {
-        returnObject[answerLength] = { answers: 0, guesses: 0 };
+        returnObject[answerLength] = createSubstringHintDataCell();
       }
       return returnObject;
     };
     const { searchString, location, lettersOffset } = searchObject;
     const results = createResultsContainer();
+    const total = createSubstringHintDataCell();
     let excludedAnswers = 0;
     for (const answer of answers) {
       if (
@@ -87,12 +87,14 @@ export function SearchPanelResults({
       }
       if (answerFragment.includes(searchString)) {
         results[answer.length].answers++;
+        total.answers++;
         if (correctGuessWords.includes(answer)) {
           results[answer.length].guesses++;
+          total.guesses++;
         }
       }
     }
-    return { searchObject, results, excludedAnswers };
+    return { searchObject, results, total, excludedAnswers };
   };
 
   const content = () => {
@@ -102,7 +104,7 @@ export function SearchPanelResults({
         <SearchResult
           key={uniqid()}
           resultData={resultData}
-          tracking={tracking}
+          statusTracking={tracking}
         />
       );
     });
