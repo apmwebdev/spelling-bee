@@ -5,7 +5,6 @@ import {
   combineReducers,
 } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
-import counterReducer from "../features/counter/counterSlice";
 import puzzleReducer from "../features/puzzle/puzzleSlice";
 import guessesReducer from "../features/guesses/guessesSlice";
 import wordListSettingsReducer from "@/features/wordLists/wordListSettingsSlice";
@@ -14,7 +13,6 @@ import { apiSlice } from "@/features/api/apiSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  counter: counterReducer,
   puzzle: puzzleReducer,
   guesses: guessesReducer,
   wordListSettings: wordListSettingsReducer,
