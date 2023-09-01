@@ -23,7 +23,7 @@ export interface ListData {
 
 export function WordCountList({
   answers,
-  correctGuessWords,
+  knownWords,
   numberOfLetters,
   location,
   lettersOffset,
@@ -58,7 +58,7 @@ export function WordCountList({
 
     const { excludedAnswers, listRows } = generateListData({
       answers,
-      correctGuessWords,
+      knownWords,
       numberOfLetters,
       location,
       lettersOffset,

@@ -1,5 +1,5 @@
 import { SearchResultProps } from "./SearchPanelResults";
-import { getSubstringHintStatusClasses, StatusTrackingOptions } from "@/features/hints";
+import { getSubstringHintStatusClasses } from "@/features/hints";
 
 export function SearchResultLettersOnly({
   resultData,

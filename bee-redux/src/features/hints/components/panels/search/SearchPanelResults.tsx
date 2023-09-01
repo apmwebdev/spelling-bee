@@ -3,7 +3,7 @@ import {
   selectAnswerLengths,
   selectAnswerWords,
 } from "@/features/puzzle/puzzleSlice";
-import { selectCorrectGuessWords } from "@/features/guesses/guessesSlice";
+import { selectKnownWords } from "@/features/guesses/guessesSlice";
 import { SearchResult } from "./SearchResult";
 import uniqid from "uniqid";
 import {
@@ -37,7 +37,7 @@ export function SearchPanelResults({
 }) {
   const answers = useAppSelector(selectAnswerWords);
   const answerLengths = useAppSelector(selectAnswerLengths);
-  const correctGuessWords = useAppSelector(selectCorrectGuessWords);
+  const knownWords = useAppSelector(selectKnownWords);
 
   const generateSearchResultData = (
     searchObject: SearchPanelSearch,
@@ -88,7 +88,7 @@ export function SearchPanelResults({
       if (answerFragment.includes(searchString)) {
         results[answer.length].answers++;
         total.answers++;
-        if (correctGuessWords.includes(answer)) {
+        if (knownWords.includes(answer)) {
           results[answer.length].guesses++;
           total.guesses++;
         }

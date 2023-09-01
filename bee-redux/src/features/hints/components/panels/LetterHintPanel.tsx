@@ -1,19 +1,19 @@
 import { WordCountList } from "./letter/WordCountList";
 import { WordLengthGridContainer } from "./letter/WordLengthGridContainer";
 import { LettersOnly } from "./letter/LettersOnly";
-import { selectCorrectGuessWords } from "../../../guesses/guessesSlice";
+import { selectKnownWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswerWords } from "../../../puzzle/puzzleSlice";
 import {
   HintPanelData,
   isLetterPanelData,
   SubstringHintOutputKeys,
 } from "@/features/hints";
 import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
+import { selectAnswerWords } from "@/features/puzzle/puzzleSlice";
 
 export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
-  const correctGuessWords = useAppSelector(selectCorrectGuessWords);
+  const knownWords = useAppSelector(selectKnownWords);
 
   if (!isLetterPanelData(panel.typeData)) return;
 
@@ -22,7 +22,7 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
 
   const subsectionProps: LetterHintSubsectionProps = {
     answers,
-    correctGuessWords,
+    knownWords,
     numberOfLetters,
     location,
     lettersOffset,

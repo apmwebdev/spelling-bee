@@ -5,7 +5,7 @@ import { SubstringHintDataCell } from "@/features/hints";
 
 export function LettersOnly({
   answers,
-  correctGuessWords,
+  knownWords,
   numberOfLetters,
   location,
   lettersOffset,
@@ -46,7 +46,7 @@ export function LettersOnly({
 
     const { excludedAnswers, listRows } = generateListData({
       answers,
-      correctGuessWords,
+      knownWords,
       numberOfLetters,
       location,
       lettersOffset,

@@ -16,7 +16,7 @@ import {
 
 export function WordLengthGridContainer({
   answers,
-  correctGuessWords,
+  knownWords,
   numberOfLetters,
   location,
   lettersOffset,
@@ -80,7 +80,7 @@ export function WordLengthGridContainer({
       gridRows[substring][answer.length].answers++;
       totalColumn[substring].answers++;
       totalRow[answer.length].answers++;
-      if (correctGuessWords.includes(answer)) {
+      if (knownWords.includes(answer)) {
         gridRows[substring][answer.length].guesses++;
         totalColumn[substring].guesses++;
         totalRow[answer.length].guesses++;

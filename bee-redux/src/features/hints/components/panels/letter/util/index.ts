@@ -42,7 +42,7 @@ export const getTdClasses = (
 
 export const generateListData = ({
   answers,
-  correctGuessWords,
+  knownWords,
   numberOfLetters,
   location,
   showKnown,
@@ -78,7 +78,7 @@ export const generateListData = ({
       listRows[startingLetter][answerFragment] = { answers: 0, guesses: 0 };
     }
     listRows[startingLetter][answerFragment].answers++;
-    if (correctGuessWords.includes(answer)) {
+    if (knownWords.includes(answer)) {
       listRows[startingLetter][answerFragment].guesses++;
     }
   }

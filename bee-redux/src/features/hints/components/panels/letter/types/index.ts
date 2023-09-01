@@ -7,7 +7,7 @@ import {
 
 export interface LetterHintSubsectionProps {
   answers: string[];
-  correctGuessWords: string[];
+  knownWords: string[];
   numberOfLetters: number;
   location: LetterPanelLocationKeys;
   lettersOffset: number;
