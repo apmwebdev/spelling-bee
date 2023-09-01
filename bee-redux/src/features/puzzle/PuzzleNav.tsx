@@ -1,30 +1,26 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectDate, selectIsLatest, selectPuzzleId } from "./puzzleSlice";
 import { Icon } from "@iconify/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   dateRegex,
   getNextPuzzleDateString,
   getPreviousPuzzleDateString,
 } from "@/utils";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { AttemptControls } from "../guesses/AttemptControls";
 import { ButtonLink } from "@/components/ButtonLink";
 
-export function PuzzleSubheader() {
+export function PuzzleNav() {
   const params = useParams();
   const puzzleDate = useAppSelector(selectDate);
   const puzzleId = useAppSelector(selectPuzzleId);
   const isLatest = useAppSelector(selectIsLatest);
-  const navigate = useNavigate();
-  const [puzzleIdentifier, setPuzzleIdentifier] = useState("");
 
   if (puzzleId === 0) {
     return null;
   }
 
   const firstPuzzleLink = () => {
-    let urlString = "puzzles/";
+    let urlString = "../puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += "20180509";
     } else {
@@ -42,7 +38,7 @@ export function PuzzleSubheader() {
   };
 
   const previousPuzzleLink = () => {
-    let urlString = "puzzles/";
+    let urlString = "../puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += getPreviousPuzzleDateString(params.identifier);
     } else {
@@ -60,7 +56,7 @@ export function PuzzleSubheader() {
   };
 
   const nextPuzzleLink = () => {
-    let urlString = "puzzles/";
+    let urlString = "../puzzles/";
     if (params.identifier?.match(dateRegex)) {
       urlString += getNextPuzzleDateString(params.identifier);
     } else {
@@ -80,7 +76,7 @@ export function PuzzleSubheader() {
   const latestPuzzleLink = () => {
     return (
       <ButtonLink
-        to="puzzles/latest"
+        to="../puzzles/latest"
         className="puzzle-nav-link"
         disabled={isLatest}
       >
@@ -89,39 +85,15 @@ export function PuzzleSubheader() {
     );
   };
 
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    return navigate(`/puzzle/${puzzleIdentifier}`);
-  };
-
-  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.match(/^[a-zA-Z0-9]*$/)) {
-      setPuzzleIdentifier(e.target.value);
-    }
-  };
-
   return (
-    <>
-      <AttemptControls />
-      <nav className="sb-puzzle-nav">
-        {firstPuzzleLink()}
-        {previousPuzzleLink()}
-        <span>
-          Spelling Bee #{puzzleId}: {puzzleDate}
-        </span>
-        {nextPuzzleLink()}
-        {latestPuzzleLink()}
-      </nav>
-      <form className="sb-puzzle-search" onSubmit={handleSearch}>
-        <Icon icon="mdi:search" />
-        <input
-          type="text"
-          name="identifierInput"
-          value={puzzleIdentifier}
-          placeholder="Date, ID, or letters"
-          onChange={(e) => handleSearchInput(e)}
-        />
-      </form>
-    </>
+    <nav className="PuzzleNav">
+      {firstPuzzleLink()}
+      {previousPuzzleLink()}
+      <span>
+        Spelling Bee #{puzzleId}: {puzzleDate}
+      </span>
+      {nextPuzzleLink()}
+      {latestPuzzleLink()}
+    </nav>
   );
 }

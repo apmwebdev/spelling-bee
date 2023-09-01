@@ -95,6 +95,8 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useAddAttemptMutation,
+  useDeleteAttemptMutation,
   useLazyGetCurrentAttemptsQuery,
   useAddGuessMutation,
 } = guessesApiSlice;

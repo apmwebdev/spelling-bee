@@ -1,4 +1,3 @@
-import { GridRow } from "../letter/WordLengthGridContainer";
 import { useAppSelector } from "@/app/hooks";
 import {
   selectAnswerLengths,
@@ -12,6 +11,7 @@ import {
   SearchPanelSearch,
   StatusTrackingKeys,
 } from "@/features/hints";
+import { GridRow } from "@/features/hints/components/panels/letter/types";
 
 interface ResultData {
   searchObject: SearchPanelSearch;
@@ -27,11 +27,13 @@ export interface SearchResultProps {
 
 export function SearchPanelResults({
   panelId,
-  results,
+  searchPanelId,
+  searches,
   tracking,
 }: {
   panelId: number;
-  results: SearchPanelSearch[];
+  searchPanelId: number;
+  searches: SearchPanelSearch[];
   tracking: StatusTrackingKeys;
 }) {
   const answers = useAppSelector(selectAnswerWords);
@@ -67,12 +69,18 @@ export function SearchPanelResults({
           lettersOffset,
           lettersOffset + searchString.length,
         );
-      } else if (location === SearchPanelLocationKeys.End && lettersOffset > 0) {
+      } else if (
+        location === SearchPanelLocationKeys.End &&
+        lettersOffset > 0
+      ) {
         answerFragment = answer.slice(
           -searchString.length - lettersOffset,
           -lettersOffset,
         );
-      } else if (location === SearchPanelLocationKeys.End && lettersOffset === 0) {
+      } else if (
+        location === SearchPanelLocationKeys.End &&
+        lettersOffset === 0
+      ) {
         answerFragment = answer.slice(-searchString.length);
       } else {
         answerFragment = answer;
@@ -88,18 +96,19 @@ export function SearchPanelResults({
   };
 
   const content = () => {
-    const resultDivs = results.map((searchObject) => {
+    const resultDivs = searches.map((searchObject) => {
       const resultData = generateSearchResultData(searchObject);
       return (
         <SearchResult
           key={uniqid()}
-          panelId={panelId}
           resultData={resultData}
           tracking={tracking}
         />
       );
     });
-    return <div className="sb-search-hints-results">{resultDivs}</div>;
+    return (
+      <div className="sb-search-hints-results">{resultDivs}</div>
+    );
   };
 
   return content();

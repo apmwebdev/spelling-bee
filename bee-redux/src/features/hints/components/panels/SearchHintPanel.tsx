@@ -1,40 +1,29 @@
 import { FormEvent, useState } from "react";
 import { SearchPanelResults } from "./search/SearchPanelResults";
-import { HintPanelData, isSearchPanelData } from "@/features/hints";
+import {
+  HintPanelData,
+  isSearchPanelData,
+  SearchPanelSearch,
+} from "@/features/hints";
+import { hintApiSlice } from "@/features/hints/hintApiSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 
 export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
   const [searchValue, setSearchValue] = useState("");
+  const currentAttemptId = useSelector(selectCurrentAttemptId);
+  const { data } =
+    hintApiSlice.endpoints.getSearches.useQueryState(currentAttemptId);
+  if (!isSearchPanelData(panel.typeData)) return null;
 
-  // const addSearchToPanel = () => {
-  //   if (!isSearchPanelData(panel.typeData)) {
-  //     return;
-  //   }
-  //   const { location, lettersOffset, outputType } =
-  //     panel.typeData;
-  //   const payload = {
-  //     panelId: panel.id,
-  //     search: {
-  //       searchId: random(1000),
-  //       searchString: searchValue,
-  //       location,
-  //       lettersOffset,
-  //       outputType,
-  //     },
-  //   };
-  //   dispatch(addSearch(payload));
-  // };
+  const getPanelSearches = (data: SearchPanelSearch[] | undefined) => {
+    if (!data) return;
+    return data.filter((search) => search.searchPanelId === panel.typeData.id);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // addSearchToPanel();
-  };
-
-  const searches = () => {
-    if (!isSearchPanelData(panel.typeData)) {
-      return [];
-    }
-    // return panel.typeData.searches;
-    return [];
   };
 
   return (
@@ -53,7 +42,8 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
       </form>
       <SearchPanelResults
         panelId={panel.id}
-        results={searches()}
+        searchPanelId={panel.typeData.id}
+        searches={getPanelSearches(data) ?? []}
         tracking={panel.statusTracking}
       />
     </div>

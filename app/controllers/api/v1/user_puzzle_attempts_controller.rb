@@ -12,10 +12,12 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   def index_for_puzzle
     unless params[:puzzle_id].to_s.match(/\A\d{1,5}\z/)
       render json: {error: "Invalid puzzle ID"}, status: :bad_request
+      return
     end
     puzzle_id = params[:puzzle_id].to_i
     unless Puzzle.exists?(puzzle_id)
       render json: {error: "Puzzle not found"}, status: :not_found
+      return
     end
     @user_puzzle_attempts = UserPuzzleAttempt
       .includes(:guesses)

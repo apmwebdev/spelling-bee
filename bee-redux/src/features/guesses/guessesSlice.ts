@@ -3,7 +3,6 @@ import { RootState } from "@/app/store";
 import { calculateScore } from "@/utils";
 import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
-import { selectRanks, selectTotalPoints } from "../puzzle/puzzleSlice";
 
 export enum Status {
   Initial = "Not Fetched",
@@ -149,6 +148,10 @@ export const { setCurrentAttempt } = guessesSlice.actions;
 export const selectGuessesData = (state: RootState) => state.guesses.data;
 export const selectCurrentAttempt = (state: RootState) =>
   state.guesses.data.currentAttempt;
+export const selectCurrentAttemptId = createSelector(
+  [selectCurrentAttempt],
+  (attempt) => attempt.id,
+);
 export const selectAttempts = (state: RootState) => state.guesses.data.attempts;
 export const selectGuesses = (state: RootState) =>
   state.guesses.data.currentAttempt.guesses;

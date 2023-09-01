@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :guesses, only: :create
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
+      get "user_puzzle_data/:puzzle_id", to: "user_data#user_puzzle_data"
       # User preferences
       get "user_prefs", to: "user_prefs#show"
       match "user_prefs", to: "user_prefs#update", via: [:put, :patch]
@@ -33,6 +34,9 @@ Rails.application.routes.draw do
       get "hint_profiles", to: "user_hint_profiles#get_all_hint_profiles"
       resources :user_hint_profiles
       resources :hint_panels, except: [:index, :show]
+      # Search panel searches
+      get "search_panel_search/:attempt_id",
+        to: "search_panel_searches#for_attempt_and_profile"
       # Root
       root "puzzles#latest"
     end

@@ -1,14 +1,14 @@
 import { apiSlice } from "../api/apiSlice";
 import {
   CompleteHintProfile,
-  CurrentHintProfileFormData,
+  CurrentHintProfileFormData, GetSearchesFormData,
   HintPanelCreateForm,
   HintPanelData,
   HintPanelUpdateForm,
   HintProfilesData,
   HintProfileTypes,
   PanelSubTypeTypes,
-  RailsHintPanelUpdateForm,
+  RailsHintPanelUpdateForm, SearchPanelSearch,
   UserHintProfileBasic,
   UserHintProfileComplete,
   UserHintProfileForm,
@@ -198,6 +198,21 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // ⚠️
     deleteHintPanel: builder.mutation<boolean, number>({}),
 
+    //Searches
+
+    //
+    getSearches: builder.query<SearchPanelSearch[], number>({
+      query: (attemptId) => ({
+        url: `search_panel_search/${attemptId}`,
+      }),
+    }),
+
+    //
+    addSearch: builder.mutation({}),
+
+    //
+    deleteSearch: builder.mutation({}),
+
     //Maybe not needed
 
     // ❌ Get only user hint profiles
@@ -215,8 +230,11 @@ export const hintApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useUpdateHintPanelMutation, useSetCurrentHintProfileMutation } =
-  hintApiSlice;
+export const {
+  useUpdateHintPanelMutation,
+  useSetCurrentHintProfileMutation,
+  useLazyGetSearchesQuery,
+} = hintApiSlice;
 
 export const selectCurrentHintProfile =
   hintApiSlice.endpoints.getCurrentHintProfile.select()(store.getState()).data;

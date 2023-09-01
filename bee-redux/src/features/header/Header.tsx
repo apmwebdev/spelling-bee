@@ -1,16 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HeaderAuth } from "../auth/headerAuth/HeaderAuth";
-import { PuzzleSubheader } from "../puzzle/PuzzleSubheader";
+import { PuzzleSearch } from "@/features/puzzleSearch/PuzzleSearch";
 
 export function Header() {
-  const { pathname } = useLocation();
-
-  const subheaderContent = () => {
-    const pathArr = pathname.split("/");
-    if (pathArr[1].match(/^puzzle(s)?$/) || pathname === "/") {
-      return <PuzzleSubheader />;
-    }
-  };
 
   return (
     <header className="sb-header">
@@ -24,10 +16,10 @@ export function Header() {
           <Link to="/">Stats</Link>
           <Link to="/">Help</Link>
           <Link to="/">About</Link>
+          <PuzzleSearch />
         </div>
         <HeaderAuth />
       </div>
-      <div className="subheader">{subheaderContent()}</div>
     </header>
   );
 }

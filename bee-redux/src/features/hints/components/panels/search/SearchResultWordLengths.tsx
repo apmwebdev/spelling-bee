@@ -30,7 +30,7 @@ export function SearchResultWordLengths({
       const cssClasses = getCellClasses(dataCell);
       const total = dataCell.answers;
       const found = dataCell.guesses;
-      const remaining = found - total;
+      const remaining = total - found;
       let cellText = "";
       if (total === 0) {
         cellText = "-";
@@ -76,6 +76,7 @@ export function SearchResultWordLengths({
       <div className="sb-search-hints-result-wlg">
         {headerRow}
         {contentRow}
+        <div>Excluded words: {resultData.excludedAnswers}</div>
       </div>
     );
   };

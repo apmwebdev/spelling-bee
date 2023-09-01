@@ -489,10 +489,6 @@ input[type="number"] {
 
 
 
-.sb-header {
-  margin-bottom: 8px;
-}
-
 .main-header {
   font-size: 20px;
   display: flex;
@@ -583,21 +579,12 @@ input[type="number"] {
     }
   }
 }
-.sb-attempt-controls {
+.AttemptControls {
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-  .small-button {
-    font-size: 16px;
-    padding: 6px 12px;
-    background-color: ui-bg-color-muted($accent-hue);
-    border: 1.5px solid ui-bg-color-muted($accent-hue);
-    &:hover {
-      border-color: ui-border-color-muted($accent-hue);
-    }
-  }
 }
 
 .user-menu-content {
@@ -623,6 +610,7 @@ input[type="number"] {
   justify-content: stretch;
   position: relative;
   width: 100%;
+  padding: 16px;
 }
 
 .sb-main {
@@ -671,6 +659,12 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.PuzzleNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .sb-guess-input-alerts-container {
@@ -820,7 +814,7 @@ input[type="number"] {
   top: 8px;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  //padding: 8px;
   gap: 8px;
   justify-content: flex-start;
   align-self: flex-start;

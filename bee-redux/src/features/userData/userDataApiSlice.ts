@@ -1,10 +1,12 @@
 import { apiSlice } from "../api/apiSlice";
+import { hintApiSlice } from "@/features/hints/hintApiSlice";
 import {
   UserBaseData,
   UserPrefsData,
   UserPrefsFormData,
-} from "@/features/hints";
-import { hintApiSlice } from "@/features/hints/hintApiSlice";
+  UserPuzzleData,
+} from "@/types";
+import { guessesApiSlice } from "@/features/guesses/guessesApiSlice";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -94,11 +96,36 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
      * For after the puzzle loads, as it requires the puzzle ID. Combines
      * - getCurrentAttempts
      * - getSearches
+     * - getDefinitions
      */
-    getUserPuzzleData: builder.query<any, number>({
+    getUserPuzzleData: builder.query<UserPuzzleData, number>({
       query: (puzzleId: number) => ({
         url: `/user_puzzle_data/${puzzleId}`,
       }),
+      onQueryStarted: async (
+        puzzleId,
+        { dispatch, getCacheEntry, queryFulfilled },
+      ) => {
+        await queryFulfilled;
+        const cacheEntry = getCacheEntry();
+        if (cacheEntry.isSuccess && cacheEntry.data) {
+          const { data } = cacheEntry;
+          dispatch(
+            guessesApiSlice.util.upsertQueryData(
+              "getCurrentAttempts",
+              undefined,
+              data.attempts,
+            ),
+          );
+          dispatch(
+            hintApiSlice.util.upsertQueryData(
+              "getSearches",
+              data.currentAttempt,
+              data.searches,
+            ),
+          );
+        }
+      },
     }),
   }),
 });
@@ -107,4 +134,5 @@ export const {
   useGetUserPrefsQuery,
   useUpdateUserPrefsMutation,
   useGetUserBaseDataQuery,
+  useLazyGetUserPuzzleDataQuery,
 } = userDataApiSlice;
