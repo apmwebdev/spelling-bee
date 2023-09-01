@@ -1407,13 +1407,10 @@ button.sb-revealer {
 }
 
 .sb-search-hints-results {
-  //border-radius: var(--br);
-  //overflow: hidden;
   padding: 4px;
-  //border: 1px solid;
 }
 
-.sb-search-panel-result {
+.SearchPanelResult {
   border: 1px solid #666;
   .result-content {
     padding: 4px;
@@ -1421,7 +1418,7 @@ button.sb-revealer {
   }
 }
 
-.sb-search-hints-search-result-header {
+.SearchHintSearchResultHeader {
   display: grid;
   grid-template-columns: max-content 1fr;
   align-items: center;

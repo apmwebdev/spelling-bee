@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import {
   SearchPanelLocationKeys,
   SearchPanelSearch,
@@ -7,16 +6,11 @@ import {
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
 export function SearchResultHeader({
-  panelId,
   searchObject,
 }: {
-  panelId: number;
   searchObject: SearchPanelSearch;
 }) {
-  const { id, searchString, location, lettersOffset, outputType } =
-    searchObject;
-  const dispatch = useDispatch();
-
+  const { searchString, location, lettersOffset, outputType } = searchObject;
   const title = () => {
     const offsetString = () => {
       let returnString = "";
@@ -51,7 +45,7 @@ export function SearchResultHeader({
   };
 
   return (
-    <header className="sb-search-hints-search-result-header">
+    <header className="SearchHintSearchResultHeader">
       <IconButton
         type={IconButtonTypeKeys.Close}
         className="SearchResultHeaderRemoveButton"

@@ -5,11 +5,7 @@ import { SearchResultLettersOnly } from "./SearchResultLettersOnly";
 import { SearchResultHeader } from "./SearchResultHeader";
 import { SubstringHintOutputKeys } from "@/features/hints";
 
-export function SearchResult({
-  panelId,
-  resultData,
-  tracking,
-}: SearchResultProps) {
+export function SearchResult({ resultData, tracking }: SearchResultProps) {
   const content = () => {
     switch (resultData.searchObject.outputType) {
       case SubstringHintOutputKeys.WordLengthGrid:
@@ -34,11 +30,8 @@ export function SearchResult({
   };
 
   return (
-    <div className="sb-search-panel-result">
-      <SearchResultHeader
-        panelId={panelId ? panelId : 0}
-        searchObject={resultData.searchObject}
-      />
+    <div className="SearchPanelResult">
+      <SearchResultHeader searchObject={resultData.searchObject} />
       <div className="result-content">{content()}</div>
     </div>
   );
