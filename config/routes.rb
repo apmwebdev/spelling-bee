@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       # Attempts and guesses
       get "/user_puzzle_attempts_for_puzzle/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
-      resources :user_puzzle_attempts, except: [:update]
+      resources :user_puzzle_attempts, except: :update
       resources :guesses, only: :create
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       # Search panel searches
       get "search_panel_search/:attempt_id",
         to: "search_panel_searches#for_attempt_and_profile"
+      resources :search_panel_searches, only: [:create, :update, :destroy]
       # Root
       root "puzzles#latest"
     end

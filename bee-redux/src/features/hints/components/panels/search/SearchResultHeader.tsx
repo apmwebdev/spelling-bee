@@ -1,6 +1,6 @@
 import {
   SearchPanelLocationKeys,
-  SearchPanelSearch,
+  SearchPanelSearchData,
   SubstringHintOutputKeys,
 } from "@/features/hints";
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
@@ -8,7 +8,7 @@ import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 export function SearchResultHeader({
   searchObject,
 }: {
-  searchObject: SearchPanelSearch;
+  searchObject: SearchPanelSearchData;
 }) {
   const { searchString, location, lettersOffset, outputType } = searchObject;
   const title = () => {

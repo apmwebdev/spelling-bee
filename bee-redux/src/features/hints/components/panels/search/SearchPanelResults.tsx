@@ -10,13 +10,13 @@ import {
   createSubstringHintDataCell,
   GridRow,
   SearchPanelLocationKeys,
-  SearchPanelSearch,
+  SearchPanelSearchData,
   StatusTrackingKeys,
   SubstringHintDataCell,
 } from "@/features/hints";
 
 interface ResultData {
-  searchObject: SearchPanelSearch;
+  searchObject: SearchPanelSearchData;
   results: GridRow;
   total: SubstringHintDataCell;
   excludedAnswers: number;
@@ -32,7 +32,7 @@ export function SearchPanelResults({
   searches,
   tracking,
 }: {
-  searches: SearchPanelSearch[];
+  searches: SearchPanelSearchData[];
   tracking: StatusTrackingKeys;
 }) {
   const answers = useAppSelector(selectAnswerWords);
@@ -40,7 +40,7 @@ export function SearchPanelResults({
   const knownWords = useAppSelector(selectKnownWords);
 
   const generateSearchResultData = (
-    searchObject: SearchPanelSearch,
+    searchObject: SearchPanelSearchData,
   ): ResultData => {
     const createResultsContainer = () => {
       const returnObject: GridRow = {};

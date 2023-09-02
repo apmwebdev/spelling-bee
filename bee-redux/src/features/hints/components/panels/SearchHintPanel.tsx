@@ -4,9 +4,9 @@ import {
   HintPanelData,
   isSearchPanelData,
   SearchPanelData,
-  SearchPanelSearch,
+  SearchPanelSearchData,
 } from "@/features/hints";
-import { hintApiSlice } from "@/features/hints/hintApiSlice";
+import { hintApiSlice, useAddSearchMutation } from "@/features/hints/hintApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 
@@ -15,18 +15,28 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
   const currentAttemptId = useSelector(selectCurrentAttemptId);
   const { data } =
     hintApiSlice.endpoints.getSearches.useQueryState(currentAttemptId);
+  const [addSearch] = useAddSearchMutation();
   if (!isSearchPanelData(panel.typeData)) return null;
+  //For TypeScript
+  const searchPanelData = panel.typeData as SearchPanelData;
 
-  const getPanelSearches = (data: SearchPanelSearch[] | undefined) => {
+  const getPanelSearches = (data: SearchPanelSearchData[] | undefined) => {
     if (!data) return;
-    //For TypeScript
-    const searchPanelData = panel.typeData as SearchPanelData;
     return data.filter((search) => search.searchPanelId === searchPanelData.id);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // addSearchToPanel();
+    //Add debounce here
+    addSearch({
+      searchPanelId: searchPanelData.id,
+      attemptId: currentAttemptId,
+      searchString: searchValue,
+      location: searchPanelData.location,
+      lettersOffset: searchPanelData.lettersOffset,
+      outputType: searchPanelData.outputType,
+      createdAt: Date.now(),
+    });
   };
 
   return (

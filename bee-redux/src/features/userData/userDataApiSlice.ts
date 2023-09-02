@@ -6,7 +6,10 @@ import {
   UserPrefsFormData,
   UserPuzzleData,
 } from "@/types";
-import { guessesApiSlice, processAttempts } from "@/features/guesses/guessesApiSlice";
+import {
+  guessesApiSlice,
+  processAttempts,
+} from "@/features/guesses/guessesApiSlice";
 import { RootState } from "@/app/store";
 
 // Meant to be used within an updateQueryData function to update state immutably.

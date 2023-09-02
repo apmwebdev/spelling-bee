@@ -228,32 +228,26 @@ export const SearchPanelLocationOptions: EnumeratedOptions = {
   anywhere: { title: "Anywhere in Word" },
 };
 
-export interface SearchPanelFormData {
+export interface SearchPanelBaseData {
+  searchString: string;
   location: SearchPanelLocationKeys;
   lettersOffset: number;
   outputType: SubstringHintOutputKeys;
 }
 
-export interface SearchPanelData extends SearchPanelFormData {
+export interface SearchPanelData extends SearchPanelBaseData {
   panelType: PanelTypes;
   // ID is necessary for search panels so that searches know which panel they
   // belong to
   id: number;
 }
 
-export interface SearchPanelSearch extends SearchPanelFormData {
+export interface SearchPanelSearchData extends SearchPanelBaseData {
   //includes location, lettersOffset, and outputType through inheritance
-  id: number;
   attemptId: number;
   searchPanelId: number;
-  searchString: string;
-  createdAt: string;
-}
-
-export interface GetSearchesFormData {
-  attemptId: number;
-  hintProfileType: HintProfileTypes;
-  hintProfileId: number;
+  createdAt: number;
+  id?: number;
 }
 
 export function isSearchPanelData(a: any): a is SearchPanelData {
@@ -316,7 +310,7 @@ export interface HintPanelCreateForm {
   panelSubtypeType: PanelSubTypeTypes;
   typeData:
     | LetterPanelFormData
-    | SearchPanelFormData
+    | SearchPanelBaseData
     | ObscurityPanelFormData
     | DefinitionPanelFormData;
 }

@@ -1,36 +1,29 @@
 import { apiSlice } from "../api/apiSlice";
-import {
-  CompleteHintProfile,
-  CurrentHintProfileFormData, GetSearchesFormData,
-  HintPanelCreateForm,
-  HintPanelData,
-  HintPanelUpdateForm,
-  HintProfilesData,
-  HintProfileTypes,
-  PanelSubTypeTypes,
-  RailsHintPanelUpdateForm, SearchPanelSearch,
-  UserHintProfileBasic,
-  UserHintProfileComplete,
-  UserHintProfileForm,
-} from "./types";
+import * as t from "./types";
 import { RootState, store } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
 import { keysToSnakeCase } from "@/features/api/util";
+import { SearchPanelSearchData } from "./types";
+import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import {
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query";
 
 const maybeFindDefaultHintProfile = (
-  formData: CurrentHintProfileFormData,
-  profiles?: HintProfilesData,
-): CompleteHintProfile | undefined => {
+  formData: t.CurrentHintProfileFormData,
+  profiles?: t.HintProfilesData,
+): t.CompleteHintProfile | undefined => {
   if (!profiles) return;
-  if (formData.current_hint_profile_type === HintProfileTypes.Default) {
+  if (formData.current_hint_profile_type === t.HintProfileTypes.Default) {
     return profiles.defaultHintProfiles.find(
       (profile) => profile.id === formData.current_hint_profile_id,
     );
   }
 };
 
-const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
-  const railsData: RailsHintPanelUpdateForm = {
+const railsifyUpdatePanelData = (formData: t.HintPanelUpdateForm) => {
+  const railsData: t.RailsHintPanelUpdateForm = {
     hint_panel: {
       id: formData.id,
       name: formData.name,
@@ -48,30 +41,40 @@ const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   return railsData;
 };
 
+const railsifyAddSearchData = (newSearch: t.SearchPanelSearchData) => {
+  return {
+    search_panel_search: {
+      ...keysToSnakeCase(newSearch),
+      user_puzzle_attempt_id: newSearch.attemptId,
+      attempt_id: undefined,
+    },
+  };
+};
+
 export const hintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Hint Profiles
 
     // ✅Get all hint profiles, including default profiles
-    getHintProfiles: builder.query<HintProfilesData, void>({
+    getHintProfiles: builder.query<t.HintProfilesData, void>({
       query: () => ({
         url: "/hint_profiles",
       }),
     }),
     // ✅
     createUserHintProfile: builder.mutation<
-      UserHintProfileComplete,
-      UserHintProfileForm
+      t.UserHintProfileComplete,
+      t.UserHintProfileForm
     >({}),
     // ✅ Only for updating the profile itself. Updating panels is handled below.
     updateUserHintProfile: builder.mutation<
-      UserHintProfileBasic,
-      UserHintProfileForm
+      t.UserHintProfileBasic,
+      t.UserHintProfileForm
     >({}),
     // ⚠️
     deleteUserHintProfile: builder.mutation<boolean, number>({}),
     // ✅
-    getCurrentHintProfile: builder.query<CompleteHintProfile, void>({
+    getCurrentHintProfile: builder.query<t.CompleteHintProfile, void>({
       query: () => ({
         url: "/current_hint_profile",
       }),
@@ -79,8 +82,8 @@ export const hintApiSlice = apiSlice.injectEndpoints({
 
     // ✅
     setCurrentHintProfile: builder.mutation<
-      CompleteHintProfile,
-      CurrentHintProfileFormData
+      t.CompleteHintProfile,
+      t.CurrentHintProfileFormData
     >({
       query: (formData) => ({
         url: "/current_hint_profile",
@@ -91,8 +94,9 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         formData,
         { getState, dispatch, getCacheEntry, queryFulfilled },
       ) => {
-        const profiles =
-          hintApiSlice.endpoints.getHintProfiles.select(undefined)(getState()).data;
+        const profiles = hintApiSlice.endpoints.getHintProfiles.select(
+          undefined,
+        )(getState()).data;
         const maybeProfile = maybeFindDefaultHintProfile(formData, profiles);
         if (maybeProfile) {
           dispatch(
@@ -121,7 +125,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // Hint Panels
 
     // ⚠️
-    createHintPanel: builder.mutation<HintPanelData, HintPanelCreateForm>({}),
+    createHintPanel: builder.mutation<t.HintPanelData, t.HintPanelCreateForm>({}),
 
     /**
      * ✅
@@ -130,7 +134,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
      * Manually updates getCurrentHintProfile endpoint data
      * Guest users + modifications to default panels save only to local storage
      */
-    updateHintPanel: builder.mutation<boolean, HintPanelUpdateForm>({
+    updateHintPanel: builder.mutation<boolean, t.HintPanelUpdateForm>({
       queryFn: async (formData, api, _opts, baseQuery) => {
         //Optimistically update getCurrentHintProfile with panel mutations
         api.dispatch(
@@ -163,7 +167,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         const state = api.getState() as RootState;
         if (
           state.auth.isGuest ||
-          selectCurrentHintProfile?.type === HintProfileTypes.Default
+          selectCurrentHintProfile?.type === t.HintProfileTypes.Default
         ) {
           return { data: true };
         }
@@ -201,14 +205,68 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     //Searches
 
     //
-    getSearches: builder.query<SearchPanelSearch[], number>({
+    getSearches: builder.query<t.SearchPanelSearchData[], number>({
       query: (attemptId) => ({
-        url: `search_panel_search/${attemptId}`,
+        url: `/search_panel_search/${attemptId}`,
       }),
     }),
 
-    //
-    addSearch: builder.mutation({}),
+    /**
+     * ✅
+     * Does NOT debounce. This must be handled in the component
+     * Uses optimistic updates
+     * Updates getSearches endpoint data
+     * Guest users save only to local storage
+     */
+    addSearch: builder.mutation<
+      t.SearchPanelSearchData,
+      t.SearchPanelSearchData
+    >({
+      queryFn: async (newSearch, api, _opts, baseQuery) => {
+        //Optimistically update getSearches with new search
+        api.dispatch(
+          hintApiSlice.util.updateQueryData(
+            "getSearches",
+            newSearch.attemptId,
+            (searches) => {
+              searches.push(newSearch);
+            },
+          ),
+        );
+        const state = api.getState() as RootState;
+        if (
+          state.auth.isGuest ||
+          selectCurrentHintProfile?.type === t.HintProfileTypes.Default
+        ) {
+          return { data: newSearch };
+        }
+        const response = (await baseQuery({
+          url: "/search_panel_searches",
+          method: "POST",
+          body: railsifyAddSearchData(newSearch),
+        })) as QueryReturnValue<
+          SearchPanelSearchData,
+          FetchBaseQueryError,
+          FetchBaseQueryMeta
+        >;
+        //Update the new search with the ID from the back end
+        api.dispatch(
+          hintApiSlice.util.updateQueryData(
+            "getSearches",
+            newSearch.attemptId,
+            (searches) => {
+              const searchToUpdate = searches.find(
+                (spsData) => spsData.createdAt === newSearch.createdAt,
+              );
+              if (!searchToUpdate) return;
+              searchToUpdate.id = response.data?.id;
+            },
+          ),
+        );
+
+        return response;
+      },
+    }),
 
     //
     deleteSearch: builder.mutation({}),
@@ -216,13 +274,13 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     //Maybe not needed
 
     // ❌ Get only user hint profiles
-    getUserHintProfiles: builder.query<UserHintProfileBasic[], void>({
+    getUserHintProfiles: builder.query<t.UserHintProfileBasic[], void>({
       query: () => ({
         url: "/user_hint_profiles",
       }),
     }),
     // ✅❌ Implemented, but maybe not needed?
-    getUserHintProfile: builder.query<UserHintProfileComplete, number>({
+    getUserHintProfile: builder.query<t.UserHintProfileComplete, number>({
       query: (id: number) => ({
         url: `user_hint_profiles/${id}`,
       }),
@@ -234,6 +292,7 @@ export const {
   useUpdateHintPanelMutation,
   useSetCurrentHintProfileMutation,
   useLazyGetSearchesQuery,
+  useAddSearchMutation,
 } = hintApiSlice;
 
 export const selectCurrentHintProfile =
