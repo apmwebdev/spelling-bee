@@ -1,10 +1,10 @@
-import { SearchResultProps } from "./SearchPanelResults";
+import { SearchResultProps } from "./Results";
 import {
   getSubstringHintStatusClasses,
   StatusTrackingOptions,
 } from "@/features/hints";
 
-export function SearchResultWordCount({
+export function WordCount({
   resultData,
   statusTracking,
 }: SearchResultProps) {

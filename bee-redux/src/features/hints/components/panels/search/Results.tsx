@@ -4,7 +4,7 @@ import {
   selectAnswerWords,
 } from "@/features/puzzle/puzzleSlice";
 import { selectKnownWords } from "@/features/guesses/guessesSlice";
-import { SearchResult } from "./SearchResult";
+import { Result } from "./Result";
 import uniqid from "uniqid";
 import {
   createSubstringHintDataCell,
@@ -28,7 +28,7 @@ export interface SearchResultProps {
   statusTracking: StatusTrackingKeys;
 }
 
-export function SearchPanelResults({
+export function Results({
   searches,
   tracking,
 }: {
@@ -101,7 +101,7 @@ export function SearchPanelResults({
     const resultDivs = searches.map((searchObject) => {
       const resultData = generateSearchResultData(searchObject);
       return (
-        <SearchResult
+        <Result
           key={uniqid()}
           resultData={resultData}
           statusTracking={tracking}
@@ -109,7 +109,7 @@ export function SearchPanelResults({
       );
     });
     return (
-      <div className="sb-search-hints-results">{resultDivs}</div>
+      <div className="SearchPanelResults">{resultDivs}</div>
     );
   };
 

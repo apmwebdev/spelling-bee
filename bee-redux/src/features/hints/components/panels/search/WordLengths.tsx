@@ -1,8 +1,8 @@
-import { SearchResultProps } from "./SearchPanelResults";
+import { SearchResultProps } from "./Results";
 import uniqid from "uniqid";
 import { StatusTrackingOptions, SubstringHintDataCell } from "@/features/hints";
 
-export function SearchResultWordLengths({
+export function WordLengths({
   resultData,
   statusTracking,
 }: SearchResultProps) {

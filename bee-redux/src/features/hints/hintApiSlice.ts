@@ -61,18 +61,26 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         url: "/hint_profiles",
       }),
     }),
-    // ✅
+
+    // ⚠️
     createUserHintProfile: builder.mutation<
       t.UserHintProfileComplete,
       t.UserHintProfileForm
     >({}),
-    // ✅ Only for updating the profile itself. Updating panels is handled below.
+
+    // ⚠️ Only for updating the profile itself. Updating panels is handled below.
     updateUserHintProfile: builder.mutation<
       t.UserHintProfileBasic,
       t.UserHintProfileForm
     >({}),
+
     // ⚠️
-    deleteUserHintProfile: builder.mutation<boolean, number>({}),
+    deleteUserHintProfile: builder.mutation<boolean, number>({
+      queryFn: (id, api, _opts, baseQuery) => {
+        return { data: true };
+      },
+    }),
+
     // ✅
     getCurrentHintProfile: builder.query<t.CompleteHintProfile, void>({
       query: () => ({
@@ -200,11 +208,19 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     }),
 
     // ⚠️
-    deleteHintPanel: builder.mutation<boolean, number>({}),
+    deleteHintPanel: builder.mutation<boolean, number>({
+      queryFn: (id, api, _opts, baseQuery) => {
+        return { data: true };
+      },
+    }),
 
     //Searches
 
-    //
+    /**
+     * ✅
+     * Shouldn't ever run directly. Updated from getUserPuzzleData, addSearch,
+     * and deleteSearch
+     */
     getSearches: builder.query<t.SearchPanelSearchData[], number>({
       query: (attemptId) => ({
         url: `/search_panel_search/${attemptId}`,
@@ -268,8 +284,12 @@ export const hintApiSlice = apiSlice.injectEndpoints({
       },
     }),
 
-    //
-    deleteSearch: builder.mutation({}),
+    // ⚠️
+    deleteSearch: builder.mutation<boolean, number>({
+      queryFn: (id, api, _opts, baseQuery) => {
+        return { data: true };
+      },
+    }),
 
     //Maybe not needed
 

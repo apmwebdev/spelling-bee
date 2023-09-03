@@ -1,11 +1,12 @@
-import { SearchResultProps } from "./SearchPanelResults";
-import { SearchResultWordLengths } from "./SearchResultWordLengths";
-import { SearchResultWordCount } from "./SearchResultWordCount";
-import { SearchResultLettersOnly } from "./SearchResultLettersOnly";
-import { SearchResultHeader } from "./SearchResultHeader";
+import { SearchResultProps } from "./Results";
+import { WordLengths } from "./WordLengths";
+import { WordCount } from "./WordCount";
+import { LettersOnly } from "./LettersOnly";
+import { ResultHeader } from "./ResultHeader";
 import { SubstringHintOutputKeys } from "@/features/hints";
+import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
-export function SearchResult({
+export function Result({
   resultData,
   statusTracking,
 }: SearchResultProps) {
@@ -13,21 +14,21 @@ export function SearchResult({
     switch (resultData.searchObject.outputType) {
       case SubstringHintOutputKeys.WordLengthGrid:
         return (
-          <SearchResultWordLengths
+          <WordLengths
             resultData={resultData}
             statusTracking={statusTracking}
           />
         );
       case SubstringHintOutputKeys.WordCountList:
         return (
-          <SearchResultWordCount
+          <WordCount
             resultData={resultData}
             statusTracking={statusTracking}
           />
         );
       case SubstringHintOutputKeys.LettersList:
         return (
-          <SearchResultLettersOnly
+          <LettersOnly
             resultData={resultData}
             statusTracking={statusTracking}
           />
@@ -37,7 +38,7 @@ export function SearchResult({
 
   return (
     <div className="SearchPanelResult">
-      <SearchResultHeader searchObject={resultData.searchObject} />
+      <ResultHeader searchObject={resultData.searchObject} />
       <div className="result-content">{content()}</div>
     </div>
   );

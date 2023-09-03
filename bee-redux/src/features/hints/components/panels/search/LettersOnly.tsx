@@ -1,7 +1,7 @@
-import { SearchResultProps } from "./SearchPanelResults";
+import { SearchResultProps } from "./Results";
 import { getSubstringHintStatusClasses } from "@/features/hints";
 
-export function SearchResultLettersOnly({
+export function LettersOnly({
   resultData,
   statusTracking,
 }: SearchResultProps) {

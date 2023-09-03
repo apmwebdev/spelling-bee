@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { SearchPanelResults } from "./search/SearchPanelResults";
+import { Results } from "./search/Results";
 import {
   HintPanelData,
   isSearchPanelData,
@@ -53,7 +53,7 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
           Search
         </button>
       </form>
-      <SearchPanelResults
+      <Results
         searches={getPanelSearches(data) ?? []}
         tracking={panel.statusTracking}
       />
