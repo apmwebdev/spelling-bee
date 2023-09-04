@@ -1238,6 +1238,10 @@ button.sb-revealer {
   }
 }
 
+.HintOffsetInput {
+  width: 3rem;
+}
+
 .HintPanelContentContainer {
   position: relative;
   margin-top: 8px;
@@ -1268,9 +1272,7 @@ button.sb-revealer {
   padding: 8px;
 }
 
-.sb-hint-panel-output {
-  padding: 8px 0px;
-}
+/***   Letter Panel   ***/
 
 .LetterPanelSettings {
   display: grid;
@@ -1286,21 +1288,15 @@ button.sb-revealer {
    }
 }
 
-.WordLengthGridTable {
-  margin: 8px 0px;
-  td, th:not(.axis-label) {
-    padding: 6px 4px;
-  }
-  th.axis-label {
-    padding: 4px 0px;
-  }
+.LetterPanelNumberOfLettersInput {
+  width: 3rem;
 }
 
-.WlgTdCol, .WlgTotalCol {
-  width: 60px;
+.LetterHintPanel {
+  padding: 8px 0px;
 }
 
-.sb-word-length-grid-container,
+.LetterPanel_WLG_Container,
 .sb-word-count-list-container {
   display: flex;
   flex-direction: column;
@@ -1308,23 +1304,7 @@ button.sb-revealer {
   //margin-top: 8px;
 }
 
-.sb-word-length-grid {
-  display: grid;
-  //margin-top: 16px;
-  border-top: 1px dotted;
-  padding: 8px;
-  margin-top: 8px;
-}
-
-.sb-word-length-grid > div:not(.axis-label) {
-  padding: 6px 2px;
-}
-
-.LetterPanelNumberOfLettersInput, .LetterPanelOffsetInput {
-  width: 3rem;
-}
-
-.sb-word-length-grid-key {
+.LetterPanel_WLG_Key {
   font-size: 16px;
   display: flex;
   gap: 4px;
@@ -1337,9 +1317,45 @@ button.sb-revealer {
     align-items: center;
     gap: 8px;
   }
-  .sb-wlg-tracking-key {
-    padding: 2px 8px;
+}
+
+.LetterPanel_WLG_TrackingKey {
+  padding: 2px 8px;
+  background-color: $dark-gray-lighter;
+  border: 1px solid $line-darkest;
+}
+
+.LetterPanel_WLG_Table {
+  margin: 8px 0px;
+  td, th:not(.LetterPanel_WLG_AxisLabel) {
+    padding: 6px 4px;
   }
+  th.LetterPanel_WLG_AxisLabel {
+    padding: 4px 0px;
+  }
+}
+
+.LetterPanel_WLG_TdCol, .LetterPanel_WLG_TotalCol {
+  width: 60px;
+}
+
+.LetterPanel_WLG_Content,
+.LetterPanel_WLG_TotalColumn,
+.LetterPanel_WLG_RowHeader,
+.LetterPanel_WLG_TotalRow,
+{
+  border-top: 1px solid $line-darkest;
+}
+
+.LetterPanel_WLG_Content,
+.LetterPanel_WLG_TotalColumn,
+.LetterPanel_WLG_TotalRow,
+{
+  border-left: 1px solid $line-darkest;
+}
+
+.LetterPanel_WLG_ContentFull {
+  background-color: $dark-gray-lighter;
 }
 
 .sb-word-count-list,
@@ -1349,6 +1365,10 @@ button.sb-revealer {
   //gap: 8px;
   padding: 12px 8px;
   margin-top: 4px;
+}
+
+.sb-word-count-list {
+  border-top: 1px dotted;
 }
 
 .sb-wcl-row {
@@ -1380,7 +1400,15 @@ button.sb-revealer {
 .sb-wcl-fragment-count {
   padding: 2px 8px;
   width: 4em;
-  //text-align: left;
+  border: 1px solid $line-darkest;
+  background-color: $dark-gray-lighter;
+}
+
+.sb-lol-row {
+  border-bottom: 1px solid $line-darkest;
+  //&:first-child {
+  //  border-top: 1px solid #666;
+  //}
 }
 
 .SearchPanelSettings {
@@ -1403,7 +1431,8 @@ button.sb-revealer {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding-bottom: 8px;
+    padding: 8px;
+    margin-bottom: 8px;
   }
 }
 
@@ -1418,66 +1447,119 @@ button.sb-revealer {
   border-radius: var(--br);
   position: relative;
   overflow: hidden;
-  border: 1px solid $mid-gray-lighter;
+  border: 1.5px solid border-color($blue-hue);
   //padding-left: 29px;
-  .result-content {
-    padding: 6px 0px;
-    font-size: 16px;
-  }
 }
 
 .SearchHintSearchResultHeader {
+  $this-hue: $blue-hue;
   height: 31px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2px;
-  background-color: $dark-gray-lighter;
+  background-color: bg-color($this-hue);
 }
 
 .SearchResultHeaderRemoveButton {
+  $this-hue: $blue-hue;
   position: absolute;
-  left: 2px;
+  right: 2px;
   top: 2px;
   //z-index: 2;
   padding: 4px;
   font-size: 16px;
-  background-color: $dark-gray;
-  border-color: $dark-gray;
+  background-color: bg-color-extra($this-hue);
+  border-color: bg-color-extra($this-hue);
   &:hover {
-    border-color: $line-darkest
+    border-color: border-color($this-hue)
   }
+  &:focus {
+    box-shadow: 0 0 0 1.5px border-color-hover($this-hue);
+  }
+}
+
+.SearchPanelResultKeyContainer {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SearchPanelResultKey {
+  $this-hue: $alt-bg-hue;
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: 1.5px;
+  //padding: 1.5px;
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 1.5px solid border-color($this-hue);
+  background-color: border-color($this-hue);
+}
+
+.SearchPanelResultKeyItem {
+  $this-hue: $alt-bg-hue;
+  //border: 1.5px solid border-color($this-hue);
+  //border-radius: var(--br);
+  background-color: $dark-gray;
+  header {
+    padding: 6px 8px;
+    background-color: bg-color-main($this-hue);
+  }
+  > div {
+    padding: 6px 8px;
+  }
+}
+
+.SearchPanelResultContent {
+  padding: 6px 0px;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 .SearchHintResultWordLengthGrid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .header-row, .content-row {
+  .HeaderRow, .ContentRow {
     display: flex;
   }
-  .header-cell, .content-cell {
+  .ContentRow {
+    border-top: 1px solid $mid-gray-lighter;
+    border-bottom: 1px solid $mid-gray-lighter;
+  }
+  .HeaderCell, .ContentCell {
     width: 3rem;
     padding: 8px 2px;
-    &.row-header {
+    &.RowHeader {
       width: 6rem;
     }
   }
-  .header-cell {
-    background-color: #222;
+  .HeaderCell {
+    background-color: $dark-gray;
   }
-  .content-cell {
-    &:not(.row-header) {
-      border-top: 1px solid #666;
-      border-left: 1px solid #666;
+  .ContentCell {
+    &:not(.RowHeader) {
+      //border-top: 1px solid $mid-gray-lighter;
+      border-left: 1px solid $mid-gray-lighter;
     }
-    border-bottom: 1px solid #666;
-    &.has-content {
-      background-color: #333;
+    &.HasContent {
+      background-color: $dark-gray-lighter;
     }
     &:last-child {
       background-color: inherit;
     }
   }
+}
+
+.SearchResultWordCount, .SearchResultLettersList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }

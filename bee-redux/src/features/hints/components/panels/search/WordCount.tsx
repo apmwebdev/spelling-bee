@@ -10,7 +10,7 @@ export function WordCount({
 }: SearchResultProps) {
   return (
     <div className="SearchResultWordCount">
-      Search: {resultData.searchObject.searchString.toUpperCase()}
+      <span>Result:</span>
       <div
         className={getSubstringHintStatusClasses({
           baseClasses: "",

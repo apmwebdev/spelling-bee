@@ -16,7 +16,7 @@ export const getTdClasses = (
   statusTracking: StatusTrackingKeys,
 ): string => {
   if (cell.answers === 0 && !isTotalRow && !isTotalColumn) {
-    return "sb-wlg-content";
+    return "LetterPanel_WLG_Content";
   }
   let returnStr = "";
   if (statusTracking !== "total") {
@@ -29,13 +29,13 @@ export const getTdClasses = (
     }
   }
   if (!isTotalRow && !isTotalColumn) {
-    return returnStr + " sb-wlg-content sb-wlg-content-full";
+    return returnStr + " LetterPanel_WLG_Content LetterPanel_WLG_ContentFull";
   }
   if (isTotalRow) {
-    returnStr += " sb-wlg-total-row";
+    returnStr += " LetterPanel_WLG_TotalRow";
   }
   if (isTotalColumn) {
-    returnStr += " sb-wlg-total-column";
+    returnStr += " LetterPanel_WLG_TotalColumn";
   }
   return returnStr;
 };

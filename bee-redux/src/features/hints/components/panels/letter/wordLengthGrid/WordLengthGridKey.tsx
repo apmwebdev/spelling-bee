@@ -6,9 +6,9 @@ export function WordLengthGridKey({
   statusTracking: StatusTrackingKeys;
 }) {
   return (
-    <div className="sb-word-length-grid-key">
+    <div className="LetterPanel_WLG_Key">
       <div>Key: Showing</div>
-      <div className="sb-wlg-tracking-key">
+      <div className="LetterPanel_WLG_TrackingKey">
         {StatusTrackingOptions[statusTracking].compactTitle}
       </div>
       {/*<div>*/}

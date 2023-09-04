@@ -134,7 +134,7 @@ export function WordLengthGridContainer({
   };
 
   return (
-    <div className="sb-word-length-grid-container">
+    <div className="LetterPanel_WLG_Container">
       <WordLengthGridKey statusTracking={statusTracking} />
       <WordLengthGrid
         {...generateData()}

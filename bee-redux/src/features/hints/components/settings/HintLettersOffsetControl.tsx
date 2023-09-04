@@ -41,7 +41,7 @@ export function HintLettersOffsetControl({
       >
         <span>Offset:</span>
         <input
-          className="LetterPanelOffsetInput"
+          className="HintOffsetInput"
           type="number"
           value={lettersOffset}
           min={0}

@@ -2,17 +2,14 @@ import { SearchResultProps } from "./Results";
 import uniqid from "uniqid";
 import { StatusTrackingOptions, SubstringHintDataCell } from "@/features/hints";
 
-export function WordLengths({
-  resultData,
-  statusTracking,
-}: SearchResultProps) {
+export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
   const generateOutput = () => {
     const getCellClasses = (dataCell: SubstringHintDataCell) => {
-      let classList = "content-cell";
+      let classList = "ContentCell";
       if (dataCell.answers === 0) {
         return classList;
       }
-      classList += " has-content";
+      classList += " HasContent";
       if (statusTracking !== "total") {
         if (dataCell.guesses === dataCell.answers) {
           classList += " hint-completed";
@@ -42,39 +39,38 @@ export function WordLengths({
 
     const headerRowDivs = [];
     headerRowDivs.push(
-      <div className="header-cell row-header" key={uniqid()}>
+      <div className="HeaderCell RowHeader" key={uniqid()}>
         Word Length
       </div>,
     );
     const contentRowDivs = [];
     contentRowDivs.push(
-      <div className="content-cell row-header" key={uniqid()}>
-        {StatusTrackingOptions[statusTracking].compactTitle}
+      <div className="ContentCell RowHeader" key={uniqid()}>
+        Results
       </div>,
     );
     for (const lengthProp in resultData.results) {
       headerRowDivs.push(
-        <div className="header-cell" key={uniqid()}>
+        <div className="HeaderCell" key={uniqid()}>
           {lengthProp}
         </div>,
       );
       contentRowDivs.push(createCell(resultData.results[lengthProp]));
     }
     headerRowDivs.push(
-      <div className="header-cell" key={uniqid()}>
+      <div className="HeaderCell" key={uniqid()}>
         Total
       </div>,
     );
     contentRowDivs.push(createCell(resultData.total));
 
-    const headerRow = <div className="header-row">{headerRowDivs}</div>;
-    const contentRow = <div className="content-row">{contentRowDivs}</div>;
+    const headerRow = <div className="HeaderRow">{headerRowDivs}</div>;
+    const contentRow = <div className="ContentRow">{contentRowDivs}</div>;
 
     return (
       <div className="SearchHintResultWordLengthGrid">
         {headerRow}
         {contentRow}
-        <div>Excluded words: {resultData.excludedAnswers}</div>
       </div>
     );
   };

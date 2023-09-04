@@ -6,7 +6,10 @@ import {
   SearchPanelData,
   SearchPanelSearchData,
 } from "@/features/hints";
-import { hintApiSlice, useAddSearchMutation } from "@/features/hints/hintApiSlice";
+import {
+  hintApiSlice,
+  useAddSearchMutation,
+} from "@/features/hints/hintApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 

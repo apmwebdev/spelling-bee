@@ -138,6 +138,22 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 }
 
 @media (prefers-color-scheme: dark) {
+  .hint-completed {
+    color: status-text($success-hue);
+    //background-color: hsl(120, 40%, 20%);
+    font-style: italic;
+  }
+
+  .hint-in-progress {
+    color: status-text($warning-hue)
+    //background-color: hsl(60, 60%, 20%);
+  }
+
+  .hint-not-started {
+    color: status-text($error-hue);
+    //background-color: hsl(0, 40%, 20%);
+  }
+
   .sb-header {
     border-color: $line-darkest;
     background-color: bg-color-darker($blue-hue);
@@ -227,61 +243,6 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     }
   }
 
-  .sb-wlg-content,
-  .sb-wlg-total-column,
-  .sb-wlg-row-header:not(:nth-child(-n + 1 of div.sb-wlg-row-header)),
-  .sb-wlg-total-row,
-  {
-    border-top: 1px solid $line-darkest;
-  }
-
-  .sb-wlg-content,
-  .sb-wlg-total-column,
-  .sb-wlg-total-row,
-  {
-    border-left: 1px solid $line-darkest;
-  }
-
-  .sb-wlg-tracking-key {
-    background-color: $dark-gray-lighter;
-    border: 1px solid $line-darkest;
-  }
-
-  .sb-wlg-content-full {
-    background-color: $dark-gray-lighter;
-  }
-
-  .hint-completed {
-    color: status-text($success-hue);
-    //background-color: hsl(120, 40%, 20%);
-    font-style: italic;
-  }
-
-  .hint-in-progress {
-    color: status-text($warning-hue)
-    //background-color: hsl(60, 60%, 20%);
-  }
-
-  .hint-not-started {
-    color: status-text($error-hue);
-    //background-color: hsl(0, 40%, 20%);
-  }
-
-  .sb-word-count-list {
-    border-top: 1px dotted;
-  }
-
-  .sb-wcl-fragment-count {
-    border: 1px solid $line-darkest;
-    background-color: $dark-gray-lighter;
-  }
-
-  .sb-lol-row {
-    border-bottom: 1px solid $line-darkest;
-    //&:first-child {
-    //  border-top: 1px solid #666;
-    //}
-  }
 }
 
 @media (prefers-color-scheme: light) {

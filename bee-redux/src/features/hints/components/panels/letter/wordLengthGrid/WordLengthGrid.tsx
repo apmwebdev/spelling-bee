@@ -36,7 +36,7 @@ export function WordLengthGrid({
       const trContent = [];
       //Row header
       trContent.push(
-        <th key={uniqid()} scope="row" className="sb-wlg-row-header">
+        <th key={uniqid()} scope="row" className="LetterPanel_WLG_RowHeader">
           {property}
         </th>,
       );
@@ -53,20 +53,20 @@ export function WordLengthGrid({
 
   const createTable = () => {
     return (
-      <table className="WordLengthGridTable">
+      <table className="LetterPanel_WLG_Table">
         <colgroup>
-          <col className="WlgHeaderCol" />
+          <col className="LetterPanel_WLG_HeaderCol" />
           {relevantAnswerLengths.map((_) => (
-            <col key={uniqid()} className="WlgTdCol" />
+            <col key={uniqid()} className="LetterPanel_WLG_TdCol" />
           ))}
-          <col className="WlgTotalCol" />
+          <col className="LetterPanel_WLG_TotalCol" />
         </colgroup>
         <thead>
           <tr>
             <th
               scope="col"
               rowSpan={2}
-              className="sb-word-length-grid-y-label axis-label"
+              className="LetterPanel_WLG_AxisLabel"
             >
               <div>Letters</div>
               <div>↓</div>
@@ -74,26 +74,24 @@ export function WordLengthGrid({
             <th
               scope="colgroup"
               colSpan={relevantAnswerLengths.length + 1}
-              className="sb-word-length-grid-x-label axis-label"
+              className="LetterPanel_WLG_AxisLabel"
             >
               Word Length →
             </th>
           </tr>
           <tr>
             {relevantAnswerLengths.map((answerLength) => (
-              <th scope="col" key={uniqid()} className="sb-wlg-col-header">
+              <th scope="col" key={uniqid()}>
                 {answerLength}
               </th>
             ))}
-            <th scope="col" className="sb-wlg-col-header">
-              Total
-            </th>
+            <th scope="col">Total</th>
           </tr>
         </thead>
         <tbody>{createTableBody()}</tbody>
         <tfoot>
           <tr>
-            <th scope="row" className="sb-wlg-row-header sb-wlg-total">
+            <th scope="row" className="LetterPanel_WLG_RowHeader">
               Total
             </th>
             {Object.values(totalRow).map((colTotal) => {

@@ -9,16 +9,7 @@ export function ResultHeader({
 }: {
   searchObject: SearchPanelSearchData;
 }) {
-  const { searchString, location, lettersOffset, outputType } = searchObject;
-  const title = () => {
-    let titleString = `Search: "${searchString.toLowerCase()}" (`;
-    titleString += `${SearchPanelLocationOptions[location].title.toLowerCase()}`;
-    titleString += ", ";
-    titleString += `${lettersOffset ? `offset ${lettersOffset}` : "no offset"}`;
-    titleString += ")";
-
-    return `"${searchString}"`;
-  };
+  const { searchString, location } = searchObject;
 
   const handleClickRemoveButton = () => {
     // dispatch(removeSearch({ panelId, searchId }));
@@ -32,7 +23,7 @@ export function ResultHeader({
         onClick={handleClickRemoveButton}
         tooltip="Delete search"
       />
-      <div className="search-result-title">{title()}</div>
+      <div className="search-result-title">Search: "{searchString}"</div>
     </header>
   );
 }

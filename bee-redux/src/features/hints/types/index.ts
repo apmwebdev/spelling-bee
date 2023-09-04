@@ -164,28 +164,20 @@ export const LetterPanelLocationOptions: EnumeratedOptions = {
  *   of a certain word length for a given letter combination.
  * @prop WordCountList "word_count_list" - A list of letter combinations and the
  *   number of answers for that letter combination.
- * @prop LettersList "letters_list" - A list of letter combinations, but no numbers.
+ * @prop LettersPresent "letters_list" - A list of letter combinations, but no numbers.
  *   Essentially, it is just confirming that certain letter combinations exist
  *   among the answers.
  */
 export enum SubstringHintOutputKeys {
   WordLengthGrid = "word_length_grid",
   WordCountList = "word_count_list",
-  LettersList = "letters_list",
+  LettersPresent = "letters_list",
 }
 
-interface SubstringHintOutputOption {
-  title: string;
-}
-
-interface SubstringHintOutputOptionsData {
-  [key: string]: SubstringHintOutputOption;
-}
-
-export const SubstringHintOutputOptions: SubstringHintOutputOptionsData = {
+export const SubstringHintOutputOptions: EnumeratedOptions = {
   word_length_grid: { title: "Word Length Grid" },
   word_count_list: { title: "Word Count List" },
-  letters_list: { title: "Letters List" },
+  letters_list: { title: "Letters Present?" },
 };
 
 export interface LetterPanelFormData {
@@ -243,7 +235,7 @@ export interface SearchPanelData extends SearchPanelBaseData {
 }
 
 export interface SearchPanelSearchData extends SearchPanelBaseData {
-  //includes location, lettersOffset, and outputType through inheritance
+  //includes searchString, location, lettersOffset, and outputType through inheritance
   attemptId: number;
   searchPanelId: number;
   createdAt: number;
