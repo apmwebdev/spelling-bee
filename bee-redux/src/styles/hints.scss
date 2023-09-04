@@ -1,0 +1,596 @@
+@use 'colors' as *;
+
+:root {
+  /*
+  Word Length Grid ("WLG") Column Width
+  Set widths of all columns except for left-most column.
+  The purpose of this is twofold:
+  1. Make all columns the same width, regardless of what combination of
+     single-digit and double-digit numbers they contain. Columns of different
+     widths looks sloppy.
+  2. Make it so that columns do not resize when going from a single-digit number
+     to a double-digit number (or vice-versa) for a Remaining or Found value.
+     Resizing columns is distracting (and still sloppy).
+  56px is the narrowest that columns can be with Roboto Mono at 15.5 px, 4px of
+  horizontal padding, and a left border, while making sure that cells can contain
+  two double-digit numbers and not need to widen.
+  The leftmost column does not need a set width because it is just headers, and,
+  therefore, will not need to resize.
+  */
+  --wlg-col-width: 56px
+}
+
+//See above for width. Setting the box sizing as content-box
+@mixin hint-cell {
+  box-sizing: content-box;
+  width: 47px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
+  padding: 6px 4px;
+}
+
+
+
+
+/******************/
+/***   SHARED   ***/
+/******************/
+
+
+
+
+.Hints {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: var(--br);
+}
+
+.HintProfiles {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  .SelectTrigger {
+    width: 16em;
+  }
+}
+
+.HintPanels {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.HintPanel {
+  $this-hue: $blue-hue;
+  border-radius: var(--br);
+  border: 2px solid border-color($this-hue);
+  overflow: hidden;
+  //border-color: border-color($this-hue);
+  &[data-state="closed"] {
+    color: $line-darker;
+    border-color: border-color-disabled($this-hue);
+  }
+}
+
+.HintPanelHeader {
+  $this-hue: $blue_hue;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  background-color: bg-color($this-hue);
+  .HintPanel[data-state="closed"] & {
+    background-color: bg-color-disabled($this-hue);
+
+  }
+}
+
+.HintPanelHeader button {
+  $this-hue: $blue_hue;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 8px;
+  border: 1.5px solid transparent;
+  &.button {
+    background-color: bg-color-extra($this-hue);
+    &:focus {
+      box-shadow: 0 0 0 1.5px border-color-hover($this-hue);
+    }
+  }
+  &:hover {
+    border-color: border-color($this-hue);
+  }
+  .HintPanel[data-state="closed"] & {
+    color: $line-darker;
+    &.button {
+      background-color: bg-color-disabled($this-hue);
+    }
+    &:hover {
+      border-color: border-color-disabled($this-hue);
+    }
+  }
+}
+.header-remove-button {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.HeaderDisclosureWidget {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SettingsCollapsible {
+  $this-hue: $alt-bg-hue;
+  font-size: 16px;
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 2px solid border-color($this-hue);
+  background-color: bg-color-main($this-hue);
+  //border-color: border-color($this-hue);
+  span.disabled {
+    color: $text-disabled;
+  }
+  .SettingsCollapsibleHeader {
+    padding: 2px;
+    background-color: bg-color($this-hue);
+    button {
+      border: 1.5px solid transparent;
+      &.button {
+        background-color: bg-color-extra($this-hue);
+      }
+      &:hover {
+        border-color: border-color($this-hue);
+        //border-color: transparent;
+      }
+    }
+  }
+  &[data-state="closed"] {
+    color: $line-darker;
+    border-color: border-color-disabled($this-hue);
+    .SettingsCollapsibleHeader {
+      background-color: bg-color-disabled($this-hue);
+      button {
+        color: $line-darker;
+        &:hover {
+          border-color: border-color-disabled($this-hue);
+        }
+      }
+    }
+  }
+}
+
+.SettingsCollapsibleHeaderButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.HeaderDisclosureWidgetIcon {
+  position: absolute;
+  justify-self: flex-start;
+  left: -18px;
+}
+
+.sb-hint-panel-header-buttons-left, .sb-hint-panel-header-buttons-right {
+  grid-row: 1 / 2;
+  display: flex;
+  gap: 8px;
+  /*margin-bottom: 8px;*/
+}
+
+.GeneralPanelSettings {
+  border-top: 2px solid border-color($alt-bg-hue);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 8px;
+  padding: 8px 8px;
+}
+
+.GeneralPanelSettingsStatusTracking, .PanelNameInputForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.PanelInitialDisplayControlsContainer {
+  display: grid;
+  align-items: center;
+  justify-content: stretch;
+  gap: 12px;
+  border-top: 1.5px solid border-color($accent-hue);
+  padding-top: 8px;
+}
+
+.PanelInitialDisplayControls {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  //grid-template-rows: 1fr 1fr;
+  align-items: flex-start;
+  justify-content: stretch;
+  gap: 12px;
+}
+
+.PanelInitDisplayControl label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  .CheckboxRoot[data-disabled] + div {
+    span {
+      color: $text-disabled;
+    }
+  }
+}
+
+.PanelInitDisplayControlInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.HintLettersOffsetControl {
+  &.disabled {
+    color: $text-disabled;
+  }
+}
+
+.HintOffsetInput {
+  width: 3rem;
+}
+
+.HintPanelContentContainer {
+  position: relative;
+  margin-top: 8px;
+}
+
+.HintContentBlurButton {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+
+.HintContentBlur {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $dark-gray-lighter;
+  border-radius: var(--br);
+}
+
+.HintPanelContent {
+  padding: 8px;
+}
+
+
+
+
+/************************/
+/***   LETTER PANEL   ***/
+/************************/
+
+
+
+
+.LetterPanelSettings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
+  padding: 8px;
+  gap: 8px;
+  //margin-bottom: 8px;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.LetterPanelNumberOfLettersInput {
+  width: 3rem;
+}
+
+.LetterHintPanel {
+  padding: 8px 0px;
+}
+
+.LetterPanel_WLG_Container,
+.LetterPanel_WCL_Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //margin-top: 8px;
+}
+
+.LetterPanel_WLG_Key {
+  font-size: 16px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: start;
+  //align-self: flex-start;
+  padding: 4px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.LetterPanel_WLG_TrackingKey {
+  padding: 2px 8px;
+  background-color: $dark-gray-lighter;
+  border: 1px solid $line-darkest;
+}
+
+.LetterPanel_WordLengthGrid {
+  margin: 8px 0px;
+  td, th:not(.LetterPanel_WLG_AxisLabel):not(.LetterPanel_WLG_RowHeader) {
+    @include hint-cell;
+    border-left: 1px solid transparent;
+  }
+  th.LetterPanel_WLG_RowHeader {
+    font-family: "Roboto Mono", monospace;
+    font-size: 15.5px;
+  }
+  th.LetterPanel_WLG_AxisLabel {
+    padding: 4px 0px;
+  }
+  .LetterPanel_WLG_Content,
+  .LetterPanel_WLG_TotalColumn,
+  .LetterPanel_WLG_TotalRow,
+  {
+    border-left: 1px solid $line-darkest;
+  }
+
+}
+
+//For some reason, this is necessary for column widths to be consistent
+.LetterPanel_WLG_TdCol, .LetterPanel_WLG_TotalCol {
+  width: var(--wlg-col-width);
+}
+
+.LetterPanel_WLG_Content,
+.LetterPanel_WLG_TotalColumn,
+.LetterPanel_WLG_RowHeader,
+.LetterPanel_WLG_TotalRow,
+{
+  border-top: 1px solid $line-darkest;
+}
+
+.LetterPanel_WLG_ContentFull {
+  background-color: $dark-gray-lighter;
+}
+
+.LetterPanel_WordCountList,
+.LetterPanel_LettersPresentList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //gap: 8px;
+  padding: 12px 8px;
+  margin-top: 4px;
+}
+
+.LetterPanel_WordCountList {
+  border-top: 1px dotted;
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
+}
+
+.LetterPanel_WCL_Row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 8px;
+}
+
+.LetterPanel_WCL_Cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.LetterPanel_WCL_CellCount {
+  @include hint-cell;
+  border: 1px solid $line-darkest;
+  background-color: $dark-gray-lighter;
+}
+
+.LetterPanel_LPL_Row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid $line-darkest;
+}
+
+
+
+
+/************************/
+/***   SEARCH PANEL   ***/
+/************************/
+
+
+
+
+.SearchPanelSettings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
+  padding: 8px;
+  gap: 8px;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.SearchHintPanel {
+  //padding: 8px;
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+.SearchPanelResults {
+  //padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.SearchPanelResult {
+  border-radius: var(--br);
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid border-color($blue-hue);
+  //padding-left: 29px;
+}
+
+.SearchHintSearchResultHeader {
+  $this-hue: $blue-hue;
+  height: 31px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background-color: bg-color($this-hue);
+}
+
+.IconButton.SearchResultHeaderRemoveButton {
+  $this-hue: $blue-hue;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  //z-index: 2;
+  padding: 4px;
+  font-size: 16px;
+  background-color: bg-color-extra($this-hue);
+  border-color: bg-color-extra($this-hue);
+  &:hover {
+    border-color: border-color($this-hue)
+  }
+  &:focus {
+    box-shadow: 0 0 0 1.5px border-color-hover($this-hue);
+  }
+}
+
+.SearchPanelResultKeyContainer {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SearchPanelResultKey {
+  $this-hue: $alt-bg-hue;
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: 1.5px;
+  //padding: 1.5px;
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 1.5px solid border-color($this-hue);
+  background-color: border-color($this-hue);
+}
+
+.SearchPanelResultKeyItem {
+  $this-hue: $alt-bg-hue;
+  //border: 1.5px solid border-color($this-hue);
+  //border-radius: var(--br);
+  background-color: $dark-gray;
+  header {
+    padding: 6px 8px;
+    background-color: bg-color-main($this-hue);
+  }
+  > div {
+    padding: 6px 8px;
+  }
+}
+
+.SearchPanelResultContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0px;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.SearchHintResult_WordLengthGrid {
+  td, th:not(.RowHeader) {
+    @include hint-cell;
+  }
+  td {
+    border: 1px solid $mid-gray-lighter;
+    &.HasContent {
+      background-color: $dark-gray-lighter;
+    }
+    &:last-child {
+      border-right-color: transparent;
+      background-color: inherit;
+    }
+  }
+  th {
+    border-bottom: 1px solid $mid-gray-lighter;
+    background-color: $dark-gray;
+  }
+}
+
+//Need to set width here or else it is inconsistent
+.SearchHintResult_WLG_TdCol, .SearchHintResult_WLG_TotalCol {
+  width: 57px;
+}
+
+.SearchResultWordCount, .SearchResultLettersList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.SearchHintResult_WC_Result {
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
+}

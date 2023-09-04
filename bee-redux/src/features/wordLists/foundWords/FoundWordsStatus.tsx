@@ -31,11 +31,11 @@ export function FoundWordsStatus() {
 
   let foundPointsCountClasses = countClass;
   if (correctCount === 0) {
-    foundPointsCountClasses += "hint-not-started";
+    foundPointsCountClasses += "HintNotStarted";
   } else if (correctCount === answerCount) {
-    foundPointsCountClasses += "hint-completed";
+    foundPointsCountClasses += "HintCompleted";
   } else {
-    foundPointsCountClasses += "hint-in-progress";
+    foundPointsCountClasses += "HintInProgress";
   }
 
   const foundWordsTrackingText = () => {
@@ -74,11 +74,11 @@ export function FoundWordsStatus() {
     }
     let pangramCountClasses = countClass;
     if (currentPangrams === 0) {
-      pangramCountClasses += "hint-not-started";
+      pangramCountClasses += "HintNotStarted";
     } else if (currentPangrams === totalPangrams) {
-      pangramCountClasses += "hint-completed";
+      pangramCountClasses += "HintCompleted";
     } else {
-      pangramCountClasses += "hint-in-progress";
+      pangramCountClasses += "HintInProgress";
     }
     return (
       <div className="pangrams">
@@ -103,11 +103,11 @@ export function FoundWordsStatus() {
       }
       let perfectClasses = countClass;
       if (currentPerfectPangrams === 0) {
-        perfectClasses += "hint-not-started";
+        perfectClasses += "HintNotStarted";
       } else if (currentPerfectPangrams === totalPerfectPangrams) {
-        perfectClasses += "hint-completed";
+        perfectClasses += "HintCompleted";
       } else {
-        perfectClasses += "hint-in-progress";
+        perfectClasses += "HintInProgress";
       }
       return (
         <div className="perfect">

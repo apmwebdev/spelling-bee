@@ -21,11 +21,11 @@ export const getTdClasses = (
   let returnStr = "";
   if (statusTracking !== "total") {
     if (cell.guesses === cell.answers) {
-      returnStr += "hint-completed";
+      returnStr += "HintCompleted";
     } else if (cell.guesses === 0) {
-      returnStr += "hint-not-started";
+      returnStr += "HintNotStarted";
     } else {
-      returnStr += "hint-in-progress";
+      returnStr += "HintInProgress";
     }
   }
   if (!isTotalRow && !isTotalColumn) {

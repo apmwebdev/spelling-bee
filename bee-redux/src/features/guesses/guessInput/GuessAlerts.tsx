@@ -24,6 +24,6 @@ export function GuessAlerts({ messages, messagesType }: GuessAlertsProps) {
   };
 
   return (
-    <div className="sb-guess-input-alerts-container">{messageOutput()}</div>
+    <div className="GuessAlertsContainer">{messageOutput()}</div>
   );
 }

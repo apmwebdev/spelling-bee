@@ -1,0 +1,94 @@
+@use 'colors' as *;
+
+.SSB_Header {
+  border-color: $line-darkest;
+  background-color: bg-color-darker($blue-hue);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.HeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  a {
+    display: flex;
+    justify-content: flex-start;
+    padding: 4px 8px;
+  }
+}
+
+.HeaderTitle {
+  display: flex;
+  justify-content: flex-start;
+  padding: 8px;
+  font-size: 26px;
+  font-weight: bold;
+  text-decoration: none;
+  color: $accent-title;
+  &:hover {
+    color: $accent-title-hover;
+    text-decoration: none;
+  }
+}
+.HeaderAuth {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.UserMenuTrigger {
+  padding: 0px;
+  border: none;
+}
+.UserMenuTriggerAccountIcon {
+  font-size: 30px;
+  //background-color: $line-bright;
+}
+.svg-fg {
+  fill: ui-bg-color($accent-hue);
+}
+.svg-bg {
+  fill: $line-bright;
+}
+.svg-border {
+  fill: transparent;
+  .umt-hover & {
+    fill: ui-line-hover-color($accent-hue);
+  }
+}
+.UserMenuContent {
+  background-color: $mid-gray-darker;
+  .MenuItem {
+    padding: 8px 12px;
+    cursor: pointer;
+    .iconify {
+      font-size: 1.2em;
+      margin-right: 8px;
+    }
+    &:hover {
+      background-color: $mid-gray-lighter;
+    }
+  }
+  .Separator {
+    height: 1px;
+    margin: 4px 0px;
+    background-color: $light-gray;
+  }
+  .Arrow {
+    fill: $mid-gray-darker;
+  }
+  padding: 4px 0px 2px;
+  border-radius: var(--br);
+  font-size: 16px;
+}
+

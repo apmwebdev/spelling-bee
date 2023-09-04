@@ -1,0 +1,223 @@
+@use 'colors' as *;
+
+.Status {
+  /*border: 1px solid #ccc;*/
+  position: sticky;
+  top: 8px;
+  display: flex;
+  flex-direction: column;
+  //padding: 8px;
+  gap: 8px;
+  justify-content: flex-start;
+  align-self: flex-start;
+  //height: 100vh;
+  width: 100%;
+  max-width: 33.333333333vw;
+}
+
+.AttemptControls {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.Progress {
+  border-radius: var(--br);
+  //border: 1px dotted;
+  padding: 12px 16px;
+  .sb-found-words-status {
+    padding-bottom: 4px;
+  }
+}
+
+.progress-rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $mid-gray;
+}
+
+.current-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
+
+.ProgressBar {
+  position: relative;
+  margin-left: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.rank-tic {
+  position: relative;
+  height: 14px;
+  width: 14px;
+  border-radius: 14px;
+  background-color: $mid-gray;
+  &.active {
+    //background-color: ui-bg-color($yellow-hue);
+  }
+  &:not(:first-child):before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    left: -20px;
+    top: 6px;
+    background-color: $mid-gray;
+  }
+  &:not(.active ~ .rank-tic) {
+    background-color: $yellow-line;
+    &:not(:first-child):before {
+      background-color: $yellow-line;
+    }
+  }
+}
+
+.sb-word-list-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  //border: 2px solid;
+  //border-radius: var(--br);
+  margin: 0px;
+  //padding: 8px;
+}
+
+.sb-word-list-settings-content {
+  padding: 8px;
+  label, > div {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    //justify-content: space-between;
+  }
+  &.found {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  &.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sb-word-list-toggle {
+    font-size: 16px;
+    button {
+      padding: 2px 8px;
+    }
+  }
+}
+
+.sb-word-list-status {
+  padding: 16px 8px;
+  align-items: center;
+  font-size: 16px;
+  &.sb-found-words-status {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    > div:not(.perfect) {
+      display: flex;
+      gap: 4px;
+    }
+  }
+  .word-list-status-count {
+    font-weight: bold;
+  }
+}
+
+.sb-word-list-container {
+  border-radius: var(--br);
+  border: 1px solid $line-darkest;
+  overflow: hidden;
+  header {
+    font-size: 16px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid $mid-gray;
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+.sb-word-list {
+  padding: 8px 8px 16px 8px;
+  //border: 1px dotted;
+  &.has-content {
+    font-size: 16px;
+    list-style: none;
+    text-align: left;
+    height: calc(26px * 15 + 24px);
+    column-count: 3;
+    column-fill: auto;
+    li {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span {
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+      button.word-popover-trigger {
+        padding: 0px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        &:focus {
+          outline: none;
+        }
+        span {
+          text-decoration: underline;
+          display: block;
+          text-align: left;
+          &:first-letter {
+            text-transform: uppercase;
+          }
+          &.perfect {
+            font-style: italic;
+            font-weight: bold;
+          }
+          &.pangram {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.has-popover {
+  &.perfect, &.pangram {
+    color: $yellow-line;
+  }
+}
+
+button.sb-revealer {
+  padding: 3px 8px;
+  border: 1px solid $mid-gray;
+  //border-radius: 0px;
+  text-align: left;
+  background-color: $dark-gray-lighter;
+  &:hover, &:active {
+    text-decoration: underline;
+  }
+}

@@ -4,10 +4,7 @@ import {
   StatusTrackingOptions,
 } from "@/features/hints";
 
-export function WordCount({
-  resultData,
-  statusTracking,
-}: SearchResultProps) {
+export function WordCount({ resultData, statusTracking }: SearchResultProps) {
   return (
     <div className="SearchResultWordCount">
       <span>Result:</span>

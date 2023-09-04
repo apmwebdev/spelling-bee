@@ -25,5 +25,5 @@ export function HeaderAuth() {
     );
   };
 
-  return <div className="header-auth">{content()}</div>;
+  return <div className="HeaderAuth">{content()}</div>;
 }

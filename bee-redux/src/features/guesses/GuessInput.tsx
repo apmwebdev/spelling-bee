@@ -224,7 +224,7 @@ export function GuessInput() {
   ]);
 
   return (
-    <div className="sb-guess-input-container">
+    <div className="GuessInputContainer">
       <GuessAlerts messages={messages} messagesType={messagesType} />
       <GuessInputDisplay
         guessValue={guessValue}

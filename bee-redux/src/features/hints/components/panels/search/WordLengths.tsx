@@ -1,6 +1,10 @@
 import { SearchResultProps } from "./Results";
 import uniqid from "uniqid";
-import { StatusTrackingOptions, SubstringHintDataCell } from "@/features/hints";
+import {
+  getSubstringHintStatusClasses,
+  StatusTrackingOptions,
+  SubstringHintDataCell,
+} from "@/features/hints";
 
 export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
   const content = () => {
@@ -10,16 +14,11 @@ export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
         return classList;
       }
       classList += " HasContent";
-      if (statusTracking !== "total") {
-        if (dataCell.guesses === dataCell.answers) {
-          classList += " hint-completed";
-        } else if (dataCell.guesses === 0) {
-          classList += " hint-not-started";
-        } else {
-          classList += " hint-in-progress";
-        }
-      }
-      return classList;
+      return getSubstringHintStatusClasses({
+        baseClasses: classList,
+        cell: dataCell,
+        statusTracking: statusTracking,
+      });
     };
 
     const createCell = (dataCell: SubstringHintDataCell) => {

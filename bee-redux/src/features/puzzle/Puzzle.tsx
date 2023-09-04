@@ -3,13 +3,14 @@ import { GuessInputProvider } from "@/app/GuessInputProvider";
 import { GuessInput } from "../guesses/GuessInput";
 import { GuessInputControls } from "../guesses/guessInput/GuessInputControls";
 import { PuzzleNav } from "@/features/puzzle/PuzzleNav";
+import "@/styles/puzzle.scss";
 
 export function Puzzle() {
   return (
     <GuessInputProvider>
-      <div className="sb-controls-container">
+      <div className="PuzzleControlsContainer">
         <PuzzleNav />
-        <div className="sb-controls">
+        <div className="PuzzleControls">
           <GuessInput />
           <Hive />
         </div>

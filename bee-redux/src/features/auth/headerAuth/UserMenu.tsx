@@ -19,11 +19,11 @@ export function UserMenu() {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
         className={buttonClasses}
-        onMouseEnter={() => setButtonClasses("user-menu-trigger umt-hover")}
-        onMouseLeave={() => setButtonClasses("user-menu-trigger")}
+        onMouseEnter={() => setButtonClasses("UserMenuTrigger umt-hover")}
+        onMouseLeave={() => setButtonClasses("UserMenuTrigger")}
       >
         <svg
-          className="account-icon"
+          className="UserMenuTriggerAccountIcon"
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           aria-hidden="true"
@@ -43,27 +43,27 @@ export function UserMenu() {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="user-menu-content"
+          className="UserMenuContent"
           avoidCollisions={true}
           collisionPadding={24}
         >
-          <DropdownMenu.Item className="menu-item">
+          <DropdownMenu.Item className="MenuItem">
             <InlineIcon icon="heroicons-outline:light-bulb" />
             Hint Profiles
           </DropdownMenu.Item>
-          <DropdownMenu.Item className="menu-item">
+          <DropdownMenu.Item className="MenuItem">
             <InlineIcon icon="mdi:puzzle-outline" />
             Puzzles
           </DropdownMenu.Item>
-          <DropdownMenu.Item className="menu-item">
+          <DropdownMenu.Item className="MenuItem">
             <InlineIcon icon="tabler:letter-w" />
             Saved Words
           </DropdownMenu.Item>
-          <DropdownMenu.Item className="menu-item">
+          <DropdownMenu.Item className="MenuItem">
             <InlineIcon icon="mdi:cog" />
             Account
           </DropdownMenu.Item>
-          <DropdownMenu.Separator className="separator" />
+          <DropdownMenu.Separator className="Separator" />
           <DropdownMenu.Item
             className="menu-item"
             onSelect={handleLogoutSelect}
@@ -71,7 +71,7 @@ export function UserMenu() {
             <InlineIcon icon="mdi:logout" />
             Log Out
           </DropdownMenu.Item>
-          <DropdownMenu.Arrow className="arrow" width={10} height={5} />
+          <DropdownMenu.Arrow className="Arrow" width={10} height={5} />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>

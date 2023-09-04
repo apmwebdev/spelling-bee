@@ -15,9 +15,9 @@ export function ErrorAlert({ errorMessages }: { errorMessages: string[] }) {
   }
 
   return (
-    <ul className="sb-error-alert-message">
+    <ul className="ErrorAlertMessage">
       {errorMessages.map((errorMessage) => (
-        <li className="sb-error-alert-item" key={uniqid()}>
+        <li className="ErrorAlertItem" key={uniqid()}>
           {errorMessage}
         </li>
       ))}

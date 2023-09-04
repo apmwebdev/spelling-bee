@@ -34,7 +34,7 @@ export default function App() {
     return (
       <TooltipProvider delayDuration={900}>
         <div className={appClasses()}>
-          <div className="sb-top-container">
+          <div className="SSB_TopContainer">
             <Header />
             <Outlet />
           </div>

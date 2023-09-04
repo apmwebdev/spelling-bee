@@ -12,13 +12,13 @@ export function WordLengthGridKey({
         {StatusTrackingOptions[statusTracking].compactTitle}
       </div>
       {/*<div>*/}
-      {/*  <div className="sb-wlg-content-full hint-completed">*/}
+      {/*  <div className="sb-wlg-content-full HintCompleted">*/}
       {/*    Green = finished*/}
       {/*  </div>*/}
-      {/*  <div className="sb-wlg-content-full hint-in-progress">*/}
+      {/*  <div className="sb-wlg-content-full HintInProgress">*/}
       {/*    Yellow = In progress*/}
       {/*  </div>*/}
-      {/*  <div className="sb-wlg-content-full hint-not-started">*/}
+      {/*  <div className="sb-wlg-content-full HintNotStarted">*/}
       {/*    Red = Not started*/}
       {/*  </div>*/}
       {/*</div>*/}

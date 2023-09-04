@@ -100,6 +100,22 @@ $error-hue: 0;
   @return hsl($hue, 85%, 82%);
 }
 
+.HintCompleted {
+  color: status-text($success-hue);
+  //background-color: hsl(120, 40%, 20%);
+  font-style: italic;
+}
+
+.HintInProgress {
+  color: status-text($warning-hue)
+  //background-color: hsl(60, 60%, 20%);
+}
+
+.HintNotStarted {
+  color: status-text($error-hue);
+  //background-color: hsl(0, 40%, 20%);
+}
+
 //Gray Backgrounds
 $dark-gray: #222;
 $dark-gray-lighter: #333;
@@ -138,111 +154,7 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 }
 
 @media (prefers-color-scheme: dark) {
-  .hint-completed {
-    color: status-text($success-hue);
-    //background-color: hsl(120, 40%, 20%);
-    font-style: italic;
-  }
-
-  .hint-in-progress {
-    color: status-text($warning-hue)
-    //background-color: hsl(60, 60%, 20%);
-  }
-
-  .hint-not-started {
-    color: status-text($error-hue);
-    //background-color: hsl(0, 40%, 20%);
-  }
-
-  .sb-header {
-    border-color: $line-darkest;
-    background-color: bg-color-darker($blue-hue);
-    .title {
-      color: $accent-title;
-      &:hover {
-        color: $accent-title-hover;
-      }
-    }
-  }
-
-  .user-menu-content {
-    background-color: $mid-gray-darker;
-    .menu-item {
-      &:hover {
-        background-color: $mid-gray-lighter;
-      }
-    }
-    .separator {
-      background-color: $light-gray;
-    }
-    .arrow {
-      fill: $mid-gray-darker;
-    }
-  }
-  .has-popover {
-    &.perfect, &.pangram {
-      color: $yellow-line;
-    }
-  }
-
-  button.sb-revealer {
-    //border-color: $mid-gray;
-    background-color: $dark-gray-lighter;
-  }
-
-  .sb-answer-alert-message {
-    //border-color: $line-darkest;
-    &.pangram-alert-message {
-      border-color: $yellow-main;
-      background-color: $yellow-main;
-    }
-  }
-
-  .sb-error-alert-message {
-    border-color: $line-bright;
-    background-color: $line-bright;
-    color: $dark-gray;
-  }
-
-  .sb-guess-input {
-    &.error {
-    }
-    &:after {
-      background-color: $yellow-line;
-    }
-  }
-
-  .sb-guess-input-letter {
-    &.valid {
-      color: white;
-    }
-    &.center-letter {
-      color: $yellow-line;
-    }
-    &.invalid {
-      color: $line-disabled;
-    }
-  }
-
-  .hexagon polygon {
-    fill: $mid-gray-darker;
-    stroke: $dark-gray;
-  }
-
-  .hexagon.center-letter polygon {
-    fill: $yellow-main; //#887711
-  }
-
-  .hexagon text {
-    fill: $line-bright;
-  }
-
-  .sb-guess-input-controls {
-    .standard-button {
-      background-color: $mid-gray-darker;
-    }
-  }
-
+// See component CSS
 }
 
 @media (prefers-color-scheme: light) {

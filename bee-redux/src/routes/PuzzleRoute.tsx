@@ -1,7 +1,6 @@
 import { Puzzle } from "@/features/puzzle/Puzzle";
 import { Status } from "@/features/status/Status";
 import { Hints } from "@/features/hints";
-import { useLazyGetCurrentAttemptsQuery } from "@/features/guesses/guessesApiSlice";
 import { useEffect } from "react";
 import { useCurrentPuzzle } from "@/features/puzzle/useCurrentPuzzle";
 import { useLazyGetUserPuzzleDataQuery } from "@/features/userData/userDataApiSlice";
@@ -17,8 +16,8 @@ export function PuzzleRoute() {
   }, [getUserPuzzleData, puzzleQ]);
 
   return (
-    <div className="sb-main-container">
-      <div className="sb-main">
+    <div className="PuzzleMainContainer">
+      <div className="PuzzleMain">
         <Status />
         <Puzzle />
         <Hints />

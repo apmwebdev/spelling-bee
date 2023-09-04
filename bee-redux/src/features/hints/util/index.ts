@@ -18,10 +18,10 @@ export const getSubstringHintStatusClasses = ({
     return baseClasses;
   }
   if (cell.guesses === cell.answers) {
-    return composeClasses(baseClasses, "hint-completed");
+    return composeClasses(baseClasses, "HintCompleted");
   }
   if (cell.guesses === 0) {
-    return composeClasses(baseClasses, "hint-not-started");
+    return composeClasses(baseClasses, "HintNotStarted");
   }
-  return composeClasses(baseClasses, "hint-in-progress");
+  return composeClasses(baseClasses, "HintInProgress");
 };

@@ -40,9 +40,9 @@ export function AnswerAlert({ answerWord }: { answerWord: string }) {
   };
 
   const getMessageClasses = (answerWord: string, pangrams: string[]) => {
-    let messageClasses = "sb-answer-alert-message";
+    let messageClasses = "AnswerAlertMessage";
     if (isPangram(answerWord, pangrams)) {
-      messageClasses += " pangram-alert-message";
+      messageClasses += " PangramAlertMessage";
     }
     return messageClasses;
   };
@@ -52,7 +52,7 @@ export function AnswerAlert({ answerWord }: { answerWord: string }) {
       <div className={getMessageClasses(answerWord, pangrams)}>
         {getMessage(answerWord, pangrams)}
       </div>
-      <div className="sb-answer-alert-score">
+      <div className="AnswerAlertScore">
         {`+${calculateWordScore(answerWord)}`}
       </div>
     </>
