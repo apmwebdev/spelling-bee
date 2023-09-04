@@ -1297,7 +1297,7 @@ button.sb-revealer {
 }
 
 .LetterPanel_WLG_Container,
-.sb-word-count-list-container {
+.LetterPanel_WCL_Container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1358,8 +1358,8 @@ button.sb-revealer {
   background-color: $dark-gray-lighter;
 }
 
-.sb-word-count-list,
-.sb-letters-only-list {
+.LetterPanel_WordCountList,
+.LetterPanel_LettersPresentList {
   display: grid;
   align-items: center;
   //gap: 8px;
@@ -1367,11 +1367,11 @@ button.sb-revealer {
   margin-top: 4px;
 }
 
-.sb-word-count-list {
+.LetterPanel_WordCountList {
   border-top: 1px dotted;
 }
 
-.sb-wcl-row {
+.LetterPanel_WCL_Row {
   font-family: monospace;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1382,34 +1382,30 @@ button.sb-revealer {
   padding: 8px;
 }
 
-.sb-lol-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 16px;
-  row-gap: 8px;
-  padding: 8px;
-}
-
-.sb-wcl-fragment-cell {
+.LetterPanel_WCL_Cell {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.sb-wcl-fragment-count {
+.LetterPanel_WCL_CellCount {
   padding: 2px 8px;
   width: 4em;
   border: 1px solid $line-darkest;
   background-color: $dark-gray-lighter;
 }
 
-.sb-lol-row {
+.LetterPanel_LPL_Row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 8px;
   border-bottom: 1px solid $line-darkest;
-  //&:first-child {
-  //  border-top: 1px solid #666;
-  //}
 }
+
+/***   Search Panel   ***/
 
 .SearchPanelSettings {
   display: grid;

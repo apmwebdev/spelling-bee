@@ -33,22 +33,22 @@ export function WordCountList({
   const generateOutput = () => {
     const createCell = ({
       cell,
-      fragment,
-      fragmentDivs,
+      letters,
+      letterDivs,
     }: {
       cell: SubstringHintDataCell;
-      fragment: string;
-      fragmentDivs: any[];
+      letters: string;
+      letterDivs: any[];
     }) => {
       const cellClasses = getSubstringHintStatusClasses({
-        baseClasses: "sb-wcl-fragment-count",
+        baseClasses: "LetterPanel_WCL_CellCount",
         cell,
         statusTracking,
       });
 
-      fragmentDivs.push(
-        <div key={uniqid()} className="sb-wcl-fragment-cell">
-          <div className="sb-wcl-fragment-label">{fragment}</div>
+      letterDivs.push(
+        <div key={uniqid()} className="LetterPanel_WCL_Cell">
+          <div>{letters}</div>
           <div className={cellClasses}>
             {StatusTrackingOptions[statusTracking].outputFn(cell)}
           </div>
@@ -69,24 +69,24 @@ export function WordCountList({
 
     for (const startingLetter in listRows) {
       const listRow = listRows[startingLetter];
-      const fragmentDivs: any[] = [];
+      const letterDivs: any[] = [];
 
-      for (const fragment in listRow) {
-        const dataCell = listRow[fragment];
-        createCell({ cell: dataCell, fragment, fragmentDivs });
+      for (const letters in listRow) {
+        const dataCell = listRow[letters];
+        createCell({ cell: dataCell, letters, letterDivs });
       }
 
       startingLetterDivs.push(
-        <div key={uniqid()} className="sb-wcl-row">
-          {fragmentDivs}
+        <div key={uniqid()} className="LetterPanel_WCL_Row">
+          {letterDivs}
         </div>,
       );
     }
 
     return (
-      <div className="sb-word-count-list-container">
+      <div className="LetterPanel_WCL_Container">
         <WordLengthGridKey statusTracking={statusTracking} />
-        <div className="sb-word-count-list">{startingLetterDivs}</div>
+        <div className="LetterPanel_WordCountList">{startingLetterDivs}</div>
         <div>Excluded words: {excludedAnswers}</div>
       </div>
     );

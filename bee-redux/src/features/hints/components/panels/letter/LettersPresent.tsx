@@ -3,7 +3,7 @@ import { LetterHintSubsectionProps } from "@/features/hints/components/panels/le
 import { generateListData } from "@/features/hints/components/panels/letter/util";
 import { SubstringHintDataCell } from "@/features/hints";
 
-export function LettersOnly({
+export function LettersPresent({
   answers,
   knownWords,
   numberOfLetters,
@@ -65,16 +65,18 @@ export function LettersOnly({
       }
 
       startingLetterDivs.push(
-        <div key={uniqid()} className="sb-lol-row">
+        <div key={uniqid()} className="LetterPanel_LPL_Row">
           {fragmentDivs}
         </div>,
       );
     }
 
     return (
-      <div className="sb-letters-only-list-container">
+      <div className="LetterPanel_LPL_Container">
         {/*<WordLengthGridKey tracking={tracking} />*/}
-        <div className="sb-letters-only-list">{startingLetterDivs}</div>
+        <div className="LetterPanel_LettersPresentList">
+          {startingLetterDivs}
+        </div>
         <div>Excluded words: {excludedAnswers}</div>
       </div>
     );

@@ -1,6 +1,6 @@
 import { WordCountList } from "./letter/WordCountList";
 import { WordLengthGridContainer } from "./letter/WordLengthGridContainer";
-import { LettersOnly } from "./letter/LettersOnly";
+import { LettersPresent } from "./letter/LettersPresent";
 import { selectKnownWords } from "../../../guesses/guessesSlice";
 import { useAppSelector } from "@/app/hooks";
 import {
@@ -36,7 +36,7 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
     } else if (outputType === SubstringHintOutputKeys.WordCountList) {
       return <WordCountList {...subsectionProps} />;
     } else if (outputType === SubstringHintOutputKeys.LettersPresent) {
-      return <LettersOnly {...subsectionProps} />;
+      return <LettersPresent {...subsectionProps} />;
     }
   };
 
