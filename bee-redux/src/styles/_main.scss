@@ -10,6 +10,37 @@
 :root {
   color: $line-bright;
   background-color: $dark-gray;
+
+  /* Variables */
+
+  /* Border radius */
+  --br: 6px;
+
+  /*
+  Word Length Grid ("WLG") Column Width
+  Set widths of all columns except for left-most column.
+  The purpose of this is twofold:
+  1. Make all columns the same width, regardless of what combination of
+     single-digit and double-digit numbers they contain. Columns of different
+     widths looks sloppy.
+  2. Make it so that columns do not resize when going from a single-digit number
+     to a double-digit number (or vice-versa) for a Remaining or Found value.
+     Resizing columns is distracting (and still sloppy).
+  56px is the narrowest that columns can be with Roboto Mono at 15.5 px, 4px of
+  horizontal padding, and a left border, while making sure that cells can contain
+  two double-digit numbers and not need to widen.
+  The leftmost column does not need a set width because it is just headers, and,
+  therefore, will not need to resize.
+  */
+  --wlg-col-width: 56px
+}
+//See above for width. Setting the box sizing as content-box
+@mixin hint-cell {
+  box-sizing: content-box;
+  width: 47px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
+  padding: 6px 4px;
 }
 
 #root {
@@ -20,7 +51,6 @@
   /*padding: 2rem;*/
   text-align: center;
   /* Border radius */
-  --br: 6px;
 }
 
 a {
@@ -1325,18 +1355,31 @@ button.sb-revealer {
   border: 1px solid $line-darkest;
 }
 
-.LetterPanel_WLG_Table {
+.LetterPanel_WordLengthGrid {
   margin: 8px 0px;
-  td, th:not(.LetterPanel_WLG_AxisLabel) {
-    padding: 6px 4px;
+  td, th:not(.LetterPanel_WLG_AxisLabel):not(.LetterPanel_WLG_RowHeader) {
+    @include hint-cell;
+    border-left: 1px solid transparent;
+  }
+  th.LetterPanel_WLG_RowHeader {
+    font-family: "Roboto Mono", monospace;
+    font-size: 15.5px;
   }
   th.LetterPanel_WLG_AxisLabel {
     padding: 4px 0px;
   }
+  .LetterPanel_WLG_Content,
+  .LetterPanel_WLG_TotalColumn,
+  .LetterPanel_WLG_TotalRow,
+  {
+    border-left: 1px solid $line-darkest;
+  }
+
 }
 
+//For some reason, this is necessary for column widths to be consistent
 .LetterPanel_WLG_TdCol, .LetterPanel_WLG_TotalCol {
-  width: 60px;
+  width: var(--wlg-col-width);
 }
 
 .LetterPanel_WLG_Content,
@@ -1347,20 +1390,14 @@ button.sb-revealer {
   border-top: 1px solid $line-darkest;
 }
 
-.LetterPanel_WLG_Content,
-.LetterPanel_WLG_TotalColumn,
-.LetterPanel_WLG_TotalRow,
-{
-  border-left: 1px solid $line-darkest;
-}
-
 .LetterPanel_WLG_ContentFull {
   background-color: $dark-gray-lighter;
 }
 
 .LetterPanel_WordCountList,
 .LetterPanel_LettersPresentList {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   //gap: 8px;
   padding: 12px 8px;
@@ -1369,10 +1406,11 @@ button.sb-revealer {
 
 .LetterPanel_WordCountList {
   border-top: 1px dotted;
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
 }
 
 .LetterPanel_WCL_Row {
-  font-family: monospace;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   flex-wrap: wrap;
@@ -1389,8 +1427,7 @@ button.sb-revealer {
 }
 
 .LetterPanel_WCL_CellCount {
-  padding: 2px 8px;
-  width: 4em;
+  @include hint-cell;
   border: 1px solid $line-darkest;
   background-color: $dark-gray-lighter;
 }
@@ -1513,44 +1550,37 @@ button.sb-revealer {
 }
 
 .SearchPanelResultContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 6px 0px;
   font-size: 16px;
   margin-bottom: 8px;
 }
 
-.SearchHintResultWordLengthGrid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .HeaderRow, .ContentRow {
-    display: flex;
+.SearchHintResult_WordLengthGrid {
+  td, th:not(.RowHeader) {
+    @include hint-cell;
   }
-  .ContentRow {
-    border-top: 1px solid $mid-gray-lighter;
-    border-bottom: 1px solid $mid-gray-lighter;
-  }
-  .HeaderCell, .ContentCell {
-    width: 3rem;
-    padding: 8px 2px;
-    &.RowHeader {
-      width: 6rem;
-    }
-  }
-  .HeaderCell {
-    background-color: $dark-gray;
-  }
-  .ContentCell {
-    &:not(.RowHeader) {
-      //border-top: 1px solid $mid-gray-lighter;
-      border-left: 1px solid $mid-gray-lighter;
-    }
+  td {
+    border: 1px solid $mid-gray-lighter;
     &.HasContent {
       background-color: $dark-gray-lighter;
     }
     &:last-child {
+      border-right-color: transparent;
       background-color: inherit;
     }
   }
+  th {
+    border-bottom: 1px solid $mid-gray-lighter;
+    background-color: $dark-gray;
+  }
+}
+
+//Need to set width here or else it is inconsistent
+.SearchHintResult_WLG_TdCol, .SearchHintResult_WLG_TotalCol {
+  width: 57px;
 }
 
 .SearchResultWordCount, .SearchResultLettersList {
@@ -1558,4 +1588,9 @@ button.sb-revealer {
   justify-content: center;
   align-items: center;
   gap: 8px;
+}
+
+.SearchHintResult_WC_Result {
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.5px;
 }

@@ -1,7 +1,10 @@
 import uniqid from "uniqid";
 import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
 import { generateListData } from "@/features/hints/components/panels/letter/util";
-import { SubstringHintDataCell } from "@/features/hints";
+import {
+  getSubstringHintStatusClasses,
+  SubstringHintDataCell,
+} from "@/features/hints";
 
 export function LettersPresent({
   answers,
@@ -12,34 +15,26 @@ export function LettersPresent({
   statusTracking,
   showKnown,
 }: LetterHintSubsectionProps) {
-  const generateOutput = () => {
+  const content = () => {
     const createCell = ({
       cell,
-      fragment,
-      fragmentDivs,
+      letters,
+      letterDivs,
     }: {
       cell: SubstringHintDataCell;
-      fragment: string;
-      fragmentDivs: any[];
+      letters: string;
+      letterDivs: any[];
     }) => {
-      const cellClasses = () => {
-        let classList = "sb-lol-fragment";
-        if (statusTracking === "total") {
-          return classList;
-        }
-        if (cell.guesses === cell.answers) {
-          classList += " hint-completed";
-        } else if (cell.guesses === 0) {
-          classList += " hint-not-started";
-        } else {
-          classList += " hint-in-progress";
-        }
-        return classList;
-      };
-
-      fragmentDivs.push(
-        <div key={uniqid()} className={cellClasses()}>
-          {fragment}
+      letterDivs.push(
+        <div
+          key={uniqid()}
+          className={getSubstringHintStatusClasses({
+            baseClasses: "LetterPanel_LPL_Cell",
+            cell,
+            statusTracking,
+          })}
+        >
+          {letters}
         </div>,
       );
     };
@@ -57,16 +52,16 @@ export function LettersPresent({
 
     for (const startingLetter in listRows) {
       const listRow = listRows[startingLetter];
-      const fragmentDivs: any[] = [];
+      const letterDivs: any[] = [];
 
-      for (const fragment in listRow) {
-        const dataCell = listRow[fragment];
-        createCell({ cell: dataCell, fragment, fragmentDivs });
+      for (const letters in listRow) {
+        const dataCell = listRow[letters];
+        createCell({ cell: dataCell, letters, letterDivs });
       }
 
       startingLetterDivs.push(
         <div key={uniqid()} className="LetterPanel_LPL_Row">
-          {fragmentDivs}
+          {letterDivs}
         </div>,
       );
     }
@@ -82,5 +77,5 @@ export function LettersPresent({
     );
   };
 
-  return generateOutput();
+  return content();
 }

@@ -1,7 +1,19 @@
-:root {
-  /* Border radius variable */
-  --br: 6px;
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(RobotoMono-VariableFont_wght.ttf) format('truetype') tech('variations'),
+  url(RobotoMono-VariableFont_wght.ttf) format('trutype-variations');
+  font-weight: 100 700;
+}
 
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(RobotoMono-Italic-VariableFont_wght.ttf) format('truetype') tech('variations'),
+  url(RobotoMono-Italic-VariableFont_wght.ttf) format("truetype-variations");
+  font-weight: 100 700;
+  font-style: italic;
+}
+
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -14,6 +26,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+.mono {
+  font-family: "Roboto Mono", monospace;
 }
 
 body {

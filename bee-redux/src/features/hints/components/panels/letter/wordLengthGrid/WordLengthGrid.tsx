@@ -53,21 +53,20 @@ export function WordLengthGrid({
 
   const createTable = () => {
     return (
-      <table className="LetterPanel_WLG_Table">
+      <table className="LetterPanel_WordLengthGrid">
         <colgroup>
+          {/* Left-most column, i.e., row headers */}
           <col className="LetterPanel_WLG_HeaderCol" />
           {relevantAnswerLengths.map((_) => (
+            // Normal content columns (not header, not total)
             <col key={uniqid()} className="LetterPanel_WLG_TdCol" />
           ))}
+          {/* Right-most column, i.e., total column */}
           <col className="LetterPanel_WLG_TotalCol" />
         </colgroup>
         <thead>
           <tr>
-            <th
-              scope="col"
-              rowSpan={2}
-              className="LetterPanel_WLG_AxisLabel"
-            >
+            <th scope="col" rowSpan={2} className="LetterPanel_WLG_AxisLabel">
               <div>Letters</div>
               <div>↓</div>
             </th>

@@ -13,7 +13,7 @@ export function WordCount({
       <span>Result:</span>
       <div
         className={getSubstringHintStatusClasses({
-          baseClasses: "",
+          baseClasses: "SearchHintResult_WC_Result",
           cell: resultData.total,
           statusTracking,
         })}

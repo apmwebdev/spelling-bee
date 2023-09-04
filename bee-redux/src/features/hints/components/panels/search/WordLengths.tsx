@@ -3,7 +3,7 @@ import uniqid from "uniqid";
 import { StatusTrackingOptions, SubstringHintDataCell } from "@/features/hints";
 
 export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
-  const generateOutput = () => {
+  const content = () => {
     const getCellClasses = (dataCell: SubstringHintDataCell) => {
       let classList = "ContentCell";
       if (dataCell.answers === 0) {
@@ -31,49 +31,56 @@ export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
         cellText = StatusTrackingOptions[statusTracking].outputFn(dataCell);
       }
       return (
-        <div className={cssClasses} key={uniqid()}>
+        <td className={cssClasses} key={uniqid()}>
           {cellText}
-        </div>
+        </td>
       );
     };
 
     const headerRowDivs = [];
     headerRowDivs.push(
-      <div className="HeaderCell RowHeader" key={uniqid()}>
+      <th scope="row" className="HeaderCell RowHeader" key={uniqid()}>
         Word Length
-      </div>,
+      </th>,
     );
     const contentRowDivs = [];
     contentRowDivs.push(
-      <div className="ContentCell RowHeader" key={uniqid()}>
+      <th scope="row" className="ContentCell RowHeader" key={uniqid()}>
         Results
-      </div>,
+      </th>,
     );
     for (const lengthProp in resultData.results) {
       headerRowDivs.push(
-        <div className="HeaderCell" key={uniqid()}>
+        <th scope="col" className="HeaderCell" key={uniqid()}>
           {lengthProp}
-        </div>,
+        </th>,
       );
       contentRowDivs.push(createCell(resultData.results[lengthProp]));
     }
     headerRowDivs.push(
-      <div className="HeaderCell" key={uniqid()}>
+      <th scope="col" className="HeaderCell" key={uniqid()}>
         Total
-      </div>,
+      </th>,
     );
     contentRowDivs.push(createCell(resultData.total));
 
-    const headerRow = <div className="HeaderRow">{headerRowDivs}</div>;
-    const contentRow = <div className="ContentRow">{contentRowDivs}</div>;
+    const headerRow = <tr className="HeaderRow">{headerRowDivs}</tr>;
+    const contentRow = <tr className="ContentRow">{contentRowDivs}</tr>;
 
     return (
-      <div className="SearchHintResultWordLengthGrid">
-        {headerRow}
-        {contentRow}
-      </div>
+      <table className="SearchHintResult_WordLengthGrid">
+        <colgroup>
+          <col />
+          {Object.keys(resultData.results).map((_) => (
+            <col key={uniqid()} className="SearchHintResult_WLG_TdCol" />
+          ))}
+          <col className="SearchHintResult_WLG_TotalCol" />
+        </colgroup>
+        <thead>{headerRow}</thead>
+        <tbody>{contentRow}</tbody>
+      </table>
     );
   };
 
-  return <div>{generateOutput()}</div>;
+  return <div>{content()}</div>;
 }
