@@ -10,20 +10,23 @@ import guessesReducer from "../features/guesses/guessesSlice";
 import wordListSettingsReducer from "@/features/wordLists/wordListSettingsSlice";
 import hintProfilesReducer from "../features/hints/hintProfilesSlice";
 import { apiSlice } from "@/features/api/apiSlice";
+import { listenerMiddleware } from "@/app/listenerMiddleware";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   puzzle: puzzleReducer,
   guesses: guessesReducer,
   wordListSettings: wordListSettingsReducer,
-  hintProfiles: hintProfilesReducer,
+  // hintProfiles: hintProfilesReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware()
+      // .prepend(listenerMiddleware.middleware)
+      .concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

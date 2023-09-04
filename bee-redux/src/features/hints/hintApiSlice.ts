@@ -9,6 +9,8 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query";
+import { useAppSelector } from "@/app/hooks";
+import { selectCurrentPanelData } from "@/features/hints/hintProfilesSlice";
 
 const maybeFindDefaultHintProfile = (
   formData: t.CurrentHintProfileFormData,
@@ -174,8 +176,9 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         //Otherwise, run the actual query
         const state = api.getState() as RootState;
         if (
-          state.auth.isGuest ||
-          selectCurrentHintProfile?.type === t.HintProfileTypes.Default
+          state.auth.isGuest
+          // state.hintProfiles.data.currentProfile?.type ===
+          //   t.HintProfileTypes.Default
         ) {
           return { data: true };
         }
@@ -314,6 +317,3 @@ export const {
   useLazyGetSearchesQuery,
   useAddSearchMutation,
 } = hintApiSlice;
-
-export const selectCurrentHintProfile =
-  hintApiSlice.endpoints.getCurrentHintProfile.select()(store.getState()).data;
