@@ -1,6 +1,7 @@
 import { apiSlice } from "../api/apiSlice";
 import { calculateScore } from "@/utils";
 import { sortBy } from "lodash";
+import { RootState } from "@/app/store";
 
 export interface Rank {
   id: string;

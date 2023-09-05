@@ -32,7 +32,7 @@
   }
 }
 
-.progress-rank {
+.ProgressRank {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +41,7 @@
   border-bottom: 2px solid $mid-gray;
 }
 
-.current-rank {
+.CurrentRank {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +57,7 @@
   gap: 20px;
 }
 
-.rank-tic {
+.RankTic {
   position: relative;
   height: 14px;
   width: 14px;
@@ -75,7 +75,7 @@
     top: 6px;
     background-color: $mid-gray;
   }
-  &:not(.active ~ .rank-tic) {
+  &:not(.active ~ .RankTic) {
     background-color: $yellow-line;
     &:not(:first-child):before {
       background-color: $yellow-line;

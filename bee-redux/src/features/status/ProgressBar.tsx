@@ -1,17 +1,20 @@
-import { selectRanks } from "../puzzle/puzzleSlice";
-import { useAppSelector } from "@/app/hooks";
 import uniqid from "uniqid";
-import { Rank } from "../puzzle/puzzleApiSlice";
+import { Rank, RanksType } from "../puzzle/puzzleApiSlice";
 
-export function ProgressBar({ currentRank }: { currentRank: Rank }) {
-  const ranks = useAppSelector(selectRanks);
+export function ProgressBar({
+  ranks,
+  currentRank,
+}: {
+  ranks: RanksType | [Rank];
+  currentRank: Rank;
+}) {
   return (
     <div className="ProgressBar">
       {ranks.map((rank) => {
         return (
           <div
             key={uniqid()}
-            className={`rank-tic${rank === currentRank ? " active" : ""}`}
+            className={`RankTic${rank === currentRank ? " active" : ""}`}
           ></div>
         );
       })}

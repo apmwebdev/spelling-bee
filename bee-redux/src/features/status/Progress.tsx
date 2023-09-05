@@ -28,9 +28,9 @@ export function Progress() {
 
   return (
     <div className="Progress">
-      <div className="progress-rank">
-        <div className="current-rank">{currentRank().name}</div>
-        <ProgressBar currentRank={currentRank()} />
+      <div className="ProgressRank">
+        <div className="CurrentRank">{currentRank().name}</div>
+        <ProgressBar ranks={ranks} currentRank={currentRank()} />
       </div>
       <FoundWordsStatus />
     </div>
