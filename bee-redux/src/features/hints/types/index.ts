@@ -246,6 +246,8 @@ export function isSearchPanelData(a: any): a is SearchPanelData {
   return a.panelType === PanelTypes.Search;
 }
 
+export type SearchPanelSearchDeleteArgs = { id?: number; createdAt: number };
+
 export interface ObscurityPanelFormData {
   showKnown: boolean;
   separateKnown: boolean;

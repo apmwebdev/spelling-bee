@@ -35,13 +35,19 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   end
 
   def destroy
-
+    @search.destroy
+    head 204
   end
 
   private
 
   def set_search
-    @search = SearchPanelSearch.find(params[:id])
+    prelim_search = SearchPanelSearch.find(params[:id])
+    unless prelim_search.user_puzzle_attempt.user == current_user
+      render json: { error: "Search doesn't match current user" }, status: 403
+      return
+    end
+    @search = prelim_search
   end
 
   def sps_params

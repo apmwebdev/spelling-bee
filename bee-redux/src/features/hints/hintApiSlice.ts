@@ -1,16 +1,15 @@
 import { apiSlice } from "../api/apiSlice";
 import * as t from "./types";
-import { RootState, store } from "@/app/store";
+import { RootState } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
 import { keysToSnakeCase } from "@/features/api/util";
-import { SearchPanelSearchData } from "./types";
+import { HintProfileTypes, SearchPanelSearchData, SearchPanelSearchDeleteArgs } from "./types";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query";
-import { useAppSelector } from "@/app/hooks";
-import { selectCurrentPanelData } from "@/features/hints/hintProfilesSlice";
+import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 
 const maybeFindDefaultHintProfile = (
   formData: t.CurrentHintProfileFormData,
@@ -176,9 +175,8 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         //Otherwise, run the actual query
         const state = api.getState() as RootState;
         if (
-          state.auth.isGuest
-          // state.hintProfiles.data.currentProfile?.type ===
-          //   t.HintProfileTypes.Default
+          state.auth.isGuest ||
+          selectCurrentHintProfile(state)?.type === HintProfileTypes.Default
         ) {
           return { data: true };
         }
@@ -248,7 +246,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
             "getSearches",
             newSearch.attemptId,
             (searches) => {
-              searches.push(newSearch);
+              searches.unshift(newSearch);
             },
           ),
         );
@@ -289,8 +287,35 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     }),
 
     // ⚠️
-    deleteSearch: builder.mutation<boolean, number>({
-      queryFn: (id, api, _opts, baseQuery) => {
+    deleteSearch: builder.mutation<boolean, SearchPanelSearchDeleteArgs>({
+      queryFn: async (arg, api, _opts, baseQuery) => {
+        const state = api.getState() as RootState;
+        api.dispatch(
+          hintApiSlice.util.updateQueryData(
+            "getSearches",
+            selectCurrentAttemptId(state),
+            (draftState) => {
+              if (draftState.length === 0) return;
+              const indexToRemove = draftState.findIndex(
+                (search) => search.createdAt === arg.createdAt,
+              );
+              if (indexToRemove > -1) {
+                draftState.splice(indexToRemove, 1);
+              }
+            },
+          ),
+        );
+        if (state.auth.isGuest || !arg.id) {
+          return { data: true };
+        }
+        try {
+          await baseQuery({
+            url: `/search_panel_searches/${arg.id}`,
+            method: "DELETE",
+          });
+        } catch (err) {
+          console.log("Couldn't delete search on back end:", err);
+        }
         return { data: true };
       },
     }),
@@ -317,6 +342,7 @@ export const {
   useSetCurrentHintProfileMutation,
   useLazyGetSearchesQuery,
   useAddSearchMutation,
+  useDeleteSearchMutation,
 } = hintApiSlice;
 
 export const selectCurrentHintProfile = (state: RootState) =>

@@ -1,8 +1,4 @@
-import {
-  HintPanelData,
-  HintPanelUpdateForm,
-  PanelDisplayStateKeys,
-} from "@/features/hints";
+import { HintPanelData, PanelDisplayStateKeys } from "@/features/hints";
 import { PanelInitDisplayCheckboxControl } from "@/features/hints/components/settings/PanelInitDisplayCheckboxControl";
 import {
   InitIsBlurredHelpText,
