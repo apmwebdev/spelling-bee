@@ -59,7 +59,7 @@ const authSlice = createSlice({
       .addMatcher(
         authApiSlice.endpoints.login.matchFulfilled,
         (state, { payload }) => {
-          state.user = payload.status.data.user;
+          state.user = payload;
           state.isGuest = false;
         },
       )

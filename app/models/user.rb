@@ -20,4 +20,8 @@ class User < ApplicationRecord
   def after_create_actions
     create_prefs
   end
+
+  def to_front_end
+    { name:, username:, email: }
+  end
 end
