@@ -84,3 +84,6 @@ export const composeClasses = (
 export const maybeDisable = (baseClasses: string, disabled?: boolean) => {
   return composeClasses(baseClasses, disabled ? "disabled" : "");
 };
+
+export const capitalizeFirstLetter = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);

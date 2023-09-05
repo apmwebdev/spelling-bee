@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   puzzle: puzzleReducer,
   guesses: guessesReducer,
   wordListSettings: wordListSettingsReducer,
-  // hintProfiles: hintProfilesReducer,
+  hintProfiles: hintProfilesReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
@@ -25,7 +25,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      // .prepend(listenerMiddleware.middleware)
+      .prepend(listenerMiddleware.middleware)
       .concat(apiSlice.middleware),
 });
 
