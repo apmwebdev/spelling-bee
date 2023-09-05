@@ -3,7 +3,11 @@ import * as t from "./types";
 import { RootState } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
 import { keysToSnakeCase } from "@/features/api/util";
-import { HintProfileTypes, SearchPanelSearchData, SearchPanelSearchDeleteArgs } from "./types";
+import {
+  HintProfileTypes,
+  SearchPanelSearchData,
+  SearchPanelSearchDeleteArgs,
+} from "./types";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   FetchBaseQueryError,
@@ -219,8 +223,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
 
     /**
      * ✅
-     * Shouldn't ever run directly. Updated from getUserPuzzleData, addSearch,
-     * and deleteSearch
+     * Updated from getUserPuzzleData, addSearch, and deleteSearch
      */
     getSearches: builder.query<t.SearchPanelSearchData[], number>({
       query: (attemptId) => ({
@@ -286,7 +289,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
       },
     }),
 
-    // ⚠️
+    // ✅
     deleteSearch: builder.mutation<boolean, SearchPanelSearchDeleteArgs>({
       queryFn: async (arg, api, _opts, baseQuery) => {
         const state = api.getState() as RootState;

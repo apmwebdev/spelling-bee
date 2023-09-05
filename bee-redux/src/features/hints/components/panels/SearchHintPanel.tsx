@@ -25,7 +25,9 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
 
   const getPanelSearches = (data: SearchPanelSearchData[] | undefined) => {
     if (!data) return;
-    return data.filter((search) => search.searchPanelId === searchPanelData.id);
+    return data
+      .filter((search) => search.searchPanelId === searchPanelData.id)
+      .sort((a, b) => b.createdAt - a.createdAt);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

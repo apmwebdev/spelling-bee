@@ -16,8 +16,9 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
           .where(panel_subtype_type: "SearchPanel"))
       )
       .where(user_puzzle_attempt_id: params[:attempt_id])
+      .map{ |search| search.to_front_end }
 
-    render json: searches.map { |search| search.to_front_end }
+    render json: searches
   end
 
   def create
