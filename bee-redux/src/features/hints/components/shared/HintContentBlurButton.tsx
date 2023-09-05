@@ -1,5 +1,9 @@
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { useAppDispatch } from "@/app/hooks";
+import {
+  PanelCurrentDisplayStateProperties,
+  setPanelDisplayPropThunk,
+} from "@/features/hints/hintProfilesSlice";
 
 export function HintContentBlurButton({
   panelId,
@@ -8,15 +12,15 @@ export function HintContentBlurButton({
   panelId: number;
   isBlurred: boolean;
 }) {
-  const [updatePanel] = useUpdateHintPanelMutation();
+  const dispatch = useAppDispatch();
   const handleClick = () => {
-    updatePanel({
-      id: panelId,
-      debounceField: "currentDisplayIsBlurred",
-      currentDisplayState: {
-        isBlurred: !isBlurred,
-      },
-    });
+    dispatch(
+      setPanelDisplayPropThunk({
+        panelId,
+        property: PanelCurrentDisplayStateProperties.isBlurred,
+        value: !isBlurred,
+      }),
+    );
   };
 
   return (

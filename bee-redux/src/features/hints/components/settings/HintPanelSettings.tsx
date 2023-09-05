@@ -6,7 +6,6 @@ import {
   isObscurityPanelData,
   isSearchPanelData,
 } from "@/features/hints";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { PanelStatusTrackingControl } from "@/features/hints/components/settings/PanelStatusTrackingControl";
 import { PanelNameInputForm } from "@/features/hints/components/settings/PanelNameInputForm";
@@ -15,37 +14,52 @@ import { LetterPanelSettings } from "@/features/hints/components/panels/letter/L
 import { SearchPanelSettings } from "@/features/hints/components/panels/search/SearchPanelSettings";
 import { ObscurityPanelSettings } from "@/features/hints/components/panels/obscurity/ObscurityPanelSettings";
 import { DefinitionPanelSettings } from "@/features/hints/components/panels/definition/DefinitionPanelSettings";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import {
+  PanelCurrentDisplayStateProperties,
+  selectPanelsDisplayState,
+  setPanelDisplayPropThunk,
+} from "@/features/hints/hintProfilesSlice";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
-  const [updatePanel] = useUpdateHintPanelMutation();
+  const dispatch = useAppDispatch();
+  const display = useAppSelector(selectPanelsDisplayState)[panel.id];
   const toggleExpanded = () => {
-    updatePanel({
-      id: panel.id,
-      debounceField: "currentIsSettingsExpanded",
-      currentDisplayState: {
-        isSettingsExpanded: !panel.currentDisplayState.isSettingsExpanded,
-      },
-    });
+    dispatch(
+      setPanelDisplayPropThunk({
+        panelId: panel.id,
+        property: PanelCurrentDisplayStateProperties.isSettingsExpanded,
+        value: !display.isSettingsExpanded,
+      }),
+    );
   };
 
   const typeSpecificSettings = () => {
     if (isLetterPanelData(panel.typeData)) {
-      return <LetterPanelSettings panelId={panel.id} typeData={panel.typeData} />;
+      return (
+        <LetterPanelSettings panelId={panel.id} typeData={panel.typeData} />
+      );
     }
     if (isSearchPanelData(panel.typeData)) {
-      return <SearchPanelSettings panelId={panel.id} typeData={panel.typeData} />;
+      return (
+        <SearchPanelSettings panelId={panel.id} typeData={panel.typeData} />
+      );
     }
     if (isObscurityPanelData(panel.typeData)) {
-      return <ObscurityPanelSettings panelId={panel.id} typeData={panel.typeData} />;
+      return (
+        <ObscurityPanelSettings panelId={panel.id} typeData={panel.typeData} />
+      );
     }
     if (isDefinitionPanelData(panel.typeData)) {
-      return <DefinitionPanelSettings panelId={panel.id} typeData={panel.typeData} />;
+      return (
+        <DefinitionPanelSettings panelId={panel.id} typeData={panel.typeData} />
+      );
     }
   };
 
   return (
     <SettingsCollapsible
-      isExpanded={panel.currentDisplayState.isSettingsExpanded}
+      isExpanded={display.isSettingsExpanded}
       toggleIsExpanded={toggleExpanded}
     >
       {typeSpecificSettings()}

@@ -255,7 +255,8 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         const state = api.getState() as RootState;
         if (
           state.auth.isGuest ||
-          selectCurrentHintProfile?.type === t.HintProfileTypes.Default
+          selectCurrentHintProfile(api.getState() as RootState)?.type ===
+            t.HintProfileTypes.Default
         ) {
           return { data: newSearch };
         }
@@ -317,3 +318,6 @@ export const {
   useLazyGetSearchesQuery,
   useAddSearchMutation,
 } = hintApiSlice;
+
+export const selectCurrentHintProfile = (state: RootState) =>
+  hintApiSlice.endpoints.getCurrentHintProfile.select()(state).data;

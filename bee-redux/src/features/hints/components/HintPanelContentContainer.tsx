@@ -7,9 +7,11 @@ import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle/puzzleSlice";
 import { HintContentBlur } from "@/features/hints/components/shared/HintContentBlur";
 import { HintContentBlurButton } from "@/features/hints/components/shared/HintContentBlurButton";
+import { selectPanelsDisplayState } from "@/features/hints/hintProfilesSlice";
 
 export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
+  const displayState = useAppSelector(selectPanelsDisplayState)[panel.id];
 
   const panelContent = () => {
     if (answers.length === 0) {
@@ -33,9 +35,9 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
     <div className="HintPanelContentContainer">
       <HintContentBlurButton
         panelId={panel.id}
-        isBlurred={panel.currentDisplayState.isBlurred}
+        isBlurred={displayState.isBlurred}
       />
-      <HintContentBlur isBlurred={panel.currentDisplayState.isBlurred} />
+      <HintContentBlur isBlurred={displayState.isBlurred} />
       {panelContent()}
     </div>
   );
