@@ -1,4 +1,4 @@
-import { SearchResultProps } from "@/features/hints/components/panels/search/Results";
+import { SearchResultProps } from "@/features/hints/components/searchPanel/Results";
 import {
   SearchPanelLocationOptions,
   StatusTrackingOptions,

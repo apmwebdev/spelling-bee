@@ -1,4 +1,4 @@
-import { HintPanelData, PanelDisplayStateKeys } from "@/features/hints";
+import { PanelDisplayState, PanelDisplayStateKeys } from "@/features/hints";
 import { PanelInitDisplayCheckboxControl } from "@/features/hints/components/settings/PanelInitDisplayCheckboxControl";
 import {
   InitIsBlurredHelpText,
@@ -8,15 +8,17 @@ import {
   InitIsStickyHelpText,
 } from "@/features/hints/components/settings/helpText";
 import { useAppSelector } from "@/app/hooks";
-import { selectPanelsDisplayState } from "@/features/hints/hintProfilesSlice";
+import { selectPanelDisplayState } from "@/features/hints/hintProfilesSlice";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 
 export function PanelInitialDisplayControls({
-  panel,
+  panelId,
+  initialDisplayState,
 }: {
-  panel: HintPanelData;
+  panelId: number;
+  initialDisplayState: PanelDisplayState;
 }) {
-  const display = useAppSelector(selectPanelsDisplayState)[panel.id];
+  const display = useAppSelector(selectPanelDisplayState(panelId));
   const [updatePanel] = useUpdateHintPanelMutation();
   return (
     <div
@@ -26,19 +28,19 @@ export function PanelInitialDisplayControls({
       <span>Initial Panel Display</span>
       <div className="PanelInitialDisplayControls">
         <PanelInitDisplayCheckboxControl
-          panel={panel}
+          panelId={panelId}
           settingKey={PanelDisplayStateKeys.isSticky}
+          currentValue={initialDisplayState.isSticky}
           label="Sticky"
           helpBubbleContent={InitIsStickyHelpText()}
           customHandler={() => {
-            const newValue = !panel.initialDisplayState.isSticky;
+            const newValue = !initialDisplayState.isSticky;
             const shouldUpdateIsExpanded =
-              newValue && !panel.initialDisplayState.isExpanded;
+              newValue && !initialDisplayState.isExpanded;
             const shouldUpdateIsBlurred =
-              newValue &&
-              display.isBlurred !== panel.initialDisplayState.isBlurred;
+              newValue && display.isBlurred !== initialDisplayState.isBlurred;
             updatePanel({
-              id: panel.id,
+              id: panelId,
               debounceField: "initDisplayIsSticky",
               initialDisplayState: {
                 isSticky: newValue,
@@ -51,30 +53,33 @@ export function PanelInitialDisplayControls({
           }}
         />
         <PanelInitDisplayCheckboxControl
-          panel={panel}
+          panelId={panelId}
           settingKey={PanelDisplayStateKeys.isExpanded}
-          disableKey={PanelDisplayStateKeys.isSticky}
+          currentValue={initialDisplayState.isExpanded}
+          disabled={initialDisplayState.isSticky}
           label="Expanded"
           helpBubbleContent={InitIsExpandedHelpText()}
         />
         <PanelInitDisplayCheckboxControl
-          panel={panel}
+          panelId={panelId}
           settingKey={PanelDisplayStateKeys.isBlurred}
-          disableKey={PanelDisplayStateKeys.isSticky}
+          currentValue={initialDisplayState.isBlurred}
+          disabled={initialDisplayState.isSticky}
           label="Blurred"
           helpBubbleContent={InitIsBlurredHelpText()}
         />
         <PanelInitDisplayCheckboxControl
-          panel={panel}
+          panelId={panelId}
           settingKey={PanelDisplayStateKeys.isSettingsSticky}
+          currentValue={initialDisplayState.isSettingsSticky}
           label="Settings Sticky"
           helpBubbleContent={InitIsSettingsStickyHelpText()}
           customHandler={() => {
-            const newValue = !panel.initialDisplayState.isSettingsSticky;
+            const newValue = !initialDisplayState.isSettingsSticky;
             const shouldUpdateIsSettingsExpanded =
-              newValue && !panel.initialDisplayState.isSettingsExpanded;
+              newValue && !initialDisplayState.isSettingsExpanded;
             updatePanel({
-              id: panel.id,
+              id: panelId,
               debounceField: "initDisplayIsSettingsSticky",
               initialDisplayState: {
                 isSettingsSticky: newValue,
@@ -86,9 +91,10 @@ export function PanelInitialDisplayControls({
           }}
         />
         <PanelInitDisplayCheckboxControl
-          panel={panel}
+          panelId={panelId}
           settingKey={PanelDisplayStateKeys.isSettingsExpanded}
-          disableKey={PanelDisplayStateKeys.isSettingsSticky}
+          currentValue={initialDisplayState.isSettingsExpanded}
+          disabled={initialDisplayState.isSettingsSticky}
           label="Settings Expanded"
           helpBubbleContent={InitIsSettingsExpandedHelpText()}
         />

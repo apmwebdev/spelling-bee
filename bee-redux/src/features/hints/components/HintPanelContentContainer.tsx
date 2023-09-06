@@ -1,34 +1,54 @@
-import { HintPanelData, PanelTypes } from "@/features/hints";
-import { LetterHintPanel } from "@/features/hints/components/panels/LetterHintPanel";
-import { SearchHintPanel } from "@/features/hints/components/panels/SearchHintPanel";
-import { WordObscurityHintPanel } from "@/features/hints/components/panels/WordObscurityHintPanel";
-import { DefinitionsHintPanel } from "@/features/hints/components/panels/DefinitionsHintPanel";
+import {
+  DefinitionPanelData,
+  HintPanelData,
+  LetterPanelData,
+  ObscurityPanelData,
+  PanelTypes,
+  SearchPanelData,
+} from "@/features/hints";
+import { LetterHintPanel } from "@/features/hints/components/LetterHintPanel";
+import { SearchHintPanel } from "@/features/hints/components/SearchHintPanel";
+import { ObscurityHintPanel } from "@/features/hints/components/ObscurityHintPanel";
+import { DefinitionHintPanel } from "@/features/hints/components/DefinitionHintPanel";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle/puzzleSlice";
 import { HintContentBlur } from "@/features/hints/components/shared/HintContentBlur";
 import { HintContentBlurButton } from "@/features/hints/components/shared/HintContentBlurButton";
-import { selectPanelsDisplayState } from "@/features/hints/hintProfilesSlice";
+import { selectPanelDisplayState } from "@/features/hints/hintProfilesSlice";
 
 export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
-  const displayState = useAppSelector(selectPanelsDisplayState)[panel.id];
+  const displayState = useAppSelector(selectPanelDisplayState(panel.id));
 
-  const panelContent = () => {
-    if (answers.length === 0) {
-      return;
-    }
-    switch (panel.typeData.panelType) {
-      case PanelTypes.Letter:
-        return <LetterHintPanel panel={panel} />;
-      case PanelTypes.Search:
-        return <SearchHintPanel panel={panel} />;
-      case PanelTypes.Obscurity:
-        return <WordObscurityHintPanel panel={panel} />;
-      case PanelTypes.Definition:
-        return <DefinitionsHintPanel panel={panel} />;
-      default:
-        return null;
-    }
+  if (answers.length === 0) {
+    return;
+  }
+
+  const typeRouter = {
+    [PanelTypes.Letter]: () => (
+      <LetterHintPanel
+        letterData={panel.typeData as LetterPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
+    [PanelTypes.Search]: () => (
+      <SearchHintPanel
+        searchPanelData={panel.typeData as SearchPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
+    [PanelTypes.Obscurity]: () => (
+      <ObscurityHintPanel
+        obscurityPanelData={panel.typeData as ObscurityPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
+    [PanelTypes.Definition]: () => (
+      <DefinitionHintPanel
+        definitionPanelData={panel.typeData as DefinitionPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
   };
 
   return (
@@ -38,7 +58,7 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
         isBlurred={displayState.isBlurred}
       />
       <HintContentBlur isBlurred={displayState.isBlurred} />
-      {panelContent()}
+      {typeRouter[panel.typeData.panelType]()}
     </div>
   );
 }

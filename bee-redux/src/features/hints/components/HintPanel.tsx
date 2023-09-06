@@ -7,13 +7,13 @@ import { HintPanelContentContainer } from "@/features/hints/components/HintPanel
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   PanelCurrentDisplayStateProperties,
-  selectPanelsDisplayState,
+  selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hints/hintProfilesSlice";
 
 export function HintPanel({ panel }: { panel: HintPanelData }) {
   const dispatch = useAppDispatch();
-  const display = useAppSelector(selectPanelsDisplayState)[panel.id];
+  const display = useAppSelector(selectPanelDisplayState(panel.id));
 
   const toggleExpanded = () => {
     dispatch(

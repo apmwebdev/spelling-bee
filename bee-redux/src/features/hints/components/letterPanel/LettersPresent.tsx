@@ -1,6 +1,6 @@
 import uniqid from "uniqid";
-import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
-import { generateListData } from "@/features/hints/components/panels/letter/util";
+import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
+import { generateListData } from "@/features/hints/components/letterPanel/util";
 import {
   getSubstringHintStatusClasses,
   SubstringHintDataCell,

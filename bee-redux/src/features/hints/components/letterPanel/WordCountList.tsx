@@ -5,8 +5,8 @@ import {
   StatusTrackingOptions,
   SubstringHintDataCell,
 } from "@/features/hints";
-import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
-import { generateListData } from "@/features/hints/components/panels/letter/util";
+import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
+import { generateListData } from "@/features/hints/components/letterPanel/util";
 
 export interface ListRow {
   [substring: string]: SubstringHintDataCell;

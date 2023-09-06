@@ -6,13 +6,13 @@ import {
   GridRow,
   LetterPanelLocationKeys,
 } from "@/features/hints";
-import { WordLengthGrid } from "@/features/hints/components/panels/letter/wordLengthGrid/WordLengthGrid";
+import { WordLengthGrid } from "@/features/hints/components/letterPanel/wordLengthGrid/WordLengthGrid";
 import {
   GridData,
   GridRows,
   LetterHintSubsectionProps,
   TotalColumn,
-} from "@/features/hints/components/panels/letter/types";
+} from "@/features/hints/components/letterPanel/types";
 
 export function WordLengthGridContainer({
   answers,

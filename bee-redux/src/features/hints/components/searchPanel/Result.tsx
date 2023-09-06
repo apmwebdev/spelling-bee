@@ -4,7 +4,7 @@ import { WordCount } from "./WordCount";
 import { LettersPresent } from "./LettersPresent";
 import { ResultHeader } from "./ResultHeader";
 import { SubstringHintOutputKeys } from "@/features/hints";
-import { ResultKey } from "@/features/hints/components/panels/search/ResultKey";
+import { ResultKey } from "@/features/hints/components/searchPanel/ResultKey";
 
 export function Result({ resultData, statusTracking }: SearchResultProps) {
   const content = () => {

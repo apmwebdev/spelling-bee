@@ -4,7 +4,7 @@ import {
   SubstringHintDataCell,
 } from "@/features/hints";
 import uniqid from "uniqid";
-import { getTdClasses } from "@/features/hints/components/panels/letter/util";
+import { getTdClasses } from "@/features/hints/components/letterPanel/util";
 
 interface WordLengthGridCellProps {
   cell: SubstringHintDataCell;

@@ -1,24 +1,31 @@
-import { WordCountList } from "./letter/WordCountList";
-import { WordLengthGridContainer } from "./letter/WordLengthGridContainer";
-import { LettersPresent } from "./letter/LettersPresent";
-import { selectKnownWords } from "../../../guesses/guessesSlice";
-import { useAppSelector } from "@/app/hooks";
+import { WordCountList } from "@/features/hints/components/letterPanel/WordCountList";
+import { WordLengthGridContainer } from "@/features/hints/components/letterPanel/WordLengthGridContainer";
+import { LettersPresent } from "@/features/hints/components/letterPanel/LettersPresent";
 import {
-  HintPanelData,
   isLetterPanelData,
+  LetterPanelData,
+  StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hints";
-import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
+import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
+import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle/puzzleSlice";
+import { selectKnownWords } from "@/features/guesses/guessesSlice";
 
-export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
+export function LetterHintPanel({
+  letterData,
+  statusTracking,
+}: {
+  letterData: LetterPanelData;
+  statusTracking: StatusTrackingKeys;
+}) {
   const answers = useAppSelector(selectAnswerWords);
   const knownWords = useAppSelector(selectKnownWords);
 
-  if (!isLetterPanelData(panel.typeData)) return;
+  if (!isLetterPanelData(letterData)) return;
 
   const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
-    panel.typeData;
+    letterData;
 
   const subsectionProps: LetterHintSubsectionProps = {
     answers,
@@ -27,7 +34,7 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
     location,
     lettersOffset,
     showKnown,
-    statusTracking: panel.statusTracking,
+    statusTracking,
   };
 
   const content = () => {
@@ -40,7 +47,5 @@ export function LetterHintPanel({ panel }: { panel: HintPanelData }) {
     }
   };
 
-  return (
-    <div className="LetterHintPanel">{content()}</div>
-  );
+  return <div className="LetterHintPanel">{content()}</div>;
 }

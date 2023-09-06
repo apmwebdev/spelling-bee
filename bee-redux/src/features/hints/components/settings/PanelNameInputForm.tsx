@@ -1,16 +1,17 @@
-import { HintPanelData } from "@/features/hints";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export function PanelNameInputForm({
-  panel,
+  panelId,
+  currentName,
   inputId,
 }: {
-  panel: HintPanelData;
+  panelId: number;
+  currentName: string;
   inputId: string;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
-  const [name, setName] = useState(panel.name);
+  const [name, setName] = useState(currentName);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -18,7 +19,7 @@ export function PanelNameInputForm({
       setName(val);
       if (val.length > 0) {
         updatePanel({
-          id: panel.id,
+          id: panelId,
           debounceField: "name",
           name: val,
         });
@@ -31,10 +32,7 @@ export function PanelNameInputForm({
   };
 
   return (
-    <form
-      className="PanelNameInputForm"
-      onSubmit={(e) => handleSubmit(e)}
-    >
+    <form className="PanelNameInputForm" onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor={inputId}>Name:</label>
       <input
         type="text"

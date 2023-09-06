@@ -1,4 +1,4 @@
-import { LetterHintSubsectionProps } from "@/features/hints/components/panels/letter/types";
+import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
 import {
   LetterPanelLocationKeys,
   StatusTrackingKeys,
@@ -7,7 +7,7 @@ import {
 import {
   ListData,
   ListRows,
-} from "@/features/hints/components/panels/letter/WordCountList";
+} from "@/features/hints/components/letterPanel/WordCountList";
 
 export const getTdClasses = (
   cell: SubstringHintDataCell,

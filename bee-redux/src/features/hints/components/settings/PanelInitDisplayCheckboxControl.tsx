@@ -6,16 +6,18 @@ import { HelpBubble } from "@/components/HelpBubble";
 import { capitalizeFirstLetter } from "@/utils";
 
 export function PanelInitDisplayCheckboxControl({
-  panel,
+  panelId,
   settingKey,
-  disableKey,
+  currentValue,
+  disabled,
   label,
   helpBubbleContent,
   customHandler,
 }: {
-  panel: HintPanelData;
+  panelId: number;
   settingKey: PanelDisplayStateKeys;
-  disableKey?: PanelDisplayStateKeys;
+  currentValue: boolean;
+  disabled?: boolean;
   label: string;
   helpBubbleContent: ReactNode;
   customHandler?: () => void;
@@ -26,10 +28,10 @@ export function PanelInitDisplayCheckboxControl({
       customHandler();
     } else {
       updatePanel({
-        id: panel.id,
+        id: panelId,
         debounceField: `initDisplay${capitalizeFirstLetter(settingKey)}`,
         initialDisplayState: {
-          [settingKey]: !panel.initialDisplayState[settingKey],
+          [settingKey]: !currentValue,
         },
       });
     }
@@ -38,10 +40,8 @@ export function PanelInitDisplayCheckboxControl({
     <div className="PanelInitDisplayControl">
       <label>
         <Checkbox
-          checked={panel.initialDisplayState[settingKey]}
-          disabled={
-            disableKey ? panel.initialDisplayState[disableKey] : undefined
-          }
+          checked={currentValue}
+          disabled={disabled}
           onCheckedChange={handleChange}
         />
         <div className="PanelInitDisplayControlInfo">

@@ -1,8 +1,4 @@
-import {
-  HintPanelData,
-  StatusTrackingKeys,
-  StatusTrackingOptions,
-} from "@/features/hints";
+import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import * as Select from "@radix-ui/react-select";
 import {
@@ -13,28 +9,25 @@ import {
 import uniqid from "uniqid";
 
 export function PanelStatusTrackingControl({
-  panel,
+  panelId,
+  statusTracking,
 }: {
-  panel: HintPanelData;
+  panelId: number;
+  statusTracking: StatusTrackingKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = (value: string) => {
-    //Trust me bro
-    const typedValue = value as StatusTrackingKeys;
+  const handleChange = (value: StatusTrackingKeys) => {
     updatePanel({
-      id: panel.id,
+      id: panelId,
       debounceField: "statusTracking",
-      statusTracking: typedValue,
+      statusTracking: value,
     });
   };
 
   return (
     <div className="GeneralPanelSettingsStatusTracking">
       <span>Display:</span>
-      <Select.Root
-        value={panel.statusTracking as string}
-        onValueChange={handleChange}
-      >
+      <Select.Root value={statusTracking} onValueChange={handleChange}>
         <SelectTrigger className="SmallSelect" />
         <SelectContentWithPortal className="SmallSelect">
           <Select.Viewport>

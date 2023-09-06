@@ -1,10 +1,9 @@
 import { FormEvent, useState } from "react";
-import { Results } from "./search/Results";
+import { Results } from "@/features/hints/components/searchPanel/Results";
 import {
-  HintPanelData,
-  isSearchPanelData,
   SearchPanelData,
   SearchPanelSearchData,
+  StatusTrackingKeys,
 } from "@/features/hints";
 import {
   hintApiSlice,
@@ -13,15 +12,18 @@ import {
 import { useSelector } from "react-redux";
 import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 
-export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
+export function SearchHintPanel({
+  searchPanelData,
+  statusTracking,
+}: {
+  searchPanelData: SearchPanelData;
+  statusTracking: StatusTrackingKeys;
+}) {
   const [searchValue, setSearchValue] = useState("");
   const currentAttemptId = useSelector(selectCurrentAttemptId);
   const { data } =
     hintApiSlice.endpoints.getSearches.useQueryState(currentAttemptId);
   const [addSearch] = useAddSearchMutation();
-  if (!isSearchPanelData(panel.typeData)) return null;
-  //For TypeScript
-  const searchPanelData = panel.typeData as SearchPanelData;
 
   const getPanelSearches = (data: SearchPanelSearchData[] | undefined) => {
     if (!data) return;
@@ -60,7 +62,7 @@ export function SearchHintPanel({ panel }: { panel: HintPanelData }) {
       </form>
       <Results
         searches={getPanelSearches(data) ?? []}
-        tracking={panel.statusTracking}
+        tracking={statusTracking}
       />
     </div>
   );

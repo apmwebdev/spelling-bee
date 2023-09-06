@@ -108,9 +108,7 @@ export function Results({
         />
       );
     });
-    return (
-      <div className="SearchPanelResults">{resultDivs}</div>
-    );
+    return <div className="SearchPanelResults">{resultDivs}</div>;
   };
 
   return content();

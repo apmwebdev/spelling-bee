@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   CompleteHintProfile,
   HintPanelData,
@@ -153,8 +153,10 @@ export const { setDisplayStateToPayload, setPanelDisplayStateProp } =
   hintProfilesSlice.actions;
 
 export const selectCurrentPanelData = (state: RootState) => state.hintProfiles;
-export const selectPanelsDisplayState = (state: RootState) =>
-  state.hintProfiles.data;
+// export const selectPanelsDisplayState = (state: RootState) =>
+//   state.hintProfiles.data;
+export const selectPanelDisplayState = (id: number) => (state: RootState) =>
+  state.hintProfiles.data[id];
 
 export default hintProfilesSlice.reducer;
 

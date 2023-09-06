@@ -10,20 +10,20 @@ import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { PanelStatusTrackingControl } from "@/features/hints/components/settings/PanelStatusTrackingControl";
 import { PanelNameInputForm } from "@/features/hints/components/settings/PanelNameInputForm";
 import { PanelInitialDisplayControls } from "@/features/hints/components/settings/PanelInitialDisplayControls";
-import { LetterPanelSettings } from "@/features/hints/components/panels/letter/LetterPanelSettings";
-import { SearchPanelSettings } from "@/features/hints/components/panels/search/SearchPanelSettings";
-import { ObscurityPanelSettings } from "@/features/hints/components/panels/obscurity/ObscurityPanelSettings";
-import { DefinitionPanelSettings } from "@/features/hints/components/panels/definition/DefinitionPanelSettings";
+import { LetterPanelSettings } from "@/features/hints/components/letterPanel/LetterPanelSettings";
+import { SearchPanelSettings } from "@/features/hints/components/searchPanel/SearchPanelSettings";
+import { ObscurityPanelSettings } from "@/features/hints/components/obscurityPanel/ObscurityPanelSettings";
+import { DefinitionPanelSettings } from "@/features/hints/components/definitionPanel/DefinitionPanelSettings";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   PanelCurrentDisplayStateProperties,
-  selectPanelsDisplayState,
+  selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hints/hintProfilesSlice";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   const dispatch = useAppDispatch();
-  const display = useAppSelector(selectPanelsDisplayState)[panel.id];
+  const display = useAppSelector(selectPanelDisplayState(panel.id));
   const toggleExpanded = () => {
     dispatch(
       setPanelDisplayPropThunk({
@@ -64,12 +64,19 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
     >
       {typeSpecificSettings()}
       <div className="GeneralPanelSettings">
-        <PanelStatusTrackingControl panel={panel} />
+        <PanelStatusTrackingControl
+          panelId={panel.id}
+          statusTracking={panel.statusTracking}
+        />
         <PanelNameInputForm
-          panel={panel}
+          panelId={panel.id}
+          currentName={panel.name}
           inputId={`PanelNameInput${uniqid()}`}
         />
-        <PanelInitialDisplayControls panel={panel} />
+        <PanelInitialDisplayControls
+          panelId={panel.id}
+          initialDisplayState={panel.initialDisplayState}
+        />
       </div>
     </SettingsCollapsible>
   );
