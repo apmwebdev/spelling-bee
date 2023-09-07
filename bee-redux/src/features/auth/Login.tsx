@@ -38,9 +38,9 @@ export function Login() {
       const response = await login({
         user: { username: "admin", password: "admin1" },
       });
-      if (response.error) {
-        console.log("Error:", response.error);
-      }
+      // if (response.error) {
+      //   console.log("Error:", response.error);
+      // }
     } catch (error) {
       console.log("Failed to log in: ", error);
     }

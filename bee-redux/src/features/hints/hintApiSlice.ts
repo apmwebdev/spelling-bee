@@ -68,16 +68,16 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     }),
 
     // ⚠️
-    createUserHintProfile: builder.mutation<
-      t.UserHintProfileComplete,
-      t.UserHintProfileForm
-    >({}),
+    // createUserHintProfile: builder.mutation<
+    //   t.UserHintProfileComplete,
+    //   t.UserHintProfileForm
+    // >({}),
 
     // ⚠️ Only for updating the profile itself. Updating panels is handled below.
-    updateUserHintProfile: builder.mutation<
-      t.UserHintProfileBasic,
-      t.UserHintProfileForm
-    >({}),
+    // updateUserHintProfile: builder.mutation<
+    //   t.UserHintProfileBasic,
+    //   t.UserHintProfileForm
+    // >({}),
 
     // ⚠️
     deleteUserHintProfile: builder.mutation<boolean, number>({
@@ -138,7 +138,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // Hint Panels
 
     // ⚠️
-    createHintPanel: builder.mutation<t.HintPanelData, t.HintPanelCreateForm>({}),
+    // createHintPanel: builder.mutation<t.HintPanelData, t.HintPanelCreateForm>({}),
 
     /**
      * ✅

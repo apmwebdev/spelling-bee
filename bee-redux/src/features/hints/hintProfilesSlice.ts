@@ -1,10 +1,5 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  CompleteHintProfile,
-  HintPanelData,
-  HintProfileTypes,
-  PanelDisplayState,
-} from "@/features/hints/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CompleteHintProfile, HintProfileTypes } from "@/features/hints/types";
 import { hintApiSlice } from "@/features/hints/hintApiSlice";
 import { Status } from "@/features/guesses/guessesSlice";
 import { puzzleApiSlice } from "@/features/puzzle/puzzleApiSlice";
