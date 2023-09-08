@@ -594,3 +594,17 @@
   font-family: "Roboto Mono", monospace;
   font-size: 15.5px;
 }
+
+.ObscurityHintPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ObscurityPanelTable {
+  th, td {
+    padding: 4px 12px;
+    text-align: left;
+    border: 1px solid $mid-gray;
+  }
+}
