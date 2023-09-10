@@ -4,6 +4,7 @@ import { calculateScore } from "@/utils";
 import { sortBy } from "lodash";
 import { selectKnownWords } from "../guesses/guessesSlice";
 import {
+  AnswerFormat,
   BlankPuzzle,
   puzzleApiSlice,
   PuzzleFormat,
@@ -64,6 +65,10 @@ export const puzzleSlice = createSlice({
 
 export const {} = puzzleSlice.actions;
 
+export type TAnswersByLetter = {
+  [letter: string]: AnswerFormat[];
+};
+
 export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
@@ -81,6 +86,20 @@ export const selectExcludedWords = (state: RootState) =>
 export const selectIsLatest = (state: RootState) => state.puzzle.data.isLatest;
 
 // Derived data
+export const selectAnswersByLetter = createSelector(
+  [selectAnswers],
+  (answers) => {
+    const answerObj: TAnswersByLetter = {};
+    for (const answer of answers) {
+      if (answerObj[answer.word[0]] === undefined) {
+        answerObj[answer.word[0]] = [];
+      }
+      answerObj[answer.word[0]].push(answer);
+    }
+    return answerObj;
+  },
+);
+
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
   if (answers && answers.length > 0) {
     return answers.map((answer) => answer.word);

@@ -8,7 +8,10 @@ export function WordLists() {
   return (
     <div className="sb-word-list-section-container">
       <Tabs.Root className="sb-word-tabs-root" defaultValue="foundWords">
-        <Tabs.List className="TabsList">
+        <Tabs.List
+          className="TabsList"
+          style={{ gridTemplateColumns: "repeat(4, 1fr" }}
+        >
           <Tabs.Trigger className="TabsTrigger" value="foundWords">
             Found
           </Tabs.Trigger>

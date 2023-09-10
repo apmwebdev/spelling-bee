@@ -11,8 +11,9 @@ export function ObscurityHintPanel({
   obscurityPanelData: ObscurityPanelData;
   statusTracking: StatusTrackingKeys;
 }) {
-  const answers = [...useAppSelector(selectAnswers)]
-    .sort((a, b) => b.frequency - a.frequency);
+  const answers = [...useAppSelector(selectAnswers)].sort(
+    (a, b) => b.frequency - a.frequency,
+  );
   const knownWords = useAppSelector(selectKnownWords);
 
   const content = (answers: AnswerFormat[], knownWords: string[]) => {
