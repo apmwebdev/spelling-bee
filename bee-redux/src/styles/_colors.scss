@@ -103,7 +103,7 @@ $error-hue: 0;
 .HintCompleted {
   color: status-text($success-hue);
   //background-color: hsl(120, 40%, 20%);
-  font-style: italic;
+  //font-style: italic;
 }
 
 .HintInProgress {
@@ -126,8 +126,9 @@ $light-gray: #999;
 $light-gray-bg: #ddd;
 
 //Gray Lines
-$line-bright: rgba(255, 255, 255, 0.87);
-$line-darker: rgba(255, 255, 255, 0.730);
+$line-main: rgba(255, 255, 255, 0.87);
+$line-bright: rgba(255, 255, 255, 0.73);
+$line-mid: rgba(255, 255, 255, 0.66);
 $line-disabled: rgba(255, 255, 255, 0.36);
 $line-darkest: rgba(255, 255, 255, 0.3);
 

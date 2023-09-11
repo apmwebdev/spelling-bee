@@ -68,7 +68,7 @@
   overflow: hidden;
   //border-color: border-color($this-hue);
   &[data-state="closed"] {
-    color: $line-darker;
+    color: $line-bright;
     border-color: border-color-disabled($this-hue);
   }
 }
@@ -106,7 +106,7 @@
     border-color: border-color($this-hue);
   }
   .HintPanel[data-state="closed"] & {
-    color: $line-darker;
+    color: $line-bright;
     &.button {
       background-color: bg-color-disabled($this-hue);
     }
@@ -154,12 +154,12 @@
     }
   }
   &[data-state="closed"] {
-    color: $line-darker;
+    color: $line-bright;
     border-color: border-color-disabled($this-hue);
     .SettingsCollapsibleHeader {
       background-color: bg-color-disabled($this-hue);
       button {
-        color: $line-darker;
+        color: $line-bright;
         &:hover {
           border-color: border-color-disabled($this-hue);
         }
@@ -611,4 +611,19 @@
 
 .DefinitionPanelTabs {
   padding-top: 38px;
+  .TabsContent {
+    text-align: left;
+  }
+}
+
+.DefinitionPanelItem {
+  padding: 12px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.DefinitionPanelTerm {
+  font-weight: bold;
+  text-decoration: underline;
 }

@@ -69,6 +69,20 @@ export type TAnswersByLetter = {
   [letter: string]: AnswerFormat[];
 };
 
+export type LetterGuesses = {
+  known: AnswerFormat[];
+  unknown: AnswerFormat[];
+};
+
+export const createLetterGuesses = (): LetterGuesses => ({
+  known: [],
+  unknown: [],
+});
+
+export type TAnswersByLetterProcessed = {
+  [letter: string]: LetterGuesses;
+};
+
 export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
@@ -95,6 +109,25 @@ export const selectAnswersByLetter = createSelector(
         answerObj[answer.word[0]] = [];
       }
       answerObj[answer.word[0]].push(answer);
+    }
+    return answerObj;
+  },
+);
+
+export const selectAnswersByLetterProcessed = createSelector(
+  [selectAnswers, selectKnownWords],
+  (answers, knownWords) => {
+    const answerObj: TAnswersByLetterProcessed = {};
+    for (const answer of answers) {
+      const firstLetter = answer.word[0];
+      if (answerObj[firstLetter] === undefined) {
+        answerObj[firstLetter] = createLetterGuesses();
+      }
+      if (knownWords.includes(answer.word)) {
+        answerObj[firstLetter].known.push(answer);
+      } else {
+        answerObj[firstLetter].unknown.push(answer);
+      }
     }
     return answerObj;
   },

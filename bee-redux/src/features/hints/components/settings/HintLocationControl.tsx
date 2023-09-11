@@ -10,7 +10,7 @@ import {
   SelectContentWithPortal,
   SelectItem,
   SelectTrigger,
-} from "@/components/radix-ui/react-select";
+} from "@/components/radix-ui/radix-select";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import uniqid from "uniqid";
 import { CSSProperties } from "react";

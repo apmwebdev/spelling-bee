@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-} from "@/components/radix-ui/react-select";
+} from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import {
   hintApiSlice,

@@ -256,6 +256,7 @@ export interface ObscurityPanelFormData {
   clickToDefine: boolean;
   sortOrder: "asc" | "desc";
 }
+//TODO: Add setting for number of letters to reveal
 
 export interface ObscurityPanelData extends ObscurityPanelFormData {
   panelType: PanelTypes;
@@ -271,6 +272,17 @@ export interface DefinitionPanelFormData {
   showObscurity: boolean;
   sortOrder: "asc" | "desc";
 }
+
+/*
+ * TODO:
+ *  Some number of these:
+ *  mode: 'clickToReveal' or 'dictionary'
+ *   Either show one definition for each word or hide all until clicked
+ *  separateKnown: boolean
+ *  revealedLetters: number
+ *  Add setting for revealing second letter when revealing definition?
+ *  Add way to track what definitions have been revealed
+ */
 
 export interface DefinitionPanelData extends DefinitionPanelFormData {
   panelType: PanelTypes;

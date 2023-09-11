@@ -1,4 +1,4 @@
-import { Switch } from "@/components/radix-ui/react-switch";
+import { Switch } from "@/components/radix-ui/radix-switch";
 import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 
 export function HintShowKnownControl({

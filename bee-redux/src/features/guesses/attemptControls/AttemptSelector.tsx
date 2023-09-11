@@ -9,7 +9,7 @@ import {
   SelectContentWithPortal,
   SelectItem,
   SelectTrigger,
-} from "@/components/radix-ui/react-select";
+} from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 
 export function AttemptSelector() {

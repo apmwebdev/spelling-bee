@@ -8,7 +8,7 @@
 }
 
 :root {
-  color: $line-bright;
+  color: $line-main;
   background-color: $dark-gray;
 
   /* Variables */
@@ -188,7 +188,7 @@ input, input[type="number"] {
 input[type="text"], input[type="search"] {
   padding: 4px 8px;
   border: 1.5px solid transparent;
-  color: $line-darker;
+  color: $line-bright;
   border-bottom-color: border-color($accent-hue);
   background-color: bg-color-darker($accent-hue);
   font-size: 14px;
@@ -201,7 +201,7 @@ input[type="text"], input[type="search"] {
   }
   &:focus {
     background-color: bg-color-darkest($accent-hue);
-    //color: $line-bright;
+    //color: $line-main;
   }
 }
 
@@ -438,7 +438,7 @@ a {
   height: 18px;
   width: 18px;
   transform: translateX(-2px);
-  background-color: $line-bright;
+  background-color: $line-main;
 }
 .SwitchThumb[data-state='checked'] {
   transform: translateX(15px);

@@ -1,11 +1,11 @@
 import { DefinitionPanelData, StatusTrackingKeys } from "@/features/hints";
-import * as Tabs from "@radix-ui/react-tabs";
+import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
 import {
   selectAnswersByLetter,
-  selectValidLetters,
+  selectAnswersByLetterProcessed,
 } from "@/features/puzzle/puzzleSlice";
-import { selectKnownWords } from "@/features/guesses/guessesSlice";
+import { LetterTab } from "@/features/hints/components/definitionPanel/LetterTab";
 
 export function DefinitionHintPanel({
   definitionPanelData,
@@ -14,32 +14,28 @@ export function DefinitionHintPanel({
   definitionPanelData: DefinitionPanelData;
   statusTracking: StatusTrackingKeys;
 }) {
-  const validLetters = useAppSelector(selectValidLetters);
-  const answersByLetter = useAppSelector(selectAnswersByLetter);
-  const knownWords = useAppSelector(selectKnownWords);
+  const answersProcessed = useAppSelector(selectAnswersByLetterProcessed);
+  const usedLetters = Object.keys(answersProcessed);
 
   return (
     <div className="DefinitionHintPanel">
-      <Tabs.Root className="DefinitionPanelTabs" defaultValue={validLetters[0]}>
+      <Tabs.Root className="DefinitionPanelTabs" defaultValue={usedLetters[0]}>
         <Tabs.List
-          className="TabsList"
-          style={{ gridTemplateColumns: "repeat(7, 1fr" }}
+          style={{ gridTemplateColumns: `repeat(${usedLetters.length}, 1fr` }}
         >
-          {validLetters.map((letter) => (
-            <Tabs.Trigger className="TabsTrigger" value={letter} key={letter}>
+          {Object.keys(answersProcessed).map((letter) => (
+            <Tabs.Trigger value={letter} key={letter}>
               {letter.toUpperCase()}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
-        {Object.keys(answersByLetter).map((letter) => (
-          <Tabs.Content className="TabsContent" value={letter} key={letter}>
-            {answersByLetter[letter].map((answer) => (
-              <div>
-                <div>{answer.word}</div>
-                <div>{answer.definitions[0]}</div>
-              </div>
-            ))}
-          </Tabs.Content>
+        {Object.keys(answersProcessed).map((letter) => (
+          <LetterTab
+            letter={letter}
+            letterAnswers={answersProcessed[letter]}
+            definitionPanelData={definitionPanelData}
+            statusTracking={statusTracking}
+          />
         ))}
       </Tabs.Root>
     </div>
