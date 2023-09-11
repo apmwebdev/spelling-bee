@@ -16,7 +16,7 @@ export function SearchPanelSettings({
 }) {
   const { outputType, location, lettersOffset } = typeData;
   return (
-    <div className="SearchPanelSettings">
+    <div className="SearchPanelSettings PanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
       <HintLocationControl
         panelId={panelId}

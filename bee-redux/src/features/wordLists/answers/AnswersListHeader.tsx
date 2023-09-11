@@ -3,7 +3,7 @@ import {
   setAnswersSortOrder,
   SortOrder,
 } from "../wordListSettingsSlice";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function AnswersListHeader() {
@@ -16,7 +16,6 @@ export function AnswersListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="ToggleGroup"
           value={sortOrder}
           onValueChange={(val) => dispatch(setAnswersSortOrder(val))}
         >

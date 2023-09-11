@@ -112,7 +112,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :number_of_letters,
         :letters_offset,
         :separate_known,
-        :reveal_first_letter,
+        :revealed_letters,
         :click_to_define,
       ],
     )
@@ -148,7 +148,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :number_of_letters,
         :letters_offset,
         :separate_known,
-        :reveal_first_letter,
+        :revealed_letters,
         :click_to_define,
         :sort_order
       ],
@@ -177,7 +177,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
       :show_known,
       :separate_known,
-      :reveal_first_letter,
+      :revealed_letters,
       :reveal_length,
       :click_to_define,
       :sort_order,
@@ -190,6 +190,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :reveal_length,
       :show_obscurity,
       :sort_order,
+      :revealed_letters,
     )
   end
 end

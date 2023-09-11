@@ -325,12 +325,13 @@ CREATE TABLE public.obscurity_panels (
     id bigint NOT NULL,
     show_known boolean DEFAULT true NOT NULL,
     separate_known boolean DEFAULT false NOT NULL,
-    reveal_first_letter boolean DEFAULT true NOT NULL,
     reveal_length boolean DEFAULT true NOT NULL,
     click_to_define boolean DEFAULT false NOT NULL,
     sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    revealed_letters integer,
+    CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
 
 
@@ -1312,6 +1313,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230816121754'),
 ('20230818004354'),
 ('20230828060858'),
-('20230828115156');
+('20230828115156'),
+('20230911051856');
 
 

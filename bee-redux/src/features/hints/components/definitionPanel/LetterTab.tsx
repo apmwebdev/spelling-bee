@@ -20,7 +20,7 @@ export function LetterTab({
         {letterAnswers.unknown
           .sort((a, b) => a.word.length - b.word.length)
           .map((answer) => (
-            <div className="DefinitionPanelItem">
+            <div className="DefinitionPanelItem" key={answer.word}>
               <div className="DefinitionPanelTerm HintNotStarted">
                 {answer.word[0]}... {answer.word.length}
               </div>
@@ -31,7 +31,7 @@ export function LetterTab({
       <hr />
       <div className="LetterTabKnown">
         {letterAnswers.known.map((answer) => (
-          <div className="DefinitionPanelItem">
+          <div className="DefinitionPanelItem" key={answer.word}>
             <div className="DefinitionPanelTerm HintCompleted">
               {capitalizeFirstLetter(answer.word)}
             </div>

@@ -66,7 +66,7 @@ module SeedHintProfiles
       panel_subtype: ObscurityPanel.new(
         show_known: true,
         separate_known: false,
-        reveal_first_letter: true,
+        revealed_letters: 1,
         reveal_length: true,
         click_to_define: false,
         sort_order: "asc",
@@ -128,7 +128,7 @@ module SeedHintProfiles
       panel_subtype: ObscurityPanel.new(
         show_known: true,
         separate_known: false,
-        reveal_first_letter: true,
+        revealed_letters: 1,
         reveal_length: true,
         click_to_define: false,
         sort_order: "asc",
@@ -278,6 +278,32 @@ module SeedHintProfiles
       ),
       **user_panel_boilerplate(prof_2)
     )
+
+    HintPanel.create!(
+      name: "Word Obscurity Ranking",
+      display_index: 3,
+      panel_subtype: ObscurityPanel.new(
+        show_known: true,
+        separate_known: false,
+        revealed_letters: 1,
+        reveal_length: true,
+        click_to_define: false,
+        sort_order: "asc",
+      ),
+      **user_panel_boilerplate(prof_2)
+    )
+
+    HintPanel.create!(
+      name: "Word Definitions",
+      display_index: 4,
+      panel_subtype: DefinitionPanel.new(
+        show_known: true,
+        reveal_length: true,
+        show_obscurity: false,
+        sort_order: "asc",
+      ),
+      **user_panel_boilerplate(prof_2)
+    )
   end
 
   def self.seed_default_profiles
@@ -342,9 +368,9 @@ module SeedHintProfiles
     DefinitionPanel.destroy_all
     LetterPanel.destroy_all
     ObscurityPanel.destroy_all
+    SearchPanelSearch.destroy_all
     SearchPanel.destroy_all
     PanelDisplayState.destroy_all
-    SearchPanelSearch.destroy_all
     reset_all_ids
   end
 end

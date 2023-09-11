@@ -35,6 +35,7 @@ export function DefinitionHintPanel({
             letterAnswers={answersProcessed[letter]}
             definitionPanelData={definitionPanelData}
             statusTracking={statusTracking}
+            key={letter}
           />
         ))}
       </Tabs.Root>

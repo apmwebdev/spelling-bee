@@ -252,8 +252,8 @@
   }
 }
 
-.HintOffsetInput {
-  width: 3rem;
+.PanelSettings input[type="number"] {
+  width: 3.5rem;
 }
 
 .HintPanelContentContainer {
@@ -286,6 +286,19 @@
   padding: 8px;
 }
 
+.PanelSettings {
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: stretch;
+  gap: 8px;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
 
 
 
@@ -297,17 +310,6 @@
 
 
 .LetterPanelSettings {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: stretch;
-  padding: 8px;
-  gap: 8px;
-  //margin-bottom: 8px;
-  > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 }
 
 .LetterPanelNumberOfLettersInput {
@@ -445,16 +447,6 @@
 
 
 .SearchPanelSettings {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: stretch;
-  padding: 8px;
-  gap: 8px;
-  > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 }
 
 .SearchHintPanel {
@@ -595,6 +587,16 @@
   font-size: 15.5px;
 }
 
+
+
+
+/***************************/
+/***   OBSCURITY PANEL   ***/
+/***************************/
+
+
+
+
 .ObscurityHintPanel {
   display: flex;
   align-items: center;
@@ -608,6 +610,16 @@
     border: 1px solid $mid-gray;
   }
 }
+
+
+
+
+/****************************/
+/***   DEFINITION PANEL   ***/
+/****************************/
+
+
+
 
 .DefinitionPanelTabs {
   padding-top: 38px;

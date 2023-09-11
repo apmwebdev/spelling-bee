@@ -248,15 +248,24 @@ export function isSearchPanelData(a: any): a is SearchPanelData {
 
 export type SearchPanelSearchDeleteArgs = { id?: number; createdAt: number };
 
+export enum SortOrderKeys {
+  asc = "asc",
+  desc = "desc",
+}
+
+export const SortOrderOptions: EnumeratedOptions = {
+  asc: { title: "Ascending" },
+  desc: { title: "Descending" },
+};
+
 export interface ObscurityPanelFormData {
   showKnown: boolean;
   separateKnown: boolean;
-  revealFirstLetter: boolean;
+  revealedLetters: number;
   revealLength: boolean;
   clickToDefine: boolean;
-  sortOrder: "asc" | "desc";
+  sortOrder: SortOrderKeys;
 }
-//TODO: Add setting for number of letters to reveal
 
 export interface ObscurityPanelData extends ObscurityPanelFormData {
   panelType: PanelTypes;
@@ -270,7 +279,7 @@ export interface DefinitionPanelFormData {
   showKnown: boolean;
   revealLength: boolean;
   showObscurity: boolean;
-  sortOrder: "asc" | "desc";
+  sortOrder: SortOrderKeys;
 }
 
 /*
@@ -339,13 +348,13 @@ export interface HintPanelUpdateForm {
     showKnown?: boolean;
     revealLength?: boolean;
     showObscurity?: boolean;
-    sortOrder?: boolean;
+    sortOrder?: SortOrderKeys;
     location?: SearchPanelLocationKeys | LetterPanelLocationKeys;
     outputType?: SubstringHintOutputKeys;
     numberOfLetters?: number;
     lettersOffset?: number;
     separateKnown?: boolean;
-    revealFirstLetter?: boolean;
+    revealedLetters?: number;
     clickToDefine?: boolean;
   };
 }
@@ -362,13 +371,13 @@ export interface RailsHintPanelUpdateForm {
       show_known?: boolean;
       reveal_length?: boolean;
       show_obscurity?: boolean;
-      sort_order?: SortOrder;
+      sort_order?: SortOrderKeys;
       location?: SearchPanelLocationKeys;
       output_type?: SubstringHintOutputKeys;
       number_of_letters?: number;
       letters_offset?: number;
       separate_known?: boolean;
-      reveal_first_letter?: boolean;
+      revealed_letters?: number;
       click_to_define?: boolean;
     };
   };

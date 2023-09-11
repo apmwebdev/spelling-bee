@@ -33,7 +33,7 @@ export function LetterPanelSettings({
   };
 
   return (
-    <div className="LetterPanelSettings">
+    <div className="LetterPanelSettings PanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
       <div>
         <span>Number of letters:</span>

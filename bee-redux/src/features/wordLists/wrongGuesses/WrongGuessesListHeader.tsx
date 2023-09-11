@@ -5,7 +5,7 @@ import {
   SortOrder,
   SortType,
 } from "../wordListSettingsSlice";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function WrongGuessesListHeader() {
@@ -20,7 +20,7 @@ export function WrongGuessesListHeader() {
         <span>Sort</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-type ToggleGroup"
+          className="sb-wrong-guesses-sort-type"
           value={sortType}
           onValueChange={(val) => dispatch(setWrongGuessesSortType(val))}
         >
@@ -36,7 +36,7 @@ export function WrongGuessesListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-order ToggleGroup"
+          className="sb-wrong-guesses-sort-order"
           value={sortOrder}
           onValueChange={(val) => dispatch(setWrongGuessesSortOrder(val))}
         >

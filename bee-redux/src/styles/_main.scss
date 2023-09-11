@@ -475,8 +475,9 @@ a {
 /*** Toggle Group   ***/
 
 .ToggleGroup {
+  $this-hue: $accent-hue;
   border-radius: var(--br);
-  border: 1px solid $mid-gray;
+  border: 1.5px solid border-color($this-hue);
   overflow: hidden;
   display: flex;
   gap: 1px;

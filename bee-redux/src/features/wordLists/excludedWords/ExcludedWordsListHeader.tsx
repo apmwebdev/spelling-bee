@@ -3,7 +3,7 @@ import {
   setExcludedWordsSortOrder,
   SortOrder,
 } from "../wordListSettingsSlice";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function ExcludedWordsListHeader() {
@@ -16,7 +16,7 @@ export function ExcludedWordsListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-order ToggleGroup"
+          className="sb-wrong-guesses-sort-order"
           value={sortOrder}
           onValueChange={(val) => dispatch(setExcludedWordsSortOrder(val))}
         >

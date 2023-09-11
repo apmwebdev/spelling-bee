@@ -8,7 +8,7 @@ export function DefinitionPanelSettings({
   typeData: DefinitionPanelData;
 }) {
   return (
-    <div className="DefinitionPanelSettings">
+    <div className="DefinitionPanelSettings PanelSettings">
       DefinitionPanelSettings
     </div>
   );
