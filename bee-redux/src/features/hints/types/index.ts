@@ -260,8 +260,8 @@ export const SortOrderOptions: EnumeratedOptions = {
 
 export interface ObscurityPanelFormData {
   showKnown: boolean;
-  separateKnown: boolean;
   revealedLetters: number;
+  separateKnown: boolean;
   revealLength: boolean;
   clickToDefine: boolean;
   sortOrder: SortOrderKeys;
@@ -277,10 +277,10 @@ export function isObscurityPanelData(a: any): a is ObscurityPanelData {
 
 export interface DefinitionPanelFormData {
   showKnown: boolean;
+  revealedLetters: number;
   revealLength: boolean;
   showObscurity: boolean;
   sortOrder: SortOrderKeys;
-  revealedLetters: number;
 }
 
 /*

@@ -152,7 +152,9 @@ CREATE TABLE public.definition_panels (
     show_obscurity boolean DEFAULT false NOT NULL,
     sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    revealed_letters integer DEFAULT 1 NOT NULL,
+    CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
 
 
@@ -1314,6 +1316,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230818004354'),
 ('20230828060858'),
 ('20230828115156'),
-('20230911051856');
+('20230911051856'),
+('20230912194527');
 
 

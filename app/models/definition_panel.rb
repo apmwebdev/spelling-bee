@@ -5,6 +5,7 @@ class DefinitionPanel < ApplicationRecord
     {
       panelType: "definition",
       showKnown: show_known,
+      revealedLetters: revealed_letters,
       revealLength: reveal_length,
       showObscurity: show_obscurity,
       sortOrder: sort_order,

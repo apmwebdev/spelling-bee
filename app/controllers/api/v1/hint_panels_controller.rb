@@ -176,8 +176,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
   def obscurity_update_params
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
       :show_known,
-      :separate_known,
       :revealed_letters,
+      :separate_known,
       :reveal_length,
       :click_to_define,
       :sort_order,
@@ -187,10 +187,10 @@ class Api::V1::HintPanelsController < AuthRequiredController
   def definition_update_params
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
       :show_known,
+      :revealed_letters,
       :reveal_length,
       :show_obscurity,
       :sort_order,
-      :revealed_letters,
     )
   end
 end
