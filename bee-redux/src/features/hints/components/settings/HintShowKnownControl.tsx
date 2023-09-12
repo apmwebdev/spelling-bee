@@ -1,5 +1,5 @@
-import { Switch } from "@/components/radix-ui/radix-switch";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
+import { HintPanelBooleanKeys } from "@/features/hints";
 
 export function HintShowKnownControl({
   panelId,
@@ -8,20 +8,11 @@ export function HintShowKnownControl({
   panelId: number;
   showKnown: boolean;
 }) {
-  const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = () => {
-    updatePanel({
-      id: panelId,
-      debounceField: "showKnown",
-      typeData: {
-        showKnown: !showKnown,
-      },
-    });
-  };
   return (
-    <div className="HintShowKnownControl">
-      <span>Show Known:</span>
-      <Switch checked={showKnown} onCheckedChange={handleChange} />
-    </div>
+    <HintPanelSwitchSetting
+      panelId={panelId}
+      settingKey={HintPanelBooleanKeys.showKnown}
+      currentValue={showKnown}
+    />
   );
 }

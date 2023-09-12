@@ -1,18 +1,18 @@
 import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
 import { HintPanelBooleanKeys } from "@/features/hints";
 
-export function HintClickToDefineControl({
+export function HintShowObscurityControl({
   panelId,
-  clickToDefine,
+  showObscurity,
 }: {
   panelId: number;
-  clickToDefine: boolean;
+  showObscurity: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
       panelId={panelId}
-      settingKey={HintPanelBooleanKeys.clickToDefine}
-      currentValue={clickToDefine}
+      settingKey={HintPanelBooleanKeys.showObscurity}
+      currentValue={showObscurity}
     />
   );
 }

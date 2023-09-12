@@ -1,5 +1,5 @@
-import { Switch } from "@/components/radix-ui/radix-switch";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
+import { HintPanelBooleanKeys } from "@/features/hints";
 
 export function HintRevealLengthControl({
   panelId,
@@ -8,20 +8,11 @@ export function HintRevealLengthControl({
   panelId: number;
   revealLength: boolean;
 }) {
-  const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = () => {
-    updatePanel({
-      id: panelId,
-      debounceField: "revealLength",
-      typeData: {
-        revealLength: !revealLength,
-      },
-    });
-  };
   return (
-    <div className="HintRevealLengthControl">
-      <span>Reveal Length:</span>
-      <Switch checked={revealLength} onCheckedChange={handleChange} />
-    </div>
+    <HintPanelSwitchSetting
+      panelId={panelId}
+      settingKey={HintPanelBooleanKeys.revealLength}
+      currentValue={revealLength}
+    />
   );
 }

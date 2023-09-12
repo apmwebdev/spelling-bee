@@ -1,27 +1,21 @@
-import { Switch } from "@/components/radix-ui/radix-switch";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
+import { HintPanelBooleanKeys } from "@/features/hints";
 
 export function HintSeparateKnownControl({
   panelId,
   separateKnown,
+  disabled,
 }: {
   panelId: number;
   separateKnown: boolean;
+  disabled: boolean;
 }) {
-  const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = () => {
-    updatePanel({
-      id: panelId,
-      debounceField: "separateKnown",
-      typeData: {
-        separateKnown: !separateKnown,
-      },
-    });
-  };
   return (
-    <div className="HintSeparateKnownControl">
-      <span>Separate Known:</span>
-      <Switch checked={separateKnown} onCheckedChange={handleChange} />
-    </div>
+    <HintPanelSwitchSetting
+      panelId={panelId}
+      settingKey={HintPanelBooleanKeys.separateKnown}
+      currentValue={separateKnown}
+      disabled={disabled}
+    />
   );
 }

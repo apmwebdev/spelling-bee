@@ -331,6 +331,22 @@ export interface HintPanelCreateForm {
     | DefinitionPanelFormData;
 }
 
+export enum HintPanelBooleanKeys {
+  showKnown = "showKnown",
+  revealLength = "revealLength",
+  separateKnown = "separateKnown",
+  showObscurity = "showObscurity",
+  clickToDefine = "clickToDefine",
+}
+
+export const HintPanelBooleanSettings: EnumeratedOptions = {
+  showKnown: { title: "Show Known" },
+  revealLength: { title: "Reveal Length" },
+  separateKnown: { title: "Separate Known" },
+  showObscurity: { title: "Show Obscurity" },
+  clickToDefine: { title: "Click to Define" },
+};
+
 export interface HintPanelUpdateForm {
   id: number;
   /**
