@@ -15,7 +15,7 @@ export function DefinitionPanelSettings({
 }) {
   return (
     <div className="DefinitionPanelSettings PanelSettings">
-      <HintHideKnownControl panelId={panelId} showKnown={typeData.showKnown} />
+      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
       <HintRevealedLettersControl
         panelId={panelId}
         revealedLetters={typeData.revealedLetters}
@@ -23,7 +23,7 @@ export function DefinitionPanelSettings({
       <HintSeparateKnownControl
         panelId={panelId}
         separateKnown={typeData.separateKnown}
-        disabled={!typeData.showKnown}
+        disabled={typeData.hideKnown}
       />
       <HintShowObscurityControl
         panelId={panelId}

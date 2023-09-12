@@ -6,6 +6,7 @@ class DefinitionPanel < ApplicationRecord
       panelType: "definition",
       hideKnown: hide_known,
       revealedLetters: revealed_letters,
+      separateKnown: separate_known,
       revealLength: reveal_length,
       showObscurity: show_obscurity,
       sortOrder: sort_order,
