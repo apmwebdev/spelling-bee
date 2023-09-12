@@ -7,11 +7,11 @@ import { AppDispatch, RootState } from "@/app/store";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { capitalizeFirstLetter } from "@/utils";
 
-interface PanelCurrentDisplayState {
+export type PanelCurrentDisplayState = {
   isExpanded: boolean;
   isBlurred: boolean;
   isSettingsExpanded: boolean;
-}
+};
 
 interface StateData {
   [panelId: number]: PanelCurrentDisplayState;

@@ -303,20 +303,41 @@ button.PanelSettingsToggle {
   }
 }
 
-.PanelSettings input[type="number"] {
+.PanelSettings input[type="number"],
+.HintOffsetInput,
+.LetterPanelNumberOfLettersInput,
+.HintRevealedLettersInput,
+{
   width: 3.5rem;
+}
+
+.HintPanelContent {
+  padding: 8px;
 }
 
 .HintPanelContentContainer {
   position: relative;
-  //margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-.HintContentBlurButton {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+.HintPanelQuickActions {
+  position: relative;
   z-index: 2;
+  width: 100%;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  > div {
+    display: flex;
+    align-items: center;
+    //justify-content: stretch;
+    gap: 8px;
+  }
 }
 
 .HintContentBlur {
@@ -331,10 +352,6 @@ button.PanelSettingsToggle {
   justify-content: center;
   background-color: $dark-gray-lighter;
   border-radius: var(--br);
-}
-
-.HintPanelContent {
-  padding: 8px;
 }
 
 .PanelSettings {
@@ -673,7 +690,6 @@ button.PanelSettingsToggle {
 
 
 .DefinitionPanelTabs {
-  padding-top: 38px;
   .TabsContent {
     text-align: left;
   }

@@ -14,9 +14,6 @@ export function ObscurityPanelSettings({
   typeData: ObscurityPanelData;
 }) {
   return (
-    /*
-     * clickToDefine: boolean;
-     */
     <div className="ObscurityPanelSettings PanelSettings">
       <HintShowKnownControl panelId={panelId} showKnown={typeData.showKnown} />
       <HintRevealedLettersControl

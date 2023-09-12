@@ -280,6 +280,7 @@ export interface DefinitionPanelFormData {
   revealLength: boolean;
   showObscurity: boolean;
   sortOrder: SortOrderKeys;
+  revealedLetters: number;
 }
 
 /*

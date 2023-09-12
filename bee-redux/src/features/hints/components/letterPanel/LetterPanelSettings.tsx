@@ -1,51 +1,26 @@
-import { ChangeEvent } from "react";
 import { LetterPanelData, PanelTypes } from "@/features/hints";
 import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
 import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
-import { useAppSelector } from "@/app/hooks";
-import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
 import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
-
-export interface LetterPanelSettingsProps {
-  panelId: number;
-  typeData: LetterPanelData;
-}
+import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";
 
 export function LetterPanelSettings({
   panelId,
   typeData,
-}: LetterPanelSettingsProps) {
+}: {
+  panelId: number;
+  typeData: LetterPanelData;
+}) {
   const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
     typeData;
-  const answerLengths = useAppSelector(selectAnswerLengths);
-  const [updatePanel] = useUpdateHintPanelMutation();
-
-  const handleNumberOfLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
-    updatePanel({
-      id: panelId,
-      debounceField: "numberOfLetters",
-      typeData: {
-        numberOfLetters: Number(e.target.value),
-      },
-    });
-  };
-
   return (
     <div className="LetterPanelSettings PanelSettings">
       <HintOutputTypeControl panelId={panelId} outputType={outputType} />
-      <div>
-        <span>Number of letters:</span>
-        <input
-          className="LetterPanelNumberOfLettersInput"
-          type="number"
-          value={numberOfLetters}
-          min={1}
-          max={answerLengths.length ? answerLengths.slice(-1)[0] : 0}
-          onChange={handleNumberOfLettersChange}
-        />
-      </div>
+      <HintNumberOfLettersControl
+        panelId={panelId}
+        numberOfLetters={typeData.numberOfLetters}
+      />
       <HintLocationControl
         panelId={panelId}
         location={location}
