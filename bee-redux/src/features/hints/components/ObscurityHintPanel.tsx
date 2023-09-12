@@ -20,15 +20,15 @@ export function ObscurityHintPanel({
     return answers.map((answer) => {
       if (knownWords.includes(answer.word)) {
         return (
-          <tr className="capitalize" key={answer.word}>
-            <td>{answer.word}</td>
+          <tr key={answer.word}>
+            <td className="capitalize">{answer.word}</td>
             <td>{answer.frequency}</td>
           </tr>
         );
       }
       return (
         <tr className="HintNotStarted capitalize" key={answer.word}>
-          <td>
+          <td className="capitalize">
             {answer.word.slice(0, obscurityPanelData.revealedLetters)}...{" "}
             {obscurityPanelData.revealLength ? answer.word.length : null}
           </td>

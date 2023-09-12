@@ -72,11 +72,13 @@ export type TAnswersByLetter = {
 export type LetterGuesses = {
   known: AnswerFormat[];
   unknown: AnswerFormat[];
+  all: AnswerFormat[];
 };
 
 export const createLetterGuesses = (): LetterGuesses => ({
   known: [],
   unknown: [],
+  all: [],
 });
 
 export type TAnswersByLetterProcessed = {
@@ -123,6 +125,7 @@ export const selectAnswersByLetterProcessed = createSelector(
       if (answerObj[firstLetter] === undefined) {
         answerObj[firstLetter] = createLetterGuesses();
       }
+      answerObj[firstLetter].all.push(answer);
       if (knownWords.includes(answer.word)) {
         answerObj[firstLetter].known.push(answer);
       } else {

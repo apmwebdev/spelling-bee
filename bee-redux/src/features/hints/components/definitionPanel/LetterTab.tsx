@@ -1,18 +1,15 @@
 import { LetterGuesses } from "@/features/puzzle/puzzleSlice";
-import { DefinitionPanelData, StatusTrackingKeys } from "@/features/hints";
+import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
-import { capitalizeFirstLetter } from "@/utils";
 
 export function LetterTab({
   letter,
   letterAnswers,
   definitionPanelData,
-  statusTracking,
 }: {
   letter: string;
   letterAnswers: LetterGuesses;
   definitionPanelData: DefinitionPanelData;
-  statusTracking: StatusTrackingKeys;
 }) {
   return (
     <Tabs.Content className="LetterTab" value={letter}>
@@ -22,8 +19,12 @@ export function LetterTab({
           .map((answer) => (
             <div className="DefinitionPanelItem" key={answer.word}>
               <div className="DefinitionPanelTerm HintNotStarted capitalize">
-                {answer.word[0]}... {answer.word.length}
+                {answer.word.slice(0, definitionPanelData.revealedLetters)}...{" "}
+                {definitionPanelData.revealLength ? answer.word.length : null}
               </div>
+              {definitionPanelData.showObscurity ? (
+                <div className="italic">Frequency: {answer.frequency}</div>
+              ) : null}
               <div>{answer.definitions[0]}</div>
             </div>
           ))}
@@ -35,6 +36,7 @@ export function LetterTab({
             <div className="DefinitionPanelTerm HintCompleted capitalize">
               {answer.word}
             </div>
+            <div className="italic">Frequency: {answer.frequency}</div>
             <div>{answer.definitions[0]}</div>
           </div>
         ))}

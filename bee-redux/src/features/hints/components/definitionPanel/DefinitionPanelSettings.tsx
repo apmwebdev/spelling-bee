@@ -13,10 +13,6 @@ export function DefinitionPanelSettings({
   panelId: number;
   typeData: DefinitionPanelData;
 }) {
-  /*
-  showObscurity
-  sortOrder
-   */
   return (
     <div className="DefinitionPanelSettings PanelSettings">
       <HintShowKnownControl panelId={panelId} showKnown={typeData.showKnown} />
@@ -26,7 +22,7 @@ export function DefinitionPanelSettings({
       />
       <HintSeparateKnownControl
         panelId={panelId}
-        separateKnown={typeData.showKnown}
+        separateKnown={typeData.separateKnown}
         disabled={!typeData.showKnown}
       />
       <HintShowObscurityControl

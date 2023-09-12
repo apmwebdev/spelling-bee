@@ -262,8 +262,8 @@ export interface ObscurityPanelFormData {
   showKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
-  revealLength: boolean;
   clickToDefine: boolean;
+  revealLength: boolean;
   sortOrder: SortOrderKeys;
 }
 
@@ -278,8 +278,9 @@ export function isObscurityPanelData(a: any): a is ObscurityPanelData {
 export interface DefinitionPanelFormData {
   showKnown: boolean;
   revealedLetters: number;
-  revealLength: boolean;
+  separateKnown: boolean;
   showObscurity: boolean;
+  revealLength: boolean;
   sortOrder: SortOrderKeys;
 }
 
@@ -288,9 +289,6 @@ export interface DefinitionPanelFormData {
  *  Some number of these:
  *  mode: 'clickToReveal' or 'dictionary'
  *   Either show one definition for each word or hide all until clicked
- *  separateKnown: boolean
- *  revealedLetters: number
- *  Add setting for revealing second letter when revealing definition?
  *  Add way to track what definitions have been revealed
  */
 
