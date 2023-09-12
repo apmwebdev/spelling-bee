@@ -1,6 +1,7 @@
 //Hues
 $yellow-hue: 51;
 $blue-hue: $yellow-hue + 180;
+$settings-hue: $blue-hue + 30;
 $accent-hue: $blue-hue - 30;
 $alt-bg-hue: $blue-hue - 30;
 $title-hue: $yellow-hue - 0;
@@ -10,6 +11,8 @@ $warning-hue: 56;
 $error-hue: 0;
 
 //Backgrounds
+
+//Dark
 @function bg-color($hue) {
   @return hsl($hue, 25%, 30%);
 }
@@ -40,6 +43,11 @@ $error-hue: 0;
 
 @function bg-color-extra-disabled($hue) {
   @return hsl($hue, 15%, 22%);
+}
+
+//Light
+@function bg-color-light-hover($hue) {
+  @return hsl($hue, 80%, 85%);
 }
 
 //Borders

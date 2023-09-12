@@ -1,6 +1,9 @@
 import { RemoveButton } from "./RemoveButton";
 import { DuplicateButton } from "./DuplicateButton";
 import { ReactNode } from "react";
+import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
+import { DragHandle } from "@/features/hints/components/shared/DragHandle";
+import { SettingsToggle } from "@/features/hints/components/shared/SettingsToggle";
 
 interface PanelHeaderProps {
   panelId: number;
@@ -14,7 +17,7 @@ export function PanelHeader({
   children,
 }: PanelHeaderProps) {
   const cssClasses = () => {
-    let classList = "HintPanelHeader click-header-to-collapse";
+    let classList = "HintPanelHeader";
     if (isPanelExpanded) {
       classList += " expanded";
     } else {
@@ -25,11 +28,13 @@ export function PanelHeader({
 
   return (
     <header className={cssClasses()}>
-      <div className="HintPanelHeaderButtonsLeft">
-        <DuplicateButton panelId={panelId} />
+      <div className="PanelHeaderButtonGroup">
+        <DragHandle />
+        <SettingsToggle panelId={panelId} />
       </div>
       {children}
-      <div className="HintPanelHeaderButtonsRight">
+      <div className="PanelHeaderButtonGroup">
+        <DuplicateButton panelId={panelId} />
         <RemoveButton panelId={panelId} />
       </div>
     </header>

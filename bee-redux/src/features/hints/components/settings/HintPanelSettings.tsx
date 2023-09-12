@@ -7,9 +7,9 @@ import {
   isSearchPanelData,
 } from "@/features/hints";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
-import { PanelStatusTrackingControl } from "@/features/hints/components/settings/PanelStatusTrackingControl";
-import { PanelNameInputForm } from "@/features/hints/components/settings/PanelNameInputForm";
-import { PanelInitialDisplayControls } from "@/features/hints/components/settings/PanelInitialDisplayControls";
+import { PanelStatusTrackingControl } from "./PanelStatusTrackingControl";
+import { PanelNameInputForm } from "./PanelNameInputForm";
+import { PanelInitialDisplayControls } from "./PanelInitialDisplayControls";
 import { LetterPanelSettings } from "@/features/hints/components/letterPanel/LetterPanelSettings";
 import { SearchPanelSettings } from "@/features/hints/components/searchPanel/SearchPanelSettings";
 import { ObscurityPanelSettings } from "@/features/hints/components/obscurityPanel/ObscurityPanelSettings";
@@ -58,6 +58,28 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   };
 
   return (
+    <div className="HintPanelSettings">
+      <div className="HintPanelSettingsHeader">Settings</div>
+      {typeSpecificSettings()}
+      <div className="GeneralPanelSettings">
+        <PanelStatusTrackingControl
+          panelId={panel.id}
+          statusTracking={panel.statusTracking}
+        />
+        <PanelNameInputForm
+          panelId={panel.id}
+          currentName={panel.name}
+          inputId={`PanelNameInput${uniqid()}`}
+        />
+        <PanelInitialDisplayControls
+          panelId={panel.id}
+          initialDisplayState={panel.initialDisplayState}
+        />
+      </div>
+    </div>
+  );
+  /*
+  return (
     <SettingsCollapsible
       isExpanded={display.isSettingsExpanded}
       toggleIsExpanded={toggleExpanded}
@@ -80,4 +102,5 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
       </div>
     </SettingsCollapsible>
   );
+  */
 }

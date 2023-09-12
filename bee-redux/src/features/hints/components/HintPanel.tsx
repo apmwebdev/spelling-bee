@@ -38,7 +38,9 @@ export function HintPanel({ panel }: { panel: HintPanelData }) {
         </Collapsible.Trigger>
       </PanelHeader>
       <Collapsible.Content className="HintPanelContent">
-        <HintPanelSettings panel={panel} />
+        {display.isSettingsExpanded ? (
+          <HintPanelSettings panel={panel} />
+        ) : null}
         <HintPanelContentContainer panel={panel} />
       </Collapsible.Content>
     </Collapsible.Root>

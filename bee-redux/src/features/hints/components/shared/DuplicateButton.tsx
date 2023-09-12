@@ -5,7 +5,6 @@ interface DuplicateButtonProps {
 }
 
 export function DuplicateButton({ panelId }: DuplicateButtonProps) {
-
   return (
     <IconButton
       type={IconButtonTypeKeys.Duplicate}

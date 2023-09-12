@@ -16,6 +16,8 @@ export enum IconButtonTypeKeys {
   Close = "Close",
   Show = "Show",
   Hide = "Hide",
+  Settings = "Settings",
+  DragVertical = "DragVertical",
 }
 
 type IconButtonTypesData = {
@@ -54,6 +56,14 @@ export const IconButtonTypes: IconButtonTypesData = {
   Hide: {
     name: "show",
     icon: "mdi:hide",
+  },
+  Settings: {
+    name: "settings",
+    icon: "mdi:cog",
+  },
+  DragVertical: {
+    name: "dragVertical",
+    icon: "mdi:drag",
   },
 };
 
