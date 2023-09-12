@@ -425,10 +425,15 @@ a {
   height: 25px;
   border: 1.5px solid border-color($accent-hue);
   background-color: bg-color-darkest($accent-hue);
-}
-.SwitchRoot[data-state='checked'] {
-  background-color: ui-bg-color($accent-hue);
-  border-color: border-color-hover($accent-hue);
+  &[data-state='checked'] {
+    background-color: ui-bg-color($accent-hue);
+    border-color: border-color-hover($accent-hue);
+  }
+  &[data-disabled] {
+    background-color: bg-color-disabled($accent-hue);
+    border-color: border-color-disabled($accent-hue);
+    cursor: not-allowed;
+  }
 }
 
 .SwitchThumb {
@@ -439,9 +444,12 @@ a {
   width: 18px;
   transform: translateX(-2px);
   background-color: $line-main;
-}
-.SwitchThumb[data-state='checked'] {
-  transform: translateX(15px);
+  &[data-state='checked'] {
+    transform: translateX(15px);
+  }
+  &[data-disabled] {
+    background-color: $line-disabled;
+  }
 }
 
 /***   Tabs   ***/

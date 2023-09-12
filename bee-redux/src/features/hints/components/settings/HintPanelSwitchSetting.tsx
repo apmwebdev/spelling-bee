@@ -4,6 +4,7 @@ import {
   HintPanelBooleanSettings,
 } from "@/features/hints";
 import { Switch } from "@/components/radix-ui/radix-switch";
+import { maybeDisable } from "@/utils";
 
 export function HintPanelSwitchSetting({
   panelId,
@@ -28,8 +29,10 @@ export function HintPanelSwitchSetting({
   };
 
   return (
-    <div className="HintPanelSwitchSetting">
-      <span>{HintPanelBooleanSettings[settingKey].title}:</span>
+    <div>
+      <span className={maybeDisable("HintPanelSwitchSetting", disabled)}>
+        {HintPanelBooleanSettings[settingKey].title}:
+      </span>
       <Switch
         checked={currentValue}
         onCheckedChange={handleChange}
