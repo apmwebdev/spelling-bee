@@ -1,6 +1,7 @@
 import { LetterGuesses } from "@/features/puzzle/puzzleSlice";
 import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
+import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
 
 export function LetterTab({
   letter,
@@ -23,7 +24,10 @@ export function LetterTab({
                 {definitionPanelData.revealLength ? answer.word.length : null}
               </div>
               {definitionPanelData.showObscurity ? (
-                <div className="italic">Frequency: {answer.frequency}</div>
+                <div className="italic">
+                  Frequency: {answer.frequency} (
+                  {usageExplanation(answer.frequency).toLowerCase()})
+                </div>
               ) : null}
               <div>{answer.definitions[0]}</div>
             </div>
@@ -36,7 +40,10 @@ export function LetterTab({
             <div className="DefinitionPanelTerm HintCompleted capitalize">
               {answer.word}
             </div>
-            <div className="italic">Frequency: {answer.frequency}</div>
+            <div className="italic">
+              Frequency: {answer.frequency} (
+              {usageExplanation(answer.frequency).toLowerCase()})
+            </div>
             <div>{answer.definitions[0]}</div>
           </div>
         ))}

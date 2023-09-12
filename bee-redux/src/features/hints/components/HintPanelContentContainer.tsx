@@ -61,7 +61,6 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       content: (
         <ObscurityHintPanel
           obscurityPanelData={panel.typeData as ObscurityPanelData}
-          statusTracking={panel.statusTracking}
         />
       ),
       quickActions: (

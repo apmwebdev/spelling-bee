@@ -1,15 +1,14 @@
-import { ObscurityPanelData, StatusTrackingKeys } from "@/features/hints";
+import { ObscurityPanelData } from "@/features/hints";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswers } from "@/features/puzzle/puzzleSlice";
 import { selectKnownWords } from "@/features/guesses/guessesSlice";
 import { AnswerFormat } from "@/features/puzzle/puzzleApiSlice";
+import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
 
 export function ObscurityHintPanel({
   obscurityPanelData,
-  statusTracking,
 }: {
   obscurityPanelData: ObscurityPanelData;
-  statusTracking: StatusTrackingKeys;
 }) {
   const answers = [...useAppSelector(selectAnswers)].sort(
     (a, b) => b.frequency - a.frequency,
@@ -23,16 +22,18 @@ export function ObscurityHintPanel({
           <tr key={answer.word}>
             <td className="capitalize">{answer.word}</td>
             <td>{answer.frequency}</td>
+            <td>{usageExplanation(answer.frequency)}</td>
           </tr>
         );
       }
       return (
-        <tr className="HintNotStarted capitalize" key={answer.word}>
+        <tr className="HintNotStarted" key={answer.word}>
           <td className="capitalize">
             {answer.word.slice(0, obscurityPanelData.revealedLetters)}...{" "}
             {obscurityPanelData.revealLength ? answer.word.length : null}
           </td>
           <td>{answer.frequency}</td>
+          <td>{usageExplanation(answer.frequency)}</td>
         </tr>
       );
     });
@@ -45,6 +46,7 @@ export function ObscurityHintPanel({
           <tr>
             <th>Word</th>
             <th>Frequency</th>
+            <th>Usage</th>
           </tr>
         </thead>
         <tbody>{content(answers, knownWords)}</tbody>

@@ -1,4 +1,4 @@
-import { DefinitionPanelData, StatusTrackingKeys } from "@/features/hints";
+import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersByLetterProcessed } from "@/features/puzzle/puzzleSlice";
