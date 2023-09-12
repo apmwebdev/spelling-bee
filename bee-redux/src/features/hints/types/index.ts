@@ -193,7 +193,7 @@ export interface LetterPanelFormData {
    */
   lettersOffset: number;
   /** Whether to show rows that consist only of known words */
-  showKnown: boolean;
+  hideKnown: boolean;
 }
 
 export interface LetterPanelData extends LetterPanelFormData {
@@ -259,7 +259,7 @@ export const SortOrderOptions: EnumeratedOptions = {
 };
 
 export interface ObscurityPanelFormData {
-  showKnown: boolean;
+  hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
   clickToDefine: boolean;
@@ -276,7 +276,7 @@ export function isObscurityPanelData(a: any): a is ObscurityPanelData {
 }
 
 export interface DefinitionPanelFormData {
-  showKnown: boolean;
+  hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
   showObscurity: boolean;
@@ -330,7 +330,7 @@ export interface HintPanelCreateForm {
 }
 
 export enum HintPanelBooleanKeys {
-  showKnown = "showKnown",
+  hideKnown = "hideKnown",
   revealLength = "revealLength",
   separateKnown = "separateKnown",
   showObscurity = "showObscurity",
@@ -338,7 +338,7 @@ export enum HintPanelBooleanKeys {
 }
 
 export const HintPanelBooleanSettings: EnumeratedOptions = {
-  showKnown: { title: "Show Known" },
+  hideKnown: { title: "Hide Known" },
   revealLength: { title: "Reveal Length" },
   separateKnown: { title: "Separate Known" },
   showObscurity: { title: "Show Obscurity" },
@@ -360,7 +360,7 @@ export interface HintPanelUpdateForm {
   currentDisplayState?: PanelDisplayFormData;
   statusTracking?: StatusTrackingKeys;
   typeData?: {
-    showKnown?: boolean;
+    hideKnown?: boolean;
     revealLength?: boolean;
     showObscurity?: boolean;
     sortOrder?: SortOrderKeys;
@@ -383,7 +383,7 @@ export interface RailsHintPanelUpdateForm {
     current_display_state_attributes?: RailsPanelDisplayFormData;
     status_tracking?: StatusTrackingKeys;
     panel_subtype_attributes?: {
-      show_known?: boolean;
+      hide_known?: boolean;
       reveal_length?: boolean;
       show_obscurity?: boolean;
       sort_order?: SortOrderKeys;

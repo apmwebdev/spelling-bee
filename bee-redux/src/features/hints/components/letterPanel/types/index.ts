@@ -11,7 +11,7 @@ export interface LetterHintSubsectionProps {
   numberOfLetters: number;
   location: LetterPanelLocationKeys;
   lettersOffset: number;
-  showKnown: boolean;
+  hideKnown: boolean;
   statusTracking: StatusTrackingKeys;
 }
 

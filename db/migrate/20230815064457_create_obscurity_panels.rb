@@ -1,7 +1,7 @@
 class CreateObscurityPanels < ActiveRecord::Migration[7.0]
   def change
     create_table :obscurity_panels do |t|
-      t.boolean :show_known, default: true, null: false
+      t.boolean :hide_known, default: false, null: false
       t.integer :revealed_letters, default: 1, null: false
       t.check_constraint "revealed_letters > 0",
         name: "positive_revealed_letters"

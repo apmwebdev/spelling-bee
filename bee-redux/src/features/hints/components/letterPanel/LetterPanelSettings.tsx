@@ -1,7 +1,7 @@
 import { LetterPanelData, PanelTypes } from "@/features/hints";
 import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
 import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
-import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
+import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
 import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
 import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";
 
@@ -12,7 +12,7 @@ export function LetterPanelSettings({
   panelId: number;
   typeData: LetterPanelData;
 }) {
-  const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
+  const { numberOfLetters, location, lettersOffset, outputType, hideKnown } =
     typeData;
   return (
     <div className="LetterPanelSettings PanelSettings">
@@ -31,7 +31,7 @@ export function LetterPanelSettings({
         lettersOffset={lettersOffset}
         numberOfLetters={numberOfLetters}
       />
-      <HintShowKnownControl panelId={panelId} showKnown={showKnown} />
+      <HintHideKnownControl panelId={panelId} hideKnown={hideKnown} />
     </div>
   );
 }

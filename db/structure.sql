@@ -147,13 +147,14 @@ ALTER SEQUENCE public.default_hint_profiles_id_seq OWNED BY public.default_hint_
 
 CREATE TABLE public.definition_panels (
     id bigint NOT NULL,
-    show_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT true NOT NULL,
     reveal_length boolean DEFAULT true NOT NULL,
     show_obscurity boolean DEFAULT false NOT NULL,
     sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     revealed_letters integer DEFAULT 1 NOT NULL,
+    separate_known boolean DEFAULT true NOT NULL,
     CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
 
@@ -260,7 +261,7 @@ CREATE TABLE public.letter_panels (
     output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
     number_of_letters integer DEFAULT 1 NOT NULL,
     letters_offset integer DEFAULT 0 NOT NULL,
-    show_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0)),
@@ -325,7 +326,7 @@ ALTER SEQUENCE public.nyt_puzzles_id_seq OWNED BY public.nyt_puzzles.id;
 
 CREATE TABLE public.obscurity_panels (
     id bigint NOT NULL,
-    show_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT true NOT NULL,
     separate_known boolean DEFAULT false NOT NULL,
     reveal_length boolean DEFAULT true NOT NULL,
     click_to_define boolean DEFAULT false NOT NULL,
@@ -1317,6 +1318,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230828060858'),
 ('20230828115156'),
 ('20230911051856'),
-('20230912194527');
+('20230912194527'),
+('20230912210851'),
+('20230912212040');
 
 

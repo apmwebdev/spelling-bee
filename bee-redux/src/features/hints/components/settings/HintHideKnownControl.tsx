@@ -1,18 +1,18 @@
 import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
 import { HintPanelBooleanKeys } from "@/features/hints";
 
-export function HintShowKnownControl({
+export function HintHideKnownControl({
   panelId,
-  showKnown,
+  hideKnown,
 }: {
   panelId: number;
-  showKnown: boolean;
+  hideKnown: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
       panelId={panelId}
-      settingKey={HintPanelBooleanKeys.showKnown}
-      currentValue={showKnown}
+      settingKey={HintPanelBooleanKeys.hideKnown}
+      currentValue={hideKnown}
     />
   );
 }

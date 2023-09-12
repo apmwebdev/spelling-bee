@@ -24,7 +24,7 @@ export function LetterHintPanel({
 
   if (!isLetterPanelData(letterData)) return;
 
-  const { numberOfLetters, location, lettersOffset, outputType, showKnown } =
+  const { numberOfLetters, location, lettersOffset, outputType, hideKnown } =
     letterData;
 
   const subsectionProps: LetterHintSubsectionProps = {
@@ -33,7 +33,7 @@ export function LetterHintPanel({
     numberOfLetters,
     location,
     lettersOffset,
-    showKnown,
+    hideKnown,
     statusTracking,
   };
 

@@ -1,5 +1,5 @@
 import { DefinitionPanelData } from "@/features/hints";
-import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
+import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
 import { HintRevealedLettersControl } from "@/features/hints/components/settings/HintRevealedLettersControl";
 import { HintRevealLengthControl } from "@/features/hints/components/settings/HintRevealLengthControl";
 import { HintSortOrderControl } from "@/features/hints/components/settings/HintSortOrderControl";
@@ -15,7 +15,7 @@ export function DefinitionPanelSettings({
 }) {
   return (
     <div className="DefinitionPanelSettings PanelSettings">
-      <HintShowKnownControl panelId={panelId} showKnown={typeData.showKnown} />
+      <HintHideKnownControl panelId={panelId} showKnown={typeData.showKnown} />
       <HintRevealedLettersControl
         panelId={panelId}
         revealedLetters={typeData.revealedLetters}

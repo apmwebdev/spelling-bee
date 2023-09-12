@@ -1,5 +1,5 @@
 import { ObscurityPanelData } from "@/features/hints";
-import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
+import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
 import { HintSeparateKnownControl } from "@/features/hints/components/settings/HintSeparateKnownControl";
 import { HintRevealedLettersControl } from "@/features/hints/components/settings/HintRevealedLettersControl";
 import { HintSortOrderControl } from "@/features/hints/components/settings/HintSortOrderControl";
@@ -15,7 +15,7 @@ export function ObscurityPanelSettings({
 }) {
   return (
     <div className="ObscurityPanelSettings PanelSettings">
-      <HintShowKnownControl panelId={panelId} showKnown={typeData.showKnown} />
+      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
       <HintRevealedLettersControl
         panelId={panelId}
         revealedLetters={typeData.revealedLetters}
@@ -23,6 +23,7 @@ export function ObscurityPanelSettings({
       <HintSeparateKnownControl
         panelId={panelId}
         separateKnown={typeData.separateKnown}
+        disabled={typeData.hideKnown}
       />
       <HintClickToDefineControl
         panelId={panelId}

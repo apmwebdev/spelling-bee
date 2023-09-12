@@ -20,7 +20,7 @@ export function WordLengthGridContainer({
   numberOfLetters,
   location,
   lettersOffset,
-  showKnown,
+  hideKnown,
   statusTracking,
 }: LetterHintSubsectionProps) {
   const answerLengths = useAppSelector(selectAnswerLengths);
@@ -86,7 +86,7 @@ export function WordLengthGridContainer({
         totalRow[answer.length].guesses++;
       }
     }
-    if (!showKnown) {
+    if (hideKnown) {
       const newTotalColumn: TotalColumn = {};
       const newTotalRow: GridRow = createGridRow();
       for (const key in totalColumn) {
@@ -139,7 +139,7 @@ export function WordLengthGridContainer({
       <WordLengthGrid
         {...generateData()}
         statusTracking={statusTracking}
-        showKnown={showKnown}
+        hideKnown={hideKnown}
       />
       <div>Excluded words: {generateData().excludedAnswers}</div>
     </div>

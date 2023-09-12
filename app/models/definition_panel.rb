@@ -4,7 +4,7 @@ class DefinitionPanel < ApplicationRecord
   def to_front_end
     {
       panelType: "definition",
-      showKnown: show_known,
+      hideKnown: hide_known,
       revealedLetters: revealed_letters,
       revealLength: reveal_length,
       showObscurity: show_obscurity,

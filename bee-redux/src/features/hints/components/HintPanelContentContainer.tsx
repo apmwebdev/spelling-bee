@@ -76,7 +76,6 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       content: (
         <DefinitionHintPanel
           definitionPanelData={panel.typeData as DefinitionPanelData}
-          statusTracking={panel.statusTracking}
         />
       ),
       quickActions: (

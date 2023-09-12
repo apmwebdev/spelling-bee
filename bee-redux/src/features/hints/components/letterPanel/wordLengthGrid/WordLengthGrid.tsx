@@ -5,7 +5,7 @@ import { GridData } from "@/features/hints/components/letterPanel/types";
 
 type WordLengthGridTableProps = GridData & {
   statusTracking: StatusTrackingKeys;
-  showKnown: boolean;
+  hideKnown: boolean;
 };
 
 export function WordLengthGrid({

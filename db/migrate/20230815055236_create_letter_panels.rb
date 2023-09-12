@@ -9,7 +9,7 @@ class CreateLetterPanels < ActiveRecord::Migration[7.0]
       t.check_constraint "number_of_letters > 0", name: "positive_number_of_letters"
       t.integer :letters_offset, null: false, default: 0
       t.check_constraint "letters_offset >= 0", name: "no_negative_offset"
-      t.boolean :show_known, null: false, default: true
+      t.boolean :hide_known, null: false, default: false
 
       t.timestamps
     end

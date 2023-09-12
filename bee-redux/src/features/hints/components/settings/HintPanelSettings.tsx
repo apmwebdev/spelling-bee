@@ -6,7 +6,6 @@ import {
   isObscurityPanelData,
   isSearchPanelData,
 } from "@/features/hints";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { PanelStatusTrackingControl } from "./PanelStatusTrackingControl";
 import { PanelNameInputForm } from "./PanelNameInputForm";
 import { PanelInitialDisplayControls } from "./PanelInitialDisplayControls";
@@ -14,26 +13,8 @@ import { LetterPanelSettings } from "@/features/hints/components/letterPanel/Let
 import { SearchPanelSettings } from "@/features/hints/components/searchPanel/SearchPanelSettings";
 import { ObscurityPanelSettings } from "@/features/hints/components/obscurityPanel/ObscurityPanelSettings";
 import { DefinitionPanelSettings } from "@/features/hints/components/definitionPanel/DefinitionPanelSettings";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import {
-  PanelCurrentDisplayStateProperties,
-  selectPanelDisplayState,
-  setPanelDisplayPropThunk,
-} from "@/features/hints/hintProfilesSlice";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
-  const dispatch = useAppDispatch();
-  const display = useAppSelector(selectPanelDisplayState(panel.id));
-  const toggleExpanded = () => {
-    dispatch(
-      setPanelDisplayPropThunk({
-        panelId: panel.id,
-        property: PanelCurrentDisplayStateProperties.isSettingsExpanded,
-        value: !display.isSettingsExpanded,
-      }),
-    );
-  };
-
   const typeSpecificSettings = () => {
     if (isLetterPanelData(panel.typeData)) {
       return (

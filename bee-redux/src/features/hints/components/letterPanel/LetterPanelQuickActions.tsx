@@ -1,7 +1,7 @@
 import { PanelCurrentDisplayState } from "@/features/hints/hintProfilesSlice";
 import { LetterPanelData } from "@/features/hints";
 import { QuickActions } from "@/features/hints/components/shared/QuickActions";
-import { HintShowKnownControl } from "@/features/hints/components/settings/HintShowKnownControl";
+import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
 import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";
 
 export function LetterPanelQuickActions({
@@ -15,7 +15,7 @@ export function LetterPanelQuickActions({
 }) {
   return (
     <QuickActions panelId={panelId} displayState={displayState}>
-      <HintShowKnownControl panelId={panelId} showKnown={typeData.showKnown} />
+      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
       <HintNumberOfLettersControl
         panelId={panelId}
         numberOfLetters={typeData.numberOfLetters}

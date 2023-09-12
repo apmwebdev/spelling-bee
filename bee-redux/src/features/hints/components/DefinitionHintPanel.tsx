@@ -1,18 +1,13 @@
 import { DefinitionPanelData, StatusTrackingKeys } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
-import {
-  selectAnswersByLetter,
-  selectAnswersByLetterProcessed,
-} from "@/features/puzzle/puzzleSlice";
+import { selectAnswersByLetterProcessed } from "@/features/puzzle/puzzleSlice";
 import { LetterTab } from "@/features/hints/components/definitionPanel/LetterTab";
 
 export function DefinitionHintPanel({
   definitionPanelData,
-  statusTracking,
 }: {
   definitionPanelData: DefinitionPanelData;
-  statusTracking: StatusTrackingKeys;
 }) {
   const answersProcessed = useAppSelector(selectAnswersByLetterProcessed);
   const usedLetters = Object.keys(answersProcessed);
@@ -34,7 +29,6 @@ export function DefinitionHintPanel({
             letter={letter}
             letterAnswers={answersProcessed[letter]}
             definitionPanelData={definitionPanelData}
-            statusTracking={statusTracking}
             key={letter}
           />
         ))}

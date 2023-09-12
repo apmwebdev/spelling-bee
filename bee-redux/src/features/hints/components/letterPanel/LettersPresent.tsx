@@ -13,7 +13,7 @@ export function LettersPresent({
   location,
   lettersOffset,
   statusTracking,
-  showKnown,
+  hideKnown,
 }: LetterHintSubsectionProps) {
   const content = () => {
     const createCell = ({
@@ -46,7 +46,7 @@ export function LettersPresent({
       location,
       lettersOffset,
       statusTracking,
-      showKnown,
+      hideKnown,
     });
     const startingLetterDivs = [];
 

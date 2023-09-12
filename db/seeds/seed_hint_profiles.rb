@@ -31,7 +31,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       **boilerplate_fields(ssb_profile),
     )
@@ -44,7 +44,7 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       **boilerplate_fields(ssb_profile),
     )
@@ -64,7 +64,7 @@ module SeedHintProfiles
       name: "Word Obscurity Ranking",
       display_index: 4,
       panel_subtype: ObscurityPanel.new(
-        show_known: true,
+        hide_known: false,
         separate_known: false,
         revealed_letters: 1,
         reveal_length: true,
@@ -78,7 +78,9 @@ module SeedHintProfiles
       name: "Word Definitions",
       display_index: 5,
       panel_subtype: DefinitionPanel.new(
-        show_known: true,
+        hide_known: false,
+        revealed_letters: 1,
+        separate_known: true,
         reveal_length: true,
         show_obscurity: true,
         sort_order: "asc",
@@ -98,7 +100,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       hint_profile: sbb_profile,
       status_tracking: "remaining",
@@ -114,7 +116,7 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       hint_profile: sbb_profile,
       status_tracking: "remaining",
@@ -126,7 +128,7 @@ module SeedHintProfiles
       name: "Word Obscurity Ranking",
       display_index: 3,
       panel_subtype: ObscurityPanel.new(
-        show_known: true,
+        hide_known: true,
         separate_known: false,
         revealed_letters: 1,
         reveal_length: true,
@@ -143,7 +145,9 @@ module SeedHintProfiles
       name: "Word Definitions",
       display_index: 4,
       panel_subtype: DefinitionPanel.new(
-        show_known: true,
+        hide_known: true,
+        revealed_letters: 1,
+        separate_known: true,
         reveal_length: true,
         show_obscurity: false,
         sort_order: "asc",
@@ -201,7 +205,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       **user_panel_boilerplate(prof_1)
     )
@@ -214,7 +218,7 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       **user_panel_boilerplate(prof_1)
     )
@@ -263,7 +267,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 2,
         letters_offset: 0,
-        show_known: true,
+        hide_known: false,
       ),
       **user_panel_boilerplate(prof_2)
     )
@@ -283,11 +287,11 @@ module SeedHintProfiles
       name: "Word Obscurity Ranking",
       display_index: 3,
       panel_subtype: ObscurityPanel.new(
-        show_known: true,
-        separate_known: false,
+        hide_known: false,
         revealed_letters: 1,
-        reveal_length: true,
+        separate_known: false,
         click_to_define: false,
+        reveal_length: true,
         sort_order: "asc",
       ),
       **user_panel_boilerplate(prof_2)
@@ -297,7 +301,9 @@ module SeedHintProfiles
       name: "Word Definitions",
       display_index: 4,
       panel_subtype: DefinitionPanel.new(
-        show_known: true,
+        hide_known: true,
+        revealed_letters: 1,
+        separate_known: true,
         reveal_length: true,
         show_obscurity: false,
         sort_order: "asc",

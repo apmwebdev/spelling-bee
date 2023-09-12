@@ -16,6 +16,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
   def update
     if @hint_panel.hint_profile.class.name == "DefaultHintProfile"
       render json: { error: "Can't change default profiles" }, status: 403
+      return
     end
     the_params = hint_panel_update_params
     if the_params[:initial_display_state_attributes]
@@ -103,7 +104,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_settings_sticky,
       ],
       panel_subtype_attributes: [
-        :show_known,
+        :hide_known,
         :reveal_length,
         :show_obscurity,
         :sort_order,
@@ -139,7 +140,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_settings_sticky,
       ],
       panel_subtype_attributes: [
-        :show_known,
+        :hide_known,
         :reveal_length,
         :show_obscurity,
         :sort_order,
@@ -157,7 +158,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   def letter_update_params
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
-      :show_known,
+      :hide_known,
       :location,
       :output_type,
       :number_of_letters,
@@ -175,7 +176,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   def obscurity_update_params
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
-      :show_known,
+      :hide_known,
       :revealed_letters,
       :separate_known,
       :reveal_length,
@@ -186,7 +187,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   def definition_update_params
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
-      :show_known,
+      :hide_known,
       :revealed_letters,
       :reveal_length,
       :show_obscurity,

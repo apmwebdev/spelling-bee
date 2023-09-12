@@ -45,7 +45,7 @@ export const generateListData = ({
   knownWords,
   numberOfLetters,
   location,
-  showKnown,
+  hideKnown,
   lettersOffset,
 }: LetterHintSubsectionProps): ListData => {
   const listRows: ListRows = {};
@@ -82,7 +82,7 @@ export const generateListData = ({
       listRows[startingLetter][answerFragment].guesses++;
     }
   }
-  if (!showKnown) {
+  if (hideKnown) {
     for (const letter in listRows) {
       const row = listRows[letter];
       for (const fragment in row) {

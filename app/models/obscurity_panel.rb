@@ -4,7 +4,7 @@ class ObscurityPanel < ApplicationRecord
   def to_front_end
     {
       panelType: "obscurity",
-      showKnown: show_known,
+      hideKnown: hide_known,
       separateKnown: separate_known,
       revealedLetters: revealed_letters,
       revealLength: reveal_length,

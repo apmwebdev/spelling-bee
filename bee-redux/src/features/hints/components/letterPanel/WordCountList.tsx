@@ -28,7 +28,7 @@ export function WordCountList({
   location,
   lettersOffset,
   statusTracking,
-  showKnown,
+  hideKnown,
 }: LetterHintSubsectionProps) {
   const generateOutput = () => {
     const createCell = ({
@@ -63,7 +63,7 @@ export function WordCountList({
       location,
       lettersOffset,
       statusTracking,
-      showKnown,
+      hideKnown,
     });
     const startingLetterDivs = [];
 
