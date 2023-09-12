@@ -27,9 +27,10 @@ export function ObscurityHintPanel({
         );
       }
       return (
-        <tr className="HintNotStarted" key={answer.word}>
+        <tr className="HintNotStarted capitalize" key={answer.word}>
           <td>
-            {answer.word[0]}... {answer.word.length}
+            {answer.word.slice(0, obscurityPanelData.revealedLetters)}...{" "}
+            {obscurityPanelData.revealLength ? answer.word.length : null}
           </td>
           <td>{answer.frequency}</td>
         </tr>

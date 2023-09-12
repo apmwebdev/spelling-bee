@@ -426,10 +426,10 @@ a {
   border: 1.5px solid border-color($accent-hue);
   background-color: bg-color-darkest($accent-hue);
 }
-//.SwitchRoot[data-state='checked'] {
-//  background-color: ui-bg-color($accent-hue);
-//  border-color: border-color-hover($accent-hue);
-//}
+.SwitchRoot[data-state='checked'] {
+  background-color: ui-bg-color($accent-hue);
+  border-color: border-color-hover($accent-hue);
+}
 
 .SwitchThumb {
   display: block;
