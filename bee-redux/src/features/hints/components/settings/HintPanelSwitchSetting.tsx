@@ -4,7 +4,7 @@ import {
   HintPanelBooleanSettings,
 } from "@/features/hints";
 import { Switch } from "@/components/radix-ui/radix-switch";
-import { maybeDisable } from "@/utils";
+import { maybeAddDisabledClass } from "@/utils";
 
 export function HintPanelSwitchSetting({
   panelId,
@@ -30,7 +30,9 @@ export function HintPanelSwitchSetting({
 
   return (
     <div>
-      <span className={maybeDisable("HintPanelSwitchSetting", disabled)}>
+      <span
+        className={maybeAddDisabledClass("HintPanelSwitchSetting", disabled)}
+      >
         {HintPanelBooleanSettings[settingKey].title}:
       </span>
       <Switch

@@ -81,7 +81,10 @@ export const composeClasses = (
   return finalClasses;
 };
 
-export const maybeDisable = (baseClasses: string, disabled?: boolean) => {
+export const maybeAddDisabledClass = (
+  baseClasses: string,
+  disabled?: boolean,
+) => {
   return composeClasses(baseClasses, disabled ? "disabled" : "");
 };
 

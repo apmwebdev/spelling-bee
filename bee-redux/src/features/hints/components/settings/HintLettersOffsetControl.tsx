@@ -2,7 +2,7 @@ import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
-import { maybeDisable } from "@/utils";
+import { maybeAddDisabledClass } from "@/utils";
 import { BasicTooltip } from "@/components/BasicTooltip";
 
 export function HintLettersOffsetControl({
@@ -36,7 +36,7 @@ export function HintLettersOffsetControl({
   return (
     <BasicTooltip disabled={!disabled} tooltipContent={disabledTooltip}>
       <div
-        className={maybeDisable("HintLettersOffsetControl", disabled)}
+        className={maybeAddDisabledClass("HintLettersOffsetControl", disabled)}
         style={style}
       >
         <span>Offset:</span>
