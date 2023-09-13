@@ -1,20 +1,25 @@
 import { RemoveButton } from "./RemoveButton";
 import { DuplicateButton } from "./DuplicateButton";
 import { ReactNode } from "react";
-import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 import { DragHandle } from "@/features/hints/components/shared/DragHandle";
 import { SettingsToggle } from "@/features/hints/components/shared/SettingsToggle";
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 interface PanelHeaderProps {
   panelId: number;
   isPanelExpanded: boolean;
   children: ReactNode;
+  attributes?: DraggableAttributes;
+  listeners?: SyntheticListenerMap | undefined;
 }
 
 export function PanelHeader({
   panelId,
   isPanelExpanded,
   children,
+  attributes,
+  listeners,
 }: PanelHeaderProps) {
   const cssClasses = () => {
     let classList = "HintPanelHeader";
@@ -29,7 +34,7 @@ export function PanelHeader({
   return (
     <header className={cssClasses()}>
       <div className="PanelHeaderButtonGroup">
-        <DragHandle />
+        <DragHandle attributes={attributes} listeners={listeners} />
         <SettingsToggle panelId={panelId} />
       </div>
       {children}

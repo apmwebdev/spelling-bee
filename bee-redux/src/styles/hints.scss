@@ -63,6 +63,7 @@
 
 .HintPanel {
   $this-hue: $blue-hue;
+  position: relative;
   border-radius: var(--br);
   border: 2px solid border-color($this-hue);
   overflow: hidden;
@@ -70,6 +71,16 @@
   &[data-state="closed"] {
     color: $line-bright;
     border-color: border-color-disabled($this-hue);
+  }
+  &.Dragging {
+    opacity: 20%;
+  }
+  &.Overlay {
+    opacity: 80%;
+    outline: 3px dotted;
+  }
+  &.Sorting {
+    border-color: border-color-hover($this-hue);
   }
 }
 
@@ -105,9 +116,6 @@
   &.button {
     font-size: 20px;
     background-color: bg-color-extra($this-hue);
-    &:focus {
-      box-shadow: 0 0 0 2px bg-color-darkest($this-hue);
-    }
   }
   &:hover {
     border-color: border-color($this-hue);
@@ -125,21 +133,12 @@
 
 button.IconButton.DragHandle {
   $this-hue: $blue-hue;
-  //padding: 8px 3px;
-  //border-width: 2px;
-
-  //background-color: bg-color($this-hue);
   cursor: grab;
-  &:hover {
-    //border-style: dashed;
-    //border-color: border-color-hover($this-hue);
-  }
-  &:active {
+  .HintPanel.Overlay & {
     cursor: grabbing;
     background-color: $line-main;
     color: bg-color($this-hue);
   }
-  //border: 1.5px solid border-color($this-hue);
 }
 
 button.PanelSettingsToggle {
@@ -365,6 +364,12 @@ button.PanelSettingsToggle {
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.PanelOverlay {
+  background-color: white;
+  color: black;
+  padding: 24px;
 }
 
 

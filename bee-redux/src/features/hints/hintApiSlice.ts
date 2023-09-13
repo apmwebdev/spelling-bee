@@ -14,6 +14,7 @@ import {
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query";
 import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
+import { createSelector } from "@reduxjs/toolkit";
 
 const maybeFindDefaultHintProfile = (
   formData: t.CurrentHintProfileFormData,
@@ -350,3 +351,13 @@ export const {
 
 export const selectCurrentHintProfile = (state: RootState) =>
   hintApiSlice.endpoints.getCurrentHintProfile.select()(state).data;
+
+export const selectPanels = createSelector(
+  [selectCurrentHintProfile],
+  (profile) => profile?.panels ?? [],
+);
+
+export const selectPanelIds = createSelector([selectPanels], (panels) => {
+  if (!panels) return [];
+  return panels.map((panel) => panel.id);
+});
