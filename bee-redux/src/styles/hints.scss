@@ -677,11 +677,11 @@ button.PanelSettingsToggle {
     border: 1px solid $mid-gray;
   }
   td {
-    padding: 4px 12px;
+    padding: 6px 12px;
   }
   th {
     font-weight: bold;
-    padding: 6px 12px;
+    padding: 8px 12px;
   }
   thead {
     background-color: $dark-gray-lighter;
@@ -714,7 +714,7 @@ button.PanelSettingsToggle {
   }
 }
 
-.DefinitionPanelItem {
+.DefinitionPanelWord {
   padding: 12px 0px;
   display: flex;
   flex-direction: column;

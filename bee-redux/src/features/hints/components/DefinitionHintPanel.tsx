@@ -1,7 +1,7 @@
-import { DefinitionPanelData } from "@/features/hints";
+import { DefinitionPanelData, SortOrderKeys } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswersByLetterProcessed } from "@/features/puzzle/puzzleSlice";
+import { selectAnswersByLetter } from "@/features/puzzle/puzzleSlice";
 import { LetterTab } from "@/features/hints/components/definitionPanel/LetterTab";
 
 export function DefinitionHintPanel({
@@ -9,8 +9,8 @@ export function DefinitionHintPanel({
 }: {
   definitionPanelData: DefinitionPanelData;
 }) {
-  const answersProcessed = useAppSelector(selectAnswersByLetterProcessed);
-  const usedLetters = Object.keys(answersProcessed);
+  const answersByLetter = useAppSelector(selectAnswersByLetter);
+  const usedLetters = Object.keys(answersByLetter.asc);
 
   return (
     <div className="DefinitionHintPanel">
@@ -18,16 +18,18 @@ export function DefinitionHintPanel({
         <Tabs.List
           style={{ gridTemplateColumns: `repeat(${usedLetters.length}, 1fr` }}
         >
-          {Object.keys(answersProcessed).map((letter) => (
+          {usedLetters.map((letter) => (
             <Tabs.Trigger value={letter} key={letter}>
               {letter.toUpperCase()}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
-        {Object.keys(answersProcessed).map((letter) => (
+        {usedLetters.map((letter) => (
           <LetterTab
             letter={letter}
-            letterAnswers={answersProcessed[letter]}
+            letterAnswers={
+              answersByLetter[definitionPanelData.sortOrder][letter]
+            }
             definitionPanelData={definitionPanelData}
             key={letter}
           />

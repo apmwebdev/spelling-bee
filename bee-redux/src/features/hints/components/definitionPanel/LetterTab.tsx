@@ -1,7 +1,7 @@
-import { LetterGuesses } from "@/features/puzzle/puzzleSlice";
+import { LetterAnswers } from "@/features/puzzle/puzzleSlice";
 import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
-import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
+import { Word } from "@/features/hints/components/definitionPanel/Word";
 
 export function LetterTab({
   letter,
@@ -9,45 +9,63 @@ export function LetterTab({
   definitionPanelData,
 }: {
   letter: string;
-  letterAnswers: LetterGuesses;
+  letterAnswers: LetterAnswers;
   definitionPanelData: DefinitionPanelData;
 }) {
+  const { hideKnown, separateKnown } = definitionPanelData;
+
+  const unknownAnswers = () => (
+    <div className="LetterTabUnknown">
+      {letterAnswers.unknown.map((answer) => (
+        <Word
+          answer={answer}
+          definitionPanelData={definitionPanelData}
+          isKnown={false}
+          key={answer.word}
+        />
+      ))}
+    </div>
+  );
+
+  const content = () => {
+    if (hideKnown) {
+      return unknownAnswers();
+    }
+    if (!hideKnown && !separateKnown) {
+      return (
+        <div className="LetterTabAll">
+          {letterAnswers.all.map((answer) => (
+            <Word
+              answer={answer}
+              definitionPanelData={definitionPanelData}
+              isKnown={letterAnswers.known.includes(answer)}
+              key={answer.word}
+            />
+          ))}
+        </div>
+      );
+    }
+    return (
+      <>
+        {unknownAnswers()}
+        <hr />
+        <div className="LetterTabKnown">
+          {letterAnswers.known.map((answer) => (
+            <Word
+              answer={answer}
+              definitionPanelData={definitionPanelData}
+              isKnown={true}
+              key={answer.word}
+            />
+          ))}
+        </div>
+      </>
+    );
+  };
+
   return (
     <Tabs.Content className="LetterTab" value={letter}>
-      <div className="LetterTabUnknown">
-        {letterAnswers.unknown
-          .sort((a, b) => a.word.length - b.word.length)
-          .map((answer) => (
-            <div className="DefinitionPanelItem" key={answer.word}>
-              <div className="DefinitionPanelTerm HintNotStarted capitalize">
-                {answer.word.slice(0, definitionPanelData.revealedLetters)}...{" "}
-                {definitionPanelData.revealLength ? answer.word.length : null}
-              </div>
-              {definitionPanelData.showObscurity ? (
-                <div className="italic">
-                  Frequency: {answer.frequency} (
-                  {usageExplanation(answer.frequency).toLowerCase()})
-                </div>
-              ) : null}
-              <div>{answer.definitions[0]}</div>
-            </div>
-          ))}
-      </div>
-      <hr />
-      <div className="LetterTabKnown">
-        {letterAnswers.known.map((answer) => (
-          <div className="DefinitionPanelItem" key={answer.word}>
-            <div className="DefinitionPanelTerm HintCompleted capitalize">
-              {answer.word}
-            </div>
-            <div className="italic">
-              Frequency: {answer.frequency} (
-              {usageExplanation(answer.frequency).toLowerCase()})
-            </div>
-            <div>{answer.definitions[0]}</div>
-          </div>
-        ))}
-      </div>
+      {content()}
     </Tabs.Content>
   );
 }

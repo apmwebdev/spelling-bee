@@ -65,26 +65,6 @@ export const puzzleSlice = createSlice({
 
 export const {} = puzzleSlice.actions;
 
-export type TAnswersByLetter = {
-  [letter: string]: AnswerFormat[];
-};
-
-export type LetterGuesses = {
-  known: AnswerFormat[];
-  unknown: AnswerFormat[];
-  all: AnswerFormat[];
-};
-
-export const createLetterGuesses = (): LetterGuesses => ({
-  known: [],
-  unknown: [],
-  all: [],
-});
-
-export type TAnswersByLetterProcessed = {
-  [letter: string]: LetterGuesses;
-};
-
 export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
@@ -102,20 +82,6 @@ export const selectExcludedWords = (state: RootState) =>
 export const selectIsLatest = (state: RootState) => state.puzzle.data.isLatest;
 
 // Derived data
-export const selectAnswersByLetter = createSelector(
-  [selectAnswers],
-  (answers) => {
-    const answerObj: TAnswersByLetter = {};
-    for (const answer of answers) {
-      if (answerObj[answer.word[0]] === undefined) {
-        answerObj[answer.word[0]] = [];
-      }
-      answerObj[answer.word[0]].push(answer);
-    }
-    return answerObj;
-  },
-);
-
 export const selectKnownAnswers = createSelector(
   [selectAnswers, selectGuessWords],
   (answers, guessWords) =>
@@ -127,23 +93,54 @@ export const selectKnownWords = createSelector(
   (answers) => answers.map((answer) => answer.word),
 );
 
-export const selectAnswersByLetterProcessed = createSelector(
+export type LetterAnswers = {
+  known: AnswerFormat[];
+  unknown: AnswerFormat[];
+  all: AnswerFormat[];
+};
+
+export const createLetterAnswers = (): LetterAnswers => ({
+  known: [],
+  unknown: [],
+  all: [],
+});
+
+export type AnswersByLetter = {
+  [letter: string]: LetterAnswers;
+};
+
+export type AnswersByLetterSortable = {
+  asc: AnswersByLetter;
+  desc: AnswersByLetter;
+};
+
+export const selectAnswersByLetter = createSelector(
   [selectAnswers, selectKnownWords],
   (answers, knownWords) => {
-    const answerObj: TAnswersByLetterProcessed = {};
+    const asc: AnswersByLetter = {};
+    const desc: AnswersByLetter = {};
+    const answersByLetterSortable: AnswersByLetterSortable = { asc, desc };
     for (const answer of answers) {
       const firstLetter = answer.word[0];
-      if (answerObj[firstLetter] === undefined) {
-        answerObj[firstLetter] = createLetterGuesses();
+      if (asc[firstLetter] === undefined) {
+        asc[firstLetter] = createLetterAnswers();
+        desc[firstLetter] = createLetterAnswers();
       }
-      answerObj[firstLetter].all.push(answer);
+      asc[firstLetter].all.push(answer);
+      desc[firstLetter].all.unshift(answer);
       if (knownWords.includes(answer.word)) {
-        answerObj[firstLetter].known.push(answer);
+        asc[firstLetter].known.push(answer);
+        desc[firstLetter].known.unshift(answer);
       } else {
-        answerObj[firstLetter].unknown.push(answer);
+        asc[firstLetter].unknown.push(answer);
+        desc[firstLetter].unknown.unshift(answer);
       }
     }
-    return answerObj;
+    for (const letter in asc) {
+      asc[letter].unknown.sort((a, b) => a.word.length - b.word.length);
+      desc[letter].unknown.sort((a, b) => b.word.length - a.word.length);
+    }
+    return answersByLetterSortable;
   },
 );
 
