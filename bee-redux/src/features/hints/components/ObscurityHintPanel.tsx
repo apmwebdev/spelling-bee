@@ -1,26 +1,85 @@
-import { ObscurityPanelData } from "@/features/hints";
+import { ObscurityPanelData, SortOrderKeys } from "@/features/hints";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswers } from "@/features/puzzle/puzzleSlice";
-import { selectKnownWords } from "@/features/guesses/guessesSlice";
+import {
+  selectAnswerLengths,
+  selectAnswers,
+  selectKnownAnswers,
+  selectKnownWords,
+  selectRemainingAnswers,
+} from "@/features/puzzle/puzzleSlice";
 import { AnswerFormat } from "@/features/puzzle/puzzleApiSlice";
 import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
+import { DefinitionPopover } from "@/features/hints/components/obscurityPanel/DefinitionPopover";
+import { last } from "lodash";
+
+const sortByFrequency = (
+  sortOrder: SortOrderKeys,
+  ...answers: AnswerFormat[]
+) => {
+  return answers.sort((a, b) =>
+    sortOrder === SortOrderKeys.asc
+      ? b.frequency - a.frequency
+      : a.frequency - b.frequency,
+  );
+};
+
+const displayUnknownWord = ({
+  answer,
+  revealedLetters,
+  revealLength,
+}: {
+  answer: AnswerFormat;
+  revealedLetters: number;
+  revealLength: boolean;
+}) => {
+  let returnStr = `${answer.word.slice(0, revealedLetters)}...`;
+  if (revealLength) returnStr += ` ${answer.word.length}`;
+  return returnStr;
+};
 
 export function ObscurityHintPanel({
   obscurityPanelData,
 }: {
   obscurityPanelData: ObscurityPanelData;
 }) {
-  const answers = [...useAppSelector(selectAnswers)].sort(
-    (a, b) => b.frequency - a.frequency,
-  );
+  const allAnswers = useAppSelector(selectAnswers);
+  const remainingAnswers = useAppSelector(selectRemainingAnswers);
+  const knownAnswers = useAppSelector(selectKnownAnswers);
   const knownWords = useAppSelector(selectKnownWords);
+  const answerLengths = useAppSelector(selectAnswerLengths);
+  const {
+    hideKnown,
+    revealedLetters,
+    separateKnown,
+    clickToDefine,
+    revealLength,
+    sortOrder,
+  } = obscurityPanelData;
 
-  const content = (answers: AnswerFormat[], knownWords: string[]) => {
+  const content = () => {
+    let answers: AnswerFormat[];
+    if (hideKnown) {
+      answers = sortByFrequency(sortOrder, ...remainingAnswers);
+    } else if (!hideKnown && separateKnown) {
+      answers = [
+        ...sortByFrequency(sortOrder, ...remainingAnswers),
+        ...sortByFrequency(sortOrder, ...knownAnswers),
+      ];
+    } else {
+      answers = sortByFrequency(sortOrder, ...allAnswers);
+    }
+
     return answers.map((answer) => {
-      if (knownWords.includes(answer.word)) {
+      if (!hideKnown && knownWords.includes(answer.word)) {
         return (
           <tr key={answer.word}>
-            <td className="capitalize">{answer.word}</td>
+            <td className="capitalize">
+              {clickToDefine ? (
+                <DefinitionPopover answer={answer} />
+              ) : (
+                answer.word
+              )}
+            </td>
             <td>{answer.frequency}</td>
             <td>{usageExplanation(answer.frequency)}</td>
           </tr>
@@ -29,8 +88,18 @@ export function ObscurityHintPanel({
       return (
         <tr className="HintNotStarted" key={answer.word}>
           <td className="capitalize">
-            {answer.word.slice(0, obscurityPanelData.revealedLetters)}...{" "}
-            {obscurityPanelData.revealLength ? answer.word.length : null}
+            {clickToDefine ? (
+              <DefinitionPopover
+                answer={answer}
+                displayString={displayUnknownWord({
+                  answer,
+                  revealedLetters,
+                  revealLength,
+                })}
+              />
+            ) : (
+              displayUnknownWord({ answer, revealedLetters, revealLength })
+            )}
           </td>
           <td>{answer.frequency}</td>
           <td>{usageExplanation(answer.frequency)}</td>
@@ -42,14 +111,17 @@ export function ObscurityHintPanel({
   return (
     <div className="ObscurityHintPanel">
       <table className="ObscurityPanelTable">
+        <colgroup>
+          <col style={{ width: `${(last(answerLengths) ?? 8) + 4}ch` }} />
+        </colgroup>
         <thead>
           <tr>
-            <th>Word</th>
-            <th>Frequency</th>
-            <th>Usage</th>
+            <th scope="col">Word</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Usage</th>
           </tr>
         </thead>
-        <tbody>{content(answers, knownWords)}</tbody>
+        <tbody>{content()}</tbody>
       </table>
     </div>
   );

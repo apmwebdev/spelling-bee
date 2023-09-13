@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   selectAnswerWords,
+  selectKnownWords,
   selectRemainingAnswerWords,
   selectValidLetters,
 } from "../../puzzle/puzzleSlice";
@@ -11,10 +12,7 @@ import {
   toggleAnswersSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import answerSorter from "./answerSorter";
-import {
-  selectKnownWords,
-  selectSpoiledWords,
-} from "../../guesses/guessesSlice";
+import { selectSpoiledWords } from "../../guesses/guessesSlice";
 import { AnswersSettings } from "./AnswersSettings";
 import { AnswersListHeader } from "./AnswersListHeader";
 

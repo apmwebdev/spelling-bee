@@ -2,8 +2,8 @@ import { useAppSelector } from "@/app/hooks";
 import {
   selectAnswerLengths,
   selectAnswerWords,
+  selectKnownWords,
 } from "@/features/puzzle/puzzleSlice";
-import { selectKnownWords } from "@/features/guesses/guessesSlice";
 import { Result } from "./Result";
 import uniqid from "uniqid";
 import {

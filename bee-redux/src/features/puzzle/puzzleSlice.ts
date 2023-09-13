@@ -2,7 +2,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore } from "@/utils";
 import { sortBy } from "lodash";
-import { selectKnownWords } from "../guesses/guessesSlice";
+import { selectGuessWords } from "../guesses/guessesSlice";
 import {
   AnswerFormat,
   BlankPuzzle,
@@ -116,6 +116,17 @@ export const selectAnswersByLetter = createSelector(
   },
 );
 
+export const selectKnownAnswers = createSelector(
+  [selectAnswers, selectGuessWords],
+  (answers, guessWords) =>
+    answers.filter((answer) => guessWords.includes(answer.word)),
+);
+
+export const selectKnownWords = createSelector(
+  [selectKnownAnswers],
+  (answers) => answers.map((answer) => answer.word),
+);
+
 export const selectAnswersByLetterProcessed = createSelector(
   [selectAnswers, selectKnownWords],
   (answers, knownWords) => {
@@ -161,10 +172,16 @@ export const selectAnswerLengths = createSelector(
   },
 );
 
+export const selectRemainingAnswers = createSelector(
+  [selectAnswers, selectKnownWords],
+  (answers, knownWords) =>
+    answers.filter((answer) => !knownWords.includes(answer.word)),
+);
+
 export const selectRemainingAnswerWords = createSelector(
-  [selectAnswerWords, selectKnownWords],
-  (answerWords, knownWords) => {
-    return answerWords.filter((answerWord) => !knownWords.includes(answerWord));
+  [selectRemainingAnswers],
+  (answers) => {
+    return answers.map((answer) => answer.word);
   },
 );
 

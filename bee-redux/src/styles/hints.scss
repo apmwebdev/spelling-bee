@@ -688,6 +688,16 @@ button.PanelSettingsToggle {
   }
 }
 
+.DefinitionPopoverTrigger {
+  text-align: left;
+  text-decoration: underline;
+  padding: 0px;
+  //cursor: help;
+  tr.HintNotStarted & {
+    @extend .HintNotStarted
+  }
+}
+
 
 
 

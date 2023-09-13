@@ -266,15 +266,16 @@ a {
     display: flex;
     align-items: center;
   }
-  .popover-close-button {
-    align-self: flex-start;
-    margin-top: 4px;
-    padding: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid $light-gray;
-  }
+}
+
+.PopoverCloseButton {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $light-gray;
 }
 
 .PopoverArrow {

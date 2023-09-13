@@ -15,7 +15,7 @@ export function WordInfoQuickActions({
 }) {
   return (
     <QuickActions panelId={panelId} displayState={displayState}>
-      <HintHideKnownControl panelId={panelId} showKnown={typeData.showKnown} />
+      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
       <HintRevealedLettersControl
         panelId={panelId}
         revealedLetters={typeData.revealedLetters}

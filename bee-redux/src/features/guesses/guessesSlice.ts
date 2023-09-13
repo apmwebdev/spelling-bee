@@ -168,9 +168,6 @@ export const selectCorrectGuessWords = createSelector(
       .filter((guess) => guess.isAnswer && !guess.isSpoiled)
       .map((guess) => guess.text),
 );
-export const selectKnownWords = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => guess.isAnswer).map((guess) => guess.text),
-);
 export const selectSpoiledWords = createSelector([selectGuesses], (guesses) =>
   guesses.filter((guess) => guess.isSpoiled).map((guess) => guess.text),
 );
