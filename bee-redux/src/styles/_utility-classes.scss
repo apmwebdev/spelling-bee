@@ -1,13 +1,5 @@
-.display-none {
-  display: none;
-}
-
 .bold {
   font-weight: bold;
-}
-
-.italic {
-  font-style: italic;
 }
 
 .capitalize {
@@ -19,4 +11,16 @@
 
 .disabled {
   cursor: not-allowed;
+}
+
+.display-none {
+  display: none;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.mono {
+  font-family: "Roboto Mono", monospace;
 }
