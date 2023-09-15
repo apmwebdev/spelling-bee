@@ -33,7 +33,9 @@ Rails.application.routes.draw do
       # Hints
       get "hint_profiles", to: "user_hint_profiles#get_all_hint_profiles"
       resources :user_hint_profiles
-      resources :hint_panels, except: [:index, :show]
+      resources :hint_panels, except: [:index, :show] do
+        put "move", on: :collection
+      end
       # Search panel searches
       get "search_panel_search/:attempt_id",
         to: "search_panel_searches#for_attempt_and_profile"

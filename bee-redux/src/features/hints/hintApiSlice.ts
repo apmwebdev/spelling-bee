@@ -3,11 +3,6 @@ import * as t from "./types";
 import { RootState } from "@/app/store";
 import { addDebouncer } from "@/features/api/util/debouncer";
 import { keysToSnakeCase } from "@/features/api/util";
-import {
-  HintProfileTypes,
-  SearchPanelSearchData,
-  SearchPanelSearchDeleteArgs,
-} from "./types";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   FetchBaseQueryError,
@@ -15,6 +10,7 @@ import {
 } from "@reduxjs/toolkit/query";
 import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
 import { createSelector } from "@reduxjs/toolkit";
+import { arrayMove } from "@dnd-kit/sortable";
 
 const maybeFindDefaultHintProfile = (
   formData: t.CurrentHintProfileFormData,
@@ -181,7 +177,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         const state = api.getState() as RootState;
         if (
           state.auth.isGuest ||
-          selectCurrentHintProfile(state)?.type === HintProfileTypes.Default
+          selectCurrentHintProfile(state)?.type === t.HintProfileTypes.Default
         ) {
           return { data: true };
         }
@@ -216,6 +212,59 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     // ⚠️
     deleteHintPanel: builder.mutation<boolean, number>({
       queryFn: (id, api, _opts, baseQuery) => {
+        return { data: true };
+      },
+    }),
+
+    // ✅
+    changeHintPanelOrder: builder.mutation<boolean, t.MoveHintPanelData>({
+      queryFn: async (formData, api, _opts, baseQuery) => {
+        const state = api.getState() as RootState;
+        let shouldPersist =
+          !state.auth.isGuest &&
+          selectCurrentHintProfile(state)?.type !== t.HintProfileTypes.Default;
+
+        api.dispatch(
+          hintApiSlice.util.updateQueryData(
+            "getCurrentHintProfile",
+            undefined,
+            (draftState) => {
+              if (!draftState) {
+                shouldPersist = false;
+                return;
+              }
+              if (draftState.panels.at(formData.oldIndex)?.id !== formData.id) {
+                shouldPersist = false;
+                return;
+              }
+              draftState.panels = arrayMove(
+                draftState.panels,
+                formData.oldIndex,
+                formData.newIndex,
+              );
+              const modifiedPanels = draftState.panels.slice(
+                formData.oldIndex,
+                formData.newIndex,
+              );
+              for (const [index, panel] of modifiedPanels.entries()) {
+                panel.displayIndex = index;
+              }
+            },
+          ),
+        );
+
+        if (shouldPersist) {
+          try {
+            await baseQuery({
+              url: "/hint_panels/move",
+              method: "PUT",
+              body: keysToSnakeCase(formData),
+            });
+          } catch (err) {
+            console.log("Couldn't update panel order:", err);
+            return { data: false };
+          }
+        }
         return { data: true };
       },
     }),
@@ -267,7 +316,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
           method: "POST",
           body: railsifyAddSearchData(newSearch),
         })) as QueryReturnValue<
-          SearchPanelSearchData,
+          t.SearchPanelSearchData,
           FetchBaseQueryError,
           FetchBaseQueryMeta
         >;
@@ -291,7 +340,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     }),
 
     // ✅
-    deleteSearch: builder.mutation<boolean, SearchPanelSearchDeleteArgs>({
+    deleteSearch: builder.mutation<boolean, t.SearchPanelSearchDeleteArgs>({
       queryFn: async (arg, api, _opts, baseQuery) => {
         const state = api.getState() as RootState;
         api.dispatch(
@@ -344,6 +393,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
 export const {
   useUpdateHintPanelMutation,
   useSetCurrentHintProfileMutation,
+  useChangeHintPanelOrderMutation,
   useLazyGetSearchesQuery,
   useAddSearchMutation,
   useDeleteSearchMutation,

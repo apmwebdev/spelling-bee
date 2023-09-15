@@ -1,5 +1,10 @@
 import { HintPanel } from "./HintPanel";
-import { hintApiSlice, selectPanelIds, selectPanels } from "@/features/hints/hintApiSlice";
+import {
+  hintApiSlice,
+  selectPanelIds,
+  selectPanels,
+  useChangeHintPanelOrderMutation,
+} from "@/features/hints/hintApiSlice";
 import React, { useState } from "react";
 import {
   DndContext,
@@ -13,7 +18,6 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import {
-  arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
@@ -35,6 +39,8 @@ export function HintPanels() {
     }),
   );
   const [activePanel, setActivePanel] = useState<HintPanelData | null>(null);
+  const [changeHintPanelOrder] = useChangeHintPanelOrderMutation();
+
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e;
     const maybeActivePanel = panels.find((panel) => panel.id === active.id);
@@ -42,16 +48,19 @@ export function HintPanels() {
       setActivePanel(maybeActivePanel);
     }
   };
+
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
-    console.log("active:", active.id, "over:", over?.id);
-    if (active.id !== over?.id) {
-      console.log("move");
-    } else {
-      console.log("no move");
+    if (over && active.id !== over.id) {
+      changeHintPanelOrder({
+        id: Number(active.id),
+        oldIndex: panelIds.indexOf(Number(active.id)),
+        newIndex: panelIds.indexOf(Number(over.id)),
+      });
     }
     setActivePanel(null);
   };
+
   return (
     <div className="HintPanels">
       <DndContext

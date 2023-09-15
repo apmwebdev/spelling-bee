@@ -29,7 +29,7 @@ export const HintPanel = forwardRef(
       panel: HintPanelData;
       isOverlay: boolean;
       isDragging: boolean;
-      isSorting: boolean;
+      isSorting?: boolean;
       style?: CSSProperties;
       attributes?: DraggableAttributes;
       listeners?: SyntheticListenerMap | undefined;
