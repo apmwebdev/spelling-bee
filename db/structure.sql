@@ -228,7 +228,7 @@ CREATE TABLE public.hint_panels (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     display_index integer,
-    CONSTRAINT positive_display_index CHECK ((display_index > 0))
+    CONSTRAINT non_negative_display_index CHECK ((display_index >= 0))
 );
 
 
@@ -1320,6 +1320,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230911051856'),
 ('20230912194527'),
 ('20230912210851'),
-('20230912212040');
+('20230912212040'),
+('20230913100015');
 
 

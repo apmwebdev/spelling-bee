@@ -18,4 +18,8 @@ class HintPanel < ApplicationRecord
       typeData: panel_subtype.to_front_end,
     }
   end
+
+  def to_front_end_basic
+    { id:, name:, display_index: }
+  end
 end
