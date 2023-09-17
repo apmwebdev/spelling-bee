@@ -1,3 +1,4 @@
 ## Description
 
-## Fixes (issue #)
+## Related Issues
+Resolves (issue #)
