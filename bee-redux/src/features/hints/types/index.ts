@@ -398,6 +398,12 @@ export interface RailsHintPanelUpdateForm {
   };
 }
 
+export type MoveHintPanelData = {
+  id: number;
+  oldIndex: number;
+  newIndex: number;
+};
+
 export enum HintProfileTypes {
   Default = "DefaultHintProfile",
   User = "UserHintProfile",

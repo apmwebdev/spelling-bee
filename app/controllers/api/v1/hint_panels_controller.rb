@@ -1,5 +1,5 @@
 class Api::V1::HintPanelsController < AuthRequiredController
-  before_action :set_hint_panel, only: %i[ update destroy ]
+  before_action :set_hint_panel, only: %i[ update destroy move ]
 
   # POST /hint_panels
   def create
@@ -72,15 +72,44 @@ class Api::V1::HintPanelsController < AuthRequiredController
     @hint_panel.destroy
   end
 
+  def move
+    hint_panel_move_params
+    old_index = params[:old_index].to_i
+    new_index = params[:new_index].to_i
+    panels = HintPanel
+      .where(hint_profile_type: "UserHintProfile")
+      .where(hint_profile_id: @hint_panel.hint_profile_id)
+
+    if old_index > panels.size || new_index > panels.size || old_index < 0 ||
+        new_index < 0 || old_index == new_index || panels.size < 2
+      render json: { error: "Invalid move" }, status: 400
+      return
+    end
+
+    panels_array = panels
+      .to_a
+      .sort_by { |panel| panel.display_index }
+    panels_array
+      .insert(new_index, panels_array.delete_at(old_index))
+    relevant_panels = panels_array.slice(
+        new_index > old_index ? old_index : new_index,
+        (old_index - new_index).abs + 1
+      )
+      .each_with_index do |panel, i|
+        panel.display_index = i
+        panel.save
+      end
+    render json: relevant_panels.map { |panel| { name: panel.name, index: panel.display_index }}
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
-    panel = HintPanel.find(params[:id])
-    unless panel.hint_profile_type == "UserHintProfile" && panel.hint_profile.user == current_user
-      render json: {error: "User and hint profile don't match"}, status: 403
-      return
+    @hint_panel = current_user.hint_panels.find(params[:id].to_i)
+    unless @hint_panel
+      render json: { error: "Hint panel not found for current user" },
+        status: 404
     end
-    @hint_panel = panel
   end
 
   def hint_panel_create_params
@@ -193,5 +222,9 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :show_obscurity,
       :sort_order,
     )
+  end
+
+  def hint_panel_move_params
+    params.require([:id, :old_index, :new_index])
   end
 end

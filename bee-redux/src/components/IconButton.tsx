@@ -1,6 +1,8 @@
 import { Icon } from "@iconify/react";
 import { composeClasses } from "@/utils";
 import { BasicTooltip } from "@/components/BasicTooltip";
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 export interface IconButtonTypeData {
   name: string;
@@ -69,9 +71,11 @@ export const IconButtonTypes: IconButtonTypesData = {
 
 export interface IconButtonProps {
   type: IconButtonTypeKeys;
-  tooltip: string;
+  tooltip?: string;
   onClick?: Function;
   className?: string;
+  attributes?: DraggableAttributes;
+  listeners?: SyntheticListenerMap | undefined;
 }
 
 export function IconButton({
@@ -79,13 +83,17 @@ export function IconButton({
   onClick,
   tooltip,
   className,
+  attributes,
+  listeners,
 }: IconButtonProps) {
   return (
-    <BasicTooltip tooltipContent={tooltip}>
+    <BasicTooltip tooltipContent={tooltip} disabled={tooltip === undefined}>
       <button
         type="button"
         onClick={onClick ? () => onClick() : undefined}
         className={composeClasses("IconButton", className ?? "")}
+        {...attributes}
+        {...listeners}
       >
         <Icon icon={IconButtonTypes[type].icon} />
       </button>

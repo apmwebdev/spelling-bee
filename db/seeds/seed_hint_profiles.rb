@@ -25,7 +25,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Lengths - First Letter",
-      display_index: 1,
+      display_index: 0,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -38,7 +38,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Count - First 2 Letters",
-      display_index: 2,
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -51,7 +51,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Letter Search",
-      display_index: 3,
+      display_index: 2,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -62,7 +62,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Obscurity Ranking",
-      display_index: 4,
+      display_index: 3,
       panel_subtype: ObscurityPanel.new(
         hide_known: false,
         separate_known: false,
@@ -76,7 +76,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Definitions",
-      display_index: 5,
+      display_index: 4,
       panel_subtype: DefinitionPanel.new(
         hide_known: false,
         revealed_letters: 1,
@@ -94,7 +94,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Your Grid of Remaining Words",
-      display_index: 1,
+      display_index: 0,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -110,7 +110,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Your Two-Letter List",
-      display_index: 2,
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -126,7 +126,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Obscurity Ranking",
-      display_index: 3,
+      display_index: 2,
       panel_subtype: ObscurityPanel.new(
         hide_known: true,
         separate_known: false,
@@ -143,7 +143,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Definitions",
-      display_index: 4,
+      display_index: 3,
       panel_subtype: DefinitionPanel.new(
         hide_known: true,
         revealed_letters: 1,
@@ -188,7 +188,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Search",
-      display_index: 1,
+      display_index: 0,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -199,7 +199,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First Letter WLG",
-      display_index: 2,
+      display_index: 1,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -212,7 +212,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First 2 Letters WCL",
-      display_index: 3,
+      display_index: 2,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_count_list",
@@ -261,7 +261,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "First 2 Letters WLG",
-      display_index: 1,
+      display_index: 0,
       panel_subtype: LetterPanel.new(
         location: "start",
         output_type: "word_length_grid",
@@ -274,7 +274,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Search",
-      display_index: 2,
+      display_index: 1,
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
@@ -285,7 +285,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Obscurity Ranking",
-      display_index: 3,
+      display_index: 2,
       panel_subtype: ObscurityPanel.new(
         hide_known: false,
         revealed_letters: 1,
@@ -299,7 +299,7 @@ module SeedHintProfiles
 
     HintPanel.create!(
       name: "Word Definitions",
-      display_index: 4,
+      display_index: 3,
       panel_subtype: DefinitionPanel.new(
         hide_known: true,
         revealed_letters: 1,
