@@ -5,7 +5,7 @@ import { Status } from "@/features/guesses/guessesSlice";
 import { puzzleApiSlice } from "@/features/puzzle/puzzleApiSlice";
 import { AppDispatch, RootState } from "@/app/store";
 import { startAppListening } from "@/app/listenerMiddleware";
-import { capitalizeFirstLetter } from "@/utils";
+import { capitalizeFirstLetter } from "@/util";
 
 export type PanelCurrentDisplayState = {
   isExpanded: boolean;

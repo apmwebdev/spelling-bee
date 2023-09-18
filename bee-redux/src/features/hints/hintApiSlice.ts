@@ -216,14 +216,21 @@ export const hintApiSlice = apiSlice.injectEndpoints({
       },
     }),
 
-    // ✅
+    /**
+     * ✅
+     * Does not debounce
+     * Uses optimistic updates
+     * Manually updates getCurrentHintProfile endpoint data
+     * Guest users + modifications to default profile panls save only to local
+     *   storage
+     */
     changeHintPanelOrder: builder.mutation<boolean, t.MoveHintPanelData>({
       queryFn: async (formData, api, _opts, baseQuery) => {
         const state = api.getState() as RootState;
         let shouldPersist =
           !state.auth.isGuest &&
           selectCurrentHintProfile(state)?.type !== t.HintProfileTypes.Default;
-
+        //Optimistically update getCurrentHintProfile
         api.dispatch(
           hintApiSlice.util.updateQueryData(
             "getCurrentHintProfile",
@@ -252,7 +259,8 @@ export const hintApiSlice = apiSlice.injectEndpoints({
             },
           ),
         );
-
+        // If user is logged in and the profile is not a default profile,
+        // run the actual query. Otherwise, just return.
         if (shouldPersist) {
           try {
             await baseQuery({
@@ -371,21 +379,6 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         }
         return { data: true };
       },
-    }),
-
-    //Maybe not needed
-
-    // ❌ Get only user hint profiles
-    getUserHintProfiles: builder.query<t.UserHintProfileBasic[], void>({
-      query: () => ({
-        url: "/user_hint_profiles",
-      }),
-    }),
-    // ✅❌ Implemented, but maybe not needed?
-    getUserHintProfile: builder.query<t.UserHintProfileComplete, number>({
-      query: (id: number) => ({
-        url: `user_hint_profiles/${id}`,
-      }),
     }),
   }),
 });

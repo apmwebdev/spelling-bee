@@ -1,6 +1,5 @@
 import * as Popover from "@radix-ui/react-popover";
 import { ReactNode } from "react";
-import { Icon } from "@iconify/react";
 
 export function HelpBubble({ children }: { children: ReactNode }) {
   return (

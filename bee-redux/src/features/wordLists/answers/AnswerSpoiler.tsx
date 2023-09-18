@@ -3,8 +3,8 @@ import { selectAnswersListSettings } from "../wordListSettingsSlice";
 import {
   GuessFormData,
   selectCurrentAttempt,
-} from "../../guesses/guessesSlice";
-import { useAddGuessMutation } from "../../guesses/guessesApiSlice";
+} from "@/features/guesses/guessesSlice";
+import { useAddGuessMutation } from "@/features/guesses/guessesApiSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
   const currentAttempt = useAppSelector(selectCurrentAttempt);

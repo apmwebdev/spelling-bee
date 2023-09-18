@@ -2,13 +2,13 @@ import { useAppSelector } from "@/app/hooks";
 import {
   selectCorrectGuessWords,
   selectScore,
-} from "../../guesses/guessesSlice";
+} from "@/features/guesses/guessesSlice";
 import {
   selectAnswers,
   selectPangrams,
   selectPerfectPangrams,
   selectTotalPoints,
-} from "../../puzzle/puzzleSlice";
+} from "@/features/puzzle/puzzleSlice";
 import { selectFoundWordsListSettings } from "../wordListSettingsSlice";
 
 export function FoundWordsStatus() {

@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore } from "@/utils";
+import { calculateScore } from "@/util";
 import { sortBy } from "lodash";
 import { selectGuessWords } from "../guesses/guessesSlice";
 import {
@@ -65,7 +65,6 @@ export const puzzleSlice = createSlice({
 
 export const {} = puzzleSlice.actions;
 
-export const selectPuzzleStatus = (state: RootState) => state.puzzle.status;
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
 export const selectDate = (state: RootState) => state.puzzle.data.date;

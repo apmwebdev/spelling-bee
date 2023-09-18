@@ -1,12 +1,12 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectDate, selectIsLatest, selectPuzzleId } from "./puzzleSlice";
 import { Icon } from "@iconify/react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   dateRegex,
   getNextPuzzleDateString,
   getPreviousPuzzleDateString,
-} from "@/utils";
+} from "@/util";
 import { ButtonLink } from "@/components/ButtonLink";
 
 export function PuzzleNav() {

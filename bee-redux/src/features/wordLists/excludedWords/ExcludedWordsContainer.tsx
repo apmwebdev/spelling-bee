@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectExcludedWords } from "../../puzzle/puzzleSlice";
+import { selectExcludedWords } from "@/features/puzzle/puzzleSlice";
 import { WordListScroller } from "../WordListScroller";
 import { ExcludedWordsListHeader } from "./ExcludedWordsListHeader";
 import {

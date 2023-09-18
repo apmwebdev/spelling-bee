@@ -68,7 +68,6 @@ export function LettersPresent({
 
     return (
       <div className="LetterPanel_LPL_Container">
-        {/*<WordLengthGridKey tracking={tracking} />*/}
         <div className="LetterPanel_LettersPresentList">
           {startingLetterDivs}
         </div>

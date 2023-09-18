@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore } from "@/utils";
+import { calculateScore } from "@/util";
 import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 
@@ -103,14 +103,6 @@ const initialState: GuessesState = {
   status: Status.Initial,
 };
 
-// export const fetchGuessesAsync = createAsyncThunk(
-//   "guesses/fetchGuesses",
-//   async (puzzleId: string) => {
-//     const response = await fetchGuesses(0, puzzleId);
-//     return response.data;
-//   },
-// );
-
 export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
@@ -145,7 +137,6 @@ export const guessesSlice = createSlice({
 
 export const { setCurrentAttempt } = guessesSlice.actions;
 
-export const selectGuessesData = (state: RootState) => state.guesses.data;
 export const selectCurrentAttempt = (state: RootState) =>
   state.guesses.data.currentAttempt;
 export const selectCurrentAttemptId = createSelector(
