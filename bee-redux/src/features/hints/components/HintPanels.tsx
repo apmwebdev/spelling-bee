@@ -1,21 +1,23 @@
-import { HintPanel } from "./HintPanel";
 import {
   hintApiSlice,
+  HintPanel,
+  HintPanelData,
   selectPanelIds,
   selectPanels,
+  SortableHintPanel,
   useChangeHintPanelOrderMutation,
-} from "@/features/hints/hintApiSlice";
+} from "@/features/hints";
 import React, { useState } from "react";
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
-  DragStartEvent,
-  DragOverlay,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -23,9 +25,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useAppSelector } from "@/app/hooks";
-import { SortableHintPanel } from "@/features/hints/components/SortableHintPanel";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { HintPanelData } from "@/features/hints";
 
 export function HintPanels() {
   const currentProfile =

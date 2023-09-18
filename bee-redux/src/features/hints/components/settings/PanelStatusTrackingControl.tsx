@@ -1,5 +1,8 @@
-import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import {
+  StatusTrackingKeys,
+  StatusTrackingOptions,
+  useUpdateHintPanelMutation,
+} from "@/features/hints";
 import * as Select from "@radix-ui/react-select";
 import {
   SelectContentWithPortal,

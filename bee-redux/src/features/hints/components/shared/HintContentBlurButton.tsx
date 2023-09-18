@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/app/hooks";
 import {
   PanelCurrentDisplayStateProperties,
   setPanelDisplayPropThunk,
-} from "@/features/hints/hintProfilesSlice";
+} from "@/features/hints";
 
 export function HintContentBlurButton({
   panelId,

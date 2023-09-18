@@ -1,5 +1,5 @@
 import * as Popover from "@/components/radix-ui/radix-popover";
-import { AnswerFormat } from "@/features/puzzle/puzzleApiSlice";
+import { AnswerFormat } from "@/features/puzzle";
 
 export function DefinitionPopover({
   answer,

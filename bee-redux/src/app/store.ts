@@ -1,15 +1,15 @@
 import {
-  configureStore,
-  ThunkAction,
   Action,
   combineReducers,
+  configureStore,
+  ThunkAction,
 } from "@reduxjs/toolkit";
-import authReducer from "../features/auth/authSlice";
-import puzzleReducer from "../features/puzzle/puzzleSlice";
-import guessesReducer from "../features/guesses/guessesSlice";
-import wordListSettingsReducer from "@/features/wordLists/wordListSettingsSlice";
-import hintProfilesReducer from "../features/hints/hintProfilesSlice";
-import { apiSlice } from "@/features/api/apiSlice";
+import authReducer from "@/features/auth/authSlice";
+import puzzleReducer from "@/features/puzzle/api/puzzleSlice";
+import guessesReducer from "@/features/guesses/api/guessesSlice";
+import wordListSettingsReducer from "@/features/wordLists/api/wordListSettingsSlice";
+import hintProfilesReducer from "@/features/hints/api/hintProfilesSlice";
+import { apiSlice } from "@/features/api/api/apiSlice";
 import { listenerMiddleware } from "@/app/listenerMiddleware";
 
 const rootReducer = combineReducers({

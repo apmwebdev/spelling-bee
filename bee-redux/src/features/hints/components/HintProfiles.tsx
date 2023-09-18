@@ -1,4 +1,4 @@
-import { HintProfilesSelector } from "@/features/hints/components/profiles/HintProfilesSelector";
+import { HintProfilesSelector } from "./profiles/HintProfilesSelector";
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
 export function HintProfiles() {

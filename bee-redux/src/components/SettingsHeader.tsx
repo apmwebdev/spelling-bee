@@ -5,9 +5,5 @@ interface SettingsHeaderProps {
 }
 
 export function SettingsHeader({ children }: SettingsHeaderProps) {
-  return (
-    <header className="SettingsCollapsibleHeader">
-      {children}
-    </header>
-  );
+  return <header className="SettingsCollapsibleHeader">{children}</header>;
 }

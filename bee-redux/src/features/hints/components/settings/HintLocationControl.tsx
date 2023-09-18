@@ -4,6 +4,7 @@ import {
   PanelTypes,
   SearchPanelLocationKeys,
   SearchPanelLocationOptions,
+  useUpdateHintPanelMutation,
 } from "@/features/hints";
 import * as Select from "@radix-ui/react-select";
 import {
@@ -11,7 +12,6 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/radix-ui/radix-select";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import uniqid from "uniqid";
 import { CSSProperties } from "react";
 
