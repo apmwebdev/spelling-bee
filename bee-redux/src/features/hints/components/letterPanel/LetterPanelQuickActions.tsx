@@ -1,5 +1,4 @@
-import { PanelCurrentDisplayState } from "@/features/hints/hintProfilesSlice";
-import { LetterPanelData } from "@/features/hints";
+import { LetterPanelData, PanelCurrentDisplayState } from "@/features/hints";
 import { QuickActions } from "@/features/hints/components/shared/QuickActions";
 import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
 import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";

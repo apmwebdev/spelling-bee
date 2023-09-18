@@ -1,6 +1,6 @@
-import { AnswerFormat } from "@/features/puzzle/puzzleApiSlice";
+import { AnswerFormat } from "@/features/puzzle";
 import { DefinitionPanelData } from "@/features/hints";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
 
 const cssClasses = (isKnown: boolean) => {

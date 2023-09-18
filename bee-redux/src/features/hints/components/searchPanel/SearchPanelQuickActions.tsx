@@ -1,5 +1,9 @@
-import { PanelCurrentDisplayState } from "@/features/hints/hintProfilesSlice";
-import { PanelTypes, SearchPanelData, SearchPanelLocationKeys } from "@/features/hints";
+import {
+  PanelCurrentDisplayState,
+  PanelTypes,
+  SearchPanelData,
+  SearchPanelLocationKeys,
+} from "@/features/hints";
 import { QuickActions } from "@/features/hints/components/shared/QuickActions";
 import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
 import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";

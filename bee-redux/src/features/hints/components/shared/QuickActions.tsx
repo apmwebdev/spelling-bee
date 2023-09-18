@@ -1,4 +1,4 @@
-import { PanelCurrentDisplayState } from "@/features/hints/hintProfilesSlice";
+import { PanelCurrentDisplayState } from "@/features/hints";
 import { ReactNode } from "react";
 import { HintContentBlurButton } from "@/features/hints/components/shared/HintContentBlurButton";
 

@@ -1,12 +1,12 @@
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import {
   ToggleGroupItemProps,
   ToggleGroupMultipleProps,
   ToggleGroupSingleProps,
 } from "@radix-ui/react-toggle-group";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export const Root = (
   props: IntrinsicAttributes &
@@ -25,10 +25,4 @@ export const Item = (
   props: IntrinsicAttributes &
     ToggleGroupItemProps &
     RefAttributes<HTMLButtonElement>,
-) => (
-  <ToggleGroup.Item
-    {...props}
-  >
-    {props.children}
-  </ToggleGroup.Item>
-);
+) => <ToggleGroup.Item {...props}>{props.children}</ToggleGroup.Item>;

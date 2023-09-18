@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { useUpdateHintPanelMutation } from "@/features/hints";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
+import { selectAnswerLengths } from "@/features/puzzle";
 
 export function HintRevealedLettersControl({
   panelId,

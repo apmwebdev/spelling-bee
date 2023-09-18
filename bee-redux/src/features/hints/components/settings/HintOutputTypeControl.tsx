@@ -1,8 +1,8 @@
 import {
   SubstringHintOutputKeys,
   SubstringHintOutputOptions,
+  useUpdateHintPanelMutation,
 } from "@/features/hints";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import * as Select from "@radix-ui/react-select";
 import {
   SelectContentWithPortal,

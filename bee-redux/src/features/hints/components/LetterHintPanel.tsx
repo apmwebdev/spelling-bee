@@ -9,10 +9,7 @@ import {
 } from "@/features/hints";
 import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
 import { useAppSelector } from "@/app/hooks";
-import {
-  selectAnswerWords,
-  selectKnownWords,
-} from "@/features/puzzle/puzzleSlice";
+import { selectAnswerWords, selectKnownWords } from "@/features/puzzle";
 
 export function LetterHintPanel({
   letterData,

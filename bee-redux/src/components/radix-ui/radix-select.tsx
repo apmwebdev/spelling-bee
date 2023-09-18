@@ -1,13 +1,13 @@
 import * as Select from "@radix-ui/react-select";
-import { RefAttributes } from "react";
-import { Icon } from "@iconify/react";
-import { composeClasses } from "@/utils";
-import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import {
   SelectContentProps,
   SelectLabelProps,
   SelectTriggerProps,
 } from "@radix-ui/react-select";
+import { RefAttributes } from "react";
+import { Icon } from "@iconify/react";
+import { composeClasses } from "@/util";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export const SelectTrigger = (
   props: IntrinsicAttributes &

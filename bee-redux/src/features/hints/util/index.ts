@@ -1,5 +1,5 @@
 import { StatusTrackingKeys, SubstringHintDataCell } from "@/features/hints";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 
 export const createSubstringHintDataCell = (): SubstringHintDataCell => {
   return { answers: 0, guesses: 0 };

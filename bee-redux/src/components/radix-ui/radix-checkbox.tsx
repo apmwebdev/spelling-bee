@@ -1,7 +1,7 @@
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
-import { RefAttributes } from "react";
 import { CheckboxProps } from "@radix-ui/react-checkbox";
-import { composeClasses } from "@/utils";
+import { RefAttributes } from "react";
+import { composeClasses } from "@/util";
 import { Icon } from "@iconify/react";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 

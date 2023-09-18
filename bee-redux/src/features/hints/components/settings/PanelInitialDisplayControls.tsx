@@ -1,4 +1,9 @@
-import { PanelDisplayState, PanelDisplayStateKeys } from "@/features/hints";
+import {
+  PanelDisplayState,
+  PanelDisplayStateKeys,
+  selectPanelDisplayState,
+  useUpdateHintPanelMutation,
+} from "@/features/hints";
 import { PanelInitDisplayCheckboxControl } from "@/features/hints/components/settings/PanelInitDisplayCheckboxControl";
 import {
   InitIsBlurredHelpText,
@@ -8,8 +13,6 @@ import {
   InitIsStickyHelpText,
 } from "@/features/hints/components/settings/helpText";
 import { useAppSelector } from "@/app/hooks";
-import { selectPanelDisplayState } from "@/features/hints/hintProfilesSlice";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 
 export function PanelInitialDisplayControls({
   panelId,

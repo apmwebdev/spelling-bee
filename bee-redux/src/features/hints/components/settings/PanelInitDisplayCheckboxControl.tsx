@@ -1,9 +1,11 @@
-import { HintPanelData, PanelDisplayStateKeys } from "@/features/hints";
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import {
+  PanelDisplayStateKeys,
+  useUpdateHintPanelMutation,
+} from "@/features/hints";
 import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 import { ReactNode } from "react";
 import { HelpBubble } from "@/components/HelpBubble";
-import { capitalizeFirstLetter } from "@/utils";
+import { capitalizeFirstLetter } from "@/util";
 
 export function PanelInitDisplayCheckboxControl({
   panelId,

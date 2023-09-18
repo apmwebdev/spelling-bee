@@ -59,29 +59,4 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
       </div>
     </div>
   );
-  /*
-  return (
-    <SettingsCollapsible
-      isExpanded={display.isSettingsExpanded}
-      toggleIsExpanded={toggleExpanded}
-    >
-      {typeSpecificSettings()}
-      <div className="GeneralPanelSettings">
-        <PanelStatusTrackingControl
-          panelId={panel.id}
-          statusTracking={panel.statusTracking}
-        />
-        <PanelNameInputForm
-          panelId={panel.id}
-          currentName={panel.name}
-          inputId={`PanelNameInput${uniqid()}`}
-        />
-        <PanelInitialDisplayControls
-          panelId={panel.id}
-          initialDisplayState={panel.initialDisplayState}
-        />
-      </div>
-    </SettingsCollapsible>
-  );
-  */
 }

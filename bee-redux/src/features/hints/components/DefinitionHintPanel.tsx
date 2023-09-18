@@ -1,8 +1,8 @@
-import { DefinitionPanelData, SortOrderKeys } from "@/features/hints";
+import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswersByLetter } from "@/features/puzzle/puzzleSlice";
-import { LetterTab } from "@/features/hints/components/definitionPanel/LetterTab";
+import { selectAnswersByLetter } from "@/features/puzzle";
+import { LetterTab } from "./definitionPanel/LetterTab";
 
 export function DefinitionHintPanel({
   definitionPanelData,
