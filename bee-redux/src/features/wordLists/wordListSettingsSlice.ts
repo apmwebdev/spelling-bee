@@ -118,12 +118,6 @@ export const wordListSettingsSlice = createSlice({
     setFoundWordsSortOrder: (state, action) => {
       state.data.foundWords.sortOrder = action.payload;
     },
-    // toggleWrongGuessesShow: (state) => {
-    //   state.data.wrongGuessesShow = !state.data.wrongGuessesShow;
-    // },
-    // toggleWrongGuessesSeparate: (state) => {
-    //   state.data.wrongGuessesSeparate = !state.data.wrongGuessesSeparate;
-    // },
     setFoundWordsWordsShowTotal: (
       state,
       action: { payload: boolean; type: string },
@@ -199,8 +193,6 @@ export const wordListSettingsSlice = createSlice({
 export const {
   setFoundWordsSortType,
   setFoundWordsSortOrder,
-  // toggleWrongGuessesShow,
-  // toggleWrongGuessesSeparate,
   setFoundWordsWordsShowTotal,
   setFoundWordsPangramsShowTotal,
   setFoundWordsShowPerfectPangrams,
@@ -220,8 +212,6 @@ export const {
   toggleAnswersSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 
-export const selectWordListSettings = (state: RootState) =>
-  state.wordListSettings.data;
 export const selectFoundWordsListSettings = (state: RootState) =>
   state.wordListSettings.data.foundWords;
 export const selectWrongGuessesListSettings = (state: RootState) =>

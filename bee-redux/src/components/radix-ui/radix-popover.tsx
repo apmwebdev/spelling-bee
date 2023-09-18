@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-popover";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import { RefAttributes } from "react";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 import { Icon } from "@iconify/react";
 
 export { Root, Trigger, Anchor } from "@radix-ui/react-popover";

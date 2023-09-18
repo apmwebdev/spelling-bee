@@ -7,8 +7,6 @@ import { selectCurrentPanelData } from "@/features/hints/hintProfilesSlice";
 import { Status } from "@/features/guesses/guessesSlice";
 
 export function Hints() {
-  // const currentProfile =
-  //   hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
   const currentProfile = useAppSelector(selectCurrentPanelData);
   const profiles =
     hintApiSlice.endpoints.getHintProfiles.useQueryState(undefined);

@@ -4,7 +4,7 @@ import {
   HintPanelBooleanSettings,
 } from "@/features/hints";
 import { Switch } from "@/components/radix-ui/radix-switch";
-import { maybeAddDisabledClass } from "@/utils";
+import { maybeAddDisabledClass } from "@/util";
 
 export function HintPanelSwitchSetting({
   panelId,

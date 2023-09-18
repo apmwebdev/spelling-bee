@@ -13,7 +13,7 @@ import {
 import { CSSProperties, forwardRef, Ref } from "react";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 
 export const HintPanel = forwardRef(
   (

@@ -4,7 +4,7 @@ import {
   selectKnownWords,
   selectRemainingAnswerWords,
   selectValidLetters,
-} from "../../puzzle/puzzleSlice";
+} from "@/features/puzzle/puzzleSlice";
 import { WordListScroller } from "../WordListScroller";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import {
@@ -12,7 +12,7 @@ import {
   toggleAnswersSettingsCollapsed,
 } from "../wordListSettingsSlice";
 import answerSorter from "./answerSorter";
-import { selectSpoiledWords } from "../../guesses/guessesSlice";
+import { selectSpoiledWords } from "@/features/guesses/guessesSlice";
 import { AnswersSettings } from "./AnswersSettings";
 import { AnswersListHeader } from "./AnswersListHeader";
 

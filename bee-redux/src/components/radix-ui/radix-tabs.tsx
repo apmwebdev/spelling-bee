@@ -7,7 +7,7 @@ import {
   TabsTriggerProps,
 } from "@radix-ui/react-tabs";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 
 export const Root = (
   props: IntrinsicAttributes & TabsProps & RefAttributes<HTMLDivElement>,

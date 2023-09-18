@@ -1,5 +1,3 @@
-import { SortOrder } from "@/features/wordLists/wordListSettingsSlice";
-
 interface EnumerableOption {
   title: string;
 }

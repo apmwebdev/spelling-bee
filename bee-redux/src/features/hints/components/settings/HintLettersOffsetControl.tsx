@@ -2,7 +2,7 @@ import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
 import { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
-import { maybeAddDisabledClass } from "@/utils";
+import { maybeAddDisabledClass } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
 
 export function HintLettersOffsetControl({
