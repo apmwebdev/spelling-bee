@@ -5,11 +5,10 @@ import {
   setFoundWordsShowPerfectPangrams,
   setFoundWordsWordsShowTotal,
 } from "../wordListSettingsSlice";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function FoundWordsSettings() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     wordsShowTotal,
     pangramsShowTotal,
