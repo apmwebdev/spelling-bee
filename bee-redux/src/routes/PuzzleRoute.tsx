@@ -1,5 +1,5 @@
-import { Puzzle } from "@/features/puzzle/components/Puzzle";
-import { Status } from "@/features/status/components/Status";
+import { Puzzle } from "@/features/puzzle";
+import { Status } from "@/features/status";
 import { Hints } from "@/features/hints";
 import { useEffect } from "react";
 import { useCurrentPuzzle } from "@/features/puzzle/hooks/useCurrentPuzzle";
