@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswerLengths } from "@/features/puzzle/puzzleSlice";
+import { selectAnswerLengths } from "@/features/puzzle";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
 import {
   createSubstringHintDataCell,

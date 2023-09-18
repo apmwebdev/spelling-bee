@@ -4,7 +4,14 @@ import {
   HintProfilesData,
   SearchPanelSearchData,
 } from "@/features/hints";
-import { RawAttemptFormat } from "@/features/guesses/guessesSlice";
+import { RawAttemptFormat } from "@/features/guesses";
+
+export enum Statuses {
+  Initial = "Not Fetched",
+  Loading = "Loading...",
+  UpToDate = "Up to Date",
+  Error = "Error",
+}
 
 export enum ColorSchemes {
   Auto = "auto",

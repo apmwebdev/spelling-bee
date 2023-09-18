@@ -1,5 +1,4 @@
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 import {
   ToggleGroupItemProps,
   ToggleGroupMultipleProps,
@@ -7,6 +6,7 @@ import {
 } from "@radix-ui/react-toggle-group";
 import { RefAttributes } from "react";
 import { composeClasses } from "@/util";
+import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export const Root = (
   props: IntrinsicAttributes &

@@ -1,4 +1,4 @@
-import { useUpdateHintPanelMutation } from "@/features/hints/hintApiSlice";
+import { useUpdateHintPanelMutation } from "@/features/hints";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export function PanelNameInputForm({
