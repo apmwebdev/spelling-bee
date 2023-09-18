@@ -1,13 +1,13 @@
 import { ObscurityPanelData, SortOrderKeys } from "@/features/hints";
 import { useAppSelector } from "@/app/hooks";
 import {
+  AnswerFormat,
   selectAnswerLengths,
   selectAnswers,
   selectKnownAnswers,
   selectKnownWords,
   selectRemainingAnswers,
-} from "@/features/puzzle/puzzleSlice";
-import { AnswerFormat } from "@/features/puzzle/puzzleApiSlice";
+} from "@/features/puzzle";
 import { usageExplanation } from "@/features/hints/components/obscurityPanel/util";
 import { DefinitionPopover } from "@/features/hints/components/obscurityPanel/DefinitionPopover";
 import { last } from "lodash";

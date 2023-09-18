@@ -1,4 +1,4 @@
-import { LetterAnswers } from "@/features/puzzle/puzzleSlice";
+import { LetterAnswers } from "@/features/puzzle";
 import { DefinitionPanelData } from "@/features/hints";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { Word } from "@/features/hints/components/definitionPanel/Word";

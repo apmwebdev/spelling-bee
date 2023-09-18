@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
 
 export function ButtonLink({

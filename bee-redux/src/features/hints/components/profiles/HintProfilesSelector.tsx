@@ -8,9 +8,10 @@ import {
 import uniqid from "uniqid";
 import {
   hintApiSlice,
+  HintProfileBasicData,
+  HintProfileTypes,
   useSetCurrentHintProfileMutation,
-} from "@/features/hints/hintApiSlice";
-import { HintProfileBasicData, HintProfileTypes } from "@/features/hints";
+} from "@/features/hints";
 
 export function HintProfilesSelector() {
   const currentProfile =

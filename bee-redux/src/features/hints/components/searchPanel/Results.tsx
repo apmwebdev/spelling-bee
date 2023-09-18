@@ -3,7 +3,7 @@ import {
   selectAnswerLengths,
   selectAnswerWords,
   selectKnownWords,
-} from "@/features/puzzle/puzzleSlice";
+} from "@/features/puzzle";
 import { Result } from "./Result";
 import uniqid from "uniqid";
 import {

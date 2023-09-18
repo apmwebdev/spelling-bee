@@ -1,16 +1,14 @@
 import { FormEvent, useState } from "react";
 import { Results } from "@/features/hints/components/searchPanel/Results";
 import {
+  hintApiSlice,
   SearchPanelData,
   SearchPanelSearchData,
   StatusTrackingKeys,
-} from "@/features/hints";
-import {
-  hintApiSlice,
   useAddSearchMutation,
-} from "@/features/hints/hintApiSlice";
+} from "@/features/hints";
 import { useSelector } from "react-redux";
-import { selectCurrentAttemptId } from "@/features/guesses/guessesSlice";
+import { selectCurrentAttemptId } from "@/features/guesses";
 
 export function SearchHintPanel({
   searchPanelData,

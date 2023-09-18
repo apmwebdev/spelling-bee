@@ -5,7 +5,7 @@ import {
   PanelCurrentDisplayStateProperties,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
-} from "@/features/hints/hintProfilesSlice";
+} from "@/features/hints";
 
 export function SettingsToggle({ panelId }: { panelId: number }) {
   const dispatch = useAppDispatch();

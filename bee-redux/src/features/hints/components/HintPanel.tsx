@@ -1,19 +1,19 @@
-import { PanelHeader } from "././shared/PanelHeader";
+import { PanelHeader } from "./shared/PanelHeader";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
-import { HintPanelData } from "@/features/hints";
 import { HintPanelSettings } from "@/features/hints/components/settings/HintPanelSettings";
-import { HintPanelContentContainer } from "@/features/hints/components/HintPanelContentContainer";
+import { HintPanelContentContainer } from "@/features/hints/components/shared/HintPanelContentContainer";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
+  HintPanelData,
   PanelCurrentDisplayStateProperties,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
-} from "@/features/hints/hintProfilesSlice";
+} from "@/features/hints";
 import { CSSProperties, forwardRef, Ref } from "react";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 
 export const HintPanel = forwardRef(
   (

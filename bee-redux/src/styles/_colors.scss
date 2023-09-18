@@ -162,10 +162,6 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   }
 }
 
-@media (prefers-color-scheme: dark) {
-// See component CSS
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

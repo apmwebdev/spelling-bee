@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { composeClasses } from "@/utils";
+import { composeClasses } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
