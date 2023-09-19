@@ -11,7 +11,7 @@ export function GuessInputEnter() {
   return (
     <button
       type="button"
-      className="sb-guess-input-enter standard-button"
+      className="GuessInputEnter standardButton"
       onClick={handleClick}
     >
       Enter

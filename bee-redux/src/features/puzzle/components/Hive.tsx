@@ -1,14 +1,14 @@
-import React, { FC } from "react";
+import React from "react";
 import LetterCell from "./LetterCell";
 import { useAppSelector } from "@/app/hooks";
 import { selectPuzzle } from "@/features/puzzle";
 import uniqid from "uniqid";
 
-const Hive: FC = () => {
+export function Hive() {
   const puzzle = useAppSelector(selectPuzzle);
   return (
-    <div className="hive-container">
-      <div className="hive">
+    <div className="HiveContainer">
+      <div className="Hive">
         <LetterCell letter={puzzle.centerLetter} isCenter={true} />
         {puzzle.outerLetters.map((letter) => {
           return <LetterCell key={uniqid()} letter={letter} isCenter={false} />;
@@ -16,6 +16,4 @@ const Hive: FC = () => {
       </div>
     </div>
   );
-};
-
-export default Hive;
+}

@@ -8,7 +8,7 @@ export function DuplicateButton({ panelId }: DuplicateButtonProps) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Duplicate}
-      className="HintPanelHeaderButton button"
+      className="HintPanelHeaderButton"
       // onClick={() => dispatch(duplicatePanel({ panelId }))}
       tooltip="Duplicate panel"
     />

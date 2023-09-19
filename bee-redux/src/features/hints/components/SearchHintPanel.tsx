@@ -54,7 +54,7 @@ export function SearchHintPanel({
           placeholder="Search..."
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <button type="submit" className="standard-button">
+        <button type="submit" className="standardButton">
           Search
         </button>
       </form>

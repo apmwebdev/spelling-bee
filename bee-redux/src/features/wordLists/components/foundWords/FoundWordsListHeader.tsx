@@ -4,7 +4,7 @@ import {
   setFoundWordsSortType,
   SortOrder,
   SortType,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
@@ -13,12 +13,11 @@ export function FoundWordsListHeader() {
   const { sortType, sortOrder } = useAppSelector(selectFoundWordsListSettings);
 
   return (
-    <header className="header">
-      <div className="sort-type">
+    <header>
+      <div>
         <span>Sort</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-order"
           value={sortType}
           onValueChange={(val) => dispatch(setFoundWordsSortType(val))}
         >
@@ -30,11 +29,10 @@ export function FoundWordsListHeader() {
           </ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
-      <div className="sort-order">
+      <div>
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-found-words-sort-type"
           value={sortOrder}
           onValueChange={(val) => dispatch(setFoundWordsSortOrder(val))}
         >

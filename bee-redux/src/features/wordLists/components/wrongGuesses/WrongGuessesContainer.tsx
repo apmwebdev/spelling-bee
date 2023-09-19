@@ -45,16 +45,16 @@ export function WrongGuessesContainer() {
   };
 
   return (
-    <div className="sb-wrong-guesses-container">
+    <div>
       <SettingsCollapsible
         isExpanded={!settingsCollapsed}
         toggleIsExpanded={() => dispatch(toggleWrongGuessesSettingsCollapsed())}
       >
         No content
       </SettingsCollapsible>
-      <div className="sb-wrong-guesses-status sb-word-list-status">
+      <div className="WordListStatus">
         You've made{" "}
-        <span className="word-list-status-count">{wrongGuesses.length}</span>{" "}
+        <span className="WordListStatusCount">{wrongGuesses.length}</span>{" "}
         incorrect {wrongGuesses.length === 1 ? "guess" : "guesses"}.
       </div>
       <WrongGuessesListContainer wordList={generateDisplayGuessList()} />

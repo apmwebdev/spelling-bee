@@ -6,7 +6,7 @@ import {
   selectExcludedWordsListSettings,
   SortOrder,
   toggleExcludedWordsSettingsCollapsed,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
 export function ExcludedWordsContainer() {
@@ -18,7 +18,7 @@ export function ExcludedWordsContainer() {
   const displayList = [...excludedWords];
 
   return (
-    <div className="sb-excluded-words-container">
+    <div className="ExcludedWordsContainer">
       <SettingsCollapsible
         isExpanded={!settingsCollapsed}
         toggleIsExpanded={() =>
@@ -27,12 +27,12 @@ export function ExcludedWordsContainer() {
       >
         blah
       </SettingsCollapsible>
-      <div className="sb-excluded-words-status sb-word-list-status">
+      <div className="WordListStatus">
         There are{" "}
-        <span className="word-list-status-count">{excludedWords.length}</span>{" "}
+        <span className="WordListStatusCount">{excludedWords.length}</span>{" "}
         words excluded from this puzzle.
       </div>
-      <div className="sb-word-list-container">
+      <div className="WordListContainer">
         <ExcludedWordsListHeader />
         <WordListScroller
           wordList={
