@@ -10,7 +10,7 @@ export default function LetterCell({ letter, isCenter }: LetterCellProps) {
   // TODO: Make these fully accessible buttons
   return (
     <svg
-      className={isCenter ? "hexagon center-letter" : "hexagon"}
+      className={isCenter ? "LetterCell centerLetter" : "LetterCell"}
       viewBox="0 0 140 121.2435565"
       onClick={handleClick}
       // tabIndex={0}

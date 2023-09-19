@@ -1,16 +1,13 @@
 @use 'colors' as *;
 
 .Status {
-  /*border: 1px solid #ccc;*/
   position: sticky;
   top: 8px;
   display: flex;
   flex-direction: column;
-  //padding: 8px;
   gap: 8px;
   justify-content: flex-start;
   align-self: flex-start;
-  //height: 100vh;
   width: 100%;
   max-width: 33.333333333vw;
 }
@@ -20,26 +17,15 @@
   font-size: 16px;
   display: flex;
   align-items: center;
-  //justify-content: center;
   justify-content: flex-start;
   gap: 16px;
   background-color: bg-color-dark($this-hue);
-  //border: 1.5px solid border-color($this-hue);
   padding: 8px 16px;
-  //margin: 8px 0px;
   border-radius: var(--br);
 }
 
 .Progress {
-  //border-radius: 24px;
-  //border: 2px solid border-color($blue-hue);
   padding: 0px 16px;
-  .sb-found-words-status {
-    padding-bottom: 4px;
-  }
-  //border-top: 2px solid $mid-gray;
-  //margin: 8px;
-  //background-color: bg-color-darker($blue-hue);
 }
 
 .ProgressRank {
@@ -72,9 +58,6 @@
   width: 14px;
   border-radius: 14px;
   background-color: $mid-gray;
-  &.active {
-    //background-color: ui-bg-color($yellow-hue);
-  }
   &:not(:first-child):before {
     content: "";
     position: absolute;
@@ -119,17 +102,7 @@
   }
 }
 
-.sb-word-list-section-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  //border: 2px solid;
-  //border-radius: var(--br);
-  margin: 0px;
-  //padding: 8px;
-}
-
-.sb-word-list-settings-content {
+.WordListSettingsContent {
   padding: 8px;
   label, > div {
     display: flex;
@@ -147,19 +120,13 @@
     flex-direction: column;
     gap: 4px;
   }
-  .sb-word-list-toggle {
-    font-size: 16px;
-    button {
-      padding: 2px 8px;
-    }
-  }
 }
 
-.sb-word-list-status {
+.WordListStatus {
   padding: 16px 8px;
   align-items: center;
   font-size: 16px;
-  &.sb-found-words-status {
+  &.FoundWordsStatus {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -168,12 +135,12 @@
       gap: 4px;
     }
   }
-  .word-list-status-count {
+  .WordListStatusCount {
     font-weight: bold;
   }
 }
 
-.sb-word-list-container {
+.WordListContainer {
   border-radius: var(--br);
   border: 1px solid $line-darkest;
   overflow: hidden;
@@ -192,10 +159,10 @@
   }
 }
 
-.sb-word-list {
+.WordList {
   padding: 8px 8px 16px 8px;
   //border: 1px dotted;
-  &.has-content {
+  &.hasContent {
     font-size: 16px;
     list-style: none;
     text-align: left;
@@ -212,7 +179,7 @@
           text-transform: uppercase;
         }
       }
-      button.word-popover-trigger {
+      button.WordPopoverTrigger {
         padding: 0px;
         border: none;
         display: flex;
@@ -241,13 +208,13 @@
   }
 }
 
-.has-popover {
+.hasPopover {
   &.perfect, &.pangram {
     color: $yellow-line;
   }
 }
 
-button.sb-revealer {
+button.Revealer {
   padding: 3px 8px;
   border: 1px solid $mid-gray;
   //border-radius: 0px;

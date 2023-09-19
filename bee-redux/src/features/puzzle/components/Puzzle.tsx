@@ -1,4 +1,4 @@
-import Hive from "./Hive";
+import { Hive } from "./Hive";
 import { GuessInputProvider } from "@/app/GuessInputProvider";
 import { GuessInput, GuessInputControls } from "@/features/guesses";
 import { PuzzleNav } from "@/features/puzzle/components/PuzzleNav";

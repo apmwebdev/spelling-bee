@@ -7,7 +7,7 @@ export function GuessInputBackspace() {
   return (
     <button
       type="button"
-      className="sb-guess-input-backspace standard-button"
+      className="GuessInputBackspace standardButton"
       onClick={guessBackspace}
     >
       Delete

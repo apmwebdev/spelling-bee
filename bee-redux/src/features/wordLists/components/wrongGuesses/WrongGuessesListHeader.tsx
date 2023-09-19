@@ -20,7 +20,6 @@ export function WrongGuessesListHeader() {
         <span>Sort</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-type"
           value={sortType}
           onValueChange={(val) => dispatch(setWrongGuessesSortType(val))}
         >
@@ -36,7 +35,6 @@ export function WrongGuessesListHeader() {
         <span>Order</span>
         <ToggleGroup.Root
           type="single"
-          className="sb-wrong-guesses-sort-order"
           value={sortOrder}
           onValueChange={(val) => dispatch(setWrongGuessesSortOrder(val))}
         >

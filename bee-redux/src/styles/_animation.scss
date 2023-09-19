@@ -18,7 +18,7 @@
   transform: rotate(0deg);
 }
 
-.sb-answer-alert-message, .sb-answer-alert-score {
+.AnswerAlertMessage, .AnswerAlertScore {
   animation-duration: 0.7s;
   animation-timing-function:
           cubic-bezier(0.33, 1, 0.68, 1),
@@ -27,7 +27,7 @@
   animation-iteration-count: 1;
 }
 
-.sb-answer-alert-message {
+.AnswerAlertMessage {
   animation-name: float-up-slow, fade-out;
 
   @keyframes float-up-slow {
@@ -39,7 +39,7 @@
     }
   }
 }
-.sb-answer-alert-score {
+.AnswerAlertScore {
   animation-name: float-up-fast, fade-out;
 
   @keyframes float-up-fast {
@@ -61,7 +61,7 @@
   }
 }
 
-.sb-guess-input {
+.GuessInput {
   &.error {
     animation-name: shake;
     animation-duration: 0.4s;

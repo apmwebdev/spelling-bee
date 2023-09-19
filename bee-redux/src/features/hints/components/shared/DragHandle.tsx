@@ -12,7 +12,7 @@ export function DragHandle({
   return (
     <IconButton
       type={IconButtonTypeKeys.DragVertical}
-      className="DragHandle HintPanelHeaderButton button"
+      className="DragHandle HintPanelHeaderButton"
       attributes={attributes}
       listeners={listeners}
     />

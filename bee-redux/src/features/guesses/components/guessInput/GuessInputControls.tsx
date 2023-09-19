@@ -3,7 +3,7 @@ import { GuessInputEnter } from "./controls/GuessInputEnter";
 
 export function GuessInputControls() {
   return (
-    <div className="sb-guess-input-controls">
+    <div className="GuessInputControls">
       <GuessInputBackspace />
       <div>blah</div>
       <GuessInputEnter />
