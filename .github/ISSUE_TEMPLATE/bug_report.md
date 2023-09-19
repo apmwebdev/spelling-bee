@@ -2,22 +2,22 @@
 name: Bug report
 about: Create a bug report
 title: "[BUG]"
-labels: bug, cleanup
+labels: bug
 assignees: apmwebdev
 
 ---
 
-**Description**
+## Description
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+## To Reproduce
 Steps to reproduce the behavior:
 1. 
 2. 
 3. 
 
-**Expected behavior**
+## Expected behavior
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+## Screenshots
 If applicable, add screenshots to help explain your problem.
