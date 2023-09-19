@@ -6,7 +6,7 @@ import {
   selectPerfectPangrams,
   selectTotalPoints,
 } from "@/features/puzzle";
-import { selectFoundWordsListSettings } from "../../api/wordListSettingsSlice";
+import { selectFoundWordsListSettings } from "@/features/wordLists";
 
 export function FoundWordsStatus() {
   const {

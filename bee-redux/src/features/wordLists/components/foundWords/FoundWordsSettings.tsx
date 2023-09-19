@@ -4,7 +4,7 @@ import {
   setFoundWordsPerfectPangramsShowTotal,
   setFoundWordsShowPerfectPangrams,
   setFoundWordsWordsShowTotal,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 export function FoundWordsSettings() {
@@ -16,7 +16,7 @@ export function FoundWordsSettings() {
     perfectPangramsShowTotal,
   } = useAppSelector(selectFoundWordsListSettings);
   return (
-    <div className="sb-word-list-settings-content found">
+    <div className="WordListSettingsContent found">
       <label>
         <input
           type="checkbox"
@@ -39,7 +39,6 @@ export function FoundWordsSettings() {
       </label>
       <label>
         <input
-          id="sb-found-words-list-show-perfect"
           type="checkbox"
           checked={showPerfectPangrams}
           onChange={(e) =>
@@ -50,7 +49,6 @@ export function FoundWordsSettings() {
       </label>
       <label>
         <input
-          id="sb-found-words-list-perfect-include-total"
           type="checkbox"
           checked={perfectPangramsShowTotal}
           disabled={!showPerfectPangrams}

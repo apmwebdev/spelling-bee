@@ -54,15 +54,15 @@
   font-size: 30px;
   //background-color: $line-bright;
 }
-.svg-fg {
+.UserMenuTrigger_svgForeground {
   fill: ui-bg-color($accent-hue);
 }
-.svg-bg {
+.UserMenuTrigger_svgBackground {
   fill: $line-main;
 }
-.svg-border {
+.UserMenuTrigger_svgBorder {
   fill: transparent;
-  .umt-hover & {
+  .UserMenuTrigger___hover & {
     fill: ui-line-hover-color($accent-hue);
   }
 }

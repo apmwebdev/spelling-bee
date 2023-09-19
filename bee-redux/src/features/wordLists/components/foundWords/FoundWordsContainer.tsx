@@ -5,7 +5,7 @@ import {
   SortOrder,
   SortType,
   toggleFoundWordsSettingsCollapsed,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import { WordListScroller } from "../WordListScroller";
 import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
@@ -54,16 +54,16 @@ export function FoundWordsContainer() {
     const wordsOnly = displayGuessList.map((guess) => guess.text);
     if (wordsOnly.length > 0) {
       return (
-        <div className="sb-word-list-container">
+        <div className="WordListContainer">
           <FoundWordsListHeader />
           <WordListScroller wordList={wordsOnly} allowPopovers={true} />
         </div>
       );
     }
-    return <div className="sb-word-list empty">No found words</div>;
+    return <div className="WordList empty">No found words</div>;
   };
   return (
-    <div className="sb-found-words-container">
+    <div className="FoundWordsContainer">
       <SettingsCollapsible
         isExpanded={!settingsCollapsed}
         toggleIsExpanded={() => dispatch(toggleFoundWordsSettingsCollapsed())}

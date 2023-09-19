@@ -67,7 +67,6 @@
   border-radius: var(--br);
   border: 2px solid border-color($this-hue);
   overflow: hidden;
-  //border-color: border-color($this-hue);
   &[data-state="closed"] {
     color: $line-bright;
     border-color: border-color-disabled($this-hue);
@@ -92,7 +91,6 @@
   gap: 6px;
   padding: 3px 4px;
   background-color: bg-color($this-hue);
-  //border-bottom: 1.5px solid bg-color($this-hue);
   .HintPanel[data-state="closed"] & {
     background-color: bg-color-disabled($this-hue);
 
@@ -104,7 +102,7 @@
   gap: 6px;
 }
 
-.HintPanelHeader button {
+button.HintPanelHeaderButton {
   $this-hue: $blue_hue;
   font-size: 18px;
   display: flex;
@@ -113,16 +111,19 @@
   font-weight: bold;
   padding: 8px;
   border: 1.5px solid transparent;
-  &.button {
+  &.IconButton {
     font-size: 20px;
     background-color: bg-color-extra($this-hue);
   }
   &:hover {
     border-color: border-color($this-hue);
   }
+  &:focus {
+    box-shadow: 0 0 0 1px shadow-color-focus($this-hue)
+  }
   .HintPanel[data-state="closed"] & {
     color: $line-bright;
-    &.button {
+    &.IconButton {
       background-color: bg-color-disabled($this-hue);
     }
     &:hover {
@@ -133,9 +134,8 @@
 
 button.IconButton.DragHandle {
   $this-hue: $blue-hue;
-  cursor: grab;
+  cursor: move;
   .HintPanel.Overlay & {
-    cursor: grabbing;
     background-color: $line-main;
     color: bg-color($this-hue);
   }
@@ -144,9 +144,6 @@ button.IconButton.DragHandle {
 button.PanelSettingsToggle {
   $this-hue: $blue-hue;
   padding: 8px;
-  //flex-direction: column;
-  //background-color: bg-color-darker($this-hue);
-  //border: 1.5px solid border-color($this-hue);
   color: $line-main;
   &[data-state="on"] {
     background-color: $line-main;
@@ -234,13 +231,6 @@ button.PanelSettingsToggle {
   left: -18px;
 }
 
-.sb-hint-panel-header-buttons-left, .sb-hint-panel-header-buttons-right {
-  grid-row: 1 / 2;
-  display: flex;
-  gap: 8px;
-  /*margin-bottom: 8px;*/
-}
-
 .GeneralPanelSettings {
   border-top: 2px solid border-color($alt-bg-hue);
   display: grid;
@@ -271,7 +261,6 @@ button.PanelSettingsToggle {
 .PanelInitialDisplayControls {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  //grid-template-rows: 1fr 1fr;
   align-items: flex-start;
   justify-content: stretch;
   gap: 12px;
@@ -381,9 +370,6 @@ button.PanelSettingsToggle {
 
 
 
-
-.LetterPanelSettings {
-}
 
 .LetterPanelNumberOfLettersInput {
   width: 3rem;
@@ -518,9 +504,6 @@ button.PanelSettingsToggle {
 
 
 
-
-.SearchPanelSettings {
-}
 
 .SearchHintPanel {
   //padding: 8px;

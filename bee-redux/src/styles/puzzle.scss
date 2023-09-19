@@ -76,7 +76,7 @@
   margin-top: 8px;
 }
 
-.sb-guess-input {
+.GuessInput {
   position: relative;
   display: flex;
   align-items: center;
@@ -99,14 +99,14 @@
   }
 }
 
-.sb-guess-input-letter {
+.GuessInputLetter {
   font-size: 36px;
   text-transform: uppercase;
   font-weight: bold;
   &.valid {
     color: white;
   }
-  &.center-letter {
+  &.centerLetter {
     color: $yellow-line;
   }
   &.invalid {
@@ -114,17 +114,17 @@
   }
 }
 
-.hive-container {
+.HiveContainer {
   width: 90%;
 }
 
-.hive {
+.Hive {
   position: relative;
   width: 100%;
   padding-bottom: 103.6085%;
 }
 
-.hexagon {
+.LetterCell {
   position: absolute;
   top: 33.333333333%;
   left: 30%;
@@ -137,7 +137,7 @@
   text {
     fill: $line-main;
   }
-  &.center-letter polygon {
+  &.centerLetter polygon {
     fill: $yellow-main; //#887711
   }
   &:focus {
@@ -148,40 +148,40 @@
   /*margin: 4px;*/
 }
 
-.hexagon text {
+.LetterCell text {
   text-anchor: middle;
   font-size: 36px;
   font-weight: bold;
 }
 
-.hexagon:nth-child(1) {
+.LetterCell:nth-child(1) {
 }
 
-.hexagon:nth-child(2) {
+.LetterCell:nth-child(2) {
   transform: translate(-75%, -50%);
 }
 
-.hexagon:nth-child(3) {
+.LetterCell:nth-child(3) {
   transform: translate(0%, -100%);
 }
 
-.hexagon:nth-child(4) {
+.LetterCell:nth-child(4) {
   transform: translate(75%, -50%);
 }
 
-.hexagon:nth-child(5) {
+.LetterCell:nth-child(5) {
   transform: translate(75%, 50%);
 }
 
-.hexagon:nth-child(6) {
+.LetterCell:nth-child(6) {
   transform: translate(0%, 100%);
 }
 
-.hexagon:nth-child(7) {
+.LetterCell:nth-child(7) {
   transform: translate(-75%, 50%);
 }
 
-.sb-guess-input-controls {
+.GuessInputControls {
   display: grid;
   //width: 100%;
   grid-template-columns: 1fr max-content 1fr;
@@ -189,7 +189,7 @@
   justify-content: center;
   gap: 16px;
   padding: 16px;
-  .standard-button {
+  .standardButton {
     background-color: $mid-gray-darker;
   }
 }

@@ -21,7 +21,7 @@ export function SettingsToggle({ panelId }: { panelId: number }) {
   };
   return (
     <Toggle.Root
-      className="PanelSettingsToggle button"
+      className="PanelSettingsToggle HintPanelHeaderButton IconButton"
       pressed={display.isSettingsExpanded}
       onPressedChange={toggleExpanded}
       disabled={!display.isExpanded}

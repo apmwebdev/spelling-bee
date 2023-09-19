@@ -19,7 +19,7 @@ export function AnswersSettings() {
     remainingGroupWithLetter,
   } = useAppSelector(selectAnswersListSettings);
   return (
-    <div className="sb-word-list-settings-content answers">
+    <div className="WordListSettingsContent answers">
       <label>
         <input
           type="checkbox"
