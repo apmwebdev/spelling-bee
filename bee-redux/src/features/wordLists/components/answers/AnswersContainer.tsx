@@ -10,7 +10,7 @@ import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import {
   selectAnswersListSettings,
   toggleAnswersSettingsCollapsed,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import answerSorter from "./answerSorter";
 import { selectSpoiledWords } from "@/features/guesses";
 import { AnswersSettings } from "./AnswersSettings";

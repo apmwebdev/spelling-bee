@@ -23,7 +23,6 @@ export function WordWithPopover({ word }: { word: string }) {
       <Popover.ContentWithPortal>
         <span>{completeWord?.definitions[0]}</span>
         <Popover.Close />
-        <Popover.Arrow width={12} height={8} />
       </Popover.ContentWithPortal>
     </Popover.Root>
   );

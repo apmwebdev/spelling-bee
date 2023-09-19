@@ -1,10 +1,4 @@
-import * as Select from "@radix-ui/react-select";
-import {
-  SelectContentWithPortal,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-} from "@/components/radix-ui/radix-select";
+import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import {
   hintApiSlice,
@@ -49,21 +43,21 @@ export function HintProfilesSelector() {
       value={composeValueString(currentProfile.data)}
       onValueChange={(value) => handleSelect(value)}
     >
-      <SelectTrigger />
-      <SelectContentWithPortal>
+      <Select.Trigger />
+      <Select.ContentWithPortal>
         <Select.Viewport>
           <Select.Group>
-            <SelectLabel>My hint profiles</SelectLabel>
+            <Select.Label>My hint profiles</Select.Label>
             {profiles.data?.userHintProfiles.length ? (
               profiles.data.userHintProfiles.map((profile) => (
-                <SelectItem
+                <Select.Item
                   key={uniqid()}
                   value={composeValueString(profile)}
                   itemText={profile.name}
                 />
               ))
             ) : (
-              <SelectItem
+              <Select.Item
                 value=""
                 className="SelectItem"
                 itemText="No profiles"
@@ -72,9 +66,9 @@ export function HintProfilesSelector() {
             )}
           </Select.Group>
           <Select.Group>
-            <SelectLabel>Default hint profiles</SelectLabel>
+            <Select.Label>Default hint profiles</Select.Label>
             {profiles.data?.defaultHintProfiles.map((profile) => (
-              <SelectItem
+              <Select.Item
                 key={uniqid()}
                 value={composeValueString(profile)}
                 itemText={profile.name}
@@ -82,7 +76,7 @@ export function HintProfilesSelector() {
             ))}
           </Select.Group>
         </Select.Viewport>
-      </SelectContentWithPortal>
+      </Select.ContentWithPortal>
     </Select.Root>
   );
 }

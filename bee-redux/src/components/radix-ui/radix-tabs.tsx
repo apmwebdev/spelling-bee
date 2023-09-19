@@ -2,16 +2,13 @@ import * as Tabs from "@radix-ui/react-tabs";
 import {
   TabsContentProps,
   TabsListProps,
-  TabsProps,
   TabsTriggerProps,
 } from "@radix-ui/react-tabs";
 import { RefAttributes } from "react";
 import { composeClasses } from "@/util";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
-export const Root = (
-  props: IntrinsicAttributes & TabsProps & RefAttributes<HTMLDivElement>,
-) => <Tabs.Root {...props}>{props.children}</Tabs.Root>;
+export { Root } from "@radix-ui/react-tabs";
 
 export const List = (
   props: IntrinsicAttributes & TabsListProps & RefAttributes<HTMLDivElement>,

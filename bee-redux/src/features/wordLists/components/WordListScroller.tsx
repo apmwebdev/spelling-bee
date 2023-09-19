@@ -1,4 +1,4 @@
-import * as ScrollArea from "@radix-ui/react-scroll-area";
+import * as ScrollArea from "@/components/radix-ui/radix-scroll-area";
 import uniqid from "uniqid";
 import { WordWithPopover } from "./WordWithPopover";
 import { AnswerSpoiler } from "./answers/AnswerSpoiler";
@@ -35,12 +35,7 @@ export function WordListScroller({
           ))}
         </ul>
       </ScrollArea.Viewport>
-      <ScrollArea.Scrollbar
-        orientation="horizontal"
-        className="ScrollAreaScrollbar"
-      >
-        <ScrollArea.Thumb className="ScrollAreaThumb" />
-      </ScrollArea.Scrollbar>
+      <ScrollArea.Scrollbar orientation="horizontal" />
     </ScrollArea.Root>
   );
 }
