@@ -93,7 +93,6 @@
   background-color: bg-color($this-hue);
   .HintPanel[data-state="closed"] & {
     background-color: bg-color-disabled($this-hue);
-
   }
 }
 
@@ -152,6 +151,11 @@ button.PanelSettingsToggle {
     &:hover {
       background-color: bg-color-light-hover($this-hue);
       border-color: bg-color-light-hover($this-hue);
+    }
+    .HintPanel[data-state="closed"] & {
+      background-color: $line-mid;
+      border-color: transparent;
+      color: bg-color-disabled($this-hue)
     }
   }
 }
