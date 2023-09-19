@@ -8,10 +8,10 @@ export function WrongGuessesListContainer({
 }) {
   const content = () => {
     if (wordList.length === 0) {
-      return <div className="sb-word-list empty">No incorrect guesses</div>;
+      return <div className="WordList empty">No incorrect guesses</div>;
     }
     return (
-      <div className="sb-word-list-container">
+      <div className="WordListContainer">
         <WrongGuessesListHeader />
         <WordListScroller wordList={wordList} allowPopovers={false} />
       </div>

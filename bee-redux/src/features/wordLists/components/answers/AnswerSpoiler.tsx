@@ -39,7 +39,7 @@ export function AnswerSpoiler({ word }: { word: string }) {
 
     return (
       <button
-        className="sb-revealer"
+        className="Revealer"
         style={{ width: `${determineWidth()}px` }}
         onClick={() => addGuess(spoilerData)}
       >

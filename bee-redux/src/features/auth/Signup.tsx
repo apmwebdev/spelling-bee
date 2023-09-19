@@ -62,53 +62,53 @@ export function Signup() {
   };
 
   return (
-    <div className="sb-signup">
-      <form className="sb-signup-form" onSubmit={handleSubmit}>
-        <div className="signup-email-container">
-          <label htmlFor="signup-email">Email:</label>
+    <div className="Signup">
+      <form className="SignupForm" onSubmit={handleSubmit}>
+        <div className="SignupEmailContainer">
+          <label htmlFor="SignupEmail">Email:</label>
           <input
             type="email"
-            id="signup-email"
+            id="SignupEmail"
             name="signup-email"
             value={emailValue}
             onChange={(e) => setEmailValue(e.target.value)}
           />
         </div>
-        <div className="signup-username-container">
-          <label htmlFor="signup-username">Username:</label>
+        <div className="SignupUsernameContainer">
+          <label htmlFor="SignupUsername">Username:</label>
           <input
             type="text"
-            id="signup-username"
+            id="SignupUsername"
             name="signup-username"
             value={usernameValue}
             onChange={(e) => setUsernameValue(e.target.value)}
           />
         </div>
-        <div className="signup-name-container">
-          <label htmlFor="signup-name">Name:</label>
+        <div className="SignupNameContainer">
+          <label htmlFor="SignupName">Name:</label>
           <input
             type="text"
-            id="signup-name"
+            id="SignupName"
             name="signup-name"
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
           />
         </div>
-        <div className="signup-password-container">
-          <label htmlFor="signup-password">Password:</label>
+        <div className="SignupPasswordContainer">
+          <label htmlFor="SignupPassword">Password:</label>
           <input
             type="password"
-            id="signup-password"
+            id="SignupPassword"
             name="signup-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
           />
         </div>
-        <div className="signup-password-confirm-container">
-          <label htmlFor="signup-password-confirm">Confirm password:</label>
+        <div className="SignupPasswordConfirmContainer">
+          <label htmlFor="SignupPasswordConfirm">Confirm password:</label>
           <input
             type="password"
-            id="signup-password-confirm"
+            id="SignupPasswordConfirm"
             name="signup-password-confirm"
             value={passwordConfirmValue}
             onChange={(e) => setPasswordConfirmValue(e.target.value)}

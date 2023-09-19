@@ -6,7 +6,7 @@ import { AnswersContainer } from "./answers/AnswersContainer";
 
 export function WordLists() {
   return (
-    <div className="sb-word-list-section-container">
+    <div className="WordLists">
       <Tabs.Root defaultValue="foundWords">
         <Tabs.List style={{ gridTemplateColumns: "repeat(4, 1fr" }}>
           <Tabs.Trigger value="foundWords">Found</Tabs.Trigger>

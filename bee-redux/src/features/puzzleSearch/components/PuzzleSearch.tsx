@@ -19,7 +19,7 @@ export function PuzzleSearch() {
 
   return (
     <div className="PuzzleSearch">
-      <form className="sb-puzzle-search" onSubmit={handleSearch}>
+      <form className="PuzzleSearch" onSubmit={handleSearch}>
         <Icon icon="mdi:search" />
         <input
           type="text"

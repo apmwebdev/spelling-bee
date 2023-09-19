@@ -29,7 +29,7 @@ export function WordListScroller({
   return (
     <ScrollArea.Root type="auto">
       <ScrollArea.Viewport>
-        <ul className="sb-word-list has-content">
+        <ul className="WordList hasContent">
           {wordList.map((word) => (
             <li key={uniqid()}>{listItem(word)}</li>
           ))}

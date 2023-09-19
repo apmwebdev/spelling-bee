@@ -47,19 +47,19 @@ export function AnswersContainer() {
   });
 
   return (
-    <div className="sb-answers-container">
+    <div className="AnswersContainer">
       <SettingsCollapsible
         isExpanded={!settingsCollapsed}
         toggleIsExpanded={() => dispatch(toggleAnswersSettingsCollapsed())}
       >
         <AnswersSettings />
       </SettingsCollapsible>
-      <div className="sb-answers-status sb-word-list-status">
+      <div className="AnswersStatus WordListStatus">
         There are{" "}
-        <span className="word-list-status-count">{answerWords.length}</span>{" "}
+        <span className="WordListStatusCount">{answerWords.length}</span>{" "}
         answers for this puzzle.
       </div>
-      <div className="sb-word-list-container">
+      <div className="WordListContainer">
         <AnswersListHeader />
         <WordListScroller
           wordList={displayList}

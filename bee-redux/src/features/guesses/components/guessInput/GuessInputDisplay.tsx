@@ -13,9 +13,9 @@ export function GuessInputDisplay({
   const centerLetter = useAppSelector(selectCenterLetter);
 
   const letterClasses = (letter: string) => {
-    let classList = "sb-guess-input-letter";
+    let classList = "GuessInputLetter";
     if (centerLetter === letter) {
-      return (classList += " center-letter");
+      return (classList += " centerLetter");
     }
     if (validLetters.includes(letter)) {
       return (classList += " valid");
@@ -27,9 +27,9 @@ export function GuessInputDisplay({
     guessValue: string,
     additionalCssClasses: string,
   ) => {
-    let classList = `sb-guess-input ${additionalCssClasses}`;
+    let classList = `GuessInput ${additionalCssClasses}`;
     if (guessValue.length > 0) {
-      classList += " non-empty";
+      classList += " nonEmpty";
     }
     return classList;
   };
@@ -45,7 +45,7 @@ export function GuessInputDisplay({
 
   return (
     <div
-      id="sb-guess-input"
+      id="GuessInput"
       className={containerClasses(guessValue, additionalCssClasses)}
     >
       {content(guessValue)}

@@ -47,27 +47,23 @@ export function Login() {
   };
 
   return (
-    <div className="sb-login">
-      <form
-        id="sb-page-login-form"
-        className="sb-login-form"
-        onSubmit={handleSubmit}
-      >
-        <div className="login-username-container">
-          <label htmlFor="login-username">Username:</label>
+    <div className="Login">
+      <form id="LoginForm" onSubmit={handleSubmit}>
+        <div className="LoginUsernameContainer">
+          <label htmlFor="LoginUsername">Username:</label>
           <input
             type="text"
-            id="login-username"
+            id="LoginUsername"
             name="login-username"
             value={usernameValue}
             onChange={(e) => setUsernameValue(e.target.value)}
           />
         </div>
-        <div className="login-username-container">
-          <label htmlFor="login-username">Password:</label>
+        <div className="LoginPasswordContainer">
+          <label htmlFor="LoginPassword">Password:</label>
           <input
             type="password"
-            id="login-password"
+            id="LoginPassword"
             name="login-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
