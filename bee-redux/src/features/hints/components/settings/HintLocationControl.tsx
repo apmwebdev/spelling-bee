@@ -6,12 +6,7 @@ import {
   SearchPanelLocationOptions,
   useUpdateHintPanelMutation,
 } from "@/features/hints";
-import * as Select from "@radix-ui/react-select";
-import {
-  SelectContentWithPortal,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/radix-ui/radix-select";
+import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import { CSSProperties } from "react";
 
@@ -44,15 +39,15 @@ export function HintLocationControl({
     <div className="LetterPanelLocationControl" style={style}>
       <span>Location:</span>
       <Select.Root value={location} onValueChange={handleChange}>
-        <SelectTrigger className="SmallSelect" style={{ width: "12em" }} />
-        <SelectContentWithPortal className="SmallSelect">
+        <Select.Trigger className="SmallSelect" style={{ width: "12em" }} />
+        <Select.ContentWithPortal className="SmallSelect">
           <Select.Viewport>
             {Object.keys(
               panelType === PanelTypes.Letter
                 ? LetterPanelLocationOptions
                 : SearchPanelLocationOptions,
             ).map((key) => (
-              <SelectItem
+              <Select.Item
                 key={uniqid()}
                 value={key}
                 itemText={
@@ -63,7 +58,7 @@ export function HintLocationControl({
               />
             ))}
           </Select.Viewport>
-        </SelectContentWithPortal>
+        </Select.ContentWithPortal>
       </Select.Root>
     </div>
   );
