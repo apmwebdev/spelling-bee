@@ -1,6 +1,5 @@
-import * as Collapsible from "@radix-ui/react-collapsible";
+import * as Collapsible from "@/components/radix-ui/radix-collapsible";
 import { SettingsHeader } from "./SettingsHeader";
-import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
 import React from "react";
 
 export function SettingsCollapsible({
@@ -15,14 +14,11 @@ export function SettingsCollapsible({
   return (
     <Collapsible.Root className="SettingsCollapsible" open={isExpanded}>
       <SettingsHeader>
-        <Collapsible.Trigger asChild>
-          <button
-            className="SettingsCollapsibleHeaderButton"
-            onClick={() => toggleIsExpanded()}
-          >
-            <HeaderDisclosureWidget title="Settings" />
-          </button>
-        </Collapsible.Trigger>
+        <Collapsible.Trigger
+          className="SettingsCollapsibleHeaderButton"
+          onClick={() => toggleIsExpanded()}
+          title="Settings"
+        />
       </SettingsHeader>
       <Collapsible.Content>{children}</Collapsible.Content>
     </Collapsible.Root>

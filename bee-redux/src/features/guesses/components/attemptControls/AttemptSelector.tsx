@@ -4,12 +4,7 @@ import {
   selectCurrentAttempt,
   setCurrentAttempt,
 } from "@/features/guesses";
-import * as Select from "@radix-ui/react-select";
-import {
-  SelectContentWithPortal,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/radix-ui/radix-select";
+import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 
 export function AttemptSelector() {
@@ -21,12 +16,12 @@ export function AttemptSelector() {
       value={`${currentAttempt.id}`}
       onValueChange={(value) => dispatch(setCurrentAttempt(Number(value)))}
     >
-      <SelectTrigger />
-      <SelectContentWithPortal className="SelectContent">
+      <Select.Trigger />
+      <Select.ContentWithPortal className="SelectContent">
         <Select.Viewport>
           {attempts.map((attempt, i) => {
             return (
-              <SelectItem
+              <Select.Item
                 key={uniqid()}
                 value={`${attempt.id}`}
                 itemText={`Attempt ${i + 1}`}
@@ -34,7 +29,7 @@ export function AttemptSelector() {
             );
           })}
         </Select.Viewport>
-      </SelectContentWithPortal>
+      </Select.ContentWithPortal>
     </Select.Root>
   );
 }

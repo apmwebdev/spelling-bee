@@ -6,8 +6,8 @@ import {
   setAnswersRemainingLocation,
   setAnswersRemainingRevealFirstLetter,
   setAnswersRemainingRevealLength,
-} from "../../api/wordListSettingsSlice";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
+} from "@/features/wordLists";
+import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 
 export function AnswersSettings() {
   const dispatch = useAppDispatch();
@@ -66,7 +66,6 @@ export function AnswersSettings() {
       <div>
         <ToggleGroup.Root
           type="single"
-          className="ToggleGroup"
           value={remainingLocation}
           onValueChange={(val) => dispatch(setAnswersRemainingLocation(val))}
         >

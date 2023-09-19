@@ -3,12 +3,7 @@ import {
   StatusTrackingOptions,
   useUpdateHintPanelMutation,
 } from "@/features/hints";
-import * as Select from "@radix-ui/react-select";
-import {
-  SelectContentWithPortal,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/radix-ui/radix-select";
+import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 
 export function PanelStatusTrackingControl({
@@ -31,12 +26,12 @@ export function PanelStatusTrackingControl({
     <div className="GeneralPanelSettingsStatusTracking">
       <span>Display:</span>
       <Select.Root value={statusTracking} onValueChange={handleChange}>
-        <SelectTrigger className="SmallSelect" />
-        <SelectContentWithPortal className="SmallSelect">
+        <Select.Trigger className="SmallSelect" />
+        <Select.ContentWithPortal className="SmallSelect">
           <Select.Viewport>
             {Object.keys(StatusTrackingOptions).map((key) => {
               return (
-                <SelectItem
+                <Select.Item
                   key={uniqid()}
                   value={key}
                   itemText={StatusTrackingOptions[key].compactTitle}
@@ -44,7 +39,7 @@ export function PanelStatusTrackingControl({
               );
             })}
           </Select.Viewport>
-        </SelectContentWithPortal>
+        </Select.ContentWithPortal>
       </Select.Root>
     </div>
   );

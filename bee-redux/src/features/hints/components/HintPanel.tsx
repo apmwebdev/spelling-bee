@@ -1,6 +1,5 @@
 import { PanelHeader } from "./shared/PanelHeader";
-import * as Collapsible from "@radix-ui/react-collapsible";
-import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
+import * as Collapsible from "@/components/radix-ui/radix-collapsible";
 import { HintPanelSettings } from "@/features/hints/components/settings/HintPanelSettings";
 import { HintPanelContentContainer } from "@/features/hints/components/shared/HintPanelContentContainer";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
@@ -75,14 +74,11 @@ export const HintPanel = forwardRef(
           attributes={attributes}
           listeners={listeners}
         >
-          <Collapsible.Trigger asChild>
-            <button
-              className="HintPanelHeaderCollapseButton"
-              onClick={toggleExpanded}
-            >
-              <HeaderDisclosureWidget title={panel.name} />
-            </button>
-          </Collapsible.Trigger>
+          <Collapsible.Trigger
+            className="HintPanelHeaderCollapseButton"
+            onClick={toggleExpanded}
+            title={panel.name}
+          />
         </PanelHeader>
         <Collapsible.Content className="HintPanelContent">
           {display.isSettingsExpanded ? (

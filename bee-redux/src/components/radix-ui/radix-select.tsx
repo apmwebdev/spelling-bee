@@ -9,7 +9,8 @@ import { Icon } from "@iconify/react";
 import { composeClasses } from "@/util";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
-export const SelectTrigger = (
+export { Group, Root, Viewport } from "@radix-ui/react-select";
+export const Trigger = (
   props: IntrinsicAttributes &
     SelectTriggerProps &
     RefAttributes<HTMLButtonElement>,
@@ -27,7 +28,7 @@ export const SelectTrigger = (
   </Select.Trigger>
 );
 
-export const SelectContentWithPortal = (
+export const ContentWithPortal = (
   props: IntrinsicAttributes &
     SelectContentProps &
     RefAttributes<HTMLDivElement>,
@@ -54,7 +55,7 @@ interface SelectItemPropsExtended extends Select.SelectItemProps {
   itemText?: string;
 }
 
-export const SelectItem = ({
+export const Item = ({
   itemText,
   ...props
 }: IntrinsicAttributes &
@@ -74,7 +75,7 @@ export const SelectItem = ({
   </Select.Item>
 );
 
-export const SelectLabel = (
+export const Label = (
   props: IntrinsicAttributes & SelectLabelProps & RefAttributes<HTMLDivElement>,
 ) => (
   <Select.Label

@@ -1,6 +1,5 @@
 import * as Popover from "@radix-ui/react-popover";
 import {
-  PopoverArrowProps,
   PopoverCloseProps,
   PopoverContentProps,
 } from "@radix-ui/react-popover";
@@ -21,23 +20,13 @@ export const ContentWithPortal = (
       {...props}
       className={composeClasses("PopoverContent", props.className ?? "")}
       side={props.side ?? "top"}
-      avoidCollisions={true}
-      collisionPadding={16}
+      avoidCollisions={props.avoidCollisions ?? true}
+      collisionPadding={props.collisionPadding ?? 16}
     >
       {props.children}
+      <Popover.Arrow className="PopoverArrow" width={12} height={8} />
     </Popover.Content>
   </Popover.Portal>
-);
-
-export const Arrow = (
-  props: IntrinsicAttributes & PopoverArrowProps & RefAttributes<SVGSVGElement>,
-) => (
-  <Popover.Arrow
-    {...props}
-    className={composeClasses("PopoverArrow", props.className ?? "")}
-  >
-    {props.children}
-  </Popover.Arrow>
 );
 
 export const Close = (
