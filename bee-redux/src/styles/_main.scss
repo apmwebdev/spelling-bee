@@ -70,15 +70,8 @@
 
 /***   Buttons   ***/
 
-button {
-  border-radius: var(--br);
-  //cursor: pointer;
-}
-
-.IconButton {
+@mixin button-mixin {
   @include basic-focus;
-  font-size: 20px;
-  padding: 4px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,8 +80,23 @@ button {
   &:hover {
     border-color: ui-border-color($accent-hue);
   }
+}
+
+button {
+  border-radius: var(--br);
+}
+
+.standardButton {
+  @include button-mixin;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.IconButton {
+  @include button-mixin;
+  font-size: 20px;
+  padding: 4px 12px;
   &.Square {
-    font-size: 20px;
     padding: 4px;
     &.Small {
       font-size: 16px;
@@ -106,13 +114,6 @@ button {
   &.group-3 {
     grid-template-columns: 1fr 1fr 1fr;
   }
-}
-
-.standardButton {
-  @include basic-focus;
-  font-size: 16px;
-  padding: 8px 16px;
-  background-color: ui-bg-color($accent-hue);
 }
 
 a.ButtonLink, div.ButtonLink {

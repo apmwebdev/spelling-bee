@@ -1,14 +1,13 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore } from "@/util";
-import { sortBy } from "lodash";
+import { shuffle, sortBy } from "lodash";
 import { selectGuessWords } from "@/features/guesses";
 import {
   AnswerFormat,
   BlankPuzzle,
   puzzleApiSlice,
   PuzzleFormat,
-  Ranks,
 } from "./puzzleApiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
@@ -34,7 +33,13 @@ const initialState: PuzzleState = {
 export const puzzleSlice = createSlice({
   name: "puzzle",
   initialState,
-  reducers: {},
+  reducers: {
+    shuffleOuterLetters: (state) => {
+      state.data.shuffledOuterLetters = shuffle(
+        state.data.shuffledOuterLetters,
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
@@ -63,13 +68,17 @@ export const puzzleSlice = createSlice({
   },
 });
 
-export const {} = puzzleSlice.actions;
+export const { shuffleOuterLetters } = puzzleSlice.actions;
 
 export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
 export const selectDate = (state: RootState) => state.puzzle.data.date;
 export const selectCenterLetter = (state: RootState) =>
   state.puzzle.data.centerLetter;
+export const selectOuterLetters = (state: RootState) =>
+  state.puzzle.data.outerLetters;
+export const selectShuffledOuterLetters = (state: RootState) =>
+  state.puzzle.data.shuffledOuterLetters;
 export const selectValidLetters = (state: RootState) =>
   state.puzzle.data.validLetters;
 export const selectPangrams = (state: RootState) => state.puzzle.data.pangrams;
@@ -178,16 +187,6 @@ export const selectRemainingAnswerWords = createSelector(
   [selectRemainingAnswers],
   (answers) => {
     return answers.map((answer) => answer.word);
-  },
-);
-
-export const selectRanks = createSelector(
-  [selectTotalPoints],
-  (totalPoints) => {
-    return Ranks.map((rank) => ({
-      ...rank,
-      score: Math.round(rank.multiplier * totalPoints),
-    }));
   },
 );
 
