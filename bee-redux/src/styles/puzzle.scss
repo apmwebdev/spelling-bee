@@ -62,7 +62,7 @@
 .ErrorAlertMessage {
   border-color: $line-main;
   background-color: $line-main;
-  color: $dark-gray;
+  color: $dark-gray-1;
 }
 
 .GuessInputContainer {
@@ -131,14 +131,14 @@
   width: 40%;
   height: 33.3333333333%;
   polygon {
-    fill: bg-color($accent-hue);
-    stroke: $dark-gray;
+    fill: $mid-gray;
+    stroke: $black;
   }
   text {
     fill: $line-main;
   }
   &.centerLetter polygon {
-    fill: $yellow-main; //#887711
+    fill: ui-bg-color($yellow-hue); //#887711
   }
   &:focus {
     z-index: 2;

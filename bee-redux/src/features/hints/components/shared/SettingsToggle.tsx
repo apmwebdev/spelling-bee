@@ -24,7 +24,6 @@ export function SettingsToggle({ panelId }: { panelId: number }) {
       className="PanelSettingsToggle HintPanelHeaderButton IconButton"
       pressed={display.isSettingsExpanded}
       onPressedChange={toggleExpanded}
-      disabled={!display.isExpanded}
     >
       <Icon icon="mdi:cog" />
     </Toggle.Root>

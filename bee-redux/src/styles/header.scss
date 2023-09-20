@@ -1,8 +1,8 @@
 @use 'colors' as *;
 
 .SSB_Header {
-  border-color: $line-darkest;
-  background-color: bg-color-darker($blue-hue);
+  border-bottom: 1.5px solid $dark-gray-5;
+  background-color: $dark-gray-1;
   font-size: 20px;
   display: flex;
   align-items: center;

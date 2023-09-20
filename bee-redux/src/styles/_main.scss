@@ -9,7 +9,7 @@
 
 :root {
   color: $line-main;
-  background-color: $dark-gray;
+  background-color: $black;
 
   /* Variables */
 
@@ -71,15 +71,13 @@
 /***   Buttons   ***/
 
 @mixin button-mixin {
+  @include basic-hover;
   @include basic-focus;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ui-bg-color($accent-hue);
-  border: 1.5px solid ui-bg-color($accent-hue);
-  &:hover {
-    border-color: ui-border-color($accent-hue);
-  }
+  background-color: bg-color-dark($accent-hue);
+  border: 1.5px solid border-color($accent-hue);
 }
 
 button {
@@ -116,31 +114,6 @@ button {
   }
 }
 
-a.ButtonLink, div.ButtonLink {
-  border-radius: var(--br);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 16px;
-  gap: 4px;
-  border: 1.5px solid border-color($accent-hue);
-  //border: 1.5px solid;
-  &:hover {
-    color: ui-line-color($accent-hue);
-    border-color: border-color-hover($accent-hue);
-  }
-  &:focus {
-    box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
-  }
-  &.disabled {
-    color: border-color-disabled($accent-hue);
-    border-color: border-color-disabled($accent-hue);
-  }
-  span {
-    font-size: 14px;
-  }
-}
-
 /***   Checkbox   ***/
 
 .CheckboxRoot {
@@ -156,7 +129,7 @@ a.ButtonLink, div.ButtonLink {
   //padding: 8px;
   border-radius: var(--br);
   border: 1.5px solid border-color($accent-hue);
-  background-color: bg-color-darkest($accent-hue);
+  background-color: bg-color-darker($accent-hue);
   &[data-disabled] {
     border-color: border-color-disabled($accent-hue);
     background-color: bg-color-disabled($accent-hue);
@@ -206,6 +179,8 @@ input[type="text"], input[type="search"] {
 input[type="number"] {
   @include basic-hover;
   @include basic-focus;
+  color: $line-main;
+  background-color: bg-color-darker($accent-hue);
   border-radius: var(--br);
   font-size: 14px;
   padding: 4px 8px;
@@ -219,6 +194,7 @@ input[type="number"] {
   }
   &[disabled] {
     color: $text-disabled;
+    background-color: $dark-gray-3;
     border-color: border-color-disabled($accent-hue);
     cursor: not-allowed;
   }
@@ -227,10 +203,10 @@ input[type="number"] {
 /***   Links   ***/
 
 a {
-  border-radius: var(--br);
-  $this-hue: $accent-hue;
+  $this-hue: $yellow-hue;
   text-decoration: inherit;
   color: ui-line-color($this-hue);
+  border-radius: var(--br);
   &:hover {
     text-decoration: underline;
     color: ui-line-hover-color($this-hue);
@@ -239,6 +215,32 @@ a {
     text-decoration: underline;
     box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
     //color: ui-line-focus-color($this-hue);
+  }
+}
+
+a.ButtonLink, div.ButtonLink {
+  $this-hue: $yellow-hue;
+  border-radius: var(--br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  gap: 4px;
+  border: 1.5px solid border-color($this-hue);
+  //border: 1.5px solid;
+  &:hover {
+    color: ui-line-color($this-hue);
+    border-color: ui-line-color($this-hue);
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 3px shadow-color-focus($this-hue);
+  }
+  &.disabled {
+    color: border-color-disabled($this-hue);
+    border-color: border-color-disabled($this-hue);
+  }
+  span {
+    font-size: 14px;
   }
 }
 
@@ -315,6 +317,7 @@ a {
 }
 
 .SelectContent {
+  z-index: 2;
   border-radius: var(--br);
   overflow: hidden;
   font-size: 16px;
@@ -423,7 +426,7 @@ a {
   width: 42px;
   height: 25px;
   border: 1.5px solid border-color($accent-hue);
-  background-color: bg-color-darkest($accent-hue);
+  background-color: bg-color-darker($accent-hue);
   &[data-state='checked'] {
     background-color: ui-bg-color($accent-hue);
     border-color: border-color-hover($accent-hue);
@@ -453,30 +456,40 @@ a {
 
 /***   Tabs   ***/
 
+.TabsRoot {
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 1.5px solid $dark-gray-5;
+}
+
 .TabsList {
   display: grid;
-  gap: 2px;
+  background-color: $dark-gray-2;
 }
 
 .TabsTrigger {
-  border-top: 2px solid;
-  border-left: 2px solid;
-  border-right: 2px solid;
-  border-bottom: none;
-  border-color: $mid-gray;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  padding: 8px;
+  padding: 8px 8px 10px 8px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid $dark-gray-5;
+  //background-color: $dark-gray-1;
+  &:hover {
+    background-color: $dark-gray-1;
+    padding-bottom: 8px;
+    border-bottom: 3px solid $dark-gray-5;
+  }
   &[data-state="active"] {
-    background-color: bg-color-extra($blue-hue);
-    border-color: border-color-hover($blue-hue);
+    background-color: bg-color-dark($accent-hue);
+    padding-bottom: 8px;
+    border-bottom: 3px solid ui-bg-color($accent-hue);
   }
 }
 .TabsContent {
-  border: 2px solid $mid-gray;
-  border-bottom-left-radius: var(--br);
-  border-bottom-right-radius: var(--br);
+  //border: 2px solid $mid-gray;
+  //border-bottom-left-radius: var(--br);
+  //border-bottom-right-radius: var(--br);
   padding: 8px;
+  background-color: $dark-gray-1;
 }
 
 /***   Toggle   ***/
@@ -500,7 +513,7 @@ a {
   button {
     border-radius: 0;
     padding: 4px 12px;
-    background-color: $dark-gray;
+    background-color: $dark-gray-1;
     &[data-state="on"] {
       background-color: ui-bg-color($accent-hue);
     }
@@ -515,7 +528,7 @@ a {
   border-radius: var(--br);
   font-size: 14px;
   background-color: $light-gray-bg;
-  color: $dark-gray;
+  color: $dark-gray-1;
   padding: 6px 12px;
   z-index: 3;
   //border: 1px solid $dark-gray-lighter;
