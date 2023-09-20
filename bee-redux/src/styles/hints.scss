@@ -58,18 +58,20 @@
 .HintPanels {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .HintPanel {
   $this-hue: $blue-hue;
   position: relative;
   border-radius: var(--br);
-  border: 2px solid border-color($this-hue);
+  border: 1.5px solid $dark-gray-5;
   overflow: hidden;
+  background-color: $dark-gray-1;
   &[data-state="closed"] {
     color: $line-bright;
-    border-color: border-color-disabled($this-hue);
+    //border-color: border-color-disabled($this-hue);
+    border-color: $dark-gray-5;
   }
   &.Dragging {
     opacity: 20%;
@@ -79,7 +81,7 @@
     outline: 3px dotted;
   }
   &.Sorting {
-    border-color: border-color-hover($this-hue);
+    border-color: $mid-gray-lighter;
   }
 }
 
@@ -90,9 +92,13 @@
   align-items: center;
   gap: 6px;
   padding: 3px 4px;
-  background-color: bg-color($this-hue);
+  //background-color: bg-color($this-hue);
+  background-color: $dark-gray-2;
+  border-bottom: 1px solid $dark-gray-5;
   .HintPanel[data-state="closed"] & {
-    background-color: bg-color-disabled($this-hue);
+    //background-color: bg-color-disabled($this-hue);
+    //background-color: $dark-gray-3;
+    border-bottom-color: transparent;
   }
 }
 
@@ -102,31 +108,40 @@
 }
 
 button.HintPanelHeaderButton {
-  $this-hue: $blue_hue;
+  $this-hue: $accent-hue;
   font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   padding: 8px;
-  border: 1.5px solid transparent;
+  border: 1px solid $dark-gray-2;
+  background-color: $dark-gray-2;
+  //border-color: $mid-gray-darker;
   &.IconButton {
     font-size: 20px;
-    background-color: bg-color-extra($this-hue);
   }
   &:hover {
-    border-color: border-color($this-hue);
+    //border-color: border-color($this-hue);
+    background-color: $dark-gray-1;
+    border-color: $mid-gray-darker;
   }
   &:focus {
-    box-shadow: 0 0 0 1px shadow-color-focus($this-hue)
+    box-shadow: 0 0 0 1px $mid-gray-darker;
   }
   .HintPanel[data-state="closed"] & {
     color: $line-bright;
-    &.IconButton {
-      background-color: bg-color-disabled($this-hue);
-    }
+    background-color: inherit;
+    border-color: $dark-gray-2;
+    //&.IconButton {
+    //}
+    //&:hover {
+    //  border-color: $mid-gray;
+    //}
     &:hover {
-      border-color: border-color-disabled($this-hue);
+      //border-color: border-color($this-hue);
+      background-color: $dark-gray-1;
+      border-color: $mid-gray-darker;
     }
   }
 }
@@ -136,26 +151,24 @@ button.IconButton.DragHandle {
   cursor: move;
   .HintPanel.Overlay & {
     background-color: $line-main;
-    color: bg-color($this-hue);
+    color: $dark-gray-2;
   }
 }
 
 button.PanelSettingsToggle {
-  $this-hue: $blue-hue;
+  $this-hue: $accent-hue;
   padding: 8px;
   color: $line-main;
   &[data-state="on"] {
-    background-color: $line-main;
-    border-color: $line-main;
-    color: bg-color($this-hue);
+    background-color: $line-bright;
+    border-color: transparent;
+    color: $dark-gray-2;
     &:hover {
-      background-color: bg-color-light-hover($this-hue);
-      border-color: bg-color-light-hover($this-hue);
+      background-color: $line-main;
     }
     .HintPanel[data-state="closed"] & {
-      background-color: $line-mid;
-      border-color: transparent;
-      color: bg-color-disabled($this-hue)
+      background-color: $line-bright;
+      color: $dark-gray-2;
     }
   }
 }
@@ -172,8 +185,8 @@ button.PanelSettingsToggle {
   font-size: 16px;
   border-radius: var(--br);
   overflow: hidden;
-  border: 2px solid border-color($this-hue);
-  background-color: bg-color-main($this-hue);
+  border: 1.5px solid $dark-gray-5;
+  background-color: $dark-gray-2;
   margin-bottom: 8px;
   //border-color: border-color($this-hue);
   span.disabled {
@@ -181,32 +194,27 @@ button.PanelSettingsToggle {
   }
   &[data-state="closed"] {
     color: $line-bright;
-    border-color: border-color-disabled($this-hue);
+    border-color: $dark-gray-4;
   }
 }
 
 .SettingsCollapsibleHeader {
-  $this-hue: $alt-bg-hue;
   padding: 2px;
-  background-color: bg-color($this-hue);
+  background-color: $dark-gray-3;
+  border-bottom: 1px solid $dark-gray-5;
   button {
     border: 1.5px solid transparent;
     &.button {
-      background-color: bg-color-extra($this-hue);
+      background-color: $dark-gray-3;
     }
     &:hover {
-      border-color: border-color($this-hue);
+      border-color: $dark-gray-5;
+      background-color: $dark-gray-2;
       //border-color: transparent;
     }
   }
   .SettingsCollapsible[data-state="closed"] & {
-    background-color: bg-color-disabled($this-hue);
-    button {
-      color: $line-bright;
-      &:hover {
-        border-color: border-color-disabled($this-hue);
-      }
-    }
+    border-bottom-color: transparent;
   }
 }
 .SettingsCollapsibleHeaderButton {
@@ -236,7 +244,7 @@ button.PanelSettingsToggle {
 }
 
 .GeneralPanelSettings {
-  border-top: 2px solid border-color($alt-bg-hue);
+  border-top: 2px solid $dark-gray-5;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
@@ -258,7 +266,7 @@ button.PanelSettingsToggle {
   align-items: center;
   justify-content: stretch;
   gap: 12px;
-  border-top: 1.5px solid border-color($accent-hue);
+  border-top: 1px solid $dark-gray-5;
   padding-top: 8px;
 }
 
@@ -342,7 +350,7 @@ button.PanelSettingsToggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $dark-gray-lighter;
+  background-color: $dark-gray-4;
   border-radius: var(--br);
 }
 
@@ -408,7 +416,7 @@ button.PanelSettingsToggle {
 
 .LetterPanel_WLG_TrackingKey {
   padding: 2px 8px;
-  background-color: $dark-gray-lighter;
+  background-color: $dark-gray-2;
   border: 1px solid $line-darkest;
 }
 
@@ -448,7 +456,7 @@ button.PanelSettingsToggle {
 }
 
 .LetterPanel_WLG_ContentFull {
-  background-color: $dark-gray-lighter;
+  background-color: $dark-gray-2;
 }
 
 .LetterPanel_WordCountList,
@@ -486,7 +494,7 @@ button.PanelSettingsToggle {
 .LetterPanel_WCL_CellCount {
   @include hint-cell;
   border: 1px solid $line-darkest;
-  background-color: $dark-gray-lighter;
+  background-color: $dark-gray-2;
 }
 
 .LetterPanel_LPL_Row {
@@ -591,7 +599,7 @@ button.PanelSettingsToggle {
   $this-hue: $alt-bg-hue;
   //border: 1.5px solid border-color($this-hue);
   //border-radius: var(--br);
-  background-color: $dark-gray;
+  background-color: $dark-gray-1;
   header {
     padding: 6px 8px;
     background-color: bg-color-main($this-hue);
@@ -617,7 +625,7 @@ button.PanelSettingsToggle {
   td {
     border: 1px solid $mid-gray-lighter;
     &.HasContent {
-      background-color: $dark-gray-lighter;
+      background-color: $dark-gray-2;
     }
     &:last-child {
       border-right-color: transparent;
@@ -626,7 +634,7 @@ button.PanelSettingsToggle {
   }
   th {
     border-bottom: 1px solid $mid-gray-lighter;
-    background-color: $dark-gray;
+    background-color: $dark-gray-1;
   }
 }
 
@@ -676,7 +684,7 @@ button.PanelSettingsToggle {
     padding: 8px 12px;
   }
   thead {
-    background-color: $dark-gray-lighter;
+    background-color: $dark-gray-2;
   }
 }
 

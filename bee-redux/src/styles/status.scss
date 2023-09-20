@@ -19,7 +19,9 @@
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-  background-color: bg-color-dark($this-hue);
+  //background-color: bg-color-dark($this-hue);
+  background-color: $dark-gray-2;
+  border: 1.5px solid $dark-gray-5;
   padding: 8px 16px;
   border-radius: var(--br);
 }
@@ -219,7 +221,7 @@ button.Revealer {
   border: 1px solid $mid-gray;
   //border-radius: 0px;
   text-align: left;
-  background-color: $dark-gray-lighter;
+  background-color: $dark-gray-2;
   &:hover, &:active {
     text-decoration: underline;
   }

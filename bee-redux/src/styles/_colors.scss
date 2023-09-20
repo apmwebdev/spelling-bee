@@ -2,9 +2,9 @@
 $yellow-hue: 51;
 $blue-hue: $yellow-hue + 180;
 $settings-hue: $blue-hue + 30;
-$accent-hue: $blue-hue - 30;
+$accent-hue: $yellow-hue + 150;
 $alt-bg-hue: $blue-hue - 30;
-$title-hue: $yellow-hue - 0;
+$title-hue: $yellow-hue + 150;
 
 $success-hue: 130;
 $warning-hue: 56;
@@ -26,15 +26,15 @@ $error-hue: 0;
 }
 
 @function bg-color-dark($hue) {
-  @return hsl($hue, 19%, 23%);
+  @return hsl($hue, 40%, 18%);
 }
 
 @function bg-color-darker($hue) {
-  @return hsl($hue, 18%, 18%);
+  @return hsl($hue, 40%, 10%);
 }
 
 @function bg-color-darkest($hue) {
-  @return hsl($hue, 16%, 14%);
+  @return hsl($hue, 40%, 5%);
 }
 
 @function bg-color-extra($hue) {
@@ -52,11 +52,11 @@ $error-hue: 0;
 
 //Borders
 @function border-color($hue) {
-  @return hsl($hue, 20%, 40%);
+  @return hsl($hue, 28%, 28%);
 }
 
 @function border-color-hover($hue) {
-  @return hsl($hue, 20%, 55%);
+  @return hsl($hue, 22%, 38%);
 }
 
 @function shadow-color-focus($hue) {
@@ -79,7 +79,7 @@ $error-hue: 0;
 }
 
 @function ui-border-color($hue) {
-  @return hsl($hue, 48%, 61%);
+  @return hsl($hue, 30%, 41%);
 }
 
 @function ui-border-color-muted($hue) {
@@ -125,11 +125,16 @@ $error-hue: 0;
 }
 
 //Gray Backgrounds
-$dark-gray: #222;
-$dark-gray-lighter: #333;
-$mid-gray-darker: #555;
-$mid-gray: #666;
-$mid-gray-lighter: #777;
+$black: #070707;
+$dark-gray-1: #121212;
+$dark-gray-2: #1e1e1e;
+$dark-gray-3: #282828;
+$dark-gray-4: #313131;
+$dark-gray-5: #393939;
+$mid-gray-darker: #444;
+$mid-gray: #555;
+$mid-gray-lighter: #666;
+$mid-gray-lightest: #777;
 $light-gray: #999;
 $light-gray-bg: #ddd;
 
