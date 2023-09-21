@@ -5,7 +5,7 @@ import {
   SortOrder,
   SortType,
   toggleWrongGuessesSettingsCollapsed,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
