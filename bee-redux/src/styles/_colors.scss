@@ -90,7 +90,9 @@ $line-bright: rgba(255, 255, 255, 0.73);
 $line-disabled: rgba(255, 255, 255, 0.36);
 $line-darkest: rgba(255, 255, 255, 0.3);
 
-//Disabled text must be lighter so that it is still legible
+//Text
+$main-text: $line-main;
+$secondary-large-text: rgba(255, 255, 255, 0.55);
 $text-disabled: rgba(255, 255, 255, 0.55);
 
 //One-off colors

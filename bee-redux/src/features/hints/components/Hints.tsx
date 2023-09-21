@@ -4,7 +4,6 @@ import {
   HintProfiles,
   selectCurrentPanelData,
 } from "@/features/hints";
-import "@/styles/hints.scss";
 import { useAppSelector } from "@/app/hooks";
 
 import { Statuses } from "@/types";

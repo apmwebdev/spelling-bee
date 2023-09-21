@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { HeaderAuth } from "@/features/auth/headerAuth/HeaderAuth";
 import { PuzzleSearch } from "@/features/puzzleSearch/components/PuzzleSearch";
-import "@/styles/header.scss";
 
 export function Header() {
   return (
