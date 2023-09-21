@@ -42,6 +42,7 @@ export function SearchHintPanel({
       outputType: searchPanelData.outputType,
       createdAt: Date.now(),
     });
+    setSearchValue("");
   };
 
   return (
