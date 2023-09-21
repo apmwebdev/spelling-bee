@@ -9,7 +9,7 @@ export function WordWithPopover({ word }: { word: string }) {
   const pangrams = useAppSelector(selectPangrams);
   const isPangram = pangrams.includes(word);
   const isPerfect = isPangram && word.length === 7;
-  let spanClasses = "has-popover";
+  let spanClasses = "hasPopover";
   if (isPerfect) {
     spanClasses += " perfect";
   } else if (isPangram) {
@@ -17,7 +17,7 @@ export function WordWithPopover({ word }: { word: string }) {
   }
   return (
     <Popover.Root>
-      <Popover.Trigger className="word-popover-trigger">
+      <Popover.Trigger className="WordPopoverTrigger">
         <span className={spanClasses}>{word}</span>
       </Popover.Trigger>
       <Popover.ContentWithPortal>

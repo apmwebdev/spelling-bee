@@ -108,7 +108,6 @@
     display: flex;
     gap: 4px;
     align-items: center;
-    //justify-content: space-between;
   }
   &.found {
     display: grid;
@@ -161,7 +160,6 @@
 
 .WordList {
   padding: 8px 8px 16px 8px;
-  //border: 1px dotted;
   &.hasContent {
     font-size: 16px;
     list-style: none;
@@ -179,31 +177,32 @@
           text-transform: uppercase;
         }
       }
-      button.WordPopoverTrigger {
-        padding: 0px;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        &:focus {
-          outline: none;
-        }
-        span {
-          text-decoration: underline;
-          display: block;
-          text-align: left;
-          &:first-letter {
-            text-transform: uppercase;
-          }
-          &.perfect {
-            font-style: italic;
-            font-weight: bold;
-          }
-          &.pangram {
-            font-weight: bold;
-          }
-        }
-      }
+    }
+  }
+}
+
+button.WordPopoverTrigger {
+  padding: 0px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  &:focus {
+    outline: none;
+  }
+  span {
+    text-decoration: underline;
+    display: block;
+    text-align: left;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+    &.perfect {
+      font-style: italic;
+      font-weight: bold;
+    }
+    &.pangram {
+      font-weight: bold;
     }
   }
 }
@@ -217,7 +216,6 @@
 button.Revealer {
   padding: 3px 8px;
   border: 1px solid $mid-gray;
-  //border-radius: 0px;
   text-align: left;
   background-color: $dark-gray-2;
   &:hover, &:active {
