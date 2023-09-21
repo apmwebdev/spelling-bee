@@ -68,7 +68,7 @@
   overflow: hidden;
   background-color: $dark-gray-1;
   &[data-state="closed"] {
-    color: $line-bright;
+    color: $line-mid;
     border-color: $dark-gray-5;
   }
   &.Dragging {
@@ -121,7 +121,7 @@ button.HintPanelHeaderButton {
     box-shadow: 0 0 0 1px $mid-gray-darker;
   }
   .HintPanel[data-state="closed"] & {
-    color: $line-bright;
+    color: $line-mid;
     background-color: inherit;
     border-color: $dark-gray-2;
     &:hover {
@@ -134,7 +134,7 @@ button.HintPanelHeaderButton {
 button.IconButton.DragHandle {
   cursor: move;
   .HintPanel.Overlay & {
-    background-color: $line-main;
+    background-color: $line-bright;
     color: $dark-gray-2;
   }
 }
@@ -142,16 +142,16 @@ button.IconButton.DragHandle {
 button.PanelSettingsToggle {
   $this-hue: $accent-hue;
   padding: 8px;
-  color: $line-main;
+  color: $line-bright;
   &[data-state="on"] {
-    background-color: $line-bright;
+    background-color: $line-mid;
     border-color: transparent;
     color: $dark-gray-2;
     &:hover {
-      background-color: $line-main;
+      background-color: $line-bright;
     }
     .HintPanel[data-state="closed"] & {
-      background-color: $line-bright;
+      background-color: $line-mid;
       color: $dark-gray-2;
     }
   }
@@ -173,10 +173,10 @@ button.PanelSettingsToggle {
   margin-bottom: 8px;
   //border-color: border-color($this-hue);
   span.disabled {
-    color: $text-disabled;
+    color: $text-disabled-dark;
   }
   &[data-state="closed"] {
-    color: $line-bright;
+    color: $line-mid;
     border-color: $dark-gray-4;
   }
 }
@@ -268,7 +268,7 @@ button.PanelSettingsToggle {
   justify-content: center;
   .CheckboxRoot[data-disabled] + div {
     span {
-      color: $text-disabled;
+      color: $text-disabled-dark;
     }
   }
 }
@@ -281,7 +281,7 @@ button.PanelSettingsToggle {
 
 .HintLettersOffsetControl {
   &.disabled {
-    color: $text-disabled;
+    color: $text-disabled-dark;
   }
 }
 

@@ -60,8 +60,8 @@
 }
 
 .ErrorAlertMessage {
-  border-color: $line-main;
-  background-color: $line-main;
+  border-color: $line-bright;
+  background-color: $line-bright;
   color: $dark-gray-1;
 }
 
@@ -135,7 +135,7 @@
     stroke: $black;
   }
   text {
-    fill: $line-main;
+    fill: $line-bright;
   }
   &.centerLetter polygon {
     fill: $yellow-main; //#887711

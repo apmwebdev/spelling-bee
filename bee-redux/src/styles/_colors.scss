@@ -12,6 +12,10 @@ $error-hue: 0;
   @return hsl($hue, 40%, 18%);
 }
 
+@function bg-color-dark-hover($hue) {
+  @return hsl($hue, 40%, 15%);
+}
+
 @function bg-color-darker($hue) {
   @return hsl($hue, 40%, 10%);
 }
@@ -34,7 +38,7 @@ $error-hue: 0;
 }
 
 @function border-color-dark-disabled($hue) {
-  @return hsl($hue, 11%, 33%);
+  @return hsl($hue, 8%, 23%);
 }
 
 @function shadow-color-focus($hue) {
@@ -85,15 +89,19 @@ $light-gray: #999;
 $light-gray-bg: #ddd;
 
 //Gray Lines
-$line-main: rgba(255, 255, 255, 0.85);
-$line-bright: rgba(255, 255, 255, 0.73);
-$line-disabled: rgba(255, 255, 255, 0.36);
-$line-darkest: rgba(255, 255, 255, 0.3);
+@function gray-alpha($opacity) {
+  @return rgba(255, 255, 255, $opacity);
+}
+$line-bright: gray-alpha(0.85);
+$line-mid: gray-alpha(0.73);
+$line-disabled: gray-alpha(0.36);
+$line-darkest: gray-alpha(0.3);
 
 //Text
-$main-text: $line-main;
-$secondary-large-text: rgba(255, 255, 255, 0.55);
-$text-disabled: rgba(255, 255, 255, 0.55);
+$text-main-dark: $line-bright;
+$text-secondary-dark: gray-alpha(0.63);
+$text-secondary-large-dark: gray-alpha(0.55);
+$text-disabled-dark: gray-alpha(0.55);
 
 //One-off colors
 $yellow-main: hsl($yellow-hue, 85%, 27%);
@@ -118,11 +126,5 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }
