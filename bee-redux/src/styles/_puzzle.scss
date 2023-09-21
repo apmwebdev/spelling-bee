@@ -62,7 +62,7 @@
 .ErrorAlertMessage {
   border-color: $line-main;
   background-color: $line-main;
-  color: $dark-gray;
+  color: $dark-gray-1;
 }
 
 .GuessInputContainer {
@@ -132,7 +132,7 @@
   height: 33.3333333333%;
   polygon {
     fill: $mid-gray-darker;
-    stroke: $dark-gray;
+    stroke: $black;
   }
   text {
     fill: $line-main;
@@ -189,7 +189,8 @@
   justify-content: center;
   gap: 16px;
   padding: 16px;
-  .standardButton {
-    background-color: $mid-gray-darker;
+  .IconButton {
+    font-size: 16px;
+    padding: 8px 12px;
   }
 }

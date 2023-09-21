@@ -124,6 +124,7 @@ export interface PuzzleFormatRaw {
 }
 
 export interface PuzzleFormat extends PuzzleFormatRaw {
+  shuffledOuterLetters: string[];
   answerWords: string[];
   totalPoints: number;
   answerLengths: number[];
@@ -135,6 +136,7 @@ export const BlankPuzzle: PuzzleFormat = {
   date: "00-00-0000",
   centerLetter: "_",
   outerLetters: ["_", "_", "_", "_", "_", "_"],
+  shuffledOuterLetters: ["_", "_", "_", "_", "_", "_", "_"],
   validLetters: ["_", "_", "_", "_", "_", "_", "_"],
   pangrams: [],
   perfectPangrams: [],
@@ -168,6 +170,7 @@ export const puzzleApiSlice = apiSlice.injectEndpoints({
 
         const processedResponse: PuzzleFormat = {
           ...response,
+          shuffledOuterLetters: [...response.outerLetters],
           answerWords,
           totalPoints,
           answerLengths: answerLengths(answerWords),

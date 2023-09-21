@@ -5,6 +5,7 @@ import { Signup } from "./features/auth/Signup";
 import { Login } from "./features/auth/Login";
 import { useGetUserBaseDataQuery, userDataApiSlice } from "@/features/userData";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { RoutingError } from "@/routes/RoutingError";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -48,6 +49,7 @@ export default function App() {
     {
       path: "/",
       element: rootElement(),
+      errorElement: <RoutingError />,
       children: [
         {
           index: true,

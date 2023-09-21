@@ -1,8 +1,8 @@
 @use 'colors' as *;
 
 .SSB_Header {
-  border-color: $line-darkest;
-  background-color: bg-color-darker($blue-hue);
+  border-bottom: 1.5px solid $dark-gray-5;
+  background-color: $dark-gray-1;
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@
   //background-color: $line-bright;
 }
 .UserMenuTrigger_svgForeground {
-  fill: ui-bg-color($accent-hue);
+  fill: highlight-color-dark($accent-hue);
 }
 .UserMenuTrigger_svgBackground {
   fill: $line-main;
@@ -63,7 +63,7 @@
 .UserMenuTrigger_svgBorder {
   fill: transparent;
   .UserMenuTrigger___hover & {
-    fill: ui-line-hover-color($accent-hue);
+    fill: ui-line-color-hover-dark($accent-hue);
   }
 }
 .UserMenuContent {

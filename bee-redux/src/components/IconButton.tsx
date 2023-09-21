@@ -20,6 +20,7 @@ export enum IconButtonTypeKeys {
   Hide = "Hide",
   Settings = "Settings",
   DragVertical = "DragVertical",
+  Shuffle = "Shuffle",
 }
 
 type IconButtonTypesData = {
@@ -66,6 +67,10 @@ export const IconButtonTypes: IconButtonTypesData = {
   DragVertical: {
     name: "dragVertical",
     icon: "mdi:drag",
+  },
+  Shuffle: {
+    name: "shuffle",
+    icon: "el:refresh",
   },
 };
 
