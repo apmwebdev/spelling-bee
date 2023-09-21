@@ -1,150 +1,102 @@
 //Hues
 $yellow-hue: 51;
-$blue-hue: $yellow-hue + 180;
-$settings-hue: $blue-hue + 30;
-$accent-hue: $blue-hue - 30;
-$alt-bg-hue: $blue-hue - 30;
-$title-hue: $yellow-hue - 0;
+$accent-hue: $yellow-hue + 150;
+$title-hue: $yellow-hue + 150;
 
 $success-hue: 130;
 $warning-hue: 56;
 $error-hue: 0;
 
 //Backgrounds
-
-//Dark
-@function bg-color($hue) {
-  @return hsl($hue, 25%, 30%);
-}
-
-@function bg-color-disabled($hue) {
-  @return hsl($hue, 15%, 26%);
-}
-
-@function bg-color-main($hue) {
-  @return hsl($hue, 30%, 20%);
-}
-
 @function bg-color-dark($hue) {
-  @return hsl($hue, 19%, 23%);
+  @return hsl($hue, 40%, 18%);
 }
 
 @function bg-color-darker($hue) {
-  @return hsl($hue, 18%, 18%);
+  @return hsl($hue, 40%, 10%);
 }
 
 @function bg-color-darkest($hue) {
-  @return hsl($hue, 16%, 14%);
+  @return hsl($hue, 40%, 5%);
 }
 
-@function bg-color-extra($hue) {
-  @return hsl($hue, 27%, 25%);
-}
-
-@function bg-color-extra-disabled($hue) {
-  @return hsl($hue, 15%, 22%);
-}
-
-//Light
-@function bg-color-light-hover($hue) {
-  @return hsl($hue, 80%, 85%);
+@function bg-color-dark-disabled($hue) {
+  @return hsl($hue, 15%, 26%);
 }
 
 //Borders
-@function border-color($hue) {
-  @return hsl($hue, 20%, 40%);
+@function border-color-dark($hue) {
+  @return hsl($hue, 28%, 28%);
 }
 
-@function border-color-hover($hue) {
-  @return hsl($hue, 20%, 55%);
+@function border-color-dark-hover($hue) {
+  @return hsl($hue, 22%, 38%);
+}
+
+@function border-color-dark-disabled($hue) {
+  @return hsl($hue, 11%, 33%);
 }
 
 @function shadow-color-focus($hue) {
   @return hsl($hue, 20%, 70%, 0.2);
 }
 
-@function border-color-disabled($hue) {
-  @return hsl($hue, 11%, 33%);
-}
-
-@function border-color-disabled-hover($hue) {
-  @return hsl($hue, 11%, 43%);
-}
-
-//Interactive Element Colors
-
-//Designed for white text
-@function ui-bg-color($hue) {
+//Interactive Elements
+@function highlight-color-dark($hue) {
   @return hsl($hue, 60%, 40%);
 }
 
-@function ui-border-color($hue) {
-  @return hsl($hue, 48%, 61%);
-}
-
-@function ui-border-color-muted($hue) {
-  @return hsl($hue, 25%, 45%);
-}
-
-@function ui-bg-color-muted($hue) {
-  @return hsl($hue, 35%, 32%);
-}
-
-//Designed for dark background
-@function ui-line-color($hue) {
+@function ui-line-color-dark($hue) {
   @return hsl($hue, 55%, 70%);
 }
 
-@function ui-line-hover-color($hue) {
+@function ui-line-color-hover-dark($hue) {
   @return hsl($hue, 65%, 65%);
 }
 
-@function ui-line-focus-color($hue) {
-  @return hsl($hue, 75%, 60%);
-}
-
 //Status Text
-@function status-text($hue) {
+@function status-text-dark($hue) {
   @return hsl($hue, 85%, 82%);
 }
 
 .HintCompleted {
-  color: status-text($success-hue);
-  //background-color: hsl(120, 40%, 20%);
-  //font-style: italic;
+  color: status-text-dark($success-hue);
 }
 
 .HintInProgress {
-  color: status-text($warning-hue)
-  //background-color: hsl(60, 60%, 20%);
+  color: status-text-dark($warning-hue)
 }
 
 .HintNotStarted {
-  color: status-text($error-hue);
-  //background-color: hsl(0, 40%, 20%);
+  color: status-text-dark($error-hue);
 }
 
 //Gray Backgrounds
-$dark-gray: #222;
-$dark-gray-lighter: #333;
-$mid-gray-darker: #555;
-$mid-gray: #666;
-$mid-gray-lighter: #777;
+$black: #050505; // body background
+$dark-gray-1: #121212; // main element content background
+$dark-gray-2: #1e1e1e; // main element header background, child element content background
+$dark-gray-3: #282828; // child element header background
+$dark-gray-4: #313131; // child element collapsed header background
+$dark-gray-5: #393939; // element border
+$mid-gray-darker: #444;
+$mid-gray: #555;
+$mid-gray-lighter: #666;
 $light-gray: #999;
 $light-gray-bg: #ddd;
 
 //Gray Lines
-$line-main: rgba(255, 255, 255, 0.87);
+$line-main: rgba(255, 255, 255, 0.85);
 $line-bright: rgba(255, 255, 255, 0.73);
-$line-mid: rgba(255, 255, 255, 0.66);
 $line-disabled: rgba(255, 255, 255, 0.36);
 $line-darkest: rgba(255, 255, 255, 0.3);
 
-//Disabled text must be lighter so that it is still legible
+//Text
+$main-text: $line-main;
+$secondary-large-text: rgba(255, 255, 255, 0.55);
 $text-disabled: rgba(255, 255, 255, 0.55);
 
 //One-off colors
-$yellow-main: hsl($yellow-hue, 78%, 30%);
+$yellow-main: hsl($yellow-hue, 85%, 27%);
 $yellow-line: hsl($yellow-hue, 78%, 50%);
 $accent-title: hsl($title-hue, 50%, 60%);
 $accent-title-hover: hsl($title-hue, 60%, 50%);
@@ -152,7 +104,7 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 //Mixins
 @mixin basic-hover {
   &:hover {
-    border-color: border-color-hover($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
 }
 

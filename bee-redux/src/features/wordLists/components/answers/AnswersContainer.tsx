@@ -6,15 +6,15 @@ import {
   selectValidLetters,
 } from "@/features/puzzle";
 import { WordListScroller } from "../WordListScroller";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import {
   selectAnswersListSettings,
   toggleAnswersSettingsCollapsed,
 } from "@/features/wordLists";
 import answerSorter from "./answerSorter";
 import { selectSpoiledWords } from "@/features/guesses";
-import { AnswersSettings } from "./AnswersSettings";
 import { AnswersListHeader } from "./AnswersListHeader";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
+import { AnswersSettings } from "@/features/wordLists/components/answers/AnswersSettings";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();
