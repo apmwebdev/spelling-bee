@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: center;
   background-color: bg-color-dark($accent-hue);
-  border: 1.5px solid border-color($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
 }
 
 button {
@@ -128,11 +128,11 @@ button {
   min-height: 1.5em;
   //padding: 8px;
   border-radius: var(--br);
-  border: 1.5px solid border-color($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &[data-disabled] {
-    border-color: border-color-disabled($accent-hue);
-    background-color: bg-color-disabled($accent-hue);
+    border-color: border-color-dark-disabled($accent-hue);
+    background-color: bg-color-dark-disabled($accent-hue);
     cursor: not-allowed;
   }
 }
@@ -160,7 +160,7 @@ input[type="text"], input[type="search"] {
   padding: 4px 8px;
   border: 1.5px solid transparent;
   color: $line-bright;
-  border-bottom-color: border-color($accent-hue);
+  border-bottom-color: border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   font-size: 14px;
   &::placeholder {
@@ -168,7 +168,7 @@ input[type="text"], input[type="search"] {
     color: $text-disabled;
   }
   &:hover {
-    border-bottom-color: border-color-hover($accent-hue);
+    border-bottom-color: border-color-dark-hover($accent-hue);
   }
   &:focus {
     background-color: bg-color-darkest($accent-hue);
@@ -184,10 +184,9 @@ input[type="number"] {
   border-radius: var(--br);
   font-size: 14px;
   padding: 4px 8px;
-  border: 1.5px solid border-color($accent-hue);
-  //background-color: bg-color-darkest($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
   &:hover {
-    border-color: border-color-hover($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
   &:focus {
     box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
@@ -195,7 +194,7 @@ input[type="number"] {
   &[disabled] {
     color: $text-disabled;
     background-color: $dark-gray-3;
-    border-color: border-color-disabled($accent-hue);
+    border-color: border-color-dark-disabled($accent-hue);
     cursor: not-allowed;
   }
 }
@@ -205,16 +204,15 @@ input[type="number"] {
 a {
   $this-hue: $yellow-hue;
   text-decoration: inherit;
-  color: ui-line-color($this-hue);
+  color: ui-line-color-dark($this-hue);
   border-radius: var(--br);
   &:hover {
     text-decoration: underline;
-    color: ui-line-hover-color($this-hue);
+    color: ui-line-color-hover-dark($this-hue);
   }
   &:focus {
     text-decoration: underline;
     box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
-    //color: ui-line-focus-color($this-hue);
   }
 }
 
@@ -226,18 +224,18 @@ a.ButtonLink, div.ButtonLink {
   justify-content: center;
   padding: 6px 16px;
   gap: 4px;
-  border: 1.5px solid border-color($this-hue);
+  border: 1.5px solid border-color-dark($this-hue);
   //border: 1.5px solid;
   &:hover {
-    color: ui-line-color($this-hue);
-    border-color: ui-line-color($this-hue);
+    color: ui-line-color-dark($this-hue);
+    border-color: ui-line-color-dark($this-hue);
   }
   &:focus {
     box-shadow: 0px 0px 0px 3px shadow-color-focus($this-hue);
   }
   &.disabled {
-    color: border-color-disabled($this-hue);
-    border-color: border-color-disabled($this-hue);
+    color: border-color-dark-disabled($this-hue);
+    border-color: border-color-dark-disabled($this-hue);
   }
   span {
     font-size: 14px;
@@ -290,7 +288,7 @@ a.ButtonLink, div.ButtonLink {
   @include basic-focus;
   width: 10em;
   font-size: 16px;
-  border: 1.5px solid border-color($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   padding: 6px 12px;
   display: flex;
@@ -322,10 +320,10 @@ a.ButtonLink, div.ButtonLink {
   overflow: hidden;
   font-size: 16px;
   padding: 3px 0px;
-  border: 1.5px solid border-color($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &:hover {
-    border-color: border-color-hover($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
   &.SmallSelect {
     font-size: 14px;
@@ -351,7 +349,7 @@ a.ButtonLink, div.ButtonLink {
   padding: 6px 6px 6px 28px;
   user-select: none;
   &[data-highlighted] {
-    background-color: ui-bg-color($accent-hue);
+    background-color: highlight-color-dark($accent-hue);
   }
   .SmallSelect & {
     padding: 5px 5px 5px 24px;
@@ -374,10 +372,10 @@ a.ButtonLink, div.ButtonLink {
   height: 24px;
   background-color: bg-color-darkest($accent-hue);
   &.up {
-    border-bottom: 1.5px solid border-color($accent-hue);
+    border-bottom: 1.5px solid border-color-dark($accent-hue);
   }
   &.down {
-    border-top: 1.5px solid border-color($accent-hue);
+    border-top: 1.5px solid border-color-dark($accent-hue);
   }
 }
 
@@ -425,15 +423,15 @@ a.ButtonLink, div.ButtonLink {
   border-radius: 9999px;
   width: 42px;
   height: 25px;
-  border: 1.5px solid border-color($accent-hue);
+  border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &[data-state='checked'] {
-    background-color: ui-bg-color($accent-hue);
-    border-color: border-color-hover($accent-hue);
+    background-color: highlight-color-dark($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
   &[data-disabled] {
-    background-color: bg-color-disabled($accent-hue);
-    border-color: border-color-disabled($accent-hue);
+    background-color: bg-color-dark-disabled($accent-hue);
+    border-color: border-color-dark-disabled($accent-hue);
     cursor: not-allowed;
   }
 }
@@ -481,7 +479,7 @@ a.ButtonLink, div.ButtonLink {
   &[data-state="active"] {
     background-color: bg-color-dark($accent-hue);
     padding-bottom: 8px;
-    border-bottom: 3px solid ui-bg-color($accent-hue);
+    border-bottom: 3px solid highlight-color-dark($accent-hue);
   }
 }
 .TabsContent {
@@ -505,7 +503,7 @@ a.ButtonLink, div.ButtonLink {
 .ToggleGroup {
   $this-hue: $accent-hue;
   border-radius: var(--br);
-  border: 1.5px solid border-color($this-hue);
+  border: 1.5px solid border-color-dark($this-hue);
   overflow: hidden;
   display: flex;
   gap: 1px;
@@ -515,7 +513,7 @@ a.ButtonLink, div.ButtonLink {
     padding: 4px 12px;
     background-color: $dark-gray-1;
     &[data-state="on"] {
-      background-color: ui-bg-color($accent-hue);
+      background-color: highlight-color-dark($accent-hue);
     }
   }
 }

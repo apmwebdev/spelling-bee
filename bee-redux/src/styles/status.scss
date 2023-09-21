@@ -13,13 +13,11 @@
 }
 
 .AttemptControls {
-  $this-hue: $blue-hue;
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-  //background-color: bg-color-dark($this-hue);
   background-color: $dark-gray-2;
   border: 1.5px solid $dark-gray-5;
   padding: 8px 16px;

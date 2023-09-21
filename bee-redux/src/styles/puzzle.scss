@@ -131,14 +131,14 @@
   width: 40%;
   height: 33.3333333333%;
   polygon {
-    fill: $mid-gray;
+    fill: $mid-gray-darker;
     stroke: $black;
   }
   text {
     fill: $line-main;
   }
   &.centerLetter polygon {
-    fill: ui-bg-color($yellow-hue); //#887711
+    fill: $yellow-main; //#887711
   }
   &:focus {
     z-index: 2;

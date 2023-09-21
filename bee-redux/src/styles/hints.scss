@@ -86,18 +86,14 @@
 }
 
 .HintPanelHeader {
-  $this-hue: $blue_hue;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   align-items: center;
   gap: 6px;
   padding: 3px 4px;
-  //background-color: bg-color($this-hue);
   background-color: $dark-gray-2;
   border-bottom: 1px solid $dark-gray-5;
   .HintPanel[data-state="closed"] & {
-    //background-color: bg-color-disabled($this-hue);
-    //background-color: $dark-gray-3;
     border-bottom-color: transparent;
   }
 }
@@ -108,7 +104,6 @@
 }
 
 button.HintPanelHeaderButton {
-  $this-hue: $accent-hue;
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -117,12 +112,10 @@ button.HintPanelHeaderButton {
   padding: 8px;
   border: 1px solid $dark-gray-2;
   background-color: $dark-gray-2;
-  //border-color: $mid-gray-darker;
   &.IconButton {
     font-size: 20px;
   }
   &:hover {
-    //border-color: border-color($this-hue);
     background-color: $dark-gray-1;
     border-color: $mid-gray-darker;
   }
@@ -133,13 +126,7 @@ button.HintPanelHeaderButton {
     color: $line-bright;
     background-color: inherit;
     border-color: $dark-gray-2;
-    //&.IconButton {
-    //}
-    //&:hover {
-    //  border-color: $mid-gray;
-    //}
     &:hover {
-      //border-color: border-color($this-hue);
       background-color: $dark-gray-1;
       border-color: $mid-gray-darker;
     }
@@ -181,7 +168,6 @@ button.PanelSettingsToggle {
 }
 
 .SettingsCollapsible {
-  $this-hue: $alt-bg-hue;
   font-size: 16px;
   border-radius: var(--br);
   overflow: hidden;
@@ -234,7 +220,6 @@ button.PanelSettingsToggle {
 .HintPanelSettingsHeader {
   padding: 6px;
   font-weight: bold;
-  //background-color: bg-color($alt-bg-hue);
 }
 
 .HeaderDisclosureWidgetIcon {
@@ -518,7 +503,6 @@ button.PanelSettingsToggle {
 
 
 .SearchHintPanel {
-  //padding: 8px;
   form {
     display: flex;
     align-items: center;
@@ -530,7 +514,6 @@ button.PanelSettingsToggle {
 }
 
 .SearchPanelResults {
-  //padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -540,36 +523,35 @@ button.PanelSettingsToggle {
   border-radius: var(--br);
   position: relative;
   overflow: hidden;
-  border: 1.5px solid border-color($blue-hue);
-  //padding-left: 29px;
+  border: 1.5px solid $dark-gray-5;
+  background-color: $dark-gray-2;
 }
 
 .SearchHintSearchResultHeader {
-  $this-hue: $blue-hue;
   height: 31px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2px;
-  background-color: bg-color($this-hue);
+  background-color: $dark-gray-3;
+  border-bottom: 1px solid $dark-gray-5;
 }
 
 .IconButton.SearchResultHeaderRemoveButton {
-  $this-hue: $blue-hue;
   position: absolute;
   right: 2px;
   top: 2px;
-  //z-index: 2;
   padding: 4px;
   font-size: 16px;
-  background-color: bg-color-extra($this-hue);
-  border-color: bg-color-extra($this-hue);
+  background-color: $dark-gray-3;
+  border-color: $dark-gray-3;
   &:hover {
-    border-color: border-color($this-hue)
+    border-color: $dark-gray-5;
+    background-color: $dark-gray-1;
   }
   &:focus {
-    box-shadow: 0 0 0 1.5px border-color-hover($this-hue);
+    box-shadow: 0 0 0 1.5px $dark-gray-5;
   }
 }
 
@@ -581,28 +563,25 @@ button.PanelSettingsToggle {
 }
 
 .SearchPanelResultKey {
-  $this-hue: $alt-bg-hue;
   font-size: 16px;
   display: grid;
   grid-template-columns: repeat(4, max-content);
   justify-content: center;
   align-items: center;
-  gap: 1.5px;
+  gap: 1px;
   //padding: 1.5px;
   border-radius: var(--br);
   overflow: hidden;
-  border: 1.5px solid border-color($this-hue);
-  background-color: border-color($this-hue);
+  border: 1px solid $mid-gray;
+  background-color: $mid-gray;
 }
 
 .SearchPanelResultKeyItem {
-  $this-hue: $alt-bg-hue;
-  //border: 1.5px solid border-color($this-hue);
-  //border-radius: var(--br);
-  background-color: $dark-gray-1;
+  background-color: $dark-gray-3;
   header {
     padding: 6px 8px;
-    background-color: bg-color-main($this-hue);
+    background-color: $dark-gray-4;
+    border-bottom: 1px solid $mid-gray;
   }
   > div {
     padding: 6px 8px;
@@ -623,18 +602,18 @@ button.PanelSettingsToggle {
     @include hint-cell;
   }
   td {
-    border: 1px solid $mid-gray-lighter;
+    border: 1px solid $mid-gray;
     &.HasContent {
-      background-color: $dark-gray-2;
+      background-color: $dark-gray-1;
     }
     &:last-child {
       border-right-color: transparent;
-      background-color: inherit;
+      background-color: $dark-gray-1;
     }
   }
   th {
     border-bottom: 1px solid $mid-gray-lighter;
-    background-color: $dark-gray-1;
+    background-color: $dark-gray-2;
   }
 }
 
