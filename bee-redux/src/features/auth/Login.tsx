@@ -33,19 +33,6 @@ export function Login() {
     }
   };
 
-  const logInAsAdmin = async () => {
-    try {
-      const response = await login({
-        user: { username: "admin", password: "admin1" },
-      });
-      // if (response.error) {
-      //   console.log("Error:", response.error);
-      // }
-    } catch (error) {
-      console.log("Failed to log in: ", error);
-    }
-  };
-
   return (
     <div className="Login">
       <form id="LoginForm" onSubmit={handleSubmit}>
@@ -71,9 +58,6 @@ export function Login() {
         </div>
         <button type="submit">Log in</button>
       </form>
-      <button type="button" onClick={logInAsAdmin}>
-        Log in as admin
-      </button>
     </div>
   );
 }

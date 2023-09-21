@@ -33,14 +33,6 @@ export function Signup() {
     setPasswordConfirmValue("");
   };
 
-  const populateSampleData = () => {
-    setEmailValue("admin@admin.com");
-    setUsernameValue("admin");
-    setNameValue("Admin");
-    setPasswordValue("admin1");
-    setPasswordConfirmValue("admin1");
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canSubmit()) {
@@ -116,9 +108,6 @@ export function Signup() {
         </div>
         <button type="submit">Submit</button>
       </form>
-      <button type="button" onClick={populateSampleData}>
-        Populate sample data
-      </button>
     </div>
   );
 }
