@@ -8,7 +8,7 @@
 }
 
 :root {
-  color: $line-main;
+  color: $line-bright;
   background-color: $black;
 
   /* Variables */
@@ -78,6 +78,9 @@
   justify-content: center;
   background-color: bg-color-dark($accent-hue);
   border: 1.5px solid border-color-dark($accent-hue);
+  &:hover {
+    background-color: bg-color-dark-hover($accent-hue);
+  }
 }
 
 button {
@@ -159,13 +162,13 @@ button {
 input[type="text"], input[type="search"] {
   padding: 4px 8px;
   border: 1.5px solid transparent;
-  color: $line-bright;
+  color: $line-mid;
   border-bottom-color: border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   font-size: 14px;
   &::placeholder {
     font-style: italic;
-    color: $text-disabled;
+    color: $text-disabled-dark;
   }
   &:hover {
     border-bottom-color: border-color-dark-hover($accent-hue);
@@ -179,7 +182,7 @@ input[type="text"], input[type="search"] {
 input[type="number"] {
   @include basic-hover;
   @include basic-focus;
-  color: $line-main;
+  color: $line-bright;
   background-color: bg-color-darker($accent-hue);
   border-radius: var(--br);
   font-size: 14px;
@@ -192,7 +195,7 @@ input[type="number"] {
     box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
   }
   &[disabled] {
-    color: $text-disabled;
+    color: $text-disabled-dark;
     background-color: $dark-gray-3;
     border-color: border-color-dark-disabled($accent-hue);
     cursor: not-allowed;
@@ -335,7 +338,7 @@ a.ButtonLink, div.ButtonLink {
   font-size: 15px;
   padding: 6px 16px;
   font-style: italic;
-  color: $text-disabled;
+  color: $text-disabled-dark;
   border-color: $line-disabled;
   .SmallSelect & {
     font-size: 13px;
@@ -443,7 +446,7 @@ a.ButtonLink, div.ButtonLink {
   height: 18px;
   width: 18px;
   transform: translateX(-2px);
-  background-color: $line-main;
+  background-color: $line-bright;
   &[data-state='checked'] {
     transform: translateX(15px);
   }
@@ -470,22 +473,20 @@ a.ButtonLink, div.ButtonLink {
   border-radius: 0;
   border: none;
   border-bottom: 1px solid $dark-gray-5;
-  //background-color: $dark-gray-1;
+  color: $text-secondary-dark;
   &:hover {
     background-color: $dark-gray-1;
     padding-bottom: 8px;
     border-bottom: 3px solid $dark-gray-5;
   }
   &[data-state="active"] {
+    color: $text-main-dark;
     background-color: bg-color-dark($accent-hue);
     padding-bottom: 8px;
     border-bottom: 3px solid highlight-color-dark($accent-hue);
   }
 }
 .TabsContent {
-  //border: 2px solid $mid-gray;
-  //border-bottom-left-radius: var(--br);
-  //border-bottom-right-radius: var(--br);
   padding: 8px;
   background-color: $dark-gray-1;
 }
@@ -507,13 +508,15 @@ a.ButtonLink, div.ButtonLink {
   overflow: hidden;
   display: flex;
   gap: 1px;
-  background-color: $mid-gray;
+  background-color: border-color-dark($this-hue);
   button {
     border-radius: 0;
     padding: 4px 12px;
     background-color: $dark-gray-1;
+    color: $text-secondary-dark;
     &[data-state="on"] {
-      background-color: highlight-color-dark($accent-hue);
+      color: $text-main-dark;
+      background-color: bg-color-dark($accent-hue);
     }
   }
 }
