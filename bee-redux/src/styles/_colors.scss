@@ -1,8 +1,6 @@
 //Hues
 $yellow-hue: 51;
-$blue-hue: $yellow-hue + 180;
 $accent-hue: $yellow-hue + 150;
-$alt-bg-hue: $blue-hue - 30;
 $title-hue: $yellow-hue + 150;
 
 $success-hue: 130;
@@ -74,7 +72,7 @@ $error-hue: 0;
 }
 
 //Gray Backgrounds
-$black: #070707; // body background
+$black: #050505; // body background
 $dark-gray-1: #121212; // main element content background
 $dark-gray-2: #1e1e1e; // main element header background, child element content background
 $dark-gray-3: #282828; // child element header background
@@ -87,7 +85,7 @@ $light-gray: #999;
 $light-gray-bg: #ddd;
 
 //Gray Lines
-$line-main: rgba(255, 255, 255, 0.87);
+$line-main: rgba(255, 255, 255, 0.85);
 $line-bright: rgba(255, 255, 255, 0.73);
 $line-disabled: rgba(255, 255, 255, 0.36);
 $line-darkest: rgba(255, 255, 255, 0.3);

@@ -62,7 +62,6 @@
 }
 
 .HintPanel {
-  $this-hue: $blue-hue;
   position: relative;
   border-radius: var(--br);
   border: 1.5px solid $dark-gray-5;
@@ -70,7 +69,6 @@
   background-color: $dark-gray-1;
   &[data-state="closed"] {
     color: $line-bright;
-    //border-color: border-color-disabled($this-hue);
     border-color: $dark-gray-5;
   }
   &.Dragging {
@@ -134,7 +132,6 @@ button.HintPanelHeaderButton {
 }
 
 button.IconButton.DragHandle {
-  $this-hue: $blue-hue;
   cursor: move;
   .HintPanel.Overlay & {
     background-color: $line-main;
