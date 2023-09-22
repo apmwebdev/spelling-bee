@@ -9,7 +9,9 @@ export function UserMenu() {
 
   const handleLogoutSelect = async () => {
     try {
-      await logout(null).then((response) => console.log(response));
+      await logout(null).then((response) =>
+        console.log("handleLogoutSelect:", response),
+      );
     } catch (error) {
       console.log("Failed to log out: ", error);
     }
