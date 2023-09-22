@@ -19,8 +19,7 @@ const baseQueryWithAuth = async (
   extraOptions: BaseQueryExtraOptions<BaseQueryFn>,
 ) => {
   const result = await baseQuery(args, api, extraOptions);
-  // @ts-ignore
-  if (result.error?.originalStatus === 401) {
+  if (result.error?.status === 401) {
     api.dispatch(logoutThunk);
   }
   return result;

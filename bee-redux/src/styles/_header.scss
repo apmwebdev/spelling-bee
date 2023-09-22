@@ -68,6 +68,7 @@
 }
 .UserMenuContent {
   background-color: $mid-gray-darker;
+  z-index: 2;
   .MenuItem {
     padding: 8px 12px;
     cursor: pointer;

@@ -1,7 +1,9 @@
 import { FormEvent, useState } from "react";
 import { useLoginMutation } from "./authApiSlice";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+  const navigate = useNavigate();
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
@@ -26,7 +28,7 @@ export function Login() {
         },
       };
       try {
-        await login(formData).then((response) => console.log(response));
+        await login(formData).then((_) => navigate("/"));
       } catch (error) {
         console.log("Failed to log in: ", error);
       }
