@@ -15,7 +15,7 @@ export function Login() {
   };
 
   const canSubmit = () => {
-    return usernameValue && passwordValue;
+    return usernameValue !== "" && passwordValue !== "";
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export function Login() {
         },
       };
       try {
-        await login(formData).then((_) => navigate("/"));
+        await login(formData);
       } catch (error) {
         console.log("Failed to log in: ", error);
       }
@@ -37,28 +37,30 @@ export function Login() {
 
   return (
     <div className="Login">
-      <form id="LoginForm" onSubmit={handleSubmit}>
-        <div className="LoginUsernameContainer">
-          <label htmlFor="LoginUsername">Username:</label>
+      <form className="Auth_form" onSubmit={handleSubmit}>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_usernameInput">Username:</label>
           <input
             type="text"
-            id="LoginUsername"
+            id="Login_usernameInput"
             name="login-username"
             value={usernameValue}
             onChange={(e) => setUsernameValue(e.target.value)}
           />
-        </div>
-        <div className="LoginPasswordContainer">
-          <label htmlFor="LoginPassword">Password:</label>
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_passwordInput">Password:</label>
           <input
             type="password"
-            id="LoginPassword"
+            id="Login_passwordInput"
             name="login-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
           />
-        </div>
-        <button type="submit">Log in</button>
+        </fieldset>
+        <button type="submit" className="standardButton">
+          Log in
+        </button>
       </form>
     </div>
   );

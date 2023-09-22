@@ -61,6 +61,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: "/user_base_data",
       }),
+      providesTags: ["User"],
       onQueryStarted: async (
         _arg,
         { dispatch, getCacheEntry, queryFulfilled },
@@ -103,6 +104,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
       query: (puzzleId: number) => ({
         url: `/user_puzzle_data/${puzzleId}`,
       }),
+      providesTags: ["User"],
       onQueryStarted: async (
         puzzleId,
         { dispatch, getState, getCacheEntry, queryFulfilled },

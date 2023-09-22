@@ -55,58 +55,67 @@ export function Signup() {
 
   return (
     <div className="Signup">
-      <form className="SignupForm" onSubmit={handleSubmit}>
-        <div className="SignupEmailContainer">
-          <label htmlFor="SignupEmail">Email:</label>
+      <form className="Auth_form" onSubmit={handleSubmit}>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Signup_emailInput">Email:</label>
           <input
             type="email"
-            id="SignupEmail"
+            id="Signup_emailInput"
             name="signup-email"
             value={emailValue}
             onChange={(e) => setEmailValue(e.target.value)}
           />
-        </div>
-        <div className="SignupUsernameContainer">
-          <label htmlFor="SignupUsername">Username:</label>
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Signup_usernameInput">Username:</label>
           <input
             type="text"
-            id="SignupUsername"
+            id="Signup_usernameInput"
             name="signup-username"
             value={usernameValue}
             onChange={(e) => setUsernameValue(e.target.value)}
           />
-        </div>
-        <div className="SignupNameContainer">
-          <label htmlFor="SignupName">Name:</label>
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Signup_nameInput">Name:</label>
           <input
             type="text"
-            id="SignupName"
+            id="Signup_nameInput"
             name="signup-name"
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
           />
-        </div>
-        <div className="SignupPasswordContainer">
-          <label htmlFor="SignupPassword">Password:</label>
+        </fieldset>
+        <hr className="Hr" />
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Signup_passwordInput">Password:</label>
           <input
             type="password"
-            id="SignupPassword"
+            id="Signup_passwordInput"
             name="signup-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
           />
-        </div>
-        <div className="SignupPasswordConfirmContainer">
-          <label htmlFor="SignupPasswordConfirm">Confirm password:</label>
+          <label
+            htmlFor="Signup_passwordInput"
+            className="Auth_fieldDescription"
+          >
+            Must be 10 characters or more
+          </label>
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Signup_passwordConfirmInput">Confirm password:</label>
           <input
             type="password"
-            id="SignupPasswordConfirm"
+            id="Signup_passwordConfirmInput"
             name="signup-password-confirm"
             value={passwordConfirmValue}
             onChange={(e) => setPasswordConfirmValue(e.target.value)}
           />
-        </div>
-        <button type="submit">Submit</button>
+        </fieldset>
+        <button type="submit" className="standardButton">
+          Submit
+        </button>
       </form>
     </div>
   );
