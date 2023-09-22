@@ -73,9 +73,8 @@
 @mixin button-mixin {
   @include basic-hover;
   @include basic-focus;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-content: center;
   background-color: bg-color-dark($accent-hue);
   border: 1.5px solid border-color-dark($accent-hue);
   &:hover {
@@ -103,6 +102,12 @@ button {
       font-size: 16px;
       padding: 3px;
     }
+  }
+  &.CloseButton {
+    padding: 3px;
+    display: grid;
+    place-content: center;
+    //border: 1px solid $light-gray;
   }
 }
 
@@ -140,6 +145,42 @@ button {
   }
 }
 
+/***   Dialog   ***/
+
+.DialogOverlay {
+  position: fixed;
+  z-index: 2;
+  inset: 0px;
+  background-color: hsl(0 0% 5% / 0.9);
+}
+
+.DialogContent {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--br);
+  background-color: $dark-gray-2;
+  border: 2px solid $dark-gray-5;
+}
+
+.DialogClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.DialogTitle {
+  text-align: center;
+  font-size: 24px;
+}
+
 /***   Help Bubble   ***/
 
 .HelpBubbleTrigger {
@@ -157,13 +198,27 @@ button {
   background-color: inherit;
 }
 
+/***   HR   ***/
+
+.Hr {
+  width: 100%;
+  //height: 1.5px;
+  border: none;
+  border-top: 2px solid $dark-gray-5;
+}
+
 /***   Input   ***/
 
-input[type="text"], input[type="search"] {
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"]
+{
+  width: 25ch;
   padding: 4px 8px;
-  border: 1.5px solid transparent;
   color: $line-mid;
-  border-bottom-color: border-color-dark($accent-hue);
+  border-radius: var(--br);
+  border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   font-size: 14px;
   &::placeholder {
@@ -171,12 +226,16 @@ input[type="text"], input[type="search"] {
     color: $text-disabled-dark;
   }
   &:hover {
-    border-bottom-color: border-color-dark-hover($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
   &:focus {
     background-color: bg-color-darkest($accent-hue);
     //color: $line-main;
   }
+}
+
+input[type="email"] {
+  width: 30ch;
 }
 
 input[type="number"] {

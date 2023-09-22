@@ -1,7 +1,8 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "../authSlice";
-import { Link } from "react-router-dom";
 import { UserMenu } from "./UserMenu";
+import { LoginButton } from "@/features/auth/headerAuth/LoginButton";
+import { SignupButton } from "@/features/auth/headerAuth/SignupButton";
 
 export function HeaderAuth() {
   const user = useAppSelector(selectUser);
@@ -16,8 +17,10 @@ export function HeaderAuth() {
     }
     return (
       <>
-        <Link to="/login">Log in</Link>
-        <Link to="/signup">Sign up</Link>
+        <LoginButton />
+        <SignupButton />
+        {/*<Link to="/login">Log in</Link>*/}
+        {/*<Link to="/signup">Sign up</Link>*/}
       </>
     );
   };
