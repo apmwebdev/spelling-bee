@@ -36,7 +36,7 @@ const rehydrateAuthState = (): AuthState => {
 };
 
 export const logoutThunk = (dispatch: AppDispatch) => {
-  dispatch(logoutLocal);
+  dispatch(logoutLocal());
   localStorage.removeItem("user");
   try {
     localStorage.setItem("isGuest", "true");
