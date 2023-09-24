@@ -15,6 +15,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: formData,
       }),
+      invalidatesTags: ["User"],
       onQueryStarted: async (_arg, { queryFulfilled, getCacheEntry }) => {
         await queryFulfilled;
         const cacheEntry = getCacheEntry();
@@ -36,6 +37,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: "/logout",
         method: "DELETE",
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

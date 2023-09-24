@@ -1,7 +1,9 @@
 import { FormEvent, useState } from "react";
 import { useLoginMutation } from "./authApiSlice";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+  const navigate = useNavigate();
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
@@ -13,7 +15,7 @@ export function Login() {
   };
 
   const canSubmit = () => {
-    return usernameValue && passwordValue;
+    return usernameValue !== "" && passwordValue !== "";
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -26,53 +28,43 @@ export function Login() {
         },
       };
       try {
-        await login(formData).then((response) => console.log(response));
+        await login(formData);
       } catch (error) {
         console.log("Failed to log in: ", error);
       }
     }
   };
 
-  const logInAsAdmin = async () => {
-    try {
-      const response = await login({
-        user: { username: "admin", password: "admin1" },
-      });
-      // if (response.error) {
-      //   console.log("Error:", response.error);
-      // }
-    } catch (error) {
-      console.log("Failed to log in: ", error);
-    }
-  };
-
   return (
-    <div className="Login">
-      <form id="LoginForm" onSubmit={handleSubmit}>
-        <div className="LoginUsernameContainer">
-          <label htmlFor="LoginUsername">Username:</label>
+    <div className="Auth_container">
+      <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_usernameInput">Username:</label>
           <input
             type="text"
-            id="LoginUsername"
+            id="Login_usernameInput"
             name="login-username"
             value={usernameValue}
             onChange={(e) => setUsernameValue(e.target.value)}
           />
-        </div>
-        <div className="LoginPasswordContainer">
-          <label htmlFor="LoginPassword">Password:</label>
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_passwordInput">Password:</label>
           <input
             type="password"
-            id="LoginPassword"
+            id="Login_passwordInput"
             name="login-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
           />
-        </div>
-        <button type="submit">Log in</button>
+        </fieldset>
       </form>
-      <button type="button" onClick={logInAsAdmin}>
-        Log in as admin
+      <button
+        type="submit"
+        form="Login_form"
+        className="standardButton Auth_submit"
+      >
+        Log in
       </button>
     </div>
   );

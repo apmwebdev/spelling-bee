@@ -19,8 +19,8 @@ const baseQueryWithAuth = async (
   extraOptions: BaseQueryExtraOptions<BaseQueryFn>,
 ) => {
   const result = await baseQuery(args, api, extraOptions);
-  // @ts-ignore
-  if (result.error?.originalStatus === 401) {
+  console.log("baseQuery args:", args, "response:", result);
+  if (result.error?.status === 401) {
     api.dispatch(logoutThunk);
   }
   return result;
@@ -28,5 +28,6 @@ const baseQueryWithAuth = async (
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithAuth,
+  tagTypes: ["User"],
   endpoints: (builder) => ({}),
 });
