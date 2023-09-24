@@ -1,6 +1,12 @@
-class Api::V1::UserDataController < AuthRequiredController
+class Api::V1::UserDataController < ApplicationController
+  before_action :authenticate_user!, only: :user_puzzle_data
+
   def user_base_data
-    render json: UserDataPresenter.present_user_base_data(current_user)
+    if user_signed_in?
+      render json: UserDataPresenter.present_user_base_data(current_user)
+    else
+      render json: UserDataPresenter.present_guest_base_data
+    end
   end
 
   def user_puzzle_data
