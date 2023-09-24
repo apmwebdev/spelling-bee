@@ -126,14 +126,24 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         }
         //If returned currentHintProfile is different from stored, overwrite
         // stored with returned
-        dispatch(
-          hintApiSlice.util.upsertQueryData(
-            "getCurrentHintProfile",
-            true,
-            data.currentHintProfile,
-          ),
-        );
+        if (
+          data.isLoggedIn &&
+          JSON.stringify(
+            JSON.stringify(data.currentHintProfile) !==
+              storedCurrentProfile?.saved,
+          )
+        ) {
+          dispatch(
+            hintApiSlice.util.upsertQueryData(
+              "getCurrentHintProfile",
+              true,
+              data.currentHintProfile,
+            ),
+          );
+        }
 
+        //The return value is not super important here since this query only
+        // exists to update data for the associated "atomic" queries.
         return { data };
       },
       providesTags: ["User"],
