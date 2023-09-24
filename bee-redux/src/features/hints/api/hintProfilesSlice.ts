@@ -139,7 +139,6 @@ export const hintProfilesSlice = createSlice({
     builder.addMatcher(
       hintApiSlice.endpoints.getCurrentHintProfile.matchFulfilled,
       (state, { payload }) => {
-        console.log("matched getCurrentHintProfile");
         state.data = getStateFromProfile(payload);
         state.status = Statuses.UpToDate;
       },
@@ -165,7 +164,6 @@ export default hintProfilesSlice.reducer;
 startAppListening({
   matcher: puzzleApiSlice.endpoints.getPuzzle.matchFulfilled,
   effect: (_action, api) => {
-    console.log("Listener API: Set panels to initialDisplayState");
     const currentProfile =
       hintApiSlice.endpoints.getCurrentHintProfile.select()(
         api.getState(),

@@ -1,5 +1,5 @@
 class Api::V1::UserDataController < ApplicationController
-  before_action :authenticate_user!, only: :user_puzzle_data
+  # before_action :authenticate_user!, only: :user_puzzle_data
 
   def user_base_data
     if user_signed_in?
@@ -10,6 +10,10 @@ class Api::V1::UserDataController < ApplicationController
   end
 
   def user_puzzle_data
+    unless user_signed_in?
+      render json: {searches: [], attempts: [{id: 0, guesses: []}], currentAttempt: 0}
+      return
+    end
     unless params[:puzzle_id].to_s.match(/\A\d{1,5}\z/)
       render json: {error: "Invalid puzzle ID"}, status: :bad_request
       return

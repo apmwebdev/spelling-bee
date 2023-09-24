@@ -1,4 +1,4 @@
-import { apiSlice, persister } from "@/features/api";
+import { apiSlice } from "@/features/api";
 import { hintApiSlice } from "@/features/hints";
 import {
   UserBaseData,
@@ -21,47 +21,35 @@ const mapUserPrefsFormDataToUserPrefs = (
 
 export const userDataApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUserPrefs: builder.query<UserPrefsData, boolean>({
-      query: (_shouldCache) => ({
+    getUserPrefs: builder.query<UserPrefsData, undefined>({
+      query: () => ({
         url: "/user_prefs",
       }),
-      onQueryStarted: async (
-        shouldCache,
-        { queryFulfilled, getCacheEntry },
-      ) => {
-        if (shouldCache) {
-          await queryFulfilled;
-          const cacheEntry = getCacheEntry();
-          if (cacheEntry.isSuccess && cacheEntry.data) {
-            persister.save("userPrefs", cacheEntry.data);
-          }
-        }
-      },
     }),
     /**
      * Needs to update getUserPrefs endpoint with response.
      * Can use optimistic updates
      */
     updateUserPrefs: builder.mutation<boolean, UserPrefsFormData>({
-      queryFn: async (formData, api, _opts, baseQuery) => {
-        api.dispatch(
-          userDataApiSlice.util.updateQueryData(
-            "getUserPrefs",
-            true,
-            (draft) => {
-              mapUserPrefsFormDataToUserPrefs(formData, draft);
-            },
-          ),
-        );
-        const state = api.getState() as RootState;
-        if (state.auth.user) {
-          await baseQuery({
-            url: "/user_prefs",
-            method: "PATCH",
-            body: formData,
-          });
+      query: (formData) => ({
+        url: "/user_prefs",
+        method: "PATCH",
+        body: formData,
+      }),
+      onQueryStarted: async (formData, api) => {
+        await api.queryFulfilled;
+        const cacheEntry = api.getCacheEntry();
+        if (cacheEntry.isSuccess && cacheEntry.data) {
+          api.dispatch(
+            userDataApiSlice.util.updateQueryData(
+              "getUserPrefs",
+              undefined,
+              (draft) => {
+                mapUserPrefsFormDataToUserPrefs(formData, draft);
+              },
+            ),
+          );
         }
-        return { data: true };
       },
     }),
     /**
@@ -70,81 +58,40 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
      * - getCurrentHintProfile, if applicable, from hintApiSlice
      * - getPrefs
      * Those 3 endpoints need to be updated with the returned data
-     * The latter 2 can be loaded from localStorage
      */
     getUserBaseData: builder.query<UserBaseData, void>({
-      queryFn: async (_args, { dispatch }, _opts, baseQuery) => {
-        //Load prefs and current profile from localStorage
-        const storedPrefs = persister.load("userPrefs");
-        if (storedPrefs) {
-          dispatch(
-            userDataApiSlice.util.upsertQueryData(
-              "getUserPrefs",
-              false,
-              storedPrefs.parsed,
+      query: () => ({
+        url: "/user_base_data",
+      }),
+      onQueryStarted: async (_args, api) => {
+        await api.queryFulfilled;
+        const cacheEntry = api.getCacheEntry();
+        if (cacheEntry.isSuccess && cacheEntry.data) {
+          const { data } = cacheEntry;
+          api.dispatch(
+            hintApiSlice.util.upsertQueryData(
+              "getHintProfiles",
+              undefined,
+              data.hintProfiles,
             ),
           );
-        }
-        const storedCurrentProfile = persister.load("currentHintProfile");
-        if (storedCurrentProfile) {
-          dispatch(
+          api.dispatch(
             hintApiSlice.util.upsertQueryData(
               "getCurrentHintProfile",
-              false,
-              storedCurrentProfile.parsed,
-            ),
-          );
-        }
-
-        //Get the response from the server
-        const response = await baseQuery({
-          url: "/user_base_data",
-        });
-        const data = response.data as UserBaseData;
-
-        //Always upsert the default profiles
-        dispatch(
-          hintApiSlice.util.upsertQueryData(
-            "getHintProfiles",
-            undefined,
-            data.hintProfiles,
-          ),
-        );
-        // If returned prefs are different from stored prefs, go with returned
-        // prefs
-        if (
-          data.isLoggedIn &&
-          JSON.stringify(data.prefs) !== storedPrefs?.saved
-        ) {
-          dispatch(
-            userDataApiSlice.util.upsertQueryData(
-              "getUserPrefs",
-              true,
-              data.prefs,
-            ),
-          );
-        }
-        //If returned currentHintProfile is different from stored, overwrite
-        // stored with returned
-        if (
-          data.isLoggedIn &&
-          JSON.stringify(
-            JSON.stringify(data.currentHintProfile) !==
-              storedCurrentProfile?.saved,
-          )
-        ) {
-          dispatch(
-            hintApiSlice.util.upsertQueryData(
-              "getCurrentHintProfile",
-              true,
+              undefined,
               data.currentHintProfile,
             ),
           );
+          if (data.prefs) {
+            api.dispatch(
+              userDataApiSlice.util.upsertQueryData(
+                "getUserPrefs",
+                undefined,
+                data.prefs,
+              ),
+            );
+          }
         }
-
-        //The return value is not super important here since this query only
-        // exists to update data for the associated "atomic" queries.
-        return { data };
       },
       providesTags: ["User"],
     }),
@@ -159,22 +106,19 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         url: `/user_puzzle_data/${puzzleId}`,
       }),
       providesTags: ["User"],
-      onQueryStarted: async (
-        _puzzleId,
-        { dispatch, getState, getCacheEntry, queryFulfilled },
-      ) => {
-        await queryFulfilled;
-        const cacheEntry = getCacheEntry();
+      onQueryStarted: async (_puzzleId, api) => {
+        await api.queryFulfilled;
+        const cacheEntry = api.getCacheEntry();
         if (cacheEntry.isSuccess && cacheEntry.data) {
           const { data } = cacheEntry;
-          dispatch(
+          api.dispatch(
             guessesApiSlice.util.upsertQueryData(
               "getCurrentAttempts",
               undefined,
-              processAttempts(data.attempts, getState() as RootState),
+              processAttempts(data.attempts, api.getState() as RootState),
             ),
           );
-          dispatch(
+          api.dispatch(
             hintApiSlice.util.upsertQueryData(
               "getSearches",
               data.currentAttempt,
