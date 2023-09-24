@@ -1,6 +1,5 @@
 import {
   CompleteHintProfile,
-  HintProfileBasicData,
   HintProfilesData,
   SearchPanelSearchData,
 } from "@/features/hints";
@@ -28,12 +27,13 @@ export interface UserPrefsFormData {
 
 export interface UserPrefsData {
   colorScheme: ColorSchemes;
-  currentHintProfile: HintProfileBasicData;
+  // currentHintProfile: HintProfileBasicData;
 }
 export interface UserBaseData {
   prefs: UserPrefsData;
   hintProfiles: HintProfilesData;
   currentHintProfile: CompleteHintProfile;
+  isLoggedIn: boolean;
 }
 
 export interface UserPuzzleData {

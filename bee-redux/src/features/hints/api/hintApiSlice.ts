@@ -1,4 +1,9 @@
-import { addDebouncer, apiSlice, keysToSnakeCase } from "@/features/api";
+import {
+  addDebouncer,
+  apiSlice,
+  keysToSnakeCase,
+  persister,
+} from "@/features/api";
 import * as t from "../types";
 import { RootState } from "@/app/store";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
@@ -82,10 +87,22 @@ export const hintApiSlice = apiSlice.injectEndpoints({
     }),
 
     // ✅
-    getCurrentHintProfile: builder.query<t.CompleteHintProfile, void>({
-      query: () => ({
+    getCurrentHintProfile: builder.query<t.CompleteHintProfile, boolean>({
+      query: (_shouldCache) => ({
         url: "/current_hint_profile",
       }),
+      onQueryStarted: async (
+        shouldCache,
+        { queryFulfilled, getCacheEntry },
+      ) => {
+        if (shouldCache) {
+          await queryFulfilled;
+          const cacheEntry = getCacheEntry();
+          if (cacheEntry.isSuccess && cacheEntry.data) {
+            persister.save("currentHintProfile", cacheEntry.data);
+          }
+        }
+      },
     }),
 
     // ✅
@@ -110,7 +127,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
           dispatch(
             hintApiSlice.util.upsertQueryData(
               "getCurrentHintProfile",
-              undefined,
+              true,
               maybeProfile,
             ),
           );
@@ -121,7 +138,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
             dispatch(
               hintApiSlice.util.upsertQueryData(
                 "getCurrentHintProfile",
-                undefined,
+                true,
                 cacheEntry.data,
               ),
             );
@@ -148,7 +165,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         api.dispatch(
           hintApiSlice.util.updateQueryData(
             "getCurrentHintProfile",
-            undefined,
+            true,
             (draftState) => {
               if (!draftState) return;
               const panel = draftState.panels.find(
@@ -232,7 +249,7 @@ export const hintApiSlice = apiSlice.injectEndpoints({
         api.dispatch(
           hintApiSlice.util.updateQueryData(
             "getCurrentHintProfile",
-            undefined,
+            true,
             (draftState) => {
               if (!draftState) {
                 shouldPersist = false;
@@ -391,7 +408,7 @@ export const {
 } = hintApiSlice;
 
 export const selectCurrentHintProfile = (state: RootState) =>
-  hintApiSlice.endpoints.getCurrentHintProfile.select()(state).data;
+  hintApiSlice.endpoints.getCurrentHintProfile.select(true)(state).data;
 
 export const selectPanels = createSelector(
   [selectCurrentHintProfile],
