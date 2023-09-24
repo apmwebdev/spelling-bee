@@ -36,8 +36,8 @@ export function Login() {
   };
 
   return (
-    <div className="Login">
-      <form className="Auth_form" onSubmit={handleSubmit}>
+    <div className="Auth_container">
+      <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
         <fieldset className="Auth_fieldset">
           <label htmlFor="Login_usernameInput">Username:</label>
           <input
@@ -58,10 +58,14 @@ export function Login() {
             onChange={(e) => setPasswordValue(e.target.value)}
           />
         </fieldset>
-        <button type="submit" className="standardButton">
-          Log in
-        </button>
       </form>
+      <button
+        type="submit"
+        form="Login_form"
+        className="standardButton Auth_submit"
+      >
+        Log in
+      </button>
     </div>
   );
 }

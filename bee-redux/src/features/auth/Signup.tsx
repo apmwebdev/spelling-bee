@@ -54,8 +54,8 @@ export function Signup() {
   };
 
   return (
-    <div className="Signup">
-      <form className="Auth_form" onSubmit={handleSubmit}>
+    <div className="Auth_container">
+      <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
         <fieldset className="Auth_fieldset">
           <label htmlFor="Signup_emailInput">Email:</label>
           <input
@@ -113,10 +113,14 @@ export function Signup() {
             onChange={(e) => setPasswordConfirmValue(e.target.value)}
           />
         </fieldset>
-        <button type="submit" className="standardButton">
-          Submit
-        </button>
       </form>
+      <button
+        type="submit"
+        form="Signup_form"
+        className="standardButton Auth_submit"
+      >
+        Submit
+      </button>
     </div>
   );
 }
