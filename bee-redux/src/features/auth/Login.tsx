@@ -1,18 +1,12 @@
 import { FormEvent, useState } from "react";
 import { useLoginMutation } from "./authApiSlice";
-import { useNavigate } from "react-router-dom";
+import { LoginData } from "@/features/auth/types";
 
 export function Login() {
-  const navigate = useNavigate();
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
   const [login] = useLoginMutation();
-
-  const resetForm = () => {
-    setUsernameValue("");
-    setPasswordValue("");
-  };
 
   const canSubmit = () => {
     return usernameValue !== "" && passwordValue !== "";
@@ -21,14 +15,14 @@ export function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canSubmit()) {
-      const formData = {
+      const formData: LoginData = {
         user: {
           username: usernameValue,
           password: passwordValue,
         },
       };
       try {
-        await login(formData);
+        login(formData);
       } catch (error) {
         console.log("Failed to log in: ", error);
       }

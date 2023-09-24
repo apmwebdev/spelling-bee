@@ -1,3 +1,7 @@
+/**
+ * So that you can see the actual JSON.stringified string that was saved to
+ * localStorage as well as what it was JSON.parsed into.
+ */
 type LoadedValue = {
   saved: string;
   parsed: any;
@@ -8,7 +12,10 @@ const save = (key: string, value: any) => {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch (err) {
-    console.log(`Couldn't persist ${key} with ${value} to localStorage:`, err);
+    console.error(
+      `Couldn't persist ${key} with ${value} to localStorage:`,
+      err,
+    );
     return false;
   }
 };
@@ -29,4 +36,8 @@ const load = (key: string) => {
   return null;
 };
 
-export const persister = { save, load };
+const remove = (key: string) => {
+  localStorage.removeItem(key);
+};
+
+export const persister = { save, load, remove };
