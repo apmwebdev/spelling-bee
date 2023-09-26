@@ -1,10 +1,10 @@
-export interface EnumerableOption {
+export type EnumerableOption = {
   title: string;
-}
+};
 
-export interface EnumeratedOptions {
+export type EnumeratedOptions = {
   [key: string]: EnumerableOption;
-}
+};
 
 export enum PanelTypes {
   Letter = "letter",
@@ -20,14 +20,14 @@ export enum PanelSubTypeTypes {
   Definition = "DefinitionPanel",
 }
 
-export interface SubstringHintDataCell {
+export type SubstringHintDataCell = {
   answers: number;
   guesses: number;
-}
+};
 
-export interface GridRow {
+export type GridRow = {
   [index: number]: SubstringHintDataCell;
-}
+};
 
 /**
  * For letter panels, should it reveal letters at the start of the word or the end?
@@ -70,7 +70,7 @@ export const SubstringHintOutputOptions: EnumeratedOptions = {
   letters_list: { title: "Letters Present?" },
 };
 
-export interface LetterPanelFormData {
+export type LetterPanelFormData = {
   location: LetterPanelLocationKeys;
   outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */
@@ -84,11 +84,11 @@ export interface LetterPanelFormData {
   lettersOffset: number;
   /** Whether to show rows that consist only of known words */
   hideKnown: boolean;
-}
+};
 
-export interface LetterPanelData extends LetterPanelFormData {
+export type LetterPanelData = LetterPanelFormData & {
   panelType: PanelTypes;
-}
+};
 
 export function isLetterPanelData(a: any): a is LetterPanelData {
   return a.panelType === PanelTypes.Letter;
@@ -110,27 +110,27 @@ export const SearchPanelLocationOptions: EnumeratedOptions = {
   anywhere: { title: "Anywhere in Word" },
 };
 
-export interface SearchPanelBaseData {
+export type SearchPanelBaseData = {
   searchString: string;
   location: SearchPanelLocationKeys;
   lettersOffset: number;
   outputType: SubstringHintOutputKeys;
-}
+};
 
-export interface SearchPanelData extends SearchPanelBaseData {
+export type SearchPanelData = SearchPanelBaseData & {
   panelType: PanelTypes;
   // ID is necessary for search panels so that searches know which panel they
   // belong to
   id: number;
-}
+};
 
-export interface SearchPanelSearchData extends SearchPanelBaseData {
+export type SearchPanelSearchData = SearchPanelBaseData & {
   //includes searchString, location, lettersOffset, and outputType through inheritance
   attemptId: number;
   searchPanelId: number;
   createdAt: number;
   id?: number;
-}
+};
 
 export function isSearchPanelData(a: any): a is SearchPanelData {
   return a.panelType === PanelTypes.Search;
@@ -148,35 +148,35 @@ export const SortOrderOptions: EnumeratedOptions = {
   desc: { title: "Descending" },
 };
 
-export interface ObscurityPanelFormData {
+export type ObscurityPanelFormData = {
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
   clickToDefine: boolean;
   revealLength: boolean;
   sortOrder: SortOrderKeys;
-}
+};
 
-export interface ObscurityPanelData extends ObscurityPanelFormData {
+export type ObscurityPanelData = ObscurityPanelFormData & {
   panelType: PanelTypes;
-}
+};
 
 export function isObscurityPanelData(a: any): a is ObscurityPanelData {
   return a.panelType === PanelTypes.Obscurity;
 }
 
-export interface DefinitionPanelFormData {
+export type DefinitionPanelFormData = {
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
   showObscurity: boolean;
   revealLength: boolean;
   sortOrder: SortOrderKeys;
-}
+};
 
-export interface DefinitionPanelData extends DefinitionPanelFormData {
+export type DefinitionPanelData = DefinitionPanelFormData & {
   panelType: PanelTypes;
-}
+};
 
 export function isDefinitionPanelData(a: any): a is DefinitionPanelData {
   return a.panelType === PanelTypes.Definition;

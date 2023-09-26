@@ -1,4 +1,4 @@
-import { SortOrder } from "../../api/wordListSettingsSlice";
+import { SortOrder } from "@/features/wordLists";
 import { random, shuffle } from "lodash";
 
 /**
@@ -19,17 +19,17 @@ import { random, shuffle } from "lodash";
  *  No length: 4 cases. location x order (order matters for letters)
  *  Length: 4 cases. location x order
  */
-interface LetterGrouperCell {
+type LetterGrouperCell = {
   known: string[];
   unknown: string[];
-}
+};
 
-interface LetterGrouperFormat {
+type LetterGrouperFormat = {
   [letter: string]: LetterGrouperCell;
-}
+};
 
 //Function assumes all arrays are already sorted using default sort
-interface answerSorterParams {
+type answerSorterParams = {
   remainingWords: string[];
   knownWords: string[];
   spoiledWords: string[];
@@ -40,7 +40,7 @@ interface answerSorterParams {
   remainingRevealLength: boolean;
   remainingLocation: "beginning" | "end";
   remainingGroupWithLetter: boolean;
-}
+};
 
 export default function answerSorter({
   remainingWords,

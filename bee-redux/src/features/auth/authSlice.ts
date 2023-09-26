@@ -5,10 +5,10 @@ import { User } from "@/features/auth/types";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { persister } from "@/features/api";
 
-interface AuthState {
+type AuthState = {
   user: User | null;
   isGuest: boolean;
-}
+};
 
 const rehydrateAuthState = (): AuthState => {
   const storedUser = persister.load("user");

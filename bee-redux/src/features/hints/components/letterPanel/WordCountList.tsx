@@ -8,18 +8,18 @@ import { LetterHintSubsectionProps } from "@/features/hints/components/letterPan
 import { generateListData } from "@/features/hints/components/letterPanel/util";
 import { StatusTrackingOptions } from "@/features/hintPanels/types";
 
-export interface ListRow {
+export type ListRow = {
   [substring: string]: SubstringHintDataCell;
-}
+};
 
-export interface ListRows {
+export type ListRows = {
   [startingLetter: string]: ListRow;
-}
+};
 
-export interface ListData {
+export type ListData = {
   excludedAnswers: number;
   listRows: ListRows;
-}
+};
 
 export function WordCountList({
   answers,

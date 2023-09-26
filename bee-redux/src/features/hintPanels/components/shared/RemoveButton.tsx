@@ -1,10 +1,6 @@
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
-interface RemoveButtonProps {
-  panelId: number;
-}
-
-export function RemoveButton({ panelId }: RemoveButtonProps) {
+export function RemoveButton({ panelId }: { panelId: number }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Close}

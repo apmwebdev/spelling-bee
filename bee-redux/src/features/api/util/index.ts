@@ -4,9 +4,9 @@ export * from "./persister";
 export const toSnakeCase = (str: string) =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 
-interface AnyObject {
+type AnyObject = {
   [key: string | number | symbol]: any;
-}
+};
 
 const isPlainObject = (thing: any) => thing?.constructor === Object;
 

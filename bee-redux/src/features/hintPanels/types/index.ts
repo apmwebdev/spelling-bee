@@ -27,11 +27,11 @@ import {
  * - Total
  * @enum {string}
  */
-export interface StatusTrackingOption {
+export type StatusTrackingOption = {
   title: string;
   compactTitle: string;
   outputFn: (cell: SubstringHintDataCell) => string;
-}
+};
 
 type StatusTrackingOptionsData = {
   [key: string]: StatusTrackingOption;
@@ -91,29 +91,29 @@ export enum StatusTrackingKeys {
  * @prop {boolean} isSettingsSticky Whether the settings remember their last
  *   collapsed/expanded state
  */
-export interface PanelDisplayState {
+export type PanelDisplayState = {
   isExpanded: boolean;
   isBlurred: boolean;
   isSticky: boolean;
   isSettingsExpanded: boolean;
   isSettingsSticky: boolean;
-}
+};
 
-export interface PanelDisplayFormData {
+export type PanelDisplayFormData = {
   isExpanded?: boolean;
   isBlurred?: boolean;
   isSticky?: boolean;
   isSettingsExpanded?: boolean;
   isSettingsSticky?: boolean;
-}
+};
 
-export interface RailsPanelDisplayFormData {
+export type RailsPanelDisplayFormData = {
   is_expanded?: boolean;
   is_blurred?: boolean;
   is_sticky?: boolean;
   is_settings_expanded?: boolean;
   is_settings_sticky?: boolean;
-}
+};
 
 export enum PanelDisplayStateKeys {
   isExpanded = "isExpanded",
@@ -123,7 +123,7 @@ export enum PanelDisplayStateKeys {
   isSettingsSticky = "isSettingsSticky",
 }
 
-export interface HintPanelData {
+export type HintPanelData = {
   id: number;
   name: string;
   displayIndex: number;
@@ -135,9 +135,9 @@ export interface HintPanelData {
     | SearchPanelData
     | ObscurityPanelData
     | DefinitionPanelData;
-}
+};
 
-export interface HintPanelCreateForm {
+export type HintPanelCreateForm = {
   userHintProfileId: number;
   name: string;
   displayIndex: number;
@@ -150,7 +150,7 @@ export interface HintPanelCreateForm {
     | SearchPanelBaseData
     | ObscurityPanelFormData
     | DefinitionPanelFormData;
-}
+};
 
 export enum HintPanelBooleanKeys {
   hideKnown = "hideKnown",
@@ -168,7 +168,7 @@ export const HintPanelBooleanSettings: EnumeratedOptions = {
   clickToDefine: { title: "Click to Define" },
 };
 
-export interface HintPanelUpdateForm {
+export type HintPanelUpdateForm = {
   id: number;
   /**
    * For setting a standardized key that can be accessed if you don't know whether
@@ -195,9 +195,9 @@ export interface HintPanelUpdateForm {
     revealedLetters?: number;
     clickToDefine?: boolean;
   };
-}
+};
 
-export interface RailsHintPanelUpdateForm {
+export type RailsHintPanelUpdateForm = {
   hint_panel: {
     id: number;
     name?: string;
@@ -219,7 +219,7 @@ export interface RailsHintPanelUpdateForm {
       click_to_define?: boolean;
     };
   };
-}
+};
 
 export type MoveHintPanelData = {
   id: number;

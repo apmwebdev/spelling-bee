@@ -11,15 +11,15 @@ import {
   HintProfileTypes,
 } from "@/features/hintProfiles/types";
 
-export type PanelCurrentDisplayState = {
+type PanelCurrentDisplayState = {
   isExpanded: boolean;
   isBlurred: boolean;
   isSettingsExpanded: boolean;
 };
 
-export interface StateData {
+type StateData = {
   [panelId: number]: PanelCurrentDisplayState;
-}
+};
 
 export const initialState: StateShape<StateData> = {
   data: {},

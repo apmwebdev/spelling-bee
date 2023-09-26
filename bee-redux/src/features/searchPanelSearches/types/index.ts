@@ -5,15 +5,15 @@ import {
 } from "@/features/hints";
 import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
-export interface ResultData {
+export type ResultData = {
   searchObject: SearchPanelSearchData;
   results: GridRow;
   total: SubstringHintDataCell;
   excludedAnswers: number;
-}
+};
 
-export interface SearchResultProps {
+export type SearchResultProps = {
   panelId?: number;
   resultData: ResultData;
   statusTracking: StatusTrackingKeys;
-}
+};

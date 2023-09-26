@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-
-enum Status {
-  Initial = "Not Fetched",
-  Loading = "Loading...",
-  UpToDate = "Up to Date",
-  Error = "Error",
-}
+import { Statuses } from "@/types";
 
 export enum SortType {
   Alphabetical = "alphabetical",
@@ -18,7 +12,7 @@ export enum SortOrder {
   Descending = "descending",
 }
 
-export interface FoundWordsSettingsFormat {
+export type FoundWordsSettingsFormat = {
   sortType: SortType;
   sortOrder: SortOrder;
   letterFilter: string[];
@@ -27,22 +21,22 @@ export interface FoundWordsSettingsFormat {
   showPerfectPangrams: boolean;
   perfectPangramsShowTotal: boolean;
   settingsCollapsed: boolean;
-}
+};
 
-export interface WrongGuessesSettingsFormat {
+export type WrongGuessesSettingsFormat = {
   sortType: SortType;
   sortOrder: SortOrder;
   letterFilter: string[];
   settingsCollapsed: boolean;
-}
+};
 
-export interface ExcludedWordsSettingsFormat {
+export type ExcludedWordsSettingsFormat = {
   sortOrder: SortOrder;
   letterFilter: string[];
   settingsCollapsed: boolean;
-}
+};
 
-export interface AnswerListSettingsFormat {
+export type AnswerListSettingsFormat = {
   sortOrder: SortOrder;
   letterFilter: string[];
   remainingAndSpoiledOnly: boolean;
@@ -51,9 +45,9 @@ export interface AnswerListSettingsFormat {
   remainingLocation: "beginning" | "end";
   remainingGroupWithLetter: boolean;
   settingsCollapsed: boolean;
-}
+};
 
-export interface WordListSettingsFormat {
+export type WordListSettingsFormat = {
   foundWords: FoundWordsSettingsFormat;
   wrongGuesses: WrongGuessesSettingsFormat;
   excludedWords: ExcludedWordsSettingsFormat;
@@ -61,12 +55,12 @@ export interface WordListSettingsFormat {
   general: {
     groupByFirstLetter: boolean;
   };
-}
+};
 
-export interface WordListSettingsState {
+export type WordListSettingsState = {
   data: WordListSettingsFormat;
-  status: Status;
-}
+  status: Statuses;
+};
 
 const initialState: WordListSettingsState = {
   data: {
@@ -105,7 +99,7 @@ const initialState: WordListSettingsState = {
       groupByFirstLetter: true,
     },
   },
-  status: Status.Initial,
+  status: Statuses.Initial,
 };
 
 export const wordListSettingsSlice = createSlice({

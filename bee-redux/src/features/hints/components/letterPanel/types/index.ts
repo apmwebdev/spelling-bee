@@ -5,7 +5,7 @@ import {
 } from "@/features/hints";
 import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
-export interface LetterHintSubsectionProps {
+export type LetterHintSubsectionProps = {
   answers: string[];
   knownWords: string[];
   numberOfLetters: number;
@@ -13,21 +13,21 @@ export interface LetterHintSubsectionProps {
   lettersOffset: number;
   hideKnown: boolean;
   statusTracking: StatusTrackingKeys;
-}
+};
 
-export interface GridRows {
+export type GridRows = {
   [substring: string]: GridRow;
-}
+};
 
-export interface TotalColumn {
+export type TotalColumn = {
   [substring: string]: SubstringHintDataCell;
-}
+};
 
-export interface GridData {
+export type GridData = {
   gridRows: GridRows;
   totalRow: GridRow;
   totalColumn: TotalColumn;
   grandTotal: SubstringHintDataCell;
   relevantAnswerLengths: number[];
   excludedAnswers: number;
-}
+};
