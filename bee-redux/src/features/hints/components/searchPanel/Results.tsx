@@ -4,13 +4,16 @@ import {
   selectAnswerWords,
   selectKnownWords,
 } from "@/features/puzzle";
-import { Result, ResultData } from "@/features/searchPanelSearches";
+import {
+  Result,
+  ResultData,
+  SearchPanelSearchData,
+} from "@/features/searchPanelSearches";
 import uniqid from "uniqid";
 import {
   createSubstringHintDataCell,
   GridRow,
   SearchPanelLocationKeys,
-  SearchPanelSearchData,
 } from "@/features/hints";
 import { StatusTrackingKeys } from "@/features/hintPanels";
 

@@ -1,17 +1,20 @@
-import { SearchPanelSearchData } from "@/features/hints";
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useDeleteSearchMutation } from "@/features/searchPanelSearches";
+import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import { useAppDispatch } from "@/app/hooks";
+import { deleteSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
 
 export function ResultHeader({
   searchObject,
 }: {
   searchObject: SearchPanelSearchData;
 }) {
-  const [deleteSearch] = useDeleteSearchMutation();
+  const dispatch = useAppDispatch();
   const { searchString } = searchObject;
 
   const handleClickRemoveButton = () => {
-    deleteSearch({ id: searchObject.id, createdAt: searchObject.createdAt });
+    dispatch(
+      deleteSearch({ id: searchObject.id, createdAt: searchObject.createdAt }),
+    );
   };
 
   return (
