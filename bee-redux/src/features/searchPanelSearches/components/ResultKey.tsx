@@ -1,9 +1,9 @@
-import { SearchResultProps } from "@/features/hints/components/searchPanel/Results";
 import {
   SearchPanelLocationOptions,
   SubstringHintOutputOptions,
 } from "@/features/hints";
 import { StatusTrackingOptions } from "@/features/hintPanels/types";
+import { SearchResultProps } from "@/features/searchPanelSearches/types";
 
 export function ResultKey({ resultData, statusTracking }: SearchResultProps) {
   const { searchObject } = resultData;

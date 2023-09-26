@@ -1,5 +1,5 @@
-import { SearchResultProps } from "./Results";
 import { getSubstringHintStatusClasses } from "@/features/hints";
+import { SearchResultProps } from "@/features/searchPanelSearches/types";
 
 export function LettersPresent({
   resultData,
