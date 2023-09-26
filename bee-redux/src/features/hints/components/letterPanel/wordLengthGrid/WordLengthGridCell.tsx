@@ -1,10 +1,10 @@
+import { SubstringHintDataCell } from "@/features/hints";
+import uniqid from "uniqid";
+import { getTdClasses } from "@/features/hints/components/letterPanel/util";
 import {
   StatusTrackingKeys,
   StatusTrackingOptions,
-  SubstringHintDataCell,
-} from "@/features/hints";
-import uniqid from "uniqid";
-import { getTdClasses } from "@/features/hints/components/letterPanel/util";
+} from "@/features/hintPanels/types";
 
 interface WordLengthGridCellProps {
   cell: SubstringHintDataCell;

@@ -1,8 +1,8 @@
 import { RemoveButton } from "./RemoveButton";
 import { DuplicateButton } from "./DuplicateButton";
 import { ReactNode } from "react";
-import { DragHandle } from "@/features/hints/components/shared/DragHandle";
-import { SettingsToggle } from "@/features/hints/components/shared/SettingsToggle";
+import { DragHandle } from "@/features/hintPanels/components/shared/DragHandle";
+import { SettingsToggle } from "@/features/hintPanels/components/shared/SettingsToggle";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 

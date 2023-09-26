@@ -1,8 +1,8 @@
 import { LetterPanelData, PanelTypes } from "@/features/hints";
-import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
-import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
-import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
-import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
+import { HintOutputTypeControl } from "@/features/hintPanels/components/settings/HintOutputTypeControl";
+import { HintLocationControl } from "@/features/hintPanels/components/settings/HintLocationControl";
+import { HintHideKnownControl } from "@/features/hintPanels/components/settings/HintHideKnownControl";
+import { HintLettersOffsetControl } from "@/features/hintPanels/components/settings/HintLettersOffsetControl";
 import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";
 
 export function LetterPanelSettings({

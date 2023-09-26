@@ -11,9 +11,9 @@ import {
   GridRow,
   SearchPanelLocationKeys,
   SearchPanelSearchData,
-  StatusTrackingKeys,
   SubstringHintDataCell,
 } from "@/features/hints";
+import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
 interface ResultData {
   searchObject: SearchPanelSearchData;

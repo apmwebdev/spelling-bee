@@ -9,24 +9,11 @@ import {
   puzzleApiSlice,
   PuzzleFormat,
 } from "./puzzleApiSlice";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { StateShape, Statuses } from "@/types";
 
-export enum PuzzleStatuses {
-  Initial = "Not Fetched",
-  Pending = "Loading...",
-  Succeeded = "Up To Date",
-  Failed = "Error",
-}
-
-export interface PuzzleState {
-  data: PuzzleFormat;
-  status: PuzzleStatuses;
-  error: FetchBaseQueryError | undefined;
-}
-
-const initialState: PuzzleState = {
+const initialState: StateShape<PuzzleFormat> = {
   data: BlankPuzzle,
-  status: PuzzleStatuses.Initial,
+  status: Statuses.Initial,
   error: undefined,
 };
 
@@ -46,7 +33,7 @@ export const puzzleSlice = createSlice({
         puzzleApiSlice.endpoints.getPuzzle.matchFulfilled,
         (state, { payload }) => {
           state.data = payload;
-          state.status = PuzzleStatuses.Succeeded;
+          state.status = Statuses.UpToDate;
           state.error = undefined;
         },
       )
@@ -55,14 +42,14 @@ export const puzzleSlice = createSlice({
         puzzleApiSlice.endpoints.getPuzzle.matchRejected,
         (state, { payload }) => {
           state.data = BlankPuzzle;
-          state.status = PuzzleStatuses.Failed;
+          state.status = Statuses.Error;
           state.error = payload;
           console.log("puzzleSlice: getPuzzle.matchRejected:", payload);
         },
       )
       // TODO: Add loading state handling
       .addMatcher(puzzleApiSlice.endpoints.getPuzzle.matchPending, (state) => {
-        state.status = PuzzleStatuses.Pending;
+        state.status = Statuses.Pending;
         state.error = undefined;
       });
   },

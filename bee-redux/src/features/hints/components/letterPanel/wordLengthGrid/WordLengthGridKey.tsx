@@ -1,4 +1,7 @@
-import { StatusTrackingKeys, StatusTrackingOptions } from "@/features/hints";
+import {
+  StatusTrackingKeys,
+  StatusTrackingOptions,
+} from "@/features/hintPanels/types";
 
 export function WordLengthGridKey({
   statusTracking,

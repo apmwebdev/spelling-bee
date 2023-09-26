@@ -1,9 +1,9 @@
 import { ObscurityPanelData } from "@/features/hints";
-import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
-import { HintSeparateKnownControl } from "@/features/hints/components/settings/HintSeparateKnownControl";
-import { HintRevealedLettersControl } from "@/features/hints/components/settings/HintRevealedLettersControl";
-import { HintSortOrderControl } from "@/features/hints/components/settings/HintSortOrderControl";
-import { HintRevealLengthControl } from "@/features/hints/components/settings/HintRevealLengthControl";
+import { HintHideKnownControl } from "@/features/hintPanels/components/settings/HintHideKnownControl";
+import { HintSeparateKnownControl } from "@/features/hintPanels/components/settings/HintSeparateKnownControl";
+import { HintRevealedLettersControl } from "@/features/hintPanels/components/settings/HintRevealedLettersControl";
+import { HintSortOrderControl } from "@/features/hintPanels/components/settings/HintSortOrderControl";
+import { HintRevealLengthControl } from "@/features/hintPanels/components/settings/HintRevealLengthControl";
 import { HintClickToDefineControl } from "@/features/hints/components/obscurityPanel/HintClickToDefineControl";
 
 export function ObscurityPanelSettings({

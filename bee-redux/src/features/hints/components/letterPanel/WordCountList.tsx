@@ -2,11 +2,11 @@ import uniqid from "uniqid";
 import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
 import {
   getSubstringHintStatusClasses,
-  StatusTrackingOptions,
   SubstringHintDataCell,
 } from "@/features/hints";
 import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
 import { generateListData } from "@/features/hints/components/letterPanel/util";
+import { StatusTrackingOptions } from "@/features/hintPanels/types";
 
 export interface ListRow {
   [substring: string]: SubstringHintDataCell;

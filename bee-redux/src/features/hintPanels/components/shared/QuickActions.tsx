@@ -1,6 +1,6 @@
-import { PanelCurrentDisplayState } from "@/features/hints";
 import { ReactNode } from "react";
-import { HintContentBlurButton } from "@/features/hints/components/shared/HintContentBlurButton";
+import { HintContentBlurButton } from "@/features/hintPanels/components/shared/HintContentBlurButton";
+import { PanelCurrentDisplayState } from "@/features/hintPanels";
 
 export function QuickActions({
   panelId,

@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch, RootState } from "@/app/store";
+import { hintProfilesApiSlice } from "@/features/hintProfiles";
+import { hintPanelsApiSlice } from "@/features/hints";
+import { capitalizeFirstLetter } from "@/util";
+import { StateShape, Statuses } from "@/types";
+import { startAppListening } from "@/app/listenerMiddleware";
+import { puzzleApiSlice } from "@/features/puzzle";
 import {
   CompleteHintProfile,
-  hintApiSlice,
   HintProfileTypes,
-} from "@/features/hints";
-import { puzzleApiSlice } from "@/features/puzzle";
-import { AppDispatch, RootState } from "@/app/store";
-import { startAppListening } from "@/app/listenerMiddleware";
-import { capitalizeFirstLetter } from "@/util";
-import { Statuses } from "@/types";
+} from "@/features/hintProfiles/types";
 
 export type PanelCurrentDisplayState = {
   isExpanded: boolean;
@@ -16,18 +17,14 @@ export type PanelCurrentDisplayState = {
   isSettingsExpanded: boolean;
 };
 
-interface StateData {
+export interface StateData {
   [panelId: number]: PanelCurrentDisplayState;
 }
 
-interface HintProfilesStateData {
-  data: StateData;
-  status: Statuses;
-}
-
-const initialState: HintProfilesStateData = {
+export const initialState: StateShape<StateData> = {
   data: {},
   status: Statuses.Initial,
+  error: undefined,
 };
 
 export enum PanelCurrentDisplayStateProperties {
@@ -36,31 +33,28 @@ export enum PanelCurrentDisplayStateProperties {
   isSettingsExpanded = "isSettingsExpanded",
 }
 
-type SetPanelDisplayStatePayload = {
+export type SetPanelDisplayStatePayload = {
   panelId: number;
   data: PanelCurrentDisplayState;
 };
 
-type SetPanelDisplayStatePropPayload = {
+export type SetPanelDisplayStatePropPayload = {
   panelId: number;
   property: PanelCurrentDisplayStateProperties;
   value: boolean;
 };
 
-export interface SetDisplayStateThunkPayload {
-  panelId: number;
-  value: boolean;
-}
-
 export const setPanelDisplayPropThunk =
   ({ panelId, property, value }: SetPanelDisplayStatePropPayload) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const state = getState();
-    const panelData = state.hintProfiles.data[panelId];
+    const panelData = state.hintPanels.data[panelId];
     if (panelData) {
       dispatch(setPanelDisplayStateProp({ panelId, property, value }));
       const currentProfile =
-        hintApiSlice.endpoints.getCurrentHintProfile.select()(state).data;
+        hintProfilesApiSlice.endpoints.getCurrentHintProfile.select()(
+          state,
+        ).data;
       const panel = currentProfile?.panels.find(
         (panel) => panel.id === panelId,
       );
@@ -81,7 +75,7 @@ export const setPanelDisplayPropThunk =
       ) {
         console.log("All checks passed. Should update");
         dispatch(
-          hintApiSlice.endpoints.updateHintPanel.initiate({
+          hintPanelsApiSlice.endpoints.updateHintPanel.initiate({
             id: panelId,
             debounceField: `initDisplay${capitalizeFirstLetter(property)}`,
             initialDisplayState: {
@@ -93,21 +87,8 @@ export const setPanelDisplayPropThunk =
     }
   };
 
-const getStateFromProfile = (profile: CompleteHintProfile) => {
-  const stateObj: StateData = {};
-  for (const panelId in profile.panels) {
-    const panel = profile.panels[panelId];
-    stateObj[panel.id] = {
-      isExpanded: panel.initialDisplayState.isExpanded,
-      isBlurred: panel.initialDisplayState.isBlurred,
-      isSettingsExpanded: panel.initialDisplayState.isSettingsExpanded,
-    };
-  }
-  return stateObj;
-};
-
-export const hintProfilesSlice = createSlice({
-  name: "hintProfiles",
+export const hintPanelsSlice = createSlice({
+  name: "hintPanels",
   initialState,
   reducers: {
     setDisplayStateToPayload: (
@@ -137,7 +118,7 @@ export const hintProfilesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      hintApiSlice.endpoints.getCurrentHintProfile.matchFulfilled,
+      hintProfilesApiSlice.endpoints.getCurrentHintProfile.matchFulfilled,
       (state, { payload }) => {
         state.data = getStateFromProfile(payload);
         state.status = Statuses.UpToDate;
@@ -147,25 +128,31 @@ export const hintProfilesSlice = createSlice({
 });
 
 export const { setDisplayStateToPayload, setPanelDisplayStateProp } =
-  hintProfilesSlice.actions;
+  hintPanelsSlice.actions;
 
-export const selectCurrentPanelData = (state: RootState) => state.hintProfiles;
+export const getStateFromProfile = (profile: CompleteHintProfile) => {
+  const stateObj: StateData = {};
+  for (const panelId in profile.panels) {
+    const panel = profile.panels[panelId];
+    stateObj[panel.id] = {
+      isExpanded: panel.initialDisplayState.isExpanded,
+      isBlurred: panel.initialDisplayState.isBlurred,
+      isSettingsExpanded: panel.initialDisplayState.isSettingsExpanded,
+    };
+  }
+  return stateObj;
+};
+export const selectCurrentPanelData = (state: RootState) => state.hintPanels;
 // export const selectPanelsDisplayState = (state: RootState) =>
 //   state.hintProfiles.data;
 export const selectPanelDisplayState = (id: number) => (state: RootState) =>
-  state.hintProfiles.data[id];
+  state.hintPanels.data[id];
 
-export default hintProfilesSlice.reducer;
-
-/**
- * Set panel current display state to initial display state when the puzzle
- * changes
- */
 startAppListening({
   matcher: puzzleApiSlice.endpoints.getPuzzle.matchFulfilled,
   effect: (_action, api) => {
     const currentProfile =
-      hintApiSlice.endpoints.getCurrentHintProfile.select()(
+      hintProfilesApiSlice.endpoints.getCurrentHintProfile.select()(
         api.getState(),
       ).data;
     if (currentProfile) {
@@ -175,3 +162,5 @@ startAppListening({
     }
   },
 });
+
+export default hintPanelsSlice.reducer;

@@ -1,5 +1,6 @@
-import { HintPanelSwitchSetting } from "@/features/hints/components/settings/HintPanelSwitchSetting";
-import { HintPanelBooleanKeys } from "@/features/hints";
+import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
+
+import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
 
 export function HintClickToDefineControl({
   panelId,

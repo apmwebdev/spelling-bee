@@ -1,7 +1,5 @@
 import {
-  hintApiSlice,
   HintPanel,
-  HintPanelData,
   selectPanelIds,
   selectPanels,
   SortableHintPanel,
@@ -26,10 +24,14 @@ import {
 } from "@dnd-kit/sortable";
 import { useAppSelector } from "@/app/hooks";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { hintProfilesApiSlice } from "@/features/hintProfiles";
+import { HintPanelData } from "@/features/hintPanels/types";
 
 export function HintPanels() {
   const currentProfile =
-    hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
+    hintProfilesApiSlice.endpoints.getCurrentHintProfile.useQueryState(
+      undefined,
+    );
   const panels = useAppSelector(selectPanels);
   const panelIds = useAppSelector(selectPanelIds);
   const sensors = useSensors(
