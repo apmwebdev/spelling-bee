@@ -73,7 +73,6 @@ export const setPanelDisplayPropThunk =
         (panel?.initialDisplayState.isSettingsSticky &&
           property === PanelCurrentDisplayStateProperties.isSettingsExpanded)
       ) {
-        console.log("All checks passed. Should update");
         dispatch(
           hintPanelsApiSlice.endpoints.updateHintPanel.initiate({
             id: panelId,

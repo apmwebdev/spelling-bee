@@ -124,19 +124,9 @@ export type SearchPanelData = SearchPanelBaseData & {
   id: number;
 };
 
-export type SearchPanelSearchData = SearchPanelBaseData & {
-  //includes searchString, location, lettersOffset, and outputType through inheritance
-  attemptId: number;
-  searchPanelId: number;
-  createdAt: number;
-  id?: number;
-};
-
 export function isSearchPanelData(a: any): a is SearchPanelData {
   return a.panelType === PanelTypes.Search;
 }
-
-export type SearchPanelSearchDeleteArgs = { id?: number; createdAt: number };
 
 export enum SortOrderKeys {
   asc = "asc",

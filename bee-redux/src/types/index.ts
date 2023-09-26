@@ -1,10 +1,10 @@
-import { SearchPanelSearchData } from "@/features/hints";
 import { RawAttemptFormat } from "@/features/guesses";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   CompleteHintProfile,
   HintProfilesData,
 } from "@/features/hintProfiles/types";
+import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -48,3 +48,9 @@ export type StateShape<dataShape> = {
   status: Statuses;
   error: FetchBaseQueryError | undefined;
 };
+
+export const createInitialState = (data: any): StateShape<typeof data> => ({
+  data,
+  status: Statuses.Initial,
+  error: undefined,
+});

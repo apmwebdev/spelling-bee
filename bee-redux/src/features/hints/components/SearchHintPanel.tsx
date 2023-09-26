@@ -1,13 +1,14 @@
 import { FormEvent, useState } from "react";
 import { Results } from "@/features/hints/components/searchPanel/Results";
-import { SearchPanelData, SearchPanelSearchData } from "@/features/hints";
+import { SearchPanelData } from "@/features/hints";
 import { useSelector } from "react-redux";
 import { selectCurrentAttemptId } from "@/features/guesses";
 import { StatusTrackingKeys } from "@/features/hintPanels/types";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
-  searchPanelSearchesApiSlice,
-  useAddSearchMutation,
-} from "@/features/searchPanelSearches";
+  addSearch,
+  selectSpsByPanel,
+} from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
 
 export function SearchHintPanel({
   searchPanelData,
@@ -16,33 +17,25 @@ export function SearchHintPanel({
   searchPanelData: SearchPanelData;
   statusTracking: StatusTrackingKeys;
 }) {
+  const dispatch = useAppDispatch();
   const [searchValue, setSearchValue] = useState("");
   const currentAttemptId = useSelector(selectCurrentAttemptId);
-  const { data } =
-    searchPanelSearchesApiSlice.endpoints.getSearches.useQueryState(
-      currentAttemptId,
-    );
-  const [addSearch] = useAddSearchMutation();
-
-  const getPanelSearches = (data: SearchPanelSearchData[] | undefined) => {
-    if (!data) return;
-    return data
-      .filter((search) => search.searchPanelId === searchPanelData.id)
-      .sort((a, b) => b.createdAt - a.createdAt);
-  };
+  const panelSearches = useAppSelector(selectSpsByPanel(searchPanelData.id));
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Add debounce here
-    addSearch({
-      searchPanelId: searchPanelData.id,
-      attemptId: currentAttemptId,
-      searchString: searchValue,
-      location: searchPanelData.location,
-      lettersOffset: searchPanelData.lettersOffset,
-      outputType: searchPanelData.outputType,
-      createdAt: Date.now(),
-    });
+    dispatch(
+      addSearch({
+        searchPanelId: searchPanelData.id,
+        attemptId: currentAttemptId,
+        searchString: searchValue,
+        location: searchPanelData.location,
+        lettersOffset: searchPanelData.lettersOffset,
+        outputType: searchPanelData.outputType,
+        createdAt: Date.now(),
+      }),
+    );
     setSearchValue("");
   };
 
@@ -60,10 +53,7 @@ export function SearchHintPanel({
           Search
         </button>
       </form>
-      <Results
-        searches={getPanelSearches(data) ?? []}
-        tracking={statusTracking}
-      />
+      <Results searches={panelSearches} tracking={statusTracking} />
     </div>
   );
 }
