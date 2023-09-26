@@ -1,23 +1,20 @@
 import { addDebouncer, apiSlice, keysToSnakeCase } from "@/features/api";
-import * as t from "../../hints/types";
 import { RootState } from "@/app/store";
-import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import {
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-} from "@reduxjs/toolkit/query";
-import { selectCurrentAttemptId } from "@/features/guesses";
 import { createSelector } from "@reduxjs/toolkit";
 import { arrayMove } from "@dnd-kit/sortable";
 import {
   hintProfilesApiSlice,
   selectCurrentHintProfile,
 } from "@/features/hintProfiles/api/hintProfilesApiSlice";
-import { MoveHintPanelData } from "@/features/hintPanels/types";
+import {
+  HintPanelUpdateForm,
+  MoveHintPanelData,
+  RailsHintPanelUpdateForm,
+} from "@/features/hintPanels/types";
 import { HintProfileTypes } from "@/features/hintProfiles/types";
 
-const railsifyUpdatePanelData = (formData: t.HintPanelUpdateForm) => {
-  const railsData: t.RailsHintPanelUpdateForm = {
+const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
+  const railsData: RailsHintPanelUpdateForm = {
     hint_panel: {
       id: formData.id,
       name: formData.name,
@@ -35,16 +32,6 @@ const railsifyUpdatePanelData = (formData: t.HintPanelUpdateForm) => {
   return railsData;
 };
 
-const railsifyAddSearchData = (newSearch: t.SearchPanelSearchData) => {
-  return {
-    search_panel_search: {
-      ...keysToSnakeCase(newSearch),
-      user_puzzle_attempt_id: newSearch.attemptId,
-      attempt_id: undefined,
-    },
-  };
-};
-
 export const hintPanelsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // ⚠️
@@ -57,7 +44,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
      * Manually updates getCurrentHintProfile endpoint data
      * Guest users + modifications to default panels save only to local storage
      */
-    updateHintPanel: builder.mutation<boolean, t.HintPanelUpdateForm>({
+    updateHintPanel: builder.mutation<boolean, HintPanelUpdateForm>({
       queryFn: async (formData, api, _opts, baseQuery) => {
         //Optimistically update getCurrentHintProfile with panel mutations
         api.dispatch(
@@ -189,120 +176,11 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
         return { data: true };
       },
     }),
-
-    //Searches
-
-    /**
-     * ✅
-     * Updated from getUserPuzzleData, addSearch, and deleteSearch
-     */
-    getSearches: builder.query<t.SearchPanelSearchData[], number>({
-      query: (attemptId) => ({
-        url: `/search_panel_search/${attemptId}`,
-      }),
-    }),
-
-    /**
-     * ✅
-     * Does NOT debounce. This must be handled in the component
-     * Uses optimistic updates
-     * Updates getSearches endpoint data
-     * Guest users save only to local storage
-     */
-    addSearch: builder.mutation<
-      t.SearchPanelSearchData,
-      t.SearchPanelSearchData
-    >({
-      queryFn: async (newSearch, api, _opts, baseQuery) => {
-        //Optimistically update getSearches with new search
-        api.dispatch(
-          hintPanelsApiSlice.util.updateQueryData(
-            "getSearches",
-            newSearch.attemptId,
-            (searches) => {
-              searches.unshift(newSearch);
-            },
-          ),
-        );
-        const state = api.getState() as RootState;
-        if (
-          state.auth.isGuest ||
-          selectCurrentHintProfile(api.getState() as RootState)?.type ===
-            HintProfileTypes.Default
-        ) {
-          return { data: newSearch };
-        }
-        const response = (await baseQuery({
-          url: "/search_panel_searches",
-          method: "POST",
-          body: railsifyAddSearchData(newSearch),
-        })) as QueryReturnValue<
-          t.SearchPanelSearchData,
-          FetchBaseQueryError,
-          FetchBaseQueryMeta
-        >;
-        //Update the new search with the ID from the back end
-        api.dispatch(
-          hintPanelsApiSlice.util.updateQueryData(
-            "getSearches",
-            newSearch.attemptId,
-            (searches) => {
-              const searchToUpdate = searches.find(
-                (spsData) => spsData.createdAt === newSearch.createdAt,
-              );
-              if (!searchToUpdate) return;
-              searchToUpdate.id = response.data?.id;
-            },
-          ),
-        );
-
-        return response;
-      },
-    }),
-
-    // ✅
-    deleteSearch: builder.mutation<boolean, t.SearchPanelSearchDeleteArgs>({
-      queryFn: async (arg, api, _opts, baseQuery) => {
-        const state = api.getState() as RootState;
-        api.dispatch(
-          hintPanelsApiSlice.util.updateQueryData(
-            "getSearches",
-            selectCurrentAttemptId(state),
-            (draftState) => {
-              if (draftState.length === 0) return;
-              const indexToRemove = draftState.findIndex(
-                (search) => search.createdAt === arg.createdAt,
-              );
-              if (indexToRemove > -1) {
-                draftState.splice(indexToRemove, 1);
-              }
-            },
-          ),
-        );
-        if (state.auth.isGuest || !arg.id) {
-          return { data: true };
-        }
-        try {
-          await baseQuery({
-            url: `/search_panel_searches/${arg.id}`,
-            method: "DELETE",
-          });
-        } catch (err) {
-          console.log("Couldn't delete search on back end:", err);
-        }
-        return { data: true };
-      },
-    }),
   }),
 });
 
-export const {
-  useUpdateHintPanelMutation,
-  useChangeHintPanelOrderMutation,
-  useLazyGetSearchesQuery,
-  useAddSearchMutation,
-  useDeleteSearchMutation,
-} = hintPanelsApiSlice;
+export const { useUpdateHintPanelMutation, useChangeHintPanelOrderMutation } =
+  hintPanelsApiSlice;
 
 export const selectPanels = createSelector(
   [selectCurrentHintProfile],

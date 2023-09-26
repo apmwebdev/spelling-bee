@@ -4,29 +4,15 @@ import {
   selectAnswerWords,
   selectKnownWords,
 } from "@/features/puzzle";
-import { Result } from "./Result";
+import { Result, ResultData } from "@/features/searchPanelSearches";
 import uniqid from "uniqid";
 import {
   createSubstringHintDataCell,
   GridRow,
   SearchPanelLocationKeys,
   SearchPanelSearchData,
-  SubstringHintDataCell,
 } from "@/features/hints";
-import { StatusTrackingKeys } from "@/features/hintPanels/types";
-
-interface ResultData {
-  searchObject: SearchPanelSearchData;
-  results: GridRow;
-  total: SubstringHintDataCell;
-  excludedAnswers: number;
-}
-
-export interface SearchResultProps {
-  panelId?: number;
-  resultData: ResultData;
-  statusTracking: StatusTrackingKeys;
-}
+import { StatusTrackingKeys } from "@/features/hintPanels";
 
 export function Results({
   searches,

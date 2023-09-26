@@ -1,8 +1,6 @@
-import {
-  SearchPanelSearchData,
-  useDeleteSearchMutation,
-} from "@/features/hints";
+import { SearchPanelSearchData } from "@/features/hints";
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
+import { useDeleteSearchMutation } from "@/features/searchPanelSearches";
 
 export function ResultHeader({
   searchObject,
