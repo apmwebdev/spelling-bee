@@ -1,11 +1,11 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { ReactNode } from "react";
 
-export interface TooltipProps {
+type TooltipProps = {
   tooltipContent: ReactNode;
   children: ReactNode;
   disabled?: boolean;
-}
+};
 
 export function BasicTooltip({
   tooltipContent,

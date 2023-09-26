@@ -6,12 +6,12 @@ import {
   StatusTrackingOptions,
 } from "@/features/hintPanels/types";
 
-interface WordLengthGridCellProps {
+type WordLengthGridCellProps = {
   cell: SubstringHintDataCell;
   isTotalRow: boolean;
   isTotalColumn: boolean;
   statusTracking: StatusTrackingKeys;
-}
+};
 
 export function WordLengthGridCell({
   cell,

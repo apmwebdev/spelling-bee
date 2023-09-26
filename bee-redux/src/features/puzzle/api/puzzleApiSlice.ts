@@ -2,13 +2,13 @@ import { apiSlice } from "@/features/api";
 import { calculateScore } from "@/util";
 import { sortBy } from "lodash";
 
-export interface Rank {
+export type Rank = {
   id: string;
   name: string;
   multiplier: number;
   rank: number;
   score: number;
-}
+};
 
 export type RanksType = [
   Rank,
@@ -104,13 +104,13 @@ export const Ranks: RanksType = [
   },
 ];
 
-export interface AnswerFormat {
+export type AnswerFormat = {
   word: string;
   frequency: number;
   definitions: string[];
-}
+};
 
-export interface PuzzleFormatRaw {
+export type PuzzleFormatRaw = {
   id: number;
   date: string;
   centerLetter: string;
@@ -121,15 +121,15 @@ export interface PuzzleFormatRaw {
   answers: AnswerFormat[];
   excludedWords: string[];
   isLatest: boolean;
-}
+};
 
-export interface PuzzleFormat extends PuzzleFormatRaw {
+export type PuzzleFormat = PuzzleFormatRaw & {
   shuffledOuterLetters: string[];
   answerWords: string[];
   totalPoints: number;
   answerLengths: number[];
   ranks: RanksType | [Rank];
-}
+};
 
 export const BlankPuzzle: PuzzleFormat = {
   id: 0,

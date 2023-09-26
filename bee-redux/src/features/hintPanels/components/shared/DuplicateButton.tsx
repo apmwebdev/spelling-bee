@@ -1,10 +1,6 @@
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
-interface DuplicateButtonProps {
-  panelId: number;
-}
-
-export function DuplicateButton({ panelId }: DuplicateButtonProps) {
+export function DuplicateButton({ panelId }: { panelId: number }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Duplicate}

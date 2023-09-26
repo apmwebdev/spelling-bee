@@ -6,13 +6,13 @@ import { SettingsToggle } from "@/features/hintPanels/components/shared/Settings
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
-interface PanelHeaderProps {
+type PanelHeaderProps = {
   panelId: number;
   isPanelExpanded: boolean;
   children: ReactNode;
   attributes?: DraggableAttributes;
   listeners?: SyntheticListenerMap | undefined;
-}
+};
 
 export function PanelHeader({
   panelId,

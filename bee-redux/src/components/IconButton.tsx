@@ -4,10 +4,10 @@ import { BasicTooltip } from "@/components/BasicTooltip";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
-export interface IconButtonTypeData {
+type IconButtonTypeData = {
   name: string;
   icon: string;
-}
+};
 
 export enum IconButtonTypeKeys {
   Create = "Create",
@@ -74,14 +74,14 @@ export const IconButtonTypes: IconButtonTypesData = {
   },
 };
 
-export interface IconButtonProps {
+type IconButtonProps = {
   type: IconButtonTypeKeys;
   tooltip?: string;
   onClick?: Function;
   className?: string;
   attributes?: DraggableAttributes;
   listeners?: SyntheticListenerMap | undefined;
-}
+};
 
 export function IconButton({
   type,

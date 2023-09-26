@@ -39,22 +39,22 @@ export type CompleteHintProfile =
   | UserHintProfileComplete
   | DefaultHintProfileComplete;
 
-export interface HintProfilesData {
+export type HintProfilesData = {
   userHintProfiles: UserHintProfileBasic[];
   defaultHintProfiles: DefaultHintProfileBasic[];
-}
+};
 
-export interface UserHintProfileForm {
+export type UserHintProfileForm = {
   name: string;
   default_panel_tracking: StatusTrackingKeys;
   default_panel_display_state: PanelDisplayState;
   panels: HintPanelData[];
-}
+};
 
-export interface CurrentHintProfileFormData {
+export type CurrentHintProfileFormData = {
   current_hint_profile_type: HintProfileTypes;
   current_hint_profile_id: number;
-}
+};
 
 export const defaultCurrentHintProfile: HintProfileBasicData = {
   type: HintProfileTypes.Default,
