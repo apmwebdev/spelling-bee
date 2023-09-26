@@ -1,14 +1,14 @@
 import { FormEvent, useState } from "react";
 import { Results } from "@/features/hints/components/searchPanel/Results";
 import {
-  hintApiSlice,
+  hintPanelsApiSlice,
   SearchPanelData,
   SearchPanelSearchData,
-  StatusTrackingKeys,
   useAddSearchMutation,
 } from "@/features/hints";
 import { useSelector } from "react-redux";
 import { selectCurrentAttemptId } from "@/features/guesses";
+import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
 export function SearchHintPanel({
   searchPanelData,
@@ -20,7 +20,7 @@ export function SearchHintPanel({
   const [searchValue, setSearchValue] = useState("");
   const currentAttemptId = useSelector(selectCurrentAttemptId);
   const { data } =
-    hintApiSlice.endpoints.getSearches.useQueryState(currentAttemptId);
+    hintPanelsApiSlice.endpoints.getSearches.useQueryState(currentAttemptId);
   const [addSearch] = useAddSearchMutation();
 
   const getPanelSearches = (data: SearchPanelSearchData[] | undefined) => {

@@ -1,17 +1,21 @@
 import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import {
-  hintApiSlice,
+  hintProfilesApiSlice,
+  useSetCurrentHintProfileMutation,
+} from "@/features/hintProfiles";
+import {
   HintProfileBasicData,
   HintProfileTypes,
-  useSetCurrentHintProfileMutation,
-} from "@/features/hints";
+} from "@/features/hintProfiles/types";
 
 export function HintProfilesSelector() {
   const currentProfile =
-    hintApiSlice.endpoints.getCurrentHintProfile.useQueryState(undefined);
+    hintProfilesApiSlice.endpoints.getCurrentHintProfile.useQueryState(
+      undefined,
+    );
   const profiles =
-    hintApiSlice.endpoints.getHintProfiles.useQueryState(undefined);
+    hintProfilesApiSlice.endpoints.getHintProfiles.useQueryState(undefined);
   const [setCurrentHintProfile] = useSetCurrentHintProfileMutation();
 
   const composeValueString = (profile: HintProfileBasicData): string => {

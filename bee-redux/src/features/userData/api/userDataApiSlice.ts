@@ -1,5 +1,5 @@
 import { apiSlice } from "@/features/api";
-import { hintApiSlice } from "@/features/hints";
+import { hintPanelsApiSlice } from "@/features/hints";
 import {
   UserBaseData,
   UserPrefsData,
@@ -54,8 +54,8 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
     }),
     /**
      * For initial page load. Can fetch before puzzle loads. Combines
-     * - getHintProfiles from hintApiSlice
-     * - getCurrentHintProfile, if applicable, from hintApiSlice
+     * - getHintProfiles from hintPanelsApiSlice
+     * - getCurrentHintProfile, if applicable, from hintPanelsApiSlice
      * - getPrefs
      * Those 3 endpoints need to be updated with the returned data
      */
@@ -69,14 +69,14 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         if (cacheEntry.isSuccess && cacheEntry.data) {
           const { data } = cacheEntry;
           api.dispatch(
-            hintApiSlice.util.upsertQueryData(
+            hintPanelsApiSlice.util.upsertQueryData(
               "getHintProfiles",
               undefined,
               data.hintProfiles,
             ),
           );
           api.dispatch(
-            hintApiSlice.util.upsertQueryData(
+            hintPanelsApiSlice.util.upsertQueryData(
               "getCurrentHintProfile",
               undefined,
               data.currentHintProfile,
@@ -119,7 +119,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
             ),
           );
           api.dispatch(
-            hintApiSlice.util.upsertQueryData(
+            hintPanelsApiSlice.util.upsertQueryData(
               "getSearches",
               data.currentAttempt,
               data.searches,

@@ -3,9 +3,9 @@ import {
   SearchPanelData,
   SearchPanelLocationKeys,
 } from "@/features/hints";
-import { HintOutputTypeControl } from "@/features/hints/components/settings/HintOutputTypeControl";
-import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
-import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
+import { HintOutputTypeControl } from "@/features/hintPanels/components/settings/HintOutputTypeControl";
+import { HintLocationControl } from "@/features/hintPanels/components/settings/HintLocationControl";
+import { HintLettersOffsetControl } from "@/features/hintPanels/components/settings/HintLettersOffsetControl";
 
 export function SearchPanelSettings({
   panelId,

@@ -1,7 +1,8 @@
-import { LetterPanelData, PanelCurrentDisplayState } from "@/features/hints";
-import { QuickActions } from "@/features/hints/components/shared/QuickActions";
-import { HintHideKnownControl } from "@/features/hints/components/settings/HintHideKnownControl";
+import { LetterPanelData } from "@/features/hints";
+import { QuickActions } from "@/features/hintPanels/components/shared/QuickActions";
+import { HintHideKnownControl } from "@/features/hintPanels/components/settings/HintHideKnownControl";
 import { HintNumberOfLettersControl } from "@/features/hints/components/letterPanel/HintNumberOfLettersControl";
+import { PanelCurrentDisplayState } from "@/features/hintPanels";
 
 export function LetterPanelQuickActions({
   panelId,

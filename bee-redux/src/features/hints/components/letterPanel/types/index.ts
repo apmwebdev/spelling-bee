@@ -1,9 +1,9 @@
 import {
   GridRow,
   LetterPanelLocationKeys,
-  StatusTrackingKeys,
   SubstringHintDataCell,
 } from "@/features/hints";
+import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
 export interface LetterHintSubsectionProps {
   answers: string[];

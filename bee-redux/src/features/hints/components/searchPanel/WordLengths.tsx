@@ -2,9 +2,9 @@ import { SearchResultProps } from "./Results";
 import uniqid from "uniqid";
 import {
   getSubstringHintStatusClasses,
-  StatusTrackingOptions,
   SubstringHintDataCell,
 } from "@/features/hints";
+import { StatusTrackingOptions } from "@/features/hintPanels/types";
 
 export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
   const content = () => {

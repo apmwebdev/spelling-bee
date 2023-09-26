@@ -1,10 +1,10 @@
+import { useUpdateHintPanelMutation } from "@/features/hints";
+import * as Select from "@/components/radix-ui/radix-select";
+import uniqid from "uniqid";
 import {
   StatusTrackingKeys,
   StatusTrackingOptions,
-  useUpdateHintPanelMutation,
-} from "@/features/hints";
-import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
+} from "@/features/hintPanels/types";
 
 export function PanelStatusTrackingControl({
   panelId,

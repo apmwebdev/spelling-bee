@@ -4,12 +4,12 @@ import { LettersPresent } from "@/features/hints/components/letterPanel/LettersP
 import {
   isLetterPanelData,
   LetterPanelData,
-  StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hints";
 import { LetterHintSubsectionProps } from "@/features/hints/components/letterPanel/types";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords, selectKnownWords } from "@/features/puzzle";
+import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
 export function LetterHintPanel({
   letterData,

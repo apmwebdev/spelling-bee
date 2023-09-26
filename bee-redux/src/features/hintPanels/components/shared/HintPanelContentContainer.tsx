@@ -1,11 +1,9 @@
 import {
   DefinitionPanelData,
-  HintPanelData,
   LetterPanelData,
   ObscurityPanelData,
   PanelTypes,
   SearchPanelData,
-  selectPanelDisplayState,
 } from "@/features/hints";
 import { LetterHintPanel } from "@/features/hints/components/LetterHintPanel";
 import { SearchHintPanel } from "@/features/hints/components/SearchHintPanel";
@@ -13,10 +11,12 @@ import { ObscurityHintPanel } from "@/features/hints/components/ObscurityHintPan
 import { DefinitionHintPanel } from "@/features/hints/components/DefinitionHintPanel";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle";
-import { HintContentBlur } from "@/features/hints/components/shared/HintContentBlur";
-import { WordInfoQuickActions } from "@/features/hints/components/shared/WordInfoQuickActions";
+import { HintContentBlur } from "@/features/hintPanels/components/shared/HintContentBlur";
+import { WordInfoQuickActions } from "@/features/hintPanels/components/shared/WordInfoQuickActions";
 import { LetterPanelQuickActions } from "@/features/hints/components/letterPanel/LetterPanelQuickActions";
 import { SearchPanelQuickActions } from "@/features/hints/components/searchPanel/SearchPanelQuickActions";
+import { selectPanelDisplayState } from "@/features/hintPanels";
+import { HintPanelData } from "@/features/hintPanels/types";
 
 export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);

@@ -1,12 +1,12 @@
 import {
-  PanelCurrentDisplayState,
   PanelTypes,
   SearchPanelData,
   SearchPanelLocationKeys,
 } from "@/features/hints";
-import { QuickActions } from "@/features/hints/components/shared/QuickActions";
-import { HintLocationControl } from "@/features/hints/components/settings/HintLocationControl";
-import { HintLettersOffsetControl } from "@/features/hints/components/settings/HintLettersOffsetControl";
+import { QuickActions } from "@/features/hintPanels/components/shared/QuickActions";
+import { HintLocationControl } from "@/features/hintPanels/components/settings/HintLocationControl";
+import { HintLettersOffsetControl } from "@/features/hintPanels/components/settings/HintLettersOffsetControl";
+import { PanelCurrentDisplayState } from "@/features/hintPanels";
 
 export function SearchPanelQuickActions({
   panelId,

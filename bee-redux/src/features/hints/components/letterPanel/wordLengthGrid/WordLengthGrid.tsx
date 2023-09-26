@@ -1,7 +1,8 @@
-import { StatusTrackingKeys, SubstringHintDataCell } from "@/features/hints";
+import { SubstringHintDataCell } from "@/features/hints";
 import uniqid from "uniqid";
 import { WordLengthGridCell } from "@/features/hints/components/letterPanel/wordLengthGrid/WordLengthGridCell";
 import { GridData } from "@/features/hints/components/letterPanel/types";
+import { StatusTrackingKeys } from "@/features/hintPanels/types";
 
 type WordLengthGridTableProps = GridData & {
   statusTracking: StatusTrackingKeys;

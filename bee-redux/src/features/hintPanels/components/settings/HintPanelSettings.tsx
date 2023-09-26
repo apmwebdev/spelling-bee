@@ -1,6 +1,5 @@
 import uniqid from "uniqid";
 import {
-  HintPanelData,
   isDefinitionPanelData,
   isLetterPanelData,
   isObscurityPanelData,
@@ -13,6 +12,7 @@ import { LetterPanelSettings } from "@/features/hints/components/letterPanel/Let
 import { SearchPanelSettings } from "@/features/hints/components/searchPanel/SearchPanelSettings";
 import { ObscurityPanelSettings } from "@/features/hints/components/obscurityPanel/ObscurityPanelSettings";
 import { DefinitionPanelSettings } from "@/features/hints/components/definitionPanel/DefinitionPanelSettings";
+import { HintPanelData } from "@/features/hintPanels/types";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   const typeSpecificSettings = () => {

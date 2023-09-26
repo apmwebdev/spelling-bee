@@ -1,13 +1,14 @@
+import { SearchPanelSearchData } from "@/features/hints";
+import { RawAttemptFormat } from "@/features/guesses";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   CompleteHintProfile,
   HintProfilesData,
-  SearchPanelSearchData,
-} from "@/features/hints";
-import { RawAttemptFormat } from "@/features/guesses";
+} from "@/features/hintProfiles/types";
 
 export enum Statuses {
   Initial = "Not Fetched",
-  Loading = "Loading...",
+  Pending = "Loading...",
   UpToDate = "Up to Date",
   Error = "Error",
 }
@@ -21,23 +22,29 @@ export enum ColorSchemes {
 // If either current_hint_profile_type OR current_hint_profile_id is defined,
 // they both must be defined. Current_hint_profile is a polymorphic
 // association in Rails, so it requires both fields.
-export interface UserPrefsFormData {
+export type UserPrefsFormData = {
   color_scheme?: ColorSchemes;
-}
+};
 
-export interface UserPrefsData {
+export type UserPrefsData = {
   colorScheme: ColorSchemes;
   // currentHintProfile: HintProfileBasicData;
-}
-export interface UserBaseData {
+};
+export type UserBaseData = {
   prefs: UserPrefsData;
   hintProfiles: HintProfilesData;
   currentHintProfile: CompleteHintProfile;
   isLoggedIn: boolean;
-}
+};
 
-export interface UserPuzzleData {
+export type UserPuzzleData = {
   searches: SearchPanelSearchData[];
   attempts: RawAttemptFormat[];
   currentAttempt: number;
-}
+};
+
+export type StateShape<dataShape> = {
+  data: dataShape;
+  status: Statuses;
+  error: FetchBaseQueryError | undefined;
+};
