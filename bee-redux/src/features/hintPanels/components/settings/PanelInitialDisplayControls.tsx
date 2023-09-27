@@ -1,4 +1,3 @@
-import { useUpdateHintPanelMutation } from "@/features/hints";
 import { PanelInitDisplayCheckboxControl } from "@/features/hintPanels/components/settings/PanelInitDisplayCheckboxControl";
 import {
   InitIsBlurredHelpText,
@@ -8,7 +7,10 @@ import {
   InitIsStickyHelpText,
 } from "@/features/hintPanels/components/settings/helpText";
 import { useAppSelector } from "@/app/hooks";
-import { selectPanelDisplayState } from "@/features/hintPanels";
+import {
+  selectPanelDisplayState,
+  useUpdateHintPanelMutation,
+} from "@/features/hintPanels";
 import {
   PanelDisplayState,
   PanelDisplayStateKeys,

@@ -1,7 +1,9 @@
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import {
+  deleteSearch,
+  SearchPanelSearchData,
+} from "@/features/searchPanelSearches";
 import { useAppDispatch } from "@/app/hooks";
-import { deleteSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
 
 export function ResultHeader({
   searchObject,

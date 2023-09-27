@@ -54,3 +54,21 @@ export const createInitialState = (data: any): StateShape<typeof data> => ({
   status: Statuses.Initial,
   error: undefined,
 });
+
+export type EnumerableOption = {
+  title: string;
+};
+
+export type EnumeratedOptions = {
+  [key: string]: EnumerableOption;
+};
+
+export enum SortOrderKeys {
+  asc = "asc",
+  desc = "desc",
+}
+
+export const SortOrderOptions: EnumeratedOptions = {
+  asc: { title: "Ascending" },
+  desc: { title: "Descending" },
+};

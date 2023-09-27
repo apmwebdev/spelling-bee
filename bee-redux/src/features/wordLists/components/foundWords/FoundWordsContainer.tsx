@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { GuessFormat, selectCorrectGuesses } from "@/features/guesses";
 import {
   selectFoundWordsListSettings,
-  SortOrder,
   SortType,
   toggleFoundWordsSettingsCollapsed,
 } from "@/features/wordLists";
@@ -11,6 +10,7 @@ import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { FoundWordsSettings } from "./FoundWordsSettings";
+import { SortOrderKeys } from "@/types";
 
 export function FoundWordsContainer() {
   const dispatch = useAppDispatch();
@@ -30,16 +30,16 @@ export function FoundWordsContainer() {
     if (sortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
         if (a.text < b.text) {
-          return sortOrder === SortOrder.Ascending ? -1 : 1;
+          return sortOrder === SortOrderKeys.asc ? -1 : 1;
         }
         if (a.text > b.text) {
-          return sortOrder === SortOrder.Ascending ? 1 : -1;
+          return sortOrder === SortOrderKeys.asc ? 1 : -1;
         }
         return 0;
       });
     } else {
       displayGuessList.sort((a, b) => {
-        if (sortOrder === SortOrder.Ascending) {
+        if (sortOrder === SortOrderKeys.asc) {
           return a.createdAt - b.createdAt;
         }
         return b.createdAt - a.createdAt;

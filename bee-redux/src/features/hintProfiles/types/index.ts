@@ -2,7 +2,7 @@ import {
   HintPanelData,
   PanelDisplayState,
   StatusTrackingKeys,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels";
 
 export enum HintProfileTypes {
   Default = "DefaultHintProfile",

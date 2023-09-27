@@ -1,4 +1,3 @@
-import { Header } from "@/features/header";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { Signup } from "./features/auth/Signup";
@@ -6,6 +5,7 @@ import { Login } from "./features/auth/Login";
 import { useGetUserBaseDataQuery, userDataApiSlice } from "@/features/userData";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { RoutingError } from "@/routes/RoutingError";
+import { Header } from "@/routes/puzzleRoutePageSections/Header";
 
 export default function App() {
   useGetUserBaseDataQuery();

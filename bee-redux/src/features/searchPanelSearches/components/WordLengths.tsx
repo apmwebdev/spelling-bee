@@ -1,10 +1,10 @@
 import uniqid from "uniqid";
 import {
   getSubstringHintStatusClasses,
+  StatusTrackingOptions,
   SubstringHintDataCell,
-} from "@/features/hints";
-import { StatusTrackingOptions } from "@/features/hintPanels/types";
-import { SearchResultProps } from "@/features/searchPanelSearches/types";
+} from "@/features/hintPanels";
+import { SearchResultProps } from "@/features/searchPanelSearches";
 
 export function WordLengths({ resultData, statusTracking }: SearchResultProps) {
   const content = () => {

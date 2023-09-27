@@ -1,8 +1,9 @@
 import { HintHideKnownControl } from "@/features/hintPanels/components/settings/HintHideKnownControl";
-import { DefinitionPanelData, ObscurityPanelData } from "@/features/hints";
 import { HintRevealedLettersControl } from "@/features/hintPanels/components/settings/HintRevealedLettersControl";
 import { QuickActions } from "@/features/hintPanels/components/shared/QuickActions";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
+import { ObscurityPanelData } from "@/features/hintPanelType_obscurity";
+import { DefinitionPanelData } from "@/features/hintPanelType_definition";
 
 export function WordInfoQuickActions({
   panelId,

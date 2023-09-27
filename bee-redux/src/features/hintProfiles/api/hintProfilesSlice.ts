@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { StateShape, Statuses } from "@/types";
 
-import { HintProfilesData } from "@/features/hintProfiles/types";
+import { HintProfilesData } from "@/features/hintProfiles";
 
 const initialState: StateShape<HintProfilesData> = {
   data: {

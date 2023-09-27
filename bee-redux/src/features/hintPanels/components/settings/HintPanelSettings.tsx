@@ -1,18 +1,20 @@
 import uniqid from "uniqid";
-import {
-  isDefinitionPanelData,
-  isLetterPanelData,
-  isObscurityPanelData,
-  isSearchPanelData,
-} from "@/features/hints";
 import { PanelStatusTrackingControl } from "./PanelStatusTrackingControl";
 import { PanelNameInputForm } from "./PanelNameInputForm";
 import { PanelInitialDisplayControls } from "./PanelInitialDisplayControls";
-import { LetterPanelSettings } from "@/features/hints/components/letterPanel/LetterPanelSettings";
-import { SearchPanelSettings } from "@/features/hints/components/searchPanel/SearchPanelSettings";
-import { ObscurityPanelSettings } from "@/features/hints/components/obscurityPanel/ObscurityPanelSettings";
-import { DefinitionPanelSettings } from "@/features/hints/components/definitionPanel/DefinitionPanelSettings";
+import {
+  isLetterPanelData,
+  LetterPanelSettings,
+} from "@/features/hintPanelType_letter";
+import {
+  isSearchPanelData,
+  SearchPanelSettings,
+} from "@/features/hintPanelType_search";
+import { ObscurityPanelSettings } from "@/features/hintPanelType_obscurity";
+import { DefinitionPanelSettings } from "@/features/hintPanelType_definition";
 import { HintPanelData } from "@/features/hintPanels/types";
+import { isObscurityPanelData } from "@/features/hintPanelType_obscurity/types";
+import { isDefinitionPanelData } from "@/features/hintPanelType_definition/types";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   const typeSpecificSettings = () => {

@@ -1,5 +1,5 @@
-import { SortOrder } from "@/features/wordLists";
 import { random, shuffle } from "lodash";
+import { SortOrderKeys } from "@/types";
 
 /**
  * Cases
@@ -34,7 +34,7 @@ type answerSorterParams = {
   knownWords: string[];
   spoiledWords: string[];
   validLetters: string[];
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   remainingAndSpoiledOnly: boolean;
   remainingRevealFirstLetter: boolean;
   remainingRevealLength: boolean;
@@ -72,11 +72,11 @@ export default function answerSorter({
 
   const grouperLocationAndOrderCases = (
     grouper: LetterGrouperFormat,
-    sortOrder: SortOrder,
+    sortOrder: SortOrderKeys,
     remainingLocation: "beginning" | "end",
   ) => {
     const result: string[] = [];
-    if (sortOrder === SortOrder.Ascending) {
+    if (sortOrder === SortOrderKeys.asc) {
       //groupWithLetter, length?, ascending. 2 cases.
       if (remainingLocation === "beginning") {
         //groupWithLetter, length?, ascending, beginning
@@ -114,10 +114,10 @@ export default function answerSorter({
     hiddenWords: string[],
     revealedWords: string[],
     remainingLocation: "beginning" | "end",
-    sortOrder: SortOrder,
+    sortOrder: SortOrderKeys,
   ) => {
     const result: string[] = [];
-    if (sortOrder === SortOrder.Ascending) {
+    if (sortOrder === SortOrderKeys.asc) {
       if (remainingLocation === "beginning") {
         result.push(...hiddenWords, ...revealedWords);
       } else {

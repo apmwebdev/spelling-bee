@@ -1,14 +1,15 @@
-import {
-  LetterPanelLocationKeys,
-  LetterPanelLocationOptions,
-  PanelTypes,
-  SearchPanelLocationKeys,
-  SearchPanelLocationOptions,
-  useUpdateHintPanelMutation,
-} from "@/features/hints";
 import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import { CSSProperties } from "react";
+import {
+  LetterPanelLocationKeys,
+  LetterPanelLocationOptions,
+} from "@/features/hintPanelType_letter";
+import {
+  SearchPanelLocationKeys,
+  SearchPanelLocationOptions,
+} from "@/features/hintPanelType_search";
+import { PanelTypes, useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintLocationControl({
   panelId,

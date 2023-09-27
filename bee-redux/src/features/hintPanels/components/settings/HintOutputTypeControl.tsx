@@ -1,10 +1,10 @@
+import * as Select from "@/components/radix-ui/radix-select";
+import uniqid from "uniqid";
 import {
   SubstringHintOutputKeys,
   SubstringHintOutputOptions,
   useUpdateHintPanelMutation,
-} from "@/features/hints";
-import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
+} from "@/features/hintPanels";
 
 export function HintOutputTypeControl({
   panelId,
