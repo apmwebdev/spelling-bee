@@ -1,5 +1,5 @@
-import { SortOrder } from "../../api/wordListSettingsSlice";
 import { random, shuffle } from "lodash";
+import { SortOrderKeys } from "@/types";
 
 /**
  * Cases
@@ -19,28 +19,28 @@ import { random, shuffle } from "lodash";
  *  No length: 4 cases. location x order (order matters for letters)
  *  Length: 4 cases. location x order
  */
-interface LetterGrouperCell {
+type LetterGrouperCell = {
   known: string[];
   unknown: string[];
-}
+};
 
-interface LetterGrouperFormat {
+type LetterGrouperFormat = {
   [letter: string]: LetterGrouperCell;
-}
+};
 
 //Function assumes all arrays are already sorted using default sort
-interface answerSorterParams {
+type answerSorterParams = {
   remainingWords: string[];
   knownWords: string[];
   spoiledWords: string[];
   validLetters: string[];
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   remainingAndSpoiledOnly: boolean;
   remainingRevealFirstLetter: boolean;
   remainingRevealLength: boolean;
   remainingLocation: "beginning" | "end";
   remainingGroupWithLetter: boolean;
-}
+};
 
 export default function answerSorter({
   remainingWords,
@@ -72,11 +72,11 @@ export default function answerSorter({
 
   const grouperLocationAndOrderCases = (
     grouper: LetterGrouperFormat,
-    sortOrder: SortOrder,
+    sortOrder: SortOrderKeys,
     remainingLocation: "beginning" | "end",
   ) => {
     const result: string[] = [];
-    if (sortOrder === SortOrder.Ascending) {
+    if (sortOrder === SortOrderKeys.asc) {
       //groupWithLetter, length?, ascending. 2 cases.
       if (remainingLocation === "beginning") {
         //groupWithLetter, length?, ascending, beginning
@@ -114,10 +114,10 @@ export default function answerSorter({
     hiddenWords: string[],
     revealedWords: string[],
     remainingLocation: "beginning" | "end",
-    sortOrder: SortOrder,
+    sortOrder: SortOrderKeys,
   ) => {
     const result: string[] = [];
-    if (sortOrder === SortOrder.Ascending) {
+    if (sortOrder === SortOrderKeys.asc) {
       if (remainingLocation === "beginning") {
         result.push(...hiddenWords, ...revealedWords);
       } else {

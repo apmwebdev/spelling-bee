@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
-import { Header } from "@/features/header";
 import { TRoutingError } from "@/routes/types";
+import { Header } from "@/routes/puzzleRoutePageSections/Header";
 
 export function RoutingError() {
   const error = useRouteError() as TRoutingError;

@@ -1,12 +1,12 @@
-export interface AddDebouncePayload {
+export type AddDebouncePayload = {
   key: string;
   delay: number;
   callback: Function;
-}
+};
 
-interface debounceState {
+type debounceState = {
   [key: string]: number;
-}
+};
 
 const debouncerState: debounceState = {};
 

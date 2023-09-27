@@ -1,10 +1,10 @@
 import { AnswerAlert } from "./guessAlerts/AnswerAlert";
 import { ErrorAlert } from "./guessAlerts/ErrorAlert";
 
-export interface GuessAlertsProps {
+export type GuessAlertsProps = {
   messages: string[];
   messagesType: "answer" | "error" | "";
-}
+};
 
 export function initialGuessAlerts(): GuessAlertsProps {
   return {
@@ -23,7 +23,5 @@ export function GuessAlerts({ messages, messagesType }: GuessAlertsProps) {
     return null;
   };
 
-  return (
-    <div className="GuessAlertsContainer">{messageOutput()}</div>
-  );
+  return <div className="GuessAlertsContainer">{messageOutput()}</div>;
 }

@@ -1,9 +1,9 @@
-interface LetterCellProps {
+type LetterCellProps = {
   letter: string;
   isCenter: boolean;
-}
+};
 
-export default function LetterCell({ letter, isCenter }: LetterCellProps) {
+export function LetterCell({ letter, isCenter }: LetterCellProps) {
   const handleClick = () => {
     window.dispatchEvent(new KeyboardEvent("keydown", { key: letter }));
   };

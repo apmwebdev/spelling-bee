@@ -1,9 +1,9 @@
-import { Puzzle } from "@/features/puzzle";
-import { Status } from "@/features/status";
-import { Hints } from "@/features/hints";
 import { useEffect } from "react";
-import { useCurrentPuzzle } from "@/features/puzzle/hooks/useCurrentPuzzle";
-import { useLazyGetUserPuzzleDataQuery } from "@/features/userData/api/userDataApiSlice";
+import { useCurrentPuzzle } from "@/features/puzzle";
+import { useLazyGetUserPuzzleDataQuery } from "@/features/userData";
+import { Status } from "@/routes/puzzleRoutePageSections/Status";
+import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
+import { Puzzle } from "@/routes/puzzleRoutePageSections/Puzzle";
 
 export function PuzzleRoute() {
   const puzzleQ = useCurrentPuzzle();

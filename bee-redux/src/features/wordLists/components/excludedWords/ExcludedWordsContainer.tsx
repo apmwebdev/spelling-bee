@@ -4,10 +4,10 @@ import { WordListScroller } from "../WordListScroller";
 import { ExcludedWordsListHeader } from "./ExcludedWordsListHeader";
 import {
   selectExcludedWordsListSettings,
-  SortOrder,
   toggleExcludedWordsSettingsCollapsed,
 } from "@/features/wordLists";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
+import { SortOrderKeys } from "@/types";
 
 export function ExcludedWordsContainer() {
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export function ExcludedWordsContainer() {
         <ExcludedWordsListHeader />
         <WordListScroller
           wordList={
-            sortOrder === SortOrder.Ascending
+            sortOrder === SortOrderKeys.asc
               ? displayList
               : displayList.reverse()
           }

@@ -51,9 +51,9 @@ export const ContentWithPortal = (
   </Select.Portal>
 );
 
-interface SelectItemPropsExtended extends Select.SelectItemProps {
+type SelectItemPropsExtended = Select.SelectItemProps & {
   itemText?: string;
-}
+};
 
 export const Item = ({
   itemText,
