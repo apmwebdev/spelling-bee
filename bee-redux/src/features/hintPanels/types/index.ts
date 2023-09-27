@@ -1,21 +1,68 @@
 import {
-  DefinitionPanelData,
-  DefinitionPanelFormData,
-  EnumeratedOptions,
   LetterPanelData,
   LetterPanelFormData,
   LetterPanelLocationKeys,
-  ObscurityPanelData,
-  ObscurityPanelFormData,
-  PanelSubTypeTypes,
+} from "@/features/hintPanelType_letter";
+import {
   SearchPanelBaseData,
   SearchPanelData,
   SearchPanelLocationKeys,
-  SortOrderKeys,
-  SubstringHintDataCell,
-  SubstringHintOutputKeys,
-} from "@/features/hints";
+} from "@/features/hintPanelType_search";
+import {
+  ObscurityPanelData,
+  ObscurityPanelFormData,
+} from "@/features/hintPanelType_obscurity/types";
+import {
+  DefinitionPanelData,
+  DefinitionPanelFormData,
+} from "@/features/hintPanelType_definition/types";
+import { EnumeratedOptions, SortOrderKeys } from "@/types";
 
+export enum PanelTypes {
+  Letter = "letter",
+  Search = "search",
+  Obscurity = "obscurity",
+  Definition = "definition",
+}
+
+export enum PanelSubTypeTypes {
+  Letter = "LetterPanel",
+  Search = "SearchPanel",
+  Obscurity = "ObscurityPanel",
+  Definition = "DefinitionPanel",
+}
+
+export type SubstringHintDataCell = {
+  answers: number;
+  guesses: number;
+};
+export type GridRow = {
+  [index: number]: SubstringHintDataCell;
+};
+
+/**
+ * Output types for letter and search panels, i.e., the "substring" hint types
+ * @enum {string}
+ * @prop WordLengthGrid "word_length_grid" - A table with letter combinations as
+ *   rows and word lengths as columns, each cell showing the number of answers
+ *   of a certain word length for a given letter combination.
+ * @prop WordCountList "word_count_list" - A list of letter combinations and the
+ *   number of answers for that letter combination.
+ * @prop LettersPresent "letters_list" - A list of letter combinations, but no numbers.
+ *   Essentially, it is just confirming that certain letter combinations exist
+ *   among the answers.
+ */
+export enum SubstringHintOutputKeys {
+  WordLengthGrid = "word_length_grid",
+  WordCountList = "word_count_list",
+  LettersPresent = "letters_list",
+}
+
+export const SubstringHintOutputOptions: EnumeratedOptions = {
+  word_length_grid: { title: "Word Length Grid" },
+  word_count_list: { title: "Word Count List" },
+  letters_list: { title: "Letters Present?" },
+};
 /**
  * Determines how to live update hints when correct guesses are made.
  * The numbers being counted here are puzzle answers (number of found answers,
@@ -121,6 +168,18 @@ export enum PanelDisplayStateKeys {
   isSticky = "isSticky",
   isSettingsExpanded = "isSettingsExpanded",
   isSettingsSticky = "isSettingsSticky",
+}
+
+export type PanelCurrentDisplayState = {
+  isExpanded: boolean;
+  isBlurred: boolean;
+  isSettingsExpanded: boolean;
+};
+
+export enum PanelCurrentDisplayStateProperties {
+  isExpanded = "isExpanded",
+  isBlurred = "isBlurred",
+  isSettingsExpanded = "isSettingsExpanded",
 }
 
 export type HintPanelData = {

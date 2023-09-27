@@ -1,10 +1,10 @@
-import { useUpdateHintPanelMutation } from "@/features/hints";
 import { Switch } from "@/components/radix-ui/radix-switch";
 import { maybeAddDisabledClass } from "@/util";
 import {
   HintPanelBooleanKeys,
   HintPanelBooleanSettings,
 } from "@/features/hintPanels/types";
+import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintPanelSwitchSetting({
   panelId,

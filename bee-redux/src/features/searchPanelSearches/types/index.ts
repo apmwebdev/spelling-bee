@@ -1,9 +1,9 @@
 import {
   GridRow,
-  SearchPanelBaseData,
+  StatusTrackingKeys,
   SubstringHintDataCell,
-} from "@/features/hints";
-import { StatusTrackingKeys } from "@/features/hintPanels/types";
+} from "@/features/hintPanels";
+import { SearchPanelBaseData } from "@/features/hintPanelType_search";
 
 export type SearchPanelSearchData = SearchPanelBaseData & {
   //includes searchString, location, lettersOffset, and outputType through inheritance

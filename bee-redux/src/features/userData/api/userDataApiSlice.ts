@@ -1,5 +1,4 @@
 import { apiSlice } from "@/features/api";
-import { hintPanelsApiSlice } from "@/features/hints";
 import {
   UserBaseData,
   UserPrefsData,
@@ -8,6 +7,8 @@ import {
 } from "@/types";
 import { guessesApiSlice, processAttempts } from "@/features/guesses";
 import { RootState } from "@/app/store";
+import { hintProfilesApiSlice } from "@/features/hintProfiles";
+import { searchPanelSearchesApiSlice } from "@/features/searchPanelSearches";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -69,14 +70,14 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         if (cacheEntry.isSuccess && cacheEntry.data) {
           const { data } = cacheEntry;
           api.dispatch(
-            hintPanelsApiSlice.util.upsertQueryData(
+            hintProfilesApiSlice.util.upsertQueryData(
               "getHintProfiles",
               undefined,
               data.hintProfiles,
             ),
           );
           api.dispatch(
-            hintPanelsApiSlice.util.upsertQueryData(
+            hintProfilesApiSlice.util.upsertQueryData(
               "getCurrentHintProfile",
               undefined,
               data.currentHintProfile,
@@ -119,7 +120,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
             ),
           );
           api.dispatch(
-            hintPanelsApiSlice.util.upsertQueryData(
+            searchPanelSearchesApiSlice.util.upsertQueryData(
               "getSearches",
               data.currentAttempt,
               data.searches,

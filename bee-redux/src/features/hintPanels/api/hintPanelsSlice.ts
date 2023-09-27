@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "@/app/store";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
-import { hintPanelsApiSlice } from "@/features/hints";
 import { capitalizeFirstLetter } from "@/util";
 import { StateShape, Statuses } from "@/types";
 import { startAppListening } from "@/app/listenerMiddleware";
@@ -10,12 +9,11 @@ import {
   CompleteHintProfile,
   HintProfileTypes,
 } from "@/features/hintProfiles/types";
-
-type PanelCurrentDisplayState = {
-  isExpanded: boolean;
-  isBlurred: boolean;
-  isSettingsExpanded: boolean;
-};
+import {
+  hintPanelsApiSlice,
+  PanelCurrentDisplayState,
+  PanelCurrentDisplayStateProperties,
+} from "@/features/hintPanels";
 
 type StateData = {
   [panelId: number]: PanelCurrentDisplayState;
@@ -26,12 +24,6 @@ export const initialState: StateShape<StateData> = {
   status: Statuses.Initial,
   error: undefined,
 };
-
-export enum PanelCurrentDisplayStateProperties {
-  isExpanded = "isExpanded",
-  isBlurred = "isBlurred",
-  isSettingsExpanded = "isSettingsExpanded",
-}
 
 export type SetPanelDisplayStatePayload = {
   panelId: number;

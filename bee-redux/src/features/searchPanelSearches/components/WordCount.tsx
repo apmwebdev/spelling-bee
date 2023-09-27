@@ -1,6 +1,8 @@
-import { getSubstringHintStatusClasses } from "@/features/hints";
-import { StatusTrackingOptions } from "@/features/hintPanels/types";
-import { SearchResultProps } from "@/features/searchPanelSearches/types";
+import {
+  getSubstringHintStatusClasses,
+  StatusTrackingOptions,
+} from "@/features/hintPanels";
+import { SearchResultProps } from "@/features/searchPanelSearches";
 
 export function WordCount({ resultData, statusTracking }: SearchResultProps) {
   return (

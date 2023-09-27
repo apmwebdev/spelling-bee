@@ -8,11 +8,11 @@ import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { composeClasses } from "@/util";
 import {
+  HintPanelData,
   PanelCurrentDisplayStateProperties,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
-import { HintPanelData } from "@/features/hintPanels/types";
 
 export const HintPanel = forwardRef(
   (

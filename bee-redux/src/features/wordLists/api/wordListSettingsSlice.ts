@@ -1,20 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { Statuses } from "@/types";
+import { SortOrderKeys, Statuses } from "@/types";
 
 export enum SortType {
   Alphabetical = "alphabetical",
   FoundOrder = "foundOrder",
 }
 
-export enum SortOrder {
-  Ascending = "ascending",
-  Descending = "descending",
-}
-
 export type FoundWordsSettingsFormat = {
   sortType: SortType;
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   wordsShowTotal: boolean;
   pangramsShowTotal: boolean;
@@ -25,19 +20,19 @@ export type FoundWordsSettingsFormat = {
 
 export type WrongGuessesSettingsFormat = {
   sortType: SortType;
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   settingsCollapsed: boolean;
 };
 
 export type ExcludedWordsSettingsFormat = {
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   settingsCollapsed: boolean;
 };
 
 export type AnswerListSettingsFormat = {
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   remainingAndSpoiledOnly: boolean;
   remainingRevealFirstLetter: boolean;
@@ -66,7 +61,7 @@ const initialState: WordListSettingsState = {
   data: {
     foundWords: {
       sortType: SortType.Alphabetical,
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       wordsShowTotal: true,
       pangramsShowTotal: true,
@@ -76,17 +71,17 @@ const initialState: WordListSettingsState = {
     },
     wrongGuesses: {
       sortType: SortType.FoundOrder,
-      sortOrder: SortOrder.Descending,
+      sortOrder: SortOrderKeys.desc,
       letterFilter: [],
       settingsCollapsed: true,
     },
     excludedWords: {
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       settingsCollapsed: true,
     },
     answers: {
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       remainingAndSpoiledOnly: false,
       remainingRevealFirstLetter: true,

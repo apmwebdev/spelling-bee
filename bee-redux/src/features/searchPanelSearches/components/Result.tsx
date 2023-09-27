@@ -2,9 +2,9 @@ import { WordLengths } from "./WordLengths";
 import { WordCount } from "./WordCount";
 import { LettersPresent } from "./LettersPresent";
 import { ResultHeader } from "./ResultHeader";
-import { SubstringHintOutputKeys } from "@/features/hints";
-import { ResultKey } from "@/features/searchPanelSearches/components/ResultKey";
-import { SearchResultProps } from "@/features/searchPanelSearches/types";
+import { ResultKey } from "./ResultKey";
+import { SearchResultProps } from "@/features/searchPanelSearches";
+import { SubstringHintOutputKeys } from "@/features/hintPanels";
 
 export function Result({ resultData, statusTracking }: SearchResultProps) {
   const content = () => {

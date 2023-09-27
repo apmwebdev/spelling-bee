@@ -4,7 +4,7 @@ import {
   CompleteHintProfile,
   CurrentHintProfileFormData,
   HintProfilesData,
-} from "@/features/hintProfiles/types";
+} from "@/features/hintProfiles";
 
 export const hintProfilesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

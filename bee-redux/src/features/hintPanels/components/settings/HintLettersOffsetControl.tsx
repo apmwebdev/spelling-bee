@@ -1,9 +1,9 @@
-import { useUpdateHintPanelMutation } from "@/features/hints";
 import { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
 import { maybeAddDisabledClass } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
+import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintLettersOffsetControl({
   panelId,

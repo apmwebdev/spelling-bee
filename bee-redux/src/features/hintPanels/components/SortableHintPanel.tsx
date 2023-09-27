@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { HintPanel } from "@/features/hints";
 import { HintPanelData } from "@/features/hintPanels/types";
+import { HintPanel } from "@/features/hintPanels";
 
 export function SortableHintPanel({ panel }: { panel: HintPanelData }) {
   const {

@@ -1,13 +1,11 @@
 import * as Select from "@/components/radix-ui/radix-select";
 import uniqid from "uniqid";
 import {
+  HintProfileBasicData,
   hintProfilesApiSlice,
+  HintProfileTypes,
   useSetCurrentHintProfileMutation,
 } from "@/features/hintProfiles";
-import {
-  HintProfileBasicData,
-  HintProfileTypes,
-} from "@/features/hintProfiles/types";
 
 export function HintProfilesSelector() {
   const currentProfile =

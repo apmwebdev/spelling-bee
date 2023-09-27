@@ -1,10 +1,3 @@
-import {
-  HintPanel,
-  selectPanelIds,
-  selectPanels,
-  SortableHintPanel,
-  useChangeHintPanelOrderMutation,
-} from "@/features/hints";
 import React, { useState } from "react";
 import {
   closestCenter,
@@ -25,7 +18,14 @@ import {
 import { useAppSelector } from "@/app/hooks";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
-import { HintPanelData } from "@/features/hintPanels/types";
+import {
+  HintPanel,
+  HintPanelData,
+  selectPanelIds,
+  selectPanels,
+  SortableHintPanel,
+  useChangeHintPanelOrderMutation,
+} from "@/features/hintPanels";
 
 export function HintPanels() {
   const currentProfile =

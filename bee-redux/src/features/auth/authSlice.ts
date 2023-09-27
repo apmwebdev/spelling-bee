@@ -3,7 +3,7 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { authApiSlice } from "./authApiSlice";
 import { User } from "@/features/auth/types";
 import { startAppListening } from "@/app/listenerMiddleware";
-import { persister } from "@/features/api";
+import { persistor } from "@/features/api";
 
 type AuthState = {
   user: User | null;
@@ -11,8 +11,8 @@ type AuthState = {
 };
 
 const rehydrateAuthState = (): AuthState => {
-  const storedUser = persister.load("user");
-  const storedIsGuest = persister.load("isGuest");
+  const storedUser = persistor.load("user");
+  const storedIsGuest = persistor.load("isGuest");
   const authState: AuthState = {
     user: null,
     isGuest: storedIsGuest?.parsed === true,
@@ -38,8 +38,8 @@ const rehydrateAuthState = (): AuthState => {
  */
 export const logoutThunk = (dispatch: AppDispatch) => {
   dispatch(logoutReducer());
-  persister.remove("user");
-  persister.save("isGuest", "true");
+  persistor.remove("user");
+  persistor.save("isGuest", "true");
 };
 
 const authSlice = createSlice({
@@ -66,8 +66,8 @@ startAppListening({
   matcher: authApiSlice.endpoints.login.matchFulfilled,
   effect: ({ payload }, api) => {
     api.dispatch(loginReducer(payload));
-    persister.save("user", payload);
-    persister.save("isGuest", false);
+    persistor.save("user", payload);
+    persistor.save("isGuest", false);
   },
 });
 
@@ -75,8 +75,8 @@ startAppListening({
   matcher: authApiSlice.endpoints.logout.matchFulfilled,
   effect: (_action, api) => {
     api.dispatch(logoutThunk);
-    persister.remove("currentHintProfile");
-    persister.remove("userPrefs");
+    persistor.remove("currentHintProfile");
+    persistor.remove("userPrefs");
   },
 });
 
