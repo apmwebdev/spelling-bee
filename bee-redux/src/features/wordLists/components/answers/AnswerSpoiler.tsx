@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswersListSettings } from "../../api/wordListSettingsSlice";
+import { selectAnswersListSettings } from "@/features/wordLists";
 import {
   GuessFormData,
   selectCurrentAttempt,

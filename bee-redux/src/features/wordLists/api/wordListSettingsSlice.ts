@@ -1,49 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-
-enum Status {
-  Initial = "Not Fetched",
-  Loading = "Loading...",
-  UpToDate = "Up to Date",
-  Error = "Error",
-}
+import { SortOrderKeys, Statuses } from "@/types";
 
 export enum SortType {
   Alphabetical = "alphabetical",
   FoundOrder = "foundOrder",
 }
 
-export enum SortOrder {
-  Ascending = "ascending",
-  Descending = "descending",
-}
-
-export interface FoundWordsSettingsFormat {
+export type FoundWordsSettingsFormat = {
   sortType: SortType;
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   wordsShowTotal: boolean;
   pangramsShowTotal: boolean;
   showPerfectPangrams: boolean;
   perfectPangramsShowTotal: boolean;
   settingsCollapsed: boolean;
-}
+};
 
-export interface WrongGuessesSettingsFormat {
+export type WrongGuessesSettingsFormat = {
   sortType: SortType;
-  sortOrder: SortOrder;
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   settingsCollapsed: boolean;
-}
+};
 
-export interface ExcludedWordsSettingsFormat {
-  sortOrder: SortOrder;
+export type ExcludedWordsSettingsFormat = {
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   settingsCollapsed: boolean;
-}
+};
 
-export interface AnswerListSettingsFormat {
-  sortOrder: SortOrder;
+export type AnswerListSettingsFormat = {
+  sortOrder: SortOrderKeys;
   letterFilter: string[];
   remainingAndSpoiledOnly: boolean;
   remainingRevealFirstLetter: boolean;
@@ -51,9 +40,9 @@ export interface AnswerListSettingsFormat {
   remainingLocation: "beginning" | "end";
   remainingGroupWithLetter: boolean;
   settingsCollapsed: boolean;
-}
+};
 
-export interface WordListSettingsFormat {
+export type WordListSettingsFormat = {
   foundWords: FoundWordsSettingsFormat;
   wrongGuesses: WrongGuessesSettingsFormat;
   excludedWords: ExcludedWordsSettingsFormat;
@@ -61,18 +50,18 @@ export interface WordListSettingsFormat {
   general: {
     groupByFirstLetter: boolean;
   };
-}
+};
 
-export interface WordListSettingsState {
+export type WordListSettingsState = {
   data: WordListSettingsFormat;
-  status: Status;
-}
+  status: Statuses;
+};
 
 const initialState: WordListSettingsState = {
   data: {
     foundWords: {
       sortType: SortType.Alphabetical,
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       wordsShowTotal: true,
       pangramsShowTotal: true,
@@ -82,17 +71,17 @@ const initialState: WordListSettingsState = {
     },
     wrongGuesses: {
       sortType: SortType.FoundOrder,
-      sortOrder: SortOrder.Descending,
+      sortOrder: SortOrderKeys.desc,
       letterFilter: [],
       settingsCollapsed: true,
     },
     excludedWords: {
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       settingsCollapsed: true,
     },
     answers: {
-      sortOrder: SortOrder.Ascending,
+      sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       remainingAndSpoiledOnly: false,
       remainingRevealFirstLetter: true,
@@ -105,7 +94,7 @@ const initialState: WordListSettingsState = {
       groupByFirstLetter: true,
     },
   },
-  status: Status.Initial,
+  status: Statuses.Initial,
 };
 
 export const wordListSettingsSlice = createSlice({

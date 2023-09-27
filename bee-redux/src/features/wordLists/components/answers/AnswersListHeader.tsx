@@ -1,10 +1,10 @@
 import {
   selectAnswersListSettings,
   setAnswersSortOrder,
-  SortOrder,
-} from "../../api/wordListSettingsSlice";
+} from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { SortOrderKeys } from "@/types";
 
 export function AnswersListHeader() {
   const dispatch = useAppDispatch();
@@ -19,8 +19,8 @@ export function AnswersListHeader() {
           value={sortOrder}
           onValueChange={(val) => dispatch(setAnswersSortOrder(val))}
         >
-          <ToggleGroup.Item value={SortOrder.Ascending}>Asc</ToggleGroup.Item>
-          <ToggleGroup.Item value={SortOrder.Descending}>Desc</ToggleGroup.Item>
+          <ToggleGroup.Item value={SortOrderKeys.asc}>Asc</ToggleGroup.Item>
+          <ToggleGroup.Item value={SortOrderKeys.desc}>Desc</ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
     </header>

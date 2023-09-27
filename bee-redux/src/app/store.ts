@@ -8,7 +8,9 @@ import authReducer from "@/features/auth/authSlice";
 import puzzleReducer from "@/features/puzzle/api/puzzleSlice";
 import guessesReducer from "@/features/guesses/api/guessesSlice";
 import wordListSettingsReducer from "@/features/wordLists/api/wordListSettingsSlice";
-import hintProfilesReducer from "@/features/hints/api/hintProfilesSlice";
+import hintProfilesReducer from "@/features/hintProfiles/api/hintProfilesSlice";
+import hintPanelsReducer from "@/features/hintPanels/api/hintPanelsSlice";
+import searchPanelSearchesReducer from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
 import { apiSlice } from "@/features/api/api/apiSlice";
 import { listenerMiddleware } from "@/app/listenerMiddleware";
 
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
   guesses: guessesReducer,
   wordListSettings: wordListSettingsReducer,
   hintProfiles: hintProfilesReducer,
+  hintPanels: hintPanelsReducer,
+  searchPanelSearches: searchPanelSearchesReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

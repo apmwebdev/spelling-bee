@@ -6,7 +6,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import { logoutThunk } from "../../auth/authSlice";
+import { logoutThunk } from "@/features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3000/api/v1",
@@ -14,16 +14,20 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithAuth = async (
-  args: string | FetchArgs,
+  arg: string | FetchArgs,
   api: BaseQueryApi,
   extraOptions: BaseQueryExtraOptions<BaseQueryFn>,
 ) => {
-  const result = await baseQuery(args, api, extraOptions);
-  console.log("baseQuery args:", args, "response:", result);
-  if (result.error?.status === 401) {
+  const response = await baseQuery(arg, api, extraOptions);
+  if (response.error) {
+    console.error("arg:", arg, "error:", response);
+  } else {
+    console.log("arg:", arg, "response:", response);
+  }
+  if (response.error?.status === 401) {
     api.dispatch(logoutThunk);
   }
-  return result;
+  return response;
 };
 
 export const apiSlice = createApi({

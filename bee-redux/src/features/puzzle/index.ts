@@ -1,4 +1,5 @@
-export * from "./components/Puzzle";
 export * from "./api/puzzleApiSlice";
 export * from "./api/puzzleSlice";
+export * from "./components/Hive";
+export * from "./components/PuzzleNav";
 export * from "./hooks/useCurrentPuzzle";

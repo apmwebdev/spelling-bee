@@ -2,12 +2,12 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectWrongGuesses } from "@/features/guesses";
 import {
   selectWrongGuessesListSettings,
-  SortOrder,
   SortType,
   toggleWrongGuessesSettingsCollapsed,
 } from "@/features/wordLists";
 import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
+import { SortOrderKeys } from "@/types";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();
@@ -25,16 +25,16 @@ export function WrongGuessesContainer() {
     if (sortType === SortType.Alphabetical) {
       displayGuessList.sort((a, b) => {
         if (a.text < b.text) {
-          return sortOrder === SortOrder.Ascending ? -1 : 1;
+          return sortOrder === SortOrderKeys.asc ? -1 : 1;
         }
         if (a.text > b.text) {
-          return sortOrder === SortOrder.Ascending ? 1 : -1;
+          return sortOrder === SortOrderKeys.asc ? 1 : -1;
         }
         return 0;
       });
     } else {
       displayGuessList.sort((a, b) => {
-        if (sortOrder === SortOrder.Ascending) {
+        if (sortOrder === SortOrderKeys.asc) {
           return a.createdAt - b.createdAt;
         }
         return b.createdAt - a.createdAt;

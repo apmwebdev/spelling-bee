@@ -1,5 +1,5 @@
 import React from "react";
-import LetterCell from "./LetterCell";
+import { LetterCell } from "./LetterCell";
 import { useAppSelector } from "@/app/hooks";
 import {
   selectCenterLetter,

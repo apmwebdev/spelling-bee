@@ -5,17 +5,17 @@ import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { Statuses } from "@/types";
 
-export interface RawAttemptFormat {
+export type RawAttemptFormat = {
   id: number;
   puzzleId: number;
   guesses: RawGuessFormat[];
-}
+};
 
-export interface AttemptFormat {
+export type AttemptFormat = {
   id: number;
   puzzleId: number;
   guesses: GuessFormat[];
-}
+};
 
 type CurrentAttemptsFulfilledResponse = PayloadAction<
   AttemptFormat[],
@@ -51,39 +51,39 @@ type AddGuessFulfilledResponse = PayloadAction<
   never
 >;
 
-export interface GuessFormData {
+export type GuessFormData = {
   guess: {
     user_puzzle_attempt_id: number;
     text: string;
     is_spoiled: boolean;
   };
-}
+};
 
-export interface RawGuessFormat {
+export type RawGuessFormat = {
   attemptId: number;
   text: string;
   isSpoiled: boolean;
   createdAt: string;
-}
+};
 
-export interface GuessFormat {
+export type GuessFormat = {
   attemptId: number;
   text: string;
   createdAt: number;
   isSpoiled: boolean;
   isAnswer: boolean;
   isExcluded: boolean;
-}
+};
 
-export interface GuessesStateData {
+export type GuessesStateData = {
   currentAttempt: AttemptFormat;
   attempts: AttemptFormat[];
-}
+};
 
-export interface GuessesState {
+export type GuessesState = {
   data: GuessesStateData;
   status: Statuses;
-}
+};
 
 const initialState: GuessesState = {
   data: {

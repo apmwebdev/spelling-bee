@@ -9,9 +9,7 @@ export function UserMenu() {
 
   const handleLogoutSelect = async () => {
     try {
-      await logout(null).then((response) =>
-        console.log("handleLogoutSelect:", response),
-      );
+      await logout(null);
     } catch (error) {
       console.log("Failed to log out: ", error);
     }

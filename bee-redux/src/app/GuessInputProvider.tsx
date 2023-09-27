@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useState } from "react";
 
-export interface GuessInputContextType {
+export type GuessInputContextType = {
   guessValue: string;
   setGuessValue: React.Dispatch<React.SetStateAction<string>>;
   guessBackspace: () => void;
   enterPressedEvent: Event;
-}
+};
 
 export const GuessInputContext = createContext({} as GuessInputContextType);
 
