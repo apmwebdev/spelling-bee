@@ -1,11 +1,11 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
-import { Signup } from "./features/auth/Signup";
-import { Login } from "./features/auth/Login";
 import { useGetUserBaseDataQuery, userDataApiSlice } from "@/features/userData";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { RoutingError } from "@/routes/RoutingError";
 import { Header } from "@/routes/puzzleRoutePageSections/Header";
+import { LoginRoute } from "@/routes/LoginRoute";
+import { SignupRoute } from "@/routes/SignupRoute";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -65,11 +65,11 @@ export default function App() {
         },
         {
           path: "signup",
-          element: <Signup />,
+          element: <SignupRoute />,
         },
         {
           path: "login",
-          element: <Login />,
+          element: <LoginRoute />,
         },
       ],
     },

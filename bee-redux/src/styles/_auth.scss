@@ -1,9 +1,23 @@
 @use 'colors' as *;
 
+.Auth_route {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
 .Auth_container {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.Auth_message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: status-text-dark($error-hue);
+  min-height: 1em;
 }
 
 .Auth_form {
