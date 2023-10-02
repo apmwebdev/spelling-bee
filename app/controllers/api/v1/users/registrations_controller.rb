@@ -9,13 +9,12 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   def respond_with(current_user, _opts = {})
     if resource.persisted?
       render json: {
-        status: {code: 200, message: 'Signed up successfully.'},
-        data: UserSerializer.new(current_user).serializable_hash[:data][:attributes]
-      }
+        success: I18n.t('devise.registrations.signed_up_but_unconfirmed'),
+      }, status: 200
     else
       render json: {
-        status: {message: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}"}
-      }, status: :unprocessable_entity
+        error: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}"
+      }, status: 422
     end
   end
 end

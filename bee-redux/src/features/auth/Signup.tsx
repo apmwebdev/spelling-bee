@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useSignupMutation } from "./authApiSlice";
+import { isSignupError } from "@/types";
 
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");
@@ -7,6 +8,7 @@ export function Signup() {
   const [nameValue, setNameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
+  const [messageValue, setMessageValue] = useState("");
 
   const [signup, { isLoading }] = useSignupMutation();
   const canSubmit = () => {
@@ -45,16 +47,21 @@ export function Signup() {
         },
       };
       try {
-        await signup(formData).unwrap();
+        const response = await signup(formData).unwrap();
         resetForm();
+        setMessageValue(response.success);
       } catch (error) {
         console.error("Failed to save user: ", error);
+        if (isSignupError(error)) {
+          setMessageValue(error.data.error);
+        }
       }
     }
   };
 
   return (
     <div className="Auth_container">
+      <div className="Auth_message">{messageValue}</div>
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
         <fieldset className="Auth_fieldset">
           <label htmlFor="Signup_emailInput">Email:</label>

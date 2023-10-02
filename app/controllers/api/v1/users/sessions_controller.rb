@@ -7,20 +7,18 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(current_user, _opts = {})
-    render json: current_user.to_front_end, status: :ok
+    render json: current_user.to_front_end, status: 200
   end
 
   def respond_to_on_destroy
     if current_user
       render json: {
-        status: 200,
         message: 'Logged out successfully.'
-      }, status: :ok
+      }, status: 200
     else
       render json: {
-        status: 401,
-        message: "Couldn't find an active session."
-      }, status: :unauthorized
+        error: "Couldn't find an active session."
+      }, status: 401
     end
   end
 end

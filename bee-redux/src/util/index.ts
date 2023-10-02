@@ -1,6 +1,3 @@
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
-
 export const calculateScore = (words: string[]) => {
   return words.reduce((score, word) => {
     if (word.length === 4) {
@@ -93,20 +90,3 @@ export const maybeAddDisabledClass = (
 
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
-
-export const isSuccessfulResponse = (
-  response: any,
-): response is { data: any } => "data" in response;
-
-export const isErrorResponse = (response: any): response is { error: any } =>
-  "error" in response;
-
-export const isFetchBaseQueryErrorResponse = (
-  response: any,
-): response is { error: FetchBaseQueryError } =>
-  isErrorResponse(response) && "status" in response.error;
-
-export const isSerializedErrorResponse = (
-  response: any,
-): response is { error: SerializedError } =>
-  isErrorResponse(response) && !("status" in response.error);

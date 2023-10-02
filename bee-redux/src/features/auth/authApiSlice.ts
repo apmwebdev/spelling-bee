@@ -1,10 +1,10 @@
 import { apiSlice } from "@/features/api";
 
-import { LoginData, User } from "@/features/auth/types";
+import { LoginData, SignupData, User } from "@/features/auth/types";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    signup: builder.mutation({
+    signup: builder.mutation<{ success: string }, SignupData>({
       query: (formData) => ({
         url: "/signup",
         method: "POST",

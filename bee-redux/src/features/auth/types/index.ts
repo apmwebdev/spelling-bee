@@ -10,3 +10,12 @@ export type LoginData = {
     password: string;
   };
 };
+
+export type SignupData = {
+  user: {
+    email: string;
+    username: string;
+    name: string;
+    password: string;
+  };
+};
