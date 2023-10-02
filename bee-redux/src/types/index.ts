@@ -5,6 +5,7 @@ import {
   HintProfilesData,
 } from "@/features/hintProfiles/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -72,3 +73,30 @@ export const SortOrderOptions: EnumeratedOptions = {
   asc: { title: "Ascending" },
   desc: { title: "Descending" },
 };
+export const isSuccessfulResponse = (
+  response: any,
+): response is { data: any } => "data" in response;
+
+export const isErrorResponse = (response: any): response is { error: any } =>
+  "error" in response;
+
+export const isFetchBaseQueryErrorResponse = (
+  response: any,
+): response is { error: FetchBaseQueryError } =>
+  isErrorResponse(response) && "status" in response.error;
+
+export const isSerializedErrorResponse = (
+  response: any,
+): response is { error: SerializedError } =>
+  isErrorResponse(response) && !("status" in response.error);
+
+export type SignupError = {
+  data: {
+    error: string;
+  };
+  status: number;
+};
+export const isSignupError = (response: any): response is SignupError =>
+  "data" in response &&
+  "error" in response.data &&
+  typeof response.data.error === "string";

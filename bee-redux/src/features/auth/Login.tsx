@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react";
 import { useLoginMutation } from "./authApiSlice";
 import { LoginData } from "@/features/auth/types";
-import { isFetchBaseQueryErrorResponse } from "@/util";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/auth/authSlice";
+import { isFetchBaseQueryErrorResponse } from "@/types";
 
 export function Login({ redirectTo }: { redirectTo?: string }) {
   const user = useAppSelector(selectUser);

@@ -10,12 +10,15 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 400px;
+  max-width: 400px;
 }
 
 .Auth_message {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   color: status-text-dark($error-hue);
   min-height: 1em;
 }
@@ -29,10 +32,13 @@
 .Auth_fieldset {
   display: grid;
   grid-template-columns: auto auto;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   column-gap: 8px;
   row-gap: 6px;
+  label {
+    text-align: right;
+  }
 }
 
 .Auth_fieldDescription {
