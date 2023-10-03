@@ -28,11 +28,11 @@ export function FoundWordsStatus() {
 
   let foundPointsCountClasses = countClass;
   if (correctCount === 0) {
-    foundPointsCountClasses += "HintNotStarted";
+    foundPointsCountClasses += "ErrorText";
   } else if (correctCount === answerCount) {
-    foundPointsCountClasses += "HintCompleted";
+    foundPointsCountClasses += "SuccessText";
   } else {
-    foundPointsCountClasses += "HintInProgress";
+    foundPointsCountClasses += "WarningText";
   }
 
   const foundWordsTrackingText = () => {
@@ -71,11 +71,11 @@ export function FoundWordsStatus() {
     }
     let pangramCountClasses = countClass;
     if (currentPangrams === 0) {
-      pangramCountClasses += "HintNotStarted";
+      pangramCountClasses += "ErrorText";
     } else if (currentPangrams === totalPangrams) {
-      pangramCountClasses += "HintCompleted";
+      pangramCountClasses += "SuccessText";
     } else {
-      pangramCountClasses += "HintInProgress";
+      pangramCountClasses += "WarningText";
     }
     return (
       <div className="pangrams">
@@ -100,11 +100,11 @@ export function FoundWordsStatus() {
       }
       let perfectClasses = countClass;
       if (currentPerfectPangrams === 0) {
-        perfectClasses += "HintNotStarted";
+        perfectClasses += "ErrorText";
       } else if (currentPerfectPangrams === totalPerfectPangrams) {
-        perfectClasses += "HintCompleted";
+        perfectClasses += "SuccessText";
       } else {
-        perfectClasses += "HintInProgress";
+        perfectClasses += "WarningText";
       }
       return (
         <div className="perfect">

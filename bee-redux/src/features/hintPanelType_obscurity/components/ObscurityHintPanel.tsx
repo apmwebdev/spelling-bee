@@ -87,7 +87,7 @@ export function ObscurityHintPanel({
         );
       }
       return (
-        <tr className="HintNotStarted" key={answer.word}>
+        <tr className="ErrorText" key={answer.word}>
           <td className="capitalize">
             {clickToDefine ? (
               <DefinitionPopover

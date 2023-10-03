@@ -63,18 +63,6 @@ $error-hue: 0;
   @return hsl($hue, 85%, 82%);
 }
 
-.HintCompleted {
-  color: status-text-dark($success-hue);
-}
-
-.HintInProgress {
-  color: status-text-dark($warning-hue)
-}
-
-.HintNotStarted {
-  color: status-text-dark($error-hue);
-}
-
 //Gray Backgrounds
 $black: #050505; // body background
 $dark-gray-1: #121212; // main element content background
@@ -120,6 +108,24 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   &:focus {
     box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
   }
+}
+
+:root {
+  --success-text: #{status-text-dark($success-hue)};
+  --warning-text: #{status-text-dark($warning-hue)};
+  --error-text: #{status-text-dark($error-hue)};
+}
+
+.SuccessText {
+  color: var(--success-text);
+}
+
+.WarningText {
+  color: var(--warning-text);
+}
+
+.ErrorText {
+  color: var(--error-text);
 }
 
 @media (prefers-color-scheme: light) {
