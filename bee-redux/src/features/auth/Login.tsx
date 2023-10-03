@@ -8,14 +8,14 @@ import { isFetchBaseQueryErrorResponse } from "@/types";
 
 export function Login({ redirectTo }: { redirectTo?: string }) {
   const user = useAppSelector(selectUser);
-  const [usernameValue, setUsernameValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [messageValue, setMessageValue] = useState("");
 
   const [login] = useLoginMutation();
 
   const canSubmit = () => {
-    return usernameValue !== "" && passwordValue !== "";
+    return emailValue !== "" && passwordValue !== "";
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -24,7 +24,7 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
       setMessageValue("");
       const formData: LoginData = {
         user: {
-          username: usernameValue,
+          email: emailValue,
           password: passwordValue,
         },
       };
@@ -59,18 +59,20 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
         <div className="Auth_message">{messageValue}</div>
         <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
           <fieldset className="Auth_fieldset">
-            <label htmlFor="Login_usernameInput">Username:</label>
+            <label htmlFor="Login_emailInput">Email:</label>
             <input
-              type="text"
-              id="Login_usernameInput"
-              name="login-username"
-              value={usernameValue}
-              onChange={(e) => setUsernameValue(e.target.value)}
+              className="Auth_textInput"
+              type="email"
+              id="Login_emailInput"
+              name="login-email"
+              value={emailValue}
+              onChange={(e) => setEmailValue(e.target.value)}
             />
           </fieldset>
           <fieldset className="Auth_fieldset">
             <label htmlFor="Login_passwordInput">Password:</label>
             <input
+              className="Auth_textInput"
               type="password"
               id="Login_passwordInput"
               name="login-password"

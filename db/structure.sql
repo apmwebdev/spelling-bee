@@ -664,11 +664,6 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
-    username character varying NOT NULL,
-    provider character varying DEFAULT 'email'::character varying NOT NULL,
-    uid character varying DEFAULT ''::character varying NOT NULL,
-    allow_password_change boolean DEFAULT true,
-    tokens json,
     jti character varying NOT NULL,
     confirmation_token character varying,
     confirmed_at timestamp(6) without time zone,
@@ -1156,13 +1151,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
--- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
-
-
---
 -- Name: index_words_on_definitions; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1333,6 +1321,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230912210851'),
 ('20230912212040'),
 ('20230913100015'),
-('20231001001349');
+('20231001001349'),
+('20231002213304');
 
 

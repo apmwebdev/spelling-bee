@@ -4,7 +4,6 @@ import { isSignupError } from "@/types";
 
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");
-  const [usernameValue, setUsernameValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
@@ -15,7 +14,6 @@ export function Signup() {
     if (
       !(
         emailValue &&
-        usernameValue &&
         nameValue &&
         passwordValue &&
         passwordConfirmValue &&
@@ -29,7 +27,6 @@ export function Signup() {
 
   const resetForm = () => {
     setEmailValue("");
-    setUsernameValue("");
     setNameValue("");
     setPasswordValue("");
     setPasswordConfirmValue("");
@@ -41,7 +38,6 @@ export function Signup() {
       const formData = {
         user: {
           email: emailValue,
-          username: usernameValue,
           name: nameValue,
           password: passwordValue,
         },
@@ -71,16 +67,6 @@ export function Signup() {
             name="signup-email"
             value={emailValue}
             onChange={(e) => setEmailValue(e.target.value)}
-          />
-        </fieldset>
-        <fieldset className="Auth_fieldset">
-          <label htmlFor="Signup_usernameInput">Username:</label>
-          <input
-            type="text"
-            id="Signup_usernameInput"
-            name="signup-username"
-            value={usernameValue}
-            onChange={(e) => setUsernameValue(e.target.value)}
           />
         </fieldset>
         <fieldset className="Auth_fieldset">
