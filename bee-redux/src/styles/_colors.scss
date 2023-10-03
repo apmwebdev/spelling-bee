@@ -25,7 +25,7 @@ $error-hue: 0;
 }
 
 @function bg-color-dark-disabled($hue) {
-  @return hsl($hue, 15%, 26%);
+  @return hsl($hue, 18%, 22%);
 }
 
 //Borders
@@ -38,7 +38,7 @@ $error-hue: 0;
 }
 
 @function border-color-dark-disabled($hue) {
-  @return hsl($hue, 8%, 23%);
+  @return hsl($hue, 12%, 25%);
 }
 
 @function shadow-color-focus($hue) {

@@ -100,3 +100,32 @@ export const isSignupError = (response: any): response is SignupError =>
   "data" in response &&
   "error" in response.data &&
   typeof response.data.error === "string";
+
+/**
+ * For validating email addresses submitted at sign-up
+ * Copied from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email
+ * This mirrors the validation that browsers do on email input fields.
+ * The regex essentially says that the following format is valid:
+ * - One or more characters that are letters, digits, or various symbols
+ * - An @ symbol
+ * - 1-63 characters that are letters, numbers, or dashes. The first and last
+ *   characters in this sequence can't be dashes.
+ * - 0 to 1 instances of:
+ *   - A period
+ *   - 1-63 characters that are letters, numbers, or dashes. The first and last
+ *     characters in this sequence can't be dashes.
+ */
+export const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+/**
+ * For password validation
+ * It requires that the length be 10-128 characters and include at least one of
+ * each of the following:
+ * - A capital letter
+ * - A lowercase letter
+ * - A number
+ * - A non-digit, non-letter, non-whitespace character
+ */
+export const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\d\sa-zA-Z]).{10,128}$/;
