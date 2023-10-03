@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def to_front_end
-    { name:, username:, email: }
+    { email:, name: }
   end
 
   private

@@ -21,8 +21,7 @@ const rehydrateAuthState = (): AuthState => {
     const maybeUser = storedUser.parsed;
     if (
       typeof maybeUser.email === "string" &&
-      typeof maybeUser.name === "string" &&
-      typeof maybeUser.username === "string"
+      typeof maybeUser.name === "string"
     ) {
       authState.user = maybeUser;
     }

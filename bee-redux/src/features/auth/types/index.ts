@@ -1,12 +1,11 @@
 export type User = {
   email: string;
-  username: string;
   name: string;
 };
 
 export type LoginData = {
   user: {
-    username: string;
+    email: string;
     password: string;
   };
 };
@@ -14,7 +13,6 @@ export type LoginData = {
 export type SignupData = {
   user: {
     email: string;
-    username: string;
     name: string;
     password: string;
   };
