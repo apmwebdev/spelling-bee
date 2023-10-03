@@ -1,7 +1,8 @@
 import { FormEvent, useState } from "react";
 import { useSignupMutation } from "./authApiSlice";
-import { isSignupError } from "@/types";
+import { EMAIL_REGEX, isSignupError, PASSWORD_REGEX } from "@/types";
 import { composeClasses } from "@/util";
+import { SignupFormInput } from "@/features/auth/SignupFormInput";
 
 type MessageStatuses = "success" | "error";
 const composeMessageClasses = (messageStatus: MessageStatuses) => {
@@ -13,6 +14,10 @@ const composeMessageClasses = (messageStatus: MessageStatuses) => {
   return "Auth_message";
 };
 
+// This allows validation to run for the individual form fields when the form is
+// submitted without needing to control it from here.
+const signupFormSubmittedEvent = new Event("signupFormSubmitted");
+
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");
   const [nameValue, setNameValue] = useState("");
@@ -23,20 +28,19 @@ export function Signup() {
     useState<MessageStatuses>("success");
   const [signup, { isLoading }] = useSignupMutation();
 
-  const canSubmit = () => {
-    if (
-      !(
-        emailValue &&
-        nameValue &&
-        passwordValue &&
-        passwordConfirmValue &&
-        !isLoading
-      )
-    ) {
-      return false;
-    }
-    return passwordValue === passwordConfirmValue;
-  };
+  const emailIsValid = (value: string) => EMAIL_REGEX.test(value);
+  const nameIsValid = (value: string) => value.length > 0;
+  const passwordIsValid = (value: string) => PASSWORD_REGEX.test(value);
+  const passwordsMatch = (comparisonValue: string) => (value: string) =>
+    value === comparisonValue && value.length > 0;
+  const passwordConfirmIsValid = passwordsMatch(passwordValue);
+
+  const canSubmit = () =>
+    emailIsValid(emailValue) &&
+    nameIsValid(nameValue) &&
+    passwordIsValid(passwordValue) &&
+    passwordsMatch(passwordValue)(passwordConfirmValue) &&
+    !isLoading;
 
   const setMessage = (message: string, status: MessageStatuses) => {
     setMessageValue(message);
@@ -52,6 +56,7 @@ export function Signup() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    window.dispatchEvent(signupFormSubmittedEvent);
     if (canSubmit()) {
       const formData = {
         user: {
@@ -79,59 +84,45 @@ export function Signup() {
     <div className="Auth_container">
       <div className={composeMessageClasses(messageStatus)}>{messageValue}</div>
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
-        <fieldset className="Auth_fieldset">
-          <label htmlFor="Signup_emailInput">Email:</label>
-          <input
-            type="email"
-            id="Signup_emailInput"
-            name="signup-email"
-            value={emailValue}
-            onChange={(e) => setEmailValue(e.target.value)}
-          />
-        </fieldset>
-        <fieldset className="Auth_fieldset">
-          <label htmlFor="Signup_nameInput">Name:</label>
-          <input
-            type="text"
-            className="Auth_textInput"
-            id="Signup_nameInput"
-            name="signup-name"
-            value={nameValue}
-            onChange={(e) => setNameValue(e.target.value)}
-            required
-          />
-        </fieldset>
+        <SignupFormInput
+          value={emailValue}
+          setValue={setEmailValue}
+          name="email"
+          inputType="email"
+          validate={emailIsValid}
+          errorMessage="Please enter a valid email address"
+        />
+        <SignupFormInput
+          value={nameValue}
+          setValue={setNameValue}
+          name="name"
+          inputType="text"
+          validate={nameIsValid}
+          errorMessage="Please enter a name"
+        />
         <hr className="Hr" />
-        <fieldset className="Auth_fieldset">
-          <label htmlFor="Signup_passwordInput">Password:</label>
-          <input
-            type="password"
-            className="Auth_textInput"
-            id="Signup_passwordInput"
-            name="signup-password"
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
-            required
-          />
-          <label
-            htmlFor="Signup_passwordInput"
-            className="Auth_fieldDescription"
-          >
-            Must be 10 characters or more
-          </label>
-        </fieldset>
-        <fieldset className="Auth_fieldset">
-          <label htmlFor="Signup_passwordConfirmInput">Confirm password:</label>
-          <input
-            type="password"
-            className="Auth_textInput"
-            id="Signup_passwordConfirmInput"
-            name="signup-password-confirm"
-            value={passwordConfirmValue}
-            onChange={(e) => setPasswordConfirmValue(e.target.value)}
-            required
-          />
-        </fieldset>
+        <SignupFormInput
+          value={passwordValue}
+          setValue={setPasswordValue}
+          name="password"
+          inputType="password"
+          validate={passwordIsValid}
+          errorMessage="Please enter a valid password"
+        >
+          <div className="Auth_fieldDescription">
+            <div>Must be 10-128 characters and contain at least:</div>
+            <div>1 capital letter, 1 lowercase letter, 1 number, 1 symbol</div>
+          </div>
+        </SignupFormInput>
+        <SignupFormInput
+          value={passwordConfirmValue}
+          setValue={setPasswordConfirmValue}
+          name="passwordConfirm"
+          label="Confirm password"
+          inputType="password"
+          validate={passwordConfirmIsValid}
+          errorMessage="Please ensure passwords match and are valid"
+        />
       </form>
       <div className="Auth_actions">
         <button type="button" className="standardButton">

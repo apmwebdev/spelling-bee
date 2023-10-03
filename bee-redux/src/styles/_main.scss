@@ -80,6 +80,12 @@
   &:hover {
     background-color: bg-color-dark-hover($accent-hue);
   }
+  &:disabled {
+    cursor: not-allowed;
+    color: $text-disabled-dark;
+    background-color: bg-color-dark-disabled($accent-hue);
+    border-color: border-color-dark-disabled($accent-hue);
+  }
 }
 
 @mixin gray-button-mixin {
@@ -214,7 +220,6 @@ button {
 
 .Hr {
   width: 100%;
-  //height: 1.5px;
   border: none;
   border-top: 2px solid $dark-gray-5;
 }

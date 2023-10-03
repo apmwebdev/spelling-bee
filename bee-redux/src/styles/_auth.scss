@@ -40,7 +40,7 @@
   justify-content: flex-end;
   align-items: center;
   column-gap: 12px;
-  row-gap: 6px;
+  row-gap: 4px;
   label {
     text-align: right;
   }
@@ -48,9 +48,18 @@
 
 .Auth_fieldDescription {
   grid-column: 1/3;
-  font-size: 16px;
+  font-size: 14px;
   color: $text-secondary-dark;
   font-style: italic;
+  min-height: 1em;
+  justify-self: flex-end;
+  text-align: right;
+}
+
+.Auth_fieldMessage {
+  grid-column: 1/3;
+  font-size: 14px;
+  min-height: 1em;
 }
 
 input.Auth_textInput {
