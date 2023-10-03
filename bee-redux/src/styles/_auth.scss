@@ -6,10 +6,16 @@
   padding: 16px;
 }
 
+.Auth_dialogContent {
+  padding: 12px;
+  gap: 12px;
+}
+
 .Auth_container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 16px;
   width: 400px;
   max-width: 400px;
 }
@@ -19,14 +25,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: status-text-dark($error-hue);
   min-height: 1em;
 }
 
 .Auth_form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .Auth_fieldset {
@@ -34,7 +39,7 @@
   grid-template-columns: auto auto;
   justify-content: flex-end;
   align-items: center;
-  column-gap: 8px;
+  column-gap: 12px;
   row-gap: 6px;
   label {
     text-align: right;
@@ -46,6 +51,16 @@
   font-size: 16px;
   color: $text-secondary-dark;
   font-style: italic;
+}
+
+input.Auth_textInput {
+  width: 30ch;
+}
+
+.Auth_actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .Auth_submit {

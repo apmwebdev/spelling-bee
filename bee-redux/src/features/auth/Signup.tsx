@@ -1,6 +1,17 @@
 import { FormEvent, useState } from "react";
 import { useSignupMutation } from "./authApiSlice";
 import { isSignupError } from "@/types";
+import { composeClasses } from "@/util";
+
+type MessageStatuses = "success" | "error";
+const composeMessageClasses = (messageStatus: MessageStatuses) => {
+  if (messageStatus === "success") {
+    return composeClasses("Auth_message", "SuccessText");
+  } else if (messageStatus === "error") {
+    return composeClasses("Auth_message", "ErrorText");
+  }
+  return "Auth_message";
+};
 
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");
@@ -8,8 +19,10 @@ export function Signup() {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [messageValue, setMessageValue] = useState("");
-
+  const [messageStatus, setMessageStatus] =
+    useState<MessageStatuses>("success");
   const [signup, { isLoading }] = useSignupMutation();
+
   const canSubmit = () => {
     if (
       !(
@@ -23,6 +36,11 @@ export function Signup() {
       return false;
     }
     return passwordValue === passwordConfirmValue;
+  };
+
+  const setMessage = (message: string, status: MessageStatuses) => {
+    setMessageValue(message);
+    setMessageStatus(status);
   };
 
   const resetForm = () => {
@@ -45,11 +63,13 @@ export function Signup() {
       try {
         const response = await signup(formData).unwrap();
         resetForm();
-        setMessageValue(response.success);
+        setMessage(response.success, "success");
       } catch (error) {
         console.error("Failed to save user: ", error);
         if (isSignupError(error)) {
-          setMessageValue(error.data.error);
+          setMessage(error.data.error, "error");
+        } else {
+          setMessage("Error", "error");
         }
       }
     }
@@ -57,7 +77,7 @@ export function Signup() {
 
   return (
     <div className="Auth_container">
-      <div className="Auth_message">{messageValue}</div>
+      <div className={composeMessageClasses(messageStatus)}>{messageValue}</div>
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
         <fieldset className="Auth_fieldset">
           <label htmlFor="Signup_emailInput">Email:</label>
@@ -73,10 +93,12 @@ export function Signup() {
           <label htmlFor="Signup_nameInput">Name:</label>
           <input
             type="text"
+            className="Auth_textInput"
             id="Signup_nameInput"
             name="signup-name"
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
+            required
           />
         </fieldset>
         <hr className="Hr" />
@@ -84,10 +106,12 @@ export function Signup() {
           <label htmlFor="Signup_passwordInput">Password:</label>
           <input
             type="password"
+            className="Auth_textInput"
             id="Signup_passwordInput"
             name="signup-password"
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}
+            required
           />
           <label
             htmlFor="Signup_passwordInput"
@@ -100,20 +124,27 @@ export function Signup() {
           <label htmlFor="Signup_passwordConfirmInput">Confirm password:</label>
           <input
             type="password"
+            className="Auth_textInput"
             id="Signup_passwordConfirmInput"
             name="signup-password-confirm"
             value={passwordConfirmValue}
             onChange={(e) => setPasswordConfirmValue(e.target.value)}
+            required
           />
         </fieldset>
       </form>
-      <button
-        type="submit"
-        form="Signup_form"
-        className="standardButton Auth_submit"
-      >
-        Submit
-      </button>
+      <div className="Auth_actions">
+        <button type="button" className="standardButton">
+          Resend confirmation email
+        </button>
+        <button
+          type="submit"
+          form="Signup_form"
+          className="standardButton Auth_submit"
+        >
+          Sign up
+        </button>
+      </div>
     </div>
   );
 }

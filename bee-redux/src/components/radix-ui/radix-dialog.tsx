@@ -32,10 +32,10 @@ export const ContentWithPortal = (
             {description}
           </Dialog.Description>
         </VisuallyHidden>
+        {props.children}
         <Dialog.Close className="IconButton CloseButton DialogClose">
           <Icon icon={IconButtonTypes.Close.icon} />
         </Dialog.Close>
-        {props.children}
       </Dialog.Content>
     </Dialog.Portal>
   );
