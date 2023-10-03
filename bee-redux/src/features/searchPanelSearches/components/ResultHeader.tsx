@@ -22,7 +22,7 @@ export function ResultHeader({
   return (
     <header className="SearchHintSearchResultHeader">
       <IconButton
-        type={IconButtonTypeKeys.Close}
+        type={IconButtonTypeKeys.Delete}
         className="SearchResultHeaderRemoveButton"
         onClick={handleClickRemoveButton}
         tooltip="Delete search"
