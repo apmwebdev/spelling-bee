@@ -6,6 +6,7 @@ export function LoginButton() {
     <Dialog.Root>
       <Dialog.Trigger className="standardButton">Log in</Dialog.Trigger>
       <Dialog.ContentWithPortal
+        className="Auth_dialogContent"
         description="Log in to your account"
         hideDescription={true}
         title="Log In"
