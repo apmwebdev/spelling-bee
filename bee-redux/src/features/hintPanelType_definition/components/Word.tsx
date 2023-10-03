@@ -6,7 +6,7 @@ import { DefinitionPanelData } from "@/features/hintPanelType_definition/types";
 const cssClasses = (isKnown: boolean) => {
   const baseClasses = "DefinitionPanelTerm capitalize";
   if (isKnown) return baseClasses;
-  return composeClasses(baseClasses, "HintNotStarted");
+  return composeClasses(baseClasses, "ErrorText");
 };
 
 export function Word({

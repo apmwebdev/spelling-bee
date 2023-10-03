@@ -20,10 +20,10 @@ export const getSubstringHintStatusClasses = ({
     return baseClasses;
   }
   if (cell.guesses === cell.answers) {
-    return composeClasses(baseClasses, "HintCompleted");
+    return composeClasses(baseClasses, "SuccessText");
   }
   if (cell.guesses === 0) {
-    return composeClasses(baseClasses, "HintNotStarted");
+    return composeClasses(baseClasses, "ErrorText");
   }
-  return composeClasses(baseClasses, "HintInProgress");
+  return composeClasses(baseClasses, "WarningText");
 };
