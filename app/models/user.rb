@@ -36,7 +36,12 @@ class User < ApplicationRecord
 
   # Validations
   validate :password_complexity, :email_format
+  validates :email, presence: true, on: :create
   validates :name, presence: true, on: :create
+  validates :password, presence: true, on: :create
+  validates :email, uniqueness: true
+  validates :password, confirmation: true, unless: -> { password.blank? }
+  validates :password_confirmation, presence: true, unless: -> { password.blank? }
 
   # Methods
   def create_prefs
@@ -66,7 +71,7 @@ class User < ApplicationRecord
   def email_format
     # See explanation above for why a blank email should bypass validation
     return if email.blank? || email =~ EMAIL_REGEX
-    errors.add :email, "invalid"
+    errors.add :email, "is invalid"
   end
 
 end
