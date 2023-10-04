@@ -3,6 +3,7 @@ import { selectUser } from "@/features/auth";
 import { UserMenu } from "./UserMenu";
 import { LoginButton } from "@/features/auth/components/headerAuth/LoginButton";
 import { SignupButton } from "@/features/auth/components/headerAuth/SignupButton";
+import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
 
 export function HeaderAuth() {
   const user = useAppSelector(selectUser);
@@ -19,8 +20,6 @@ export function HeaderAuth() {
       <>
         <LoginButton />
         <SignupButton />
-        {/*<Link to="/login">Log in</Link>*/}
-        {/*<Link to="/signup">Sign up</Link>*/}
       </>
     );
   };

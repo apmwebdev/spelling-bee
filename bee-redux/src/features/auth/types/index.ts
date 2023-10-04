@@ -17,3 +17,9 @@ export type SignupData = {
     password: string;
   };
 };
+
+export type ResendConfirmationData = {
+  user: {
+    email: string;
+  };
+};

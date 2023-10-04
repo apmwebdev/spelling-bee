@@ -1,16 +1,11 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useSignupMutation } from "@/features/auth";
-import { EMAIL_REGEX, isSignupError, PASSWORD_REGEX } from "@/types";
+import { EMAIL_REGEX, isBasicError, PASSWORD_REGEX } from "@/types";
 import { SignupFormInput } from "@/features/auth/components/SignupFormInput";
 import classNames from "classnames/dedupe";
-
-type MessageStatuses = "success" | "error";
-const composeMessageClasses = (messageStatus: MessageStatuses) =>
-  classNames({
-    Auth_message: true,
-    SuccessText: messageStatus === "success",
-    ErrorText: messageStatus === "error",
-  });
+import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
+import { useMessage } from "@/features/auth/hooks/useMessage";
+import { Message } from "@/features/auth/components/Message";
 
 const passwordsMatch = (comparisonValue: string) => (value: string) =>
   value === comparisonValue && value.length > 0;
@@ -33,16 +28,9 @@ export function Signup() {
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-  const [messageValue, setMessageValue] = useState("");
-  const [messageStatus, setMessageStatus] =
-    useState<MessageStatuses>("success");
   const [signup, { isLoading }] = useSignupMutation();
   const passwordConfirmValidationFn = passwordsMatch(passwordValue);
-
-  const setMessage = (message: string, status?: MessageStatuses) => {
-    setMessageValue(message);
-    setMessageStatus(status ?? "success");
-  };
+  const message = useMessage();
 
   const validateField =
     ({
@@ -65,30 +53,34 @@ export function Signup() {
 
   const validateEmail = validateField({
     validationFn: (value: string) => EMAIL_REGEX.test(value),
+    // validationFn: (value: string) => true,
     errorMessage: "Please enter a valid email address",
     setErrorMessage: setEmailMessage,
   });
 
   const validateName = validateField({
     validationFn: (value: string) => value.length > 0,
+    // validationFn: (value: string) => true,
     errorMessage: "Please enter a name",
     setErrorMessage: setNameMessage,
   });
 
   const validatePassword = validateField({
     validationFn: (value: string) => PASSWORD_REGEX.test(value),
+    // validationFn: () => true
     errorMessage: "Please enter a valid password",
     setErrorMessage: setPasswordMessage,
   });
 
   const validatePasswordConfirm = validateField({
     validationFn: passwordConfirmValidationFn,
+    // validationFn: () => true,
     errorMessage: "Please ensure passwords match and are valid",
     setErrorMessage: setPasswordConfirmMessage,
   });
 
   const validateForm = () => {
-    setMessage("");
+    message.update("");
     const emailIsValid = validateEmail(emailValue);
     const nameIsValid = validateName(nameValue);
     const passwordIsValid = validatePassword(passwordValue);
@@ -124,13 +116,13 @@ export function Signup() {
       try {
         const response = await signup(formData).unwrap();
         resetForm();
-        setMessage(response.success, "success");
+        message.update(response.success, "success");
       } catch (error) {
         console.error("Failed to save user: ", error);
-        if (isSignupError(error)) {
-          setMessage(error.data.error, "error");
+        if (isBasicError(error)) {
+          message.update(error.data.error, "error");
         } else {
-          setMessage("Error", "error");
+          message.update("Error", "error");
         }
       }
     }
@@ -138,7 +130,7 @@ export function Signup() {
 
   return (
     <div className="Auth_container">
-      <div className={composeMessageClasses(messageStatus)}>{messageValue}</div>
+      <Message {...message.output()} />
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
         <SignupFormInput
           value={emailValue}
@@ -181,9 +173,7 @@ export function Signup() {
         />
       </form>
       <div className="Auth_actions">
-        <button type="button" className="standardButton">
-          Resend confirmation email
-        </button>
+        <ResendConfirmationButton />
         <button
           type="submit"
           form="Signup_form"

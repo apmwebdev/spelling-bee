@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/auth/api/authSlice";
 import { isFetchBaseQueryErrorResponse } from "@/types";
+import { ForgotPasswordButton } from "@/features/auth/components/headerAuth/ForgotPasswordButton";
 
 export function Login({ redirectTo }: { redirectTo?: string }) {
   const user = useAppSelector(selectUser);
@@ -81,13 +82,16 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
             />
           </fieldset>
         </form>
-        <button
-          type="submit"
-          form="Login_form"
-          className="standardButton Auth_submit"
-        >
-          Log in
-        </button>
+        <div className="Auth_actions">
+          <ForgotPasswordButton />
+          <button
+            type="submit"
+            form="Login_form"
+            className="standardButton Auth_submit"
+          >
+            Log in
+          </button>
+        </div>
       </div>
     );
   };
