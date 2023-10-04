@@ -1,6 +1,6 @@
 import { apiSlice } from "@/features/api";
 
-import { LoginData, SignupData, User } from "@/features/auth/types";
+import { LoginData, SignupData, User } from "@/features/auth";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

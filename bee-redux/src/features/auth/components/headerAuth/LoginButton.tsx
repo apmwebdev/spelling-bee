@@ -1,5 +1,5 @@
 import * as Dialog from "@/components/radix-ui/radix-dialog";
-import { Login } from "@/features/auth/Login";
+import { Login } from "@/features/auth";
 
 export function LoginButton() {
   return (

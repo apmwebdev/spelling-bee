@@ -1,6 +1,6 @@
 import { InlineIcon } from "@iconify/react";
 import * as DropdownMenu from "@/components/radix-ui/radix-dropdown-menu";
-import { useLogoutMutation } from "../authApiSlice";
+import { useLogoutMutation } from "@/features/auth";
 import { useState } from "react";
 
 export function UserMenu() {

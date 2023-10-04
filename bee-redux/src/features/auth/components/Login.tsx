@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react";
-import { useLoginMutation } from "./authApiSlice";
+import { useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
-import { selectUser } from "@/features/auth/authSlice";
+import { selectUser } from "@/features/auth/api/authSlice";
 import { isFetchBaseQueryErrorResponse } from "@/types";
 
 export function Login({ redirectTo }: { redirectTo?: string }) {

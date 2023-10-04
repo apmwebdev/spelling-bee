@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "@/app/store";
 import { authApiSlice } from "./authApiSlice";
-import { User } from "@/features/auth/types";
+import { User } from "@/features/auth";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { persistor } from "@/features/api";
 
