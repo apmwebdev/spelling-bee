@@ -1,50 +1,107 @@
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useSignupMutation } from "./authApiSlice";
 import { EMAIL_REGEX, isSignupError, PASSWORD_REGEX } from "@/types";
-import { composeClasses } from "@/util";
 import { SignupFormInput } from "@/features/auth/SignupFormInput";
+import classNames from "classnames/dedupe";
 
 type MessageStatuses = "success" | "error";
-const composeMessageClasses = (messageStatus: MessageStatuses) => {
-  if (messageStatus === "success") {
-    return composeClasses("Auth_message", "SuccessText");
-  } else if (messageStatus === "error") {
-    return composeClasses("Auth_message", "ErrorText");
-  }
-  return "Auth_message";
-};
+const composeMessageClasses = (messageStatus: MessageStatuses) =>
+  classNames({
+    Auth_message: true,
+    SuccessText: messageStatus === "success",
+    ErrorText: messageStatus === "error",
+  });
 
-// This allows validation to run for the individual form fields when the form is
-// submitted without needing to control it from here.
-const signupFormSubmittedEvent = new Event("signupFormSubmitted");
+const passwordsMatch = (comparisonValue: string) => (value: string) =>
+  value === comparisonValue && value.length > 0;
 
+/**
+ * @name Signup
+ * @constructor
+ * Controls the signup form validation and submission logic.
+ * The data and validation need to be defined here rather than in individual
+ * SignupFormInput components (the form fields) so that a field can be
+ * validated both on events affecting only that field (e.g., onChange, onBlur)
+ * and on events affecting the form as a whole, namely form submission.
+ */
 export function Signup() {
   const [emailValue, setEmailValue] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
   const [nameValue, setNameValue] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
   const [messageValue, setMessageValue] = useState("");
   const [messageStatus, setMessageStatus] =
     useState<MessageStatuses>("success");
   const [signup, { isLoading }] = useSignupMutation();
+  const passwordConfirmValidationFn = passwordsMatch(passwordValue);
 
-  const emailIsValid = (value: string) => EMAIL_REGEX.test(value);
-  const nameIsValid = (value: string) => value.length > 0;
-  const passwordIsValid = (value: string) => PASSWORD_REGEX.test(value);
-  const passwordsMatch = (comparisonValue: string) => (value: string) =>
-    value === comparisonValue && value.length > 0;
-  const passwordConfirmIsValid = passwordsMatch(passwordValue);
-
-  const canSubmit = () =>
-    emailIsValid(emailValue) &&
-    nameIsValid(nameValue) &&
-    passwordIsValid(passwordValue) &&
-    passwordsMatch(passwordValue)(passwordConfirmValue) &&
-    !isLoading;
-
-  const setMessage = (message: string, status: MessageStatuses) => {
+  const setMessage = (message: string, status?: MessageStatuses) => {
     setMessageValue(message);
-    setMessageStatus(status);
+    setMessageStatus(status ?? "success");
+  };
+
+  const validateField =
+    ({
+      validationFn,
+      errorMessage,
+      setErrorMessage,
+    }: {
+      validationFn: (value: string) => boolean;
+      errorMessage: string;
+      setErrorMessage: Dispatch<SetStateAction<string>>;
+    }) =>
+    (value: string) => {
+      if (validationFn(value)) {
+        setErrorMessage("");
+        return true;
+      }
+      setErrorMessage(errorMessage);
+      return false;
+    };
+
+  const validateEmail = validateField({
+    validationFn: (value: string) => EMAIL_REGEX.test(value),
+    errorMessage: "Please enter a valid email address",
+    setErrorMessage: setEmailMessage,
+  });
+
+  const validateName = validateField({
+    // validationFn: (value: string) => value.length > 0,
+    validationFn: (value: string) => true,
+    errorMessage: "Please enter a name",
+    setErrorMessage: setNameMessage,
+  });
+
+  const validatePassword = validateField({
+    validationFn: (value: string) => PASSWORD_REGEX.test(value),
+    errorMessage: "Please enter a valid password",
+    setErrorMessage: setPasswordMessage,
+  });
+
+  const validatePasswordConfirm = validateField({
+    validationFn: passwordConfirmValidationFn,
+    errorMessage: "Please ensure passwords match and are valid",
+    setErrorMessage: setPasswordConfirmMessage,
+  });
+
+  const validateForm = () => {
+    setMessage("");
+    const emailIsValid = validateEmail(emailValue);
+    const nameIsValid = validateName(nameValue);
+    const passwordIsValid = validatePassword(passwordValue);
+    const passwordConfirmIsValid =
+      validatePasswordConfirm(passwordConfirmValue);
+    return (
+      emailIsValid &&
+      nameIsValid &&
+      passwordIsValid &&
+      passwordConfirmIsValid &&
+      !isLoading
+    );
   };
 
   const resetForm = () => {
@@ -56,13 +113,13 @@ export function Signup() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.dispatchEvent(signupFormSubmittedEvent);
-    if (canSubmit()) {
+    if (validateForm()) {
       const formData = {
         user: {
           email: emailValue,
           name: nameValue,
           password: passwordValue,
+          password_confirmation: passwordConfirmValue,
         },
       };
       try {
@@ -88,30 +145,30 @@ export function Signup() {
           value={emailValue}
           setValue={setEmailValue}
           name="email"
-          inputType="email"
-          validate={emailIsValid}
-          errorMessage="Please enter a valid email address"
+          inputType="text"
+          validate={validateEmail}
+          errorMessage={emailMessage}
         />
         <SignupFormInput
           value={nameValue}
           setValue={setNameValue}
           name="name"
           inputType="text"
-          validate={nameIsValid}
-          errorMessage="Please enter a name"
+          validate={validateName}
+          errorMessage={nameMessage}
         />
-        <hr className="Hr" />
+        {/*<hr className="Hr" />*/}
         <SignupFormInput
           value={passwordValue}
           setValue={setPasswordValue}
           name="password"
           inputType="password"
-          validate={passwordIsValid}
-          errorMessage="Please enter a valid password"
+          validate={validatePassword}
+          errorMessage={passwordMessage}
         >
           <div className="Auth_fieldDescription">
-            <div>Must be 10-128 characters and contain at least:</div>
-            <div>1 capital letter, 1 lowercase letter, 1 number, 1 symbol</div>
+            <div>Passwords must be at least 10 characters and contain</div>
+            <div>1 capital, 1 lowercase, 1 number, and 1 symbol</div>
           </div>
         </SignupFormInput>
         <SignupFormInput
@@ -120,8 +177,8 @@ export function Signup() {
           name="passwordConfirm"
           label="Confirm password"
           inputType="password"
-          validate={passwordConfirmIsValid}
-          errorMessage="Please ensure passwords match and are valid"
+          validate={validatePasswordConfirm}
+          errorMessage={passwordConfirmMessage}
         />
       </form>
       <div className="Auth_actions">
