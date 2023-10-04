@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { useSignupMutation } from "./authApiSlice";
+import { useSignupMutation } from "@/features/auth";
 import { EMAIL_REGEX, isSignupError, PASSWORD_REGEX } from "@/types";
-import { SignupFormInput } from "@/features/auth/SignupFormInput";
+import { SignupFormInput } from "@/features/auth/components/SignupFormInput";
 import classNames from "classnames/dedupe";
 
 type MessageStatuses = "success" | "error";
@@ -70,8 +70,7 @@ export function Signup() {
   });
 
   const validateName = validateField({
-    // validationFn: (value: string) => value.length > 0,
-    validationFn: (value: string) => true,
+    validationFn: (value: string) => value.length > 0,
     errorMessage: "Please enter a name",
     setErrorMessage: setNameMessage,
   });

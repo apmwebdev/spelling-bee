@@ -21,8 +21,6 @@ export function SignupFormInput({
   errorMessage: string;
   children?: ReactNode;
 }) {
-  // const [isError, setIsError] = useState(false);
-
   const inputId = `Signup_${name}Input`;
 
   const inputClassnames = classNames({
