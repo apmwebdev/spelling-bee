@@ -36,34 +36,40 @@
 
 .Auth_fieldset {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr auto max-content;
   justify-content: flex-end;
   align-items: center;
   column-gap: 12px;
   row-gap: 4px;
-  label {
-    text-align: right;
-  }
 }
 
-.Auth_fieldDescription {
-  grid-column: 1/3;
-  font-size: 14px;
-  color: $text-secondary-dark;
-  font-style: italic;
-  min-height: 1em;
+.Auth_fieldLabel {
+  grid-column: 2/3;
   justify-self: flex-end;
   text-align: right;
 }
 
+.Auth_fieldDescription {
+  grid-column: 1/4;
+  font-size: 14px;
+  color: $text-disabled-dark;
+  font-style: italic;
+  min-height: 1em;
+  text-align: right;
+  padding-bottom: 12px;
+}
+
 .Auth_fieldMessage {
-  grid-column: 1/3;
+  grid-column: 1/4;
   font-size: 14px;
   min-height: 1em;
+  text-align: right;
 }
 
 input.Auth_textInput {
+  grid-column: 3/4;
   width: 30ch;
+  justify-self: flex-end;
 }
 
 .Auth_actions {

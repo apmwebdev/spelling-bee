@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import classNames from "classnames/dedupe";
 import { capitalize } from "lodash";
 
@@ -27,53 +21,30 @@ export function SignupFormInput({
   errorMessage: string;
   children?: ReactNode;
 }) {
-  const [messageValue, setMessageValue] = useState("");
-  const [isInvalid, setIsInvalid] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("signupFormSubmitted", checkValidationEffect);
-
-    return () => {
-      window.removeEventListener("signupFormSubmitted", checkValidationEffect);
-    };
-  }, []);
+  // const [isError, setIsError] = useState(false);
 
   const inputId = `Signup_${name}Input`;
 
   const inputClassnames = classNames({
     Auth_textInput: true,
-    TextInput___invalid: isInvalid,
+    TextInput___invalid: errorMessage.length > 0,
   });
 
   const messageClassnames = classNames({
     Auth_fieldMessage: true,
-    ErrorText: isInvalid,
-    SuccessText: !isInvalid,
+    ErrorText: errorMessage.length > 0,
   });
-
-  const checkValidation = (value: string) => {
-    const isValid = validate(value);
-    if (isValid) {
-      setIsInvalid(false);
-      setMessageValue("");
-    } else {
-      setIsInvalid(true);
-      setMessageValue(errorMessage);
-    }
-  };
-
-  const checkValidationEffect = () => {
-    checkValidation(value);
-  };
 
   const handleChange = (value: string) => {
     setValue(value);
-    checkValidation(value);
+    validate(value);
   };
 
   return (
     <fieldset className="Auth_fieldset">
-      <label htmlFor="Signup_nameInput">{label ?? capitalize(name)}:</label>
+      <label className="Auth_fieldLabel" htmlFor="Signup_nameInput">
+        {label ?? capitalize(name)}:
+      </label>
       <input
         type={inputType}
         className={inputClassnames}
@@ -81,10 +52,10 @@ export function SignupFormInput({
         name={`signup-${name}`}
         value={value}
         onChange={(e) => handleChange(e.target.value)}
-        onBlur={() => checkValidation(value)}
+        onBlur={() => validate(value)}
       />
       <label htmlFor={`Signup_${name}Input`} className={messageClassnames}>
-        {messageValue}
+        {errorMessage}
       </label>
       {children}
     </fieldset>
