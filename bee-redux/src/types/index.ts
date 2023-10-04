@@ -73,6 +73,11 @@ export const SortOrderOptions: EnumeratedOptions = {
   asc: { title: "Ascending" },
   desc: { title: "Descending" },
 };
+
+export type BasicResponse = {
+  success: string;
+};
+
 export const isSuccessfulResponse = (
   response: any,
 ): response is { data: any } => "data" in response;
@@ -90,13 +95,13 @@ export const isSerializedErrorResponse = (
 ): response is { error: SerializedError } =>
   isErrorResponse(response) && !("status" in response.error);
 
-export type SignupError = {
+export type BasicError = {
   data: {
     error: string;
   };
   status: number;
 };
-export const isSignupError = (response: any): response is SignupError =>
+export const isBasicError = (response: any): response is BasicError =>
   "data" in response &&
   "error" in response.data &&
   typeof response.data.error === "string";

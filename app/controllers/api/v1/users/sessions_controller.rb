@@ -13,7 +13,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
     if current_user
       render json: {
-        message: 'Logged out successfully.'
+        success: "Logged out successfully."
       }, status: 200
     else
       render json: {

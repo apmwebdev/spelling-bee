@@ -1,33 +1,52 @@
 import { apiSlice } from "@/features/api";
 
-import { LoginData, SignupData, User } from "@/features/auth";
+import {
+  LoginData,
+  ResendConfirmationData,
+  SignupData,
+  User,
+} from "@/features/auth";
+import { BasicResponse } from "@/types";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    signup: builder.mutation<{ success: string }, SignupData>({
+    signup: builder.mutation<BasicResponse, SignupData>({
       query: (formData) => ({
-        url: "/signup",
+        url: "/auth/signup",
         method: "POST",
         body: formData,
       }),
     }),
     login: builder.mutation<User, LoginData>({
       query: (formData) => ({
-        url: "/login",
+        url: "/auth/login",
         method: "POST",
         body: formData,
       }),
       invalidatesTags: ["User"],
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<BasicResponse, void>({
       query: () => ({
-        url: "/logout",
+        url: "/auth/logout",
         method: "DELETE",
       }),
       invalidatesTags: ["User"],
     }),
+    resendConfirmation: builder.mutation<BasicResponse, ResendConfirmationData>(
+      {
+        query: (email) => ({
+          url: "/auth/confirmation/resend",
+          method: "POST",
+          body: email,
+        }),
+      },
+    ),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation, useLogoutMutation } =
-  authApiSlice;
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useResendConfirmationMutation,
+} = authApiSlice;
