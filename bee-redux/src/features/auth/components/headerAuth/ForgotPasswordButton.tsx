@@ -1,5 +1,5 @@
 import * as Dialog from "@/components/radix-ui/radix-dialog";
-import { ForgotPassword } from "@/features/auth/components/ForgotPassword";
+import { ResetPassword } from "@/features/auth/components/ResetPassword";
 
 export function ForgotPasswordButton() {
   return (
@@ -10,7 +10,7 @@ export function ForgotPasswordButton() {
         description="Enter your email to reset your password"
         title="Reset Password"
       >
-        <ForgotPassword />
+        <ResetPassword />
       </Dialog.ContentWithPortal>
     </Dialog.Root>
   );
