@@ -4,9 +4,9 @@ import { useGetUserBaseDataQuery, userDataApiSlice } from "@/features/userData";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { RoutingError } from "@/routes/RoutingError";
 import { Header } from "@/routes/puzzleRoutePageSections/Header";
-import { LoginRoute } from "@/routes/LoginRoute";
-import { SignupRoute } from "@/routes/SignupRoute";
-import { ResendConfirmationRoute } from "@/routes/ResendConfirmationRoute";
+import { LoginRoute } from "@/features/auth/routes/LoginRoute";
+import { SignupRoute } from "@/features/auth/routes/SignupRoute";
+import { AuthRoutes } from "@/features/auth/routes";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -65,16 +65,8 @@ export default function App() {
           element: <PuzzleRoute />,
         },
         {
-          path: "signup",
-          element: <SignupRoute />,
-        },
-        {
-          path: "login",
-          element: <LoginRoute />,
-        },
-        {
-          path: "resend_confirmation",
-          element: <ResendConfirmationRoute />,
+          path: "auth/*",
+          element: <AuthRoutes />,
         },
       ],
     },

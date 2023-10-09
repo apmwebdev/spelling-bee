@@ -1,5 +1,6 @@
-import { AuthMessageOutput, Login } from "@/features/auth";
-import { useSearchParams } from "react-router-dom";
+import { AuthMessageOutput, Login, selectUser } from "@/features/auth";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { useAppSelector } from "@/app/hooks";
 
 const confirmedMessage: AuthMessageOutput = {
   value: "Email address confirmed successfully.",
@@ -7,7 +8,9 @@ const confirmedMessage: AuthMessageOutput = {
 };
 
 export function LoginRoute() {
+  const user = useAppSelector(selectUser);
   const [searchParams] = useSearchParams();
+
   const message = (): AuthMessageOutput | undefined => {
     //TODO: Make URL pattern and/or message into constants?
     if (searchParams.get("message") === "confirmed") {
@@ -15,9 +18,10 @@ export function LoginRoute() {
     }
   };
 
+  if (user) return <Navigate to="/puzzle/latest" />;
   return (
     <div className="Auth_route">
-      <Login redirectTo="../puzzle/latest" passedInMessage={message()} />
+      <Login passedInMessage={message()} />
     </div>
   );
 }

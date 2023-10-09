@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 
-export function ForgotPassword() {
+export function ResetPassword() {
   const [emailValue, setEmailValue] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
