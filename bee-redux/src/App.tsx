@@ -6,6 +6,7 @@ import { RoutingError } from "@/routes/RoutingError";
 import { Header } from "@/routes/puzzleRoutePageSections/Header";
 import { LoginRoute } from "@/routes/LoginRoute";
 import { SignupRoute } from "@/routes/SignupRoute";
+import { ResendConfirmationRoute } from "@/routes/ResendConfirmationRoute";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -70,6 +71,10 @@ export default function App() {
         {
           path: "login",
           element: <LoginRoute />,
+        },
+        {
+          path: "resend_confirmation",
+          element: <ResendConfirmationRoute />,
         },
       ],
     },
