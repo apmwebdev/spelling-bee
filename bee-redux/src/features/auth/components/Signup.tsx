@@ -2,7 +2,6 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useSignupMutation } from "@/features/auth";
 import { EMAIL_REGEX, isBasicError, PASSWORD_REGEX } from "@/types";
 import { SignupFormInput } from "@/features/auth/components/SignupFormInput";
-import classNames from "classnames/dedupe";
 import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
 import { useMessage } from "@/features/auth/hooks/useMessage";
 import { Message } from "@/features/auth/components/Message";
@@ -130,7 +129,7 @@ export function Signup() {
 
   return (
     <div className="Auth_container">
-      <Message {...message.output()} />
+      <Message {...message.output} />
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
         <SignupFormInput
           value={emailValue}

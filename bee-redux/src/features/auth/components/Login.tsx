@@ -1,17 +1,25 @@
 import { FormEvent, useState } from "react";
-import { useLoginMutation } from "@/features/auth";
+import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/auth/api/authSlice";
 import { isFetchBaseQueryErrorResponse } from "@/types";
 import { ForgotPasswordButton } from "@/features/auth/components/headerAuth/ForgotPasswordButton";
+import { useMessage } from "@/features/auth/hooks/useMessage";
+import { Message } from "@/features/auth/components/Message";
 
-export function Login({ redirectTo }: { redirectTo?: string }) {
+export function Login({
+  redirectTo,
+  passedInMessage,
+}: {
+  redirectTo?: string;
+  passedInMessage?: AuthMessageOutput;
+}) {
   const user = useAppSelector(selectUser);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [messageValue, setMessageValue] = useState("");
+  const message = useMessage(passedInMessage);
 
   const [login] = useLoginMutation();
 
@@ -22,7 +30,7 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canSubmit()) {
-      setMessageValue("");
+      message.update("");
       const formData: LoginData = {
         user: {
           email: emailValue,
@@ -34,7 +42,7 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
         isFetchBaseQueryErrorResponse(response) &&
         typeof response.error.data === "string"
       ) {
-        setMessageValue(response.error.data);
+        message.update(response.error.data, "error");
         console.log(response);
         return;
       }
@@ -57,7 +65,7 @@ export function Login({ redirectTo }: { redirectTo?: string }) {
 
     return (
       <div className="Auth_container">
-        <div className="Auth_message">{messageValue}</div>
+        <Message {...message.output} />
         <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
           <fieldset className="Auth_fieldset">
             <label htmlFor="Login_emailInput">Email:</label>

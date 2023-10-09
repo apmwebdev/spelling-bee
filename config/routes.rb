@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     sign_in: "login",
     sign_out: "logout",
     registration: "signup",
-    resend_confirmation: "confirmation/resend",
   },
     controllers: {
       sessions: "api/v1/users/sessions",

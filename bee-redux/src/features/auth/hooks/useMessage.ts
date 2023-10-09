@@ -1,11 +1,19 @@
 import { useState } from "react";
 import classNames from "classnames/dedupe";
+import {
+  AuthMessageHook,
+  AuthMessageOutput,
+  AuthMessageUpdate,
+} from "@/features/auth";
 
-export const useMessage = () => {
-  const [value, setValue] = useState("");
-  const [classes, setClasses] = useState("Auth_message");
+export const useMessage = (init?: AuthMessageOutput): AuthMessageHook => {
+  const [value, setValue] = useState(init?.value ?? "");
+  const [classes, setClasses] = useState(init?.classes ?? "Auth_message");
 
-  const update = (message: string, status?: "success" | "error") => {
+  const update: AuthMessageUpdate = (
+    message: string,
+    status?: "success" | "error",
+  ) => {
     setValue(message);
     setClasses(
       classNames({
@@ -16,10 +24,10 @@ export const useMessage = () => {
     );
   };
 
-  const output = () => ({
+  const output: AuthMessageOutput = {
     value,
     classes,
-  });
+  };
 
   return { update, output };
 };

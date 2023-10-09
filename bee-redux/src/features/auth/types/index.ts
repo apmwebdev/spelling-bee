@@ -23,3 +23,18 @@ export type ResendConfirmationData = {
     email: string;
   };
 };
+
+export type AuthMessageUpdate = (
+  message: string,
+  status?: "success" | "error",
+) => void;
+
+export type AuthMessageOutput = {
+  value: string;
+  classes: string;
+};
+
+export type AuthMessageHook = {
+  update: AuthMessageUpdate;
+  output: AuthMessageOutput;
+};
