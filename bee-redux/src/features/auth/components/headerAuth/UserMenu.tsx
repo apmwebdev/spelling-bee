@@ -2,10 +2,16 @@ import { InlineIcon } from "@iconify/react";
 import * as DropdownMenu from "@/components/radix-ui/radix-dropdown-menu";
 import { useLogoutMutation } from "@/features/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function UserMenu() {
   const [logout] = useLogoutMutation();
   const [buttonClasses, setButtonClasses] = useState("UserMenuTrigger");
+  const navigate = useNavigate();
+
+  const handleAccountSelect = () => {
+    navigate("/auth/account");
+  };
 
   const handleLogoutSelect = async () => {
     try {
@@ -65,7 +71,7 @@ export function UserMenu() {
           <InlineIcon icon="tabler:letter-w" />
           Saved Words
         </DropdownMenu.Item>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item onSelect={handleAccountSelect}>
           <InlineIcon icon="mdi:cog" />
           Account
         </DropdownMenu.Item>

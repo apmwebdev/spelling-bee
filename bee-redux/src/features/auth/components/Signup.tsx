@@ -1,10 +1,11 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useSignupMutation } from "@/features/auth";
 import { EMAIL_REGEX, isBasicError, PASSWORD_REGEX } from "@/types";
-import { SignupFormInput } from "@/features/auth/components/SignupFormInput";
+import { ValidatableFormInput } from "@/components/ValidatableFormInput";
 import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
-import { useMessage } from "@/features/auth/hooks/useMessage";
-import { Message } from "@/features/auth/components/Message";
+import { useFormMessage } from "@/hooks/useFormMessage";
+import { FormMessage } from "@/components/FormMessage";
+import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 
 const passwordsMatch = (comparisonValue: string) => (value: string) =>
   value === comparisonValue && value.length > 0;
@@ -19,72 +20,17 @@ const passwordsMatch = (comparisonValue: string) => (value: string) =>
  * and on events affecting the form as a whole, namely form submission.
  */
 export function Signup() {
-  const [emailValue, setEmailValue] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [nameValue, setNameValue] = useState("");
-  const [nameMessage, setNameMessage] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const { emailState, nameState, passwordState, passwordConfirmState } =
+    useUserInfoValidation({ allowBlanks: false });
+  const message = useFormMessage();
   const [signup, { isLoading }] = useSignupMutation();
-  const passwordConfirmValidationFn = passwordsMatch(passwordValue);
-  const message = useMessage();
-
-  const validateField =
-    ({
-      validationFn,
-      errorMessage,
-      setErrorMessage,
-    }: {
-      validationFn: (value: string) => boolean;
-      errorMessage: string;
-      setErrorMessage: Dispatch<SetStateAction<string>>;
-    }) =>
-    (value: string) => {
-      if (validationFn(value)) {
-        setErrorMessage("");
-        return true;
-      }
-      setErrorMessage(errorMessage);
-      return false;
-    };
-
-  const validateEmail = validateField({
-    validationFn: (value: string) => EMAIL_REGEX.test(value),
-    // validationFn: (value: string) => true,
-    errorMessage: "Please enter a valid email address",
-    setErrorMessage: setEmailMessage,
-  });
-
-  const validateName = validateField({
-    validationFn: (value: string) => value.length > 0,
-    // validationFn: (value: string) => true,
-    errorMessage: "Please enter a name",
-    setErrorMessage: setNameMessage,
-  });
-
-  const validatePassword = validateField({
-    validationFn: (value: string) => PASSWORD_REGEX.test(value),
-    // validationFn: () => true
-    errorMessage: "Please enter a valid password",
-    setErrorMessage: setPasswordMessage,
-  });
-
-  const validatePasswordConfirm = validateField({
-    validationFn: passwordConfirmValidationFn,
-    // validationFn: () => true,
-    errorMessage: "Please ensure passwords match and are valid",
-    setErrorMessage: setPasswordConfirmMessage,
-  });
 
   const validateForm = () => {
     message.update("");
-    const emailIsValid = validateEmail(emailValue);
-    const nameIsValid = validateName(nameValue);
-    const passwordIsValid = validatePassword(passwordValue);
-    const passwordConfirmIsValid =
-      validatePasswordConfirm(passwordConfirmValue);
+    const emailIsValid = emailState.validateCurrent();
+    const nameIsValid = nameState.validateCurrent();
+    const passwordIsValid = nameState.validateCurrent();
+    const passwordConfirmIsValid = passwordConfirmState.validateCurrent();
     return (
       emailIsValid &&
       nameIsValid &&
@@ -95,10 +41,10 @@ export function Signup() {
   };
 
   const resetForm = () => {
-    setEmailValue("");
-    setNameValue("");
-    setPasswordValue("");
-    setPasswordConfirmValue("");
+    emailState.setValue("");
+    nameState.setValue("");
+    passwordState.setValue("");
+    passwordConfirmState.setValue("");
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -106,10 +52,10 @@ export function Signup() {
     if (validateForm()) {
       const formData = {
         user: {
-          email: emailValue,
-          name: nameValue,
-          password: passwordValue,
-          password_confirmation: passwordConfirmValue,
+          email: emailState.value,
+          name: nameState.value,
+          password: passwordState.value,
+          password_confirmation: passwordConfirmState.value,
         },
       };
       try {
@@ -129,46 +75,37 @@ export function Signup() {
 
   return (
     <div className="Auth_container">
-      <Message {...message.output} />
+      <FormMessage {...message.output} />
       <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
-        <SignupFormInput
-          value={emailValue}
-          setValue={setEmailValue}
+        <ValidatableFormInput
           name="email"
-          inputType="text"
-          validate={validateEmail}
-          errorMessage={emailMessage}
+          inputType="email"
+          cssBlock="Auth"
+          {...emailState}
         />
-        <SignupFormInput
-          value={nameValue}
-          setValue={setNameValue}
+        <ValidatableFormInput
           name="name"
           inputType="text"
-          validate={validateName}
-          errorMessage={nameMessage}
+          cssBlock="Auth"
+          {...nameState}
         />
-        {/*<hr className="Hr" />*/}
-        <SignupFormInput
-          value={passwordValue}
-          setValue={setPasswordValue}
+        <ValidatableFormInput
           name="password"
           inputType="password"
-          validate={validatePassword}
-          errorMessage={passwordMessage}
+          cssBlock="Auth"
+          {...passwordState}
         >
           <div className="Auth_fieldDescription">
             <div>Passwords must be at least 10 characters and contain</div>
             <div>1 capital, 1 lowercase, 1 number, and 1 symbol</div>
           </div>
-        </SignupFormInput>
-        <SignupFormInput
-          value={passwordConfirmValue}
-          setValue={setPasswordConfirmValue}
+        </ValidatableFormInput>
+        <ValidatableFormInput
           name="passwordConfirm"
           label="Confirm password"
           inputType="password"
-          validate={validatePasswordConfirm}
-          errorMessage={passwordConfirmMessage}
+          cssBlock="Auth"
+          {...passwordConfirmState}
         />
       </form>
       <div className="Auth_actions">

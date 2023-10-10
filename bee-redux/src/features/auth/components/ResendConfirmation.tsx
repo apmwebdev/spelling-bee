@@ -3,8 +3,8 @@ import {
   AuthMessageOutput,
   useResendConfirmationMutation,
 } from "@/features/auth";
-import { useMessage } from "@/features/auth/hooks/useMessage";
-import { Message } from "@/features/auth/components/Message";
+import { useFormMessage } from "@/hooks/useFormMessage";
+import { FormMessage } from "@/components/FormMessage";
 import { isBasicError } from "@/types";
 
 export function ResendConfirmation({
@@ -13,7 +13,7 @@ export function ResendConfirmation({
   passedInMessage?: AuthMessageOutput;
 }) {
   const [emailValue, setEmailValue] = useState("");
-  const message = useMessage(passedInMessage);
+  const message = useFormMessage(passedInMessage);
   const [resend] = useResendConfirmationMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -37,7 +37,7 @@ export function ResendConfirmation({
 
   return (
     <div className="Auth_container">
-      <Message {...message.output} />
+      <FormMessage {...message.output} />
       <form
         id="ResendConfirmation_form"
         className="Auth_form"

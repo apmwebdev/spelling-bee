@@ -1,12 +1,21 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { useGetUserBaseDataQuery, userDataApiSlice } from "@/features/userData";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { RoutingError } from "@/routes/RoutingError";
 import { Header } from "@/routes/puzzleRoutePageSections/Header";
-import { LoginRoute } from "@/features/auth/routes/LoginRoute";
+import { AuthRoutes } from "@/features/auth";
 import { SignupRoute } from "@/features/auth/routes/SignupRoute";
-import { AuthRoutes } from "@/features/auth/routes";
+import { LoginRoute } from "@/features/auth/routes/LoginRoute";
+import { ResendConfirmationRoute } from "@/features/auth/routes/ResendConfirmationRoute";
+import { NonPuzzleLayout } from "@/routes/NonPuzzleLayout";
+import { AccountRoute } from "@/features/auth/routes/AccountRoute";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -46,6 +55,7 @@ export default function App() {
     );
   };
 
+  //TODO: Get rid of this if not using it
   const router = createBrowserRouter([
     {
       path: "/",
@@ -57,11 +67,11 @@ export default function App() {
           element: <PuzzleRoute />,
         },
         {
-          path: "puzzles/:identifier",
+          path: "puzzle/:identifier",
           element: <PuzzleRoute />,
         },
         {
-          path: "puzzle/:identifier",
+          path: "puzzles/:identifier",
           element: <PuzzleRoute />,
         },
         {
@@ -72,5 +82,25 @@ export default function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  // return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={rootElement()} errorElement={<RoutingError />}>
+          <Route index element={<PuzzleRoute />} />
+          <Route path="puzzle/:identifier" element={<PuzzleRoute />} />
+          <Route path="puzzles/:identifier" element={<PuzzleRoute />} />
+          <Route path="auth/*" element={<NonPuzzleLayout />}>
+            <Route path="signup" element={<SignupRoute />} />
+            <Route path="login" element={<LoginRoute />} />
+            <Route
+              path="resend_confirmation"
+              element={<ResendConfirmationRoute />}
+            />
+            <Route path="account" element={<AccountRoute />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }

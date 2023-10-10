@@ -3,8 +3,8 @@ import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
 import { isFetchBaseQueryErrorResponse } from "@/types";
 import { ForgotPasswordButton } from "@/features/auth/components/headerAuth/ForgotPasswordButton";
-import { useMessage } from "@/features/auth/hooks/useMessage";
-import { Message } from "@/features/auth/components/Message";
+import { useFormMessage } from "@/hooks/useFormMessage";
+import { FormMessage } from "@/components/FormMessage";
 
 export function Login({
   passedInMessage,
@@ -13,7 +13,7 @@ export function Login({
 }) {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const message = useMessage(passedInMessage);
+  const message = useFormMessage(passedInMessage);
 
   const [login] = useLoginMutation();
 
@@ -46,7 +46,7 @@ export function Login({
   const content = () => {
     return (
       <div className="Auth_container">
-        <Message {...message.output} />
+        <FormMessage {...message.output} />
         <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
           <fieldset className="Auth_fieldset">
             <label htmlFor="Login_emailInput">Email:</label>

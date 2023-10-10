@@ -52,6 +52,35 @@ class User < ApplicationRecord
     { email:, name: }
   end
 
+  # Override Devise::Models::DatabaseAuthenticatable#update_with_password
+  def update_with_password(params)
+    current_password = params.delete(:current_password)
+    result = if valid_password?(current_password)
+      update(params)
+    else
+      assign_attributes(params)
+      valid?
+      errors.add(:current_password, current_password.blank? ? :blank : :invalid)
+      false
+    end
+
+    clean_up_passwords
+    result
+  end
+
+  # Override Devise::Models::DatabaseAuthenticatable#update_without_password
+  def update_without_password(params)
+    params.delete(:password)
+    params.delete(:password_confirmation)
+    params.delete(:current_password)
+    params.delete(:email) if params[:email].blank?
+    params.delete(:name) if params[:name].blank?
+
+    result = update(params)
+    clean_up_passwords
+    result
+  end
+
   private
 
   # Override Devise::Confirmable#after_confirmation

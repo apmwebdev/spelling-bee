@@ -3,14 +3,14 @@ import classNames from "classnames/dedupe";
 import {
   AuthMessageHook,
   AuthMessageOutput,
-  AuthMessageUpdate,
+  AuthMessageData,
 } from "@/features/auth";
 
-export const useMessage = (init?: AuthMessageOutput): AuthMessageHook => {
+export const useFormMessage = (init?: AuthMessageOutput): AuthMessageHook => {
   const [value, setValue] = useState(init?.value ?? "");
   const [classes, setClasses] = useState(init?.classes ?? "Auth_message");
 
-  const update: AuthMessageUpdate = (
+  const update: AuthMessageData = (
     message: string,
     status?: "success" | "error",
   ) => {

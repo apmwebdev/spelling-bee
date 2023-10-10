@@ -24,7 +24,7 @@ export type ResendConfirmationData = {
   };
 };
 
-export type AuthMessageUpdate = (
+export type AuthMessageData = (
   message: string,
   status?: "success" | "error",
 ) => void;
@@ -35,6 +35,16 @@ export type AuthMessageOutput = {
 };
 
 export type AuthMessageHook = {
-  update: AuthMessageUpdate;
+  update: AuthMessageData;
   output: AuthMessageOutput;
+};
+
+export type AuthUpdateData = {
+  user: {
+    email?: string;
+    name?: string;
+    current_password?: string;
+    password?: string;
+    password_confirmation?: string;
+  };
 };
