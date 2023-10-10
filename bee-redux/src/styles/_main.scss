@@ -58,6 +58,21 @@
   max-width: 33.3333333333vw;
 }
 
+.NonPuzzleLayout {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+}
+
+.NonPuzzleMain {
+  width: clamp(600px, 60%, 1280px);
+  background-color: $dark-gray-1;
+  padding: 16px;
+  border-radius: var(--br);
+  border: 1.5px solid $dark-gray-5;
+}
+
 
 
 

@@ -1,4 +1,4 @@
-export function Message({
+export function FormMessage({
   value,
   classes,
 }: {

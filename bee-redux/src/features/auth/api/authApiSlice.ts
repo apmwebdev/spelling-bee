@@ -1,6 +1,7 @@
 import { apiSlice } from "@/features/api";
 
 import {
+  AuthUpdateData,
   LoginData,
   ResendConfirmationData,
   SignupData,
@@ -41,6 +42,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }),
       },
     ),
+    updateAccount: builder.mutation<User, AuthUpdateData>({
+      query: (formData) => ({
+        url: "/auth/signup",
+        method: "PATCH",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -49,4 +57,5 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useResendConfirmationMutation,
+  useUpdateAccountMutation,
 } = authApiSlice;
