@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "@/app/store";
 import { authApiSlice } from "./authApiSlice";
-import { User } from "@/features/auth/types";
+import { User } from "@/features/auth";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { persistor } from "@/features/api";
 
@@ -21,8 +21,7 @@ const rehydrateAuthState = (): AuthState => {
     const maybeUser = storedUser.parsed;
     if (
       typeof maybeUser.email === "string" &&
-      typeof maybeUser.name === "string" &&
-      typeof maybeUser.username === "string"
+      typeof maybeUser.name === "string"
     ) {
       authState.user = maybeUser;
     }
@@ -63,7 +62,10 @@ export const { loginReducer, logoutReducer } = authSlice.actions;
 export const selectUser = (state: RootState) => state.auth.user;
 
 startAppListening({
-  matcher: authApiSlice.endpoints.login.matchFulfilled,
+  matcher: isAnyOf(
+    authApiSlice.endpoints.login.matchFulfilled,
+    authApiSlice.endpoints.updateAccount.matchFulfilled,
+  ),
   effect: ({ payload }, api) => {
     api.dispatch(loginReducer(payload));
     persistor.save("user", payload);

@@ -4,7 +4,7 @@ import {
   configureStore,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import authReducer from "@/features/auth/authSlice";
+import authReducer from "@/features/auth/api/authSlice";
 import puzzleReducer from "@/features/puzzle/api/puzzleSlice";
 import guessesReducer from "@/features/guesses/api/guessesSlice";
 import wordListSettingsReducer from "@/features/wordLists/api/wordListSettingsSlice";

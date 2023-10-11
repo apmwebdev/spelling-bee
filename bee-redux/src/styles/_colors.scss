@@ -25,7 +25,7 @@ $error-hue: 0;
 }
 
 @function bg-color-dark-disabled($hue) {
-  @return hsl($hue, 15%, 26%);
+  @return hsl($hue, 18%, 22%);
 }
 
 //Borders
@@ -38,7 +38,7 @@ $error-hue: 0;
 }
 
 @function border-color-dark-disabled($hue) {
-  @return hsl($hue, 8%, 23%);
+  @return hsl($hue, 12%, 25%);
 }
 
 @function shadow-color-focus($hue) {
@@ -61,18 +61,6 @@ $error-hue: 0;
 //Status Text
 @function status-text-dark($hue) {
   @return hsl($hue, 85%, 82%);
-}
-
-.HintCompleted {
-  color: status-text-dark($success-hue);
-}
-
-.HintInProgress {
-  color: status-text-dark($warning-hue)
-}
-
-.HintNotStarted {
-  color: status-text-dark($error-hue);
 }
 
 //Gray Backgrounds
@@ -120,6 +108,28 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   &:focus {
     box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
   }
+}
+
+:root {
+  --success-text: #{status-text-dark($success-hue)};
+  --warning-text: #{status-text-dark($warning-hue)};
+  --error-text: #{status-text-dark($error-hue)};
+}
+
+.SuccessText {
+  color: var(--success-text);
+}
+
+.WarningText {
+  color: var(--warning-text);
+}
+
+.ErrorText {
+  color: var(--error-text);
+}
+
+.DisabledText {
+  color: $text-disabled-dark;
 }
 
 @media (prefers-color-scheme: light) {

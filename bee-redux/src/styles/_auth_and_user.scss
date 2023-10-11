@@ -1,0 +1,141 @@
+@use 'colors' as *;
+
+@mixin auth-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.Auth_route {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.Auth_dialogContent {
+  padding: 12px;
+  gap: 12px;
+}
+
+.Auth_container {
+  @include auth-form-container;
+  width: 400px;
+  max-width: 400px;
+}
+
+.Auth_message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 1em;
+}
+
+.Auth_form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Auth_fieldset {
+  display: grid;
+  grid-template-columns: 1fr auto max-content;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 4px;
+}
+
+.Auth_fieldLabel {
+  grid-column: 2/3;
+  justify-self: flex-end;
+  text-align: right;
+}
+
+.Auth_fieldDescription {
+  grid-column: 1/4;
+  font-size: 14px;
+  color: $text-disabled-dark;
+  font-style: italic;
+  min-height: 1em;
+  text-align: right;
+  padding-bottom: 12px;
+}
+
+.Auth_fieldMessage {
+  grid-column: 1/4;
+  font-size: 14px;
+  min-height: 1em;
+  text-align: right;
+}
+
+input.Auth_textInput {
+  grid-column: 3/4;
+  width: 30ch;
+  justify-self: flex-end;
+}
+
+.Auth_actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Auth_submit {
+  align-self: flex-end;
+}
+
+.User_formContainer {
+  @include auth-form-container;
+}
+
+.User_message {
+  @extend .Auth_message;
+}
+
+.User_form {
+  @extend .Auth_form;
+}
+
+.User_fieldset {
+  @extend .Auth_fieldset;
+  justify-content: center;
+}
+
+.User_fieldLabel {
+  @extend .Auth_fieldLabel;
+  width: 200px;
+  text-align: left;
+}
+
+.User_fieldDescription {
+  @extend .Auth_fieldDescription;
+}
+
+.User_fieldMessage {
+  @extend .Auth_fieldMessage;
+}
+
+input.User_textInput {
+  @extend .Auth_textInput;
+}
+
+.User_actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.User_formSection {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.User_formSection___vert {
+  flex-direction: column;
+  align-items: center;
+}

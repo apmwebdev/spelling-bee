@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, path: "api/v1", path_names: {
+  devise_for :users, path: "api/v1/auth", path_names: {
     sign_in: "login",
     sign_out: "logout",
     registration: "signup",
@@ -7,16 +7,20 @@ Rails.application.routes.draw do
     controllers: {
       sessions: "api/v1/users/sessions",
       registrations: "api/v1/users/registrations",
+      confirmations: "api/v1/users/confirmations",
     }
   namespace :api do
     namespace :v1 do
-      resources :words
+      # Auth
+      devise_scope :user do
+        post "auth/confirmation/resend", to: "users/confirmations#resend"
+      end
       # Puzzles
       get "puzzles/latest", to: "puzzles#latest"
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
       # Attempts and guesses
-      get "/user_puzzle_attempts_for_puzzle/:puzzle_id",
+      get "user_puzzle_attempts_for_puzzle/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
       resources :user_puzzle_attempts, except: :update
       resources :guesses, only: :create
@@ -40,6 +44,8 @@ Rails.application.routes.draw do
       get "search_panel_search/:attempt_id",
         to: "search_panel_searches#for_attempt_and_profile"
       resources :search_panel_searches, only: [:create, :update, :destroy]
+      # Words
+      resources :words
       # Root
       root "puzzles#latest"
     end
