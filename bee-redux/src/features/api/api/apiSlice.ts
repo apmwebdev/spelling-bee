@@ -6,7 +6,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import { logoutThunk } from "@/features/auth/authSlice";
+import { logoutThunk } from "@/features/auth";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3000/api/v1",

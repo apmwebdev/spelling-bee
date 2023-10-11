@@ -664,12 +664,11 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
-    username character varying NOT NULL,
-    provider character varying DEFAULT 'email'::character varying NOT NULL,
-    uid character varying DEFAULT ''::character varying NOT NULL,
-    allow_password_change boolean DEFAULT true,
-    tokens json,
-    jti character varying NOT NULL
+    jti character varying NOT NULL,
+    confirmation_token character varying,
+    confirmed_at timestamp(6) without time zone,
+    confirmation_sent_at timestamp(6) without time zone,
+    unconfirmed_email character varying
 );
 
 
@@ -1124,6 +1123,13 @@ CREATE INDEX index_user_puzzle_attempts_on_user_id ON public.user_puzzle_attempt
 
 
 --
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON public.users USING btree (confirmation_token);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1142,13 +1148,6 @@ CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
-
-
---
--- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
 
 
 --
@@ -1321,6 +1320,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230912194527'),
 ('20230912210851'),
 ('20230912212040'),
-('20230913100015');
+('20230913100015'),
+('20231001001349'),
+('20231002213304');
 
 

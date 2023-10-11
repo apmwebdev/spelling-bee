@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HeaderAuth } from "@/features/auth/headerAuth/HeaderAuth";
+import { HeaderAuth } from "@/features/auth";
 import { PuzzleSearch } from "@/features/puzzleSearch";
 
 export function Header() {

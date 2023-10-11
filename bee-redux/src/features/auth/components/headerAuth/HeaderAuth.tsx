@@ -1,8 +1,8 @@
 import { useAppSelector } from "@/app/hooks";
-import { selectUser } from "../authSlice";
+import { selectUser } from "@/features/auth";
 import { UserMenu } from "./UserMenu";
-import { LoginButton } from "@/features/auth/headerAuth/LoginButton";
-import { SignupButton } from "@/features/auth/headerAuth/SignupButton";
+import { LoginButton } from "@/features/auth/components/headerAuth/LoginButton";
+import { SignupButton } from "@/features/auth/components/headerAuth/SignupButton";
 
 export function HeaderAuth() {
   const user = useAppSelector(selectUser);
@@ -19,8 +19,6 @@ export function HeaderAuth() {
       <>
         <LoginButton />
         <SignupButton />
-        {/*<Link to="/login">Log in</Link>*/}
-        {/*<Link to="/signup">Sign up</Link>*/}
       </>
     );
   };

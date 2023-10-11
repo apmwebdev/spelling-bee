@@ -669,8 +669,8 @@ button.PanelSettingsToggle {
   text-decoration: underline;
   padding: 0px;
   //cursor: help;
-  tr.HintNotStarted & {
-    @extend .HintNotStarted
+  tr.ErrorText & {
+    @extend .ErrorText
   }
 }
 

@@ -1,13 +1,13 @@
 import * as Dialog from "@/components/radix-ui/radix-dialog";
-import { Signup } from "@/features/auth/Signup";
+import { Signup } from "@/features/auth";
 
 export function SignupButton() {
   return (
     <Dialog.Root>
       <Dialog.Trigger className="standardButton">Sign up</Dialog.Trigger>
       <Dialog.ContentWithPortal
-        description="Sign up for an account"
-        hideDescription={true}
+        className="Auth_dialogContent"
+        description="All fields are required"
         title="Sign Up"
       >
         <Signup />
