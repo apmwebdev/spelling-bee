@@ -7,6 +7,7 @@ import { useAppSelector } from "@/app/hooks";
 import {
   AuthUpdateData,
   selectUser,
+  User,
   useUpdateAccountMutation,
 } from "@/features/auth";
 import {
@@ -36,9 +37,9 @@ export function AccountRoute() {
     validationDependency: passwordState.value,
   });
 
-  const resetForm = () => {
-    emailState.setValue(user?.email ?? "");
-    nameState.setValue(user?.name ?? "");
+  const resetForm = (updatedUser: User) => {
+    emailState.setValue(updatedUser.email);
+    nameState.setValue(updatedUser.name);
     currentPasswordState.setValue("");
     passwordState.setValue("");
     passwordConfirmState.setValue("");
@@ -72,6 +73,7 @@ export function AccountRoute() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     if (canSubmit()) {
       const formData: AuthUpdateData = {
         user: {
@@ -83,9 +85,9 @@ export function AccountRoute() {
         },
       };
       try {
-        await updateAccount(formData).unwrap();
+        const response = await updateAccount(formData).unwrap();
         message.update("Successfully updated", "Success");
-        resetForm();
+        resetForm(response);
       } catch (err) {
         console.error("Failed to update: ", err);
         if (isBasicError(err)) {
