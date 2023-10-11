@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Class configuration
   include Devise::JWT::RevocationStrategies::JTIMatcher
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-    :confirmable, :jwt_cookie_authenticatable,
+    :confirmable, :lockable, :jwt_cookie_authenticatable,
     :jwt_authenticatable, jwt_revocation_strategy: self
 
   # Constants

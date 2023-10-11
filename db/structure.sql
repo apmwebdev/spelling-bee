@@ -668,7 +668,10 @@ CREATE TABLE public.users (
     confirmation_token character varying,
     confirmed_at timestamp(6) without time zone,
     confirmation_sent_at timestamp(6) without time zone,
-    unconfirmed_email character varying
+    unconfirmed_email character varying,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    locked_at timestamp(6) without time zone,
+    unlock_token character varying
 );
 
 
@@ -1151,6 +1154,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
+
+
+--
 -- Name: index_words_on_definitions; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1322,6 +1332,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230912212040'),
 ('20230913100015'),
 ('20231001001349'),
-('20231002213304');
+('20231002213304'),
+('20231011153938');
 
 
