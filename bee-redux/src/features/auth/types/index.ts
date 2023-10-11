@@ -1,3 +1,5 @@
+import { MessageStatus } from "@/types";
+
 export type User = {
   email: string;
   name: string;
@@ -24,18 +26,19 @@ export type ResendConfirmationData = {
   };
 };
 
-export type AuthMessageData = (
+export type AuthMessageUpdateFn = (
   message: string,
-  status?: "success" | "error",
+  status?: MessageStatus,
 ) => void;
 
 export type AuthMessageOutput = {
   value: string;
+  status: MessageStatus;
   classes: string;
 };
 
 export type AuthMessageHook = {
-  update: AuthMessageData;
+  update: AuthMessageUpdateFn;
   output: AuthMessageOutput;
 };
 

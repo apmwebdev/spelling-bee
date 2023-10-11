@@ -1,9 +1,6 @@
 import { FormMessage } from "@/components/FormMessage";
-import { useFormMessage } from "@/hooks/useFormMessage";
-import {
-  useUserInfoValidation,
-  validateField,
-} from "@/hooks/useUserInfoValidation";
+import { useStatusMessage } from "@/hooks/useStatusMessage";
+import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { FormEvent } from "react";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
 import { useAppSelector } from "@/app/hooks";
@@ -12,7 +9,10 @@ import {
   selectUser,
   useUpdateAccountMutation,
 } from "@/features/auth";
-import { useUserInfoFormField } from "@/hooks/useUserInfoFormField";
+import {
+  useUserInfoFormField,
+  validateField,
+} from "@/hooks/useUserInfoFormField";
 import { Navigate } from "react-router-dom";
 import { isBasicError } from "@/types";
 
@@ -20,11 +20,13 @@ export function AccountRoute() {
   const { emailState, nameState, passwordState, passwordConfirmState } =
     useUserInfoValidation({ allowBlanks: true });
   const user = useAppSelector(selectUser);
-  const message = useFormMessage();
+  const message = useStatusMessage({
+    baseClass: "Auth_message",
+  });
   const [updateAccount, { isLoading }] = useUpdateAccountMutation();
 
   const currentPasswordState = useUserInfoFormField({
-    validator_needsSetMessage: validateField({
+    validator_needsMessageHook: validateField({
       validationFn: (value: string) => value.length > 0,
     })({
       errorMessage: "Please enter your current password",
@@ -34,24 +36,43 @@ export function AccountRoute() {
     validationDependency: passwordState.value,
   });
 
-  const validateForm = () => {
+  const resetForm = () => {
+    emailState.setValue(user?.email ?? "");
+    nameState.setValue(user?.name ?? "");
+    currentPasswordState.setValue("");
+    passwordState.setValue("");
+    passwordConfirmState.setValue("");
+  };
+
+  const validateIfChanged = () => {
+    const didChange =
+      emailState.hasChanged || nameState.hasChanged || passwordState.hasChanged;
+    if (!didChange) message.update("Nothing to update", "Warning");
+    return didChange;
+  };
+
+  /** Returns true if *all* fields are valid and *any* fields have been changed.
+   */
+  const canSubmit = () => {
     message.update("");
     const emailIsValid = emailState.validateCurrent();
     const nameIsValid = nameState.validateCurrent();
     const passwordIsValid = nameState.validateCurrent();
     const passwordConfirmIsValid = passwordConfirmState.validateCurrent();
+    const didChange = validateIfChanged();
     return (
       emailIsValid &&
       nameIsValid &&
       passwordIsValid &&
       passwordConfirmIsValid &&
+      didChange &&
       !isLoading
     );
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (canSubmit()) {
       const formData: AuthUpdateData = {
         user: {
           email: emailState.value,
@@ -62,15 +83,15 @@ export function AccountRoute() {
         },
       };
       try {
-        const response = await updateAccount(formData).unwrap();
-        console.log("Response:", response);
-        message.update("Successfully updated", "success");
+        await updateAccount(formData).unwrap();
+        message.update("Successfully updated", "Success");
+        resetForm();
       } catch (err) {
-        console.error("Failed to save user: ", err);
+        console.error("Failed to update: ", err);
         if (isBasicError(err)) {
-          message.update(err.data.error, "error");
+          message.update(err.data.error, "Error");
         } else {
-          message.update("Error", "error");
+          message.update("Failed to update", "Error");
         }
       }
     }
@@ -82,6 +103,7 @@ export function AccountRoute() {
       <h2>Edit Account</h2>
       <h3>Note: Blank fields will not be updated</h3>
       <FormMessage {...message.output} />
+      <div className="spacer"></div>
       <form className="User_form" onSubmit={handleSubmit}>
         <ValidatableFormInput
           name="email"
