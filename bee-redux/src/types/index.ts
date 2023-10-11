@@ -14,6 +14,9 @@ export enum Statuses {
   Error = "Error",
 }
 
+const MessageStatuses = ["Success", "Warning", "Error", "Disabled"] as const;
+export type MessageStatus = (typeof MessageStatuses)[number];
+
 export enum ColorSchemes {
   Auto = "auto",
   Light = "light",

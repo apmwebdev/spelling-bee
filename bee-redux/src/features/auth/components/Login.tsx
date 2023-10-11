@@ -3,7 +3,7 @@ import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
 import { isFetchBaseQueryErrorResponse } from "@/types";
 import { ForgotPasswordButton } from "@/features/auth/components/headerAuth/ForgotPasswordButton";
-import { useFormMessage } from "@/hooks/useFormMessage";
+import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 
 export function Login({
@@ -13,7 +13,10 @@ export function Login({
 }) {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const message = useFormMessage(passedInMessage);
+  const message = useStatusMessage({
+    baseClass: "Auth_message",
+    initial: passedInMessage,
+  });
 
   const [login] = useLoginMutation();
 
@@ -36,7 +39,7 @@ export function Login({
         isFetchBaseQueryErrorResponse(response) &&
         typeof response.error.data === "string"
       ) {
-        message.update(response.error.data, "error");
+        message.update(response.error.data, "Error");
         console.log(response);
         return;
       }

@@ -3,7 +3,7 @@ import {
   AuthMessageOutput,
   useResendConfirmationMutation,
 } from "@/features/auth";
-import { useFormMessage } from "@/hooks/useFormMessage";
+import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { isBasicError } from "@/types";
 
@@ -13,7 +13,10 @@ export function ResendConfirmation({
   passedInMessage?: AuthMessageOutput;
 }) {
   const [emailValue, setEmailValue] = useState("");
-  const message = useFormMessage(passedInMessage);
+  const message = useStatusMessage({
+    baseClass: "Auth_message",
+    initial: passedInMessage,
+  });
   const [resend] = useResendConfirmationMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -25,12 +28,12 @@ export function ResendConfirmation({
         },
       }).unwrap();
       setEmailValue("");
-      message.update(response.success, "success");
+      message.update(response.success, "Success");
     } catch (err) {
       if (isBasicError(err)) {
-        message.update(err.data.error, "error");
+        message.update(err.data.error, "Error");
       } else {
-        message.update("Error", "error");
+        message.update("Error", "Error");
       }
     }
   };

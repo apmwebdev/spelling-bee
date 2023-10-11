@@ -1,9 +1,9 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { FormEvent } from "react";
 import { useSignupMutation } from "@/features/auth";
-import { EMAIL_REGEX, isBasicError, PASSWORD_REGEX } from "@/types";
+import { isBasicError } from "@/types";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
 import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
-import { useFormMessage } from "@/hooks/useFormMessage";
+import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 
@@ -22,7 +22,9 @@ const passwordsMatch = (comparisonValue: string) => (value: string) =>
 export function Signup() {
   const { emailState, nameState, passwordState, passwordConfirmState } =
     useUserInfoValidation({ allowBlanks: false });
-  const message = useFormMessage();
+  const message = useStatusMessage({
+    baseClass: "Auth_message",
+  });
   const [signup, { isLoading }] = useSignupMutation();
 
   const validateForm = () => {
@@ -61,13 +63,13 @@ export function Signup() {
       try {
         const response = await signup(formData).unwrap();
         resetForm();
-        message.update(response.success, "success");
+        message.update(response.success, "Success");
       } catch (error) {
         console.error("Failed to save user: ", error);
         if (isBasicError(error)) {
-          message.update(error.data.error, "error");
+          message.update(error.data.error, "Error");
         } else {
-          message.update("Error", "error");
+          message.update("Error", "Error");
         }
       }
     }
