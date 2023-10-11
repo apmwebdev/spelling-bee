@@ -18,17 +18,22 @@ export function ValidatableFormInput({
 }: {
   /** Field name for the form */
   name: string;
+  /** What type of text input field to render */
   inputType: "text" | "email" | "password";
   /** For determining what CSS classes to apply */
   cssBlock: "User" | "Auth";
+  /** Value is controlled in a hook, so it and its setter are passed in */
   value: string;
+  /** Value is controlled in a hook, so the setter is passed in */
   setValue: Dispatch<SetStateAction<string>>;
-  /** Validation fn. Will fail on empty value, which is handled elsewhere */
+  /** Function used to validate the field's value. May fail if empty and can
+   * depend on other form values */
   validate: UserFieldValidator;
-  /** Validation/error message for the input field based on validation fn */
+  /** The message state for the field based on validation */
   messageHook: AuthMessageHook;
+  /** Current value for the field. Used for validation */
   existingValue?: string;
-  /** Field label, if different from name */
+  /** The field's label text, if different from name */
   label?: string;
   /** Used for a field description, if needed */
   children?: ReactNode;
