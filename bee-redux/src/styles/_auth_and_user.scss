@@ -9,8 +9,9 @@
 
 .Auth_route {
   display: flex;
-  justify-content: center;
-  padding: 16px;
+  flex-direction: column;
+  align-items: center;
+  //padding: 16px;
 }
 
 .Auth_dialogContent {
@@ -20,7 +21,6 @@
 
 .Auth_container {
   @include auth-form-container;
-  width: 400px;
   max-width: 400px;
 }
 
@@ -138,4 +138,24 @@ input.User_textInput {
 .User_formSection___vert {
   flex-direction: column;
   align-items: center;
+}
+
+.Auth_moreActions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  //align-self: flex-start;
+  align-items: center;
+}
+
+.Auth_moreActionsList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  //flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  font-size: 16px;
+  li {
+    text-align: center;
+  }
 }
