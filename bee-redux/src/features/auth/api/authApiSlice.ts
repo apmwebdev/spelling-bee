@@ -3,7 +3,7 @@ import { apiSlice } from "@/features/api";
 import {
   AuthUpdateData,
   LoginData,
-  ResendConfirmationData,
+  ResendEmailData,
   SignupData,
   User,
 } from "@/features/auth";
@@ -33,20 +33,25 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    resendConfirmation: builder.mutation<BasicResponse, ResendConfirmationData>(
-      {
-        query: (email) => ({
-          url: "/auth/confirmation/resend",
-          method: "POST",
-          body: email,
-        }),
-      },
-    ),
     updateAccount: builder.mutation<User, AuthUpdateData>({
       query: (formData) => ({
         url: "/auth/signup",
         method: "PATCH",
         body: formData,
+      }),
+    }),
+    resendConfirmation: builder.mutation<BasicResponse, ResendEmailData>({
+      query: (email) => ({
+        url: "/auth/confirmation/resend",
+        method: "POST",
+        body: email,
+      }),
+    }),
+    resendUnlock: builder.mutation<BasicResponse, ResendEmailData>({
+      query: (email) => ({
+        url: "/auth/unlock",
+        method: "POST",
+        body: email,
       }),
     }),
   }),
@@ -56,6 +61,7 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
-  useResendConfirmationMutation,
   useUpdateAccountMutation,
+  useResendConfirmationMutation,
+  useResendUnlockMutation,
 } = authApiSlice;

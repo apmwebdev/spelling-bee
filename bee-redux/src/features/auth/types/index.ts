@@ -20,7 +20,7 @@ export type SignupData = {
   };
 };
 
-export type ResendConfirmationData = {
+export type ResendEmailData = {
   user: {
     email: string;
   };
