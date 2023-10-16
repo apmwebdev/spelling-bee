@@ -4,21 +4,26 @@ import {
   CollapsibleProps,
   CollapsibleTriggerProps,
 } from "@radix-ui/react-collapsible";
-import { RefAttributes } from "react";
+import { forwardRef, Ref, RefAttributes } from "react";
 import { HeaderDisclosureWidget } from "@/components/HeaderDisclosureWidget";
-import { composeClasses } from "@/util";
 import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
-export const Root = (
-  props: IntrinsicAttributes & CollapsibleProps & RefAttributes<HTMLDivElement>,
-) => (
-  <Collapsible.Root
-    {...props}
-    className={composeClasses("CollapsibleRoot", props.className)}
-  >
-    {props.children}
-  </Collapsible.Root>
+export const Root = forwardRef(
+  (
+    props: IntrinsicAttributes &
+      CollapsibleProps &
+      RefAttributes<HTMLDivElement>,
+    ref: Ref<HTMLDivElement>,
+  ) => (
+    <Collapsible.Root
+      {...props}
+      className={classNames("CollapsibleRoot", props.className)}
+      ref={ref}
+    >
+      {props.children}
+    </Collapsible.Root>
+  ),
 );
 
 export const Trigger = (
