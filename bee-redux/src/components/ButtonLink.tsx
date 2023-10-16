@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { composeClasses } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
+import classNames from "classnames/dedupe";
 
 export function ButtonLink({
   to,
@@ -24,7 +24,7 @@ export function ButtonLink({
         tooltipContent={disabledTooltip ? disabledTooltip : ""}
         disabled={disabledTooltip === undefined}
       >
-        <div className={composeClasses("ButtonLink disabled", className ?? "")}>
+        <div className={classNames("ButtonLink disabled", className)}>
           {children}
         </div>
       </BasicTooltip>
@@ -35,7 +35,7 @@ export function ButtonLink({
       tooltipContent={tooltip ? tooltip : ""}
       disabled={tooltip === undefined}
     >
-      <Link to={to} className={composeClasses("ButtonLink", className ?? "")}>
+      <Link to={to} className={classNames("ButtonLink", className)}>
         {children}
       </Link>
     </BasicTooltip>

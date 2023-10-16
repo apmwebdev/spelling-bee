@@ -4,8 +4,8 @@ import {
   PopoverContentProps,
 } from "@radix-ui/react-popover";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/util";
 import { Icon } from "@iconify/react";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export { Root, Trigger, Anchor } from "@radix-ui/react-popover";
@@ -18,7 +18,7 @@ export const ContentWithPortal = (
   <Popover.Portal>
     <Popover.Content
       {...props}
-      className={composeClasses("PopoverContent", props.className ?? "")}
+      className={classNames("PopoverContent", props.className)}
       side={props.side ?? "top"}
       avoidCollisions={props.avoidCollisions ?? true}
       collisionPadding={props.collisionPadding ?? 16}

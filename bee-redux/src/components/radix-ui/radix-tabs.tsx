@@ -6,16 +6,13 @@ import {
   TabsTriggerProps,
 } from "@radix-ui/react-tabs";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/util";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export const Root = (
   props: IntrinsicAttributes & TabsProps & RefAttributes<HTMLDivElement>,
 ) => (
-  <Tabs.Root
-    {...props}
-    className={composeClasses("TabsRoot", props.className ?? "")}
-  >
+  <Tabs.Root {...props} className={classNames("TabsRoot", props.className)}>
     {props.children}
   </Tabs.Root>
 );
@@ -23,10 +20,7 @@ export const Root = (
 export const List = (
   props: IntrinsicAttributes & TabsListProps & RefAttributes<HTMLDivElement>,
 ) => (
-  <Tabs.List
-    {...props}
-    className={composeClasses("TabsList", props.className ?? "")}
-  >
+  <Tabs.List {...props} className={classNames("TabsList", props.className)}>
     {props.children}
   </Tabs.List>
 );
@@ -38,7 +32,7 @@ export const Trigger = (
 ) => (
   <Tabs.Trigger
     {...props}
-    className={composeClasses("TabsTrigger", props.className ?? "")}
+    className={classNames("TabsTrigger", props.className)}
   >
     {props.children}
   </Tabs.Trigger>
@@ -49,7 +43,7 @@ export const Content = (
 ) => (
   <Tabs.Content
     {...props}
-    className={composeClasses("TabsContent", props.className ?? "")}
+    className={classNames("TabsContent", props.className)}
   >
     {props.children}
   </Tabs.Content>

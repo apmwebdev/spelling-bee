@@ -1,10 +1,10 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { DialogContentProps, DialogProps } from "@radix-ui/react-dialog";
 import { ReactNode, RefAttributes, useEffect, useState } from "react";
-import { composeClasses } from "@/util";
 import { IconButtonTypes } from "@/components/IconButton";
 import { Icon } from "@iconify/react";
 import { VisuallyHidden } from "@/components/radix-ui/radix-visually-hidden";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export { Trigger } from "@radix-ui/react-dialog";
@@ -47,7 +47,7 @@ export const ContentWithPortal = (
       <Dialog.Overlay className="DialogOverlay" />
       <Dialog.Content
         {...otherProps}
-        className={composeClasses("DialogContent", props.className ?? "")}
+        className={classNames("DialogContent", props.className)}
       >
         <Dialog.Title className="DialogTitle">{title}</Dialog.Title>
         <VisuallyHidden disabled={!hideDescription}>
