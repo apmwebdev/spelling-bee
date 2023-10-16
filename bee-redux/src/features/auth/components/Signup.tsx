@@ -7,9 +7,6 @@ import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { MoreActions } from "@/features/auth/components/MoreActions";
 
-const passwordsMatch = (comparisonValue: string) => (value: string) =>
-  value === comparisonValue && value.length > 0;
-
 /**
  * @name Signup
  * @constructor
@@ -31,7 +28,7 @@ export function Signup() {
     message.update("");
     const emailIsValid = emailState.validateCurrent();
     const nameIsValid = nameState.validateCurrent();
-    const passwordIsValid = nameState.validateCurrent();
+    const passwordIsValid = passwordState.validateCurrent();
     const passwordConfirmIsValid = passwordConfirmState.validateCurrent();
     return (
       emailIsValid &&
