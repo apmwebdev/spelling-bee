@@ -1,5 +1,3 @@
-import classNames from "classnames/dedupe";
-
 export const calculateScore = (words: string[]) => {
   return words.reduce((score, word) => {
     if (word.length === 4) {
@@ -68,13 +66,6 @@ export const getNextPuzzleDateString = (dateString: string) => {
     return "";
   }
   return getAdjacentDateString(dateString, "next");
-};
-
-export const maybeAddDisabledClass = (
-  baseClasses: string,
-  disabled?: boolean,
-) => {
-  return classNames(baseClasses, disabled ? "disabled" : "");
 };
 
 export const capitalizeFirstLetter = (str: string) =>
