@@ -10,7 +10,7 @@ export function MoreActions() {
 
   const handleResetPasswordSelect = () => {
     window.dispatchEvent(closePopupsEvent);
-    navigate("/auth/password_reset");
+    navigate("/auth/send_password_reset");
   };
 
   const handleResendConfirmationSelect = () => {

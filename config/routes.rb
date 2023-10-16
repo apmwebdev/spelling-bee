@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     controllers: {
       sessions: "api/v1/users/sessions",
       registrations: "api/v1/users/registrations",
+      passwords: "api/v1/users/passwords",
       confirmations: "api/v1/users/confirmations",
       unlocks: "api/v1/users/unlocks",
     }

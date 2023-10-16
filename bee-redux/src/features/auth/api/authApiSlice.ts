@@ -1,9 +1,10 @@
 import { apiSlice } from "@/features/api";
 
 import {
+  AuthResetData,
   AuthUpdateData,
   LoginData,
-  ResendEmailData,
+  PasswordResetData,
   SignupData,
   User,
 } from "@/features/auth";
@@ -40,18 +41,47 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
-    resendConfirmation: builder.mutation<BasicResponse, ResendEmailData>({
-      query: (email) => ({
-        url: "/auth/confirmation/resend",
+    /** This only sends the password reset email, it doesn't actually reset the
+     * user's password. */
+    sendPasswordReset: builder.mutation<BasicResponse, AuthResetData>({
+      query: (formData) => ({
+        url: "/auth/password",
         method: "POST",
-        body: email,
+        body: formData,
       }),
     }),
-    resendUnlock: builder.mutation<BasicResponse, ResendEmailData>({
-      query: (email) => ({
+    /** Submits a new password, along with the `reset_password_token` from Rails.
+     * This is for resetting a password if the user has forgotten it. To change
+     * a password normally, a user can use the `updateAccount` endpoint. */
+    resetPassword: builder.mutation<BasicResponse, PasswordResetData>({
+      query: (formData) => ({
+        url: "/auth/password",
+        method: "PUT",
+        body: formData,
+      }),
+    }),
+    /** Users need to confirm their email addresses before they can log in. The
+     * email with a link to do this is sent automatically on signup. This
+     * endpoint resends that email if the user didn't receive it or didn't click
+     * the confirmation link before it expired. */
+    resendConfirmation: builder.mutation<BasicResponse, AuthResetData>({
+      query: (formData) => ({
+        url: "/auth/confirmation/resend",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+    /** User accounts are locked after a number of unsuccessful login attempts.
+     * An email is then sent to the user with a link to unlock their account.
+     * This endpoint is for resending that email if the user didn't receive it
+     * or didn't follow the link before it expired. Note that unlocking an
+     * account does not reset the password, it only allows the user to attempt
+     * to log in again. */
+    resendUnlock: builder.mutation<BasicResponse, AuthResetData>({
+      query: (formData) => ({
         url: "/auth/unlock",
         method: "POST",
-        body: email,
+        body: formData,
       }),
     }),
   }),
@@ -62,6 +92,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useUpdateAccountMutation,
+  useSendPasswordResetMutation,
   useResendConfirmationMutation,
   useResendUnlockMutation,
 } = authApiSlice;
