@@ -272,6 +272,7 @@ button {
 
 .DropdownMenuTrigger {
   @include basic-focus-gray;
+  font-size: 16px;
   display: flex;
   align-items: center;
   padding: 8px 16px 8px 8px;
