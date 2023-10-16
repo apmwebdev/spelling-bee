@@ -2,10 +2,10 @@ import { FormEvent } from "react";
 import { useSignupMutation } from "@/features/auth";
 import { isBasicError } from "@/types";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
-import { ResendConfirmationButton } from "@/features/auth/components/headerAuth/ResendConfirmationButton";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
+import { MoreActions } from "@/features/auth/components/MoreActions";
 
 const passwordsMatch = (comparisonValue: string) => (value: string) =>
   value === comparisonValue && value.length > 0;
@@ -111,7 +111,7 @@ export function Signup() {
         />
       </form>
       <div className="Auth_actions">
-        <ResendConfirmationButton />
+        <MoreActions />
         <button
           type="submit"
           form="Signup_form"

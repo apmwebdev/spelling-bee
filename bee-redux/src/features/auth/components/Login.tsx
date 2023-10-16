@@ -76,6 +76,7 @@ export function Login({
         </form>
         <div className="Auth_actions">
           {/*<ForgotPasswordButton />*/}
+          <MoreActions />
           <button
             type="submit"
             form="Login_form"
@@ -84,7 +85,6 @@ export function Login({
             Log in
           </button>
         </div>
-        <MoreActions />
       </div>
     );
   };

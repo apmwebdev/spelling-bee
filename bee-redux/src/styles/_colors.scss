@@ -110,6 +110,12 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
   }
 }
 
+@mixin basic-focus-gray {
+  &:focus {
+    box-shadow: 0px 0px 0px 3px hsl(0 0% 50% / 0.1)
+  }
+}
+
 :root {
   --success-text: #{status-text-dark($success-hue)};
   --warning-text: #{status-text-dark($warning-hue)};

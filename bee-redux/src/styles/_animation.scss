@@ -10,11 +10,11 @@
   transform: rotate(0deg);
 }
 
-.SettingsCollapsible[data-state="open"] .SettingsCollapsibleHeaderButton .HeaderDisclosureWidgetIcon {
+.CollapsibleRoot[data-state="open"] .CollapsibleTrigger .HeaderDisclosureWidgetIcon {
   transform: rotate(90deg);
 }
 
-.SettingsCollapsible[data-state="closed"] .SettingsCollapsibleHeaderButton .HeaderDisclosureWidgetIcon {
+.CollapsibleRoot[data-state="closed"] .CollapsibleTrigger .HeaderDisclosureWidgetIcon {
   transform: rotate(0deg);
 }
 
