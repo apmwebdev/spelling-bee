@@ -68,13 +68,26 @@ export const getNextPuzzleDateString = (dateString: string) => {
   return getAdjacentDateString(dateString, "next");
 };
 
+/**
+ * Creates a CSS class list string to be used as the className prop on a
+ * component
+ * @param {Array<string | undefined>} classes - Takes any number of strings to be
+ *   concatenated together for the final class list. Can also take undefined
+ *   values so that classes can be added conditionally.
+ * @returns {string | undefined}
+ */
 export const composeClasses = (
-  baseClasses: string,
-  ...additionalClasses: string[]
-) => {
+  ...classes: Array<string | undefined>
+): string | undefined => {
+  const [baseClasses, ...additionalClasses] = classes;
+
+  /* The first string is the base class(es). If it's blank or undefined, return
+   * early. Additional classes are optional. */
+  if (!baseClasses) return undefined;
+
   let finalClasses = baseClasses;
   for (const additionalClass of additionalClasses) {
-    if (additionalClass.length > 0) {
+    if (typeof additionalClass === "string" && additionalClass.length > 0) {
       finalClasses += ` ${additionalClass}`;
     }
   }

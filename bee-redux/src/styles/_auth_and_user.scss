@@ -149,9 +149,9 @@ input.User_textInput {
 }
 
 .Auth_moreActionsList {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  //flex-direction: column;
+  display: flex;
+  //grid-template-columns: 1fr 1fr;
+  flex-direction: column;
   justify-content: center;
   gap: 12px;
   font-size: 16px;

@@ -66,30 +66,4 @@
     fill: ui-line-color-hover-dark($accent-hue);
   }
 }
-.UserMenuContent {
-  background-color: $mid-gray-darker;
-  z-index: 2;
-  .MenuItem {
-    padding: 8px 12px;
-    cursor: pointer;
-    .iconify {
-      font-size: 1.2em;
-      margin-right: 8px;
-    }
-    &:hover {
-      background-color: $mid-gray-lighter;
-    }
-  }
-  .Separator {
-    height: 1px;
-    margin: 4px 0px;
-    background-color: $light-gray;
-  }
-  .Arrow {
-    fill: $mid-gray-darker;
-  }
-  padding: 4px 0px 2px;
-  border-radius: var(--br);
-  font-size: 16px;
-}
 
