@@ -11,6 +11,8 @@ import { LoginRoute } from "@/features/auth/routes/LoginRoute";
 import { AccountRoute } from "@/features/auth/routes/AccountRoute";
 import { ResendConfirmationRoute } from "@/features/auth/routes/ResendConfirmationRoute";
 import { ResendUnlockRoute } from "@/features/auth/routes/ResendUnlockRoute";
+import { SendPasswordResetRoute } from "@/features/auth/routes/SendPasswordResetRoute";
+import { ResetPasswordRoute } from "@/features/auth/routes/ResetPasswordRoute";
 
 export default function App() {
   useGetUserBaseDataQuery();
@@ -40,6 +42,11 @@ export default function App() {
             <Route path="signup" element={<SignupRoute />} />
             <Route path="login" element={<LoginRoute />} />
             <Route path="account" element={<AccountRoute />} />
+            <Route
+              path="send_password_reset"
+              element={<SendPasswordResetRoute />}
+            />
+            <Route path="reset_password" element={<ResetPasswordRoute />} />
             <Route
               path="resend_confirmation"
               element={<ResendConfirmationRoute />}

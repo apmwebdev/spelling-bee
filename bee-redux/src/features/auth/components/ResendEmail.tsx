@@ -1,4 +1,4 @@
-import { AuthMessageOutput, ResendEmailData } from "@/features/auth";
+import { AuthMessageOutput, AuthResetData } from "@/features/auth";
 import { FormEvent, useId, useState } from "react";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
@@ -14,7 +14,7 @@ import { BasicResponse, isBasicError } from "@/types";
 
 type ResendMutation = MutationTrigger<
   MutationDefinition<
-    ResendEmailData,
+    AuthResetData,
     (
       arg: string | FetchArgs,
       api: BaseQueryApi,
