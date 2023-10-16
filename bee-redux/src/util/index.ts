@@ -70,37 +70,6 @@ export const getNextPuzzleDateString = (dateString: string) => {
   return getAdjacentDateString(dateString, "next");
 };
 
-/**
- * Concatenate a single CSS class list string from any number of individual
- * input strings to be used as the className prop on a React component.
- * @param {Array<string | undefined>} classes - Takes any number of strings to be
- *   concatenated together for the final class list. Can also take undefined
- *   values so that classes can be added conditionally.
- * @returns {string | undefined}
- * @deprecated - Use the `classNames` package instead. It does the same thing as
- *   this function, plus a lot more. I'm leaving this code for one commit to
- *   have a record of the optimizations that I've realized *could* be made to
- *   it if I weren't removing it altogether.
- */
-export const composeClasses = (
-  ...classes: Array<string | undefined>
-): string | null => {
-  let finalClasses = "";
-  //A for loop is the fastest method of iterating through the array
-  for (let i = 0; i < classes.length; i++) {
-    /* In the classes[i].length check, TS complains about classes[i] possibly
-     * being undefined even though we check for that right before.
-     * @ts-ignore. */
-    if (typeof classes[i] === "string" && classes[i].length > 0) {
-      finalClasses += finalClasses ? classes[i] : ` ${classes[i]}`;
-    }
-  }
-  /* If finalClasses is blank, return null, because otherwise React will
-   * render the resulting element with a class attribute set to an empty string
-   * instead of leaving it off entirely. */
-  return finalClasses || null;
-};
-
 export const maybeAddDisabledClass = (
   baseClasses: string,
   disabled?: boolean,
