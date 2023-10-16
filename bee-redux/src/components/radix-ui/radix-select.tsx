@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-select";
 import { RefAttributes } from "react";
 import { Icon } from "@iconify/react";
-import { composeClasses } from "@/util";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export { Group, Root, Viewport } from "@radix-ui/react-select";
@@ -17,7 +17,7 @@ export const Trigger = (
 ) => (
   <Select.Trigger
     {...props}
-    className={composeClasses("SelectTrigger", props.className ?? "")}
+    className={classNames("SelectTrigger", props.className)}
   >
     <Select.Value />
     <Select.Icon asChild>
@@ -36,7 +36,7 @@ export const ContentWithPortal = (
   <Select.Portal>
     <Select.Content
       {...props}
-      className={composeClasses("SelectContent", props.className ?? "")}
+      className={classNames("SelectContent", props.className)}
     >
       <Select.ScrollUpButton>
         <div className="SelectScrollButton up">
@@ -61,10 +61,7 @@ export const Item = ({
 }: IntrinsicAttributes &
   SelectItemPropsExtended &
   RefAttributes<HTMLDivElement>) => (
-  <Select.Item
-    {...props}
-    className={composeClasses("SelectItem", props.className ?? "")}
-  >
+  <Select.Item {...props} className={classNames("SelectItem", props.className)}>
     <Select.ItemIndicator asChild>
       <Icon className="SelectItemIndicator" icon="mdi:check" />
     </Select.ItemIndicator>
@@ -80,7 +77,7 @@ export const Label = (
 ) => (
   <Select.Label
     {...props}
-    className={composeClasses("SelectLabel", props.className ?? "")}
+    className={classNames("SelectLabel", props.className)}
   >
     {props.children}
   </Select.Label>

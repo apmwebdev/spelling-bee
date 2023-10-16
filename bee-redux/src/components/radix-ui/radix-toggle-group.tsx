@@ -4,7 +4,7 @@ import {
   ToggleGroupSingleProps,
 } from "@radix-ui/react-toggle-group";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/util";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export { Item } from "@radix-ui/react-toggle-group";
@@ -16,7 +16,7 @@ export const Root = (
 ) => (
   <ToggleGroup.Root
     {...props}
-    className={composeClasses("ToggleGroup", props.className ?? "")}
+    className={classNames("ToggleGroup", props.className)}
   >
     {props.children}
   </ToggleGroup.Root>
