@@ -1,13 +1,24 @@
-import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "@/app/store";
-import { authApiSlice } from "./authApiSlice";
 import { User } from "@/features/auth";
-import { startAppListening } from "@/app/listenerMiddleware";
-import { persistor } from "@/features/api";
+//Has to be a more specific import path to avoid a circular dependency
+import { persistor } from "@/features/api/util";
 
 type AuthState = {
   user: User | null;
   isGuest: boolean;
+};
+
+/**
+ * Necessary so that user data can be removed from local storage and state
+ * outside of the logout endpoint. Used by the baseQuery if it tries to run a
+ * query and gets a 401.
+ * @param dispatch
+ */
+export const logoutThunk = (dispatch: AppDispatch) => {
+  dispatch(logoutReducer());
+  persistor.remove("user");
+  persistor.save("isGuest", "true");
 };
 
 const rehydrateAuthState = (): AuthState => {
@@ -29,18 +40,6 @@ const rehydrateAuthState = (): AuthState => {
   return authState;
 };
 
-/**
- * Necessary so that user data can be removed from local storage and state
- * outside of the logout endpoint. Used by the baseQuery if it tries to run a
- * query and gets a 401.
- * @param dispatch
- */
-export const logoutThunk = (dispatch: AppDispatch) => {
-  dispatch(logoutReducer());
-  persistor.remove("user");
-  persistor.save("isGuest", "true");
-};
-
 const authSlice = createSlice({
   name: "auth",
   initialState: rehydrateAuthState(),
@@ -60,26 +59,5 @@ const authSlice = createSlice({
 export const { loginReducer, logoutReducer } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
-
-startAppListening({
-  matcher: isAnyOf(
-    authApiSlice.endpoints.login.matchFulfilled,
-    authApiSlice.endpoints.updateAccount.matchFulfilled,
-  ),
-  effect: ({ payload }, api) => {
-    api.dispatch(loginReducer(payload));
-    persistor.save("user", payload);
-    persistor.save("isGuest", false);
-  },
-});
-
-startAppListening({
-  matcher: authApiSlice.endpoints.logout.matchFulfilled,
-  effect: (_action, api) => {
-    api.dispatch(logoutThunk);
-    persistor.remove("currentHintProfile");
-    persistor.remove("userPrefs");
-  },
-});
 
 export default authSlice.reducer;
