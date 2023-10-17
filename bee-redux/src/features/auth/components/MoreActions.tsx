@@ -26,7 +26,7 @@ export function MoreActions() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>More actions</DropdownMenu.Trigger>
-      <DropdownMenu.ContentWithPortal>
+      <DropdownMenu.ContentWithPortal align="start">
         <DropdownMenu.Item onSelect={handleResetPasswordSelect}>
           Reset password
         </DropdownMenu.Item>

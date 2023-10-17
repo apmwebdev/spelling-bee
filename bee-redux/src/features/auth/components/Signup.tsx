@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useId } from "react";
 import { useSignupMutation } from "@/features/auth";
 import { isBasicError } from "@/types";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
@@ -6,6 +6,7 @@ import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { MoreActions } from "@/features/auth/components/MoreActions";
+import { PasswordFields } from "@/features/auth/components/PasswordFields";
 
 /**
  * @name Signup
@@ -23,6 +24,7 @@ export function Signup() {
     baseClass: "Auth_message",
   });
   const [signup, { isLoading }] = useSignupMutation();
+  const formId = useId();
 
   const validateForm = () => {
     message.update("");
@@ -75,7 +77,7 @@ export function Signup() {
   return (
     <div className="Auth_container">
       <FormMessage {...message.output} />
-      <form id="Signup_form" className="Auth_form" onSubmit={handleSubmit}>
+      <form id={formId} className="Auth_form" onSubmit={handleSubmit}>
         <ValidatableFormInput
           name="email"
           inputType="email"
@@ -88,30 +90,16 @@ export function Signup() {
           cssBlock="Auth"
           {...nameState}
         />
-        <ValidatableFormInput
-          name="password"
-          inputType="password"
-          cssBlock="Auth"
-          {...passwordState}
-        >
-          <div className="Auth_fieldDescription">
-            <div>Passwords must be at least 10 characters and contain</div>
-            <div>1 capital, 1 lowercase, 1 number, and 1 symbol</div>
-          </div>
-        </ValidatableFormInput>
-        <ValidatableFormInput
-          name="passwordConfirm"
-          label="Confirm password"
-          inputType="password"
-          cssBlock="Auth"
-          {...passwordConfirmState}
+        <PasswordFields
+          passwordState={passwordState}
+          passwordConfirmState={passwordConfirmState}
         />
       </form>
       <div className="Auth_actions">
         <MoreActions />
         <button
           type="submit"
-          form="Signup_form"
+          form={formId}
           className="standardButton Auth_submit"
         >
           Sign up

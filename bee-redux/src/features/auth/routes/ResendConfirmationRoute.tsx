@@ -3,7 +3,7 @@ import {
   AuthMessageOutput,
   useResendConfirmationMutation,
 } from "@/features/auth";
-import { ResendEmail } from "@/features/auth/components/ResendEmail";
+import { SendAuthEmail } from "@/features/auth/components/SendAuthEmail";
 
 const confirmationErrorMessage: AuthMessageOutput = {
   value:
@@ -23,7 +23,7 @@ export function ResendConfirmationRoute() {
   return (
     <div className="Auth_route">
       <h2>Resend Confirmation Email</h2>
-      <ResendEmail resend={resend} passedInMessage={message()} />
+      <SendAuthEmail sendFn={resend} passedInMessage={message()} />
     </div>
   );
 }

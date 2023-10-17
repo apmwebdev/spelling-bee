@@ -12,7 +12,7 @@ import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query/react";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { BasicResponse, isBasicError } from "@/types";
 
-type ResendMutation = MutationTrigger<
+type SendMutation = MutationTrigger<
   MutationDefinition<
     AuthResetData,
     (
@@ -28,11 +28,11 @@ type ResendMutation = MutationTrigger<
   >
 >;
 
-export function ResendEmail({
+export function SendAuthEmail({
   passedInMessage,
-  resend,
+  sendFn,
 }: {
-  resend: ResendMutation;
+  sendFn: SendMutation;
   passedInMessage?: AuthMessageOutput;
 }) {
   const [emailValue, setEmailValue] = useState("");
@@ -41,11 +41,12 @@ export function ResendEmail({
     initial: passedInMessage,
   });
   const formId = useId();
+  const inputId = useId();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await resend({
+      const response = await sendFn({
         user: {
           email: emailValue,
         },
@@ -56,7 +57,7 @@ export function ResendEmail({
       if (isBasicError(err)) {
         message.update(err.data.error, "Error");
       } else {
-        message.update("Error resending email", "Error");
+        message.update("Error sending email", "Error");
       }
     }
   };
@@ -66,15 +67,13 @@ export function ResendEmail({
       <FormMessage {...message.output} />
       <form id={formId} className="Auth_form" onSubmit={handleSubmit}>
         <fieldset className="Auth_fieldset">
-          <label
-            className="Auth_fieldLabel"
-            htmlFor="ResendConfirmation_emailInput"
-          >
+          <label className="Auth_fieldLabel" htmlFor={inputId}>
             Email:
           </label>
           <input
             type="email"
             className="Auth_textInput"
+            id={inputId}
             name="email"
             value={emailValue}
             onChange={(e) => setEmailValue(e.target.value)}

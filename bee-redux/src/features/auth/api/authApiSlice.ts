@@ -93,6 +93,7 @@ export const {
   useLogoutMutation,
   useUpdateAccountMutation,
   useSendPasswordResetMutation,
+  useResetPasswordMutation,
   useResendConfirmationMutation,
   useResendUnlockMutation,
 } = authApiSlice;

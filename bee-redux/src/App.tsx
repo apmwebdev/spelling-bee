@@ -14,7 +14,7 @@ import { ResendUnlockRoute } from "@/features/auth/routes/ResendUnlockRoute";
 import { SendPasswordResetRoute } from "@/features/auth/routes/SendPasswordResetRoute";
 import { ResetPasswordRoute } from "@/features/auth/routes/ResetPasswordRoute";
 
-export default function App() {
+export function App() {
   useGetUserBaseDataQuery();
   const appClasses = useAppClasses();
 

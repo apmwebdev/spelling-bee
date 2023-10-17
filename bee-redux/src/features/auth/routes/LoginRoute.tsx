@@ -14,6 +14,12 @@ const UNLOCKED_MESSAGE: AuthMessageOutput = {
   classes: "Auth_message SuccessText",
 };
 
+const DID_RESET_MESSAGE: AuthMessageOutput = {
+  value: "Password reset successfully.",
+  status: "Success",
+  classes: "Auth_message SuccessText",
+};
+
 export function LoginRoute() {
   const user = useAppSelector(selectUser);
   const [searchParams] = useSearchParams();
@@ -24,6 +30,9 @@ export function LoginRoute() {
     }
     if (searchParams.get("message") === "unlocked") {
       return UNLOCKED_MESSAGE;
+    }
+    if (searchParams.get("message") === "did_reset") {
+      return DID_RESET_MESSAGE;
     }
   };
 
