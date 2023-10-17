@@ -7,6 +7,20 @@
   gap: 16px;
 }
 
+.UserMenuTrigger {
+  @include button-colors($accent-hue);
+  padding: 3px 6px;
+  gap: 4px;
+  &[data-state="open"] {
+    background-color: bg-color-darker($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
+  }
+}
+
+.UserMenuTrigger_icon {
+  font-size: 22px;
+}
+
 .Auth_route {
   display: flex;
   flex-direction: column;

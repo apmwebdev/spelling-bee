@@ -55,7 +55,7 @@ $error-hue: 0;
 }
 
 @function ui-line-color-hover-dark($hue) {
-  @return hsl($hue, 65%, 65%);
+  @return hsl($hue, 75%, 45%);
 }
 
 //Status Text
@@ -98,21 +98,36 @@ $accent-title: hsl($title-hue, 50%, 60%);
 $accent-title-hover: hsl($title-hue, 60%, 50%);
 
 //Mixins
-@mixin basic-hover {
+@mixin basic-hover($hue: $accent-hue) {
   &:hover {
-    border-color: border-color-dark-hover($accent-hue);
+    border-color: border-color-dark-hover($hue);
   }
 }
 
-@mixin basic-focus {
+@mixin basic-focus($hue: $accent-hue) {
   &:focus {
-    box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
+    box-shadow: 0px 0px 0px 2px shadow-color-focus($hue);
   }
 }
 
 @mixin basic-focus-gray {
   &:focus {
-    box-shadow: 0px 0px 0px 3px hsl(0 0% 50% / 0.1)
+    box-shadow: 0px 0px 0px 2px hsl(0 0% 50% / 0.1)
+  }
+}
+
+@mixin button-colors($hue) {
+  @include basic-hover($hue);
+  @include basic-focus($hue);
+  background-color: bg-color-dark($hue);
+  border: 1.5px solid border-color-dark($hue);
+  &:hover {
+    background-color: bg-color-dark-hover($hue);
+  }
+  &:disabled {
+    color: $text-disabled-dark;
+    background-color: bg-color-dark-disabled($hue);
+    border-color: border-color-dark-disabled($hue);
   }
 }
 
