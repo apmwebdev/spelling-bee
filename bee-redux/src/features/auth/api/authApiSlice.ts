@@ -1,14 +1,17 @@
-import { apiSlice } from "@/features/api";
-
+import { apiSlice, persistor } from "@/features/api";
 import {
   AuthResetData,
   AuthUpdateData,
   LoginData,
+  loginReducer,
+  logoutThunk,
   PasswordResetData,
   SignupData,
   User,
 } from "@/features/auth";
 import { BasicResponse } from "@/types";
+import { startAppListening } from "@/app/listenerMiddleware";
+import { isAnyOf } from "@reduxjs/toolkit";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -25,6 +28,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: formData,
       }),
+      // onQueryStarted: async (_arg, api) => {
+      //   const response = await api.queryFulfilled;
+      //   if (!response.data) return;
+      //   api.dispatch(loginReducer(response.data));
+      //   persistor.save("user", response.data);
+      //   persistor.save("isGuest", false);
+      // },
       invalidatesTags: ["User"],
     }),
     logout: builder.mutation<BasicResponse, void>({
@@ -87,6 +97,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
   }),
+});
+
+startAppListening({
+  matcher: isAnyOf(
+    authApiSlice.endpoints.login.matchFulfilled,
+    authApiSlice.endpoints.updateAccount.matchFulfilled,
+  ),
+  effect: ({ payload }, api) => {
+    api.dispatch(loginReducer(payload));
+    persistor.save("user", payload);
+    persistor.save("isGuest", false);
+  },
+});
+
+startAppListening({
+  matcher: authApiSlice.endpoints.logout.matchFulfilled,
+  effect: (_action, api) => {
+    api.dispatch(logoutThunk);
+    persistor.remove("currentHintProfile");
+    persistor.remove("userPrefs");
+  },
 });
 
 export const {
