@@ -1,13 +1,7 @@
 import { AnswerFormat } from "@/features/puzzle";
-import { composeClasses } from "@/util";
 import { usageExplanation } from "@/features/hintPanelType_obscurity/util";
 import { DefinitionPanelData } from "@/features/hintPanelType_definition/types";
-
-const cssClasses = (isKnown: boolean) => {
-  const baseClasses = "DefinitionPanelTerm capitalize";
-  if (isKnown) return baseClasses;
-  return composeClasses(baseClasses, "ErrorText");
-};
+import classNames from "classnames/dedupe";
 
 export function Word({
   answer,
@@ -30,7 +24,11 @@ export function Word({
 
   return (
     <div className="DefinitionPanelWord">
-      <div className={cssClasses(isKnown)}>
+      <div
+        className={classNames("DefinitionPanelTerm capitalize", {
+          ErrorText: !isKnown,
+        })}
+      >
         {isKnown ? answer.word : unknownWordDisplay()}
       </div>
       {showObscurity ? (

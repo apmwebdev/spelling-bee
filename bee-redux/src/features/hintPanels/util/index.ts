@@ -2,7 +2,7 @@ import {
   StatusTrackingKeys,
   SubstringHintDataCell,
 } from "@/features/hintPanels";
-import { composeClasses } from "@/util";
+import classNames from "classnames/dedupe";
 
 export const createSubstringHintDataCell = (): SubstringHintDataCell => {
   return { answers: 0, guesses: 0 };
@@ -20,10 +20,10 @@ export const getSubstringHintStatusClasses = ({
     return baseClasses;
   }
   if (cell.guesses === cell.answers) {
-    return composeClasses(baseClasses, "SuccessText");
+    return classNames(baseClasses, "SuccessText");
   }
   if (cell.guesses === 0) {
-    return composeClasses(baseClasses, "ErrorText");
+    return classNames(baseClasses, "ErrorText");
   }
-  return composeClasses(baseClasses, "WarningText");
+  return classNames(baseClasses, "WarningText");
 };

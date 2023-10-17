@@ -3,9 +3,11 @@ import {
   DropdownMenuContentProps,
   DropdownMenuItemProps,
   DropdownMenuSeparatorProps,
+  DropdownMenuTriggerProps,
 } from "@radix-ui/react-dropdown-menu";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/util";
+import classNames from "classnames/dedupe";
+import { InlineIcon } from "@iconify/react";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export {
@@ -19,7 +21,6 @@ export {
   Sub,
   SubContent,
   SubTrigger,
-  Trigger,
 } from "@radix-ui/react-dropdown-menu";
 
 export const ContentWithPortal = (
@@ -30,12 +31,12 @@ export const ContentWithPortal = (
   <DropdownMenu.Portal>
     <DropdownMenu.Content
       {...props}
-      className={composeClasses("UserMenuContent", props.className ?? "")}
+      className={classNames("DropdownMenuContent", props.className)}
       avoidCollisions={props.avoidCollisions ?? true}
       collisionPadding={props.collisionPadding ?? 24}
     >
       {props.children}
-      <DropdownMenu.Arrow className="Arrow" width={10} height={5} />
+      <DropdownMenu.Arrow className="DropdownMenuArrow" width={10} height={5} />
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 );
@@ -47,7 +48,7 @@ export const Item = (
 ) => (
   <DropdownMenu.Item
     {...props}
-    className={composeClasses("MenuItem", props.className ?? "")}
+    className={classNames("DropdownMenuItem", props.className)}
   >
     {props.children}
   </DropdownMenu.Item>
@@ -60,6 +61,20 @@ export const Separator = (
 ) => (
   <DropdownMenu.Separator
     {...props}
-    className={composeClasses("Separator", props.className ?? "")}
+    className={classNames("DropdownMenuSeparator", props.className)}
   />
+);
+
+export const Trigger = (
+  props: IntrinsicAttributes &
+    DropdownMenuTriggerProps &
+    RefAttributes<HTMLButtonElement>,
+) => (
+  <DropdownMenu.Trigger
+    {...props}
+    className={classNames("DropdownMenuTrigger", props.className)}
+  >
+    <InlineIcon icon="mdi:chevron-down" />
+    {props.children}
+  </DropdownMenu.Trigger>
 );

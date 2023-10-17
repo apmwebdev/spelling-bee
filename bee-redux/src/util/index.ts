@@ -68,25 +68,5 @@ export const getNextPuzzleDateString = (dateString: string) => {
   return getAdjacentDateString(dateString, "next");
 };
 
-export const composeClasses = (
-  baseClasses: string,
-  ...additionalClasses: string[]
-) => {
-  let finalClasses = baseClasses;
-  for (const additionalClass of additionalClasses) {
-    if (additionalClass.length > 0) {
-      finalClasses += ` ${additionalClass}`;
-    }
-  }
-  return finalClasses;
-};
-
-export const maybeAddDisabledClass = (
-  baseClasses: string,
-  disabled?: boolean,
-) => {
-  return composeClasses(baseClasses, disabled ? "disabled" : "");
-};
-
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);

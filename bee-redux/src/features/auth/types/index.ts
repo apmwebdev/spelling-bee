@@ -20,7 +20,7 @@ export type SignupData = {
   };
 };
 
-export type ResendConfirmationData = {
+export type AuthResetData = {
   user: {
     email: string;
   };
@@ -49,5 +49,13 @@ export type AuthUpdateData = {
     current_password?: string;
     password?: string;
     password_confirmation?: string;
+  };
+};
+
+export type PasswordResetData = {
+  user: {
+    password: string;
+    password_confirmation: string;
+    reset_password_token: string;
   };
 };

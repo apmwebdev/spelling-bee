@@ -177,6 +177,30 @@ button {
   }
 }
 
+/***   Collapsible   ***/
+.CollapsibleRoot {
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+}
+
+.CollapsibleTrigger {
+  padding: 8px 24px;
+  border: 1.5px solid transparent;
+  background-color: inherit;
+  &:hover {
+    background-color: $dark-gray-1;
+    border-color: $mid-gray-darker;
+  }
+  &:focus {
+    box-shadow: 0 0 0 1px $mid-gray-darker;
+  }
+}
+
+.CollapsibleContent {
+  padding: 16px;
+}
+
 /***   Dialog   ***/
 
 .DialogOverlay {
@@ -212,6 +236,56 @@ button {
 .DialogTitle {
   text-align: center;
   font-size: 24px;
+}
+
+/***   Dropdown Menu   ***/
+
+.DropdownMenuArrow {
+  fill: $dark-gray-4;
+}
+
+.DropdownMenuContent {
+  background-color: $dark-gray-4;
+  z-index: 2;
+  padding: 4px 0px 2px;
+  border-radius: var(--br);
+  font-size: 16px;
+}
+
+.DropdownMenuItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: $mid-gray-darker;
+  }
+  .iconify {
+    font-size: 1.2em;
+    margin-right: 8px;
+  }
+}
+
+.DropdownMenuSeparator {
+  height: 1px;
+  margin: 4px 0px;
+  background-color: $light-gray;
+}
+
+.DropdownMenuTrigger {
+  @include basic-focus-gray;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px 8px 8px;
+  gap: 8px;
+  border: 1.5px solid $mid-gray-darker;
+  background-color: $dark-gray-3;
+  &:hover {
+    background-color: $dark-gray-2;
+  }
+  &[data-state="open"] {
+    background-color: $dark-gray-1;
+    border-color: $mid-gray;
+  }
 }
 
 /***   Help Bubble   ***/
@@ -302,11 +376,6 @@ input[type="number"] {
     cursor: not-allowed;
   }
 }
-
-//input:invalid {
-//  background-color: bg-color-darker($error-hue);
-//  border-color: border-color-dark($error-hue);
-//}
 
 /***   Links   ***/
 

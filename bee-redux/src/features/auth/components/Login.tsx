@@ -2,9 +2,9 @@ import { FormEvent, useState } from "react";
 import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
 import { isFetchBaseQueryErrorResponse } from "@/types";
-import { ForgotPasswordButton } from "@/features/auth/components/headerAuth/ForgotPasswordButton";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
+import { MoreActions } from "@/features/auth/components/MoreActions";
 
 export function Login({
   passedInMessage,
@@ -75,7 +75,8 @@ export function Login({
           </fieldset>
         </form>
         <div className="Auth_actions">
-          <ForgotPasswordButton />
+          {/*<ForgotPasswordButton />*/}
+          <MoreActions />
           <button
             type="submit"
             form="Login_form"

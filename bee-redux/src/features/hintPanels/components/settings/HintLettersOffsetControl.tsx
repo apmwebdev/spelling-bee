@@ -1,9 +1,9 @@
 import { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
-import { maybeAddDisabledClass } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import classNames from "classnames/dedupe";
 
 export function HintLettersOffsetControl({
   panelId,
@@ -36,7 +36,9 @@ export function HintLettersOffsetControl({
   return (
     <BasicTooltip disabled={!disabled} tooltipContent={disabledTooltip}>
       <div
-        className={maybeAddDisabledClass("HintLettersOffsetControl", disabled)}
+        className={classNames("HintLettersOffsetControl", {
+          disabled: disabled,
+        })}
         style={style}
       >
         <span>Offset:</span>

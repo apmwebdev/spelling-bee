@@ -1,8 +1,8 @@
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { CheckboxProps } from "@radix-ui/react-checkbox";
 import { RefAttributes } from "react";
-import { composeClasses } from "@/util";
 import { Icon } from "@iconify/react";
+import classNames from "classnames/dedupe";
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes;
 
 export const Checkbox = (
@@ -10,7 +10,7 @@ export const Checkbox = (
 ) => (
   <RadixCheckbox.Root
     {...props}
-    className={composeClasses("CheckboxRoot", props.className ?? "")}
+    className={classNames("CheckboxRoot", props.className)}
   >
     <RadixCheckbox.Indicator className="CheckboxIndicator">
       <Icon icon="mdi:check-bold" />
