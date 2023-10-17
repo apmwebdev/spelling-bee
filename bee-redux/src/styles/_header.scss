@@ -46,24 +46,3 @@
   justify-content: flex-end;
   gap: 8px;
 }
-.UserMenuTrigger {
-  padding: 0px;
-  border: none;
-}
-.UserMenuTriggerAccountIcon {
-  font-size: 30px;
-  //background-color: $line-bright;
-}
-.UserMenuTrigger_svgForeground {
-  fill: highlight-color-dark($accent-hue);
-}
-.UserMenuTrigger_svgBackground {
-  fill: $line-bright;
-}
-.UserMenuTrigger_svgBorder {
-  fill: transparent;
-  .UserMenuTrigger___hover & {
-    fill: ui-line-color-hover-dark($accent-hue);
-  }
-}
-

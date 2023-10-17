@@ -86,20 +86,11 @@
 /***   Buttons   ***/
 
 @mixin button-mixin {
-  @include basic-hover;
-  @include basic-focus;
+  @include button-colors($accent-hue);
   display: grid;
   place-content: center;
-  background-color: bg-color-dark($accent-hue);
-  border: 1.5px solid border-color-dark($accent-hue);
-  &:hover {
-    background-color: bg-color-dark-hover($accent-hue);
-  }
   &:disabled {
     cursor: not-allowed;
-    color: $text-disabled-dark;
-    background-color: bg-color-dark-disabled($accent-hue);
-    border-color: border-color-dark-disabled($accent-hue);
   }
 }
 
@@ -253,15 +244,19 @@ button {
 }
 
 .DropdownMenuItem {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
   cursor: pointer;
   &:hover {
-    background-color: $mid-gray-darker;
+    background-color: highlight-color-dark($accent-hue);
   }
-  .iconify {
-    font-size: 1.2em;
-    margin-right: 8px;
-  }
+}
+
+.DropdownMenuItem_icon {
+  font-size: 1.2em;
+  //margin-right: 8px;
 }
 
 .DropdownMenuSeparator {
@@ -381,15 +376,13 @@ input[type="number"] {
 
 a {
   $this-hue: $yellow-hue;
-  text-decoration: inherit;
+  text-decoration: underline;
   color: ui-line-color-dark($this-hue);
   border-radius: var(--br);
   &:hover {
-    text-decoration: underline;
     color: ui-line-color-hover-dark($this-hue);
   }
   &:focus {
-    text-decoration: underline;
     box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
   }
 }

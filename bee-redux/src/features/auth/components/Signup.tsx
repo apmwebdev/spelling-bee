@@ -1,5 +1,5 @@
 import { FormEvent, useId } from "react";
-import { useSignupMutation } from "@/features/auth";
+import { SignupData, useSignupMutation } from "@/features/auth";
 import { isBasicError } from "@/types";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
@@ -51,7 +51,7 @@ export function Signup() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
-      const formData = {
+      const formData: SignupData = {
         user: {
           email: emailState.value,
           name: nameState.value,
