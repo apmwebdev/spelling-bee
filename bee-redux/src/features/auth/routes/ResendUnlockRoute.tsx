@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { AuthMessageOutput, useResendUnlockMutation } from "@/features/auth";
-import { ResendEmail } from "@/features/auth/components/ResendEmail";
+import { SendAuthEmail } from "@/features/auth/components/SendAuthEmail";
 
 const unlockErrorMessage: AuthMessageOutput = {
   value:
@@ -20,7 +20,7 @@ export function ResendUnlockRoute() {
   return (
     <div className="Auth_route">
       <h2>Resend Unlock Email</h2>
-      <ResendEmail resend={resend} passedInMessage={message()} />
+      <SendAuthEmail sendFn={resend} passedInMessage={message()} />
     </div>
   );
 }
