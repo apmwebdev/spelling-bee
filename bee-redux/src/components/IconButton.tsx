@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
-import { composeClasses } from "@/util";
 import { BasicTooltip } from "@/components/BasicTooltip";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import classNames from "classnames/dedupe";
 
 type IconButtonTypeData = {
   name: string;
@@ -96,7 +96,7 @@ export function IconButton({
       <button
         type="button"
         onClick={onClick ? () => onClick() : undefined}
-        className={composeClasses("IconButton", className ?? "")}
+        className={classNames("IconButton", className)}
         {...attributes}
         {...listeners}
       >

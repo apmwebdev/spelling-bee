@@ -8,6 +8,7 @@ export function SignupRoute() {
   if (user) return <Navigate to="/puzzle/latest" />;
   return (
     <div className="Auth_route">
+      <h2>Sign Up</h2>
       <Signup />
     </div>
   );

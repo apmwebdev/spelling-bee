@@ -6,13 +6,13 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { CSSProperties, forwardRef, Ref } from "react";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { composeClasses } from "@/util";
 import {
   HintPanelData,
   PanelCurrentDisplayStateProperties,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
+import classNames from "classnames/dedupe";
 
 export const HintPanel = forwardRef(
   (
@@ -51,12 +51,12 @@ export const HintPanel = forwardRef(
     const cssClasses = () => {
       let classes = "HintPanel";
       if (isDragging && !isOverlay) {
-        classes = composeClasses(classes, "Dragging");
+        classes = classNames(classes, "Dragging");
       } else if (isOverlay) {
-        classes = composeClasses(classes, "Overlay");
+        classes = classNames(classes, "Overlay");
       }
       if (isSorting) {
-        classes = composeClasses(classes, "Sorting");
+        classes = classNames(classes, "Sorting");
       }
       return classes;
     };

@@ -80,7 +80,7 @@ $light-gray-bg: #ddd;
 @function gray-alpha($opacity) {
   @return rgba(255, 255, 255, $opacity);
 }
-$line-bright: gray-alpha(0.85);
+$line-bright: gray-alpha(0.80);
 $line-mid: gray-alpha(0.73);
 $line-disabled: gray-alpha(0.36);
 $line-darkest: gray-alpha(0.3);
@@ -107,6 +107,12 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 @mixin basic-focus {
   &:focus {
     box-shadow: 0px 0px 0px 3px shadow-color-focus($accent-hue);
+  }
+}
+
+@mixin basic-focus-gray {
+  &:focus {
+    box-shadow: 0px 0px 0px 3px hsl(0 0% 50% / 0.1)
   }
 }
 
