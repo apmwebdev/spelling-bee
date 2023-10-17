@@ -52,7 +52,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     /** Submits a new password, along with the `reset_password_token` from Rails.
      * This is for resetting a password if the user has forgotten it. To change
-     * a password normally, a user can use the `updateAccount` endpoint. */
+     * a password normally, a user can use the `updateAccount` endpoint. Note
+     * that resetting a password also unlocks the user account if it is locked.
+     */
     resetPassword: builder.mutation<BasicResponse, PasswordResetData>({
       query: (formData) => ({
         url: "/auth/password",
