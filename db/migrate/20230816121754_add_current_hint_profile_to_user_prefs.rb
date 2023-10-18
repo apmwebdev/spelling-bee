@@ -1,5 +1,6 @@
 class AddCurrentHintProfileToUserPrefs < ActiveRecord::Migration[7.0]
   def change
-    add_reference :user_prefs, :current_hint_profile, polymorphic: true
+    add_reference :user_prefs, :current_hint_profile, polymorphic: true,
+      if_not_exists: true
   end
 end
