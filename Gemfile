@@ -14,12 +14,16 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
-gem 'rack-cors'
-gem 'nokogiri'
-gem 'devise'
-gem 'devise-jwt'
-gem 'devise-jwt-cookie', git: "https://github.com/apmwebdev/devise-jwt-cookie", ref: "acc4cc9"
-gem 'jsonapi-serializer'
+gem "rack-cors"
+gem "nokogiri"
+gem "devise"
+gem "devise-jwt"
+gem "devise-jwt-cookie", git: "https://github.com/apmwebdev/devise-jwt-cookie", ref: "acc4cc9"
+gem "jsonapi-serializer"
+gem "capistrano", "~> 3.18"
+gem "capistrano-rails", "~> 1.6"
+gem "capistrano-passenger", "~> 0.2.0"
+gem "capistrano-rbenv", "~> 2.2"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
