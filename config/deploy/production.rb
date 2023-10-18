@@ -47,7 +47,9 @@ server "147.182.202.48", user: "deploy", roles: %w{app db web}
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-#
+set :ssh_options, {
+  keys: %w(/Users/austin/.ssh/do_ssb_deploy)
+}
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server "example.com",

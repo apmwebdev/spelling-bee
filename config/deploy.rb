@@ -3,6 +3,7 @@ lock "~> 3.18.0"
 
 set :application, "ssb"
 set :repo_url, "git@github.com:apmwebdev/spelling-bee.git"
+set :branch, "main"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
