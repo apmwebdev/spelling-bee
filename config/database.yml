@@ -82,6 +82,3 @@ test:
 production:
   <<: *default
   url: <% ENV["DATABASE_URL"] %>
-  database: spelling_bee_production
-  username: spelling_bee
-  password: <%= ENV["SPELLING_BEE_DATABASE_PASSWORD"] %>
