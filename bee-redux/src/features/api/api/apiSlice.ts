@@ -9,8 +9,12 @@ import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryType
 //Has to be a more specific import path to avoid a circular dependency
 import { logoutThunk } from "@/features/auth/api/authSlice";
 
+const BASE_QUERY_URL =
+  import.meta.env.VITE_BACKEND_BASE_URL + import.meta.env.VITE_BACKEND_API_PATH;
+console.log(BASE_QUERY_URL);
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000/api/v1",
+  baseUrl: BASE_QUERY_URL,
   credentials: "include",
 });
 
