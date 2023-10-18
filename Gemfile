@@ -14,7 +14,8 @@ gem "puma", "~> 5.0"
 
 gem "rack-cors"
 gem "nokogiri"
-gem 'dotenv-rails'
+gem "dotenv", "~> 2.8"
+gem "dotenv-rails", "~> 2.8"
 
 # Devise
 gem "devise"
@@ -27,6 +28,7 @@ gem "capistrano", "~> 3.18"
 gem "capistrano-rails", "~> 1.6"
 gem "capistrano-passenger", "~> 0.2.0"
 gem "capistrano-rbenv", "~> 2.2"
+gem "capistrano-dotenv"
 gem "ed25519", "~> 1.2"
 gem "bcrypt_pbkdf", "~> 1.0"
 
