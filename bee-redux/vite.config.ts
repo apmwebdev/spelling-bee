@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
-    open: true,
+    open: false,
   },
   build: {
     outDir: "build",
@@ -18,4 +18,5 @@ export default defineConfig({
     setupFiles: "src/setupTests",
     mockReset: true,
   },
+  envDir: "env",
 });
