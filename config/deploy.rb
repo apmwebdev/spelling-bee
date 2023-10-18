@@ -12,7 +12,7 @@ set :branch, "main"
 # set :deploy_to, "/var/www/my_app_name"
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
-append :linked_files, "config/master.key", ".env.production.local"
+append :linked_files, "config/master.key", ".env.production", "config/database.yml"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
   'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
@@ -45,6 +45,6 @@ set :keep_releases, 5
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+set :env_file, ".env.development"
 invoke 'dotenv:read'
 invoke 'dotenv:setup'
-set :env_file, ".env.#{stage}"

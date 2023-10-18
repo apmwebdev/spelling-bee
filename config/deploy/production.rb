@@ -1,9 +1,13 @@
+server "147.182.202.48", user: "deploy", roles: %w{app db web}
+set :ssh_options, {
+  keys: %w(/Users/austin/.ssh/do_ssb_deploy)
+}
+set :env_file, ".env.production"
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server "147.182.202.48", user: "deploy", roles: %w{app db web}
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
@@ -47,9 +51,6 @@ server "147.182.202.48", user: "deploy", roles: %w{app db web}
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-set :ssh_options, {
-  keys: %w(/Users/austin/.ssh/do_ssb_deploy)
-}
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server "example.com",
