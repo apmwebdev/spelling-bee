@@ -12,6 +12,8 @@ set :branch, "main"
 # set :deploy_to, "/var/www/my_app_name"
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
+append :linked_files, "config/master.key"
+
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
   'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
