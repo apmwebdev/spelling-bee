@@ -1,6 +1,6 @@
 class RemoveDeviseTokenAuthFields < ActiveRecord::Migration[7.0]
   def change
-    remove_index(:users, column: [:uid, :provider])
+    # remove_index(:users, column: [:uid, :provider]) if column_exists?(:users, :uid)
     remove_column(:users, :uid, if_exists: true)
     remove_column(:users, :provider, if_exists: true)
     remove_column(:users, :allow_password_change, if_exists: true)
