@@ -6,8 +6,6 @@ ruby "3.2.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.6"
 
-gem 'dotenv-rails', groups: [:development, :test]
-
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
@@ -16,15 +14,19 @@ gem "puma", "~> 5.0"
 
 gem "rack-cors"
 gem "nokogiri"
+gem 'dotenv-rails'
+
+# Devise
 gem "devise"
 gem "devise-jwt"
 gem "devise-jwt-cookie", git: "https://github.com/apmwebdev/devise-jwt-cookie", ref: "acc4cc9"
 gem "jsonapi-serializer"
+
+# Capistrano
 gem "capistrano", "~> 3.18"
 gem "capistrano-rails", "~> 1.6"
 gem "capistrano-passenger", "~> 0.2.0"
 gem "capistrano-rbenv", "~> 2.2"
-# For Capistrano
 gem "ed25519", "~> 1.2"
 gem "bcrypt_pbkdf", "~> 1.0"
 
