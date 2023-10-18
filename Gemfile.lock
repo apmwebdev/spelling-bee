@@ -92,6 +92,8 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-bundler (2.1.0)
       capistrano (~> 3.1)
+    capistrano-dotenv (0.0.5)
+      capistrano (>= 3.5.0, < 4.0.0)
     capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.3)
@@ -246,6 +248,7 @@ DEPENDENCIES
   bcrypt_pbkdf (~> 1.0)
   bootsnap
   capistrano (~> 3.18)
+  capistrano-dotenv
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.6)
   capistrano-rbenv (~> 2.2)
@@ -253,7 +256,8 @@ DEPENDENCIES
   devise
   devise-jwt
   devise-jwt-cookie!
-  dotenv-rails
+  dotenv (~> 2.8)
+  dotenv-rails (~> 2.8)
   ed25519 (~> 1.2)
   jsonapi-serializer
   letter_opener
