@@ -59,6 +59,6 @@ namespace :puma do
     end
   end
 
-  before 'deploy:starting', 'puma:stop'
-  before 'deploy:starting', 'puma:start'
+  after 'deploy', 'puma:stop'
+  after 'deploy', 'puma:start'
 end
