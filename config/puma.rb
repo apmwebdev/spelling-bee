@@ -10,9 +10,9 @@ environment ENV.fetch("RAILS_ENV") { "production" }
 
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
-bind "unix://#{shared_path}/tmp/sockets/puma.sock"
-pidfile "#{shared_path}/tmp/pids/puma.pid"
-state_path "#{shared_path}/tmp/pids/puma.state"
+# bind "unix://home/deploy/ssb/shared/tmp/sockets/puma.sock"
+# pidfile "~/ssb/shared/tmp/pids/puma.pid"
+# state_path "~/ssb/shared/tmp/pids/puma.state"
 
 # workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
