@@ -26,4 +26,4 @@ task :upload_build do
       recursive: true
   end
 end
-before "deploy:assets:precompile", "upload_build"
+before "deploy:publishing", "upload_build"
