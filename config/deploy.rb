@@ -33,4 +33,4 @@ task :ensure_words_alpha_exists do
     end
   end
 end
-before "deploy:symlink:linked_files", "ensure_linked_file"
+before "deploy:symlink:linked_files", "ensure_words_alpha_exists"
