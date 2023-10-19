@@ -44,14 +44,18 @@ namespace :puma do
   desc 'Start Puma'
   task :start do
     on roles(fetch(:puma_role)) do
-      execute :bundle, :exec, :puma, "-C #{current_path}/config/puma.rb -e #{fetch(:puma_env)} -d"
+      within current_path do
+        execute :bundle, :exec, :puma, "-C #{current_path}/config/puma.rb -e #{fetch(:puma_env)} -d"
+      end
     end
   end
 
   desc 'Stop Puma'
   task :stop do
     on roles(fetch(:puma_role)) do
-      execute :bundle, :exec, :puma, 'stop'
+      within current_path do
+        execute :bundle, :exec, :puma, 'stop'
+      end
     end
   end
 
