@@ -27,7 +27,7 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
 desc "Ensure words_alpha.txt.zip exists"
 task :ensure_words_alpha_exists do
   on roles(:app) do
-    unless File.exist?("#{shared_path}/db/seeds/words_alpha.txt.zip")
+    unless File.exists?("#{shared_path}/db/seeds/words_alpha.txt.zip")
       upload! "db/seeds/words_alpha.txt.zip", "#{shared_path}/db/seeds/"
     end
   end
