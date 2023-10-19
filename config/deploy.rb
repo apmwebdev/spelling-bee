@@ -20,7 +20,11 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
   'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
 # Tasks
-desc 'Ensure word_alpha.txt.zip exists'
+
+# This is the file to seed the words table in the database. It is very large,
+# won't change, and isn't needed after the DB is seeded, so archive it, upload
+# it to the server once, and keep it out of git.
+desc "Ensure word_alpha.txt.zip exists"
 task :ensure_words_alpha_exists do
   on roles(:app) do
     unless test("[ -f #{shared_path}/db/seeds/words_alpha.txt.zip ]")
@@ -29,5 +33,4 @@ task :ensure_words_alpha_exists do
     end
   end
 end
-
 before "deploy:symlink:linked_files", "ensure_linked_file"
