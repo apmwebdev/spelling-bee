@@ -10,6 +10,7 @@ environment ENV.fetch("RAILS_ENV") { "production" }
 
 # pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
+directory '/home/deploy/ssb/current'
 bind "unix:///home/deploy/ssb/shared/tmp/sockets/puma.sock"
 pidfile "/home/deploy/ssb/shared/tmp/pids/puma.pid"
 state_path "/home/deploy/ssb/shared/tmp/pids/puma.state"
