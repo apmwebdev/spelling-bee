@@ -16,6 +16,7 @@ gem "rack-cors"
 gem "nokogiri"
 gem "dotenv", "~> 2.8"
 gem "dotenv-rails", "~> 2.8"
+gem "puma-daemon"
 
 # Devise
 gem "devise"
