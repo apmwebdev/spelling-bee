@@ -11,9 +11,13 @@ set :env_file, ".env.production"
 desc "Build the Vite app locally"
 task :build_frontend_locally do
   run_locally do
-    within "bee-redux/" do
+    current_directory = Dir.pwd
+    begin
+      Dir.chdir("bee-redux")
       execute "npm install"
       execute "npm run build"
+    ensure
+      Dir.chdir(current_directory)
     end
   end
 end
