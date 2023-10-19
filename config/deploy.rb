@@ -18,18 +18,3 @@ append :linked_files, "config/master.key", ".env.production",
   "config/database.yml", "db/seeds/words_alpha.txt.zip"
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
   'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
-
-# Tasks
-
-# This is the file to seed the words table in the database. It is very large,
-# won't change, and isn't needed after the DB is seeded, so archive it, upload
-# it to the server once, and keep it out of git.
-desc "Ensure words_alpha.txt.zip exists"
-task :ensure_words_alpha_exists do
-  on roles(:app) do
-    unless File.exists?("#{shared_path}/db/seeds/words_alpha.txt.zip")
-      upload! "db/seeds/words_alpha.txt.zip", "#{shared_path}/db/seeds/"
-    end
-  end
-end
-before "deploy:check:linked_files", "ensure_words_alpha_exists"
