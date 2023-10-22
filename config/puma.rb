@@ -1,3 +1,7 @@
+# Dev environment puma config file. Calling this puma.rb allows the 'rails s'
+# command to still work in development, while the puma_production.rb file is
+# called explicitly in production so that that environment still works as well.
+
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
