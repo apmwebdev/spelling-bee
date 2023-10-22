@@ -15,6 +15,6 @@ invoke 'dotenv:setup'
 
 # Symlinking
 append :linked_files, "config/master.key", ".env.production",
-  "config/database.yml", "db/seeds/words_alpha.txt.zip"
+  "config/database.yml", "db/seeds/words_alpha.txt.zip", "bee-redux/env/.env.production.local"
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
   'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
