@@ -10,10 +10,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     if Rails.env.development?
       origins ENV["CORS_DEV_ORIGIN"], ENV["CORS_PREVIEW_ORIGIN"]
     else
-      origins ENV["CORS_FE_ORIGIN"]
+      origins ENV["CORS_FE_ORIGIN"], "http://localhost", "http://127.0.0.1"
     end
 
-    resource "*",
+    resource "/api/*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
       credentials: true
