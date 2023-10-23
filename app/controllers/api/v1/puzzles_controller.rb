@@ -18,7 +18,7 @@ class Api::V1::PuzzlesController < ApplicationController
   # GET /puzzles/latest
   # Get the latest puzzle and redirect to :show with its date string
   def latest
-    redirect_to action: :show, identifier: Puzzle.last.id
+    render(json: Puzzle.last.to_front_end)
   end
 
   # POST /puzzles
