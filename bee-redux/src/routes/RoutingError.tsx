@@ -8,14 +8,14 @@ export function RoutingError() {
 
   const content = (error: any) => {
     if (!isRoutingError(error)) {
-      return <p className="RoutingError_message">{JSON.stringify(error)}</p>;
+      return <p className="Error_message mono">{JSON.stringify(error)}</p>;
     }
     return (
       <>
-        <h2 className="RoutingError_subtitle">
+        <h2 className="Error_subtitle">
           {error.status}: {error.statusText}
         </h2>
-        <p className="RoutingError_message">{error.data}</p>
+        <p className="Error_message">{error.data}</p>
       </>
     );
   };
@@ -24,7 +24,7 @@ export function RoutingError() {
     <div className="RoutingError">
       <Header />
       <main>
-        <h1 className="RoutingError_title">Routing Error</h1>
+        <h1 className="Error_title">Routing Error</h1>
         {content(error)}
       </main>
     </div>
