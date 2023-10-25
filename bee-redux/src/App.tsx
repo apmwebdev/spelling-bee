@@ -1,7 +1,12 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Outlet,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 import { PuzzleRoute } from "./routes/PuzzleRoute";
 import { useGetUserBaseDataQuery } from "@/features/userData";
-import { RoutingError } from "@/routes/RoutingError";
 import { Header } from "@/routes/puzzleRoutePageSections/Header";
 import { AppProvider } from "@/providers/AppProvider";
 import { useAppClasses } from "@/hooks/useAppClasses";
@@ -13,6 +18,7 @@ import { ResendConfirmationRoute } from "@/features/auth/routes/ResendConfirmati
 import { ResendUnlockRoute } from "@/features/auth/routes/ResendUnlockRoute";
 import { SendPasswordResetRoute } from "@/features/auth/routes/SendPasswordResetRoute";
 import { ResetPasswordRoute } from "@/features/auth/routes/ResetPasswordRoute";
+import { RoutingError } from "@/routes/RoutingError";
 
 export function App() {
   useGetUserBaseDataQuery();
@@ -31,30 +37,30 @@ export function App() {
     );
   };
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={rootElement()} errorElement={<RoutingError />}>
-          <Route index element={<PuzzleRoute />} />
-          <Route path="puzzle/:identifier" element={<PuzzleRoute />} />
-          <Route path="puzzles/:identifier" element={<PuzzleRoute />} />
-          <Route path="auth/*" element={<NonPuzzleLayout />}>
-            <Route path="signup" element={<SignupRoute />} />
-            <Route path="login" element={<LoginRoute />} />
-            <Route path="account" element={<AccountRoute />} />
-            <Route
-              path="send_password_reset"
-              element={<SendPasswordResetRoute />}
-            />
-            <Route path="reset_password" element={<ResetPasswordRoute />} />
-            <Route
-              path="resend_confirmation"
-              element={<ResendConfirmationRoute />}
-            />
-            <Route path="resend_unlock" element={<ResendUnlockRoute />} />
-          </Route>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={rootElement()} errorElement={<RoutingError />}>
+        <Route index element={<PuzzleRoute />} />
+        <Route path="puzzle/:identifier" element={<PuzzleRoute />} />
+        <Route path="puzzles/:identifier" element={<PuzzleRoute />} />
+        <Route path="auth/*" element={<NonPuzzleLayout />}>
+          <Route path="signup" element={<SignupRoute />} />
+          <Route path="login" element={<LoginRoute />} />
+          <Route path="account" element={<AccountRoute />} />
+          <Route
+            path="send_password_reset"
+            element={<SendPasswordResetRoute />}
+          />
+          <Route path="reset_password" element={<ResetPasswordRoute />} />
+          <Route
+            path="resend_confirmation"
+            element={<ResendConfirmationRoute />}
+          />
+          <Route path="resend_unlock" element={<ResendUnlockRoute />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+      </Route>,
+    ),
   );
+
+  return <RouterProvider router={router} />;
 }
