@@ -11,3 +11,7 @@ export type TRoutingError = {
   status: number;
   statusText: string;
 };
+
+export const isRoutingError = (a: any): a is TRoutingError => {
+  return "data" in a && "status" in a && "statusText" in a;
+};
