@@ -1,17 +1,17 @@
 @use 'colors' as *;
 
-.RoutingError_title {
+.Error_title {
   padding: 8px;
   color: $text-secondary-large-dark;
   text-decoration: underline;
 }
 
-.RoutingError_subtitle {
+.Error_subtitle {
   padding: 8px;
   font-weight: bold;
 }
 
-.RoutingError_message {
+.Error_message {
   font-size: 1.5rem;
   padding: 16px;
 }
