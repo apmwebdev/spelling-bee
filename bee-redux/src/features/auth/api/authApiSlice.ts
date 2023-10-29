@@ -15,6 +15,8 @@ import { isAnyOf } from "@reduxjs/toolkit";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    /** Creates a new account and sends confirmation email to provided email
+     * address. */
     signup: builder.mutation<BasicResponse, SignupData>({
       query: (formData) => ({
         url: "/auth/signup",
@@ -22,21 +24,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    /** Logs a user into their account. Doesn't work if they haven't confirmed
+     * their email or their account is locked. */
     login: builder.mutation<User, LoginData>({
       query: (formData) => ({
         url: "/auth/login",
         method: "POST",
         body: formData,
       }),
-      // onQueryStarted: async (_arg, api) => {
-      //   const response = await api.queryFulfilled;
-      //   if (!response.data) return;
-      //   api.dispatch(loginReducer(response.data));
-      //   persistor.save("user", response.data);
-      //   persistor.save("isGuest", false);
-      // },
       invalidatesTags: ["User"],
     }),
+    /** Logs a user out and removes any data of theirs saved in the browser.
+     * The removal of local data happens even if the server action fails. */
     logout: builder.mutation<BasicResponse, void>({
       query: () => ({
         url: "/auth/logout",
@@ -44,6 +43,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    /** Updates all account fields, including name, email, and password. If
+     * updating a password, current password is also required. */
     updateAccount: builder.mutation<User, AuthUpdateData>({
       query: (formData) => ({
         url: "/auth/signup",
