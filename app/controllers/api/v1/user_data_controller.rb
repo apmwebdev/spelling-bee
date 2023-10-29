@@ -14,7 +14,7 @@ class Api::V1::UserDataController < ApplicationController
       render json: {searches: [], attempts: [{id: 0, guesses: []}], currentAttempt: 0}
       return
     end
-    unless params[:puzzle_id].to_s.match(/\A\d{1,5}\z/)
+    unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
       render json: {error: "Invalid puzzle ID"}, status: :bad_request
       return
     end
@@ -43,12 +43,10 @@ class Api::V1::UserDataController < ApplicationController
           .user_pref
           .current_hint_profile
           .hint_panels
-          .where(panel_subtype_type: "SearchPanel")
-        )
-      )
+          .where(panel_subtype_type: "SearchPanel")))
       .where(user_puzzle_attempt_id: attempts.last[:id])
-      .map{ |search| search.to_front_end }
+      .map { |search| search.to_front_end }
 
-    render json: { searches:, attempts:, currentAttempt: attempts.last[:id] }
+    render json: {searches:, attempts:, currentAttempt: attempts.last[:id]}
   end
 end

@@ -1,5 +1,5 @@
 class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
-  before_action :set_user_puzzle_attempt, only: %i[ show update destroy ]
+  before_action :set_user_puzzle_attempt, only: %i[show update destroy]
 
   # GET /user_puzzle_attempts
   def index
@@ -10,7 +10,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # GET /user_puzzle_attempts_for_puzzle
   def index_for_puzzle
-    unless params[:puzzle_id].to_s.match(/\A\d{1,5}\z/)
+    unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
       render json: {error: "Invalid puzzle ID"}, status: :bad_request
       return
     end
@@ -57,13 +57,14 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user_puzzle_attempt
-      @user_puzzle_attempt = UserPuzzleAttempt.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_puzzle_attempt_params
-      params.require(:user_puzzle_attempt).permit(:puzzle_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user_puzzle_attempt
+    @user_puzzle_attempt = UserPuzzleAttempt.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_puzzle_attempt_params
+    params.require(:user_puzzle_attempt).permit(:puzzle_id)
+  end
 end

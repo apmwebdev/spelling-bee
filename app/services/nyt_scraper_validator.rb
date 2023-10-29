@@ -57,11 +57,11 @@ class NytScraperValidator
     valid_puzzle?(@json_data["today"])
   end
 
-  def valid_puzzle?(puzzle_data)
-    def bad_puzzle(to_log, puzzle_data)
-      err_log "Invalid puzzle for #{puzzle_data["printDate"]}: #{to_log}"
-    end
+  def bad_puzzle(to_log, puzzle_data)
+    err_log "Invalid puzzle for #{puzzle_data["printDate"]}: #{to_log}"
+  end
 
+  def valid_puzzle?(puzzle_data)
     unless puzzle_data.is_a?(Hash)
       bad_puzzle("Puzzle is not a hash.", puzzle_data)
       return false

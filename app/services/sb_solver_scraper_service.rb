@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "open-uri"
 require "nokogiri"
 
@@ -9,7 +10,7 @@ module SbSolverScraperService
       center_letter: "",
       outer_letters: [],
       answers: [],
-      sb_solver_id: id,
+      sb_solver_id: id
     }
     url = "https://www.sbsolver.com/s/#{id}"
     return_object[:sb_solver_url] = url
@@ -22,13 +23,13 @@ module SbSolverScraperService
     # Letters
     letters = []
     doc.css(".bee-medium.spacer > .thinner-space-after img").each do |node|
-      letters.push(node['src'].slice(-7..-5))
+      letters.push(node["src"].slice(-7..-5))
     end
-    letters.each do |letterInfo|
-      if letterInfo[2] == "y"
-        return_object[:center_letter] = letterInfo[0]
+    letters.each do |letter_info|
+      if letter_info[2] == "y"
+        return_object[:center_letter] = letter_info[0]
       else
-        return_object[:outer_letters].push(letterInfo[0])
+        return_object[:outer_letters].push(letter_info[0])
       end
     end
 
@@ -54,12 +55,12 @@ module SbSolverScraperService
         sleep(rand(0..2))
         puzzle_data = get_puzzle(id)
         write_log "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
-        sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
+        sb_solver_puzzle = SbSolverPuzzle.create({sb_solver_id: id})
         puzzle = Puzzle.create({
           date: puzzle_data[:date],
           center_letter: puzzle_data[:center_letter],
           outer_letters: puzzle_data[:outer_letters],
-          origin: sb_solver_puzzle,
+          origin: sb_solver_puzzle
         })
         puzzle_data[:answers].each do |item|
           word = Word.create_or_find_by({text: item})

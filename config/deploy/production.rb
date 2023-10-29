@@ -1,9 +1,9 @@
-server "147.182.202.48", user: "deploy", roles: %w{app db web}
+server "147.182.202.48", user: "deploy", roles: %w[app db web]
 set :default_env, {
-  RAILS_ENV: 'production',
+  RAILS_ENV: "production"
 }
 set :ssh_options, {
-  keys: %w(/Users/austin/.ssh/do_ssb_deploy)
+  keys: %w[/Users/austin/.ssh/do_ssb_deploy]
 }
 set :env_file, ".env.production"
 

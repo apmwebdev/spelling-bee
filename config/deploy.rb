@@ -10,11 +10,11 @@ set :keep_releases, 5
 
 # Env file config
 set :env_file, ".env.development" # overwritten in production.rb
-invoke 'dotenv:read'
-invoke 'dotenv:setup'
+invoke "dotenv:read"
+invoke "dotenv:setup"
 
 # Symlinking
 append :linked_files, "config/master.key", ".env.production",
   "config/database.yml", "db/seeds/words_alpha.txt.zip", "bee-redux/env/.env.production.local"
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
-  'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets",
+  "vendor/bundle", ".bundle", "public/system", "public/uploads"
