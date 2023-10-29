@@ -8,6 +8,7 @@ import {
 import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 //Has to be a more specific import path to avoid a circular dependency
 import { logoutThunk } from "@/features/auth/api/authSlice";
+import { devLog } from "@/util";
 
 const BASE_QUERY_URL =
   import.meta.env.VITE_BACKEND_BASE_URL + import.meta.env.VITE_BACKEND_API_PATH;
@@ -24,9 +25,9 @@ const baseQueryWithAuth = async (
 ) => {
   const response = await baseQuery(arg, api, extraOptions);
   if (response.error) {
-    console.error("arg:", arg, "error:", response);
+    devLog("arg:", arg, "error:", response);
   } else {
-    console.log("arg:", arg, "response:", response);
+    devLog("arg:", arg, "response:", response);
   }
   if (response.error?.status === 401) {
     api.dispatch(logoutThunk);

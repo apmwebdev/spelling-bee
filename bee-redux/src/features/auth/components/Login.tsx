@@ -5,6 +5,7 @@ import { isFetchBaseQueryErrorResponse } from "@/types";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { MoreActions } from "@/features/auth/components/MoreActions";
+import { devLog } from "@/util";
 
 export function Login({
   passedInMessage,
@@ -40,7 +41,7 @@ export function Login({
         typeof response.error.data === "string"
       ) {
         message.update(response.error.data, "Error");
-        console.log(response);
+        devLog(response);
         return;
       }
     }

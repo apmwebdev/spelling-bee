@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore } from "@/util";
+import { calculateScore, devLog } from "@/util";
 import { shuffle, sortBy } from "lodash";
 import { selectGuessWords } from "@/features/guesses";
 import {
@@ -44,7 +44,7 @@ export const puzzleSlice = createSlice({
           state.data = BlankPuzzle;
           state.status = Statuses.Error;
           state.error = payload;
-          console.log("puzzleSlice: getPuzzle.matchRejected:", payload);
+          devLog("puzzleSlice: getPuzzle.matchRejected:", payload);
         },
       )
       // TODO: Add loading state handling

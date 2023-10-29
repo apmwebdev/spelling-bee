@@ -70,3 +70,7 @@ export const getNextPuzzleDateString = (dateString: string) => {
 
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
+
+export const devLog = (...to_log: any[]) => {
+  if (import.meta.env.DEV) console.log(to_log);
+};
