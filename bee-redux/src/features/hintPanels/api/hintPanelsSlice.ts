@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "@/app/store";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
-import { capitalizeFirstLetter } from "@/util";
+import { capitalizeFirstLetter, devLog } from "@/util";
 import { StateShape, Statuses } from "@/types";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { puzzleApiSlice } from "@/features/puzzle";
@@ -51,11 +51,11 @@ export const setPanelDisplayPropThunk =
         (panel) => panel.id === panelId,
       );
       if (!state.auth.user) {
-        console.log("No auth");
+        devLog("No auth");
         return;
       }
       if (currentProfile?.type !== HintProfileTypes.User) {
-        console.log("Default profile");
+        devLog("Default profile");
         return;
       }
       if (

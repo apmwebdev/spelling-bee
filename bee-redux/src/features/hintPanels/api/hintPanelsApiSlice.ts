@@ -12,6 +12,7 @@ import {
   RailsHintPanelUpdateForm,
 } from "@/features/hintPanels/types";
 import { HintProfileTypes } from "@/features/hintProfiles/types";
+import { devLog } from "@/util";
 
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   const railsData: RailsHintPanelUpdateForm = {
@@ -82,17 +83,15 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
           return { data: true };
         }
         const query = async () => {
-          console.log("Running updateHintPanel query...");
-          console.log("Form data:", formData);
           try {
             const response = await baseQuery({
               url: `/hint_panels/${formData.id}`,
               method: "PATCH",
               body: railsifyUpdatePanelData(formData),
             });
-            console.log("Response:", response);
+            devLog("Response:", response);
           } catch (err) {
-            console.log("Couldn't update DB with updated panel data:", err);
+            devLog("Couldn't update DB with updated panel data:", err);
           }
         };
         //Debounce query if applicable. Otherwise, just run it.
@@ -169,7 +168,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
               body: keysToSnakeCase(formData),
             });
           } catch (err) {
-            console.log("Couldn't update panel order:", err);
+            devLog("Couldn't update panel order:", err);
             return { data: false };
           }
         }

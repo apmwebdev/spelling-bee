@@ -171,7 +171,6 @@ export const wordListSettingsSlice = createSlice({
       state.data.answers.remainingGroupWithLetter = action.payload;
     },
     toggleAnswersSettingsCollapsed: (state) => {
-      console.log("trigger");
       state.data.answers.settingsCollapsed =
         !state.data.answers.settingsCollapsed;
     },
