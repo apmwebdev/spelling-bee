@@ -7,6 +7,7 @@ import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { MoreActions } from "@/features/auth/components/MoreActions";
 import { PasswordFields } from "@/features/auth/components/PasswordFields";
+import { devLog } from "@/util";
 
 /**
  * @name Signup
@@ -63,10 +64,10 @@ export function Signup() {
         const response = await signup(formData).unwrap();
         resetForm();
         message.update(response.success, "Success");
-      } catch (error) {
-        console.error("Failed to save user: ", error);
-        if (isBasicError(error)) {
-          message.update(error.data.error, "Error");
+      } catch (err) {
+        devLog("Failed to save user: ", err);
+        if (isBasicError(err)) {
+          message.update(err.data.error, "Error");
         } else {
           message.update("Error", "Error");
         }
