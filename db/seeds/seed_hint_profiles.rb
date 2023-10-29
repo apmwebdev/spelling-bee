@@ -7,7 +7,7 @@ module SeedHintProfiles
       is_blurred: true,
       is_sticky: false,
       is_settings_expanded: true,
-      is_settings_sticky: false,
+      is_settings_sticky: false
     )
   end
 
@@ -16,7 +16,7 @@ module SeedHintProfiles
       hint_profile: profile,
       status_tracking: "found_of_total",
       initial_display_state: default_display_state,
-      current_display_state: default_display_state,
+      current_display_state: default_display_state
     }
   end
 
@@ -31,9 +31,9 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
-      **boilerplate_fields(ssb_profile),
+      **boilerplate_fields(ssb_profile)
     )
 
     HintPanel.create!(
@@ -44,9 +44,9 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
-      **boilerplate_fields(ssb_profile),
+      **boilerplate_fields(ssb_profile)
     )
 
     HintPanel.create!(
@@ -55,9 +55,9 @@ module SeedHintProfiles
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
-        letters_offset: 0,
+        letters_offset: 0
       ),
-      **boilerplate_fields(ssb_profile),
+      **boilerplate_fields(ssb_profile)
     )
 
     HintPanel.create!(
@@ -69,9 +69,9 @@ module SeedHintProfiles
         revealed_letters: 1,
         reveal_length: true,
         click_to_define: false,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
-      **boilerplate_fields(ssb_profile),
+      **boilerplate_fields(ssb_profile)
     )
 
     HintPanel.create!(
@@ -83,7 +83,7 @@ module SeedHintProfiles
         separate_known: true,
         reveal_length: true,
         show_obscurity: true,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
       **boilerplate_fields(ssb_profile)
     )
@@ -100,12 +100,12 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
       hint_profile: sbb_profile,
       status_tracking: "remaining",
       initial_display_state: default_display_state,
-      current_display_state: default_display_state,
+      current_display_state: default_display_state
     )
 
     HintPanel.create!(
@@ -116,12 +116,12 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
       hint_profile: sbb_profile,
       status_tracking: "remaining",
       initial_display_state: default_display_state,
-      current_display_state: default_display_state,
+      current_display_state: default_display_state
     )
 
     HintPanel.create!(
@@ -133,12 +133,12 @@ module SeedHintProfiles
         revealed_letters: 1,
         reveal_length: true,
         click_to_define: false,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
       hint_profile: sbb_profile,
       status_tracking: "found_of_total",
       initial_display_state: default_display_state,
-      current_display_state: default_display_state,
+      current_display_state: default_display_state
     )
 
     HintPanel.create!(
@@ -150,12 +150,12 @@ module SeedHintProfiles
         separate_known: true,
         reveal_length: true,
         show_obscurity: false,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
       hint_profile: sbb_profile,
       status_tracking: "found_of_total",
       initial_display_state: default_display_state,
-      current_display_state: default_display_state,
+      current_display_state: default_display_state
     )
   end
 
@@ -165,7 +165,7 @@ module SeedHintProfiles
       is_blurred: false,
       is_sticky: true,
       is_settings_expanded: false,
-      is_settings_sticky: true,
+      is_settings_sticky: true
     )
   end
 
@@ -174,7 +174,7 @@ module SeedHintProfiles
       hint_profile: profile,
       status_tracking: "found_of_total",
       initial_display_state: user_display_state,
-      current_display_state: user_display_state,
+      current_display_state: user_display_state
     }
   end
 
@@ -183,7 +183,7 @@ module SeedHintProfiles
       name: "Search Test",
       user_id: User.first.id,
       default_panel_tracking: "found_of_total",
-      default_panel_display_state: user_display_state,
+      default_panel_display_state: user_display_state
     )
 
     HintPanel.create!(
@@ -192,7 +192,7 @@ module SeedHintProfiles
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
-        letters_offset: 0,
+        letters_offset: 0
       ),
       **user_panel_boilerplate(prof_1)
     )
@@ -205,7 +205,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 1,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
       **user_panel_boilerplate(prof_1)
     )
@@ -218,7 +218,7 @@ module SeedHintProfiles
         output_type: "word_count_list",
         number_of_letters: 2,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
       **user_panel_boilerplate(prof_1)
     )
@@ -231,7 +231,7 @@ module SeedHintProfiles
       location: "anywhere",
       output_type: "word_length_grid",
       letters_offset: 0,
-      search_string: "men",
+      search_string: "men"
     )
     SearchPanelSearch.create!(
       search_panel_id: 2,
@@ -239,7 +239,7 @@ module SeedHintProfiles
       location: "anywhere",
       output_type: "word_count_list",
       letters_offset: 0,
-      search_string: "men",
+      search_string: "men"
     )
     SearchPanelSearch.create!(
       search_panel_id: 2,
@@ -247,7 +247,7 @@ module SeedHintProfiles
       location: "anywhere",
       output_type: "letters_list",
       letters_offset: 0,
-      search_string: "men",
+      search_string: "men"
     )
   end
 
@@ -256,7 +256,7 @@ module SeedHintProfiles
       name: "My Profile",
       user_id: User.first.id,
       default_panel_tracking: "found_of_total",
-      default_panel_display_state: user_display_state,
+      default_panel_display_state: user_display_state
     )
 
     HintPanel.create!(
@@ -267,7 +267,7 @@ module SeedHintProfiles
         output_type: "word_length_grid",
         number_of_letters: 2,
         letters_offset: 0,
-        hide_known: false,
+        hide_known: false
       ),
       **user_panel_boilerplate(prof_2)
     )
@@ -278,7 +278,7 @@ module SeedHintProfiles
       panel_subtype: SearchPanel.new(
         location: "anywhere",
         output_type: "word_length_grid",
-        letters_offset: 0,
+        letters_offset: 0
       ),
       **user_panel_boilerplate(prof_2)
     )
@@ -292,7 +292,7 @@ module SeedHintProfiles
         separate_known: false,
         click_to_define: false,
         reveal_length: true,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
       **user_panel_boilerplate(prof_2)
     )
@@ -306,7 +306,7 @@ module SeedHintProfiles
         separate_known: true,
         reveal_length: true,
         show_obscurity: false,
-        sort_order: "asc",
+        sort_order: "asc"
       ),
       **user_panel_boilerplate(prof_2)
     )
@@ -345,7 +345,7 @@ module SeedHintProfiles
   def self.reset_all_ids
     ResetId.reset(
       DefaultHintProfile,
-      UserHintProfile,
+      UserHintProfile
     )
     reset_dependent_ids
   end

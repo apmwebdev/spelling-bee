@@ -8,16 +8,16 @@ class Puzzle < ApplicationRecord
     :is_latest
 
   def set_valid_letters
-    @valid_letters ||= [self.center_letter, *self.outer_letters].sort
+    @valid_letters ||= [center_letter, *outer_letters].sort
   end
 
   def set_pangrams
     @pangrams ||= []
     return unless @pangrams.empty?
     set_valid_letters
-    potential_pangrams = Answer.where(puzzle_id: self.id).where("length(word_text) >= 7")
+    potential_pangrams = Answer.where(puzzle_id: id).where("length(word_text) >= 7")
     potential_pangrams.each do |pan|
-      @pangrams.push(pan.word_text) if Set.new(pan.word_text.split("")).length == 7
+      @pangrams.push(pan.word_text) if Set.new(pan.word_text.chars).length == 7
     end
     @pangrams
   end
@@ -40,16 +40,16 @@ class Puzzle < ApplicationRecord
     Word
       .where("CHAR_LENGTH(text) >= 4")
       .where("text ~ '^[#{@valid_letters.join("")}]+$'")
-      .where("text LIKE '%#{self.center_letter}%'")
+      .where("text LIKE '%#{center_letter}%'")
       .find_each do |checked_word|
-      unless self.words.include?(checked_word)
+      unless words.include?(checked_word)
         @excluded_words.push(checked_word.text)
       end
     end
   end
 
   def set_is_latest
-    @is_latest = Puzzle.last === self;
+    @is_latest = Puzzle.last === self
   end
 
   def set_derived_fields
@@ -70,11 +70,11 @@ class Puzzle < ApplicationRecord
       validLetters: @valid_letters,
       pangrams: @pangrams,
       perfectPangrams: @perfect_pangrams,
-      answers: self.answers.map do |answer|
+      answers: answers.map do |answer|
         answer.to_front_end
-      end.sort{ |a, b| a[:word] <=> b[:word]},
+      end.sort_by { |answer| answer[:word] },
       excludedWords: @excluded_words,
-      isLatest: @is_latest,
+      isLatest: @is_latest
     }
   end
 end

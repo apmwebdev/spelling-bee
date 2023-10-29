@@ -8,7 +8,6 @@ class AddRevealedLettersToObscurityPanels < ActiveRecord::Migration[7.0]
         name: "positive_revealed_letters"
     end
     remove_column(:obscurity_panels, :reveal_first_letter, :boolean,
-      default: true, null: false, if_exists: true,
-    )
+      default: true, null: false, if_exists: true)
   end
 end

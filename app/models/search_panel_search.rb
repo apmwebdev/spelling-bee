@@ -11,7 +11,7 @@ class SearchPanelSearch < ApplicationRecord
       location:,
       lettersOffset: letters_offset,
       outputType: output_type,
-      createdAt: created_at.to_i,
+      createdAt: created_at.to_i
     }
   end
 end

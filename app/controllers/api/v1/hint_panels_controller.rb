@@ -1,5 +1,5 @@
 class Api::V1::HintPanelsController < AuthRequiredController
-  before_action :set_hint_panel, only: %i[ update destroy move ]
+  before_action :set_hint_panel, only: %i[update destroy move]
 
   # POST /hint_panels
   def create
@@ -14,8 +14,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # PATCH/PUT /hint_panels/1
   def update
-    if @hint_panel.hint_profile.class.name == "DefaultHintProfile"
-      render json: { error: "Can't change default profiles" }, status: 403
+    if @hint_panel.hint_profile.instance_of?(::DefaultHintProfile)
+      render json: {error: "Can't change default profiles"}, status: 403
       return
     end
     the_params = hint_panel_update_params
@@ -47,7 +47,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
           render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
           return
         end
-      elsif @hint_panel.panel_subtype_type =="DefinitionPanel"
+      elsif @hint_panel.panel_subtype_type == "DefinitionPanel"
         unless @hint_panel.panel_subtype.update(definition_update_params)
           render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
           return
@@ -58,7 +58,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       hint_panel_update_params.except(
         :initial_display_state_attributes,
         :current_display_state_attributes,
-        :panel_subtype_attributes,
+        :panel_subtype_attributes
       )
     )
       render json: @hint_panel.to_front_end
@@ -82,7 +82,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
     if old_index > panels.size || new_index > panels.size || old_index < 0 ||
         new_index < 0 || old_index == new_index || panels.size < 2
-      render json: { error: "Invalid move" }, status: 400
+      render json: {error: "Invalid move"}, status: 400
       return
     end
 
@@ -92,22 +92,23 @@ class Api::V1::HintPanelsController < AuthRequiredController
     panels_array
       .insert(new_index, panels_array.delete_at(old_index))
     relevant_panels = panels_array.slice(
-        new_index > old_index ? old_index : new_index,
-        (old_index - new_index).abs + 1
-      )
+      (new_index > old_index) ? old_index : new_index,
+      (old_index - new_index).abs + 1
+    )
       .each_with_index do |panel, i|
         panel.display_index = i
         panel.save
       end
-    render json: relevant_panels.map { |panel| { name: panel.name, index: panel.display_index }}
+    render json: relevant_panels.map { |panel| {name: panel.name, index: panel.display_index} }
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
     @hint_panel = current_user.hint_panels.find(params[:id].to_i)
     unless @hint_panel
-      render json: { error: "Hint panel not found for current user" },
+      render json: {error: "Hint panel not found for current user"},
         status: 404
     end
   end
@@ -123,14 +124,14 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_blurred,
         :is_sticky,
         :is_settings_expanded,
-        :is_settings_sticky,
+        :is_settings_sticky
       ],
       current_display_state_attributes: [
         :is_expanded,
         :is_blurred,
         :is_sticky,
         :is_settings_expanded,
-        :is_settings_sticky,
+        :is_settings_sticky
       ],
       panel_subtype_attributes: [
         :hide_known,
@@ -143,10 +144,11 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :letters_offset,
         :separate_known,
         :revealed_letters,
-        :click_to_define,
-      ],
+        :click_to_define
+      ]
     )
   end
+
   # Only allow a list of trusted parameters through.
   def hint_panel_update_params
     params.require(:hint_panel).permit(
@@ -159,14 +161,14 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_blurred,
         :is_sticky,
         :is_settings_expanded,
-        :is_settings_sticky,
+        :is_settings_sticky
       ],
       current_display_state_attributes: [
         :is_expanded,
         :is_blurred,
         :is_sticky,
         :is_settings_expanded,
-        :is_settings_sticky,
+        :is_settings_sticky
       ],
       panel_subtype_attributes: [
         :hide_known,
@@ -181,7 +183,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :revealed_letters,
         :click_to_define,
         :sort_order
-      ],
+      ]
     )
   end
 
@@ -191,7 +193,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :location,
       :output_type,
       :number_of_letters,
-      :letters_offset,
+      :letters_offset
     )
   end
 
@@ -199,7 +201,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
       :location,
       :output_type,
-      :letters_offset,
+      :letters_offset
     )
   end
 
@@ -210,7 +212,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :separate_known,
       :reveal_length,
       :click_to_define,
-      :sort_order,
+      :sort_order
     )
   end
 
@@ -220,7 +222,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :revealed_letters,
       :reveal_length,
       :show_obscurity,
-      :sort_order,
+      :sort_order
     )
   end
 

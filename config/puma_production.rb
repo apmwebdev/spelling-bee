@@ -9,8 +9,8 @@ port ENV.fetch("PORT") { 3000 }
 
 environment ENV.fetch("RAILS_ENV") { "production" }
 
-stdout_redirect '/home/deploy/ssb/shared/log/puma_access.log', '/home/deploy/ssb/shared/log/puma_error.log', true
-directory '/home/deploy/ssb/current'
+stdout_redirect "/home/deploy/ssb/shared/log/puma_access.log", "/home/deploy/ssb/shared/log/puma_error.log", true
+directory "/home/deploy/ssb/current"
 bind "unix:///home/deploy/ssb/shared/tmp/sockets/puma.sock"
 pidfile "/home/deploy/ssb/shared/tmp/pids/puma.pid"
 state_path "/home/deploy/ssb/shared/tmp/pids/puma.state"

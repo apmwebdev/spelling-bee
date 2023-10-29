@@ -3,7 +3,7 @@ class CreateUserPrefs < ActiveRecord::Migration[7.0]
     create_enum :user_color_scheme, %w[auto dark light]
 
     create_table :user_prefs do |t|
-      t.references :user, null: false, foreign_key: true, index: { unique: true }
+      t.references :user, null: false, foreign_key: true, index: {unique: true}
       t.enum :color_scheme, enum_type: :user_color_scheme, default: "auto", null: false
       t.references :current_hint_profile, polymorphic: true
 
