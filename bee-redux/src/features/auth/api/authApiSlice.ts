@@ -100,6 +100,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
+// Handle this here so that the behavior can be defined once for both login and
+// account update.
 startAppListening({
   matcher: isAnyOf(
     authApiSlice.endpoints.login.matchFulfilled,
