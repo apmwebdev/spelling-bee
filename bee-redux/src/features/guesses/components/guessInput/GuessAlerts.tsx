@@ -6,13 +6,6 @@ export type GuessAlertsProps = {
   messagesType: "answer" | "error" | "";
 };
 
-export function initialGuessAlerts(): GuessAlertsProps {
-  return {
-    messages: [],
-    messagesType: "",
-  };
-}
-
 export function GuessAlerts({ messages, messagesType }: GuessAlertsProps) {
   const messageOutput = () => {
     if (messagesType === "answer") {

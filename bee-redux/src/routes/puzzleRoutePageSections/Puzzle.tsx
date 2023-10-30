@@ -1,6 +1,7 @@
 import { Hive, PuzzleNav } from "@/features/puzzle";
-import { GuessInputProvider } from "@/app/GuessInputProvider";
-import { GuessInput, GuessInputControls } from "@/features/guesses";
+import { GuessInputProvider } from "@/features/guesses/providers/GuessInputProvider";
+import { GuessInputControls } from "@/features/guesses";
+import { GuessInputForm } from "@/features/guesses/components/GuessInputForm";
 
 export function Puzzle() {
   return (
@@ -8,7 +9,7 @@ export function Puzzle() {
       <div className="PuzzleControlsContainer">
         <PuzzleNav />
         <div className="PuzzleControls">
-          <GuessInput />
+          <GuessInputForm />
           <Hive />
         </div>
         <GuessInputControls />

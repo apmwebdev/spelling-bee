@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GuessInputContext } from "@/app/GuessInputProvider";
+import { GuessInputContext } from "@/features/guesses/providers/GuessInputProvider";
 
 export function GuessInputEnter() {
   const { enterPressedEvent } = useContext(GuessInputContext);
