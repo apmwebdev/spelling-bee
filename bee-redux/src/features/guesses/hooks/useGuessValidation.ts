@@ -3,7 +3,7 @@ import { GuessMessagesOutput } from "@/features/guesses/hooks/useGuessMessages";
 import { useAppSelector } from "@/app/hooks";
 import { selectCenterLetter, selectValidLetters } from "@/features/puzzle";
 
-enum ErrorTypes {
+export enum GuessErrorTypes {
   TooShort = "Must be at least 4 letters",
   InvalidLetter = "Contains invalid letter(s)",
   MissingCenterLetter = "Must contain center letter",
@@ -16,41 +16,39 @@ export type GuessValidationOutput = {
   validate: (guessValue: string, guesses: GuessFormat[]) => boolean;
 };
 
-const validationCurry =
-  ({
-    centerLetter,
-    validLetters,
-    messages,
-  }: {
-    centerLetter: string;
-    validLetters: string[];
-    messages: GuessMessagesOutput;
-  }) =>
-  (guessValue: string, guesses: GuessFormat[]) => {
-    const errors: ErrorTypes[] = [];
+export const validationCurry = ({
+  centerLetter,
+  validLetters,
+  messages,
+}: {
+  centerLetter: string;
+  validLetters: string[];
+  messages: GuessMessagesOutput;
+}) => {
+  const regex = new RegExp(`^[${validLetters.join("")}]+$`);
+
+  return (guessValue: string, guesses: GuessFormat[]) => {
+    const errors: GuessErrorTypes[] = [];
 
     if (guessValue.length < 4) {
-      errors.push(ErrorTypes.TooShort);
+      errors.push(GuessErrorTypes.TooShort);
     }
     if (!guessValue.includes(centerLetter)) {
-      errors.push(ErrorTypes.MissingCenterLetter);
+      errors.push(GuessErrorTypes.MissingCenterLetter);
     }
-    if (
-      guessValue !== "" &&
-      !guessValue.match(new RegExp(`^[${validLetters.join("")}]+$`))
-    ) {
-      errors.push(ErrorTypes.InvalidLetter);
+    if (guessValue !== "" && !guessValue.match(regex)) {
+      errors.push(GuessErrorTypes.InvalidLetter);
     }
     const matchingGuess = guesses.find(
       (guessObject) => guessObject.text === guessValue,
     );
     if (matchingGuess) {
       if (matchingGuess.isAnswer) {
-        errors.push(ErrorTypes.AlreadyFound);
+        errors.push(GuessErrorTypes.AlreadyFound);
       } else if (matchingGuess.isSpoiled) {
-        errors.push(ErrorTypes.AlreadySpoiled);
+        errors.push(GuessErrorTypes.AlreadySpoiled);
       } else {
-        errors.push(ErrorTypes.AlreadyGuessed);
+        errors.push(GuessErrorTypes.AlreadyGuessed);
       }
     }
     // Update messages if there are errors
@@ -59,6 +57,8 @@ const validationCurry =
     }
     return errors.length === 0;
   };
+};
+
 export const useGuessValidation = (
   messages: GuessMessagesOutput,
 ): GuessValidationOutput => {
