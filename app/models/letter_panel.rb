@@ -8,7 +8,7 @@ class LetterPanel < ApplicationRecord
       outputType: output_type,
       numberOfLetters: number_of_letters,
       lettersOffset: letters_offset,
-      hideKnown: hide_known,
+      hideKnown: hide_known
     }
   end
 end

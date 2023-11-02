@@ -17,7 +17,7 @@ class UserHintProfile < ApplicationRecord
         panel.to_front_end
       end
     }
-    return_obj[:panels].sort! { |a, b| a[:displayIndex] <=> b[:displayIndex] }
+    return_obj[:panels].sort_by! { |panel| panel[:displayIndex] }
     return_obj
   end
 
@@ -25,7 +25,7 @@ class UserHintProfile < ApplicationRecord
     {
       id:,
       type: self.class.name,
-      name:,
+      name:
     }
   end
 end

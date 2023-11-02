@@ -8,7 +8,7 @@ class SearchPanel < ApplicationRecord
       id:,
       location:,
       outputType: output_type,
-      lettersOffset: letters_offset,
+      lettersOffset: letters_offset
     }
   end
 end

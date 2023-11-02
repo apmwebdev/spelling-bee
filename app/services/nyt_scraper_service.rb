@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "open-uri"
 require "nokogiri"
 require "json"
@@ -39,7 +40,7 @@ class NytScraperService
       date: puzzle_date,
       center_letter: puzzle_json["centerLetter"],
       outer_letters: puzzle_json["outerLetters"],
-      origin: nyt_puzzle,
+      origin: nyt_puzzle
     })
     @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
     puzzle_json["answers"].each do |answer|
@@ -72,7 +73,7 @@ class NytScraperService
     if NytScraperValidator.new(@logger, puzzles_json).valid?
       @days_arr = [*puzzles_json["pastPuzzles"]["lastWeek"]]
       @days_arr.push(*puzzles_json["pastPuzzles"]["thisWeek"])
-      @days_arr.each_with_index do |puzzle_json|
+      @days_arr.each do |puzzle_json|
         create_puzzle_from_json(puzzle_json)
       end
     end

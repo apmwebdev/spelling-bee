@@ -1,5 +1,5 @@
 class Api::V1::GuessesController < AuthRequiredController
-  before_action :set_guess, only: %i[ show update destroy ]
+  before_action :set_guess, only: %i[show update destroy]
 
   # POST /guesses
   def create
@@ -18,13 +18,14 @@ class Api::V1::GuessesController < AuthRequiredController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_guess
-      @guess = Guess.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def guess_params
-      params.require(:guess).permit(:user_puzzle_attempt_id, :text, :is_spoiled)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_guess
+    @guess = Guess.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def guess_params
+    params.require(:guess).permit(:user_puzzle_attempt_id, :text, :is_spoiled)
+  end
 end

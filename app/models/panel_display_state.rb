@@ -9,7 +9,7 @@ class PanelDisplayState < ApplicationRecord
       isBlurred: is_blurred,
       isSticky: is_sticky,
       isSettingsExpanded: is_settings_expanded,
-      isSettingsSticky: is_settings_sticky,
+      isSettingsSticky: is_settings_sticky
     }
   end
 end

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types";
-import { isFetchBaseQueryErrorResponse } from "@/types";
+import { isBasicError, isFetchBaseQueryErrorResponse } from "@/types";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { MoreActions } from "@/features/auth/components/MoreActions";
@@ -18,16 +18,11 @@ export function Login({
     baseClass: "Auth_message",
     initial: passedInMessage,
   });
-
-  const [login] = useLoginMutation();
-
-  const canSubmit = () => {
-    return emailValue !== "" && passwordValue !== "";
-  };
+  const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (canSubmit()) {
+    if (emailValue !== "" && passwordValue !== "" && !isLoading) {
       message.update("");
       const formData: LoginData = {
         user: {
@@ -35,60 +30,65 @@ export function Login({
           password: passwordValue,
         },
       };
-      const response = await login(formData);
-      if (
-        isFetchBaseQueryErrorResponse(response) &&
-        typeof response.error.data === "string"
-      ) {
-        message.update(response.error.data, "Error");
-        devLog(response);
-        return;
+      try {
+        /* Success logic for login is defined in authApiSlice and the parent
+         * components to this form. Only the error case needs to be handled
+         * here. */
+        await login(formData).unwrap();
+      } catch (err) {
+        devLog("Failed to log in:", err);
+        if (
+          isFetchBaseQueryErrorResponse(err) &&
+          typeof err.error.data === "string"
+        ) {
+          message.update(err.error.data, "Error");
+        } else if (isBasicError(err)) {
+          message.update(err.data.error, "Error");
+        } else {
+          message.update("Error logging in", "Error");
+        }
       }
     }
   };
 
-  const content = () => {
-    return (
-      <div className="Auth_container">
-        <FormMessage {...message.output} />
-        <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
-          <fieldset className="Auth_fieldset">
-            <label htmlFor="Login_emailInput">Email:</label>
-            <input
-              className="Auth_textInput"
-              type="email"
-              id="Login_emailInput"
-              name="login-email"
-              value={emailValue}
-              onChange={(e) => setEmailValue(e.target.value)}
-            />
-          </fieldset>
-          <fieldset className="Auth_fieldset">
-            <label htmlFor="Login_passwordInput">Password:</label>
-            <input
-              className="Auth_textInput"
-              type="password"
-              id="Login_passwordInput"
-              name="login-password"
-              value={passwordValue}
-              onChange={(e) => setPasswordValue(e.target.value)}
-            />
-          </fieldset>
-        </form>
-        <div className="Auth_actions">
-          {/*<ForgotPasswordButton />*/}
-          <MoreActions />
-          <button
-            type="submit"
-            form="Login_form"
-            className="standardButton Auth_submit"
-          >
-            Log in
-          </button>
-        </div>
+  return (
+    <div className="Auth_container">
+      <FormMessage {...message.output} />
+      <form id="Login_form" className="Auth_form" onSubmit={handleSubmit}>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_emailInput">Email:</label>
+          <input
+            className="Auth_textInput"
+            type="email"
+            id="Login_emailInput"
+            name="login-email"
+            value={emailValue}
+            onChange={(e) => setEmailValue(e.target.value)}
+          />
+        </fieldset>
+        <fieldset className="Auth_fieldset">
+          <label htmlFor="Login_passwordInput">Password:</label>
+          <input
+            className="Auth_textInput"
+            type="password"
+            id="Login_passwordInput"
+            name="login-password"
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
+          />
+        </fieldset>
+      </form>
+      <div className="Auth_actions">
+        <MoreActions />
+        <button
+          type="submit"
+          form="Login_form"
+          className="standardButton Auth_submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading" : "Log in"}
+        </button>
       </div>
-    );
-  };
-
-  return content();
+    </div>
+  );
 }

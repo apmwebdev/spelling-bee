@@ -9,7 +9,7 @@ class ObscurityPanel < ApplicationRecord
       revealedLetters: revealed_letters,
       revealLength: reveal_length,
       clickToDefine: click_to_define,
-      sortOrder: sort_order,
+      sortOrder: sort_order
     }
   end
 end

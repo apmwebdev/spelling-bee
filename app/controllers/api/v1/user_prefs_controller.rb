@@ -31,11 +31,12 @@ class Api::V1::UserPrefsController < AuthRequiredController
   end
 
   private
-    def set_user_pref
-      @user_pref = UserPref.find_by_user_id(current_user.id)
-    end
 
-    def user_pref_params
-      params.permit(:color_scheme, :current_hint_profile_type, :current_hint_profile_id)
-    end
+  def set_user_pref
+    @user_pref = UserPref.find_by_user_id(current_user.id)
+  end
+
+  def user_pref_params
+    params.permit(:color_scheme, :current_hint_profile_type, :current_hint_profile_id)
+  end
 end

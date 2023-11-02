@@ -1,5 +1,5 @@
 class Api::V1::WordsController < ApplicationController
-  before_action :set_word, only: %i[ show update destroy ]
+  before_action :set_word, only: %i[show update destroy]
 
   # GET /words
   def index
@@ -39,13 +39,14 @@ class Api::V1::WordsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_word
-      @word = Word.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def word_params
-      params.require(:word).permit(:word)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_word
+    @word = Word.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def word_params
+    params.require(:word).permit(:word)
+  end
 end

@@ -36,7 +36,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -208,10 +208,10 @@ Devise.setup do |config|
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
-  if Rails.env.development?
-    config.maximum_attempts = 2
+  config.maximum_attempts = if Rails.env.development?
+    2
   else
-    config.maximum_attempts = 7
+    7
   end
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
@@ -319,10 +319,10 @@ Devise.setup do |config|
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
 
     jwt.dispatch_requests = [
-      ['POST', %r{\A/auth/login\z}]
+      ["POST", %r{\A/auth/login\z}]
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{\A/auth/logout\z}]
+      ["DELETE", %r{\A/auth/logout\z}]
     ]
     jwt.expiration_time = 2.weeks.to_i
   end

@@ -6,7 +6,7 @@ module UserDataPresenter
       prefs: user.user_pref.to_front_end,
       hintProfiles: HintPresenter.present_all_profiles(user),
       currentHintProfile: user.user_pref.current_hint_profile.to_front_end_complete,
-      isLoggedIn: true,
+      isLoggedIn: true
     }
   end
 
@@ -15,7 +15,7 @@ module UserDataPresenter
       prefs: nil,
       hintProfiles: HintPresenter.present_default_profiles,
       currentHintProfile: DefaultHintProfile.first.to_front_end_complete,
-      isLoggedIn: false,
+      isLoggedIn: false
     }
   end
 end

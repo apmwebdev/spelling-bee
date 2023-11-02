@@ -15,11 +15,11 @@ class HintPanel < ApplicationRecord
       initialDisplayState: initial_display_state.to_front_end,
       currentDisplayState: current_display_state.to_front_end,
       statusTracking: status_tracking,
-      typeData: panel_subtype.to_front_end,
+      typeData: panel_subtype.to_front_end
     }
   end
 
   def to_front_end_basic
-    { id:, name:, display_index: }
+    {id:, name:, display_index:}
   end
 end

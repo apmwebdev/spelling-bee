@@ -1,9 +1,9 @@
 class Api::V1::SearchPanelSearchesController < AuthRequiredController
-  before_action :set_search, only: %i[ update destroy ]
+  before_action :set_search, only: %i[update destroy]
 
   def for_attempt_and_profile
     unless params[:attempt_id]
-      render json: { error: "Must include attempt ID" }, status: 400
+      render json: {error: "Must include attempt ID"}, status: 400
       return
     end
 
@@ -16,7 +16,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
           .where(panel_subtype_type: "SearchPanel"))
       )
       .where(user_puzzle_attempt_id: params[:attempt_id])
-      .map{ |search| search.to_front_end }
+      .map { |search| search.to_front_end }
 
     render json: searches
   end
@@ -32,7 +32,6 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   end
 
   def update
-
   end
 
   def destroy
@@ -45,7 +44,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   def set_search
     prelim_search = SearchPanelSearch.find(params[:id])
     unless prelim_search.user_puzzle_attempt.user == current_user
-      render json: { error: "Search doesn't match current user" }, status: 403
+      render json: {error: "Search doesn't match current user"}, status: 403
       return
     end
     @search = prelim_search
@@ -60,8 +59,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
       :location,
       :letters_offset,
       :output_type,
-      :created_at,
+      :created_at
     )
   end
 end
-
