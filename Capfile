@@ -17,8 +17,7 @@ install_plugin Capistrano::SCM::Git
 
 require "capistrano/rails/migrations"
 require "capistrano/rbenv"
-require 'capistrano/dotenv'
-
+require "capistrano/dotenv"
 
 set :rbenv_type, :user
 set :rbenv_ruby, "3.2.2"

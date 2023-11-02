@@ -72,5 +72,9 @@ export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 export const devLog = (...to_log: any[]) => {
-  if (import.meta.env.DEV) console.log(to_log);
+  if (import.meta.env.DEV) {
+    const error = new Error();
+    const callerInfo = error.stack?.split("\n")[1].trim() ?? "No stack trace";
+    console.log(`${callerInfo}:\n`, ...to_log);
+  }
 };

@@ -25,7 +25,7 @@ class User < ApplicationRecord
   # - The domain name: One or more sequences ("subdomains") of 1-63 letters,
   #   numbers, and/or dashes, separated by periods. Subdomains can't begin or
   #   or end with a dash.
-  EMAIL_REGEX =  /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/
+  EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/
 
   # Associations
   has_one :user_pref, dependent: :destroy
@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
   def to_front_end
-    { email:, name: }
+    {email:, name:}
   end
 
   # Override Devise::Models::DatabaseAuthenticatable#update_with_password
@@ -102,5 +102,4 @@ class User < ApplicationRecord
     return if email.blank? || email =~ EMAIL_REGEX
     errors.add :email, "is invalid"
   end
-
 end

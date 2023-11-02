@@ -6,7 +6,7 @@ class Answer < ApplicationRecord
     {
       word: word_text,
       frequency: word.frequency,
-      definitions: word.definitions,
+      definitions: word.definitions
     }
   end
 end

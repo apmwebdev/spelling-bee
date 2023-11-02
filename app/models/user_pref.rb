@@ -8,7 +8,7 @@ class UserPref < ApplicationRecord
       currentHintProfile: {
         type: current_hint_profile_type,
         id: current_hint_profile_id
-      },
+      }
     }
   end
 end

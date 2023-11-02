@@ -9,7 +9,7 @@ class DefinitionPanel < ApplicationRecord
       separateKnown: separate_known,
       revealLength: reveal_length,
       showObscurity: show_obscurity,
-      sortOrder: sort_order,
+      sortOrder: sort_order
     }
   end
 end
