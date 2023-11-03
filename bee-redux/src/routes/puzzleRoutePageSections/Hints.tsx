@@ -20,5 +20,5 @@ export function Hints() {
     }
   };
 
-  return <div className="Hints">{content()}</div>;
+  return <div className="Hints PuzzleMain_section">{content()}</div>;
 }
