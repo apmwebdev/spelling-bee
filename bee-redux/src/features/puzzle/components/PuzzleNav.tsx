@@ -92,7 +92,9 @@ export function PuzzleNav() {
       {firstPuzzleLink()}
       {previousPuzzleLink()}
       <h1 className="PuzzleNav_title">
-        Spelling Bee #{puzzleId}: {puzzleDate}
+        {columns === 1
+          ? `${puzzleDate}`
+          : `Spelling Bee ${puzzleId}: ${puzzleDate}`}
       </h1>
       {nextPuzzleLink()}
       {latestPuzzleLink()}

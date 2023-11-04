@@ -7,9 +7,6 @@
   flex-direction: column;
   gap: 8px;
   justify-content: flex-start;
-  //align-self: flex-start;
-  //width: 100%;
-  //max-width: 33.333333333vw;
 }
 
 .AttemptControls {
@@ -32,9 +29,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  padding: 8px 8px 16px;
+  gap: 8px;
+  padding: 8px;
   border-bottom: 2px solid $mid-gray;
+  .App___threeColumns & {
+    gap: 16px;
+    padding: 8px 8px 16px;
+  }
 }
 
 .CurrentRank {
@@ -45,7 +46,10 @@
 }
 
 .ProgressBar {
-  --gap-length: 16px;
+  --gap-length: 12px;
+  .App___twoColumns & {
+    --gap-length: 16px;
+  }
   .App___threeColumns & {
     --gap-length: 20px;
   }
@@ -80,13 +84,14 @@
 }
 
 .ProgressStatus {
-  padding: 16px 8px;
+  padding: 8px;
   align-items: center;
   justify-content: center;
   font-size: var(--small-font);
   display: flex;
   gap: 20px;
   .App___threeColumns & {
+    padding: 16px 8px;
     gap: 20px;
   }
   > div:not(.perfect) {
@@ -95,18 +100,14 @@
   }
 }
 
+.ProgressStatus_item {
+  display: flex;
+  flex-direction: column;
+}
+
 .ProgressStatusCount {
   text-align: left;
   font-weight: bold;
-  //.words & {
-  //  width: 50px;
-  //}
-  //.points & {
-  //  width: 72px;
-  //}
-  //.pangrams & {
-  //  width: 28px;
-  //}
 }
 
 .WordListSettingsContent {
