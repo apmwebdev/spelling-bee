@@ -1,9 +1,9 @@
-import { PuzzleNav } from "@/features/puzzle";
-import { Progress } from "@/features/progress";
 import { PuzzleControls } from "@/features/puzzle/components/PuzzleControls";
 import { AttemptControls } from "@/features/guesses";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { WordLists } from "@/features/wordLists";
+import { PuzzleNav } from "@/features/puzzle";
+import { Progress } from "@/features/progress";
 
 export function PuzzleAndStatus() {
   return (

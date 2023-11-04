@@ -2,7 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 18px;
 
   color-scheme: dark light;
 
@@ -17,7 +16,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 500px;
+  min-width: 360px;
   overflow-y: scroll;
   //min-height: 100vh;
 }

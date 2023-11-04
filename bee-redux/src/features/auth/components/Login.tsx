@@ -4,8 +4,8 @@ import { LoginData } from "@/features/auth/types";
 import { isBasicError, isFetchBaseQueryErrorResponse } from "@/types";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
-import { MoreActions } from "@/features/auth/components/MoreActions";
 import { devLog } from "@/util";
+import { MoreActionsDropdown } from "@/features/auth/components/MoreActionsDropdown";
 
 export function Login({
   passedInMessage,
@@ -79,7 +79,7 @@ export function Login({
         </fieldset>
       </form>
       <div className="Auth_actions">
-        <MoreActions />
+        <MoreActionsDropdown />
         <button
           type="submit"
           form="Login_form"

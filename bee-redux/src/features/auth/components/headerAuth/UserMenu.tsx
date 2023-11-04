@@ -4,7 +4,7 @@ import { useLogoutMutation } from "@/features/auth";
 import { useNavigate } from "react-router-dom";
 import { DropdownLinkIcon } from "@/components/DropdownLinkIcon";
 
-export function UserMenu() {
+export function UserMenu({ isMobile }: { isMobile?: boolean }) {
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ export function UserMenu() {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="UserMenuTrigger">
-        <Icon icon="mdi:account" className="UserMenuTrigger_icon" />
+      <DropdownMenu.Trigger showIcon={!isMobile} className="UserMenuTrigger">
+        <Icon icon="mdi:account" className="DropdownMenuIconTrigger" />
       </DropdownMenu.Trigger>
       <DropdownMenu.ContentWithPortal>
         <DropdownMenu.Item>

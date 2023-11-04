@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/app/hooks";
 
 import { Statuses } from "@/types";
-import { HintProfiles, hintProfilesApiSlice } from "@/features/hintProfiles";
+import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { HintPanels, selectCurrentPanelData } from "@/features/hintPanels";
 
 export function Hints() {
@@ -13,7 +13,7 @@ export function Hints() {
     if (currentProfile.status === Statuses.UpToDate && profiles.isSuccess) {
       return (
         <>
-          <HintProfiles />
+          {/*<HintProfiles />*/}
           <HintPanels />
         </>
       );

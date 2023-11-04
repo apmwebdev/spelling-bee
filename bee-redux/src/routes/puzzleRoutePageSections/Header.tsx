@@ -1,22 +1,11 @@
-import { Link } from "react-router-dom";
-import { HeaderAuth } from "@/features/auth";
-import { PuzzleSearch } from "@/features/puzzleSearch";
+import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
+import { DesktopHeader } from "@/features/header/DesktopHeader";
+import { MobileHeader } from "@/features/header/MobileHeader";
 
 export function Header() {
-  return (
-    <header className="SSB_Header">
-      <div className="HeaderLeft">
-        <Link to="/" className="HeaderTitle">
-          Super Spelling Bee
-        </Link>
-        <Link to="/puzzles/latest">Latest Puzzle</Link>
-        <Link to="/">All Puzzles</Link>
-        <Link to="/">Stats</Link>
-        <Link to="/">Help</Link>
-        <Link to="/">About</Link>
-        <PuzzleSearch />
-      </div>
-      <HeaderAuth />
-    </header>
-  );
+  const columns = useColumnBreakpoints();
+  if (columns > 1) {
+    return <DesktopHeader />;
+  }
+  return <MobileHeader />;
 }

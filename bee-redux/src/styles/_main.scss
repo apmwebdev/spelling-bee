@@ -10,6 +10,7 @@
 :root {
   color: $line-bright;
   background-color: $black;
+  font-size: 16px;
 
   /* Variables */
 
@@ -19,12 +20,21 @@
 
 #AppRoot {
   width: 100%;
-  min-height: 100vh;
   text-align: center;
 }
 
 .App {
-  min-height: 550px;
+  --font-size: 16px;
+  --large-font: calc(1.11111111 * var(--font-size));
+  --small-font: calc(0.88888889 * var(--font-size));
+  --smaller-font: 14px; //Set absolute value to not go lower than 14px
+
+  //min-height: 550px;
+  font-size: var(--font-size);
+
+  &.App___threeColumns {
+    --font-size: 18px;
+  }
 }
 
 .SSB_TopContainer {
@@ -34,8 +44,6 @@
 }
 
 .PuzzleMainContainer {
-  //display: flex;
-  //position: relative;
   width: 100%;
   padding: 16px;
 }
@@ -51,10 +59,9 @@
   .App___twoColumns & {
     grid-template-columns: repeat(2, 1fr);
     .PuzzleMain_section {
+      justify-self: center;
       padding: 0px 8px;
     }
-  }
-  .App___oneColumn & {
   }
 }
 
@@ -62,7 +69,7 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 8px;
 }
 
@@ -130,7 +137,7 @@ button {
 
 .standardButton {
   @include button-mixin;
-  font-size: 16px;
+  font-size: var(--small-font);
   padding: 8px 16px;
 }
 
@@ -242,7 +249,7 @@ button {
 
 .DialogTitle {
   text-align: center;
-  font-size: 24px;
+  font-size: calc(1.33333333 * var(--font-size));
 }
 
 /***   Dropdown Menu   ***/
@@ -256,7 +263,7 @@ button {
   z-index: 2;
   padding: 4px 0px 2px;
   border-radius: var(--br);
-  font-size: 16px;
+  font-size: var(--small-font);
 }
 
 .DropdownMenuItem {
@@ -283,10 +290,10 @@ button {
 
 .DropdownMenuTrigger {
   @include basic-focus-gray;
-  font-size: 16px;
+  font-size: var(--small-font);
   display: flex;
   align-items: center;
-  padding: 8px 16px 8px 8px;
+  padding: 8px;
   gap: 8px;
   border: 1.5px solid $mid-gray-darker;
   background-color: $dark-gray-3;
@@ -297,6 +304,10 @@ button {
     background-color: $dark-gray-1;
     border-color: $mid-gray;
   }
+}
+
+.DropdownMenuTrigger___withChevron {
+  padding: 8px 16px 8px 8px;
 }
 
 /***   Help Bubble   ***/
@@ -338,7 +349,7 @@ input[type="email"]
   border-radius: var(--br);
   border: 1.5px solid border-color-dark($this-hue);
   background-color: bg-color-darker($this-hue);
-  font-size: 14px;
+  font-size: var(--smaller-font);
   &::placeholder {
     font-style: italic;
     color: $text-disabled-dark;
@@ -371,7 +382,7 @@ input[type="number"] {
   color: $line-bright;
   background-color: bg-color-darker($accent-hue);
   border-radius: var(--br);
-  font-size: 14px;
+  font-size: var(--smaller-font);
   padding: 4px 8px;
   border: 1.5px solid border-color-dark($accent-hue);
   &:hover {
@@ -409,13 +420,16 @@ a.ButtonLink, div.ButtonLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 16px;
+  padding: 4px 12px;
+  .App___threeColumns & {
+    padding: 6px 16px;
+  }
   gap: 4px;
-  border: 1.5px solid border-color-dark($this-hue);
+  border: 1.5px solid ui-line-color-dark($this-hue);
   //border: 1.5px solid;
   &:hover {
-    color: ui-line-color-dark($this-hue);
-    border-color: ui-line-color-dark($this-hue);
+    color: ui-line-color-hover-dark($this-hue);
+    border-color: ui-line-color-hover-dark($this-hue);
   }
   &:focus {
     box-shadow: 0px 0px 0px 3px shadow-color-focus($this-hue);
@@ -438,7 +452,7 @@ a.ButtonLink, div.ButtonLink {
   align-items: flex-start;
   gap: 8px;
   padding: 8px 12px 12px 12px;
-  max-width: 40rem;
+  max-width: calc(40 * var(--font-size));
   border-radius: var(--br);
   border: 2px solid $light-gray;
   background-color: $mid-gray;
@@ -474,7 +488,7 @@ a.ButtonLink, div.ButtonLink {
   @include basic-hover;
   @include basic-focus;
   width: 10em;
-  font-size: 16px;
+  font-size: var(--small-font);
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   padding: 6px 12px;
@@ -484,7 +498,7 @@ a.ButtonLink, div.ButtonLink {
   gap: 8px;
   line-height: 1.2;
   &.SmallSelect {
-    font-size: 14px;
+    font-size: var(--smaller-font);
     padding: 4px 8px;
     width: 11em;
     gap: 6px;
@@ -505,7 +519,7 @@ a.ButtonLink, div.ButtonLink {
   z-index: 2;
   border-radius: var(--br);
   overflow: hidden;
-  font-size: 16px;
+  font-size: var(--small-font);
   padding: 3px 0px;
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
@@ -513,19 +527,18 @@ a.ButtonLink, div.ButtonLink {
     border-color: border-color-dark-hover($accent-hue);
   }
   &.SmallSelect {
-    font-size: 14px;
+    font-size: var(--smaller-font);
     padding: 2px 0px;
   }
 }
 
 .SelectLabel {
-  font-size: 15px;
+  font-size: calc(0.9375 * var(--small-font));
   padding: 6px 16px;
   font-style: italic;
   color: $text-disabled-dark;
   border-color: $line-disabled;
   .SmallSelect & {
-    font-size: 13px;
     padding: 4px 12px;
   }
 }
@@ -713,7 +726,7 @@ a.ButtonLink, div.ButtonLink {
   display: flex;
   align-items: center;
   border-radius: var(--br);
-  font-size: 14px;
+  font-size: var(--smaller-font);
   background-color: $light-gray-bg;
   color: $dark-gray-1;
   padding: 6px 12px;
@@ -737,5 +750,5 @@ a.ButtonLink, div.ButtonLink {
 
 
 .spacer {
-  height: 1rem;
+  height: var(--font-size);
 }

@@ -68,13 +68,19 @@ export const Separator = (
 export const Trigger = (
   props: IntrinsicAttributes &
     DropdownMenuTriggerProps &
-    RefAttributes<HTMLButtonElement>,
-) => (
-  <DropdownMenu.Trigger
-    {...props}
-    className={classNames("DropdownMenuTrigger", props.className)}
-  >
-    <InlineIcon icon="mdi:chevron-down" />
-    {props.children}
-  </DropdownMenu.Trigger>
-);
+    RefAttributes<HTMLButtonElement> & { showIcon?: boolean },
+) => {
+  const { showIcon, children, ...rest } = props;
+  const validatedShowIcon = showIcon ?? true;
+  return (
+    <DropdownMenu.Trigger
+      {...rest}
+      className={classNames("DropdownMenuTrigger", props.className, {
+        DropdownMenuTrigger___withChevron: showIcon,
+      })}
+    >
+      {validatedShowIcon ? <InlineIcon icon="mdi:chevron-down" /> : null}
+      {children}
+    </DropdownMenu.Trigger>
+  );
+};
