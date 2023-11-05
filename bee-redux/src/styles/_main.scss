@@ -77,7 +77,7 @@
 }
 
 .PuzzleSectionTabs {
-  & > .TabsContent {
+  & > .TabsContent[data-state="active"] {
     display: grid;
     place-items: center;
     background-color: $black;
@@ -115,6 +115,7 @@
   @include button-colors($accent-hue);
   display: grid;
   place-content: center;
+  touch-action: manipulation;
   &:disabled {
     cursor: not-allowed;
   }

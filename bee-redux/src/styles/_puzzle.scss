@@ -11,6 +11,9 @@
 
 .PuzzleControls {
   width: 80vw;
+  .App___oneColumn & {
+    width: 60vw;
+  }
   max-width: 320px;
   display: flex;
   flex-direction: column;
@@ -31,7 +34,7 @@
 
 .GuessAlertsContainer {
   position: relative;
-  height: calc(3 * var(font-size));
+  height: calc(3 * var(--font-size));
   font-size: calc(0.777777778 * var(--font-size));
   display: flex;
   align-items: center;
@@ -71,7 +74,7 @@
   gap: 8px;
   align-items: center;
   width: 100%;
-  font-size: 36px;
+  font-size: calc(2* var(--font-size));
   padding: 4px;
   margin-top: 8px;
 }
@@ -91,7 +94,7 @@
     position: relative;
     top: 0;
     width: 2px;
-    height: 40px;
+    height: calc(2.25 * var(--font-size));
     background-color: $yellow-line;
   }
   &.non-empty:after {
@@ -130,6 +133,7 @@
   left: 30%;
   width: 40%;
   height: 33.3333333333%;
+  touch-action: manipulation;
   polygon {
     fill: $mid-gray-darker;
     stroke: $black;
