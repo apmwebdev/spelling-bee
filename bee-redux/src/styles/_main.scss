@@ -18,9 +18,8 @@ body {
   font-size: 16px;
 }
 
-#AppRoot {
+#Root {
   width: 100%;
-  text-align: center;
 }
 
 .App {
@@ -29,9 +28,8 @@ body {
   --small-font: calc(0.88888889 * var(--font-size));
   --smaller-font: 14px; //Set absolute value to not go lower than 14px
 
-  //min-height: 550px;
   font-size: var(--font-size);
-
+  text-align: center;
   &.App___threeColumns {
     --font-size: 18px;
   }
