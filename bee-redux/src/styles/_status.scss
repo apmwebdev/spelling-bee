@@ -105,7 +105,9 @@
 
 .ProgressStatus_item {
   display: flex;
-  flex-direction: column;
+  .App___oneColumn & {
+    flex-direction: column;
+  }
 }
 
 .ProgressStatusCount {

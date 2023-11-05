@@ -119,6 +119,7 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 @mixin button-colors($hue) {
   @include basic-hover($hue);
   @include basic-focus($hue);
+  color: $text-main-dark;
   background-color: bg-color-dark($hue);
   border: 1.5px solid border-color-dark($hue);
   &:hover {
