@@ -39,13 +39,6 @@
 
 
 
-.Hints {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-radius: var(--br);
-}
-
 .HintProfiles {
   display: flex;
   gap: 16px;
@@ -103,7 +96,7 @@
 }
 
 button.HintPanelHeaderButton {
-  font-size: 18px;
+  font-size: var(--font-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +105,7 @@ button.HintPanelHeaderButton {
   border: 1px solid $dark-gray-2;
   background-color: $dark-gray-2;
   &.IconButton {
-    font-size: 20px;
+    font-size: calc(1.11111111 * var(--font-size));
   }
   &:hover {
     background-color: $dark-gray-1;
@@ -166,7 +159,7 @@ button.PanelSettingsToggle {
 }
 
 .SettingsCollapsible {
-  font-size: 16px;
+  font-size: var(--small-font);
   border-radius: var(--br);
   overflow: hidden;
   border: 1.5px solid $dark-gray-5;
@@ -230,6 +223,9 @@ button.PanelSettingsToggle {
   border-top: 2px solid $dark-gray-5;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  .App___oneColumn & {
+    grid-template-columns: 1fr;
+  }
   justify-content: stretch;
   align-items: center;
   column-gap: 8px;
@@ -291,7 +287,7 @@ button.PanelSettingsToggle {
 .LetterPanelNumberOfLettersInput,
 .HintRevealedLettersInput,
 {
-  width: 3.5rem;
+  width: calc(3.5 * var(--font-size));
 }
 
 .HintPanelContent {
@@ -314,7 +310,7 @@ button.PanelSettingsToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  //gap: 32px;
   > div {
     display: flex;
     align-items: center;
@@ -367,7 +363,7 @@ button.PanelSettingsToggle {
 
 
 .LetterPanelNumberOfLettersInput {
-  width: 3rem;
+  width: calc(3 * var(--font-size));
 }
 
 .LetterHintPanel {
@@ -383,7 +379,7 @@ button.PanelSettingsToggle {
 }
 
 .LetterPanel_WLG_Key {
-  font-size: 16px;
+  font-size: var(--small-font);
   display: flex;
   gap: 4px;
   align-items: center;
@@ -561,7 +557,7 @@ button.PanelSettingsToggle {
 }
 
 .SearchPanelResultKey {
-  font-size: 16px;
+  font-size: var(--small-font);
   display: grid;
   grid-template-columns: repeat(4, max-content);
   justify-content: center;
@@ -591,7 +587,7 @@ button.PanelSettingsToggle {
   align-items: center;
   justify-content: center;
   padding: 6px 0px;
-  font-size: 16px;
+  font-size: var(--small-font);
   margin-bottom: 8px;
 }
 

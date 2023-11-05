@@ -42,7 +42,7 @@ export function FoundWordsStatus() {
     }
 
     return (
-      <div className="words">
+      <div className="words ProgressStatus_item">
         <span>Words:</span>
         <span className={foundPointsCountClasses}>{text}</span>
       </div>
@@ -51,7 +51,7 @@ export function FoundWordsStatus() {
 
   const pointsTrackingText = () => {
     return (
-      <div className="points">
+      <div className="points ProgressStatus_item">
         <span>Points:</span>
         <span
           className={foundPointsCountClasses}
@@ -78,7 +78,7 @@ export function FoundWordsStatus() {
       pangramCountClasses += "WarningText";
     }
     return (
-      <div className="pangrams">
+      <div className="pangrams ProgressStatus_item">
         <span>Pangrams:</span>
         <span className={pangramCountClasses}>{text}</span>
       </div>
@@ -107,7 +107,7 @@ export function FoundWordsStatus() {
         perfectClasses += "WarningText";
       }
       return (
-        <div className="perfect">
+        <div className="perfect ProgressStatus_item">
           <span>(Perfect: </span>
           <span className={perfectClasses}>{text}</span>
           <span>)</span>

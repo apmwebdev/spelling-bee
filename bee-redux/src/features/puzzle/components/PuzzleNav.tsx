@@ -8,9 +8,11 @@ import {
   getPreviousPuzzleDateString,
 } from "@/util";
 import { ButtonLink } from "@/components/ButtonLink";
+import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
 
 export function PuzzleNav() {
   const params = useParams();
+  const columns = useColumnBreakpoints();
   const puzzleDate = useAppSelector(selectDate);
   const puzzleId = useAppSelector(selectPuzzleId);
   const isLatest = useAppSelector(selectIsLatest);
@@ -89,9 +91,11 @@ export function PuzzleNav() {
     <nav className="PuzzleNav">
       {firstPuzzleLink()}
       {previousPuzzleLink()}
-      <span>
-        Spelling Bee #{puzzleId}: {puzzleDate}
-      </span>
+      <h1 className="PuzzleNav_title">
+        {columns === 1
+          ? `${puzzleDate}`
+          : `Spelling Bee ${puzzleId}: ${puzzleDate}`}
+      </h1>
       {nextPuzzleLink()}
       {latestPuzzleLink()}
     </nav>

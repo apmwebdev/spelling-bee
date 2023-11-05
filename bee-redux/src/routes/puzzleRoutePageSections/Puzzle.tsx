@@ -1,19 +1,11 @@
-import { Hive, PuzzleNav } from "@/features/puzzle";
-import { GuessInputProvider } from "@/features/guesses/providers/GuessInputProvider";
-import { GuessInputControls } from "@/features/guesses";
-import { GuessInputForm } from "@/features/guesses/components/GuessInputForm";
+import { PuzzleNav } from "@/features/puzzle";
+import { PuzzleControls } from "@/features/puzzle/components/PuzzleControls";
 
 export function Puzzle() {
   return (
-    <GuessInputProvider>
-      <div className="PuzzleControlsContainer">
-        <PuzzleNav />
-        <div className="PuzzleControls">
-          <GuessInputForm />
-          <Hive />
-        </div>
-        <GuessInputControls />
-      </div>
-    </GuessInputProvider>
+    <div className="Puzzle___threeColumns PuzzleMain_section">
+      <PuzzleNav />
+      <PuzzleControls />
+    </div>
   );
 }

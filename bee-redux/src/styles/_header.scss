@@ -1,24 +1,27 @@
 @use 'colors' as *;
 
-.SSB_Header {
+.Header___common {
   border-bottom: 1.5px solid $dark-gray-5;
-  background-color: $dark-gray-1;
-  font-size: 20px;
+  background-color: $dark-gray-2;
+  font-size: var(--font-size);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  padding: 0.6em;
+}
+
+.Header___mobile {
+  padding: 4px;
+}
+
+.Header_hamburger {
+  padding: 3px 6px;
 }
 
 .HeaderLeft {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 0.6em;
   a {
     display: flex;
     justify-content: flex-start;
@@ -29,8 +32,8 @@
 .HeaderTitle {
   display: flex;
   justify-content: flex-start;
-  padding: 8px;
-  font-size: 26px;
+  padding: 0.4em;
+  font-size: var(--large-font);
   font-weight: bold;
   text-decoration: none;
   color: $accent-title;
@@ -40,9 +43,9 @@
   }
 }
 .HeaderAuth {
-  font-size: 18px;
+  font-size: var(--small-font);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 0.4em;
 }

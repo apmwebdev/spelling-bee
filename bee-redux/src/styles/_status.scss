@@ -7,17 +7,17 @@
   flex-direction: column;
   gap: 8px;
   justify-content: flex-start;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 33.333333333vw;
 }
 
 .AttemptControls {
-  font-size: 16px;
+  font-size: var(--small-font);
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
+  .App___oneColumn & {
+    gap: 8px;
+  }
   background-color: $dark-gray-2;
   border: 1.5px solid $dark-gray-5;
   padding: 8px 16px;
@@ -25,16 +25,20 @@
 }
 
 .Progress {
-  padding: 0px 16px;
+  padding: 0px 8px;
 }
 
 .ProgressRank {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  padding: 8px 8px 16px;
+  gap: 8px;
+  padding: 8px;
   border-bottom: 2px solid $mid-gray;
+  .App___threeColumns & {
+    gap: 16px;
+    padding: 8px 8px 16px;
+  }
 }
 
 .CurrentRank {
@@ -45,26 +49,33 @@
 }
 
 .ProgressBar {
+  --gap-length: 12px;
+  .App___twoColumns & {
+    --gap-length: 16px;
+  }
+  .App___threeColumns & {
+    --gap-length: 20px;
+  }
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px;
+  gap: var(--gap-length);
 }
 
 .RankTic {
   position: relative;
-  height: 14px;
-  width: 14px;
-  border-radius: 14px;
+  height: calc(0.7 * var(--gap-length));
+  width: calc(0.7 * var(--gap-length));
+  border-radius: calc(0.7 * var(--gap-length));
   background-color: $mid-gray;
   &:not(:first-child):before {
     content: "";
     position: absolute;
-    height: 2px;
-    width: 20px;
-    left: -20px;
-    top: 6px;
+    height: calc(0.1 * var(--gap-length));
+    width: var(--gap-length);
+    left: calc(-1 * var(--gap-length));
+    top: calc(0.3 * var(--gap-length));
     background-color: $mid-gray;
   }
   &:not(.active ~ .RankTic) {
@@ -76,30 +87,30 @@
 }
 
 .ProgressStatus {
-  padding: 16px 8px;
+  padding: 8px;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: var(--small-font);
   display: flex;
   gap: 20px;
+  .App___threeColumns & {
+    padding: 16px 8px;
+    gap: 20px;
+  }
   > div:not(.perfect) {
     display: flex;
     gap: 4px;
   }
 }
 
+.ProgressStatus_item {
+  display: flex;
+  flex-direction: column;
+}
+
 .ProgressStatusCount {
   text-align: left;
   font-weight: bold;
-  .words & {
-    width: 50px;
-  }
-  .points & {
-    width: 72px;
-  }
-  .pangrams & {
-    width: 28px;
-  }
 }
 
 .WordListSettingsContent {
@@ -124,7 +135,7 @@
 .WordListStatus {
   padding: 16px 8px;
   align-items: center;
-  font-size: 16px;
+  font-size: var(--small-font);
   &.FoundWordsStatus {
     display: flex;
     justify-content: center;
@@ -144,7 +155,7 @@
   border: 1px solid $line-darkest;
   overflow: hidden;
   header {
-    font-size: 16px;
+    font-size: var(--small-font);
     display: flex;
     gap: 20px;
     align-items: center;
@@ -161,7 +172,7 @@
 .WordList {
   padding: 8px 8px 16px 8px;
   &.hasContent {
-    font-size: 16px;
+    font-size: var(--small-font);
     list-style: none;
     text-align: left;
     height: calc(26px * 15 + 24px);
