@@ -8,14 +8,14 @@
 }
 
 :root {
+  /* Border radius */
+  --border-radius: 6px;
+}
+
+body {
   color: $line-bright;
   background-color: $black;
   font-size: 16px;
-
-  /* Variables */
-
-  /* Border radius */
-  --br: 6px;
 }
 
 #AppRoot {
@@ -95,7 +95,7 @@
   width: clamp(600px, 60%, 1280px);
   background-color: $dark-gray-1;
   padding: 16px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1.5px solid $dark-gray-5;
 }
 
@@ -136,7 +136,7 @@
 }
 
 button {
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
 }
 
 .standardButton {
@@ -186,7 +186,7 @@ button {
   height: 1.5em;
   min-height: 1.5em;
   //padding: 8px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &[data-disabled] {
@@ -239,7 +239,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   background-color: $dark-gray-2;
   border: 2px solid $dark-gray-5;
 }
@@ -266,7 +266,7 @@ button {
   background-color: $dark-gray-4;
   z-index: 2;
   padding: 4px 0px 2px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   font-size: var(--small-font);
 }
 
@@ -351,7 +351,7 @@ input[type="email"]
   width: 25ch;
   padding: 4px 8px;
   color: $line-mid;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
   background-color: bg-color-darker($this-hue);
   font-size: var(--smaller-font);
@@ -386,7 +386,7 @@ input[type="number"] {
   @include basic-focus;
   color: $line-bright;
   background-color: bg-color-darker($accent-hue);
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   font-size: var(--smaller-font);
   padding: 4px 8px;
   border: 1.5px solid border-color-dark($accent-hue);
@@ -410,7 +410,7 @@ a {
   $this-hue: $yellow-hue;
   text-decoration: underline;
   color: ui-line-color-dark($this-hue);
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   &:hover {
     color: ui-line-color-hover-dark($this-hue);
   }
@@ -421,7 +421,7 @@ a {
 
 a.ButtonLink, div.ButtonLink {
   $this-hue: $yellow-hue;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,7 +458,7 @@ a.ButtonLink, div.ButtonLink {
   gap: 8px;
   padding: 8px 12px 12px 12px;
   max-width: calc(40 * var(--font-size));
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 2px solid $light-gray;
   background-color: $mid-gray;
   //box-shadow: 0 0 0px 4px $dark-gray;
@@ -522,7 +522,7 @@ a.ButtonLink, div.ButtonLink {
 
 .SelectContent {
   z-index: 2;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   overflow: hidden;
   font-size: var(--small-font);
   padding: 3px 0px;
@@ -660,7 +660,7 @@ a.ButtonLink, div.ButtonLink {
 /***   Tabs   ***/
 
 .TabsRoot {
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   overflow: hidden;
   border: 1.5px solid $dark-gray-5;
   width: 100%;
@@ -707,7 +707,7 @@ a.ButtonLink, div.ButtonLink {
 
 .ToggleGroup {
   $this-hue: $accent-hue;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
   overflow: hidden;
   display: flex;
@@ -730,7 +730,7 @@ a.ButtonLink, div.ButtonLink {
 .TooltipContent {
   display: flex;
   align-items: center;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   font-size: var(--smaller-font);
   background-color: $light-gray-bg;
   color: $dark-gray-1;

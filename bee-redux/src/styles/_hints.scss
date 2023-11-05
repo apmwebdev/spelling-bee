@@ -56,7 +56,7 @@
 
 .HintPanel {
   position: relative;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1.5px solid $dark-gray-5;
   overflow: hidden;
   background-color: $dark-gray-1;
@@ -160,7 +160,7 @@ button.PanelSettingsToggle {
 
 .SettingsCollapsible {
   font-size: var(--small-font);
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   overflow: hidden;
   border: 1.5px solid $dark-gray-5;
   background-color: $dark-gray-2;
@@ -330,7 +330,7 @@ button.PanelSettingsToggle {
   align-items: center;
   justify-content: center;
   background-color: $dark-gray-4;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
 }
 
 .PanelSettings {
@@ -514,7 +514,7 @@ button.PanelSettingsToggle {
 }
 
 .SearchPanelResult {
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   position: relative;
   overflow: hidden;
   border: 1.5px solid $dark-gray-5;
@@ -564,7 +564,7 @@ button.PanelSettingsToggle {
   align-items: center;
   gap: 1px;
   //padding: 1.5px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   overflow: hidden;
   border: 1px solid $mid-gray;
   background-color: $mid-gray;

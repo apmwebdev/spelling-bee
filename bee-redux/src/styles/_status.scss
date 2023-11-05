@@ -21,7 +21,7 @@
   background-color: $dark-gray-2;
   border: 1.5px solid $dark-gray-5;
   padding: 8px 16px;
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
 }
 
 .Progress {
@@ -153,7 +153,7 @@
 }
 
 .WordListContainer {
-  border-radius: var(--br);
+  border-radius: var(--border-radius);
   border: 1px solid $line-darkest;
   overflow: hidden;
   header {
