@@ -2,9 +2,9 @@ import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { PuzzleControls } from "@/features/puzzle/components/PuzzleControls";
 import { WordLists } from "@/features/wordLists";
 import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
-import { AttemptControls } from "@/features/guesses";
 import { PuzzleNav } from "@/features/puzzle";
 import { Progress } from "@/features/progress";
+import { AttemptControls } from "@/features/guesses";
 
 export function SingleColumn() {
   return (
