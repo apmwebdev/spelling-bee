@@ -3,10 +3,10 @@
 module SeedHintProfiles
   def self.default_display_state
     PanelDisplayState.new(
-      is_expanded: true,
-      is_blurred: true,
+      is_expanded: false,
+      is_blurred: false,
       is_sticky: false,
-      is_settings_expanded: true,
+      is_settings_expanded: false,
       is_settings_sticky: false
     )
   end
