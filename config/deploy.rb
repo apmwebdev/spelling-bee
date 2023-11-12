@@ -1,3 +1,6 @@
+require "dotenv"
+Dotenv.load(".env.development", ".env.development.local")
+
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.18.0"
 
@@ -9,7 +12,7 @@ set :deploy_to, ENV["DEPLOY_TO"]
 set :keep_releases, 5
 
 # Env file config
-set :env_file, ".env.development" # overwritten in production.rb
+set :env_file, ".env.development.local"
 invoke "dotenv:read"
 invoke "dotenv:setup"
 

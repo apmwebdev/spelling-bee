@@ -1,4 +1,5 @@
-server ENV["SERVER_IP"], user: ENV["SERVER_USER"], roles: %w[app db web]
+server ENV["SERVER_IP"], user: ENV["SERVER_USER"], roles: %w[app db web],
+  port: ENV["SSH_PORT"]
 set :default_env, {
   RAILS_ENV: "production"
 }
