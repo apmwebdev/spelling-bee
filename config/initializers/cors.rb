@@ -1,7 +1,12 @@
-# Be sure to restart your server when you modify this file.
-
-# Avoid CORS issues when API is called from the frontend app.
-# Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin AJAX requests.
+# Super Spelling Bee - A vocabulary game with integrated hints
+# Copyright (C) 2023 Austin Miller
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # Read more: https://github.com/cyu/rack-cors
 
