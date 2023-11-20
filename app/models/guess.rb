@@ -16,7 +16,7 @@ class Guess < ApplicationRecord
       attemptId: user_puzzle_attempt_id,
       text:,
       isSpoiled: is_spoiled,
-      createdAt: created_at
+      createdAt: created_at.to_i
     }
   end
 end

@@ -75,7 +75,7 @@ export type RawGuessFormat = {
   attemptId: number;
   text: string;
   isSpoiled: boolean;
-  createdAt: string;
+  createdAt: number;
 };
 
 export type GuessFormat = {

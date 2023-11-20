@@ -35,8 +35,8 @@ export const processGuess = (
   return {
     attemptId,
     text,
+    createdAt,
     isSpoiled,
-    createdAt: Date.parse(createdAt),
     isAnswer,
     isExcluded,
   };
