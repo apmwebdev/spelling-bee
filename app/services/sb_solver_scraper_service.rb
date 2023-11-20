@@ -85,6 +85,8 @@ module SbSolverScraperService
           end
           Answer.create({puzzle: puzzle, word_text: item})
         end
+        puzzle.create_excluded_words_cache
+        write_log "Created excluded words cache"
         write_log "Finished importing puzzle #{id}"
       else
         write_log "Puzzle #{id} already exists. Moving to next puzzle."

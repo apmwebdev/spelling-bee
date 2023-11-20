@@ -1,15 +1,3 @@
-/*
-  Super Spelling Bee - A vocabulary game with integrated hints
-  Copyright (C) 2023 Austin Miller
-
-  This program is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
-  Foundation, either version 3 of the License, or (at your option) any later
-  version.
-
-  See the LICENSE file or https://www.gnu.org/licenses/ for more details.
-*/
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -416,7 +404,8 @@ CREATE TABLE public.puzzles (
     origin_type character varying,
     origin_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    excluded_words character varying[]
 );
 
 
@@ -1054,6 +1043,13 @@ CREATE INDEX index_hint_panels_on_status_tracking ON public.hint_panels USING bt
 
 
 --
+-- Name: index_puzzles_on_excluded_words; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_puzzles_on_excluded_words ON public.puzzles USING gin (excluded_words);
+
+
+--
 -- Name: index_puzzles_on_origin; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1345,6 +1341,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230913100015'),
 ('20231001001349'),
 ('20231002213304'),
-('20231011153938');
+('20231011153938'),
+('20231119195913');
 
 

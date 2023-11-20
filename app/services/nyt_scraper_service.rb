@@ -66,6 +66,8 @@ class NytScraperService
       end
       Answer.create!({puzzle: puzzle, word_text: answer})
     end
+    puzzle.create_excluded_words_cache
+    @logger.info "Created excluded words cache"
     @logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
   end
 
