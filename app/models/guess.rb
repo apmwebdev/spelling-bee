@@ -13,10 +13,11 @@ class Guess < ApplicationRecord
 
   def to_front_end
     {
-      attemptId: user_puzzle_attempt_id,
+      uuid:,
+      attemptUuid: user_puzzle_attempt_uuid,
       text:,
-      isSpoiled: is_spoiled,
-      createdAt: created_at.to_i
+      createdAt: created_at.to_i,
+      isSpoiled: is_spoiled
     }
   end
 end

@@ -8,34 +8,52 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+require "securerandom"
+
 class Api::V1::GuessesController < AuthRequiredController
   before_action :set_guess, only: %i[show update destroy]
 
   # POST /guesses
   def create
-    attempt = UserPuzzleAttempt.find(guess_params[:user_puzzle_attempt_id].to_i)
-    unless attempt.user == current_user
-      render json: {error: "User and attempt don't match"}, status: 403
-      return
-    end
-    @guess = Guess.new(guess_params)
+    @guess = current_user.user_puzzle_attempts
+      .find_by(uuid: guess_params[:user_puzzle_attempt_uuid])
+      .guesses.new(guess_params)
 
-    if @guess.save
-      render json: @guess.to_front_end, status: :created
-    else
-      render json: @guess.errors, status: :unprocessable_entity
+    max_retries = 3
+    attempts = 0
+
+    begin
+      @guess.save!
+      render json: @guess.to_front_end, status: 201
+      # TODO: Make the front end check for a different UUID in the response
+    rescue ActiveRecord::RecordNotUnique
+      attempts += 1
+      if attempts < max_retries
+        @guess.uuid = SecureRandom.uuid # Generate a new UUID
+        retry
+      else
+        render json: {
+          error: "Could not create guess due to a rare UUID collision"
+        }, status: 500
+      end
+    rescue ActiveRecord::RecordInvalid
+      render json: @guess.errors, status: 422
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "User puzzle attempt not found"}, status: 404
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_guess
-    @guess = Guess.find(params[:id])
+    @guess = Guess.find(params[:uuid])
   end
 
   # Only allow a list of trusted parameters through.
   def guess_params
-    params.require(:guess).permit(:user_puzzle_attempt_id, :text, :is_spoiled)
+    params
+      .require(:guess)
+      .permit(:uuid, :user_puzzle_attempt_uuid, :text, :created_at, :is_spoiled)
   end
 end

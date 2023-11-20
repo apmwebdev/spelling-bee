@@ -12,17 +12,17 @@
 
 import { apiSlice } from "@/features/api";
 import { RootState } from "@/app/store";
+import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
 import {
   AttemptFormat,
   GuessFormat,
-  GuessFormData,
+  RailsGuessFormData,
   RawAttemptFormat,
   RawGuessFormat,
-} from "./guessesSlice";
-import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
+} from "@/features/guesses";
 
 export const processGuess = (
-  { attemptId, text, isSpoiled, createdAt }: RawGuessFormat,
+  { uuid, attemptUuid, text, createdAt, isSpoiled }: RawGuessFormat,
   state: RootState,
 ): GuessFormat => {
   const answerWords = selectAnswerWords(state);
@@ -33,7 +33,8 @@ export const processGuess = (
     isExcluded = excludedWords.includes(text);
   }
   return {
-    attemptId,
+    uuid,
+    attemptUuid,
     text,
     createdAt,
     isSpoiled,
@@ -49,8 +50,9 @@ export const processAttempts = (
   const processedAttempts: AttemptFormat[] = [];
   for (const attempt of rawAttempts) {
     processedAttempts.push({
-      id: attempt.id,
+      uuid: attempt.uuid,
       puzzleId: attempt.puzzleId,
+      createdAt: attempt.createdAt,
       guesses: attempt.guesses.map((guess) => processGuess(guess, state)),
     });
   }
@@ -90,9 +92,9 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    addGuess: builder.mutation<GuessFormat, GuessFormData>({
+    addGuess: builder.mutation<GuessFormat, RailsGuessFormData>({
       queryFn: async (
-        guessData: GuessFormData,
+        guessData: RailsGuessFormData,
         api,
         _extraOptions,
         baseQuery,

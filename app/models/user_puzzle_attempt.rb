@@ -15,8 +15,9 @@ class UserPuzzleAttempt < ApplicationRecord
 
   def to_front_end
     {
-      id: id,
+      uuid:,
       puzzleId: puzzle_id,
+      createdAt: created_at.to_i,
       guesses: guesses.map do |guess|
         guess.to_front_end
       end

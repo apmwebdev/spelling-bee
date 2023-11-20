@@ -94,7 +94,7 @@ startAppListening({
       searchPanelSearchesApiSlice.endpoints.addSearch.initiate(action.payload),
     );
     //TS is worried that the data property might not exist on the response,
-    //but we're checking if it exists, so it's fine.
+    //but we're checking if it exists right below here, so it's fine.
     const trustMeBro = response as { data: SearchPanelSearchData };
     if (trustMeBro.data?.id) {
       api.dispatch(

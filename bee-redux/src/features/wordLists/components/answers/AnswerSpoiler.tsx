@@ -13,7 +13,7 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "@/features/wordLists";
 import {
-  GuessFormData,
+  RailsGuessFormData,
   selectCurrentAttempt,
   useAddGuessMutation,
 } from "@/features/guesses";
@@ -41,7 +41,7 @@ export function AnswerSpoiler({ word }: { word: string }) {
   };
 
   const spoiler = (spoilerText: string) => {
-    const spoilerData: GuessFormData = {
+    const spoilerData: RailsGuessFormData = {
       guess: {
         user_puzzle_attempt_id: currentAttempt.id,
         text: word,

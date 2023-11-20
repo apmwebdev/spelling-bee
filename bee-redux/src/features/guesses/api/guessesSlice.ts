@@ -16,18 +16,8 @@ import { calculateScore } from "@/util";
 import { guessesApiSlice } from "./guessesApiSlice";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { Statuses } from "@/types";
-
-export type RawAttemptFormat = {
-  id: number;
-  puzzleId: number;
-  guesses: RawGuessFormat[];
-};
-
-export type AttemptFormat = {
-  id: number;
-  puzzleId: number;
-  guesses: GuessFormat[];
-};
+import { AttemptFormat, GuessFormat } from "@/features/guesses";
+import { BLANK_UUID } from "@/features/api";
 
 type CurrentAttemptsFulfilledResponse = PayloadAction<
   AttemptFormat[],
@@ -63,30 +53,6 @@ type AddGuessFulfilledResponse = PayloadAction<
   never
 >;
 
-export type GuessFormData = {
-  guess: {
-    user_puzzle_attempt_id: number;
-    text: string;
-    is_spoiled: boolean;
-  };
-};
-
-export type RawGuessFormat = {
-  attemptId: number;
-  text: string;
-  isSpoiled: boolean;
-  createdAt: number;
-};
-
-export type GuessFormat = {
-  attemptId: number;
-  text: string;
-  createdAt: number;
-  isSpoiled: boolean;
-  isAnswer: boolean;
-  isExcluded: boolean;
-};
-
 export type GuessesStateData = {
   currentAttempt: AttemptFormat;
   attempts: AttemptFormat[];
@@ -100,7 +66,8 @@ export type GuessesState = {
 const initialState: GuessesState = {
   data: {
     currentAttempt: {
-      id: 0,
+      uuid: BLANK_UUID,
+      createdAt: 0,
       puzzleId: 0,
       guesses: [],
     },
@@ -113,13 +80,16 @@ export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    setCurrentAttempt: (state, action: { payload: number; type: string }) => {
+    setCurrentAttempt: (state, action: { payload: string; type: string }) => {
       const newCurrent = state.data.attempts.find(
-        (attempt) => attempt.id === action.payload,
+        (attempt) => attempt.uuid === action.payload,
       );
       if (newCurrent) {
         state.data.currentAttempt = newCurrent;
       }
+    },
+    addGuess: (state, { payload }: PayloadAction<GuessFormat>) => {
+      state.data.currentAttempt.guesses.push(payload);
     },
   },
   extraReducers: (builder) => {
@@ -147,7 +117,7 @@ export const selectCurrentAttempt = (state: RootState) =>
   state.guesses.data.currentAttempt;
 export const selectCurrentAttemptId = createSelector(
   [selectCurrentAttempt],
-  (attempt) => attempt.id,
+  (attempt) => attempt.uuid,
 );
 export const selectAttempts = (state: RootState) => state.guesses.data.attempts;
 export const selectGuesses = (state: RootState) =>

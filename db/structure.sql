@@ -10,6 +10,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
 -- Name: letter_panel_locations; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -188,7 +202,9 @@ CREATE TABLE public.guesses (
     text character varying(15),
     is_spoiled boolean,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_puzzle_attempt_uuid uuid NOT NULL
 );
 
 
@@ -628,7 +644,8 @@ CREATE TABLE public.user_puzzle_attempts (
     user_id bigint NOT NULL,
     puzzle_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL
 );
 
 
@@ -1008,6 +1025,13 @@ CREATE UNIQUE INDEX index_guesses_on_user_puzzle_attempt_id_and_text ON public.g
 
 
 --
+-- Name: index_guesses_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_guesses_on_uuid ON public.guesses USING btree (uuid);
+
+
+--
 -- Name: index_hint_panels_on_current_display_state_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1131,6 +1155,13 @@ CREATE INDEX index_user_puzzle_attempts_on_puzzle_id ON public.user_puzzle_attem
 --
 
 CREATE INDEX index_user_puzzle_attempts_on_user_id ON public.user_puzzle_attempts USING btree (user_id);
+
+
+--
+-- Name: index_user_puzzle_attempts_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_puzzle_attempts_on_uuid ON public.user_puzzle_attempts USING btree (uuid);
 
 
 --
@@ -1287,6 +1318,14 @@ ALTER TABLE ONLY public.user_hint_profiles
 
 
 --
+-- Name: guesses fk_rails_fd6386492d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.guesses
+    ADD CONSTRAINT fk_rails_fd6386492d FOREIGN KEY (user_puzzle_attempt_uuid) REFERENCES public.user_puzzle_attempts(uuid);
+
+
+--
 -- Name: hint_panels fk_rails_fe2308349e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1342,6 +1381,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231001001349'),
 ('20231002213304'),
 ('20231011153938'),
-('20231119195913');
+('20231119195913'),
+('20231120084355'),
+('20231120090819');
 
 

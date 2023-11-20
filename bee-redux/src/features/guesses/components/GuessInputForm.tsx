@@ -57,8 +57,10 @@ export function GuessInputForm() {
         const isExcluded = excludedWords.includes(guessValue);
         addGuess({
           guess: {
-            user_puzzle_attempt_id: currentAttempt.id,
+            uuid: crypto.randomUUID(),
+            user_puzzle_attempt_uuid: currentAttempt.uuid,
             text: guessValue,
+            created_at: Date.now(),
             is_spoiled: false,
           },
         });
