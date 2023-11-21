@@ -61,12 +61,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user_hint_profile
-    profile = UserHintProfile.find(params[:id])
-    unless profile.user == current_user
-      render json: {error: "User and hint profile don't match"}, status: 403
-      return
-    end
-    @user_hint_profile = profile
+    @user_hint_profile = current_user.user_hint_profiles.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

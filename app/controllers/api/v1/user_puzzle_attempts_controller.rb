@@ -71,7 +71,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   # Use callbacks to share common setup or constraints between actions.
   def set_user_puzzle_attempt
     @user_puzzle_attempt = current_user.user_puzzle_attempts
-      .find_by(uuid: params[:uuid])
+      .find_by!(uuid: params[:uuid])
   end
 
   # Only allow a list of trusted parameters through.

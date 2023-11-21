@@ -16,7 +16,7 @@ class Api::V1::GuessesController < AuthRequiredController
   # POST /guesses
   def create
     @guess = current_user.user_puzzle_attempts
-      .find_by(uuid: guess_params[:user_puzzle_attempt_uuid])
+      .find_by!(uuid: guess_params[:user_puzzle_attempt_uuid])
       .guesses.new(guess_params)
 
     max_retries = 3
@@ -47,7 +47,7 @@ class Api::V1::GuessesController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_guess
-    @guess = Guess.find(params[:uuid])
+    @guess = current_user.guesses.find_by(uuid: params[:uuid])
   end
 
   # Only allow a list of trusted parameters through.

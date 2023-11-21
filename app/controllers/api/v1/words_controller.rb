@@ -52,11 +52,11 @@ class Api::V1::WordsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_word
-    @word = Word.find(params[:id])
+    @word = Word.find(params[:text])
   end
 
   # Only allow a list of trusted parameters through.
   def word_params
-    params.require(:word).permit(:word)
+    params.require(:word).permit(:text)
   end
 end

@@ -43,6 +43,7 @@ class User < ApplicationRecord
   has_many :guesses, through: :user_puzzle_attempts
   has_many :user_hint_profiles
   has_many :hint_panels, through: :user_hint_profiles
+  has_many :search_panel_searches, through: :user_puzzle_attempts
 
   # Validations
   validate :password_complexity, :email_format

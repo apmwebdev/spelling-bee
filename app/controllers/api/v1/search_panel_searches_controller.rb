@@ -52,12 +52,8 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   private
 
   def set_search
-    prelim_search = SearchPanelSearch.find(params[:id])
-    unless prelim_search.user_puzzle_attempt.user == current_user
-      render json: {error: "Search doesn't match current user"}, status: 403
-      return
-    end
-    @search = prelim_search
+    # TODO: Make this use UUID instead of ID
+    @search = current_user.search_panel_searches.find(params[:id])
   end
 
   def sps_params
