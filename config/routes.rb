@@ -9,11 +9,12 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 Rails.application.routes.draw do
-  devise_for :users, path: "api/v1/auth", path_names: {
-    sign_in: "login",
-    sign_out: "logout",
-    registration: "signup"
-  },
+  devise_for :users, path: "api/v1/auth",
+    path_names: {
+      sign_in: "login",
+      sign_out: "logout",
+      registration: "signup"
+    },
     controllers: {
       sessions: "api/v1/users/sessions",
       registrations: "api/v1/users/registrations",
@@ -34,8 +35,8 @@ Rails.application.routes.draw do
       # Attempts and guesses
       get "user_puzzle_attempts_for_puzzle/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
-      resources :user_puzzle_attempts, except: :update
-      resources :guesses, only: :create
+      resources :user_puzzle_attempts, param: :uuid, except: :update
+      resources :guesses, param: :uuid, only: :create
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
       get "user_puzzle_data/:puzzle_id", to: "user_data#user_puzzle_data"

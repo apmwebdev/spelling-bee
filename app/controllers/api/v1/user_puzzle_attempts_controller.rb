@@ -55,9 +55,9 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     @user_puzzle_attempt.user = current_user
 
     if @user_puzzle_attempt.save
-      render json: @user_puzzle_attempt, status: :created, location: @user_puzzle_attempt
+      render json: @user_puzzle_attempt.to_front_end, status: 201
     else
-      render json: @user_puzzle_attempt.errors, status: :unprocessable_entity
+      render json: @user_puzzle_attempt.errors, status: 422
     end
   end
 
@@ -70,11 +70,13 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user_puzzle_attempt
-    @user_puzzle_attempt = UserPuzzleAttempt.find(params[:id])
+    @user_puzzle_attempt = current_user.user_puzzle_attempts
+      .find_by(uuid: params[:uuid])
   end
 
   # Only allow a list of trusted parameters through.
   def user_puzzle_attempt_params
-    params.require(:user_puzzle_attempt).permit(:puzzle_id)
+    params.require(:user_puzzle_attempt)
+      .permit(:uuid, :puzzle_id, :created_at)
   end
 end
