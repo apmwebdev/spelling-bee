@@ -32,12 +32,42 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   end
 
   def create
+    begin
+      search_panel = find_user_search_panel(sps_params[:search_panel_id])
+      raise ActiveRecord::RecordNotFound unless search_panel
+    rescue ActiveRecord::RecordNotFound
+      render json: {error: "Search panel not found"}, status: 404
+      return
+    end
+
+    begin
+      user_puzzle_attempt = current_user.user_puzzle_attempts
+        .find(sps_params[:user_puzzle_attempt_uuid])
+    rescue ActiveRecord::RecordNotFound
+      render json: {error: "User puzzle attempt not found"}, status: 404
+      return
+    end
+
+    if search_panel.search_panel_searches.count >= 20
+      render json: {
+        error: "You've reached the maximum number of searches for this search panel."
+      }, status: 400
+      return
+    end
+
+    if user_puzzle_attempt.search_panel_searches.count >= 60
+      render json: {
+        error: "You've reached the maximum number of searches for this puzzle attempt."
+      }, status: 400
+      return
+    end
+
     @search = SearchPanelSearch.new(sps_params)
 
     if @search.save
-      render json: @search.to_front_end, status: :created
+      render json: @search.to_front_end, status: 201
     else
-      render json: @search.errors, status: :unprocessable_entity
+      render json: @search.errors, status: 422
     end
   end
 
@@ -54,13 +84,28 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   def set_search
     # TODO: Make this use UUID instead of ID
     @search = current_user.search_panel_searches.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Search not found"}, status: 404
+  end
+
+  def find_user_search_panel(search_panel_id)
+    search_panel = SearchPanel.find_by(id: search_panel_id)
+    return nil unless search_panel
+
+    hint_panel = search_panel.hint_panel
+    return nil unless hint_panel
+
+    hint_profile = hint_panel.hint_profile
+    return nil unless hint_profile&.is_a?(UserHintProfile) && hint_profile.user == current_user
+
+    search_panel
   end
 
   def sps_params
     params.require(:search_panel_search).permit(
       :id,
       :search_panel_id,
-      :user_puzzle_attempt_id,
+      :user_puzzle_attempt_uuid,
       :search_string,
       :location,
       :letters_offset,
