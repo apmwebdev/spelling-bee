@@ -31,31 +31,6 @@ class Api::V1::PuzzlesController < ApplicationController
     render(json: Puzzle.last.to_front_end)
   end
 
-  # POST /puzzles
-  def create
-    @puzzle = Puzzle.new(puzzle_params)
-
-    if @puzzle.save
-      render json: @puzzle, status: :created, location: @puzzle
-    else
-      render json: @puzzle.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /puzzles/1
-  def update
-    if @puzzle.update(puzzle_params)
-      render json: @puzzle
-    else
-      render json: @puzzle.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /puzzles/1
-  def destroy
-    @puzzle.destroy
-  end
-
   private
 
   # Find puzzle by ID, date string, or letters

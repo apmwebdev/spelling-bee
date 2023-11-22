@@ -13,13 +13,25 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # POST /hint_panels
   def create
+    profile_id = hint_panel_create_params[:hint_profile_id]
+    profile = current_user.user_hint_profiles.find(profile_id)
+
+    if profile.hint_panels.count >= 20
+      render json: {
+        error: "You have reached the maximum number of hint panels for this hint profile."
+      }, status: 400
+      return
+    end
+
     @hint_panel = HintPanel.new(hint_panel_create_params)
 
     if @hint_panel.save
-      render json: @hint_panel, status: :created, location: @hint_panel
+      render json: @hint_panel, status: 201
     else
-      render json: @hint_panel.errors, status: :unprocessable_entity
+      render json: @hint_panel.errors, status: 422
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "User hint profile not found"}, status: 404
   end
 
   # PATCH/PUT /hint_panels/1
@@ -116,11 +128,9 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
-    @hint_panel = current_user.hint_panels.find(params[:id].to_i)
-    unless @hint_panel
-      render json: {error: "Hint panel not found for current user"},
-        status: 404
-    end
+    @hint_panel = current_user.hint_panels.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "Hint panel not found"}, status: 404
   end
 
   def hint_panel_create_params

@@ -58,7 +58,7 @@ Rails.application.routes.draw do
         to: "search_panel_searches#for_attempt_and_profile"
       resources :search_panel_searches, only: [:create, :update, :destroy]
       # Words
-      resources :words
+      resources :words, only: [:index, :show]
       # Root
       root "puzzles#latest"
     end

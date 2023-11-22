@@ -51,6 +51,17 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # POST /user_puzzle_attempts
   def create
+    puzzle_id = user_puzzle_attempt_params[:puzzle_id]
+    existing_attempts_count = current_user.user_puzzle_attempts
+      .where(puzzle_id: puzzle_id).count
+
+    if existing_attempts_count >= 10
+      render json: {
+        error: "You've reached the maximum number of attempts for this puzzle."
+      }, status: 400
+      return
+    end
+
     @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params)
     @user_puzzle_attempt.user = current_user
 

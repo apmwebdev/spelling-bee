@@ -34,12 +34,19 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
 
   # POST /user_hint_profiles
   def create
+    if current_user.user_hint_profiles.count >= 20
+      render json: {
+        error: "You have reached the maximum number of user hint profiles."
+      }, status: 400
+      return
+    end
+
     @user_hint_profile = UserHintProfile.new(user_hint_profile_params)
 
     if @user_hint_profile.save
-      render json: @user_hint_profile.to_front_end_complete, status: :created, location: @user_hint_profile
+      render json: @user_hint_profile.to_front_end_complete, status: 201
     else
-      render json: @user_hint_profile.errors, status: :unprocessable_entity
+      render json: @user_hint_profile.errors, status: 422
     end
   end
 
