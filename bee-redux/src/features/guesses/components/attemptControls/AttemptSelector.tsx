@@ -25,8 +25,8 @@ export function AttemptSelector() {
   const attempts = useAppSelector(selectAttempts);
   return (
     <Select.Root
-      value={`${currentAttempt.id}`}
-      onValueChange={(value) => dispatch(setCurrentAttempt(Number(value)))}
+      value={`${currentAttempt.uuid}`}
+      onValueChange={(value) => dispatch(setCurrentAttempt(value))}
     >
       <Select.Trigger />
       <Select.ContentWithPortal className="SelectContent">
@@ -35,7 +35,7 @@ export function AttemptSelector() {
             return (
               <Select.Item
                 key={uniqid()}
-                value={`${attempt.id}`}
+                value={`${attempt.uuid}`}
                 itemText={`Attempt ${i + 1}`}
               />
             );
