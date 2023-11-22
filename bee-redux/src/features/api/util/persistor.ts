@@ -14,9 +14,10 @@
  * So that you can see the actual JSON.stringified string that was saved to
  * localStorage as well as what it was JSON.parsed into.
  */
-type LoadedValue = {
+
+type LoadedValue<T> = {
   saved: string;
-  parsed: any;
+  parsed: T;
 };
 
 const save = (key: string, value: any) => {
@@ -32,11 +33,11 @@ const save = (key: string, value: any) => {
   }
 };
 
-const load = (key: string) => {
+const load = <T>(key: string): LoadedValue<T> | null => {
   const storedItem = localStorage.getItem(key);
   if (storedItem) {
     try {
-      const loadedVal: LoadedValue = {
+      const loadedVal: LoadedValue<T> = {
         saved: storedItem,
         parsed: JSON.parse(storedItem),
       };

@@ -34,14 +34,15 @@ export const logoutThunk = (dispatch: AppDispatch) => {
 };
 
 const rehydrateAuthState = (): AuthState => {
-  const storedUser = persistor.load("user");
-  const storedIsGuest = persistor.load("isGuest");
+  const storedUser = persistor.load<User>("user");
+  const storedIsGuest = persistor.load<boolean>("isGuest");
   const authState: AuthState = {
     user: null,
     isGuest: storedIsGuest?.parsed === true,
   };
   if (storedUser) {
     const maybeUser = storedUser.parsed;
+    //Check that the stored user is *actually* the proper type
     if (
       typeof maybeUser.email === "string" &&
       typeof maybeUser.name === "string"
