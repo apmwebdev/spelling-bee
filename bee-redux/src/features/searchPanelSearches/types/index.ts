@@ -19,7 +19,7 @@ import { SearchPanelBaseData } from "@/features/hintPanelType_search";
 
 export type SearchPanelSearchData = SearchPanelBaseData & {
   //includes searchString, location, lettersOffset, and outputType through inheritance
-  attemptId: number;
+  attemptUuid: string;
   searchPanelId: number;
   createdAt: number;
   id?: number;

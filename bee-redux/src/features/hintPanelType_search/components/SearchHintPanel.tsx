@@ -13,11 +13,11 @@
 import { FormEvent, useState } from "react";
 import { Results } from "@/features/hintPanelType_search/components/Results";
 import { useSelector } from "react-redux";
-import { selectCurrentAttemptId } from "@/features/guesses";
 import { StatusTrackingKeys } from "@/features/hintPanels/";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { addSearch, selectSpsByPanel } from "@/features/searchPanelSearches";
 import { SearchPanelData } from "..";
+import { selectCurrentAttemptUuid } from "@/features/guesses";
 
 export function SearchHintPanel({
   searchPanelData,
@@ -28,7 +28,7 @@ export function SearchHintPanel({
 }) {
   const dispatch = useAppDispatch();
   const [searchValue, setSearchValue] = useState("");
-  const currentAttemptId = useSelector(selectCurrentAttemptId);
+  const currentAttemptUuid = useSelector(selectCurrentAttemptUuid);
   const panelSearches = useAppSelector(selectSpsByPanel(searchPanelData.id));
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -37,7 +37,7 @@ export function SearchHintPanel({
     dispatch(
       addSearch({
         searchPanelId: searchPanelData.id,
-        attemptId: currentAttemptId,
+        attemptUuid: currentAttemptUuid,
         searchString: searchValue,
         location: searchPanelData.location,
         lettersOffset: searchPanelData.lettersOffset,

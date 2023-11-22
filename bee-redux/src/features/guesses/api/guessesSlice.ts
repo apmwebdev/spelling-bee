@@ -115,7 +115,7 @@ export const { setCurrentAttempt } = guessesSlice.actions;
 
 export const selectCurrentAttempt = (state: RootState) =>
   state.guesses.data.currentAttempt;
-export const selectCurrentAttemptId = createSelector(
+export const selectCurrentAttemptUuid = createSelector(
   [selectCurrentAttempt],
   (attempt) => attempt.uuid,
 );

@@ -17,7 +17,7 @@ const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
   return {
     search_panel_search: {
       ...keysToSnakeCase(newSearch),
-      user_puzzle_attempt_id: newSearch.attemptId,
+      user_puzzle_attempt_uuid: newSearch.attemptUuid,
       //Remove the attempt_id key so that Rails doesn't complain
       attempt_id: undefined,
     },
