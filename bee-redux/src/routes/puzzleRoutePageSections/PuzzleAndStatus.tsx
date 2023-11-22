@@ -11,7 +11,6 @@
 */
 
 import { PuzzleControls } from "@/features/puzzle/components/PuzzleControls";
-import { AttemptControls } from "@/features/guesses";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { WordLists } from "@/features/wordLists";
 import { PuzzleNav } from "@/features/puzzle";
@@ -34,7 +33,8 @@ export function PuzzleAndStatus() {
           <WordLists />
         </Tabs.Content>
       </Tabs.Root>
-      <AttemptControls />
+      {/* TODO: Add attempt functionality */}
+      {/*<AttemptControls />*/}
     </div>
   );
 }

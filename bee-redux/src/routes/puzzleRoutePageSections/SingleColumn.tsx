@@ -16,7 +16,6 @@ import { WordLists } from "@/features/wordLists";
 import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
 import { PuzzleNav } from "@/features/puzzle";
 import { Progress } from "@/features/progress";
-import { AttemptControls } from "@/features/guesses";
 
 export function SingleColumn() {
   return (
@@ -39,7 +38,8 @@ export function SingleColumn() {
           <Hints />
         </Tabs.Content>
       </Tabs.Root>
-      <AttemptControls />
+      {/* TODO: Add attempt functionality */}
+      {/*<AttemptControls />*/}
     </div>
   );
 }
