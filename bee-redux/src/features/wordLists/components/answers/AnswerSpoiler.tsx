@@ -43,8 +43,10 @@ export function AnswerSpoiler({ word }: { word: string }) {
   const spoiler = (spoilerText: string) => {
     const spoilerData: RailsGuessFormData = {
       guess: {
-        user_puzzle_attempt_id: currentAttempt.id,
+        uuid: crypto.randomUUID(),
+        user_puzzle_attempt_uuid: currentAttempt.uuid,
         text: word,
+        created_at: Date.now(),
         is_spoiled: true,
       },
     };
