@@ -16,6 +16,7 @@ import {
 } from "@/features/guesses/hooks/useGuessValidation";
 import { GuessMessagesOutput } from "@/features/guesses/hooks/useGuessMessages";
 import { vi } from "vitest";
+import { BLANK_UUID } from "@/features/api";
 
 const centerLetter = "a";
 const validLetters = ["a", "b", "c", "d", "e", "f", "g"];
@@ -30,7 +31,8 @@ const messages: GuessMessagesOutput = {
 const guesses = [
   //already found
   {
-    attemptId: 1,
+    uuid: BLANK_UUID,
+    attemptUuid: BLANK_UUID,
     text: "fade",
     createdAt: 123456789,
     isSpoiled: false,
@@ -39,7 +41,8 @@ const guesses = [
   },
   //already guessed
   {
-    attemptId: 1,
+    uuid: BLANK_UUID,
+    attemptUuid: BLANK_UUID,
     text: "fadd",
     createdAt: 123456789,
     isSpoiled: false,
@@ -48,7 +51,8 @@ const guesses = [
   },
   //already spoiled
   {
-    attemptId: 1,
+    uuid: BLANK_UUID,
+    attemptUuid: BLANK_UUID,
     text: "faef",
     createdAt: 123456789,
     isSpoiled: true,
