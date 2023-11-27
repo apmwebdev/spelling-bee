@@ -10,7 +10,6 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { RawAttemptFormat } from "@/features/guesses";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   CompleteHintProfile,
@@ -18,6 +17,8 @@ import {
 } from "@/features/hintProfiles/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { SerializedError } from "@reduxjs/toolkit";
+import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
+import { RawGuessFormat } from "@/features/guesses";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -55,8 +56,9 @@ export type UserBaseData = {
 
 export type UserPuzzleData = {
   searches: SearchPanelSearchData[];
-  attempts: RawAttemptFormat[];
-  currentAttempt: number;
+  attempts: AttemptFormat[];
+  currentAttempt: string;
+  guesses: RawGuessFormat[];
 };
 
 export type StateShape<dataShape> = {

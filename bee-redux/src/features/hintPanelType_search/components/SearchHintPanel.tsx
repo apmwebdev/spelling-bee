@@ -17,7 +17,7 @@ import { StatusTrackingKeys } from "@/features/hintPanels/";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { addSearch, selectSpsByPanel } from "@/features/searchPanelSearches";
 import { SearchPanelData } from "..";
-import { selectCurrentAttemptUuid } from "@/features/guesses";
+import { selectCurrentAttemptUuid } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function SearchHintPanel({
   searchPanelData,

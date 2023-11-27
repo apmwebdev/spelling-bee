@@ -10,18 +10,16 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useAddAttemptMutation } from "@/features/guesses";
+import { GuessInputBackspace } from "./controls/GuessInputBackspace";
+import { GuessInputEnter } from "./controls/GuessInputEnter";
+import { ShuffleButton } from "@/features/guesses/components/controls/ShuffleButton";
 
-export function NewAttemptButton() {
-  const [addAttempt] = useAddAttemptMutation();
-  const handleClick = () => {};
-
+export function GuessInputControls() {
   return (
-    <IconButton
-      type={IconButtonTypeKeys.Create}
-      tooltip="Create new attempt"
-      onClick={handleClick}
-    />
+    <div className="GuessInputControls">
+      <GuessInputBackspace />
+      <ShuffleButton />
+      <GuessInputEnter />
+    </div>
   );
 }

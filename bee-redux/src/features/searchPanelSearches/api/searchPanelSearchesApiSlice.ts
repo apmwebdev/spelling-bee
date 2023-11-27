@@ -26,9 +26,9 @@ const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
 
 export const searchPanelSearchesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getSearches: builder.query<SearchPanelSearchData[], number>({
-      query: (attemptId) => ({
-        url: `/search_panel_search/${attemptId}`,
+    getSearches: builder.query<SearchPanelSearchData[], string>({
+      query: (attemptUuid) => ({
+        url: `/search_panel_search/${attemptUuid}`,
       }),
     }),
 

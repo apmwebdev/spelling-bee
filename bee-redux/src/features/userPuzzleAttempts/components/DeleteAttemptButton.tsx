@@ -11,7 +11,7 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useDeleteAttemptMutation } from "@/features/guesses";
+import { useDeleteAttemptMutation } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
 
 export function DeleteAttemptButton() {
   const [deleteAttempt] = useDeleteAttemptMutation();

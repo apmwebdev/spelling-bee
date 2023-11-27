@@ -10,9 +10,9 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { AttemptSelector } from "./attemptControls/AttemptSelector";
-import { NewAttemptButton } from "./attemptControls/NewAttemptButton";
-import { DeleteAttemptButton } from "./attemptControls/DeleteAttemptButton";
+import { AttemptSelector } from "./AttemptSelector";
+import { NewAttemptButton } from "./NewAttemptButton";
+import { DeleteAttemptButton } from "./DeleteAttemptButton";
 
 export function AttemptControls() {
   return (

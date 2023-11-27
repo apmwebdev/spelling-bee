@@ -10,20 +10,17 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import {
-  selectCurrentAttempt,
-  selectGuesses,
-  useAddGuessMutation,
-} from "@/features/guesses";
+import { selectGuesses, useAddGuessMutation } from "@/features/guesses";
 import React, { useContext, useEffect, useState } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { useGuessMessages } from "@/features/guesses/hooks/useGuessMessages";
 import { GuessInputContext } from "@/features/guesses/providers/GuessInputProvider";
-import { GuessAlerts } from "@/features/guesses/components/guessInput/GuessAlerts";
+import { GuessAlerts } from "@/features/guesses/components/GuessAlerts";
 import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
-import { GuessInputDisplay } from "@/features/guesses/components/guessInput/GuessInputDisplay";
+import { GuessInputDisplay } from "@/features/guesses/components/GuessInputDisplay";
 import { useGuessInputListener } from "@/features/guesses/hooks/useGuessInputListener";
 import { useGuessValidation } from "@/features/guesses/hooks/useGuessValidation";
+import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function GuessInputForm() {
   const { guessValue, setGuessValue, clearGuessTimeout, clearGuess } =

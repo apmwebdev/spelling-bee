@@ -1,17 +1,3 @@
-export type RawAttemptFormat = {
-  uuid: string;
-  puzzleId: number;
-  createdAt: number;
-  guesses: RawGuessFormat[];
-};
-
-export type AttemptFormat = {
-  uuid: string;
-  puzzleId: number;
-  createdAt: number;
-  guesses: GuessFormat[];
-};
-
 export type RailsGuessFormData = {
   guess: {
     uuid: string;

@@ -11,13 +11,13 @@
 */
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import * as Select from "@/components/radix-ui/radix-select";
+import uniqid from "uniqid";
 import {
   selectAttempts,
   selectCurrentAttempt,
   setCurrentAttempt,
-} from "@/features/guesses";
-import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
+} from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function AttemptSelector() {
   const dispatch = useAppDispatch();

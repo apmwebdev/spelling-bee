@@ -11,8 +11,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "format": "prettier --write .",
-    "lint": "eslint .",
+    "format": "prettier --write ./src",
+    "lint": "eslint ./src",
     "type-check": "tsc"
   },
   "dependencies": {
@@ -79,7 +79,8 @@
     "rules": {
       "prettier/prettier": "error",
       "react/jsx-no-target-blank": "off"
-    }
+    },
+    "ignorePatterns": ["node_modules/", "build/"]
   },
   "prettier": {
     "$schema": "https://json.schemastore.org/prettierrc",

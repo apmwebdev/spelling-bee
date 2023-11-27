@@ -14,65 +14,16 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore } from "@/util";
 import { guessesApiSlice } from "./guessesApiSlice";
-import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { Statuses } from "@/types";
-import { AttemptFormat, GuessFormat } from "@/features/guesses";
-import { BLANK_UUID } from "@/features/api";
-
-type CurrentAttemptsFulfilledResponse = PayloadAction<
-  AttemptFormat[],
-  string,
-  {
-    arg: QueryThunkArg & {
-      originalArgs: any;
-    };
-    requestId: string;
-    requestStatus: "fulfilled";
-  } & {
-    fulfilledTimeStamp: number;
-    baseQueryMeta: unknown;
-    RTK_autoBatch: true;
-  },
-  never
->;
-
-type AddGuessFulfilledResponse = PayloadAction<
-  GuessFormat,
-  string,
-  {
-    arg: QueryThunkArg & {
-      originalArgs: any;
-    };
-    requestId: string;
-    requestStatus: "fulfilled";
-  } & {
-    fulfilledTimeStamp: number;
-    baseQueryMeta: unknown;
-    RTK_autoBatch: true;
-  },
-  never
->;
-
-export type GuessesStateData = {
-  currentAttempt: AttemptFormat;
-  attempts: AttemptFormat[];
-};
+import { GuessFormat } from "@/features/guesses";
 
 export type GuessesState = {
-  data: GuessesStateData;
+  data: GuessFormat[];
   status: Statuses;
 };
 
 const initialState: GuessesState = {
-  data: {
-    currentAttempt: {
-      uuid: BLANK_UUID,
-      createdAt: 0,
-      puzzleId: 0,
-      guesses: [],
-    },
-    attempts: [],
-  },
+  data: [],
   status: Statuses.Initial,
 };
 
@@ -80,48 +31,33 @@ export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    setCurrentAttempt: (state, action: { payload: string; type: string }) => {
-      const newCurrent = state.data.attempts.find(
-        (attempt) => attempt.uuid === action.payload,
-      );
-      if (newCurrent) {
-        state.data.currentAttempt = newCurrent;
-      }
+    getGuesses: (state, { payload }: PayloadAction<GuessFormat[]>) => {
+      state.data = payload;
     },
     addGuess: (state, { payload }: PayloadAction<GuessFormat>) => {
-      state.data.currentAttempt.guesses.push(payload);
+      state.data.push(payload);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher<AddGuessFulfilledResponse>(
-        guessesApiSlice.endpoints.addGuess.matchFulfilled,
+      .addMatcher(
+        guessesApiSlice.endpoints.getGuesses.matchFulfilled,
         (state, { payload }) => {
-          state.data.currentAttempt.guesses.push(payload);
+          state.data = payload;
         },
       )
-      .addMatcher<CurrentAttemptsFulfilledResponse>(
-        guessesApiSlice.endpoints.getCurrentAttempts.matchFulfilled,
+      .addMatcher(
+        guessesApiSlice.endpoints.addGuess.matchFulfilled,
         (state, { payload }) => {
-          state.data.attempts = payload;
-          state.data.currentAttempt = payload.slice(-1)[0];
-          state.status = Statuses.UpToDate;
+          state.data.push(payload);
         },
       );
   },
 });
 
-export const { setCurrentAttempt } = guessesSlice.actions;
+export const { addGuess } = guessesSlice.actions;
 
-export const selectCurrentAttempt = (state: RootState) =>
-  state.guesses.data.currentAttempt;
-export const selectCurrentAttemptUuid = createSelector(
-  [selectCurrentAttempt],
-  (attempt) => attempt.uuid,
-);
-export const selectAttempts = (state: RootState) => state.guesses.data.attempts;
-export const selectGuesses = (state: RootState) =>
-  state.guesses.data.currentAttempt.guesses;
+export const selectGuesses = (state: RootState) => state.guesses.data;
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
   guesses.map((guess) => guess.text),
 );

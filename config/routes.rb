@@ -33,9 +33,11 @@ Rails.application.routes.draw do
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
       # Attempts and guesses
-      get "user_puzzle_attempts_for_puzzle/:puzzle_id",
+      get "puzzle_user_puzzle_attempts/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
       resources :user_puzzle_attempts, param: :uuid, except: :update
+      get "user_puzzle_attempt_guesses/:user_puzzle_attempt_uuid",
+        to: "guesses#index_for_attempt"
       resources :guesses, param: :uuid, only: :create
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
@@ -57,8 +59,6 @@ Rails.application.routes.draw do
       get "search_panel_search/:attempt_id",
         to: "search_panel_searches#for_attempt_and_profile"
       resources :search_panel_searches, only: [:create, :update, :destroy]
-      # Words
-      resources :words, only: [:index, :show]
       # Root
       root "puzzles#latest"
     end

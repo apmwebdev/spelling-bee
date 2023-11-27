@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useCurrentPuzzle } from "@/features/puzzle";
 import { useLazyGetUserPuzzleDataQuery } from "@/features/userData";
 import { Status } from "@/routes/puzzleRoutePageSections/Status";
@@ -19,17 +19,24 @@ import { Puzzle } from "@/routes/puzzleRoutePageSections/Puzzle";
 import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
 import { PuzzleAndStatus } from "@/routes/puzzleRoutePageSections/PuzzleAndStatus";
 import { SingleColumn } from "@/routes/puzzleRoutePageSections/SingleColumn";
+import { devLog } from "@/util";
 
 export function PuzzleRoute() {
   const puzzleQ = useCurrentPuzzle();
   const [getUserPuzzleData] = useLazyGetUserPuzzleDataQuery();
   const columns = useColumnBreakpoints();
+  const previousPuzzleIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (puzzleQ.isSuccess) {
-      getUserPuzzleData(puzzleQ.data.id);
+      const currentPuzzleId = puzzleQ.data.id;
+      if (currentPuzzleId !== previousPuzzleIdRef.current) {
+        devLog("new puzzle");
+        getUserPuzzleData(currentPuzzleId);
+        previousPuzzleIdRef.current = currentPuzzleId;
+      }
     }
-  }, [getUserPuzzleData, puzzleQ]);
+  }, [puzzleQ]);
 
   const content = (columns: number) => {
     if (columns === 3) {

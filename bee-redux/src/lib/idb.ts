@@ -1,5 +1,6 @@
 import Dexie, { Table } from "dexie";
-import { AttemptFormat, GuessFormat } from "@/features/guesses";
+import { GuessFormat } from "@/features/guesses";
+import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<AttemptFormat>;

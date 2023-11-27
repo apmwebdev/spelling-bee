@@ -9,6 +9,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class Guess < ApplicationRecord
+  include UuidRetryable
   belongs_to :user_puzzle_attempt
 
   def to_front_end

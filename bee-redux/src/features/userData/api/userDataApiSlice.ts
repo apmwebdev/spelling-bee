@@ -17,10 +17,11 @@ import {
   UserPrefsFormData,
   UserPuzzleData,
 } from "@/types";
-import { guessesApiSlice, processAttempts } from "@/features/guesses";
-import { RootState } from "@/app/store";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { searchPanelSearchesApiSlice } from "@/features/searchPanelSearches";
+import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
+import { guessesApiSlice, processGuess } from "@/features/guesses";
+import { RootState } from "@/app/store";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -125,10 +126,10 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         if (cacheEntry.isSuccess && cacheEntry.data) {
           const { data } = cacheEntry;
           api.dispatch(
-            guessesApiSlice.util.upsertQueryData(
+            userPuzzleAttemptsApiSlice.util.upsertQueryData(
               "getCurrentAttempts",
               undefined,
-              processAttempts(data.attempts, api.getState() as RootState),
+              data.attempts,
             ),
           );
           api.dispatch(
@@ -136,6 +137,15 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
               "getSearches",
               data.currentAttempt,
               data.searches,
+            ),
+          );
+          api.dispatch(
+            guessesApiSlice.util.upsertQueryData(
+              "getGuesses",
+              data.currentAttempt,
+              data.guesses.map((guess) =>
+                processGuess(guess, api.getState() as RootState),
+              ),
             ),
           );
         }

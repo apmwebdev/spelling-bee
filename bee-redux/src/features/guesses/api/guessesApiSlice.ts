@@ -14,10 +14,8 @@ import { apiSlice } from "@/features/api";
 import { RootState } from "@/app/store";
 import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
 import {
-  AttemptFormat,
   GuessFormat,
   RailsGuessFormData,
-  RawAttemptFormat,
   RawGuessFormat,
 } from "@/features/guesses";
 
@@ -43,53 +41,11 @@ export const processGuess = (
   };
 };
 
-export const processAttempts = (
-  rawAttempts: RawAttemptFormat[],
-  state: RootState,
-) => {
-  const processedAttempts: AttemptFormat[] = [];
-  for (const attempt of rawAttempts) {
-    processedAttempts.push({
-      uuid: attempt.uuid,
-      puzzleId: attempt.puzzleId,
-      createdAt: attempt.createdAt,
-      guesses: attempt.guesses.map((guess) => processGuess(guess, state)),
-    });
-  }
-  return processedAttempts;
-};
-
 export const guessesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAttempts: builder.query({
-      query: (puzzleId) => ({
-        url: `/user_puzzle_attempts/${puzzleId}`,
-      }),
-    }),
-    getCurrentAttempts: builder.query<AttemptFormat[], void>({
-      queryFn: async (_args, api, _extraOptions, baseQuery) => {
-        const state = api.getState() as RootState;
-        const puzzleId = state.puzzle.data.id;
-        if (puzzleId === 0) {
-          return { error: { status: 404, data: "No puzzle loaded" } };
-        }
-        const { data } = await baseQuery(
-          `/user_puzzle_attempts_for_puzzle/${puzzleId}`,
-        );
-        return { data: processAttempts(data as RawAttemptFormat[], state) };
-      },
-    }),
-    addAttempt: builder.mutation({
-      query: () => ({
-        url: "/user_puzzle_attempts/",
-        method: "POST",
-        body: {},
-      }),
-    }),
-    deleteAttempt: builder.mutation({
-      query: (attemptId: number) => ({
-        url: `/user_puzzle_attempts/${attemptId}`,
-        method: "DELETE",
+    getGuesses: builder.query<GuessFormat[], string>({
+      query: (attempt_uuid) => ({
+        url: `/user_puzzle_attempt_guesses/${attempt_uuid}`,
       }),
     }),
     addGuess: builder.mutation<GuessFormat, RailsGuessFormData>({
@@ -111,9 +67,4 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useAddAttemptMutation,
-  useDeleteAttemptMutation,
-  useLazyGetCurrentAttemptsQuery,
-  useAddGuessMutation,
-} = guessesApiSlice;
+export const { useLazyGetGuessesQuery, useAddGuessMutation } = guessesApiSlice;

@@ -10,16 +10,17 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { GuessInputBackspace } from "./controls/GuessInputBackspace";
-import { GuessInputEnter } from "./controls/GuessInputEnter";
-import { ShuffleButton } from "@/features/guesses/components/guessInput/controls/ShuffleButton";
+import { BLANK_UUID } from "@/features/api";
 
-export function GuessInputControls() {
-  return (
-    <div className="GuessInputControls">
-      <GuessInputBackspace />
-      <ShuffleButton />
-      <GuessInputEnter />
-    </div>
-  );
-}
+export type AttemptFormat = {
+  uuid: string;
+  puzzleId: number;
+  createdAt: number;
+  // guesses: GuessFormat[];
+};
+
+export const BLANK_ATTEMPT: AttemptFormat = {
+  uuid: BLANK_UUID,
+  puzzleId: 0,
+  createdAt: 0,
+};

@@ -11,9 +11,9 @@
 */
 
 import { GuessInputProvider } from "@/features/guesses/providers/GuessInputProvider";
+import { GuessInputControls } from "@/features/guesses/components/GuessInputControls";
 import { GuessInputForm } from "@/features/guesses/components/GuessInputForm";
 import { Hive } from "@/features/puzzle";
-import { GuessInputControls } from "@/features/guesses";
 
 export function PuzzleControls() {
   return (

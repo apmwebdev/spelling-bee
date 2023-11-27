@@ -12,11 +12,8 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "@/features/wordLists";
-import {
-  RailsGuessFormData,
-  selectCurrentAttempt,
-  useAddGuessMutation,
-} from "@/features/guesses";
+import { RailsGuessFormData, useAddGuessMutation } from "@/features/guesses";
+import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
   const currentAttempt = useAppSelector(selectCurrentAttempt);
