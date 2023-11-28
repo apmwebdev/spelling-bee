@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class DefaultHintProfile < ApplicationRecord
+  include UuidRetryable
+
   has_many :hint_panels, as: :hint_profile, dependent: :destroy
   has_many :user_prefs, as: :current_hint_profile
 

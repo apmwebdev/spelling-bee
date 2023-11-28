@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class SearchPanel < ApplicationRecord
+  include UuidRetryable
+
   has_one :hint_panel, as: :panel_subtype
   has_one :hint_profile, through: :hint_panel
   has_many :search_panel_searches, dependent: :destroy

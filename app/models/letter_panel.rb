@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class LetterPanel < ApplicationRecord
+  include UuidRetryable
+
   has_one :hint_panel, as: :panel_subtype
 
   def to_front_end

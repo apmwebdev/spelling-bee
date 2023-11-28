@@ -13,8 +13,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # POST /hint_panels
   def create
-    profile_id = hint_panel_create_params[:hint_profile_id]
-    profile = current_user.user_hint_profiles.find(profile_id)
+    profile_uuid = hint_panel_create_params[:hint_profile_uuid]
+    profile = current_user.user_hint_profiles.find(profile_uuid)
 
     if profile.hint_panels.count >= 20
       render json: {
@@ -25,9 +25,14 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
     @hint_panel = HintPanel.new(hint_panel_create_params)
 
-    if @hint_panel.save
+    begin
+      @hint_panel.save_with_uuid_retry!
       render json: @hint_panel, status: 201
-    else
+    rescue UuidRetryable::RetryLimitExceeded
+      render json: {
+        error: "Could not create hint panel due to a rare UUID collision"
+      }, status: 500
+    rescue ActiveRecord::RecordInvalid
       render json: @hint_panel.errors, status: 422
     end
   rescue ActiveRecord::RecordNotFound
@@ -43,35 +48,35 @@ class Api::V1::HintPanelsController < AuthRequiredController
     the_params = hint_panel_update_params
     if the_params[:initial_display_state_attributes]
       unless @hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
-        render json: @hint_panel.initial_display_state.errors, status: :unprocessable_entity
+        render json: @hint_panel.initial_display_state.errors, status: 422
         return
       end
     end
     if the_params[:current_display_state_attributes]
       unless @hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
-        render json: @hint_panel.current_display_state.errors, status: :unprocessable_entity
+        render json: @hint_panel.current_display_state.errors, status: 422
         return
       end
     end
     if the_params[:panel_subtype_attributes]
       if @hint_panel.panel_subtype_type == "LetterPanel"
         unless @hint_panel.panel_subtype.update(letter_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
+          render json: @hint_panel.panel_subtype.errors, status: 422
           return
         end
       elsif @hint_panel.panel_subtype_type == "SearchPanel"
         unless @hint_panel.panel_subtype.update(search_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
+          render json: @hint_panel.panel_subtype.errors, status: 422
           return
         end
       elsif @hint_panel.panel_subtype_type == "ObscurityPanel"
         unless @hint_panel.panel_subtype.update(obscurity_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
+          render json: @hint_panel.panel_subtype.errors, status: 422
           return
         end
       elsif @hint_panel.panel_subtype_type == "DefinitionPanel"
         unless @hint_panel.panel_subtype.update(definition_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: :unprocessable_entity
+          render json: @hint_panel.panel_subtype.errors, status: 422
           return
         end
       end
@@ -83,9 +88,9 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :panel_subtype_attributes
       )
     )
-      render json: @hint_panel.to_front_end
+      render json: @hint_panel.to_front_end, status: 200
     else
-      render json: @hint_panel.errors, status: :unprocessable_entity
+      render json: @hint_panel.errors, status: 422
     end
   end
 
@@ -95,12 +100,12 @@ class Api::V1::HintPanelsController < AuthRequiredController
   end
 
   def move
-    hint_panel_move_params
-    old_index = params[:old_index].to_i
-    new_index = params[:new_index].to_i
+    move_params = hint_panel_move_params
+    old_index = move_params[:old_index].to_i
+    new_index = move_params[:new_index].to_i
     panels = HintPanel
       .where(hint_profile_type: "UserHintProfile")
-      .where(hint_profile_id: @hint_panel.hint_profile_id)
+      .where(hint_profile_uuid: @hint_panel.hint_profile_uuid)
 
     if old_index > panels.size || new_index > panels.size || old_index < 0 ||
         new_index < 0 || old_index == new_index || panels.size < 2
@@ -128,18 +133,20 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
-    @hint_panel = current_user.hint_panels.find(params[:id])
+    @hint_panel = current_user.hint_panels.find_by!(params[:uuid])
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Hint panel not found"}, status: 404
   end
 
   def hint_panel_create_params
     params.require(:hint_panel).permit(
+      :uuid,
       :name,
-      :hint_profile_id,
+      :hint_profile_uuid,
       :status_tracking,
       :panel_subtype_type,
       initial_display_state_attributes: [
+        :uuid,
         :is_expanded,
         :is_blurred,
         :is_sticky,
@@ -147,6 +154,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_settings_sticky
       ],
       current_display_state_attributes: [
+        :uuid,
         :is_expanded,
         :is_blurred,
         :is_sticky,
@@ -154,6 +162,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
         :is_settings_sticky
       ],
       panel_subtype_attributes: [
+        :uuid,
         :hide_known,
         :reveal_length,
         :show_obscurity,
@@ -172,9 +181,9 @@ class Api::V1::HintPanelsController < AuthRequiredController
   # Only allow a list of trusted parameters through.
   def hint_panel_update_params
     params.require(:hint_panel).permit(
-      :id,
+      :uuid,
       :name,
-      :hint_profile_id,
+      :hint_profile_uuid,
       :status_tracking,
       initial_display_state_attributes: [
         :is_expanded,
@@ -247,6 +256,6 @@ class Api::V1::HintPanelsController < AuthRequiredController
   end
 
   def hint_panel_move_params
-    params.require([:id, :old_index, :new_index])
+    params.require([:uuid, :old_index, :new_index])
   end
 end

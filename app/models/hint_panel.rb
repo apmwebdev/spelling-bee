@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class HintPanel < ApplicationRecord
+  include UuidRetryable
+
   belongs_to :hint_profile, polymorphic: true
   belongs_to :initial_display_state, class_name: "PanelDisplayState", dependent: :destroy
   belongs_to :current_display_state, class_name: "PanelDisplayState", dependent: :destroy
