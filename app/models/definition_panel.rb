@@ -14,6 +14,7 @@ class DefinitionPanel < ApplicationRecord
   def to_front_end
     {
       panelType: "definition",
+      uuid:,
       hideKnown: hide_known,
       revealedLetters: revealed_letters,
       separateKnown: separate_known,

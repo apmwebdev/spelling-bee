@@ -15,6 +15,7 @@ class PanelDisplayState < ApplicationRecord
 
   def to_front_end
     {
+      uuid:,
       isExpanded: is_expanded,
       isBlurred: is_blurred,
       isSticky: is_sticky,

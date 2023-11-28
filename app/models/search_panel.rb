@@ -16,7 +16,9 @@ class SearchPanel < ApplicationRecord
   def to_front_end
     {
       panelType: "search",
+      # TODO: Stop using ID, stop sending ID to front end, then remove ID
       id:,
+      uuid:,
       location:,
       outputType: output_type,
       lettersOffset: letters_offset
