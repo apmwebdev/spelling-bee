@@ -18,7 +18,7 @@ import { PanelDisplayStateKeys } from "@/features/hintPanels/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function PanelInitDisplayCheckboxControl({
-  panelId,
+  panelUuid,
   settingKey,
   currentValue,
   disabled,
@@ -26,7 +26,7 @@ export function PanelInitDisplayCheckboxControl({
   helpBubbleContent,
   customHandler,
 }: {
-  panelId: number;
+  panelUuid: string;
   settingKey: PanelDisplayStateKeys;
   currentValue: boolean;
   disabled?: boolean;
@@ -40,7 +40,7 @@ export function PanelInitDisplayCheckboxControl({
       customHandler();
     } else {
       updatePanel({
-        id: panelId,
+        uuid: panelUuid,
         debounceField: `initDisplay${capitalizeFirstLetter(settingKey)}`,
         initialDisplayState: {
           [settingKey]: !currentValue,

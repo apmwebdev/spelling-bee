@@ -21,7 +21,7 @@ export type SearchPanelSearchData = SearchPanelBaseData & {
   //inherits searchString, location, lettersOffset, and outputType
   uuid: string;
   attemptUuid: string;
-  searchPanelId: number;
+  searchPanelUuid: string;
   createdAt: number;
 };
 
@@ -33,9 +33,7 @@ export type ResultData = {
 };
 
 export type SearchResultProps = {
-  panelId?: number;
+  panelUuid?: number;
   resultData: ResultData;
   statusTracking: StatusTrackingKeys;
 };
-
-export type SpsDeleteArgs = { id?: number; createdAt: number };

@@ -24,7 +24,7 @@ export function SortableHintPanel({ panel }: { panel: HintPanelData }) {
     transition,
     isDragging,
     isSorting,
-  } = useSortable({ id: panel.id });
+  } = useSortable({ id: panel.uuid });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,

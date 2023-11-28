@@ -18,17 +18,17 @@ import {
 } from "@/features/hintPanels";
 
 export function HintContentBlurButton({
-  panelId,
+  panelUuid,
   isBlurred,
 }: {
-  panelId: number;
+  panelUuid: string;
   isBlurred: boolean;
 }) {
   const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(
       setPanelDisplayPropThunk({
-        panelId,
+        panelUuid,
         property: PanelCurrentDisplayStateProperties.isBlurred,
         value: !isBlurred,
       }),

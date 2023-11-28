@@ -15,15 +15,15 @@ import { HintPanelSwitchSetting } from "@/features/hintPanels/components/setting
 import { HintPanelBooleanKeys } from "@/features/hintPanels";
 
 export function HintShowObscurityControl({
-  panelId,
+  panelUuid,
   showObscurity,
 }: {
-  panelId: number;
+  panelUuid: string;
   showObscurity: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.showObscurity}
       currentValue={showObscurity}
     />

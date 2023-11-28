@@ -36,6 +36,7 @@ export const LetterPanelLocationOptions: EnumeratedOptions = {
   end: { title: "End of Word" },
 };
 export type LetterPanelFormData = {
+  uuid: string;
   location: LetterPanelLocationKeys;
   outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */

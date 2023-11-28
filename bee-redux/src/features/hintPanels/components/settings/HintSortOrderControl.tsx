@@ -15,16 +15,16 @@ import { SortOrderKeys } from "@/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintSortOrderControl({
-  panelId,
+  panelUuid,
   sortOrder,
 }: {
-  panelId: number;
+  panelUuid: string;
   sortOrder: SortOrderKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: SortOrderKeys) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "sortOrder",
       typeData: {
         sortOrder: value,

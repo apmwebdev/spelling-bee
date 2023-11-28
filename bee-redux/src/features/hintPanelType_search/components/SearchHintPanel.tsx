@@ -32,7 +32,7 @@ export function SearchHintPanel({
   const dispatch = useAppDispatch();
   const [searchValue, setSearchValue] = useState("");
   const currentAttemptUuid = useSelector(selectCurrentAttemptUuid);
-  const panelSearches = useAppSelector(selectSpsByPanel(searchPanelData.id));
+  const panelSearches = useAppSelector(selectSpsByPanel(searchPanelData.uuid));
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ export function SearchHintPanel({
     dispatch(
       addSearchPanelSearch({
         uuid: crypto.randomUUID(),
-        searchPanelId: searchPanelData.id,
+        searchPanelUuid: searchPanelData.uuid,
         attemptUuid: currentAttemptUuid,
         searchString: searchValue,
         location: searchPanelData.location,

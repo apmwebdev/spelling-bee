@@ -14,6 +14,7 @@ import { PanelTypes } from "@/features/hintPanels";
 import { SortOrderKeys } from "@/types";
 
 export type ObscurityPanelFormData = {
+  uuid: string;
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;

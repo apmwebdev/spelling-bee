@@ -16,17 +16,17 @@ import { selectAnswerLengths } from "@/features/puzzle";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintNumberOfLettersControl({
-  panelId,
+  panelUuid,
   numberOfLetters,
 }: {
-  panelId: number;
+  panelUuid: string;
   numberOfLetters: number;
 }) {
   const answerLengths = useAppSelector(selectAnswerLengths);
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "numberOfLetters",
       typeData: {
         numberOfLetters: Number(e.target.value),

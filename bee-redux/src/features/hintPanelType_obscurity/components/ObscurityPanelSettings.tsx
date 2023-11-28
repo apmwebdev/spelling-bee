@@ -19,33 +19,39 @@ import { HintClickToDefineControl } from "@/features/hintPanelType_obscurity/com
 import { ObscurityPanelData } from "..";
 
 export function ObscurityPanelSettings({
-  panelId,
+  panelUuid,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   typeData: ObscurityPanelData;
 }) {
   return (
     <div className="ObscurityPanelSettings PanelSettings">
-      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
+      <HintHideKnownControl
+        panelUuid={panelUuid}
+        hideKnown={typeData.hideKnown}
+      />
       <HintRevealedLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealedLetters={typeData.revealedLetters}
       />
       <HintSeparateKnownControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         separateKnown={typeData.separateKnown}
         disabled={typeData.hideKnown}
       />
       <HintClickToDefineControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         clickToDefine={typeData.clickToDefine}
       />
       <HintRevealLengthControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealLength={typeData.revealLength}
       />
-      <HintSortOrderControl panelId={panelId} sortOrder={typeData.sortOrder} />
+      <HintSortOrderControl
+        panelUuid={panelUuid}
+        sortOrder={typeData.sortOrder}
+      />
     </div>
   );
 }

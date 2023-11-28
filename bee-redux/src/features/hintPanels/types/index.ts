@@ -151,6 +151,7 @@ export enum StatusTrackingKeys {
  *   collapsed/expanded state
  */
 export type PanelDisplayState = {
+  uuid: string;
   isExpanded: boolean;
   isBlurred: boolean;
   isSticky: boolean;
@@ -195,7 +196,7 @@ export enum PanelCurrentDisplayStateProperties {
 }
 
 export type HintPanelData = {
-  id: number;
+  uuid: string;
   name: string;
   displayIndex: number;
   initialDisplayState: PanelDisplayState;
@@ -209,6 +210,7 @@ export type HintPanelData = {
 };
 
 export type HintPanelCreateForm = {
+  uuid: string;
   userHintProfileId: number;
   name: string;
   displayIndex: number;
@@ -240,7 +242,7 @@ export const HintPanelBooleanSettings: EnumeratedOptions = {
 };
 
 export type HintPanelUpdateForm = {
-  id: number;
+  uuid: string;
   /**
    * For setting a standardized key that can be accessed if you don't know whether
    * the user has already queued up a mutation for a particular panel field. That
@@ -270,7 +272,7 @@ export type HintPanelUpdateForm = {
 
 export type RailsHintPanelUpdateForm = {
   hint_panel: {
-    id: number;
+    uuid: string;
     name?: string;
     display_index?: number;
     initial_display_state_attributes?: RailsPanelDisplayFormData;
@@ -293,7 +295,7 @@ export type RailsHintPanelUpdateForm = {
 };
 
 export type MoveHintPanelData = {
-  id: number;
+  uuid: string;
   oldIndex: number;
   newIndex: number;
 };

@@ -15,17 +15,17 @@ import { HintPanelSwitchSetting } from "@/features/hintPanels/components/setting
 import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
 
 export function HintSeparateKnownControl({
-  panelId,
+  panelUuid,
   separateKnown,
   disabled,
 }: {
-  panelId: number;
+  panelUuid: string;
   separateKnown: boolean;
   disabled: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.separateKnown}
       currentValue={separateKnown}
       disabled={disabled}

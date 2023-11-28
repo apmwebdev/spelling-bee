@@ -19,33 +19,39 @@ import { HintShowObscurityControl } from "@/features/hintPanelType_definition/co
 import { DefinitionPanelData } from "../";
 
 export function DefinitionPanelSettings({
-  panelId,
+  panelUuid,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   typeData: DefinitionPanelData;
 }) {
   return (
     <div className="DefinitionPanelSettings PanelSettings">
-      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
+      <HintHideKnownControl
+        panelUuid={panelUuid}
+        hideKnown={typeData.hideKnown}
+      />
       <HintRevealedLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealedLetters={typeData.revealedLetters}
       />
       <HintSeparateKnownControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         separateKnown={typeData.separateKnown}
         disabled={typeData.hideKnown}
       />
       <HintShowObscurityControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         showObscurity={typeData.showObscurity}
       />
       <HintRevealLengthControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealLength={typeData.revealLength}
       />
-      <HintSortOrderControl panelId={panelId} sortOrder={typeData.sortOrder} />
+      <HintSortOrderControl
+        panelUuid={panelUuid}
+        sortOrder={typeData.sortOrder}
+      />
     </div>
   );
 }

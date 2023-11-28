@@ -17,23 +17,23 @@ import { PanelCurrentDisplayState, PanelTypes } from "@/features/hintPanels";
 import { SearchPanelData, SearchPanelLocationKeys } from "..";
 
 export function SearchPanelQuickActions({
-  panelId,
+  panelUuid,
   displayState,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   displayState: PanelCurrentDisplayState;
   typeData: SearchPanelData;
 }) {
   return (
-    <QuickActions panelId={panelId} displayState={displayState}>
+    <QuickActions panelUuid={panelUuid} displayState={displayState}>
       <HintLocationControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         location={typeData.location}
         panelType={PanelTypes.Search}
       />
       <HintLettersOffsetControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         lettersOffset={typeData.lettersOffset}
         disabled={typeData.location === SearchPanelLocationKeys.Anywhere}
         disabledTooltip="Can't use Offset with 'Location' set to 'Anywhere'"

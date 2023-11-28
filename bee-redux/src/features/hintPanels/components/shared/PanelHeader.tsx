@@ -19,7 +19,7 @@ import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 type PanelHeaderProps = {
-  panelId: number;
+  panelUuid: string;
   isPanelExpanded: boolean;
   children: ReactNode;
   attributes?: DraggableAttributes;
@@ -27,7 +27,7 @@ type PanelHeaderProps = {
 };
 
 export function PanelHeader({
-  panelId,
+  panelUuid,
   isPanelExpanded,
   children,
   attributes,
@@ -47,12 +47,12 @@ export function PanelHeader({
     <header className={cssClasses()}>
       <div className="PanelHeaderButtonGroup">
         <DragHandle attributes={attributes} listeners={listeners} />
-        <SettingsToggle panelId={panelId} />
+        <SettingsToggle panelUuid={panelUuid} />
       </div>
       {children}
       <div className="PanelHeaderButtonGroup">
-        <DuplicateButton panelId={panelId} />
-        <RemoveButton panelId={panelId} />
+        <DuplicateButton panelUuid={panelUuid} />
+        <RemoveButton panelUuid={panelUuid} />
       </div>
     </header>
   );

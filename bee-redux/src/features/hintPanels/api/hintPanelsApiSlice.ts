@@ -29,7 +29,7 @@ import { devLog } from "@/util";
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   const railsData: RailsHintPanelUpdateForm = {
     hint_panel: {
-      id: formData.id,
+      uuid: formData.uuid,
       name: formData.name,
       display_index: formData.displayIndex,
       status_tracking: formData.statusTracking,
@@ -67,7 +67,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
             (draftState) => {
               if (!draftState) return;
               const panel = draftState.panels.find(
-                (hintPanel) => hintPanel.id === formData.id,
+                (hintPanel) => hintPanel.uuid === formData.uuid,
               );
               if (!panel) return;
               if (formData.name) panel.name = formData.name;
@@ -97,7 +97,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
         const query = async () => {
           try {
             const response = await baseQuery({
-              url: `/hint_panels/${formData.id}`,
+              url: `/hint_panels/${formData.uuid}`,
               method: "PATCH",
               body: railsifyUpdatePanelData(formData),
             });
@@ -109,7 +109,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
         //Debounce query if applicable. Otherwise, just run it.
         if (formData.debounceField) {
           addDebouncer({
-            key: `${formData.debounceField}Panel${formData.id}`,
+            key: `${formData.debounceField}Panel${formData.uuid}`,
             delay: 1000,
             callback: query,
           });
@@ -151,7 +151,9 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
                 shouldPersist = false;
                 return;
               }
-              if (draftState.panels.at(formData.oldIndex)?.id !== formData.id) {
+              if (
+                draftState.panels.at(formData.oldIndex)?.uuid !== formData.uuid
+              ) {
                 shouldPersist = false;
                 return;
               }
@@ -200,5 +202,5 @@ export const selectPanels = createSelector(
 
 export const selectPanelIds = createSelector([selectPanels], (panels) => {
   if (!panels) return [];
-  return panels.map((panel) => panel.id);
+  return panels.map((panel) => panel.uuid);
 });

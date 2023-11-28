@@ -24,12 +24,12 @@ import {
 import { PanelTypes, useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintLocationControl({
-  panelId,
+  panelUuid,
   location,
   panelType,
   style,
 }: {
-  panelId: number;
+  panelUuid: string;
   location: LetterPanelLocationKeys | SearchPanelLocationKeys;
   panelType: PanelTypes;
   style?: CSSProperties;
@@ -40,7 +40,7 @@ export function HintLocationControl({
     newLocation: LetterPanelLocationKeys | SearchPanelLocationKeys,
   ) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "location",
       typeData: {
         location: newLocation,

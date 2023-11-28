@@ -19,16 +19,16 @@ import {
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function PanelStatusTrackingControl({
-  panelId,
+  panelUuid,
   statusTracking,
 }: {
-  panelId: number;
+  panelUuid: string;
   statusTracking: StatusTrackingKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: StatusTrackingKeys) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "statusTracking",
       statusTracking: value,
     });

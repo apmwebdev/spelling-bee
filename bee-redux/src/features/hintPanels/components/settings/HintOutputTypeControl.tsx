@@ -19,16 +19,16 @@ import {
 } from "@/features/hintPanels";
 
 export function HintOutputTypeControl({
-  panelId,
+  panelUuid,
   outputType,
 }: {
-  panelId: number;
+  panelUuid: string;
   outputType: SubstringHintOutputKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: SubstringHintOutputKeys) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "outputType",
       typeData: {
         outputType: value,

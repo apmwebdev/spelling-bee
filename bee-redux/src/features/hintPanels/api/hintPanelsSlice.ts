@@ -28,7 +28,7 @@ import {
 } from "@/features/hintPanels";
 
 type StateData = {
-  [panelId: number]: PanelCurrentDisplayState;
+  [panelUuid: string]: PanelCurrentDisplayState;
 };
 
 export const initialState: StateShape<StateData> = {
@@ -38,29 +38,29 @@ export const initialState: StateShape<StateData> = {
 };
 
 export type SetPanelDisplayStatePayload = {
-  panelId: number;
+  panelUuid: string;
   data: PanelCurrentDisplayState;
 };
 
 export type SetPanelDisplayStatePropPayload = {
-  panelId: number;
+  panelUuid: string;
   property: PanelCurrentDisplayStateProperties;
   value: boolean;
 };
 
 export const setPanelDisplayPropThunk =
-  ({ panelId, property, value }: SetPanelDisplayStatePropPayload) =>
+  ({ panelUuid, property, value }: SetPanelDisplayStatePropPayload) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const state = getState();
-    const panelData = state.hintPanels.data[panelId];
+    const panelData = state.hintPanels.data[panelUuid];
     if (panelData) {
-      dispatch(setPanelDisplayStateProp({ panelId, property, value }));
+      dispatch(setPanelDisplayStateProp({ panelUuid, property, value }));
       const currentProfile =
         hintProfilesApiSlice.endpoints.getCurrentHintProfile.select()(
           state,
         ).data;
       const panel = currentProfile?.panels.find(
-        (panel) => panel.id === panelId,
+        (panel) => panel.uuid === panelUuid,
       );
       if (!state.auth.user) {
         devLog("No auth");
@@ -79,7 +79,7 @@ export const setPanelDisplayPropThunk =
       ) {
         dispatch(
           hintPanelsApiSlice.endpoints.updateHintPanel.initiate({
-            id: panelId,
+            uuid: panelUuid,
             debounceField: `initDisplay${capitalizeFirstLetter(property)}`,
             initialDisplayState: {
               [property]: value,
@@ -106,16 +106,16 @@ export const hintPanelsSlice = createSlice({
       { payload }: PayloadAction<SetPanelDisplayStatePayload>,
     ) => {
       //Only set data if panel data already exists
-      if (state.data[payload.panelId]) {
-        state.data[payload.panelId] = payload.data;
+      if (state.data[payload.panelUuid]) {
+        state.data[payload.panelUuid] = payload.data;
       }
     },
     setPanelDisplayStateProp: (
       state,
       { payload }: PayloadAction<SetPanelDisplayStatePropPayload>,
     ) => {
-      if (state.data[payload.panelId]) {
-        state.data[payload.panelId][payload.property] = payload.value;
+      if (state.data[payload.panelUuid]) {
+        state.data[payload.panelUuid][payload.property] = payload.value;
       }
     },
   },
@@ -135,9 +135,9 @@ export const { setDisplayStateToPayload, setPanelDisplayStateProp } =
 
 export const getStateFromProfile = (profile: CompleteHintProfile) => {
   const stateObj: StateData = {};
-  for (const panelId in profile.panels) {
-    const panel = profile.panels[panelId];
-    stateObj[panel.id] = {
+  for (const panelUuid in profile.panels) {
+    const panel = profile.panels[panelUuid];
+    stateObj[panel.uuid] = {
       isExpanded: panel.initialDisplayState.isExpanded,
       isBlurred: panel.initialDisplayState.isBlurred,
       isSettingsExpanded: panel.initialDisplayState.isSettingsExpanded,
@@ -148,8 +148,8 @@ export const getStateFromProfile = (profile: CompleteHintProfile) => {
 export const selectCurrentPanelData = (state: RootState) => state.hintPanels;
 // export const selectPanelsDisplayState = (state: RootState) =>
 //   state.hintProfiles.data;
-export const selectPanelDisplayState = (id: number) => (state: RootState) =>
-  state.hintPanels.data[id];
+export const selectPanelDisplayState = (uuid: string) => (state: RootState) =>
+  state.hintPanels.data[uuid];
 
 startAppListening({
   matcher: puzzleApiSlice.endpoints.getPuzzle.matchFulfilled,

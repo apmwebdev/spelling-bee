@@ -45,7 +45,7 @@ export function HintPanels() {
       undefined,
     );
   const panels = useAppSelector(selectPanels);
-  const panelIds = useAppSelector(selectPanelIds);
+  const panelUuids = useAppSelector(selectPanelIds);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -57,7 +57,7 @@ export function HintPanels() {
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e;
-    const maybeActivePanel = panels.find((panel) => panel.id === active.id);
+    const maybeActivePanel = panels.find((panel) => panel.uuid === active.id);
     if (maybeActivePanel) {
       setActivePanel(maybeActivePanel);
     }
@@ -67,9 +67,9 @@ export function HintPanels() {
     const { active, over } = e;
     if (over && active.id !== over.id) {
       changeHintPanelOrder({
-        id: Number(active.id),
-        oldIndex: panelIds.indexOf(Number(active.id)),
-        newIndex: panelIds.indexOf(Number(over.id)),
+        uuid: active.id + "",
+        oldIndex: panelUuids.indexOf(active.id + ""),
+        newIndex: panelUuids.indexOf(over.id + ""),
       });
     }
     setActivePanel(null);
@@ -85,11 +85,11 @@ export function HintPanels() {
         modifiers={[restrictToVerticalAxis]}
       >
         <SortableContext
-          items={panelIds}
+          items={panelUuids}
           strategy={verticalListSortingStrategy}
         >
           {currentProfile.data?.panels.map((panel) => {
-            return <SortableHintPanel key={panel.id} panel={panel} />;
+            return <SortableHintPanel key={panel.uuid} panel={panel} />;
           })}
         </SortableContext>
         <DragOverlay>

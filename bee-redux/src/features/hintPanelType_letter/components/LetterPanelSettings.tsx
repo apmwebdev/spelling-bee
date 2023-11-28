@@ -19,32 +19,32 @@ import { LetterPanelData } from "@/features/hintPanelType_letter";
 import { PanelTypes } from "@/features/hintPanels";
 
 export function LetterPanelSettings({
-  panelId,
+  panelUuid,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   typeData: LetterPanelData;
 }) {
   const { numberOfLetters, location, lettersOffset, outputType, hideKnown } =
     typeData;
   return (
     <div className="LetterPanelSettings PanelSettings">
-      <HintOutputTypeControl panelId={panelId} outputType={outputType} />
+      <HintOutputTypeControl panelUuid={panelUuid} outputType={outputType} />
       <HintNumberOfLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         numberOfLetters={typeData.numberOfLetters}
       />
       <HintLocationControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         location={location}
         panelType={PanelTypes.Letter}
       />
       <HintLettersOffsetControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         lettersOffset={lettersOffset}
         numberOfLetters={numberOfLetters}
       />
-      <HintHideKnownControl panelId={panelId} hideKnown={hideKnown} />
+      <HintHideKnownControl panelUuid={panelUuid} hideKnown={hideKnown} />
     </div>
   );
 }

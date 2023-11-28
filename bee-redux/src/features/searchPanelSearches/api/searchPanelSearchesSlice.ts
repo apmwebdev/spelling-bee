@@ -131,9 +131,9 @@ startAppListening({
 
 export const selectSearchPanelSearches = (state: RootState) =>
   state.searchPanelSearches.data;
-export const selectSpsByPanel = (panelId: number) =>
+export const selectSpsByPanel = (panelUuid: string) =>
   createSelector([selectSearchPanelSearches], (searches) =>
-    searches.filter((search) => search.searchPanelId === panelId),
+    searches.filter((search) => search.searchPanelUuid === panelUuid),
   );
 
 export default searchPanelSearchesSlice.reducer;

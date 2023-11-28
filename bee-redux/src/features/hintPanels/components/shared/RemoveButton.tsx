@@ -12,7 +12,7 @@
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
-export function RemoveButton({ panelId }: { panelId: number }) {
+export function RemoveButton({ panelUuid }: { panelUuid: string }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Delete}

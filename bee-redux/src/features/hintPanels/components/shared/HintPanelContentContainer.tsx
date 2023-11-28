@@ -40,7 +40,7 @@ import {
 
 export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
   const answers = useAppSelector(selectAnswerWords);
-  const displayState = useAppSelector(selectPanelDisplayState(panel.id));
+  const displayState = useAppSelector(selectPanelDisplayState(panel.uuid));
 
   if (answers.length === 0) {
     return;
@@ -56,7 +56,7 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       ),
       quickActions: (
         <LetterPanelQuickActions
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           displayState={displayState}
           typeData={panel.typeData as LetterPanelData}
         />
@@ -71,7 +71,7 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       ),
       quickActions: (
         <SearchPanelQuickActions
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           displayState={displayState}
           typeData={panel.typeData as SearchPanelData}
         />
@@ -85,7 +85,7 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       ),
       quickActions: (
         <WordInfoQuickActions
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           displayState={displayState}
           typeData={panel.typeData as ObscurityPanelData}
         />
@@ -99,7 +99,7 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
       ),
       quickActions: (
         <WordInfoQuickActions
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           displayState={displayState}
           typeData={panel.typeData as DefinitionPanelData}
         />

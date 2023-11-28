@@ -32,22 +32,28 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   const typeSpecificSettings = () => {
     if (isLetterPanelData(panel.typeData)) {
       return (
-        <LetterPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <LetterPanelSettings panelUuid={panel.uuid} typeData={panel.typeData} />
       );
     }
     if (isSearchPanelData(panel.typeData)) {
       return (
-        <SearchPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <SearchPanelSettings panelUuid={panel.uuid} typeData={panel.typeData} />
       );
     }
     if (isObscurityPanelData(panel.typeData)) {
       return (
-        <ObscurityPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <ObscurityPanelSettings
+          panelUuid={panel.uuid}
+          typeData={panel.typeData}
+        />
       );
     }
     if (isDefinitionPanelData(panel.typeData)) {
       return (
-        <DefinitionPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <DefinitionPanelSettings
+          panelUuid={panel.uuid}
+          typeData={panel.typeData}
+        />
       );
     }
   };
@@ -58,16 +64,16 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
       {typeSpecificSettings()}
       <div className="GeneralPanelSettings">
         <PanelStatusTrackingControl
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           statusTracking={panel.statusTracking}
         />
         <PanelNameInputForm
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           currentName={panel.name}
           inputId={`PanelNameInput${uniqid()}`}
         />
         <PanelInitialDisplayControls
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           initialDisplayState={panel.initialDisplayState}
         />
       </div>

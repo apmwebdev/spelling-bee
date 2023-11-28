@@ -15,15 +15,15 @@ import { HintPanelSwitchSetting } from "@/features/hintPanels/components/setting
 import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
 
 export function HintRevealLengthControl({
-  panelId,
+  panelUuid,
   revealLength,
 }: {
-  panelId: number;
+  panelUuid: string;
   revealLength: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.revealLength}
       currentValue={revealLength}
     />

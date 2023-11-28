@@ -15,15 +15,15 @@ import { HintPanelSwitchSetting } from "@/features/hintPanels/components/setting
 import { HintPanelBooleanKeys } from "@/features/hintPanels";
 
 export function HintClickToDefineControl({
-  panelId,
+  panelUuid,
   clickToDefine,
 }: {
-  panelId: number;
+  panelUuid: string;
   clickToDefine: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.clickToDefine}
       currentValue={clickToDefine}
     />

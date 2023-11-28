@@ -19,12 +19,12 @@ import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
 
 export function HintPanelSwitchSetting({
-  panelId,
+  panelUuid,
   settingKey,
   currentValue,
   disabled,
 }: {
-  panelId: number;
+  panelUuid: string;
   settingKey: HintPanelBooleanKeys;
   currentValue: boolean;
   disabled?: boolean;
@@ -32,7 +32,7 @@ export function HintPanelSwitchSetting({
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = () => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: settingKey,
       typeData: {
         [settingKey]: !currentValue,

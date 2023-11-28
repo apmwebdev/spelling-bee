@@ -38,7 +38,7 @@ export type SearchPanelData = SearchPanelBaseData & {
   panelType: PanelTypes;
   // ID is necessary for search panels so that searches know which panel they
   // belong to
-  id: number;
+  uuid: string;
 };
 
 export function isSearchPanelData(a: any): a is SearchPanelData {

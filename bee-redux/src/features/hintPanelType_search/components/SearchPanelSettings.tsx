@@ -17,24 +17,24 @@ import { SearchPanelData, SearchPanelLocationKeys } from "..";
 import { PanelTypes } from "@/features/hintPanels";
 
 export function SearchPanelSettings({
-  panelId,
+  panelUuid,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   typeData: SearchPanelData;
 }) {
   const { outputType, location, lettersOffset } = typeData;
   return (
     <div className="SearchPanelSettings PanelSettings">
-      <HintOutputTypeControl panelId={panelId} outputType={outputType} />
+      <HintOutputTypeControl panelUuid={panelUuid} outputType={outputType} />
       <HintLocationControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         location={location}
         panelType={PanelTypes.Search}
         style={{ gridRow: "2/3", gridColumn: "1/2" }}
       />
       <HintLettersOffsetControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         lettersOffset={lettersOffset}
         disabled={location === SearchPanelLocationKeys.Anywhere}
         disabledTooltip="Can't use Offset with 'Location' set to 'Anywhere'"

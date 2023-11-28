@@ -18,19 +18,22 @@ import { ObscurityPanelData } from "@/features/hintPanelType_obscurity";
 import { DefinitionPanelData } from "@/features/hintPanelType_definition";
 
 export function WordInfoQuickActions({
-  panelId,
+  panelUuid,
   displayState,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   displayState: PanelCurrentDisplayState;
   typeData: ObscurityPanelData | DefinitionPanelData;
 }) {
   return (
-    <QuickActions panelId={panelId} displayState={displayState}>
-      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
+    <QuickActions panelUuid={panelUuid} displayState={displayState}>
+      <HintHideKnownControl
+        panelUuid={panelUuid}
+        hideKnown={typeData.hideKnown}
+      />
       <HintRevealedLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealedLetters={typeData.revealedLetters}
       />
     </QuickActions>

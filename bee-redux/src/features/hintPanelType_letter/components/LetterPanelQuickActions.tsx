@@ -17,19 +17,22 @@ import { PanelCurrentDisplayState } from "@/features/hintPanels";
 import { LetterPanelData } from "@/features/hintPanelType_letter";
 
 export function LetterPanelQuickActions({
-  panelId,
+  panelUuid,
   displayState,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: string;
   displayState: PanelCurrentDisplayState;
   typeData: LetterPanelData;
 }) {
   return (
-    <QuickActions panelId={panelId} displayState={displayState}>
-      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
+    <QuickActions panelUuid={panelUuid} displayState={displayState}>
+      <HintHideKnownControl
+        panelUuid={panelUuid}
+        hideKnown={typeData.hideKnown}
+      />
       <HintNumberOfLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         numberOfLetters={typeData.numberOfLetters}
       />
     </QuickActions>
