@@ -10,6 +10,7 @@
 
 class SearchPanel < ApplicationRecord
   has_one :hint_panel, as: :panel_subtype
+  has_one :hint_profile, through: :hint_panel
   has_many :search_panel_searches, dependent: :destroy
 
   def to_front_end

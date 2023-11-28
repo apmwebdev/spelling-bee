@@ -11,7 +11,7 @@
 */
 
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Statuses } from "@/types";
+import { createInitialState, StateShape, Statuses } from "@/types";
 import { AttemptFormat, BLANK_ATTEMPT } from "@/features/userPuzzleAttempts";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { RootState } from "@/app/store";
@@ -22,18 +22,11 @@ type UserPuzzleAttemptsStateData = {
   attempts: AttemptFormat[];
 };
 
-type UserPuzzleAttemptsState = {
-  data: UserPuzzleAttemptsStateData;
-  status: Statuses;
-};
-
-const initialState: UserPuzzleAttemptsState = {
-  data: {
+const initialState: StateShape<UserPuzzleAttemptsStateData> =
+  createInitialState({
     currentAttempt: BLANK_ATTEMPT,
     attempts: [],
-  },
-  status: Statuses.Initial,
-};
+  });
 
 type CurrentAttemptsFulfilledResponse = PayloadAction<
   AttemptFormat[],
@@ -67,7 +60,7 @@ export const userPuzzleAttemptsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher<CurrentAttemptsFulfilledResponse>(
-      userPuzzleAttemptsApiSlice.endpoints.getCurrentAttempts.matchFulfilled,
+      userPuzzleAttemptsApiSlice.endpoints.getPuzzleAttempts.matchFulfilled,
       (state, { payload }) => {
         state.data.attempts = payload;
         state.data.currentAttempt = payload.slice(-1)[0];

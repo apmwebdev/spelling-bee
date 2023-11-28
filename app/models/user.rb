@@ -43,6 +43,8 @@ class User < ApplicationRecord
   has_many :guesses, through: :user_puzzle_attempts
   has_many :user_hint_profiles
   has_many :hint_panels, through: :user_hint_profiles
+  has_many :panel_subtypes, through: :hint_panels
+  has_many :search_panels, as: :panel_subtype
   has_many :search_panel_searches, through: :user_puzzle_attempts
 
   # Validations

@@ -10,15 +10,21 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import {
   SearchPanelSearchData,
   searchPanelSearchesApiSlice,
-  SpsDeleteArgs,
 } from "@/features/searchPanelSearches";
 import { createInitialState, StateShape, Statuses } from "@/types";
 import { RootState } from "@/app/store";
 import { startAppListening } from "@/app/listenerMiddleware";
+import { deleteIdbSearchPanelSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
+import { devLog } from "@/util";
 
 const initialState: StateShape<SearchPanelSearchData[]> = createInitialState(
   [],
@@ -28,22 +34,25 @@ export const searchPanelSearchesSlice = createSlice({
   name: "searchPanelSearches",
   initialState,
   reducers: {
-    addSearch: (state, { payload }: PayloadAction<SearchPanelSearchData>) => {
+    addSearchPanelSearch: (
+      state,
+      { payload }: PayloadAction<SearchPanelSearchData>,
+    ) => {
       state.data.push(payload);
     },
-    addIdToSearch: (
+    updateSearchPanelSearchUuid: (
       state,
-      { payload }: PayloadAction<{ createdAt: number; id: number }>,
+      { payload }: PayloadAction<{ originalUuid: string; newUuid: string }>,
     ) => {
       const searchToUpdate = state.data.find(
-        (search) => search.createdAt === payload.createdAt,
+        (search) => search.uuid === payload.originalUuid,
       );
       if (!searchToUpdate) return;
-      searchToUpdate.id = payload.id;
+      searchToUpdate.uuid = payload.newUuid;
     },
-    deleteSearch: (state, { payload }: PayloadAction<SpsDeleteArgs>) => {
+    deleteSearchPanelSearch: (state, { payload }: PayloadAction<string>) => {
       const indexToRemove = state.data.findIndex(
-        (search) => search.createdAt === payload.createdAt,
+        (search) => search.uuid === payload,
       );
       if (indexToRemove > -1) {
         state.data.splice(indexToRemove, 1);
@@ -61,48 +70,61 @@ export const searchPanelSearchesSlice = createSlice({
   },
 });
 
-export const { addSearch, addIdToSearch, deleteSearch } =
-  searchPanelSearchesSlice.actions;
+export const {
+  addSearchPanelSearch,
+  updateSearchPanelSearchUuid,
+  deleteSearchPanelSearch,
+} = searchPanelSearchesSlice.actions;
 
 //API integrations
 
-//Delete search from back end if the search has an ID and the user is
-// authenticated
-startAppListening({
-  predicate: (action, _oldState, newState) =>
-    action.type === "searchPanelSearches/deleteSearch" &&
-    action.payload.id &&
-    newState.auth.user,
-  effect: (action, api) => {
-    api.dispatch(
-      searchPanelSearchesApiSlice.endpoints.deleteSearch.initiate(
-        action.payload.id,
-      ),
+export const deleteSearchPanelSearchThunk = createAsyncThunk(
+  "searchPanelSearches/deleteSearchPanelSearchThunk",
+  async (uuid: string, api) => {
+    //Delete from state
+    api.dispatch(deleteSearchPanelSearch(uuid));
+    //Delete from IndexedDB
+    const idbResult = deleteIdbSearchPanelSearch(uuid).catch((err) =>
+      devLog("Can't delete SPS from IndexedDB due to invalid UUID:", uuid, err),
     );
+    //Delete on server if user is logged in
+    let rtkqResult;
+    const state = api.getState() as RootState;
+    if (state.auth.user) {
+      rtkqResult = api
+        .dispatch(
+          searchPanelSearchesApiSlice.endpoints.deleteSearch.initiate(uuid),
+        )
+        .unwrap()
+        .catch((err) => devLog("Can't delete SPS from server:", err));
+    }
+    Promise.all([idbResult, rtkqResult]).then(() => devLog("SPS deleted"));
   },
-});
+);
 
 //Search panel searches are the only thing that guest users can create, so they
 // are added to state without an ID. For authenticated users, the ID then needs
 // to be added to the search after the response from the back end comes back so
 // that they can later delete the search if they want to.
 startAppListening({
-  actionCreator: addSearch,
+  actionCreator: addSearchPanelSearch,
   effect: async (action, api) => {
-    const { createdAt } = action.payload;
+    const { uuid } = action.payload;
     const response = await api.dispatch(
       searchPanelSearchesApiSlice.endpoints.addSearch.initiate(action.payload),
     );
     //TS is worried that the data property might not exist on the response,
     //but we're checking if it exists right below here, so it's fine.
     const trustMeBro = response as { data: SearchPanelSearchData };
-    if (trustMeBro.data?.id) {
-      api.dispatch(
-        addIdToSearch({
-          createdAt,
-          id: trustMeBro.data.id,
-        }),
-      );
+    if (trustMeBro.data?.uuid) {
+      if (uuid !== trustMeBro.data.uuid) {
+        api.dispatch(
+          updateSearchPanelSearchUuid({
+            originalUuid: uuid,
+            newUuid: trustMeBro.data.uuid,
+          }),
+        );
+      }
     }
   },
 });

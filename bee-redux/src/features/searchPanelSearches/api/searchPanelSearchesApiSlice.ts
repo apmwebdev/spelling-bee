@@ -40,9 +40,9 @@ export const searchPanelSearchesApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    deleteSearch: builder.mutation<boolean, number>({
-      query: (id) => ({
-        url: `/search_panel_searches/${id}`,
+    deleteSearch: builder.mutation<boolean, string>({
+      query: (uuid) => ({
+        url: `/search_panel_searches/${uuid}`,
         method: "DELETE",
       }),
     }),

@@ -15,7 +15,10 @@ import { Results } from "@/features/hintPanelType_search/components/Results";
 import { useSelector } from "react-redux";
 import { StatusTrackingKeys } from "@/features/hintPanels/";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { addSearch, selectSpsByPanel } from "@/features/searchPanelSearches";
+import {
+  addSearchPanelSearch,
+  selectSpsByPanel,
+} from "@/features/searchPanelSearches";
 import { SearchPanelData } from "..";
 import { selectCurrentAttemptUuid } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
@@ -35,7 +38,8 @@ export function SearchHintPanel({
     e.preventDefault();
     //Add debounce here
     dispatch(
-      addSearch({
+      addSearchPanelSearch({
+        uuid: crypto.randomUUID(),
         searchPanelId: searchPanelData.id,
         attemptUuid: currentAttemptUuid,
         searchString: searchValue,

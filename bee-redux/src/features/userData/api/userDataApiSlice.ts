@@ -111,7 +111,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
     }),
     /**
      * For after the puzzle loads, as it requires the puzzle ID. Combines
-     * - getCurrentAttempts
+     * - getPuzzleAttempts
      * - getSearches
      * - getDefinitions (not implemented yet)
      */
@@ -127,7 +127,7 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
           const { data } = cacheEntry;
           api.dispatch(
             userPuzzleAttemptsApiSlice.util.upsertQueryData(
-              "getCurrentAttempts",
+              "getPuzzleAttempts",
               undefined,
               data.attempts,
             ),

@@ -498,6 +498,7 @@ CREATE TABLE public.search_panel_searches (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     search_string character varying,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
 );
 
@@ -1102,6 +1103,13 @@ CREATE INDEX index_search_panel_searches_on_user_puzzle_attempt_id ON public.sea
 
 
 --
+-- Name: index_search_panel_searches_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_search_panel_searches_on_uuid ON public.search_panel_searches USING btree (uuid);
+
+
+--
 -- Name: index_status_tracking_options_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1383,6 +1391,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231011153938'),
 ('20231119195913'),
 ('20231120084355'),
-('20231120090819');
+('20231120090819'),
+('20231127233418');
 
 

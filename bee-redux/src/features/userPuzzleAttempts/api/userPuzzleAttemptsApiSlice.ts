@@ -17,7 +17,7 @@ import { devLog } from "@/util";
 
 export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCurrentAttempts: builder.query<AttemptFormat[], void>({
+    getPuzzleAttempts: builder.query<AttemptFormat[], void>({
       queryFn: async (_args, api, _extraOptions, baseQuery) => {
         const state = api.getState() as RootState;
         const puzzleId = state.puzzle.data.id;
@@ -48,7 +48,7 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useLazyGetCurrentAttemptsQuery,
+  useLazyGetPuzzleAttemptsQuery,
   useAddAttemptMutation,
   useDeleteAttemptMutation,
 } = userPuzzleAttemptsApiSlice;

@@ -56,9 +56,9 @@ Rails.application.routes.draw do
         put "move", on: :collection
       end
       # Search panel searches
-      get "search_panel_search/:attempt_id",
+      get "search_panel_search/:attempt_uuid",
         to: "search_panel_searches#for_attempt_and_profile"
-      resources :search_panel_searches, only: [:create, :update, :destroy]
+      resources :search_panel_searches, param: :uuid, only: [:create, :update, :destroy]
       # Root
       root "puzzles#latest"
     end
