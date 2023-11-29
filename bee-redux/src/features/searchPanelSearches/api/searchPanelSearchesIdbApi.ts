@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { idb } from "@/lib/idb";
+import { idb, idbInsertWithRetry } from "@/lib/idb";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { Uuid } from "@/types";
 
@@ -21,9 +21,8 @@ export const getIdbAttemptSearches = (attemptUuid: Uuid) => {
     .toArray();
 };
 
-export const addIdbSearchPanelSearch = (search: SearchPanelSearchData) => {
-  return idb.searchPanelSearches.add(search);
-};
+export const addIdbSearchPanelSearch =
+  idbInsertWithRetry<SearchPanelSearchData>(idb.searchPanelSearches.add);
 
 export const deleteIdbSearchPanelSearch = (uuid: Uuid) => {
   return idb.searchPanelSearches.delete(uuid);
