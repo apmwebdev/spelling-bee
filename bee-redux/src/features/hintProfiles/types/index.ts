@@ -15,7 +15,7 @@ import {
   PanelDisplayState,
   StatusTrackingKeys,
 } from "@/features/hintPanels";
-import { BLANK_UUID } from "@/features/api";
+import { BLANK_UUID } from "@/types";
 
 export enum HintProfileTypes {
   Default = "DefaultHintProfile",

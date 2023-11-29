@@ -11,11 +11,17 @@
 */
 
 import { idb } from "@/lib/idb";
+import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 
 export const getIdbAttemptSearches = (attemptUuid: string) => {
   return idb.searchPanelSearches
     .where("attemptUuid")
-    .equalsIgnoreCase(attemptUuid);
+    .equals(attemptUuid)
+    .toArray();
+};
+
+export const addIdbSearchPanelSearch = (search: SearchPanelSearchData) => {
+  return idb.searchPanelSearches.add(search);
 };
 
 export const deleteIdbSearchPanelSearch = (uuid: string) => {

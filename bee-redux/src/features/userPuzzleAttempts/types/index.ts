@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { BLANK_UUID } from "@/features/api";
+import { BLANK_UUID } from "@/types";
 
 export type AttemptFormat = {
   uuid: string;

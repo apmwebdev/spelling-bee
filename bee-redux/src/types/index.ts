@@ -151,3 +151,30 @@ export const EMAIL_REGEX =
  */
 export const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\d\sa-zA-Z]).{10,128}$/;
+
+/** This type doesn't do anything on its own, but it uses the `isUuid` type
+ * guard function, which does test for the actual UUID format.
+ * @see isUuid
+ */
+export type Uuid = string;
+
+/** The regex to determine whether a string is a valid UUID.
+ * @see isUuid
+ */
+
+export const UUID_REGEX =
+  /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
+
+/** Determines if an input string is a valid UUID. To return true, the string
+ * must match the UUID_REGEX, i.e. hex characters [0-9a-fA-F] and dashes in the
+ * pattern 8-4-4-4-12. The numbers represent the number of hex characters. The
+ * string should be 36 characters in total with 4 dashes.
+ * @param {string} to_test - The string to test against the regex
+ */
+export const isUuid = (to_test: string): to_test is Uuid =>
+  UUID_REGEX.test(to_test);
+
+/** For use in initial state values and any other scenario where a blank, empty,
+ *  or placeholder UUID is needed.
+ */
+export const BLANK_UUID = "00000000-0000-0000-0000-000000000000";
