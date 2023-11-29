@@ -21,8 +21,6 @@ class HintPanel < ApplicationRecord
 
   def to_front_end
     {
-      # TODO: Stop using ID, stop sending ID to front end, then remove ID
-      id:,
       uuid:,
       name:,
       displayIndex: display_index,
@@ -34,6 +32,6 @@ class HintPanel < ApplicationRecord
   end
 
   def to_front_end_basic
-    {id:, uuid:, name:, display_index:}
+    {uuid:, name:, display_index:}
   end
 end

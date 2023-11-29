@@ -272,7 +272,6 @@ export type HintPanelUpdateForm = {
 
 export type RailsHintPanelUpdateForm = {
   hint_panel: {
-    uuid: string;
     name?: string;
     display_index?: number;
     initial_display_state_attributes?: RailsPanelDisplayFormData;

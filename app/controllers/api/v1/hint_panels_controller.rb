@@ -133,7 +133,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
-    @hint_panel = current_user.hint_panels.find_by!(params[:uuid])
+    @hint_panel = current_user.hint_panels.find_by!(uuid: params[:uuid])
   rescue ActiveRecord::RecordNotFound
     render json: {error: "Hint panel not found"}, status: 404
   end
@@ -181,7 +181,6 @@ class Api::V1::HintPanelsController < AuthRequiredController
   # Only allow a list of trusted parameters through.
   def hint_panel_update_params
     params.require(:hint_panel).permit(
-      :uuid,
       :name,
       :hint_profile_uuid,
       :status_tracking,

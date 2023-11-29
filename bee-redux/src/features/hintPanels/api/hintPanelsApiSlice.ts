@@ -29,7 +29,6 @@ import { devLog } from "@/util";
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   const railsData: RailsHintPanelUpdateForm = {
     hint_panel: {
-      uuid: formData.uuid,
       name: formData.name,
       display_index: formData.displayIndex,
       status_tracking: formData.statusTracking,
