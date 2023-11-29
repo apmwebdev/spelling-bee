@@ -22,6 +22,8 @@ class HintPanel < ApplicationRecord
   def to_front_end
     {
       uuid:,
+      hintProfileType: hint_profile_type,
+      hintProfileUuid: hint_profile_uuid,
       name:,
       displayIndex: display_index,
       initialDisplayState: initial_display_state.to_front_end,

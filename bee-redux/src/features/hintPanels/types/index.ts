@@ -29,6 +29,7 @@ import {
   DefinitionPanelFormData,
 } from "@/features/hintPanelType_definition/types";
 import { EnumeratedOptions, SortOrderKeys } from "@/types";
+import { HintProfileTypes } from "@/features/hintProfiles";
 
 export enum PanelTypes {
   Letter = "letter",
@@ -197,6 +198,8 @@ export enum PanelCurrentDisplayStateProperties {
 
 export type HintPanelData = {
   uuid: string;
+  hintProfileType: HintProfileTypes;
+  hintProfileUuid: string;
   name: string;
   displayIndex: number;
   initialDisplayState: PanelDisplayState;
