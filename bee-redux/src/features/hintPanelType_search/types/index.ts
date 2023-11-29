@@ -11,7 +11,7 @@
 */
 
 import { PanelTypes, SubstringHintOutputKeys } from "@/features/hintPanels";
-import { EnumeratedOptions } from "@/types";
+import { EnumeratedOptions, Uuid } from "@/types";
 
 /**
  * For search panels, should it search for the search string at the start,
@@ -38,7 +38,7 @@ export type SearchPanelData = SearchPanelBaseData & {
   panelType: PanelTypes;
   // ID is necessary for search panels so that searches know which panel they
   // belong to
-  uuid: string;
+  uuid: Uuid;
 };
 
 export function isSearchPanelData(a: any): a is SearchPanelData {

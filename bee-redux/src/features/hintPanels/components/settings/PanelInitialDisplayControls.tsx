@@ -27,12 +27,13 @@ import {
   PanelDisplayState,
   PanelDisplayStateKeys,
 } from "@/features/hintPanels/types";
+import { Uuid } from "@/types";
 
 export function PanelInitialDisplayControls({
   panelUuid,
   initialDisplayState,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   initialDisplayState: PanelDisplayState;
 }) {
   const display = useAppSelector(selectPanelDisplayState(panelUuid));

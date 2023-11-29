@@ -15,12 +15,13 @@ import { HintLocationControl } from "@/features/hintPanels/components/settings/H
 import { HintLettersOffsetControl } from "@/features/hintPanels/components/settings/HintLettersOffsetControl";
 import { SearchPanelData, SearchPanelLocationKeys } from "..";
 import { PanelTypes } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function SearchPanelSettings({
   panelUuid,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   typeData: SearchPanelData;
 }) {
   const { outputType, location, lettersOffset } = typeData;

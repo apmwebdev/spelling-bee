@@ -17,7 +17,7 @@ import {
   SubstringHintDataCell,
   SubstringHintOutputKeys,
 } from "@/features/hintPanels";
-import { EnumeratedOptions } from "@/types";
+import { EnumeratedOptions, Uuid } from "@/types";
 
 /**
  * For letter panels, should it reveal letters at the start of the word or the end?
@@ -36,7 +36,7 @@ export const LetterPanelLocationOptions: EnumeratedOptions = {
   end: { title: "End of Word" },
 };
 export type LetterPanelFormData = {
-  uuid: string;
+  uuid: Uuid;
   location: LetterPanelLocationKeys;
   outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */

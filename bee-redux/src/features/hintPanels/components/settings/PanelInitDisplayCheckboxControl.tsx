@@ -16,6 +16,7 @@ import { HelpBubble } from "@/components/HelpBubble";
 import { capitalizeFirstLetter } from "@/util";
 import { PanelDisplayStateKeys } from "@/features/hintPanels/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function PanelInitDisplayCheckboxControl({
   panelUuid,
@@ -26,7 +27,7 @@ export function PanelInitDisplayCheckboxControl({
   helpBubbleContent,
   customHandler,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   settingKey: PanelDisplayStateKeys;
   currentValue: boolean;
   disabled?: boolean;

@@ -17,12 +17,13 @@ import { HintSortOrderControl } from "@/features/hintPanels/components/settings/
 import { HintRevealLengthControl } from "@/features/hintPanels/components/settings/HintRevealLengthControl";
 import { HintClickToDefineControl } from "@/features/hintPanelType_obscurity/components/HintClickToDefineControl";
 import { ObscurityPanelData } from "..";
+import { Uuid } from "@/types";
 
 export function ObscurityPanelSettings({
   panelUuid,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   typeData: ObscurityPanelData;
 }) {
   return (

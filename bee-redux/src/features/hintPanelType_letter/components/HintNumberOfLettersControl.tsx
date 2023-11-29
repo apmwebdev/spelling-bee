@@ -14,12 +14,13 @@ import { ChangeEvent } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function HintNumberOfLettersControl({
   panelUuid,
   numberOfLetters,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   numberOfLetters: number;
 }) {
   const answerLengths = useAppSelector(selectAnswerLengths);

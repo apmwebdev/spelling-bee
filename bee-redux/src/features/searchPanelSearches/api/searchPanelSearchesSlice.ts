@@ -20,7 +20,7 @@ import {
   SearchPanelSearchData,
   searchPanelSearchesApiSlice,
 } from "@/features/searchPanelSearches";
-import { createInitialState, StateShape, Statuses } from "@/types";
+import { createInitialState, StateShape, Statuses, Uuid } from "@/types";
 import { RootState } from "@/app/store";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { deleteIdbSearchPanelSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
@@ -42,7 +42,7 @@ export const searchPanelSearchesSlice = createSlice({
     },
     updateSearchPanelSearchUuid: (
       state,
-      { payload }: PayloadAction<{ originalUuid: string; newUuid: string }>,
+      { payload }: PayloadAction<{ originalUuid: Uuid; newUuid: Uuid }>,
     ) => {
       const searchToUpdate = state.data.find(
         (search) => search.uuid === payload.originalUuid,
@@ -80,7 +80,7 @@ export const {
 
 export const deleteSearchPanelSearchThunk = createAsyncThunk(
   "searchPanelSearches/deleteSearchPanelSearchThunk",
-  async (uuid: string, api) => {
+  async (uuid: Uuid, api) => {
     //Delete from state
     api.dispatch(deleteSearchPanelSearch(uuid));
     //Delete from IndexedDB
@@ -131,7 +131,7 @@ startAppListening({
 
 export const selectSearchPanelSearches = (state: RootState) =>
   state.searchPanelSearches.data;
-export const selectSpsByPanel = (panelUuid: string) =>
+export const selectSpsByPanel = (panelUuid: Uuid) =>
   createSelector([selectSearchPanelSearches], (searches) =>
     searches.filter((search) => search.searchPanelUuid === panelUuid),
   );

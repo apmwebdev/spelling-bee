@@ -17,12 +17,13 @@ import { HintLettersOffsetControl } from "@/features/hintPanels/components/setti
 import { HintNumberOfLettersControl } from "@/features/hintPanelType_letter/components/HintNumberOfLettersControl";
 import { LetterPanelData } from "@/features/hintPanelType_letter";
 import { PanelTypes } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function LetterPanelSettings({
   panelUuid,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   typeData: LetterPanelData;
 }) {
   const { numberOfLetters, location, lettersOffset, outputType, hideKnown } =

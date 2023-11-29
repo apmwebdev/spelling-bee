@@ -13,12 +13,13 @@
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
 import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
+import { Uuid } from "@/types";
 
 export function HintHideKnownControl({
   panelUuid,
   hideKnown,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   hideKnown: boolean;
 }) {
   return (

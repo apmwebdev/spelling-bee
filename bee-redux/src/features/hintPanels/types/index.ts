@@ -28,7 +28,7 @@ import {
   DefinitionPanelData,
   DefinitionPanelFormData,
 } from "@/features/hintPanelType_definition/types";
-import { EnumeratedOptions, SortOrderKeys } from "@/types";
+import { EnumeratedOptions, SortOrderKeys, Uuid } from "@/types";
 import { HintProfileTypes } from "@/features/hintProfiles";
 
 export enum PanelTypes {
@@ -152,7 +152,7 @@ export enum StatusTrackingKeys {
  *   collapsed/expanded state
  */
 export type PanelDisplayState = {
-  uuid: string;
+  uuid: Uuid;
   isExpanded: boolean;
   isBlurred: boolean;
   isSticky: boolean;
@@ -197,9 +197,9 @@ export enum PanelCurrentDisplayStateProperties {
 }
 
 export type HintPanelData = {
-  uuid: string;
+  uuid: Uuid;
   hintProfileType: HintProfileTypes;
-  hintProfileUuid: string;
+  hintProfileUuid: Uuid;
   name: string;
   displayIndex: number;
   initialDisplayState: PanelDisplayState;
@@ -213,7 +213,7 @@ export type HintPanelData = {
 };
 
 export type HintPanelCreateForm = {
-  uuid: string;
+  uuid: Uuid;
   userHintProfileId: number;
   name: string;
   displayIndex: number;
@@ -245,7 +245,7 @@ export const HintPanelBooleanSettings: EnumeratedOptions = {
 };
 
 export type HintPanelUpdateForm = {
-  uuid: string;
+  uuid: Uuid;
   /**
    * For setting a standardized key that can be accessed if you don't know whether
    * the user has already queued up a mutation for a particular panel field. That
@@ -297,7 +297,7 @@ export type RailsHintPanelUpdateForm = {
 };
 
 export type MoveHintPanelData = {
-  uuid: string;
+  uuid: Uuid;
   oldIndex: number;
   newIndex: number;
 };

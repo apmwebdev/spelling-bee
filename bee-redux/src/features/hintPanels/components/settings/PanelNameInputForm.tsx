@@ -12,13 +12,14 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function PanelNameInputForm({
   panelUuid,
   currentName,
   inputId,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   currentName: string;
   inputId: string;
 }) {

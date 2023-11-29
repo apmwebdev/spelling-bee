@@ -17,12 +17,13 @@ import {
   SubstringHintOutputOptions,
   useUpdateHintPanelMutation,
 } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function HintOutputTypeControl({
   panelUuid,
   outputType,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   outputType: SubstringHintOutputKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();

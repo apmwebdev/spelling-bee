@@ -16,13 +16,14 @@ import { QuickActions } from "@/features/hintPanels/components/shared/QuickActio
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
 import { ObscurityPanelData } from "@/features/hintPanelType_obscurity";
 import { DefinitionPanelData } from "@/features/hintPanelType_definition";
+import { Uuid } from "@/types";
 
 export function WordInfoQuickActions({
   panelUuid,
   displayState,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   displayState: PanelCurrentDisplayState;
   typeData: ObscurityPanelData | DefinitionPanelData;
 }) {

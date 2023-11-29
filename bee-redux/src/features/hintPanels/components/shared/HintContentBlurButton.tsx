@@ -16,12 +16,13 @@ import {
   PanelCurrentDisplayStateProperties,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function HintContentBlurButton({
   panelUuid,
   isBlurred,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   isBlurred: boolean;
 }) {
   const dispatch = useAppDispatch();

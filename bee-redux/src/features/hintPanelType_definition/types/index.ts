@@ -11,10 +11,10 @@
 */
 
 import { PanelTypes } from "@/features/hintPanels";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys, Uuid } from "@/types";
 
 export type DefinitionPanelFormData = {
-  uuid: string;
+  uuid: Uuid;
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;

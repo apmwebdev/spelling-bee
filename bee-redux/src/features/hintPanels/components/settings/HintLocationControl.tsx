@@ -22,6 +22,7 @@ import {
   SearchPanelLocationOptions,
 } from "@/features/hintPanelType_search";
 import { PanelTypes, useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function HintLocationControl({
   panelUuid,
@@ -29,7 +30,7 @@ export function HintLocationControl({
   panelType,
   style,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   location: LetterPanelLocationKeys | SearchPanelLocationKeys;
   panelType: PanelTypes;
   style?: CSSProperties;

@@ -14,7 +14,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "@/app/store";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { capitalizeFirstLetter, devLog } from "@/util";
-import { StateShape, Statuses } from "@/types";
+import { StateShape, Statuses, Uuid } from "@/types";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { puzzleApiSlice } from "@/features/puzzle";
 import {
@@ -28,7 +28,7 @@ import {
 } from "@/features/hintPanels";
 
 type StateData = {
-  [panelUuid: string]: PanelCurrentDisplayState;
+  [panelUuid: Uuid]: PanelCurrentDisplayState;
 };
 
 export const initialState: StateShape<StateData> = {
@@ -38,12 +38,12 @@ export const initialState: StateShape<StateData> = {
 };
 
 export type SetPanelDisplayStatePayload = {
-  panelUuid: string;
+  panelUuid: Uuid;
   data: PanelCurrentDisplayState;
 };
 
 export type SetPanelDisplayStatePropPayload = {
-  panelUuid: string;
+  panelUuid: Uuid;
   property: PanelCurrentDisplayStateProperties;
   value: boolean;
 };
@@ -148,7 +148,7 @@ export const getStateFromProfile = (profile: CompleteHintProfile) => {
 export const selectCurrentPanelData = (state: RootState) => state.hintPanels;
 // export const selectPanelsDisplayState = (state: RootState) =>
 //   state.hintProfiles.data;
-export const selectPanelDisplayState = (uuid: string) => (state: RootState) =>
+export const selectPanelDisplayState = (uuid: Uuid) => (state: RootState) =>
   state.hintPanels.data[uuid];
 
 startAppListening({

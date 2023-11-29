@@ -15,13 +15,14 @@ import { HintLocationControl } from "@/features/hintPanels/components/settings/H
 import { HintLettersOffsetControl } from "@/features/hintPanels/components/settings/HintLettersOffsetControl";
 import { PanelCurrentDisplayState, PanelTypes } from "@/features/hintPanels";
 import { SearchPanelData, SearchPanelLocationKeys } from "..";
+import { Uuid } from "@/types";
 
 export function SearchPanelQuickActions({
   panelUuid,
   displayState,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   displayState: PanelCurrentDisplayState;
   typeData: SearchPanelData;
 }) {

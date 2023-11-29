@@ -15,7 +15,7 @@ import {
   PanelDisplayState,
   StatusTrackingKeys,
 } from "@/features/hintPanels";
-import { BLANK_UUID } from "@/types";
+import { BLANK_UUID, Uuid } from "@/types";
 
 export enum HintProfileTypes {
   Default = "DefaultHintProfile",
@@ -24,7 +24,7 @@ export enum HintProfileTypes {
 
 export type HintProfileBasicData = {
   type: HintProfileTypes;
-  uuid: string;
+  uuid: Uuid;
 };
 
 export type HintProfileData = HintProfileBasicData & {
@@ -64,7 +64,7 @@ export type HintProfilesData = {
 };
 
 export type UserHintProfileForm = {
-  uuid: string;
+  uuid: Uuid;
   name: string;
   default_panel_tracking: StatusTrackingKeys;
   default_panel_display_state: PanelDisplayState;
@@ -73,7 +73,7 @@ export type UserHintProfileForm = {
 
 export type CurrentHintProfileFormData = {
   current_hint_profile_type: HintProfileTypes;
-  current_hint_profile_uuid: string;
+  current_hint_profile_uuid: Uuid;
 };
 
 export const defaultCurrentHintProfile: HintProfileBasicData = {

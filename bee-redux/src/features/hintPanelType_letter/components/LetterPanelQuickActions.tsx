@@ -15,13 +15,14 @@ import { HintHideKnownControl } from "@/features/hintPanels/components/settings/
 import { HintNumberOfLettersControl } from "./HintNumberOfLettersControl";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
 import { LetterPanelData } from "@/features/hintPanelType_letter";
+import { Uuid } from "@/types";
 
 export function LetterPanelQuickActions({
   panelUuid,
   displayState,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   displayState: PanelCurrentDisplayState;
   typeData: LetterPanelData;
 }) {

@@ -17,12 +17,13 @@ import { HintSortOrderControl } from "@/features/hintPanels/components/settings/
 import { HintSeparateKnownControl } from "@/features/hintPanels/components/settings/HintSeparateKnownControl";
 import { HintShowObscurityControl } from "@/features/hintPanelType_definition/components/HintShowObscurityControl";
 import { DefinitionPanelData } from "../";
+import { Uuid } from "@/types";
 
 export function DefinitionPanelSettings({
   panelUuid,
   typeData,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   typeData: DefinitionPanelData;
 }) {
   return (

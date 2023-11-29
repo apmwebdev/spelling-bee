@@ -17,12 +17,13 @@ import {
   StatusTrackingOptions,
 } from "@/features/hintPanels/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function PanelStatusTrackingControl({
   panelUuid,
   statusTracking,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   statusTracking: StatusTrackingKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();

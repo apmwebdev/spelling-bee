@@ -16,6 +16,7 @@ import { selectAnswerLengths } from "@/features/puzzle";
 import { BasicTooltip } from "@/components/BasicTooltip";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
+import { Uuid } from "@/types";
 
 export function HintLettersOffsetControl({
   panelUuid,
@@ -25,7 +26,7 @@ export function HintLettersOffsetControl({
   disabledTooltip,
   style,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   lettersOffset: number;
   numberOfLetters?: number;
   disabled?: boolean;

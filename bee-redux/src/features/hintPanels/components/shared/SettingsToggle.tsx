@@ -18,8 +18,9 @@ import {
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
-export function SettingsToggle({ panelUuid }: { panelUuid: string }) {
+export function SettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
   const dispatch = useAppDispatch();
   const display = useAppSelector(selectPanelDisplayState(panelUuid));
   const toggleExpanded = () => {

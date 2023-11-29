@@ -11,8 +11,9 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
+import { Uuid } from "@/types";
 
-export function RemoveButton({ panelUuid }: { panelUuid: string }) {
+export function RemoveButton({ panelUuid }: { panelUuid: Uuid }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Delete}

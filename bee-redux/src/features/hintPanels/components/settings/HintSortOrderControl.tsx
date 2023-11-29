@@ -11,14 +11,14 @@
 */
 
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys, Uuid } from "@/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 export function HintSortOrderControl({
   panelUuid,
   sortOrder,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   sortOrder: SortOrderKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();

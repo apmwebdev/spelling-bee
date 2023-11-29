@@ -1,7 +1,9 @@
+import { Uuid } from "@/types";
+
 export type RailsGuessFormData = {
   guess: {
-    uuid: string;
-    user_puzzle_attempt_uuid: string;
+    uuid: Uuid;
+    user_puzzle_attempt_uuid: Uuid;
     text: string;
     created_at: number;
     is_spoiled: boolean;
@@ -9,16 +11,16 @@ export type RailsGuessFormData = {
 };
 
 export type RawGuessFormat = {
-  uuid: string;
-  attemptUuid: string;
+  uuid: Uuid;
+  attemptUuid: Uuid;
   text: string;
   createdAt: number;
   isSpoiled: boolean;
 };
 
 export type GuessFormat = {
-  uuid: string;
-  attemptUuid: string;
+  uuid: Uuid;
+  attemptUuid: Uuid;
   text: string;
   createdAt: number;
   isSpoiled: boolean;

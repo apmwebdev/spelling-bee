@@ -11,8 +11,9 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
+import { Uuid } from "@/types";
 
-export function DuplicateButton({ panelUuid }: { panelUuid: string }) {
+export function DuplicateButton({ panelUuid }: { panelUuid: Uuid }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Duplicate}

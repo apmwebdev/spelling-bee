@@ -13,12 +13,13 @@
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
 import { HintPanelBooleanKeys } from "@/features/hintPanels";
+import { Uuid } from "@/types";
 
 export function HintClickToDefineControl({
   panelUuid,
   clickToDefine,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   clickToDefine: boolean;
 }) {
   return (

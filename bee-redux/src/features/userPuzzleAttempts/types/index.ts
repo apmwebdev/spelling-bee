@@ -10,10 +10,10 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { BLANK_UUID } from "@/types";
+import { BLANK_UUID, Uuid } from "@/types";
 
 export type AttemptFormat = {
-  uuid: string;
+  uuid: Uuid;
   puzzleId: number;
   createdAt: number;
   // guesses: GuessFormat[];

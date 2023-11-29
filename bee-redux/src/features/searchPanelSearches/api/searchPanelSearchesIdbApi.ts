@@ -12,8 +12,9 @@
 
 import { idb } from "@/lib/idb";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import { Uuid } from "@/types";
 
-export const getIdbAttemptSearches = (attemptUuid: string) => {
+export const getIdbAttemptSearches = (attemptUuid: Uuid) => {
   return idb.searchPanelSearches
     .where("attemptUuid")
     .equals(attemptUuid)
@@ -24,6 +25,6 @@ export const addIdbSearchPanelSearch = (search: SearchPanelSearchData) => {
   return idb.searchPanelSearches.add(search);
 };
 
-export const deleteIdbSearchPanelSearch = (uuid: string) => {
+export const deleteIdbSearchPanelSearch = (uuid: Uuid) => {
   return idb.searchPanelSearches.delete(uuid);
 };

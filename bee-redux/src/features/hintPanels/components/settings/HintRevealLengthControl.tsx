@@ -13,12 +13,13 @@
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
 import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
+import { Uuid } from "@/types";
 
 export function HintRevealLengthControl({
   panelUuid,
   revealLength,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   revealLength: boolean;
 }) {
   return (

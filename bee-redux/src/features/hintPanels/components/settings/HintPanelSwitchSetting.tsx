@@ -17,6 +17,7 @@ import {
 } from "@/features/hintPanels/types";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
+import { Uuid } from "@/types";
 
 export function HintPanelSwitchSetting({
   panelUuid,
@@ -24,7 +25,7 @@ export function HintPanelSwitchSetting({
   currentValue,
   disabled,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   settingKey: HintPanelBooleanKeys;
   currentValue: boolean;
   disabled?: boolean;

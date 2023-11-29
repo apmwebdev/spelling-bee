@@ -12,6 +12,7 @@
 
 import { idb } from "@/lib/idb";
 import { AttemptFormat } from "@/features/userPuzzleAttempts";
+import { Uuid } from "@/types";
 
 export const getIdbPuzzleAttempts = (puzzleId: number) => {
   return idb.attempts.where("puzzleId").equals(puzzleId).toArray();
@@ -21,6 +22,6 @@ export const addIdbAttempt = (attempt: AttemptFormat) => {
   return idb.attempts.add(attempt);
 };
 
-export const deleteIdbAttempt = (attemptUuid: string) => {
+export const deleteIdbAttempt = (attemptUuid: Uuid) => {
   return idb.attempts.delete(attemptUuid);
 };

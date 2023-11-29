@@ -13,13 +13,14 @@
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
 import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
+import { Uuid } from "@/types";
 
 export function HintSeparateKnownControl({
   panelUuid,
   separateKnown,
   disabled,
 }: {
-  panelUuid: string;
+  panelUuid: Uuid;
   separateKnown: boolean;
   disabled: boolean;
 }) {

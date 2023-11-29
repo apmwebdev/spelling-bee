@@ -16,12 +16,13 @@ import {
   SubstringHintDataCell,
 } from "@/features/hintPanels";
 import { SearchPanelBaseData } from "@/features/hintPanelType_search";
+import { Uuid } from "@/types";
 
 export type SearchPanelSearchData = SearchPanelBaseData & {
   //inherits searchString, location, lettersOffset, and outputType
-  uuid: string;
-  attemptUuid: string;
-  searchPanelUuid: string;
+  uuid: Uuid;
+  attemptUuid: Uuid;
+  searchPanelUuid: Uuid;
   createdAt: number;
 };
 
