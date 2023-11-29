@@ -16,8 +16,6 @@ class DefaultHintProfile < ApplicationRecord
 
   def to_front_end_complete
     return_obj = {
-      # TODO: Stop using ID, stop sending ID to front end, then remove ID
-      id:,
       uuid:,
       type: self.class.name,
       name:,
@@ -31,7 +29,6 @@ class DefaultHintProfile < ApplicationRecord
 
   def to_front_end_basic
     {
-      id:,
       uuid:,
       type: self.class.name,
       name:

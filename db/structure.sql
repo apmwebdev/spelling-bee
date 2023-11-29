@@ -627,7 +627,8 @@ CREATE TABLE public.user_prefs (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     current_hint_profile_type character varying,
-    current_hint_profile_id bigint
+    current_hint_profile_id bigint,
+    current_hint_profile_uuid uuid
 );
 
 
@@ -1538,6 +1539,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231120090819'),
 ('20231127233418'),
 ('20231128021153'),
-('20231128030814');
+('20231128030814'),
+('20231128232734');
 
 

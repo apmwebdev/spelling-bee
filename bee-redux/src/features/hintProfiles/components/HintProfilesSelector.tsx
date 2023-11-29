@@ -11,7 +11,6 @@
 */
 
 import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
 import {
   HintProfileBasicData,
   hintProfilesApiSlice,
@@ -65,7 +64,7 @@ export function HintProfilesSelector() {
             {profiles.data?.userHintProfiles.length ? (
               profiles.data.userHintProfiles.map((profile) => (
                 <Select.Item
-                  key={uniqid()}
+                  key={profile.uuid}
                   value={composeValueString(profile)}
                   itemText={profile.name}
                 />
@@ -83,7 +82,7 @@ export function HintProfilesSelector() {
             <Select.Label>Default hint profiles</Select.Label>
             {profiles.data?.defaultHintProfiles.map((profile) => (
               <Select.Item
-                key={uniqid()}
+                key={profile.uuid}
                 value={composeValueString(profile)}
                 itemText={profile.name}
               />
