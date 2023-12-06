@@ -18,6 +18,7 @@ export const getIdbPuzzleAttempts = (puzzleId: number) => {
   return idb.attempts.where("puzzleId").equals(puzzleId).toArray();
 };
 
+/** If successful, returns the UUID of the inserted record. If unsuccessful, returns null. */
 export const addIdbAttempt = idbInsertWithRetry<AttemptFormat>(
   idb.attempts.add,
 );

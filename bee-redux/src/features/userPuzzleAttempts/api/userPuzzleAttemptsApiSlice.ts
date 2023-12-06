@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { apiSlice } from "@/features/api";
+import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
 import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
 import { devLog } from "@/util";
@@ -31,11 +31,11 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         return response as { data: AttemptFormat[] };
       },
     }),
-    addAttempt: builder.mutation({
-      query: () => ({
-        url: "/user_puzzle_attempts/",
+    addAttempt: builder.mutation<AttemptFormat, AttemptFormat>({
+      query: (attempt) => ({
+        url: "/user_puzzle_attempts",
         method: "POST",
-        body: {},
+        body: { user_puzzle_attempt: keysToSnakeCase(attempt) },
       }),
     }),
     deleteAttempt: builder.mutation({

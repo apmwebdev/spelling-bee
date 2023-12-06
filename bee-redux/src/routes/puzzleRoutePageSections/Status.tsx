@@ -12,6 +12,7 @@
 
 import { Progress } from "@/features/progress";
 import { WordLists } from "@/features/wordLists";
+import { AttemptControls } from "@/features/userPuzzleAttempts";
 
 export function Status() {
   return (
@@ -19,7 +20,7 @@ export function Status() {
       <Progress />
       <WordLists />
       {/* TODO: Add attempt functionality */}
-      {/*<AttemptControls />*/}
+      <AttemptControls />
     </div>
   );
 }

@@ -15,15 +15,14 @@ import {
   AuthResetData,
   AuthUpdateData,
   LoginData,
-  loginReducer,
-  logoutThunk,
   PasswordResetData,
   SignupData,
   User,
-} from "@/features/auth";
+} from "@/features/auth/types";
 import { BasicResponse } from "@/types";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { isAnyOf } from "@reduxjs/toolkit";
+import { loginReducer } from "@/features/auth";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -122,16 +121,7 @@ startAppListening({
   effect: ({ payload }, api) => {
     api.dispatch(loginReducer(payload));
     persistor.save("user", payload);
-    persistor.save("isGuest", false);
-  },
-});
-
-startAppListening({
-  matcher: authApiSlice.endpoints.logout.matchFulfilled,
-  effect: (_action, api) => {
-    api.dispatch(logoutThunk);
-    persistor.remove("currentHintProfile");
-    persistor.remove("userPrefs");
+    // persistor.save("isGuest", false);
   },
 });
 

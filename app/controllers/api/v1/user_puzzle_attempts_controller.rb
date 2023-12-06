@@ -68,7 +68,10 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     if @user_puzzle_attempt.save
       render json: @user_puzzle_attempt.to_front_end, status: 201
     else
-      render json: @user_puzzle_attempt.errors, status: 422
+      render json: {
+        error: "Couldn't save user puzzle attempt due to malformed data",
+        activeModelErrors: @user_puzzle_attempt.errors
+      }, status: 422
     end
   end
 

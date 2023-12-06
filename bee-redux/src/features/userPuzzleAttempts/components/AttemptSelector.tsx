@@ -12,7 +12,6 @@
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
 import {
   selectAttempts,
   selectCurrentAttempt,
@@ -34,7 +33,7 @@ export function AttemptSelector() {
           {attempts.map((attempt, i) => {
             return (
               <Select.Item
-                key={uniqid()}
+                key={attempt.uuid}
                 value={`${attempt.uuid}`}
                 itemText={`Attempt ${i + 1}`}
               />

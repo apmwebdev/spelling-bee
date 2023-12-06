@@ -85,8 +85,9 @@ export const capitalizeFirstLetter = (str: string) =>
 
 export const devLog = (...to_log: any[]) => {
   if (import.meta.env.DEV) {
+    const now = new Date();
     const error = new Error();
     const callerInfo = error.stack?.split("\n")[1].trim() ?? "No stack trace";
-    console.log(`${callerInfo}:\n`, ...to_log);
+    console.log(`${callerInfo}: ${now.toString()}:\n`, ...to_log);
   }
 };

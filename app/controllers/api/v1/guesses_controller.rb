@@ -25,6 +25,8 @@ class Api::V1::GuessesController < AuthRequiredController
 
   # POST /guesses
   def create
+    # render json: {error: "test error"}, status: 401
+    # return
     user_puzzle_attempt = current_user.user_puzzle_attempts
       .find_by!(uuid: guess_params[:user_puzzle_attempt_uuid])
 

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       # Auth
       devise_scope :user do
         post "auth/confirmation/resend", to: "users/confirmations#resend"
+        get "auth/check", to: "users/sessions#check_auth"
       end
       # Puzzles
       get "puzzles/latest", to: "puzzles#latest"

@@ -13,7 +13,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore } from "@/util";
-import { guessesApiSlice } from "./guessesApiSlice";
 import { Statuses } from "@/types";
 import { GuessFormat } from "@/features/guesses";
 
@@ -31,31 +30,32 @@ export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    getGuesses: (state, { payload }: PayloadAction<GuessFormat[]>) => {
+    setGuesses: (state, { payload }: PayloadAction<GuessFormat[]>) => {
       state.data = payload;
+      state.status = Statuses.UpToDate;
     },
     addGuess: (state, { payload }: PayloadAction<GuessFormat>) => {
       state.data.push(payload);
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        guessesApiSlice.endpoints.getGuesses.matchFulfilled,
-        (state, { payload }) => {
-          state.data = payload;
-        },
-      )
-      .addMatcher(
-        guessesApiSlice.endpoints.addGuess.matchFulfilled,
-        (state, { payload }) => {
-          state.data.push(payload);
-        },
-      );
+    // builder
+    //   .addMatcher(
+    //     guessesApiSlice.endpoints.getGuesses.matchFulfilled,
+    //     (state, { payload }) => {
+    //       state.data = payload;
+    //     },
+    //   )
+    //   .addMatcher(
+    //     guessesApiSlice.endpoints.addGuess.matchFulfilled,
+    //     (state, { payload }) => {
+    //       state.data.push(payload);
+    //     },
+    //   );
   },
 });
 
-export const { addGuess } = guessesSlice.actions;
+export const { setGuesses, addGuess } = guessesSlice.actions;
 
 export const selectGuesses = (state: RootState) => state.guesses.data;
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>

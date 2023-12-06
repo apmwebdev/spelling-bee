@@ -28,12 +28,36 @@ export class SsbDexie extends Dexie {
 
 export const idb = new SsbDexie();
 
+/** A type representing all the different errors that can be returned by a Dexie promise.
+ *  DexieError is a custom error type specific to Dexie. The others are standard JS errors.
+ *  @see https://dexie.org/docs/DexieErrors/DexieError
+ */
+export type DexieGeneralError =
+  | DexieError
+  | SyntaxError
+  | TypeError
+  | RangeError;
+
+/** Tests whether something is any of the errors that should be returnable by a Dexie promise.
+ * @param err
+ */
+export const isDexieGeneralError = (err: any): err is DexieGeneralError => {
+  return (
+    err instanceof Dexie.DexieError ||
+    err instanceof SyntaxError ||
+    err instanceof TypeError ||
+    err instanceof RangeError
+  );
+};
+
+/** Slightly more convenient than writing `someValue instanceof Dexie.DexieError` everywhere. Not
+ *  sure this type guard is needed since Dexie can return other errors besides its own custom
+ *  ones and the type guard function for that is above.
+ * @param err
+ * @see isDexieGeneralError
+ */
 export const isDexieError = (err: any): err is DexieError => {
-  if (!("name" in err)) return false;
-  if (!(typeof err.name === "string")) return false;
-  if (!("message" in err)) return false;
-  if (!(typeof err.message === "string")) return false;
-  return true;
+  return err instanceof Dexie.DexieError;
 };
 
 /** The maximum number of times the app should re-attempt to save a record in
@@ -42,12 +66,12 @@ export const isDexieError = (err: any): err is DexieError => {
  */
 export const MAX_IDB_RETRIES = 3;
 
-/** An abstraction for use as the base of a generic type. It represents all
- * types that contain a UUID, which is most of them. This abstraction is only
- * useful for idbInsertWithRetry.
+/** An abstraction for use as the base of a generic type. It represents all types that contain a
+ *  UUID, which is most of the types representing some unit of data that might need to be stored
+ *  in IndexedDB. This abstraction is only useful for idbInsertWithRetry.
  * @see idbInsertWithRetry
  */
-export type UuidRecord = { uuid: Uuid };
+type UuidRecord = { uuid: Uuid };
 
 /** Takes a function for inserting a record into IndexedDB ("insertFn") and
  * returns that function wrapped with retry logic ("retryableInsertFn"). This
@@ -58,11 +82,11 @@ export type UuidRecord = { uuid: Uuid };
  * @param {Function} insertFn
  * @see https://dexie.org/docs/DexieErrors/Dexie.ConstraintError
  */
-export const idbInsertWithRetry = <T extends UuidRecord>(
+export const idbInsertWithRetry = <RecordType extends UuidRecord>(
   insertFn: Function,
 ) => {
   const retryableInsertFn = async (
-    record: T,
+    record: RecordType,
     retryCount: number = 0,
   ): Promise<IndexableType | null> => {
     try {
@@ -76,6 +100,7 @@ export const idbInsertWithRetry = <T extends UuidRecord>(
         record.uuid = crypto.randomUUID();
         return retryableInsertFn(record, retryCount + 1);
       }
+      // TODO: Add better error handling here
       console.error("Error saving record:", record, err);
       return null;
     }

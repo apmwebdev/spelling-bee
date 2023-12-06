@@ -12,10 +12,19 @@
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 import { useAddAttemptMutation } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectPuzzleId } from "@/features/puzzle";
 
 export function NewAttemptButton() {
   const [addAttempt] = useAddAttemptMutation();
-  const handleClick = () => {};
+  const puzzleId = useAppSelector(selectPuzzleId);
+  const handleClick = async () => {
+    await addAttempt({
+      uuid: crypto.randomUUID(),
+      puzzleId: puzzleId,
+      createdAt: Date.now(),
+    });
+  };
 
   return (
     <IconButton

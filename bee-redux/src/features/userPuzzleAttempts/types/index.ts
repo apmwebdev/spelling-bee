@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { BLANK_UUID, Uuid } from "@/types";
+import { BLANK_UUID, hasAllProperties, isUuid, Uuid } from "@/types";
 
 export type AttemptFormat = {
   uuid: Uuid;
@@ -19,8 +19,24 @@ export type AttemptFormat = {
   // guesses: GuessFormat[];
 };
 
+export const isAttemptFormat = (toTest: any): toTest is AttemptFormat => {
+  if (!hasAllProperties(toTest, "uuid", "puzzleId", "createdAt")) return false;
+  if (!isUuid(toTest.uuid)) return false;
+  if (!(typeof toTest.puzzleId === "number")) return false;
+  if (!(typeof toTest.createdAt === "number")) return false;
+  return true;
+};
+
 export const BLANK_ATTEMPT: AttemptFormat = {
   uuid: BLANK_UUID,
   puzzleId: 0,
   createdAt: 0,
+};
+
+export const isBlankAttempt = (attempt: AttemptFormat) => {
+  if (!hasAllProperties(attempt, "uuid", "puzzleId", "createdAt")) return false;
+  if (attempt.uuid !== BLANK_UUID) return false;
+  if (attempt.puzzleId !== 0) return false;
+  if (attempt.createdAt !== 0) return false;
+  return true;
 };

@@ -12,18 +12,19 @@
 
 import { useEffect, useRef } from "react";
 import { useCurrentPuzzle } from "@/features/puzzle";
-import { useLazyGetUserPuzzleDataQuery } from "@/features/userData";
 import { Status } from "@/routes/puzzleRoutePageSections/Status";
 import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
 import { Puzzle } from "@/routes/puzzleRoutePageSections/Puzzle";
 import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
 import { PuzzleAndStatus } from "@/routes/puzzleRoutePageSections/PuzzleAndStatus";
 import { SingleColumn } from "@/routes/puzzleRoutePageSections/SingleColumn";
-import { devLog } from "@/util";
+import { useAppDispatch } from "@/app/hooks";
+import { getUserPuzzleDataThunk } from "@/features/userData/api/userDataLoader";
 
 export function PuzzleRoute() {
+  const dispatch = useAppDispatch();
   const puzzleQ = useCurrentPuzzle();
-  const [getUserPuzzleData] = useLazyGetUserPuzzleDataQuery();
+  // const [getUserPuzzleData] = useLazyGetUserPuzzleDataQuery();
   const columns = useColumnBreakpoints();
   const previousPuzzleIdRef = useRef<number | null>(null);
 
@@ -31,8 +32,8 @@ export function PuzzleRoute() {
     if (puzzleQ.isSuccess) {
       const currentPuzzleId = puzzleQ.data.id;
       if (currentPuzzleId !== previousPuzzleIdRef.current) {
-        devLog("new puzzle");
-        getUserPuzzleData(currentPuzzleId);
+        // getUserPuzzleData(currentPuzzleId);
+        dispatch(getUserPuzzleDataThunk(currentPuzzleId));
         previousPuzzleIdRef.current = currentPuzzleId;
       }
     }

@@ -21,12 +21,7 @@ class Api::V1::UserDataController < ApplicationController
 
   def user_puzzle_data
     unless user_signed_in?
-      render json: {
-        searches: [],
-        attempts: [{uuid: Constants::BLANK_UUID}],
-        currentAttempt: Constants::BLANK_UUID,
-        guesses: []
-      }
+      render json: {error: "User not found"}, status: 401
       return
     end
     unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)

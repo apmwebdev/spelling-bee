@@ -12,24 +12,21 @@
 
 import { Icon, InlineIcon } from "@iconify/react";
 import * as DropdownMenu from "@/components/radix-ui/radix-dropdown-menu";
-import { useLogoutMutation } from "@/features/auth";
 import { useNavigate } from "react-router-dom";
 import { DropdownLinkIcon } from "@/components/DropdownLinkIcon";
+import { useAppDispatch } from "@/app/hooks";
+import { logoutThunk } from "@/features/auth";
 
 export function UserMenu({ isMobile }: { isMobile?: boolean }) {
-  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleAccountSelect = () => {
     navigate("/auth/account");
   };
 
-  const handleLogoutSelect = async () => {
-    try {
-      await logout().unwrap();
-    } catch (error) {
-      console.error("Failed to log out: ", error);
-    }
+  const handleLogoutSelect = () => {
+    dispatch(logoutThunk());
   };
 
   return (
