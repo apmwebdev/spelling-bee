@@ -35,9 +35,14 @@ import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/us
 import { last } from "lodash";
 import { devLog } from "@/util";
 import { addIdbAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
-import { createDataComparisonContainer } from "@/features/api/types";
+import {
+  createDiffPromiseContainer,
+  DataSourceKeys,
+  DiffContainer,
+} from "@/features/api/types";
 import * as crypto from "crypto";
 import { selectPuzzleId } from "@/features/puzzle";
+import { combineForDisplayAndSync } from "@/features/api";
 
 type UserPuzzleAttemptsStateData = {
   currentAttempt: AttemptFormat;
@@ -151,10 +156,7 @@ export const addAttemptThunk = createAsyncThunk(
     //Note the UUID in case there's a collision during persistence and it needs to be updated
     const originalUuid = attempt.uuid;
     api.dispatch(addAttempt(attempt));
-    const results = createDataComparisonContainer<
-      AttemptFormat,
-      AttemptFormat
-    >();
+    const results = createDiffPromiseContainer<AttemptFormat, AttemptFormat>();
     results.idbData = await addIdbAttempt(attempt);
     if (!state.auth.isGuest) {
       results.serverData = await api.dispatch(
@@ -183,6 +185,19 @@ export const generateNewAttemptThunk = createAsyncThunk(
     const state = api.getState() as RootState;
     const puzzleId = selectPuzzleId(state);
     api.dispatch(addAttemptThunk(generateUserPuzzleAttempt(puzzleId)));
+  },
+);
+
+export const resolveAttempts = createAsyncThunk(
+  "userPuzzleAttempts/resolveAttempts",
+  (data: DiffContainer<AttemptFormat>) => {
+    const { displayData, idbDataToAdd, serverDataToAdd, dataToOverwrite } =
+      combineForDisplayAndSync({
+        data,
+        primaryDataKey: DataSourceKeys.serverData,
+      });
+    //TODO: Only update state if it needs it? Update stores that need updating
+    // Somehow update UUIDs if there's a collision.
   },
 );
 

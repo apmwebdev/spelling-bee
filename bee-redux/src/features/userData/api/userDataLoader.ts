@@ -22,6 +22,7 @@ import {
 } from "@/types";
 import {
   generateNewAttemptThunk,
+  resolveAttempts,
   selectCurrentAttemptUuid,
   setAttempts,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
@@ -195,7 +196,18 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       devLog(
         "ID3-1: Server and IDB attempts were both successful and both had length > 0. Diff data",
       );
+      if (!serverResult.value.data) {
+        /* This *shouldn't* ever happen. If the status is fulfilled, which we check above, there
+         * should always be a `value.data` property. This is just to satisfy TypeScript. */
+        throw new Error(
+          "Server result was successful but doesn't have a 'data' property. This shouldn't happen. Exiting.",
+        );
+      }
       //Diff data
+      resolveAttempts({
+        idbData: idbAttemptsResult.value,
+        serverData: serverResult.value.data.attempts,
+      });
     } else if (
       userPuzzleDataStatus.resolvedFirst === "IDB" &&
       idbAttemptsResult.status === "fulfilled" &&
@@ -312,12 +324,6 @@ export const loadIdbAttemptSearches = createAsyncThunk(
       });
   },
 );
-
-export const resolveAttempts = (
-  data: NullableDiffContainer<Array<AttemptFormat>>,
-) => {
-  //stuff
-};
 
 export const resolveGuesses = (data: NullableDiffContainer<GuessFormat>) => {
   //do stuff

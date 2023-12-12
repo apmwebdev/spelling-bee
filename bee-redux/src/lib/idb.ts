@@ -14,14 +14,16 @@ export class SsbDexie extends Dexie {
   hintPanels!: Table<HintPanelData>;
   searchPanelSearches!: Table<SearchPanelSearchData>;
 
+  //TODO: Send updatedAt timestamp to front end for hint profiles and hint panels and index it here
+  //TODO: Add functionality for deletion and updates offline
   constructor() {
     super("ssb");
     this.version(1).stores({
-      attempts: "&uuid, puzzleId",
+      attempts: "&uuid, puzzleId, createdAt",
       hintProfiles: "&[type+uuid]",
       hintPanels: "&uuid, [hintProfileType+hintProfileUuid]",
-      guesses: "&uuid, attemptUuid, &[text+attemptUuid]",
-      searchPanelSearches: "&uuid, attemptUuid, searchPanelUuid",
+      guesses: "&uuid, attemptUuid, &[text+attemptUuid], createdAt",
+      searchPanelSearches: "&uuid, attemptUuid, searchPanelUuid, createdAt",
     });
   }
 }

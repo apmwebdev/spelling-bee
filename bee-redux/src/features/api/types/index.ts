@@ -32,11 +32,16 @@ export type RtkqMutationResult<ArgType, ResultType> =
     >
   >;
 
+export enum DataSourceKeys {
+  idbData = "idbData",
+  serverData = "serverData",
+}
+
 /** When comparing IDB and server data, there needs to be some way to *optionally* include the
  *  server data, since sometimes the user is a guest user and there is no server data. This
  *  object is for holding the data to compare.
  */
-export type DataComparisonContainer<ArgType, ResultType> = {
+export type DiffPromiseContainer<ArgType, ResultType> = {
   //Returns a UUID if successful, null if unsuccessful, or a promise that resolves to one of those
   idbData: Promise<IndexableType | null> | IndexableType | null;
   //RtkqMutationResult is a promise. RtkqQueryReturnValue is the result of the promise. Either works
@@ -46,16 +51,15 @@ export type DataComparisonContainer<ArgType, ResultType> = {
     | null;
 };
 
-export const createDataComparisonContainer = <
+export const createDiffPromiseContainer = <
   ArgType,
   ResultType,
->(): DataComparisonContainer<ArgType, ResultType> => {
+>(): DiffPromiseContainer<ArgType, ResultType> => {
   return { idbData: null, serverData: null };
 };
 
 export type NullableDiffContainer<DataType> = {
-  idbData: DataType | null;
-  serverData: DataType | null;
+  [key in DataSourceKeys]: DataType | null;
 };
 
 export const createNullableDiffContainer = <DataType>(
@@ -66,13 +70,12 @@ export const createNullableDiffContainer = <DataType>(
 };
 
 export type DiffContainer<DataType> = {
-  idbData: DataType;
-  serverData: DataType;
+  [key in DataSourceKeys]: Array<DataType>;
 };
 
 export const createDiffContainer = <DataType>(
-  idbData: DataType,
-  serverData: DataType,
+  idbData: Array<DataType>,
+  serverData: Array<DataType>,
 ): DiffContainer<DataType> => {
   return { idbData, serverData };
 };
@@ -85,4 +88,19 @@ export const createDiffContainer = <DataType>(
 export type UuidRecord = {
   uuid: Uuid;
   [key: string]: any;
+};
+
+/** This type is the return format for combineUnique, a function for merging data from IndexedDB and
+ * the server for display. `displayData` is the combined data for storing in Redux and displaying.
+ * `idbUpdateData` is data that was present on the server but not in IndexedDB, so the data needs to
+ * be added to IndexedDB. `serverUpdateData` is the opposite: Data that was present in IndexedDB but
+ * not on the server, so it needs to be added to the server.
+ * @see combineForDisplayAndSync
+ */
+export type ResolvedDataContainer<DataType> = {
+  //TODO: If this makes everything into an array, the other containers should do that too
+  displayData: Array<DataType>;
+  idbDataToAdd: Array<DataType>;
+  serverDataToAdd: Array<DataType>;
+  dataToOverwrite: Array<Uuid>;
 };
