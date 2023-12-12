@@ -35,7 +35,7 @@ import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/us
 import { last } from "lodash";
 import { devLog } from "@/util";
 import { addIdbAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
-import { createResultsContainer } from "@/features/api/types";
+import { createDataComparisonContainer } from "@/features/api/types";
 import * as crypto from "crypto";
 import { selectPuzzleId } from "@/features/puzzle";
 
@@ -151,17 +151,20 @@ export const addAttemptThunk = createAsyncThunk(
     //Note the UUID in case there's a collision during persistence and it needs to be updated
     const originalUuid = attempt.uuid;
     api.dispatch(addAttempt(attempt));
-    const results = createResultsContainer<AttemptFormat, AttemptFormat>();
-    results.idb = await addIdbAttempt(attempt);
+    const results = createDataComparisonContainer<
+      AttemptFormat,
+      AttemptFormat
+    >();
+    results.idbData = await addIdbAttempt(attempt);
     if (!state.auth.isGuest) {
-      results.server = await api.dispatch(
+      results.serverData = await api.dispatch(
         userPuzzleAttemptsApiSlice.endpoints.addAttempt.initiate(attempt),
       );
     }
     //If neither DB saved the attempt, remove it from Redux as well
     if (
-      results.idb === null &&
-      (isErrorResponse(results.server) || results.server === null)
+      results.idbData === null &&
+      (isErrorResponse(results.serverData) || results.serverData === null)
     ) {
       //TODO: Add better error handling
       devLog(

@@ -8,6 +8,7 @@ import {
 } from "@reduxjs/toolkit/query";
 import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query/react";
 import { SerializedError } from "@reduxjs/toolkit";
+import { Uuid } from "@/types";
 
 export type RtkqQueryReturnValue<DataType> = QueryReturnValue<
   DataType, //Return type of `data` if query is successful
@@ -31,25 +32,57 @@ export type RtkqMutationResult<ArgType, ResultType> =
     >
   >;
 
-/** When comparing IDB and server data, there needs to be some way to optionally include the
- *  server data, since sometimes the user is a guest user and there is no server data. You
- *  could do this by declaring a let variable and then have the server query inside of an if
- *  statement, setting the let variable to the result of the query call. But creating an object
- *  and setting the `server` property of the object to the result of the server call seems easier.
+/** When comparing IDB and server data, there needs to be some way to *optionally* include the
+ *  server data, since sometimes the user is a guest user and there is no server data. This
+ *  object is for holding the data to compare.
  */
-export type ResultsContainer<ArgType, ResultType> = {
+export type DataComparisonContainer<ArgType, ResultType> = {
   //Returns a UUID if successful, null if unsuccessful, or a promise that resolves to one of those
-  idb: Promise<IndexableType | null> | IndexableType | null;
+  idbData: Promise<IndexableType | null> | IndexableType | null;
   //RtkqMutationResult is a promise. RtkqQueryReturnValue is the result of the promise. Either works
-  server:
+  serverData:
     | RtkqMutationResult<ArgType, ResultType>
     | RtkqQueryReturnValue<ResultType>
     | null;
 };
 
-export const createResultsContainer = <ArgType, ResultType>(): ResultsContainer<
+export const createDataComparisonContainer = <
   ArgType,
-  ResultType
-> => {
-  return { idb: null, server: null };
+  ResultType,
+>(): DataComparisonContainer<ArgType, ResultType> => {
+  return { idbData: null, serverData: null };
+};
+
+export type NullableDiffContainer<DataType> = {
+  idbData: DataType | null;
+  serverData: DataType | null;
+};
+
+export const createNullableDiffContainer = <DataType>(
+  inputIdbData?: DataType,
+  inputServerData?: DataType,
+): NullableDiffContainer<DataType> => {
+  return { idbData: inputIdbData ?? null, serverData: inputServerData ?? null };
+};
+
+export type DiffContainer<DataType> = {
+  idbData: DataType;
+  serverData: DataType;
+};
+
+export const createDiffContainer = <DataType>(
+  idbData: DataType,
+  serverData: DataType,
+): DiffContainer<DataType> => {
+  return { idbData, serverData };
+};
+
+/** An abstraction for use as the base of a generic type. It represents all types that contain a
+ *  UUID, which is most of the types representing some unit of data that might need to be stored
+ *  in IndexedDB or the server.
+ * @see idbInsertWithRetry
+ */
+export type UuidRecord = {
+  uuid: Uuid;
+  [key: string]: any;
 };

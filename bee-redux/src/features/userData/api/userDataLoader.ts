@@ -37,6 +37,7 @@ import { getIdbAttemptSearches } from "@/features/searchPanelSearches/api/search
 import { DexieGeneralError, isDexieGeneralError } from "@/lib/idb";
 import { AttemptFormat } from "@/features/userPuzzleAttempts";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { NullableDiffContainer } from "@/features/api/types";
 
 /** A type that consists of either the data from a successful query, set via a generic, plus the
  *  different error types that can result from both RTK Query and Dexie. Null is an option since
@@ -64,8 +65,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
   async (puzzleId: number, api) => {
     devLog("Begin getUserPuzzleDataThunk");
     const state = api.getState() as RootState;
-    //Create an object to hold the results of the different queries, and for the initial
-    // queries, track which one resolved first.
+    //Create an object to hold the results of the different queries to more easily compare them, and
+    // for the initial queries, track which one resolved first.
     const userPuzzleDataStatus: UserPuzzleDataStatus = {
       serverData: null,
       idbAttempts: null,
@@ -73,43 +74,36 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       idbSearchPanelSearches: null,
       resolvedFirst: null,
     };
-    let currentAttemptUuid: Uuid | null = null;
-    // First, fetch IDB attempts and server userPuzzleData
+    let attemptUuid: Uuid | null = null;
     const idbAttempts = getIdbPuzzleAttempts(puzzleId);
     const serverUserPuzzleData = api.dispatch(
       userDataApiSlice.endpoints.getUserPuzzleData.initiate(puzzleId),
     );
     // React differently depending on which query (server or IndexedDB) resolves first, and
-    // whether this first promise to resolve was successful or not.
+    // whether it was successful or not.
     Promise.race([idbAttempts, serverUserPuzzleData]).then(async (response) => {
       let isSuccess = true;
       if (Array.isArray(response)) {
-        //When IndexedDB resolves first and is successful
-        devLog("ID1-1: IDB resolved first and was successful:", response);
+        //IndexedDB resolves first with success
+        devLog("ID1-1: IDB resolved first with success:", response);
         userPuzzleDataStatus.resolvedFirst = "IDB";
         userPuzzleDataStatus.idbAttempts = response;
         api.dispatch(setAttempts(response));
       } else if (isUserPuzzleDataResponse(response)) {
-        //When the server resolves first and is successful
-        devLog("ID1-2: Server resolved first and was successful:", response);
+        //Server resolves first with success
+        devLog("ID1-2: Server resolved first with success:", response);
         userPuzzleDataStatus.resolvedFirst = "SERVER";
         userPuzzleDataStatus.serverData = response.data;
-        api.dispatch(setAttempts(response.data.attempts));
-        api.dispatch(
-          setGuesses(
-            response.data.guesses.map((guess) => processGuess(guess, state)),
-          ),
-        );
-        api.dispatch(setSearchPanelSearches(response.data.searches));
+        api.dispatch(loadUserPuzzleServerData(response.data));
       } else if (isDexieGeneralError(response)) {
-        //When the IndexedDB query resolves first and errors
-        devLog("ID1-3: IDB resolved first and errored:", response);
+        //IndexedDB resolves first with error
+        devLog("ID1-3: IDB resolved first with error:", response);
         userPuzzleDataStatus.idbAttempts = response;
         userPuzzleDataStatus.resolvedFirst = "IDB";
         isSuccess = false;
       } else if (isErrorResponse(response)) {
-        //When the server query resolves first and errors
-        devLog("ID1-4: Server resolved first and errored:", response);
+        //Server resolves first with error
+        devLog("ID1-4: Server resolved first with error:", response);
         userPuzzleDataStatus.serverData = response.error;
         userPuzzleDataStatus.resolvedFirst = "SERVER";
         isSuccess = false;
@@ -125,8 +119,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       // Only attempt to load IDB guesses and searches if we have a userPuzzleAttempt UUID
       if (isSuccess) {
         devLog("ID2-0: isSuccess = true");
-        currentAttemptUuid = selectCurrentAttemptUuid(state);
-        const idbGuesses = getIdbAttemptGuesses(currentAttemptUuid)
+        attemptUuid = selectCurrentAttemptUuid(state);
+        const idbGuesses = getIdbAttemptGuesses(attemptUuid)
           .then((idbResult) => {
             userPuzzleDataStatus.idbGuesses = idbResult;
             if (state.guesses.status === Statuses.Initial) {
@@ -152,7 +146,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
             );
             userPuzzleDataStatus.idbGuesses = err;
           });
-        const idbSearches = getIdbAttemptSearches(currentAttemptUuid)
+        const idbSearches = getIdbAttemptSearches(attemptUuid)
           .then((idbResult) => {
             userPuzzleDataStatus.idbSearchPanelSearches = idbResult;
             if (state.searchPanelSearches.status === Statuses.Initial) {
@@ -213,14 +207,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         "ID3-2: IDB attempts query resolved first but was empty, and server attempts are not" +
           " empty. Setting attempts, guesses, and SPSs to server data.",
       );
-      const serverData = serverResult.value.data;
-      api.dispatch(setAttempts(serverData.attempts));
-      api.dispatch(
-        setGuesses(
-          serverData.guesses.map((guess) => processGuess(guess, state)),
-        ),
-      );
-      api.dispatch(setSearchPanelSearches(serverData.searches));
+      api.dispatch(loadUserPuzzleServerData(serverResult.value.data));
     } else if (
       idbAttemptsResult.status === "rejected" &&
       userPuzzleDataStatus.resolvedFirst === "IDB" &&
@@ -231,15 +218,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         "ID3-3: IDB resolved first but errored, and server returned successfully. Setting" +
           " attempts, guesses, and SPSs to server data.",
       );
-      api.dispatch(setAttempts(serverResult.value.data.attempts));
-      api.dispatch(
-        setGuesses(
-          serverResult.value.data.guesses.map((guess) =>
-            processGuess(guess, state),
-          ),
-        ),
-      );
-      api.dispatch(setSearchPanelSearches(serverResult.value.data.searches));
+      api.dispatch(loadUserPuzzleServerData(serverResult.value.data));
     } else if (
       userPuzzleDataStatus.resolvedFirst === "SERVER" &&
       serverResult.status === "rejected" &&
@@ -251,8 +230,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           " attempts to IDB data and then fetching IDB guesses and SPSs.",
       );
       api.dispatch(setAttempts(idbAttemptsResult.value));
-      currentAttemptUuid = selectCurrentAttemptUuid(state);
-      const idbGuesses = getIdbAttemptGuesses(currentAttemptUuid)
+      attemptUuid = selectCurrentAttemptUuid(state);
+      const idbGuesses = getIdbAttemptGuesses(attemptUuid)
         .then((idbResult) => {
           devLog("ID3-4-1-1: Guesses loaded successfully from IDB:", idbResult);
           api.dispatch(setGuesses(idbResult));
@@ -260,7 +239,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         .catch((err) => {
           devLog("ID3-4-1-2: Error loading guesses from IDB:", err);
         });
-      const idbSearches = getIdbAttemptSearches(currentAttemptUuid)
+      const idbSearches = getIdbAttemptSearches(attemptUuid)
         .then((idbResult) => {
           devLog("ID3-4-2-1: SPSs loaded successfully from IDB:", idbResult);
           api.dispatch(setSearchPanelSearches(idbResult));
@@ -293,3 +272,53 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
     }
   },
 );
+
+export const loadUserPuzzleServerData = createAsyncThunk(
+  "userData/loadUserPuzzleServerData",
+  (data: UserPuzzleData, api) => {
+    const state = api.getState() as RootState;
+    api.dispatch(setAttempts(data.attempts));
+    api.dispatch(
+      setGuesses(data.guesses.map((guess) => processGuess(guess, state))),
+    );
+    api.dispatch(setSearchPanelSearches(data.searches));
+  },
+);
+
+export const loadIdbAttemptGuesses = createAsyncThunk(
+  "userData/loadIdbAttemptGuesses",
+  (attemptUuid: Uuid, api) => {
+    getIdbAttemptGuesses(attemptUuid)
+      .then((idbResult) => {
+        devLog("Guesses loaded successfully from IDB:", idbResult);
+        api.dispatch(setGuesses(idbResult));
+      })
+      .catch((err) => {
+        devLog("Error loading guesses from IDB:", err);
+      });
+  },
+);
+
+export const loadIdbAttemptSearches = createAsyncThunk(
+  "userData/loadIdbAttemptSearches",
+  (attemptUuid: Uuid, api) => {
+    getIdbAttemptSearches(attemptUuid)
+      .then((idbResult) => {
+        devLog("SPSs loaded successfully from IDB:", idbResult);
+        api.dispatch(setSearchPanelSearches(idbResult));
+      })
+      .catch((err) => {
+        devLog("Error loading search panel searches from IDB:", err);
+      });
+  },
+);
+
+export const resolveAttempts = (
+  data: NullableDiffContainer<Array<AttemptFormat>>,
+) => {
+  //stuff
+};
+
+export const resolveGuesses = (data: NullableDiffContainer<GuessFormat>) => {
+  //do stuff
+};

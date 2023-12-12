@@ -5,7 +5,7 @@ import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { HintPanelData } from "@/features/hintPanels";
 import * as crypto from "crypto";
-import { Uuid } from "@/types";
+import { UuidRecord } from "@/features/api/types";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<AttemptFormat>;
@@ -65,13 +65,6 @@ export const isDexieError = (err: any): err is DexieError => {
  * @see idbInsertWithRetry
  */
 export const MAX_IDB_RETRIES = 3;
-
-/** An abstraction for use as the base of a generic type. It represents all types that contain a
- *  UUID, which is most of the types representing some unit of data that might need to be stored
- *  in IndexedDB. This abstraction is only useful for idbInsertWithRetry.
- * @see idbInsertWithRetry
- */
-type UuidRecord = { uuid: Uuid };
 
 /** Takes a function for inserting a record into IndexedDB ("insertFn") and
  * returns that function wrapped with retry logic ("retryableInsertFn"). This
