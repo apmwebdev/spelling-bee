@@ -12,12 +12,13 @@
 
 import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
-import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
+import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { devLog } from "@/util";
+import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
 
 export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPuzzleAttempts: builder.query<AttemptFormat[], void>({
+    getPuzzleAttempts: builder.query<UserPuzzleAttempt[], void>({
       queryFn: async (_args, api, _extraOptions, baseQuery) => {
         const state = api.getState() as RootState;
         const puzzleId = state.puzzle.data.id;
@@ -28,10 +29,10 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         const response = await baseQuery(
           `/puzzle_user_puzzle_attempts/${puzzleId}`,
         );
-        return response as { data: AttemptFormat[] };
+        return response as { data: UserPuzzleAttempt[] };
       },
     }),
-    addAttempt: builder.mutation<AttemptFormat, AttemptFormat>({
+    addAttempt: builder.mutation<UserPuzzleAttempt, UserPuzzleAttempt>({
       query: (attempt) => ({
         url: "/user_puzzle_attempts",
         method: "POST",
@@ -43,6 +44,29 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         url: `/user_puzzle_attempts/${attemptId}`,
         method: "DELETE",
       }),
+    }),
+    addBulkAttempts: builder.mutation<
+      Array<UuidRecordStatus>,
+      Array<UserPuzzleAttempt>
+    >({
+      query: (attemptData) => ({
+        url: "/user_puzzle_attempts/bulk_add",
+        method: "POST",
+        body: {
+          user_puzzle_attempts: attemptData.map((attempt) =>
+            keysToSnakeCase(attempt),
+          ),
+        },
+      }),
+    }),
+    updateAttemptUuids: builder.mutation<
+      Array<UuidUpdateData>,
+      Array<UuidUpdateData>
+    >({
+      queryFn: (uuids, api) => {
+        devLog("This endpoint hasn't been implemented yet.");
+        return { data: [] };
+      },
     }),
   }),
 });

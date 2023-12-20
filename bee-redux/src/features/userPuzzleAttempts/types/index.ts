@@ -12,14 +12,16 @@
 
 import { BLANK_UUID, hasAllProperties, isUuid, Uuid } from "@/types";
 
-export type AttemptFormat = {
+export type UserPuzzleAttempt = {
   uuid: Uuid;
   puzzleId: number;
   createdAt: number;
   // guesses: GuessFormat[];
 };
 
-export const isAttemptFormat = (toTest: any): toTest is AttemptFormat => {
+export const isUserPuzzleAttempt = (
+  toTest: any,
+): toTest is UserPuzzleAttempt => {
   if (!hasAllProperties(toTest, "uuid", "puzzleId", "createdAt")) return false;
   if (!isUuid(toTest.uuid)) return false;
   if (!(typeof toTest.puzzleId === "number")) return false;
@@ -27,16 +29,22 @@ export const isAttemptFormat = (toTest: any): toTest is AttemptFormat => {
   return true;
 };
 
-export const BLANK_ATTEMPT: AttemptFormat = {
+export const BLANK_ATTEMPT: UserPuzzleAttempt = {
   uuid: BLANK_UUID,
   puzzleId: 0,
   createdAt: 0,
 };
 
-export const isBlankAttempt = (attempt: AttemptFormat) => {
+export const isBlankAttempt = (attempt: UserPuzzleAttempt) => {
   if (!hasAllProperties(attempt, "uuid", "puzzleId", "createdAt")) return false;
   if (attempt.uuid !== BLANK_UUID) return false;
   if (attempt.puzzleId !== 0) return false;
   if (attempt.createdAt !== 0) return false;
   return true;
+};
+
+export type RailsUserPuzzleAttempt = {
+  uuid: Uuid;
+  puzzle_id: number;
+  created_at: number;
 };

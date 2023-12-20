@@ -36,7 +36,11 @@ Rails.application.routes.draw do
       # Attempts and guesses
       get "puzzle_user_puzzle_attempts/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
-      resources :user_puzzle_attempts, param: :uuid, except: :update
+      resources :user_puzzle_attempts, param: :uuid, except: :update do
+        collection do
+          post :bulk_add
+        end
+      end
       get "user_puzzle_attempt_guesses/:user_puzzle_attempt_uuid",
         to: "guesses#index_for_attempt"
       resources :guesses, param: :uuid, only: :create

@@ -102,5 +102,17 @@ export type ResolvedDataContainer<DataType> = {
   displayData: Array<DataType>;
   idbDataToAdd: Array<DataType>;
   serverDataToAdd: Array<DataType>;
-  dataToOverwrite: Array<Uuid>;
+  dataToDelete: Array<Uuid>;
+};
+
+export type UuidRecordStatus = {
+  uuid: Uuid;
+  isSuccess: boolean;
+  newUuid?: Uuid;
+  error?: string;
+};
+
+export type UuidUpdateData = {
+  oldUuid: Uuid;
+  newUuid: Uuid;
 };

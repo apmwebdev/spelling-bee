@@ -36,7 +36,7 @@ import { devLog } from "@/util";
 import { getIdbAttemptGuesses } from "@/features/guesses/api/guessesIdbApi";
 import { getIdbAttemptSearches } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
 import { DexieGeneralError, isDexieGeneralError } from "@/lib/idb";
-import { AttemptFormat } from "@/features/userPuzzleAttempts";
+import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NullableDiffContainer } from "@/features/api/types";
 
@@ -55,7 +55,7 @@ type StatusItem<DataType> =
  */
 type UserPuzzleDataStatus = {
   serverData: StatusItem<UserPuzzleData>;
-  idbAttempts: StatusItem<Array<AttemptFormat>>;
+  idbAttempts: StatusItem<Array<UserPuzzleAttempt>>;
   idbGuesses: StatusItem<Array<GuessFormat>>;
   idbSearchPanelSearches: StatusItem<Array<SearchPanelSearchData>>;
   resolvedFirst: "IDB" | "SERVER" | null;

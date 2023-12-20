@@ -17,7 +17,7 @@ import {
 } from "@/features/hintProfiles/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { SerializedError } from "@reduxjs/toolkit";
-import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
+import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { RawGuessFormat } from "@/features/guesses";
 
 /** For type guard functions that need to check for multiple properties
@@ -78,7 +78,7 @@ export type UserBaseData = {
 
 export type UserPuzzleData = {
   searches: SearchPanelSearchData[];
-  attempts: AttemptFormat[];
+  attempts: UserPuzzleAttempt[];
   currentAttempt: string;
   guesses: RawGuessFormat[];
 };
@@ -285,8 +285,10 @@ export const UUID_REGEX =
  * string should be 36 characters in total with 4 dashes.
  * @param {string} toTest - The string to test against the regex
  */
-export const isUuid = (toTest: string): toTest is Uuid =>
-  UUID_REGEX.test(toTest);
+export const isUuid = (toTest: any): toTest is Uuid => {
+  if (typeof toTest !== "string") return false;
+  return UUID_REGEX.test(toTest);
+};
 
 /** For use in initial state values and any other scenario where a blank, empty,
  *  or placeholder UUID is needed.

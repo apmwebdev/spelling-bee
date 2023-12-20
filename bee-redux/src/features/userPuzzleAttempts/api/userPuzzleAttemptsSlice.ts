@@ -18,6 +18,7 @@ import {
 } from "@reduxjs/toolkit";
 import {
   createInitialState,
+  isBasicSuccessResponse,
   isErrorResponse,
   isUuid,
   StateShape,
@@ -25,28 +26,35 @@ import {
   Uuid,
 } from "@/types";
 import {
-  AttemptFormat,
   BLANK_ATTEMPT,
-  isAttemptFormat,
+  isUserPuzzleAttempt,
+  UserPuzzleAttempt,
 } from "@/features/userPuzzleAttempts";
 import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 import { RootState } from "@/app/store";
 import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
 import { last } from "lodash";
 import { devLog } from "@/util";
-import { addIdbAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
+import {
+  addIdbAttempt,
+  bulkAddIdbAttempts,
+  bulkDeleteIdbAttempts,
+  updateIdbAttemptUuids,
+} from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
 import {
   createDiffPromiseContainer,
   DataSourceKeys,
   DiffContainer,
+  UuidUpdateData,
 } from "@/features/api/types";
 import * as crypto from "crypto";
 import { selectPuzzleId } from "@/features/puzzle";
 import { combineForDisplayAndSync } from "@/features/api";
+import { createUuidSyncThunk } from "@/features/api/util/synchronizer";
 
 type UserPuzzleAttemptsStateData = {
-  currentAttempt: AttemptFormat;
-  attempts: AttemptFormat[];
+  currentAttempt: UserPuzzleAttempt;
+  attempts: UserPuzzleAttempt[];
 };
 
 const initialState: StateShape<UserPuzzleAttemptsStateData> =
@@ -56,7 +64,7 @@ const initialState: StateShape<UserPuzzleAttemptsStateData> =
   });
 
 type CurrentAttemptsFulfilledResponse = PayloadAction<
-  AttemptFormat[],
+  UserPuzzleAttempt[],
   string,
   {
     arg: QueryThunkArg & {
@@ -76,12 +84,15 @@ export const userPuzzleAttemptsSlice = createSlice({
   name: "userPuzzleAttempts",
   initialState,
   reducers: {
-    setAttempts: (state, { payload }: PayloadAction<Array<AttemptFormat>>) => {
+    setAttempts: (
+      state,
+      { payload }: PayloadAction<Array<UserPuzzleAttempt>>,
+    ) => {
       state.data.attempts = payload;
       state.data.currentAttempt = last(payload) ?? BLANK_ATTEMPT;
     },
-    addAttempt: (state, { payload }: PayloadAction<AttemptFormat>) => {
-      if (!isAttemptFormat(payload)) {
+    addAttempt: (state, { payload }: PayloadAction<UserPuzzleAttempt>) => {
+      if (!isUserPuzzleAttempt(payload)) {
         devLog("Invalid attempt:", payload);
         return;
       }
@@ -120,6 +131,18 @@ export const userPuzzleAttemptsSlice = createSlice({
         state.data.currentAttempt = newCurrent;
       }
     },
+    updateAttemptUuids: (
+      state,
+      { payload }: PayloadAction<Array<UuidUpdateData>>,
+    ) => {
+      for (const item of payload) {
+        const attemptToChange = state.data.attempts.find(
+          (attempt) => attempt.uuid === item.oldUuid,
+        );
+        if (!attemptToChange) continue;
+        attemptToChange.uuid = item.newUuid;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher<CurrentAttemptsFulfilledResponse>(
@@ -133,10 +156,17 @@ export const userPuzzleAttemptsSlice = createSlice({
   },
 });
 
-export const { setAttempts, addAttempt, deleteAttempt, setCurrentAttempt } =
-  userPuzzleAttemptsSlice.actions;
+export const {
+  setAttempts,
+  addAttempt,
+  deleteAttempt,
+  setCurrentAttempt,
+  updateAttemptUuids,
+} = userPuzzleAttemptsSlice.actions;
 
-export const generateUserPuzzleAttempt = (puzzleId: number): AttemptFormat => {
+export const generateUserPuzzleAttempt = (
+  puzzleId: number,
+): UserPuzzleAttempt => {
   return {
     uuid: crypto.randomUUID(),
     puzzleId,
@@ -146,8 +176,8 @@ export const generateUserPuzzleAttempt = (puzzleId: number): AttemptFormat => {
 
 export const addAttemptThunk = createAsyncThunk(
   "userPuzzleAttempts/addAttemptThunk",
-  async (attempt: AttemptFormat, api) => {
-    if (!isAttemptFormat(attempt)) {
+  async (attempt: UserPuzzleAttempt, api) => {
+    if (!isUserPuzzleAttempt(attempt)) {
       //TODO: Add better error handling
       devLog("Invalid attempt. Exiting");
       return;
@@ -156,7 +186,10 @@ export const addAttemptThunk = createAsyncThunk(
     //Note the UUID in case there's a collision during persistence and it needs to be updated
     const originalUuid = attempt.uuid;
     api.dispatch(addAttempt(attempt));
-    const results = createDiffPromiseContainer<AttemptFormat, AttemptFormat>();
+    const results = createDiffPromiseContainer<
+      UserPuzzleAttempt,
+      UserPuzzleAttempt
+    >();
     results.idbData = await addIdbAttempt(attempt);
     if (!state.auth.isGuest) {
       results.serverData = await api.dispatch(
@@ -188,16 +221,64 @@ export const generateNewAttemptThunk = createAsyncThunk(
   },
 );
 
+export const syncAttemptUuids = createUuidSyncThunk({
+  serverUuidUpdateFn:
+    userPuzzleAttemptsApiSlice.endpoints.updateAttemptUuids.initiate,
+  idbUuidUpdateFn: updateIdbAttemptUuids,
+  stateUuidUpdateFn: updateAttemptUuids,
+});
+
 export const resolveAttempts = createAsyncThunk(
   "userPuzzleAttempts/resolveAttempts",
-  (data: DiffContainer<AttemptFormat>) => {
-    const { displayData, idbDataToAdd, serverDataToAdd, dataToOverwrite } =
+  async (data: DiffContainer<UserPuzzleAttempt>, api) => {
+    const { displayData, idbDataToAdd, serverDataToAdd, dataToDelete } =
       combineForDisplayAndSync({
         data,
         primaryDataKey: DataSourceKeys.serverData,
       });
-    //TODO: Only update state if it needs it? Update stores that need updating
-    // Somehow update UUIDs if there's a collision.
+    api.dispatch(setAttempts(displayData));
+    //bulk add server data
+    const idbAndReduxUuidsToUpdate: Array<UuidUpdateData> = [];
+    const serverResult = await api
+      .dispatch(
+        userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts.initiate(
+          serverDataToAdd,
+        ),
+      )
+      .catch((err) => {
+        //TODO: Add better error handling
+        devLog("Error bulk updating attempts:", err);
+        return null;
+      });
+    if (isBasicSuccessResponse(serverResult)) {
+      for (const result of serverResult.data) {
+        //TODO: Handle errors somehow?
+        if (result.isSuccess && result.newUuid) {
+          idbAndReduxUuidsToUpdate.push({
+            oldUuid: result.uuid,
+            newUuid: result.newUuid,
+          });
+        }
+      }
+    }
+    await bulkDeleteIdbAttempts(dataToDelete);
+    const idbResult = await bulkAddIdbAttempts(idbDataToAdd).catch((err) => {
+      //TODO: Add better error handling
+      devLog("Error bulk updating IDB attempts:", err);
+      return null;
+    });
+    if (
+      idbAndReduxUuidsToUpdate.length > 0 ||
+      (idbResult && idbResult.length > 0)
+    ) {
+      devLog("Need to sync UUIDs");
+      await api.dispatch(
+        syncAttemptUuids({
+          serverData: idbAndReduxUuidsToUpdate,
+          idbData: idbResult ?? [],
+        }),
+      );
+    }
   },
 );
 
@@ -207,7 +288,12 @@ export const selectCurrentAttemptUuid = createSelector(
   [selectCurrentAttempt],
   (attempt) => attempt.uuid,
 );
-export const selectAttempts = (state: RootState) =>
+const selectAttempts = (state: RootState) =>
   state.userPuzzleAttempts.data.attempts;
+
+export const selectAttemptsMemoized = createSelector(
+  [selectAttempts],
+  (attempts) => attempts,
+);
 
 export default userPuzzleAttemptsSlice.reducer;

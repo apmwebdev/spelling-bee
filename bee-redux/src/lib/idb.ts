@@ -1,6 +1,6 @@
 import Dexie, { DexieError, IndexableType, Table } from "dexie";
 import { GuessFormat } from "@/features/guesses";
-import { AttemptFormat } from "@/features/userPuzzleAttempts/types";
+import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { HintPanelData } from "@/features/hintPanels";
@@ -8,7 +8,7 @@ import * as crypto from "crypto";
 import { UuidRecord } from "@/features/api/types";
 
 export class SsbDexie extends Dexie {
-  attempts!: Table<AttemptFormat>;
+  attempts!: Table<UserPuzzleAttempt>;
   guesses!: Table<GuessFormat>;
   hintProfiles!: Table<HintProfileData>;
   hintPanels!: Table<HintPanelData>;

@@ -13,7 +13,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import * as Select from "@/components/radix-ui/radix-select";
 import {
-  selectAttempts,
+  selectAttemptsMemoized,
   selectCurrentAttempt,
   setCurrentAttempt,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
@@ -21,7 +21,7 @@ import {
 export function AttemptSelector() {
   const dispatch = useAppDispatch();
   const currentAttempt = useAppSelector(selectCurrentAttempt);
-  const attempts = useAppSelector(selectAttempts);
+  const attempts = useAppSelector(selectAttemptsMemoized);
   return (
     <Select.Root
       value={`${currentAttempt.uuid}`}

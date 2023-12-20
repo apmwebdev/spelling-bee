@@ -92,7 +92,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
    * records may be replaced by records from the primary data. This is necessary if, e.g., a guess
    * for the word "foobar" is stored both locally and server-side, but for some reason the UUIDs
    * don't match up. In that case, delete the local one and use the server version. */
-  const dataToOverwrite = new Set<Uuid>();
+  const dataToDelete = new Set<Uuid>();
   nonUuidUniqueKeys ??= [];
   /** The nonUuidUniqueKeys, plus "uuid", in a Set to remove duplicates */
   const uniqueKeys = new Set([...nonUuidUniqueKeys, "uuid"]);
@@ -118,7 +118,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
       }
       //If `matchingItem` isn't identical to `item`, mark it for deletion and replace it with `item`
       if (matchingItem && !isEqual(item, matchingItem)) {
-        dataToOverwrite.add(matchingItem.uuid);
+        dataToDelete.add(matchingItem.uuid);
         if (!updateMaps[secondaryDataKey].has(item.uuid)) {
           updateMaps[secondaryDataKey].set(item.uuid, item);
         }
@@ -131,7 +131,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
    * data. Since partial matches were already addressed in `primaryDataLoop`, this logic can be
    * much simpler. */
   for (const item of secondaryData) {
-    if (dataToOverwrite.has(item.uuid)) continue;
+    if (dataToDelete.has(item.uuid)) continue;
     if (!uuids.has(item.uuid)) {
       displayData.push(item);
       updateMaps[primaryDataKey].set(item.uuid, item);
@@ -141,6 +141,6 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
     displayData,
     idbDataToAdd: [...updateMaps[DataSourceKeys.idbData].values()],
     serverDataToAdd: [...updateMaps[DataSourceKeys.serverData].values()],
-    dataToOverwrite: [...dataToOverwrite.values()],
+    dataToDelete: [...dataToDelete.values()],
   };
 };

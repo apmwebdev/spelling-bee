@@ -80,6 +80,25 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     @user_puzzle_attempt.destroy
   end
 
+  # POST /user_puzzle_attempts/bulk_add
+  def bulk_add
+    return_array = []
+    bulk_add_params[:user_puzzle_attempts].map do |attempt|
+      item_status = {uuid: attempt.uuid, isSuccess: true}
+      begin
+        attempt.save_with_uuid_retry!
+        unless item_status[:uuid] == attempt.uuid
+          item_status[:newUuid] = attempt.uuid
+        end
+      rescue
+        item_status[:isSuccess] = false
+        item_status[:error] = "Error saving user puzzle attempt"
+      end
+      return_array.push(item_status)
+    end
+    render json: return_array, status: 200
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -94,5 +113,12 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   def user_puzzle_attempt_params
     params.require(:user_puzzle_attempt)
       .permit(:uuid, :puzzle_id, :created_at)
+  end
+
+  def bulk_add_params
+    params.require(:user_puzzle_attempts)
+      .map do |attempt|
+        attempt.permit(:uuid, :puzzle_id, :created_at)
+      end
   end
 end
