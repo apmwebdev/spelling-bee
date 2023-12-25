@@ -22,7 +22,7 @@ import {
 } from "@/types";
 import {
   generateNewAttemptThunk,
-  resolveAttempts,
+  resolveAttemptsData,
   selectCurrentAttemptUuid,
   setAttempts,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
@@ -61,6 +61,12 @@ type UserPuzzleDataStatus = {
   resolvedFirst: "IDB" | "SERVER" | null;
 };
 
+/** Load user puzzle data (attempts, guesses, search panel searches) from both server and IndexedDB.
+ * When loaded from the server, all data comes in one query. When loaded from IDB, each type of
+ * data is its own query. For IDB, need attempts before fetching guesses and SPSs.
+ * Between server and IDB attempts queries, load whichever one returns first, then compare the data
+ * to the other query once it returns. Server data is source of truth.
+ */
 export const getUserPuzzleDataThunk = createAsyncThunk(
   "userData/getUserPuzzleDataThunk",
   async (puzzleId: number, api) => {
@@ -204,7 +210,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         );
       }
       //Diff data
-      resolveAttempts({
+      resolveAttemptsData({
         idbData: idbAttemptsResult.value,
         serverData: serverResult.value.data.attempts,
       });

@@ -22,7 +22,7 @@ export const getIdbPuzzleAttempts = (puzzleId: number) => {
 
 /** If successful, returns the UUID of the inserted record. If unsuccessful, returns null. */
 export const addIdbAttempt = idbInsertWithRetry<UserPuzzleAttempt>(
-  idb.attempts.add,
+  idb.attempts.add.bind(idb.attempts),
 );
 
 /** This is for adding attempts that exist on the server but not in IDB, which could happen if a

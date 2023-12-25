@@ -55,6 +55,8 @@ export type UuidSyncData = {
   idbData: Array<UuidUpdateData>;
 };
 
+//TODO: Make this recursive or a loop so it will keep trying new UUIDs until one works in both
+// places
 export const createUuidSyncThunk = ({
   serverUuidUpdateFn,
   idbUuidUpdateFn,

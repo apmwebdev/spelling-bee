@@ -10,9 +10,9 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { selectGuesses, useAddGuessMutation } from "@/features/guesses";
+import { addGuessThunk, selectGuesses } from "@/features/guesses";
 import React, { useContext, useEffect, useState } from "react";
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useGuessMessages } from "@/features/guesses/hooks/useGuessMessages";
 import { GuessInputContext } from "@/features/guesses/providers/GuessInputProvider";
 import { GuessAlerts } from "@/features/guesses/components/GuessAlerts";
@@ -23,6 +23,7 @@ import { useGuessValidation } from "@/features/guesses/hooks/useGuessValidation"
 import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function GuessInputForm() {
+  const dispatch = useAppDispatch();
   const { guessValue, setGuessValue, clearGuessTimeout, clearGuess } =
     useContext(GuessInputContext);
   const answers = useAppSelector(selectAnswerWords);
@@ -36,7 +37,6 @@ export function GuessInputForm() {
     clearGuess,
   });
   const validator = useGuessValidation(messages);
-  const [addGuess] = useAddGuessMutation();
   useGuessInputListener();
 
   useEffect(() => {
@@ -52,15 +52,17 @@ export function GuessInputForm() {
       if (validator.validate(guessValue, guesses)) {
         const isAnswer = answers.includes(guessValue);
         const isExcluded = excludedWords.includes(guessValue);
-        addGuess({
-          guess: {
+        dispatch(
+          addGuessThunk({
             uuid: crypto.randomUUID(),
-            user_puzzle_attempt_uuid: currentAttempt.uuid,
+            attemptUuid: currentAttempt.uuid,
             text: guessValue,
-            created_at: Date.now(),
-            is_spoiled: false,
-          },
-        });
+            createdAt: Date.now(),
+            isSpoiled: false,
+            isAnswer,
+            isExcluded,
+          }),
+        );
         if (isAnswer) {
           messages.update([guessValue], "answer");
           setGuessValue("");

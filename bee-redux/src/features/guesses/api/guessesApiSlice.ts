@@ -15,9 +15,21 @@ import { RootState } from "@/app/store";
 import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
 import {
   GuessFormat,
-  RailsGuessFormData,
+  RailsGuessFormat,
   RawGuessFormat,
 } from "@/features/guesses";
+import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
+import { devLog } from "@/util";
+
+const railsifyGuess = (guess: GuessFormat): RailsGuessFormat => {
+  return {
+    uuid: guess.uuid,
+    user_puzzle_attempt_uuid: guess.attemptUuid,
+    text: guess.text,
+    created_at: guess.createdAt,
+    is_spoiled: guess.isSpoiled,
+  };
+};
 
 export const processGuess = (
   { uuid, attemptUuid, text, createdAt, isSpoiled }: RawGuessFormat,
@@ -48,20 +60,36 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
         url: `/user_puzzle_attempt_guesses/${attempt_uuid}`,
       }),
     }),
-    addGuess: builder.mutation<GuessFormat, RailsGuessFormData>({
-      queryFn: async (
-        guessData: RailsGuessFormData,
-        api,
-        _extraOptions,
-        baseQuery,
-      ) => {
+    addGuess: builder.mutation<GuessFormat, GuessFormat>({
+      queryFn: async (guess: GuessFormat, api, _extraOptions, baseQuery) => {
         const state = api.getState() as RootState;
         const { data } = await baseQuery({
           url: "/guesses",
           method: "POST",
-          body: guessData,
+          body: { guess: railsifyGuess(guess) },
         });
         return { data: processGuess(data as RawGuessFormat, state) };
+      },
+    }),
+    addBulkGuesses: builder.mutation<
+      Array<UuidRecordStatus>,
+      Array<GuessFormat>
+    >({
+      query: (guessData) => ({
+        url: "/guesses/bulk_add",
+        method: "POST",
+        body: {
+          guesses: guessData.map((guess) => railsifyGuess(guess)),
+        },
+      }),
+    }),
+    updateGuessUuids: builder.mutation<
+      Array<UuidUpdateData>,
+      Array<UuidUpdateData>
+    >({
+      queryFn: (uuids, api) => {
+        devLog("This endpoint hasn't been implemented yet.");
+        return { data: [] };
       },
     }),
   }),

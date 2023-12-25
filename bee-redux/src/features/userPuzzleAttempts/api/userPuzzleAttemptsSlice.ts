@@ -22,7 +22,6 @@ import {
   isErrorResponse,
   isUuid,
   StateShape,
-  Statuses,
   Uuid,
 } from "@/types";
 import {
@@ -145,14 +144,14 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher<CurrentAttemptsFulfilledResponse>(
-      userPuzzleAttemptsApiSlice.endpoints.getPuzzleAttempts.matchFulfilled,
-      (state, { payload }) => {
-        state.data.attempts = payload;
-        state.data.currentAttempt = payload.slice(-1)[0];
-        state.status = Statuses.UpToDate;
-      },
-    );
+    // builder.addMatcher<CurrentAttemptsFulfilledResponse>(
+    //   userPuzzleAttemptsApiSlice.endpoints.getPuzzleAttempts.matchFulfilled,
+    //   (state, { payload }) => {
+    //     state.data.attempts = payload;
+    //     state.data.currentAttempt = payload.slice(-1)[0];
+    //     state.status = Statuses.UpToDate;
+    //   },
+    // );
   },
 });
 
@@ -208,7 +207,7 @@ export const addAttemptThunk = createAsyncThunk(
       api.dispatch(deleteAttempt(originalUuid));
       return;
     }
-    //Check UUIDs to make sure they match in all places
+    //TODO: Check UUIDs to make sure they match in all places
   },
 );
 
@@ -228,8 +227,8 @@ export const syncAttemptUuids = createUuidSyncThunk({
   stateUuidUpdateFn: updateAttemptUuids,
 });
 
-export const resolveAttempts = createAsyncThunk(
-  "userPuzzleAttempts/resolveAttempts",
+export const resolveAttemptsData = createAsyncThunk(
+  "userPuzzleAttempts/resolveAttemptsData",
   async (data: DiffContainer<UserPuzzleAttempt>, api) => {
     const { displayData, idbDataToAdd, serverDataToAdd, dataToDelete } =
       combineForDisplayAndSync({

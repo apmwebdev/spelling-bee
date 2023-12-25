@@ -22,7 +22,9 @@ export type UserPuzzleAttempt = {
 export const isUserPuzzleAttempt = (
   toTest: any,
 ): toTest is UserPuzzleAttempt => {
-  if (!hasAllProperties(toTest, "uuid", "puzzleId", "createdAt")) return false;
+  if (!hasAllProperties(toTest, ["uuid", "puzzleId", "createdAt"])) {
+    return false;
+  }
   if (!isUuid(toTest.uuid)) return false;
   if (!(typeof toTest.puzzleId === "number")) return false;
   if (!(typeof toTest.createdAt === "number")) return false;
@@ -36,7 +38,9 @@ export const BLANK_ATTEMPT: UserPuzzleAttempt = {
 };
 
 export const isBlankAttempt = (attempt: UserPuzzleAttempt) => {
-  if (!hasAllProperties(attempt, "uuid", "puzzleId", "createdAt")) return false;
+  if (!hasAllProperties(attempt, ["uuid", "puzzleId", "createdAt"])) {
+    return false;
+  }
   if (attempt.uuid !== BLANK_UUID) return false;
   if (attempt.puzzleId !== 0) return false;
   if (attempt.createdAt !== 0) return false;

@@ -24,7 +24,7 @@ import { RawGuessFormat } from "@/features/guesses";
  * @param {object} obj - The object to check
  * @param {Array<string>} properties - The property names to check in the object
  */
-export function hasAllProperties(obj: object, ...properties: Array<string>) {
+export function hasAllProperties(obj: object, properties: Array<string>) {
   if (typeof obj !== "object") return false;
   for (const property of properties) {
     if (property in obj) continue;
@@ -87,7 +87,7 @@ export const isUserPuzzleData = (toTest: any): toTest is UserPuzzleData => {
   return (
     //TODO: Eventually check for currentAttempt as well
     isPlainObject(toTest) &&
-    hasAllProperties(toTest, "searches", "attempts", "guesses")
+    hasAllProperties(toTest, ["searches", "attempts", "guesses"])
   );
 };
 
@@ -226,7 +226,7 @@ export type ActiveModelError = {
 export const isActiveModelError = (
   response: any,
 ): response is ActiveModelError => {
-  if (!hasAllProperties(response, "error", "activeModelErrors")) return false;
+  if (!hasAllProperties(response, ["error", "activeModelErrors"])) return false;
   if (!(typeof response.error === "string")) return false;
   if (!isPlainObject(response.activeModelErrors)) return false;
   return true;
