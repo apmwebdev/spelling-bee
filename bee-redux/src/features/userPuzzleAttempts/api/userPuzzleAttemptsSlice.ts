@@ -46,7 +46,6 @@ import {
   DiffContainer,
   UuidUpdateData,
 } from "@/features/api/types";
-import * as crypto from "crypto";
 import { selectPuzzleId } from "@/features/puzzle";
 import { combineForDisplayAndSync } from "@/features/api";
 import { createUuidSyncThunk } from "@/features/api/util/synchronizer";

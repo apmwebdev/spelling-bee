@@ -143,7 +143,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
                   " successful. Diff server and IDB guesses.",
                 idbResult,
               );
-              //Diff data
+              //TODO: Diff data
             }
           })
           .catch((err) => {
@@ -168,7 +168,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
                 "ID2-2-1-2: Server resolved first and was successful, SPSs IDB query was also" +
                   " successful. Diff server and IDB SPSs.",
               );
-              //Diff data
+              //TODO: Diff data
             }
           })
           .catch((err) => {
@@ -189,11 +189,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
     ]);
     const idbAttemptsResult = promisesResult[0];
     const serverResult = promisesResult[1];
-    devLog(
-      "ID3: Server and IDB both returned",
-      idbAttemptsResult,
-      serverResult,
-    );
+    devLog("ID3: Server and IDB both settled", idbAttemptsResult, serverResult);
     if (
       idbAttemptsResult.status === "fulfilled" &&
       idbAttemptsResult.value.length > 0 &&
@@ -209,7 +205,6 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           "Server result was successful but doesn't have a 'data' property. This shouldn't happen. Exiting.",
         );
       }
-      //Diff data
       resolveAttemptsData({
         idbData: idbAttemptsResult.value,
         serverData: serverResult.value.data.attempts,
@@ -226,6 +221,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           " empty. Setting attempts, guesses, and SPSs to server data.",
       );
       api.dispatch(loadUserPuzzleServerData(serverResult.value.data));
+      //TODO: Still try to load guesses and SPSs from IDB?
     } else if (
       idbAttemptsResult.status === "rejected" &&
       userPuzzleDataStatus.resolvedFirst === "IDB" &&
@@ -237,6 +233,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           " attempts, guesses, and SPSs to server data.",
       );
       api.dispatch(loadUserPuzzleServerData(serverResult.value.data));
+      //TODO: Still try to load guesses and SPSs from IDB?
     } else if (
       userPuzzleDataStatus.resolvedFirst === "SERVER" &&
       serverResult.status === "rejected" &&
