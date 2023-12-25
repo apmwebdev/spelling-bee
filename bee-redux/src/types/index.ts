@@ -11,14 +11,7 @@
 */
 
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import {
-  CompleteHintProfile,
-  HintProfilesData,
-} from "@/features/hintProfiles/types";
-import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { SerializedError } from "@reduxjs/toolkit";
-import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
-import { RawGuessFormat } from "@/features/guesses";
 
 /** For type guard functions that need to check for multiple properties
  * @param {object} obj - The object to check
@@ -69,27 +62,6 @@ export type UserPrefsData = {
   colorScheme: ColorSchemes;
   // currentHintProfile: HintProfileBasicData;
 };
-export type UserBaseData = {
-  prefs: UserPrefsData;
-  hintProfiles: HintProfilesData;
-  currentHintProfile: CompleteHintProfile;
-  isLoggedIn: boolean;
-};
-
-export type UserPuzzleData = {
-  searches: SearchPanelSearchData[];
-  attempts: UserPuzzleAttempt[];
-  currentAttempt: string;
-  guesses: RawGuessFormat[];
-};
-
-export const isUserPuzzleData = (toTest: any): toTest is UserPuzzleData => {
-  return (
-    //TODO: Eventually check for currentAttempt as well
-    isPlainObject(toTest) &&
-    hasAllProperties(toTest, ["searches", "attempts", "guesses"])
-  );
-};
 
 export type StateShape<dataShape> = {
   data: dataShape;
@@ -138,9 +110,6 @@ export const isTypedSuccessResponse =
   (response: any): response is TypedSuccessResponse<DataType> => {
     return isBasicSuccessResponse(response) && validationFn(response.data);
   };
-
-export const isUserPuzzleDataResponse =
-  isTypedSuccessResponse<UserPuzzleData>(isUserPuzzleData);
 
 export type ErrorResponse = { error: any };
 

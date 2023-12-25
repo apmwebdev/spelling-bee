@@ -13,20 +13,19 @@
 import { createAsyncThunk, SerializedError } from "@reduxjs/toolkit";
 import { getIdbPuzzleAttempts } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
 import { userDataApiSlice } from "@/features/userData";
-import {
-  isErrorResponse,
-  isUserPuzzleDataResponse,
-  Statuses,
-  UserPuzzleData,
-  Uuid,
-} from "@/types";
+import { isErrorResponse, Statuses, Uuid } from "@/types";
 import {
   generateNewAttemptThunk,
   resolveAttemptsData,
   selectCurrentAttemptUuid,
   setAttempts,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
-import { GuessFormat, processGuess, setGuesses } from "@/features/guesses";
+import {
+  GuessFormat,
+  processGuess,
+  resolveGuessesData,
+  setGuesses,
+} from "@/features/guesses";
 import { RootState } from "@/app/store";
 import {
   SearchPanelSearchData,
@@ -38,7 +37,11 @@ import { getIdbAttemptSearches } from "@/features/searchPanelSearches/api/search
 import { DexieGeneralError, isDexieGeneralError } from "@/lib/idb";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { NullableDiffContainer } from "@/features/api/types";
+import {
+  isUserPuzzleData,
+  isUserPuzzleDataResponse,
+  UserPuzzleData,
+} from "@/features/userData/types";
 
 /** A type that consists of either the data from a successful query, set via a generic, plus the
  *  different error types that can result from both RTK Query and Dexie. Null is an option since
@@ -65,7 +68,7 @@ type UserPuzzleDataStatus = {
  * When loaded from the server, all data comes in one query. When loaded from IDB, each type of
  * data is its own query. For IDB, need attempts before fetching guesses and SPSs.
  * Between server and IDB attempts queries, load whichever one returns first, then compare the data
- * to the other query once it returns. Server data is source of truth.
+ * to the other query once it returns. Server data takes precedence in case of conflict.
  */
 export const getUserPuzzleDataThunk = createAsyncThunk(
   "userData/getUserPuzzleDataThunk",
@@ -143,7 +146,12 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
                   " successful. Diff server and IDB guesses.",
                 idbResult,
               );
-              //TODO: Diff data
+              if (isUserPuzzleData(userPuzzleDataStatus.serverData)) {
+                resolveGuessesData({
+                  idbData: idbResult,
+                  serverData: userPuzzleDataStatus.serverData.guesses,
+                });
+              }
             }
           })
           .catch((err) => {
@@ -327,7 +335,3 @@ export const loadIdbAttemptSearches = createAsyncThunk(
       });
   },
 );
-
-export const resolveGuesses = (data: NullableDiffContainer<GuessFormat>) => {
-  //do stuff
-};
