@@ -55,9 +55,9 @@ type StatusItem<DataType> =
  */
 type UserPuzzleDataStatus = {
   serverData: StatusItem<UserPuzzleData>;
-  idbAttempts: StatusItem<Array<UserPuzzleAttempt>>;
-  idbGuesses: StatusItem<Array<GuessFormat>>;
-  idbSearchPanelSearches: StatusItem<Array<SearchPanelSearchData>>;
+  idbAttempts: StatusItem<UserPuzzleAttempt[]>;
+  idbGuesses: StatusItem<GuessFormat[]>;
+  idbSearchPanelSearches: StatusItem<SearchPanelSearchData[]>;
   resolvedFirst: "IDB" | "SERVER" | null;
 };
 

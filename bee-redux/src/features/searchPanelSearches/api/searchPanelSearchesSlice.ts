@@ -26,8 +26,9 @@ import { startAppListening } from "@/app/listenerMiddleware";
 import { deleteIdbSearchPanelSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
 import { devLog } from "@/util";
 
-const initialState: StateShape<Array<SearchPanelSearchData>> =
-  createInitialState([]);
+const initialState: StateShape<SearchPanelSearchData[]> = createInitialState(
+  [],
+);
 
 export const searchPanelSearchesSlice = createSlice({
   name: "searchPanelSearches",
@@ -35,7 +36,7 @@ export const searchPanelSearchesSlice = createSlice({
   reducers: {
     setSearchPanelSearches: (
       state,
-      { payload }: PayloadAction<Array<SearchPanelSearchData>>,
+      { payload }: PayloadAction<SearchPanelSearchData[]>,
     ) => {
       state.data = payload;
       state.status = Statuses.UpToDate;

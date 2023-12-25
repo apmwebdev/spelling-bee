@@ -13,8 +13,8 @@ export const addIdbGuess = idbInsertWithRetry<GuessFormat>(
 );
 // export const addIdbGuess = (guess: GuessFormat) => idb.guesses.add(guess);
 
-export const bulkAddIdbGuesses = async (guesses: Array<GuessFormat>) => {
-  const newUuids: Array<UuidUpdateData> = [];
+export const bulkAddIdbGuesses = async (guesses: GuessFormat[]) => {
+  const newUuids: UuidUpdateData[] = [];
   for (const guess of guesses) {
     const uuid = guess.uuid;
     const result = await addIdbGuess(guess);
@@ -32,12 +32,12 @@ export const deleteIdbGuess = (uuid: Uuid) => {
   return idb.guesses.delete(uuid);
 };
 
-export const bulkDeleteIdbGuesses = (uuids: Array<Uuid>) => {
+export const bulkDeleteIdbGuesses = (uuids: Uuid[]) => {
   return idb.guesses.bulkDelete(uuids);
 };
 
-export const updateIdbGuessUuids = async (uuids: Array<UuidUpdateData>) => {
-  const newUuids: Array<UuidUpdateData> = [];
+export const updateIdbGuessUuids = async (uuids: UuidUpdateData[]) => {
+  const newUuids: UuidUpdateData[] = [];
   for (const item of uuids) {
     try {
       await idb.guesses.update(item.oldUuid, { uuid: item.newUuid });

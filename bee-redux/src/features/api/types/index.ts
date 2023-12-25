@@ -70,12 +70,12 @@ export const createNullableDiffContainer = <DataType>(
 };
 
 export type DiffContainer<DataType> = {
-  [key in DataSourceKeys]: Array<DataType>;
+  [key in DataSourceKeys]: DataType[];
 };
 
 export const createDiffContainer = <DataType>(
-  idbData: Array<DataType>,
-  serverData: Array<DataType>,
+  idbData: DataType[],
+  serverData: DataType[],
 ): DiffContainer<DataType> => {
   return { idbData, serverData };
 };
@@ -99,10 +99,10 @@ export type UuidRecord = {
  */
 export type ResolvedDataContainer<DataType> = {
   //TODO: If this makes everything into an array, the other containers should do that too
-  displayData: Array<DataType>;
-  idbDataToAdd: Array<DataType>;
-  serverDataToAdd: Array<DataType>;
-  dataToDelete: Array<Uuid>;
+  displayData: DataType[];
+  idbDataToAdd: DataType[];
+  serverDataToAdd: DataType[];
+  dataToDelete: Uuid[];
 };
 
 export type UuidRecordStatus = {

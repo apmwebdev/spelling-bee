@@ -22,9 +22,9 @@ import { RawGuessFormat } from "@/features/guesses";
 
 /** For type guard functions that need to check for multiple properties
  * @param {object} obj - The object to check
- * @param {Array<string>} properties - The property names to check in the object
+ * @param {string[]} properties - The property names to check in the object
  */
-export function hasAllProperties(obj: object, properties: Array<string>) {
+export function hasAllProperties(obj: object, properties: string[]) {
   if (typeof obj !== "object") return false;
   for (const property of properties) {
     if (property in obj) continue;
@@ -220,7 +220,7 @@ export const isRawTypedError =
 
 export type ActiveModelError = {
   error: string;
-  activeModelErrors: { [key: string]: Array<string> };
+  activeModelErrors: { [key: string]: string[] };
 };
 
 export const isActiveModelError = (

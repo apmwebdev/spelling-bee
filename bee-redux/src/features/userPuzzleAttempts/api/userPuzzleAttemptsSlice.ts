@@ -83,10 +83,7 @@ export const userPuzzleAttemptsSlice = createSlice({
   name: "userPuzzleAttempts",
   initialState,
   reducers: {
-    setAttempts: (
-      state,
-      { payload }: PayloadAction<Array<UserPuzzleAttempt>>,
-    ) => {
+    setAttempts: (state, { payload }: PayloadAction<UserPuzzleAttempt[]>) => {
       state.data.attempts = payload;
       state.data.currentAttempt = last(payload) ?? BLANK_ATTEMPT;
     },
@@ -132,7 +129,7 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
     updateAttemptUuids: (
       state,
-      { payload }: PayloadAction<Array<UuidUpdateData>>,
+      { payload }: PayloadAction<UuidUpdateData[]>,
     ) => {
       for (const item of payload) {
         const attemptToChange = state.data.attempts.find(
@@ -237,7 +234,7 @@ export const resolveAttemptsData = createAsyncThunk(
       });
     api.dispatch(setAttempts(displayData));
     //bulk add server data
-    const idbAndReduxUuidsToUpdate: Array<UuidUpdateData> = [];
+    const idbAndReduxUuidsToUpdate: UuidUpdateData[] = [];
     const serverResult = await api
       .dispatch(
         userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts.initiate(

@@ -71,10 +71,7 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
         return { data: processGuess(data as RawGuessFormat, state) };
       },
     }),
-    addBulkGuesses: builder.mutation<
-      Array<UuidRecordStatus>,
-      Array<GuessFormat>
-    >({
+    addBulkGuesses: builder.mutation<UuidRecordStatus[], GuessFormat[]>({
       query: (guessData) => ({
         url: "/guesses/bulk_add",
         method: "POST",
@@ -83,10 +80,7 @@ export const guessesApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    updateGuessUuids: builder.mutation<
-      Array<UuidUpdateData>,
-      Array<UuidUpdateData>
-    >({
+    updateGuessUuids: builder.mutation<UuidUpdateData[], UuidUpdateData[]>({
       queryFn: (uuids, api) => {
         devLog("This endpoint hasn't been implemented yet.");
         return { data: [] };

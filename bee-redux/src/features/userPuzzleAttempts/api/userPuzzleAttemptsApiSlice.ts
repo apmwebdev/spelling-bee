@@ -45,10 +45,7 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    addBulkAttempts: builder.mutation<
-      Array<UuidRecordStatus>,
-      Array<UserPuzzleAttempt>
-    >({
+    addBulkAttempts: builder.mutation<UuidRecordStatus[], UserPuzzleAttempt[]>({
       query: (attemptData) => ({
         url: "/user_puzzle_attempts/bulk_add",
         method: "POST",
@@ -59,10 +56,7 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    updateAttemptUuids: builder.mutation<
-      Array<UuidUpdateData>,
-      Array<UuidUpdateData>
-    >({
+    updateAttemptUuids: builder.mutation<UuidUpdateData[], UuidUpdateData[]>({
       queryFn: (uuids, api) => {
         devLog("This endpoint hasn't been implemented yet.");
         return { data: [] };

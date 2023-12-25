@@ -27,12 +27,12 @@ export const syncRecords = async ({
   bulkDeleteData,
   bulkDeleteFn,
 }: {
-  serverData: Array<UuidRecord>;
-  serverBulkSaveFn: (serverData: Array<UuidRecord>) => Array<UuidRecordStatus>;
-  idbData: Array<UuidRecord>;
-  idbBulkSaveFn: (idbData: Array<UuidRecord>) => Array<UuidRecordStatus>;
-  bulkDeleteData: Array<Uuid>;
-  bulkDeleteFn: (bulkDeleteData: Array<Uuid>) => Array<UuidRecordStatus>;
+  serverData: UuidRecord[];
+  serverBulkSaveFn: (serverData: UuidRecord[]) => UuidRecordStatus[];
+  idbData: UuidRecord[];
+  idbBulkSaveFn: (idbData: UuidRecord[]) => UuidRecordStatus[];
+  bulkDeleteData: Uuid[];
+  bulkDeleteFn: (bulkDeleteData: Uuid[]) => UuidRecordStatus[];
 }) => {
   const serverResults = await serverBulkSaveFn(serverData);
   const deletionResults = await bulkDeleteFn(bulkDeleteData);
@@ -40,19 +40,19 @@ export const syncRecords = async ({
 };
 
 export type IdbUuidSyncFn = (
-  uuidData: Array<UuidUpdateData>,
-) => Promise<Array<UuidUpdateData>>;
+  uuidData: UuidUpdateData[],
+) => Promise<UuidUpdateData[]>;
 
 export type UuidSyncFns = {
   //TODO: Fix type here
   serverUuidUpdateFn: Function;
   idbUuidUpdateFn: IdbUuidSyncFn;
-  stateUuidUpdateFn: ActionCreatorWithPayload<Array<UuidUpdateData>>;
+  stateUuidUpdateFn: ActionCreatorWithPayload<UuidUpdateData[]>;
 };
 
 export type UuidSyncData = {
-  serverData: Array<UuidUpdateData>;
-  idbData: Array<UuidUpdateData>;
+  serverData: UuidUpdateData[];
+  idbData: UuidUpdateData[];
 };
 
 //TODO: Make this recursive or a loop so it will keep trying new UUIDs until one works in both

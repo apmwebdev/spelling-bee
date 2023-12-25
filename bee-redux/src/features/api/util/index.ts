@@ -64,7 +64,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
 }: {
   data: DiffContainer<DataType>;
   primaryDataKey: DataSourceKeys;
-  nonUuidUniqueKeys?: Array<string>;
+  nonUuidUniqueKeys?: string[];
 }): ResolvedDataContainer<DataType> => {
   /** The data that takes precedence in case there's a conflict between local and server data. This
    * should normally be server data, i.e., `data.serverData`. */
@@ -79,7 +79,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
    * data.This should normally be the IndexedDB data, i.e., `data.idbData`. */
   const secondaryData = data[secondaryDataKey];
   /** Container for the combined, deduplicated data, to be returned and stored in Redux state */
-  const displayData: Array<DataType> = [];
+  const displayData: DataType[] = [];
   /** Another piece of the return data. Tracks any records that are missing from the server or
    * IndexedDB so that they can be added and the data stores kept in sync. The values from the maps
    * are eventually spread into arrays, but maps are used here for easier lookup by UUID. */

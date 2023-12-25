@@ -76,10 +76,7 @@ export const guessesSlice = createSlice({
       }
       state.data.splice(guessIndexToDelete, 1);
     },
-    updateGuessUuids: (
-      state,
-      { payload }: PayloadAction<Array<UuidUpdateData>>,
-    ) => {
+    updateGuessUuids: (state, { payload }: PayloadAction<UuidUpdateData[]>) => {
       for (const item of payload) {
         const guessToChange = state.data.find(
           (guess) => guess.uuid === item.oldUuid,
@@ -158,7 +155,7 @@ export const resolveGuessesData = createAsyncThunk(
       });
     api.dispatch(setGuesses(displayData));
     //For guesses that exist in IDB but not the server, save them to the server
-    const idbAndReduxUuidsToUpdate: Array<UuidUpdateData> = [];
+    const idbAndReduxUuidsToUpdate: UuidUpdateData[] = [];
     const serverResult = await api
       .dispatch(
         guessesApiSlice.endpoints.addBulkGuesses.initiate(serverDataToAdd),
