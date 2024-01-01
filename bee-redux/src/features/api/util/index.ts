@@ -131,8 +131,10 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
    * data. Since partial matches were already addressed in `primaryDataLoop`, this logic can be
    * much simpler. */
   for (const item of secondaryData) {
+    devLog("secondary data item:", item);
     if (dataToDelete.has(item.uuid)) continue;
     if (!uuids.has(item.uuid)) {
+      devLog("Don't delete item, item not present in primary data");
       displayData.push(item);
       updateMaps[primaryDataKey].set(item.uuid, item);
     }

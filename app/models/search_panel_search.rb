@@ -17,8 +17,8 @@ class SearchPanelSearch < ApplicationRecord
   def to_front_end
     {
       uuid:,
-      searchPanelId: search_panel_id,
-      attemptId: user_puzzle_attempt_id,
+      searchPanelUuid: search_panel_uuid,
+      attemptUuid: user_puzzle_attempt_uuid,
       searchString: search_string,
       location:,
       lettersOffset: letters_offset,

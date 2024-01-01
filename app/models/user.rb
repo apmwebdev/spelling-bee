@@ -45,6 +45,11 @@ class User < ApplicationRecord
   has_many :hint_panels, through: :user_hint_profiles
   has_many :panel_subtypes, through: :hint_panels
   has_many :search_panels, as: :panel_subtype
+  has_many :search_panels,
+    # -> { where(panel_subtypes: {type: "SearchPanel"}) },
+    through: :hint_panels,
+    source: :panel_subtype,
+    source_type: "SearchPanel"
   has_many :search_panel_searches, through: :user_puzzle_attempts
 
   # Validations

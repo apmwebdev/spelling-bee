@@ -11,19 +11,21 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useAddAttemptMutation } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectPuzzleId } from "@/features/puzzle";
+import { addAttemptThunk } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function NewAttemptButton() {
-  const [addAttempt] = useAddAttemptMutation();
+  const dispatch = useAppDispatch();
   const puzzleId = useAppSelector(selectPuzzleId);
   const handleClick = async () => {
-    await addAttempt({
-      uuid: crypto.randomUUID(),
-      puzzleId: puzzleId,
-      createdAt: Date.now(),
-    });
+    await dispatch(
+      addAttemptThunk({
+        uuid: crypto.randomUUID(),
+        puzzleId: puzzleId,
+        createdAt: Date.now(),
+      }),
+    );
   };
 
   return (

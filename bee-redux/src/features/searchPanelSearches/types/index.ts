@@ -15,15 +15,73 @@ import {
   StatusTrackingKeys,
   SubstringHintDataCell,
 } from "@/features/hintPanels";
-import { SearchPanelBaseData } from "@/features/hintPanelType_search";
-import { Uuid } from "@/types";
+import {
+  SearchPanelBaseData,
+  SearchPanelLocationKeys,
+} from "@/features/hintPanelType_search";
+import { hasAllProperties, isUuid, Uuid } from "@/types";
+import { devLog } from "@/util";
 
+//If changing, change SearchPanelSearchProperties as well
 export type SearchPanelSearchData = SearchPanelBaseData & {
   //inherits searchString, location, lettersOffset, and outputType
   uuid: Uuid;
   attemptUuid: Uuid;
   searchPanelUuid: Uuid;
   createdAt: number;
+};
+
+export const SearchPanelSearchProperties = [
+  "uuid",
+  "attemptUuid",
+  "searchPanelUuid",
+  "createdAt",
+  "searchString",
+  "location",
+  "lettersOffset",
+  "outputType",
+];
+
+export const isSearchPanelSearch = (
+  toTest: any,
+): toTest is SearchPanelSearchData => {
+  if (!hasAllProperties(toTest, SearchPanelSearchProperties)) {
+    devLog("Doesn't have all properties");
+    return false;
+  }
+  if (!isUuid(toTest.uuid)) {
+    devLog("uuid isn't a UUID");
+    return false;
+  }
+  if (!isUuid(toTest.attemptUuid)) {
+    devLog("attemptUuid isn't a UUID");
+    return false;
+  }
+  if (!isUuid(toTest.searchPanelUuid)) {
+    devLog("searchPanelUuid isn't a UUID");
+    return false;
+  }
+  if (!(typeof toTest.createdAt === "number")) {
+    devLog("createdAt isn't a number");
+    return false;
+  }
+  if (!(typeof toTest.searchString === "string")) {
+    devLog("searchString isn't a string");
+    return false;
+  }
+  if (!(typeof toTest.location === "string")) {
+    devLog("Invalid location", SearchPanelLocationKeys);
+    return false;
+  }
+  if (!(typeof toTest.lettersOffset === "number")) {
+    devLog("lettersOffset isn't a number");
+    return false;
+  }
+  if (!(typeof toTest.outputType === "string")) {
+    devLog("Invalid outputType");
+    return false;
+  }
+  return true;
 };
 
 export type ResultData = {

@@ -12,7 +12,7 @@
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 import {
-  deleteSearchPanelSearch,
+  deleteSearchPanelSearchThunk,
   SearchPanelSearchData,
 } from "@/features/searchPanelSearches";
 import { useAppDispatch } from "@/app/hooks";
@@ -26,7 +26,7 @@ export function ResultHeader({
   const { searchString } = searchObject;
 
   const handleClickRemoveButton = () => {
-    dispatch(deleteSearchPanelSearch(searchObject.uuid));
+    dispatch(deleteSearchPanelSearchThunk(searchObject.uuid));
   };
 
   return (

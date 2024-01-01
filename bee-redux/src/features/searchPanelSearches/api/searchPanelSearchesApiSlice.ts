@@ -12,6 +12,8 @@
 
 import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import { devLog } from "@/util";
+import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
 
 const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
   return {
@@ -19,7 +21,7 @@ const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
       ...keysToSnakeCase(newSearch),
       user_puzzle_attempt_uuid: newSearch.attemptUuid,
       //Remove the attempt_id key so that Rails doesn't complain
-      attempt_id: undefined,
+      attempt_uuid: undefined,
     },
   };
 };
@@ -34,7 +36,7 @@ export const searchPanelSearchesApiSlice = apiSlice.injectEndpoints({
 
     addSearch: builder.mutation<SearchPanelSearchData, SearchPanelSearchData>({
       query: (formData) => ({
-        url: "/search_panel_searches/",
+        url: "/search_panel_searches",
         method: "POST",
         body: railsifyAddSearchData(formData),
       }),
@@ -45,6 +47,27 @@ export const searchPanelSearchesApiSlice = apiSlice.injectEndpoints({
         url: `/search_panel_searches/${uuid}`,
         method: "DELETE",
       }),
+    }),
+
+    addBulkSearchPanelSearches: builder.mutation<
+      UuidRecordStatus[],
+      SearchPanelSearchData[]
+    >({
+      query: (searchData) => ({
+        url: "/search_panel_searches/bulk_add",
+        method: "POST",
+        body: searchData.map((search) => railsifyAddSearchData(search)),
+      }),
+    }),
+
+    updateSearchPanelSearchUuids: builder.mutation<
+      UuidUpdateData[],
+      UuidUpdateData[]
+    >({
+      queryFn: (uuids, api) => {
+        devLog("This endpoint hasn't been implemented yet.");
+        return { data: [] };
+      },
     }),
   }),
 });

@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { StatusTrackingKeys } from "@/features/hintPanels/";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
-  addSearchPanelSearch,
+  addSearchPanelSearchThunk,
   selectSpsByPanel,
 } from "@/features/searchPanelSearches";
 import { SearchPanelData } from "..";
@@ -36,9 +36,9 @@ export function SearchHintPanel({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //Add debounce here
+    //TODO: Add debounce here
     dispatch(
-      addSearchPanelSearch({
+      addSearchPanelSearchThunk({
         uuid: crypto.randomUUID(),
         searchPanelUuid: searchPanelData.uuid,
         attemptUuid: currentAttemptUuid,

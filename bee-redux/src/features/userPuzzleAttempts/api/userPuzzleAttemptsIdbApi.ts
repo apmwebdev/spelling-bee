@@ -10,11 +10,14 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { idb, idbInsertWithRetry } from "@/lib/idb";
-import { isUuid, Uuid } from "@/types";
+import {
+  createBulkAddIdbDataFn,
+  createIdbUuidUpdateFn,
+  idb,
+  idbInsertWithRetry,
+} from "@/lib/idb";
+import { Uuid } from "@/types";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
-import { UuidUpdateData } from "@/features/api/types";
-import { devLog } from "@/util";
 
 export const getIdbPuzzleAttempts = (puzzleId: number) => {
   return idb.attempts.where("puzzleId").equals(puzzleId).toArray();
@@ -30,23 +33,7 @@ export const addIdbAttempt = idbInsertWithRetry<UserPuzzleAttempt>(
  * are created through the current front end.
  * @param attempts
  */
-export const bulkAddIdbAttempts = async (attempts: UserPuzzleAttempt[]) => {
-  //TODO: At some point, make this use the bulk add functionality. I'm not using it now because the
-  // documentation is not super clear what is returned with errors, which is important, so I'm
-  // looping over and attempting to save them one at a time instead.
-  const newUuids: UuidUpdateData[] = [];
-  for (const attempt of attempts) {
-    const uuid = attempt.uuid;
-    const result = await addIdbAttempt(attempt);
-    if (isUuid(result) && result !== uuid) {
-      newUuids.push({
-        oldUuid: uuid,
-        newUuid: result,
-      });
-    }
-  }
-  return newUuids;
-};
+export const bulkAddIdbAttempts = createBulkAddIdbDataFn(addIdbAttempt);
 
 export const deleteIdbAttempt = (attemptUuid: Uuid) => {
   return idb.attempts.delete(attemptUuid);
@@ -62,15 +49,4 @@ export const bulkDeleteIdbAttempts = (uuids: Uuid[]) => {
   return idb.attempts.bulkDelete(uuids);
 };
 
-export const updateIdbAttemptUuids = async (uuids: UuidUpdateData[]) => {
-  //TODO: Check if UUIDs change and add them to newUuids
-  const newUuids: UuidUpdateData[] = [];
-  for (const item of uuids) {
-    try {
-      await idb.attempts.update(item.oldUuid, { uuid: item.newUuid });
-    } catch (err) {
-      devLog("Error:", err);
-    }
-  }
-  return newUuids;
-};
+export const updateIdbAttemptUuids = createIdbUuidUpdateFn(idb.attempts);

@@ -16,20 +16,35 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
+import { searchPanelSearchesApiSlice } from "@/features/searchPanelSearches";
 import {
+  isSearchPanelSearch,
   SearchPanelSearchData,
-  searchPanelSearchesApiSlice,
-} from "@/features/searchPanelSearches";
-import { createInitialState, StateShape, Statuses, Uuid } from "@/types";
+} from "@/features/searchPanelSearches/types";
+import { createInitialState, Statuses, Uuid } from "@/types";
 import { RootState } from "@/app/store";
-import { startAppListening } from "@/app/listenerMiddleware";
-import { deleteIdbSearchPanelSearch } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
+import {
+  addIdbSearchPanelSearch,
+  bulkAddIdbSearchPanelSearches,
+  deleteIdbSearchPanelSearch,
+  updateIdbSearchPanelSearchUuids,
+} from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
 import { devLog } from "@/util";
+import {
+  createAddItemThunk,
+  createDataResolverThunk,
+  createUuidSyncThunk,
+  createUuidUpdateReducer,
+} from "@/features/api/util/synchronizer";
+import { DataSourceKeys } from "@/features/api/types";
 
-const initialState: StateShape<SearchPanelSearchData[]> = createInitialState(
-  [],
-);
+const modelDisplayName = "search";
 
+const initialState = createInitialState<SearchPanelSearchData[]>([]);
+
+const updateSpsUuidsReducer = createUuidUpdateReducer<SearchPanelSearchData[]>({
+  modelDisplayName,
+});
 export const searchPanelSearchesSlice = createSlice({
   name: "searchPanelSearches",
   initialState,
@@ -47,17 +62,7 @@ export const searchPanelSearchesSlice = createSlice({
     ) => {
       state.data.push(payload);
     },
-    updateSearchPanelSearchUuid: (
-      state,
-      { payload }: PayloadAction<{ originalUuid: Uuid; newUuid: Uuid }>,
-    ) => {
-      const searchToUpdate = state.data.find(
-        (search) => search.uuid === payload.originalUuid,
-      );
-      if (!searchToUpdate) return;
-      searchToUpdate.uuid = payload.newUuid;
-    },
-    deleteSearchPanelSearch: (state, { payload }: PayloadAction<string>) => {
+    deleteSearchPanelSearch: (state, { payload }: PayloadAction<Uuid>) => {
       const indexToRemove = state.data.findIndex(
         (search) => search.uuid === payload,
       );
@@ -65,26 +70,49 @@ export const searchPanelSearchesSlice = createSlice({
         state.data.splice(indexToRemove, 1);
       }
     },
+    updateSearchPanelSearchUuids: updateSpsUuidsReducer,
   },
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      searchPanelSearchesApiSlice.endpoints.getSearches.matchFulfilled,
-      (state, { payload }) => {
-        state.data = payload;
-        state.status = Statuses.UpToDate;
-      },
-    );
-  },
+  extraReducers: (builder) => {},
 });
 
 export const {
   setSearchPanelSearches,
   addSearchPanelSearch,
-  updateSearchPanelSearchUuid,
+  updateSearchPanelSearchUuids,
   deleteSearchPanelSearch,
 } = searchPanelSearchesSlice.actions;
 
 //API integrations
+
+export const addSearchPanelSearchThunk =
+  createAddItemThunk<SearchPanelSearchData>({
+    itemDisplayType: "search",
+    actionType: "searchPanelSearches/addSearchPanelSearchThunk",
+    validationFn: isSearchPanelSearch,
+    addItemReducer: addSearchPanelSearch,
+    deleteItemReducer: deleteSearchPanelSearch,
+    addIdbItemFn: addIdbSearchPanelSearch,
+    addServerItemEndpoint: searchPanelSearchesApiSlice.endpoints.addSearch,
+  });
+
+export const syncSearchPanelSearchUuids = createUuidSyncThunk({
+  serverUuidUpdateFn:
+    searchPanelSearchesApiSlice.endpoints.updateSearchPanelSearchUuids.initiate,
+  idbUuidUpdateFn: updateIdbSearchPanelSearchUuids,
+  stateUuidUpdateFn: updateSearchPanelSearchUuids,
+});
+
+export const resolveSearchPanelSearchData =
+  createDataResolverThunk<SearchPanelSearchData>({
+    modelDisplayName: "search",
+    actionType: "searchPanelSearches/deleteSearchPanelSearchThunk",
+    primaryDataKey: DataSourceKeys.serverData,
+    setDataReducer: setSearchPanelSearches,
+    addBulkServerDataEndpoint:
+      searchPanelSearchesApiSlice.endpoints.addBulkSearchPanelSearches,
+    addBulkIdbData: bulkAddIdbSearchPanelSearches,
+    syncUuidFn: syncSearchPanelSearchUuids,
+  });
 
 export const deleteSearchPanelSearchThunk = createAsyncThunk(
   "searchPanelSearches/deleteSearchPanelSearchThunk",
@@ -92,7 +120,7 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
     //Delete from state
     api.dispatch(deleteSearchPanelSearch(uuid));
     //Delete from IndexedDB
-    const idbResult = deleteIdbSearchPanelSearch(uuid).catch((err) =>
+    const idbResult = await deleteIdbSearchPanelSearch(uuid).catch((err) =>
       devLog("Can't delete SPS from IndexedDB due to invalid UUID:", uuid, err),
     );
     //Delete on server if user is logged in
@@ -109,33 +137,6 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
     Promise.all([idbResult, rtkqResult]).then(() => devLog("SPS deleted"));
   },
 );
-
-//Search panel searches are the only thing that guest users can create, so they
-// are added to state without an ID. For authenticated users, the ID then needs
-// to be added to the search after the response from the back end comes back so
-// that they can later delete the search if they want to.
-startAppListening({
-  actionCreator: addSearchPanelSearch,
-  effect: async (action, api) => {
-    const { uuid } = action.payload;
-    const response = await api.dispatch(
-      searchPanelSearchesApiSlice.endpoints.addSearch.initiate(action.payload),
-    );
-    //TS is worried that the data property might not exist on the response,
-    //but we're checking if it exists right below here, so it's fine.
-    const trustMeBro = response as { data: SearchPanelSearchData };
-    if (trustMeBro.data?.uuid) {
-      if (uuid !== trustMeBro.data.uuid) {
-        api.dispatch(
-          updateSearchPanelSearchUuid({
-            originalUuid: uuid,
-            newUuid: trustMeBro.data.uuid,
-          }),
-        );
-      }
-    }
-  },
-});
 
 export const selectSearchPanelSearches = (state: RootState) =>
   state.searchPanelSearches.data;

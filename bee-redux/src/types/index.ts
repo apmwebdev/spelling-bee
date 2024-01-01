@@ -13,26 +13,27 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
+/** Checks whether something is a "plain" object, since lots of things, like arrays and
+ *  functions, are also technically objects. Checking whether the immediate prototype of
+ *  something is Object.prototype should suffice for this. This is useful for type guard functions.
+ * @param {any} toTest
+ */
+export function isPlainObject(toTest: any) {
+  return Object.getPrototypeOf(toTest) === Object.prototype;
+}
+
 /** For type guard functions that need to check for multiple properties
  * @param {object} obj - The object to check
  * @param {string[]} properties - The property names to check in the object
  */
 export function hasAllProperties(obj: object, properties: string[]) {
-  if (typeof obj !== "object") return false;
+  //This application doesn't use object constructors or classes, so obj should be a plain object
+  if (!isPlainObject(obj)) return false;
   for (const property of properties) {
     if (property in obj) continue;
     return false;
   }
   return true;
-}
-
-/** Checks whether something is a "plain" object, since lots of things, like arrays and
- *  functions, are also technically objects. Checking whether the immediate prototype of
- *  something is Object.prototype should suffice for this.
- * @param {any} toTest
- */
-export function isPlainObject(toTest: any) {
-  return Object.getPrototypeOf(toTest) === Object.prototype;
 }
 
 export enum Statuses {
@@ -69,7 +70,9 @@ export type StateShape<dataShape> = {
   error: FetchBaseQueryError | undefined;
 };
 
-export const createInitialState = (data: any): StateShape<typeof data> => ({
+export const createInitialState = <DataType>(
+  data: DataType,
+): StateShape<DataType> => ({
   data,
   status: Statuses.Initial,
   error: undefined,
@@ -244,7 +247,6 @@ export type Uuid = string;
 /** The regex to determine whether a string is a valid UUID.
  * @see isUuid
  */
-
 export const UUID_REGEX =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 

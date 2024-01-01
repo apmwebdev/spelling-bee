@@ -5,7 +5,9 @@ import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { HintPanelData } from "@/features/hintPanels";
 import * as crypto from "crypto";
-import { UuidRecord } from "@/features/api/types";
+import { UuidRecord, UuidUpdateData } from "@/features/api/types";
+import { devLog } from "@/util";
+import { isUuid } from "@/types";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<UserPuzzleAttempt>;
@@ -102,3 +104,41 @@ export const idbInsertWithRetry = <RecordType extends UuidRecord>(
   };
   return retryableInsertFn;
 };
+
+export const createIdbUuidUpdateFn =
+  <DataType extends UuidRecord>(idbTable: Table<DataType, IndexableType>) =>
+  async (uuids: UuidUpdateData[]) => {
+    const newUuids: UuidUpdateData[] = [];
+    for (const item of uuids) {
+      try {
+        await idbTable.update(item.oldUuid, { uuid: item.newUuid });
+      } catch (err) {
+        devLog("Error:", err);
+      }
+    }
+    return newUuids;
+  };
+
+export type IdbAddFn<DataType> = (
+  record: DataType,
+  retryCount?: number,
+) => Promise<IndexableType | null>;
+
+export const createBulkAddIdbDataFn =
+  <DataType extends UuidRecord>(addFn: IdbAddFn<DataType>) =>
+  async (records: DataType[]) => {
+    //TODO: Eventually use the bulk add functionality in Dexie for this. Need to figure out exactly
+    // how errors are handled first though.
+    const newUuids: UuidUpdateData[] = [];
+    for (const record of records) {
+      const uuid = record.uuid;
+      const result = await addFn(record);
+      if (isUuid(result) && result !== uuid) {
+        newUuids.push({
+          oldUuid: uuid,
+          newUuid: result,
+        });
+      }
+    }
+    return newUuids;
+  };

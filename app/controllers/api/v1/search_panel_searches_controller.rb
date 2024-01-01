@@ -33,7 +33,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
 
   def create
     begin
-      search_panel = current_user.search_panels.find(sps_params[:search_panel_id])
+      search_panel = current_user.search_panels.find_by(uuid: sps_params[:search_panel_uuid])
     rescue ActiveRecord::RecordNotFound
       render json: {error: "Search panel not found"}, status: 404
       return
@@ -41,7 +41,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
 
     begin
       user_puzzle_attempt = current_user.user_puzzle_attempts
-        .find(sps_params[:user_puzzle_attempt_uuid])
+        .find_by(uuid: sps_params[:user_puzzle_attempt_uuid])
     rescue ActiveRecord::RecordNotFound
       render json: {error: "User puzzle attempt not found"}, status: 404
       return
@@ -62,6 +62,8 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
     end
 
     @search = SearchPanelSearch.new(sps_params)
+    @search.user_puzzle_attempt = user_puzzle_attempt
+    @search.search_panel = search_panel
 
     begin
       @search.save_with_uuid_retry!
@@ -95,7 +97,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   def sps_params
     params.require(:search_panel_search).permit(
       :uuid,
-      :search_panel_id,
+      :search_panel_uuid,
       :user_puzzle_attempt_uuid,
       :search_string,
       :location,
