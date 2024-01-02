@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { addDebouncer, apiSlice, keysToSnakeCase } from "@/features/api";
+import { apiSlice, debounce, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
 import { createSelector } from "@reduxjs/toolkit";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -107,7 +107,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
         };
         //Debounce query if applicable. Otherwise, just run it.
         if (formData.debounceField) {
-          addDebouncer({
+          debounce({
             key: `${formData.debounceField}Panel${formData.uuid}`,
             delay: 1000,
             callback: query,

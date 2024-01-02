@@ -14,7 +14,10 @@ import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { devLog } from "@/util";
-import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
+import {
+  UuidRecordStatus,
+  UuidUpdateData,
+} from "@/features/api/types/apiTypes";
 
 export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

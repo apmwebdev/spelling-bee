@@ -16,7 +16,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { createInitialState, isUuid, Uuid } from "@/types";
+import { createInitialState, isUuid, Statuses, Uuid } from "@/types";
 import {
   BLANK_ATTEMPT,
   isUserPuzzleAttempt,
@@ -31,7 +31,7 @@ import {
   bulkAddIdbAttempts,
   updateIdbAttemptUuids,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
-import { DataSourceKeys } from "@/features/api/types";
+import { DataSourceKeys } from "@/features/api/types/apiTypes";
 import { selectPuzzleId } from "@/features/puzzle";
 import {
   createAddItemThunk,
@@ -65,6 +65,7 @@ export const userPuzzleAttemptsSlice = createSlice({
     setAttempts: (state, { payload }: PayloadAction<UserPuzzleAttempt[]>) => {
       state.data.attempts = payload;
       state.data.currentAttempt = last(payload) ?? BLANK_ATTEMPT;
+      state.status = Statuses.UpToDate;
     },
     addAttempt: (state, { payload }: PayloadAction<UserPuzzleAttempt>) => {
       if (!isUserPuzzleAttempt(payload)) {

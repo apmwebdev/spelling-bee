@@ -71,18 +71,28 @@ export const { loginReducer, logoutReducer } = authSlice.actions;
 startAppListening({
   type: "auth/baseQueryLogout",
   effect: (_arg, api) => {
-    api.dispatch(logoutThunk());
+    api.dispatch(logoutThunk(false));
   },
 });
 
-export const logoutThunk = createAsyncThunk("auth/logoutThunk", (_arg, api) => {
-  api.dispatch(authApiSlice.endpoints.logout.initiate());
-  api.dispatch(logoutReducer());
-  persistor.remove("user");
-  // persistor.save("isGuest", "true");
-  persistor.remove("currentHintProfile");
-  persistor.remove("userPrefs");
-});
+export const logoutThunk = createAsyncThunk(
+  "auth/logoutThunk",
+  (withEndpoint: boolean = true, api) => {
+    const state = api.getState() as RootState;
+    const auth = selectAuth(state);
+    if (auth.user || !auth.isGuest) {
+      api.dispatch(logoutReducer());
+      if (withEndpoint) {
+        api.dispatch(authApiSlice.endpoints.logout.initiate(undefined));
+      }
+    }
+    persistor.remove("user");
+    persistor.remove("currentHintProfile");
+    persistor.remove("userPrefs");
+  },
+);
+
+export const selectAuth = (state: RootState) => state.auth;
 
 export const selectUser = (state: RootState) => state.auth.user;
 

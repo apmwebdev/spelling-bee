@@ -19,13 +19,15 @@ import { GuessFormat, isGuess } from "@/features/guesses/types";
 import {
   createAddItemThunk,
   createDataResolverThunk,
+  createSetDataFromIdbThunk,
   createUuidSyncThunk,
   createUuidUpdateReducer,
 } from "@/features/api/util/synchronizer";
-import { DataSourceKeys } from "@/features/api/types";
+import { DataSourceKeys } from "@/features/api/types/apiTypes";
 import {
   addIdbGuess,
   bulkAddIdbGuesses,
+  getIdbAttemptGuesses,
   updateIdbGuessUuids,
 } from "@/features/guesses/api/guessesIdbApi";
 
@@ -108,6 +110,17 @@ export const resolveGuessesData = createDataResolverThunk<GuessFormat>({
   addBulkServerDataEndpoint: guessesApiSlice.endpoints.addBulkGuesses,
   addBulkIdbData: bulkAddIdbGuesses,
   syncUuidFn: syncGuessUuids,
+});
+
+export const setGuessesFromIdbThunk = createSetDataFromIdbThunk<
+  GuessFormat,
+  Uuid
+>({
+  modelDisplayName,
+  actionType: "guesses/setGuessesFromIdbThunk",
+  getIdbDataFn: getIdbAttemptGuesses,
+  validationFn: Array.isArray,
+  setDataReducer: setGuesses,
 });
 
 export const selectGuesses = (state: RootState) => state.guesses.data;

@@ -26,7 +26,7 @@ export function UserMenu({ isMobile }: { isMobile?: boolean }) {
   };
 
   const handleLogoutSelect = () => {
-    dispatch(logoutThunk());
+    dispatch(logoutThunk(true));
   };
 
   return (

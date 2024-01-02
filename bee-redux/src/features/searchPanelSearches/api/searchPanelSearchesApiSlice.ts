@@ -13,7 +13,10 @@
 import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { devLog } from "@/util";
-import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
+import {
+  UuidRecordStatus,
+  UuidUpdateData,
+} from "@/features/api/types/apiTypes";
 
 const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
   return {

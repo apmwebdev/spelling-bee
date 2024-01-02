@@ -5,7 +5,7 @@ import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { HintPanelData } from "@/features/hintPanels";
 import * as crypto from "crypto";
-import { UuidRecord, UuidUpdateData } from "@/features/api/types";
+import { UuidRecord, UuidUpdateData } from "@/features/api/types/apiTypes";
 import { devLog } from "@/util";
 import { isUuid } from "@/types";
 

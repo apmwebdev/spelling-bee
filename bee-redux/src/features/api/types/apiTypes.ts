@@ -1,4 +1,4 @@
-import { IndexableType } from "dexie";
+import { IndexableType, PromiseExtended } from "dexie";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   ApiEndpointMutation,
@@ -10,7 +10,11 @@ import {
   QueryDefinition,
 } from "@reduxjs/toolkit/query";
 import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query/react";
-import { SerializedError } from "@reduxjs/toolkit";
+import {
+  ActionCreatorWithPayload,
+  AsyncThunk,
+  SerializedError,
+} from "@reduxjs/toolkit";
 import { Uuid } from "@/types";
 import { MutationHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 
@@ -142,4 +146,86 @@ export type UuidRecordStatus = {
 export type UuidUpdateData = {
   oldUuid: Uuid;
   newUuid: Uuid;
+};
+
+/** The params for the UuidUpdateReducerArgs factory function, defined here separately to make
+ * documentation easier.
+ * @see createUuidUpdateReducer
+ */
+export type UuidUpdateReducerArgs = {
+  /** The model type, in a log or error message friendly format, e.g. "guess" */
+  modelDisplayName: string;
+  /** In order to find the array of models where the UUIDs need to be updated, it may be necessary
+   * to provide the path (in the form of keys) to that array for each individual slice.
+   *
+   * This is necessary because different slices have different state shapes. While all slices have a
+   * `data` property, and all the slices used for createUuidUpdateReducer have an array of models
+   * somewhere in `data`, some slices have the model array more deeply nested. If this param is
+   * absent, it means that the array is not nested (i.e., `state.data` is the array).
+   */
+  keyPathToModels?: string[];
+};
+
+export type SynchronizerThunkArgs = {
+  /** The name of the model being analyzed, in a text-friendly form for error/log messages */
+  modelDisplayName: string;
+  /** The action type string for use in Redux's createAsyncThunk function. */
+  actionType: string;
+};
+
+export type CreateDataResolverThunkArgs<DataType> = SynchronizerThunkArgs & {
+  /** A string indicating which data source (server or IndexedDB) should be the source of truth
+   * in case of a conflict. Should normally be "serverData" */
+  primaryDataKey: DataSourceKeys;
+  /** Once the server and IndexedDB data is deduplicated and merged, the resulting combined data is
+   * passed to Redux for display using this reducer. */
+  setDataReducer: ActionCreatorWithPayload<DataType[]>;
+  /** For any data that is present in IndexedDB but not the server, it needs to be added to the
+   * server. This is the endpoint for doing that. */
+  addBulkServerDataEndpoint: RtkqMutationEndpoint<
+    UuidRecordStatus[],
+    DataType[]
+  >;
+  /** For any data that is present on the server but not in IndexedDB, it needs to be added to
+   * IndexedDB. This is the function for doing that. */
+  addBulkIdbData: (items: DataType[]) => Promise<UuidUpdateData[]>;
+  /** If there is a UUID collision when attempting to save a record in one data store, the UUID
+   * will be regenerated and the save action attempted again. That change then needs to be
+   * propagated to Redux and the other data store as well. This is the function for doing that. */
+  syncUuidFn: AsyncThunk<void, UuidSyncData, any>;
+};
+
+export type CreateSetDataFromIdbThunkArgs<DataType, FetchKeyType> =
+  SynchronizerThunkArgs & {
+    getIdbDataFn: (key: FetchKeyType) => PromiseExtended<DataType[]>;
+    validationFn: (toTest: any) => boolean;
+    setDataReducer: ActionCreatorWithPayload<DataType[]>;
+  };
+
+export type CreateAddItemThunkArgs<DataType> = {
+  itemDisplayType: string;
+  actionType: string;
+  validationFn: (toTest: any) => boolean;
+  addItemReducer: ActionCreatorWithPayload<DataType>;
+  deleteItemReducer: ActionCreatorWithPayload<Uuid>;
+  addIdbItemFn: (
+    record: DataType,
+    retryCount?: number,
+  ) => Promise<IndexableType | null>;
+  addServerItemEndpoint: RtkqMutationEndpoint<DataType, DataType>;
+};
+export type IdbUuidSyncFn = (
+  uuidData: UuidUpdateData[],
+) => Promise<UuidUpdateData[]>;
+
+export type UuidSyncFns = {
+  //TODO: Fix type here
+  serverUuidUpdateFn: Function;
+  idbUuidUpdateFn: IdbUuidSyncFn;
+  stateUuidUpdateFn: ActionCreatorWithPayload<UuidUpdateData[]>;
+};
+
+export type UuidSyncData = {
+  serverData: UuidUpdateData[];
+  idbData: UuidUpdateData[];
 };

@@ -27,16 +27,18 @@ import {
   addIdbSearchPanelSearch,
   bulkAddIdbSearchPanelSearches,
   deleteIdbSearchPanelSearch,
+  getIdbAttemptSearches,
   updateIdbSearchPanelSearchUuids,
 } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
 import { devLog } from "@/util";
 import {
   createAddItemThunk,
   createDataResolverThunk,
+  createSetDataFromIdbThunk,
   createUuidSyncThunk,
   createUuidUpdateReducer,
 } from "@/features/api/util/synchronizer";
-import { DataSourceKeys } from "@/features/api/types";
+import { DataSourceKeys } from "@/features/api/types/apiTypes";
 
 const modelDisplayName = "search";
 
@@ -105,7 +107,7 @@ export const syncSearchPanelSearchUuids = createUuidSyncThunk({
 export const resolveSearchPanelSearchData =
   createDataResolverThunk<SearchPanelSearchData>({
     modelDisplayName: "search",
-    actionType: "searchPanelSearches/deleteSearchPanelSearchThunk",
+    actionType: "searchPanelSearches/resolveSearchPanelSearchData",
     primaryDataKey: DataSourceKeys.serverData,
     setDataReducer: setSearchPanelSearches,
     addBulkServerDataEndpoint:
@@ -113,6 +115,17 @@ export const resolveSearchPanelSearchData =
     addBulkIdbData: bulkAddIdbSearchPanelSearches,
     syncUuidFn: syncSearchPanelSearchUuids,
   });
+
+export const setSearchPanelSearchesFromIdbThunk = createSetDataFromIdbThunk<
+  SearchPanelSearchData,
+  Uuid
+>({
+  modelDisplayName,
+  actionType: "searchPanelSearches/setSearchPanelSearchesFromIdbThunk",
+  getIdbDataFn: getIdbAttemptSearches,
+  validationFn: Array.isArray,
+  setDataReducer: setSearchPanelSearches,
+});
 
 export const deleteSearchPanelSearchThunk = createAsyncThunk(
   "searchPanelSearches/deleteSearchPanelSearchThunk",

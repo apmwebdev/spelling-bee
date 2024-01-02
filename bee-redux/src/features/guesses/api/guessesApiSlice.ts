@@ -18,7 +18,10 @@ import {
   RailsGuessFormat,
   RawGuessFormat,
 } from "@/features/guesses";
-import { UuidRecordStatus, UuidUpdateData } from "@/features/api/types";
+import {
+  UuidRecordStatus,
+  UuidUpdateData,
+} from "@/features/api/types/apiTypes";
 import { devLog } from "@/util";
 
 const railsifyGuess = (guess: GuessFormat): RailsGuessFormat => {

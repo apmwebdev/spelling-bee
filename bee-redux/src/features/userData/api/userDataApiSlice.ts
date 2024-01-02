@@ -18,6 +18,7 @@ import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/us
 import { guessesApiSlice, processGuess } from "@/features/guesses";
 import { RootState } from "@/app/store";
 import { UserBaseData, UserPuzzleData } from "@/features/userData/types";
+import { devLog } from "@/util";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -117,7 +118,12 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["User"],
       onQueryStarted: async (_puzzleId, api) => {
-        await api.queryFulfilled;
+        try {
+          await api.queryFulfilled;
+        } catch (err) {
+          //If the query fails, that's fine. It probably means the user isn't logged in
+          devLog("getUserPuzzleData endpoint failed:", err);
+        }
         const cacheEntry = api.getCacheEntry();
         if (cacheEntry.isSuccess && cacheEntry.data) {
           const { data } = cacheEntry;
