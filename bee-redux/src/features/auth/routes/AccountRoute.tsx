@@ -27,7 +27,8 @@ import {
   validateField,
 } from "@/hooks/useUserInfoFormField";
 import { Navigate } from "react-router-dom";
-import { isBasicError } from "@/types";
+
+import { isBasicError } from "@/features/api";
 
 export function AccountRoute() {
   const { emailState, nameState, passwordState, passwordConfirmState } =

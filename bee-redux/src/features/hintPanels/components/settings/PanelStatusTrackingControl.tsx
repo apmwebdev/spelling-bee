@@ -15,9 +15,10 @@ import uniqid from "uniqid";
 import {
   StatusTrackingKeys,
   StatusTrackingOptions,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function PanelStatusTrackingControl({
   panelUuid,

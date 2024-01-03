@@ -16,7 +16,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { createInitialState, isUuid, Statuses, Uuid } from "@/types";
+import { createInitialState, Statuses } from "@/types/globalTypes";
 import {
   BLANK_ATTEMPT,
   isUserPuzzleAttempt,
@@ -31,7 +31,7 @@ import {
   bulkAddIdbAttempts,
   updateIdbAttemptUuids,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
-import { DataSourceKeys } from "@/features/api/types/apiTypes";
+import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
 import { selectPuzzleId } from "@/features/puzzle";
 import {
   createAddItemThunk,

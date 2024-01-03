@@ -17,7 +17,8 @@ import {
   SubstringHintOutputOptions,
   useUpdateHintPanelMutation,
 } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function HintOutputTypeControl({
   panelUuid,

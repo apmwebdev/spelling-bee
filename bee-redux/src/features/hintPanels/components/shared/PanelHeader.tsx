@@ -17,7 +17,8 @@ import { DragHandle } from "@/features/hintPanels/components/shared/DragHandle";
 import { SettingsToggle } from "@/features/hintPanels/components/shared/SettingsToggle";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 type PanelHeaderProps = {
   panelUuid: Uuid;

@@ -17,7 +17,8 @@ import {
   idbInsertWithRetry,
 } from "@/lib/idb";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export const getIdbAttemptSearches = (attemptUuid: Uuid) => {
   return idb.searchPanelSearches

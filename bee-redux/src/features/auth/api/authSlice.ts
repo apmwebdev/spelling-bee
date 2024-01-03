@@ -13,7 +13,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/app/store";
 import { authApiSlice } from "./authApiSlice";
-import { User } from "../types";
+import { User } from "../types/authTypes";
 //Has to be a more specific import path to avoid a circular dependency
 import { persistor } from "@/features/api/util";
 import { startAppListening } from "@/app/listenerMiddleware";

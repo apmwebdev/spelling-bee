@@ -1,67 +1,10 @@
 import { IndexableType, PromiseExtended } from "dexie";
-import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { ActionCreatorWithPayload, AsyncThunk } from "@reduxjs/toolkit";
 import {
-  ApiEndpointMutation,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-  MutationActionCreatorResult,
-  MutationDefinition,
-  QueryActionCreatorResult,
-  QueryDefinition,
-} from "@reduxjs/toolkit/query";
-import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query/react";
-import {
-  ActionCreatorWithPayload,
-  AsyncThunk,
-  SerializedError,
-} from "@reduxjs/toolkit";
-import { Uuid } from "@/types";
-import { MutationHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
-
-export type RtkqQueryReturnValue<DataType> = QueryReturnValue<
-  DataType, //Return type of `data` if query is successful
-  FetchBaseQueryError | SerializedError //Error type if unsuccessful
->;
-
-export type RtkqMutationDefinition<ResultType, ArgType> = MutationDefinition<
-  ArgType,
-  (
-    arg: string | FetchArgs,
-    api: BaseQueryApi,
-    extraOptions: {},
-  ) => Promise<
-    QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-  >,
-  string, //Tag type
-  ResultType,
-  "api" //Reducer path
->;
-
-export type RtkqMutationResult<ResultType, ArgType> =
-  MutationActionCreatorResult<RtkqMutationDefinition<ResultType, ArgType>>;
-
-export type RtkqMutationEndpoint<ResultType, ArgType> = ApiEndpointMutation<
-  RtkqMutationDefinition<ResultType, ArgType>,
-  {}
-> &
-  MutationHooks<any>;
-
-export type RtkqQueryActionCreatorResult<ResultType, ArgType> =
-  QueryActionCreatorResult<
-    QueryDefinition<
-      ArgType,
-      (
-        arg: string | FetchArgs,
-        api: BaseQueryApi,
-        extraOptions: {},
-      ) => Promise<
-        QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-      >,
-      string,
-      ResultType,
-      "api"
-    >
-  >;
+  RtkqMutationEndpoint,
+  RtkqMutationResult,
+  RtkqQueryReturnValue,
+} from "@/features/api/types/rtkqTypes";
 
 export enum DataSourceKeys {
   idbData = "idbData",
@@ -110,6 +53,32 @@ export const createDiffContainer = <DataType>(
 ): DiffContainer<DataType> => {
   return { idbData, serverData };
 };
+
+/** This type doesn't do anything on its own, but it uses the `isUuid` type
+ * guard function, which does test for the actual UUID format.
+ * @see isUuid */
+export type Uuid = string;
+
+/** The regex to determine whether a string is a valid UUID.
+ * @see isUuid */
+export const UUID_REGEX =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
+/** Determines if an input string is a valid UUID. To return true, the string
+ * must match the UUID_REGEX, i.e. hex characters [0-9a-fA-F] and dashes in the
+ * pattern 8-4-4-4-12. The numbers represent the number of hex characters. The
+ * string should be 36 characters in total with 4 dashes.
+ * @param {string} toTest - The string to test against the regex
+ */
+export const isUuid = (toTest: any): toTest is Uuid => {
+  if (typeof toTest !== "string") return false;
+  return UUID_REGEX.test(toTest);
+};
+
+/** For use in initial state values and any other scenario where a blank, empty,
+ *  or placeholder UUID is needed.
+ */
+export const BLANK_UUID = "00000000-0000-0000-0000-000000000000";
 
 /** An abstraction for use as the base of a generic type. It represents all types that contain a
  *  UUID, which is most of the types representing some unit of data that might need to be stored
@@ -214,6 +183,7 @@ export type CreateAddItemThunkArgs<DataType> = {
   ) => Promise<IndexableType | null>;
   addServerItemEndpoint: RtkqMutationEndpoint<DataType, DataType>;
 };
+
 export type IdbUuidSyncFn = (
   uuidData: UuidUpdateData[],
 ) => Promise<UuidUpdateData[]>;

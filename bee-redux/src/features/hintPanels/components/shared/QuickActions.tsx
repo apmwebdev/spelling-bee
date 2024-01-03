@@ -13,7 +13,8 @@
 import { ReactNode } from "react";
 import { HintContentBlurButton } from "@/features/hintPanels/components/shared/HintContentBlurButton";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function QuickActions({
   panelUuid,

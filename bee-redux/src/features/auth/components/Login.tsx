@@ -12,12 +12,12 @@
 
 import { FormEvent, useState } from "react";
 import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
-import { LoginData } from "@/features/auth/types";
-import { isBasicError, isFetchBaseQueryErrorResponse } from "@/types";
+import { LoginData } from "@/features/auth/types/authTypes";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { devLog } from "@/util";
 import { MoreActionsDropdown } from "@/features/auth/components/MoreActionsDropdown";
+import { isBasicError, isFetchBaseQueryErrorResponse } from "@/features/api";
 
 export function Login({
   passedInMessage,

@@ -16,13 +16,14 @@ import { CSSProperties } from "react";
 import {
   LetterPanelLocationKeys,
   LetterPanelLocationOptions,
-} from "@/features/hintPanelType_letter";
+} from "@/features/letterPanel";
 import {
   SearchPanelLocationKeys,
   SearchPanelLocationOptions,
-} from "@/features/hintPanelType_search";
+} from "@/features/searchPanel";
 import { PanelTypes, useUpdateHintPanelMutation } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function HintLocationControl({
   panelUuid,

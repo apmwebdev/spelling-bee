@@ -21,7 +21,7 @@ import {
   puzzleApiSlice,
   PuzzleFormat,
 } from "./puzzleApiSlice";
-import { StateShape, Statuses } from "@/types";
+import { StateShape, Statuses } from "@/types/globalTypes";
 
 const initialState: StateShape<PuzzleFormat> = {
   data: BlankPuzzle,

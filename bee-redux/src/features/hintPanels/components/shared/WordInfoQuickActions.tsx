@@ -14,9 +14,10 @@ import { HintHideKnownControl } from "@/features/hintPanels/components/settings/
 import { HintRevealedLettersControl } from "@/features/hintPanels/components/settings/HintRevealedLettersControl";
 import { QuickActions } from "@/features/hintPanels/components/shared/QuickActions";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
-import { ObscurityPanelData } from "@/features/hintPanelType_obscurity";
-import { DefinitionPanelData } from "@/features/hintPanelType_definition";
-import { Uuid } from "@/types";
+import { ObscurityPanelData } from "@/features/obscurityPanel";
+import { DefinitionPanelData } from "@/features/definitionPanel";
+
+import { Uuid } from "@/features/api";
 
 export function WordInfoQuickActions({
   panelUuid,

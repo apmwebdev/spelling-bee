@@ -19,7 +19,7 @@ import {
 } from "@/features/wordLists";
 import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();

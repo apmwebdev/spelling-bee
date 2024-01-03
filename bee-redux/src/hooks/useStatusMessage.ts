@@ -17,7 +17,7 @@ import {
   AuthMessageOutput,
   AuthMessageUpdateFn,
 } from "@/features/auth";
-import { MessageStatus } from "@/types";
+import { MessageStatus } from "@/types/globalTypes";
 
 export const useStatusMessage = ({
   baseClass,

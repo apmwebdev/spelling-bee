@@ -13,9 +13,9 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore, devLog } from "@/util";
-import { createInitialState, isUuid, Statuses, Uuid } from "@/types";
+import { createInitialState, Statuses } from "@/types/globalTypes";
 import { guessesApiSlice } from "@/features/guesses/api/guessesApiSlice";
-import { GuessFormat, isGuess } from "@/features/guesses/types";
+import { GuessFormat, isGuess } from "@/features/guesses/types/guessTypes";
 import {
   createAddItemThunk,
   createDataResolverThunk,
@@ -23,7 +23,7 @@ import {
   createUuidSyncThunk,
   createUuidUpdateReducer,
 } from "@/features/api/util/synchronizer";
-import { DataSourceKeys } from "@/features/api/types/apiTypes";
+import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
 import {
   addIdbGuess,
   bulkAddIdbGuesses,

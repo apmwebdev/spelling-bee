@@ -1,2 +1,2 @@
 export * from "./api/userDataApiSlice";
-export * from "./types";
+export * from "./types/userDataTypes";

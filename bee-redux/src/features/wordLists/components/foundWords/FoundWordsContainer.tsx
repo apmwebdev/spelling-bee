@@ -22,7 +22,7 @@ import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { FoundWordsSettings } from "./FoundWordsSettings";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 export function FoundWordsContainer() {
   const dispatch = useAppDispatch();

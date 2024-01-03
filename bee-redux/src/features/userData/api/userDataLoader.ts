@@ -13,7 +13,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getIdbPuzzleAttempts } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
 import { userDataApiSlice } from "@/features/userData";
-import { BLANK_UUID, isErrorResponse, Uuid } from "@/types";
 import {
   generateNewAttemptThunk,
   resolveAttemptsData,
@@ -43,10 +42,10 @@ import {
   isUserPuzzleData,
   isUserPuzzleDataResponse,
   UserPuzzleData,
-} from "@/features/userData/types";
+} from "@/features/userData/types/userDataTypes";
 import { last } from "lodash";
 import { PromiseExtended } from "dexie";
-import { RtkqQueryActionCreatorResult } from "@/features/api/types/apiTypes";
+import { BLANK_UUID, isErrorResponse, Uuid } from "@/features/api";
 
 /** A type that consists of either the data from a successful query, set via a generic, plus the
  *  different error types that can result from both RTK Query and Dexie. Null is an option since
@@ -57,11 +56,6 @@ type UpdIdbDataItem<DataType> =
   | DataType
   | DexieGeneralError
   | null;
-
-type UpdServerDataItem<ResultType, ArgType> = RtkqQueryActionCreatorResult<
-  ResultType,
-  ArgType
-> | null;
 
 /** This will eventually be used for comparing the server and IndexedDB data
  */

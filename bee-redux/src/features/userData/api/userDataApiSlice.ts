@@ -11,13 +11,17 @@
 */
 
 import { apiSlice } from "@/features/api";
-import { UserPrefsData, UserPrefsFormData } from "@/types";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { searchPanelSearchesApiSlice } from "@/features/searchPanelSearches";
 import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
 import { guessesApiSlice, processGuess } from "@/features/guesses";
 import { RootState } from "@/app/store";
-import { UserBaseData, UserPuzzleData } from "@/features/userData/types";
+import {
+  UserBaseData,
+  UserPrefsData,
+  UserPrefsFormData,
+  UserPuzzleData,
+} from "@/features/userData/types/userDataTypes";
 import { devLog } from "@/util";
 
 // Meant to be used within an updateQueryData function to update state immutably.

@@ -12,7 +12,8 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function PanelNameInputForm({
   panelUuid,

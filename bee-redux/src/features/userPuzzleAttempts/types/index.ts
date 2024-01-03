@@ -10,7 +10,8 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { BLANK_UUID, hasAllProperties, isUuid, Uuid } from "@/types";
+import { hasAllProperties } from "@/types/globalTypes";
+import { BLANK_UUID, isUuid, Uuid } from "@/features/api";
 
 export type UserPuzzleAttempt = {
   uuid: Uuid;

@@ -16,8 +16,8 @@ import {
   idb,
   idbInsertWithRetry,
 } from "@/lib/idb";
-import { Uuid } from "@/types";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
+import { Uuid } from "@/features/api";
 
 export const getIdbPuzzleAttempts = (puzzleId: number) => {
   return idb.attempts.where("puzzleId").equals(puzzleId).toArray();

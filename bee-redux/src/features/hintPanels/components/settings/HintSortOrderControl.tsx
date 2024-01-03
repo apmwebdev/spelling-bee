@@ -11,8 +11,9 @@
 */
 
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
-import { SortOrderKeys, Uuid } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/features/api";
 
 export function HintSortOrderControl({
   panelUuid,

@@ -26,8 +26,9 @@ import {
 import {
   PanelDisplayState,
   PanelDisplayStateKeys,
-} from "@/features/hintPanels/types";
-import { Uuid } from "@/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
+
+import { Uuid } from "@/features/api";
 
 export function PanelInitialDisplayControls({
   panelUuid,

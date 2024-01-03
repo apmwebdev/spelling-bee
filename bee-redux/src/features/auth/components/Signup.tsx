@@ -12,7 +12,6 @@
 
 import { FormEvent, useId } from "react";
 import { SignupData, useSignupMutation } from "@/features/auth";
-import { isBasicError } from "@/types";
 import { ValidatableFormInput } from "@/components/ValidatableFormInput";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
@@ -20,6 +19,7 @@ import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { PasswordFields } from "@/features/auth/components/PasswordFields";
 import { devLog } from "@/util";
 import { MoreActionsDropdown } from "@/features/auth/components/MoreActionsDropdown";
+import { isBasicError } from "@/features/api";
 
 /**
  * @name Signup

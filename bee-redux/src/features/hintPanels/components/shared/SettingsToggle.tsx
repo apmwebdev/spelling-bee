@@ -18,7 +18,8 @@ import {
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function SettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
   const dispatch = useAppDispatch();

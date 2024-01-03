@@ -22,8 +22,8 @@ import {
   HintPanelUpdateForm,
   MoveHintPanelData,
   RailsHintPanelUpdateForm,
-} from "@/features/hintPanels/types";
-import { HintProfileTypes } from "@/features/hintProfiles/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
+import { HintProfileTypes } from "@/features/hintProfiles/types/hintProfileTypes";
 import { devLog } from "@/util";
 
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {

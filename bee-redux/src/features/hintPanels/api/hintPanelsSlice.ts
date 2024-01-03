@@ -14,18 +14,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "@/app/store";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { capitalizeFirstLetter, devLog } from "@/util";
-import { StateShape, Statuses, Uuid } from "@/types";
+import { StateShape, Statuses } from "@/types/globalTypes";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { puzzleApiSlice } from "@/features/puzzle";
 import {
   CompleteHintProfile,
   HintProfileTypes,
-} from "@/features/hintProfiles/types";
+} from "@/features/hintProfiles/types/hintProfileTypes";
 import {
   hintPanelsApiSlice,
   PanelCurrentDisplayState,
   PanelCurrentDisplayStateProperties,
 } from "@/features/hintPanels";
+import { Uuid } from "@/features/api";
 
 type StateData = {
   [panelUuid: Uuid]: PanelCurrentDisplayState;

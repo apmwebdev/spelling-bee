@@ -14,10 +14,11 @@ import { Switch } from "@/components/radix-ui/radix-switch";
 import {
   HintPanelBooleanKeys,
   HintPanelBooleanSettings,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function HintPanelSwitchSetting({
   panelUuid,

@@ -5,7 +5,8 @@ import {
   idbInsertWithRetry,
 } from "@/lib/idb";
 import { GuessFormat } from "@/features/guesses";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export const getIdbAttemptGuesses = (attemptUuid: Uuid) => {
   return idb.guesses.where("attemptUuid").equals(attemptUuid).toArray();

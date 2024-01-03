@@ -1,4 +1,4 @@
 export * from "./api/hintProfilesApiSlice";
 export * from "./api/hintProfilesSlice";
 export * from "./components/HintProfiles";
-export * from "./types";
+export * from "./types/hintProfileTypes";

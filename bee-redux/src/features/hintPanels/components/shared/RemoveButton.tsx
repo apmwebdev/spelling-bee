@@ -11,7 +11,8 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function RemoveButton({ panelUuid }: { panelUuid: Uuid }) {
   return (

@@ -14,20 +14,20 @@ import {
   LetterHintPanel,
   LetterPanelData,
   LetterPanelQuickActions,
-} from "@/features/hintPanelType_letter";
+} from "@/features/letterPanel";
 import {
   SearchHintPanel,
   SearchPanelData,
   SearchPanelQuickActions,
-} from "@/features/hintPanelType_search";
+} from "@/features/searchPanel";
 import {
   ObscurityHintPanel,
   ObscurityPanelData,
-} from "@/features/hintPanelType_obscurity";
+} from "@/features/obscurityPanel";
 import {
   DefinitionHintPanel,
   DefinitionPanelData,
-} from "@/features/hintPanelType_definition";
+} from "@/features/definitionPanel";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle";
 import { HintContentBlur } from "@/features/hintPanels/components/shared/HintContentBlur";

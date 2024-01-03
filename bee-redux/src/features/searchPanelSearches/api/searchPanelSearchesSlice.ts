@@ -20,8 +20,8 @@ import { searchPanelSearchesApiSlice } from "@/features/searchPanelSearches";
 import {
   isSearchPanelSearch,
   SearchPanelSearchData,
-} from "@/features/searchPanelSearches/types";
-import { createInitialState, Statuses, Uuid } from "@/types";
+} from "@/features/searchPanelSearches/types/searchPanelSearchTypes";
+import { createInitialState, Statuses } from "@/types/globalTypes";
 import { RootState } from "@/app/store";
 import {
   addIdbSearchPanelSearch,
@@ -38,7 +38,7 @@ import {
   createUuidSyncThunk,
   createUuidUpdateReducer,
 } from "@/features/api/util/synchronizer";
-import { DataSourceKeys } from "@/features/api/types/apiTypes";
+import { DataSourceKeys, Uuid } from "@/features/api/types/apiTypes";
 
 const modelDisplayName = "search";
 

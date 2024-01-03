@@ -17,8 +17,8 @@ import { FormEvent } from "react";
 import { usePasswordValidation } from "@/features/auth/hooks/usePasswordValidation";
 import { PasswordFields } from "@/features/auth/components/PasswordFields";
 import { PasswordResetData, useResetPasswordMutation } from "@/features/auth";
-import { isBasicError } from "@/types";
 import { MoreActions } from "@/features/auth/components/MoreActions";
+import { isBasicError } from "@/features/api";
 
 export function ResetPasswordRoute() {
   const [searchParams] = useSearchParams();

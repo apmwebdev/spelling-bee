@@ -16,7 +16,8 @@ import {
   PanelCurrentDisplayStateProperties,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function HintContentBlurButton({
   panelUuid,

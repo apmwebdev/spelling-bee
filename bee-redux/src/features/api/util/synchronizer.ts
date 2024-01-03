@@ -18,6 +18,7 @@ import {
   DataSourceKeys,
   DiffContainer,
   ResolvedDataContainer,
+  Uuid,
   UuidRecord,
   UuidRecordStatus,
   UuidSyncData,
@@ -25,17 +26,16 @@ import {
   UuidUpdateData,
   UuidUpdateReducerArgs,
 } from "@/features/api/types/apiTypes";
-import {
-  isBasicSuccessResponse,
-  isErrorResponse,
-  StateShape,
-  Uuid,
-} from "@/types";
+import { StateShape } from "@/types/globalTypes";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { devLog } from "@/util";
 import { RootState } from "@/app/store";
 import { bulkDeleteIdbGuesses } from "@/features/guesses/api/guessesIdbApi";
 import { isEqual } from "lodash";
+import {
+  isErrorResponse,
+  isSuccessResponse,
+} from "@/features/api/types/responseTypes";
 
 /** This is a factory function for creating a Redux reducer for updating UUIDs, as the logic for
  * updating UUIDs in Redux is almost identical across model types/slices. This is necessary because
@@ -208,7 +208,7 @@ export const createDataResolverThunk = <DataType extends UuidRecord>({
         devLog(`Error bulk updating ${modelDisplayName}:`, err);
         return null;
       });
-    if (isBasicSuccessResponse(serverResult)) {
+    if (isSuccessResponse(serverResult)) {
       for (const result of serverResult.data) {
         //TODO: Handle errors somehow?
         if (result.isSuccess && result.newUuid) {

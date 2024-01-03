@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { apiSlice, persistor } from "@/features/api";
+import { apiSlice, BasicResponse, persistor } from "@/features/api";
 import {
   AuthResetData,
   AuthUpdateData,
@@ -18,8 +18,7 @@ import {
   PasswordResetData,
   SignupData,
   User,
-} from "@/features/auth/types";
-import { BasicResponse } from "@/types";
+} from "@/features/auth/types/authTypes";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { isAnyOf } from "@reduxjs/toolkit";
 import { loginReducer } from "@/features/auth";

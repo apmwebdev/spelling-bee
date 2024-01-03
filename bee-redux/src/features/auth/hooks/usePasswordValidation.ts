@@ -14,7 +14,7 @@ import {
   useUserInfoFormField,
   validateField,
 } from "@/hooks/useUserInfoFormField";
-import { PASSWORD_REGEX } from "@/types";
+import { PASSWORD_REGEX } from "@/types/globalTypes";
 import { useState } from "react";
 
 export const validatePassword = validateField({

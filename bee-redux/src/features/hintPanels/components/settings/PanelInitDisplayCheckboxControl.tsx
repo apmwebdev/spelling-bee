@@ -14,9 +14,10 @@ import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 import { ReactNode } from "react";
 import { HelpBubble } from "@/components/HelpBubble";
 import { capitalizeFirstLetter } from "@/util";
-import { PanelDisplayStateKeys } from "@/features/hintPanels/types";
+import { PanelDisplayStateKeys } from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
-import { Uuid } from "@/types";
+
+import { Uuid } from "@/features/api";
 
 export function PanelInitDisplayCheckboxControl({
   panelUuid,
