@@ -24,7 +24,7 @@ import {
   RailsHintPanelUpdateForm,
 } from "@/features/hintPanels/types/hintPanelTypes";
 import { HintProfileTypes } from "@/features/hintProfiles/types/hintProfileTypes";
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   const railsData: RailsHintPanelUpdateForm = {
@@ -102,7 +102,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
             });
             devLog("Response:", response);
           } catch (err) {
-            devLog("Couldn't update DB with updated panel data:", err);
+            errLog("Couldn't update DB with updated panel data:", err);
           }
         };
         //Debounce query if applicable. Otherwise, just run it.
@@ -181,7 +181,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
               body: keysToSnakeCase(formData),
             });
           } catch (err) {
-            devLog("Couldn't update panel order:", err);
+            errLog("Couldn't update panel order:", err);
             return { data: false };
           }
         }

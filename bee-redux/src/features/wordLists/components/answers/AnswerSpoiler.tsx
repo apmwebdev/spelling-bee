@@ -12,7 +12,7 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "@/features/wordLists";
-import { GuessFormat, useAddGuessMutation } from "@/features/guesses";
+import { TGuess, useAddGuessMutation } from "@/features/guesses";
 import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
@@ -38,7 +38,7 @@ export function AnswerSpoiler({ word }: { word: string }) {
   };
 
   const spoiler = (spoilerText: string) => {
-    const spoilerData: GuessFormat = {
+    const spoilerData: TGuess = {
       uuid: crypto.randomUUID(),
       attemptUuid: currentAttempt.uuid,
       text: word,

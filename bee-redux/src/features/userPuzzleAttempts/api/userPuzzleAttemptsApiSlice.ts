@@ -13,7 +13,7 @@
 import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import {
   UuidRecordStatus,
   UuidUpdateData,
@@ -26,7 +26,7 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         const state = api.getState() as RootState;
         const puzzleId = state.puzzle.data.id;
         if (puzzleId === 0) {
-          devLog("No puzzle");
+          errLog("No puzzle");
           return { error: { status: 404, data: "No puzzle loaded" } };
         }
         const response = await baseQuery(

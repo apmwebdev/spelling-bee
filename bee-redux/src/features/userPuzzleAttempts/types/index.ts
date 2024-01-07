@@ -17,7 +17,7 @@ export type UserPuzzleAttempt = {
   uuid: Uuid;
   puzzleId: number;
   createdAt: number;
-  // guesses: GuessFormat[];
+  // guesses: TGuess[];
 };
 
 export const isUserPuzzleAttempt = (

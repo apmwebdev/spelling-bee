@@ -1,8 +1,9 @@
+import { createTypeGuard } from "@/types/globalTypes";
 import {
-  createTypeGuard,
-  TypeGuardPropertyValidator,
-} from "@/types/globalTypes";
-import { isUuid, Uuid } from "@/features/api";
+  createTypedSuccessResponseTypeGuard,
+  isUuid,
+  Uuid,
+} from "@/features/api";
 
 export type RailsGuessFormat = {
   uuid: Uuid;
@@ -16,7 +17,8 @@ export type RailsGuessFormData = {
   guess: RailsGuessFormat;
 };
 
-export type RawGuessFormat = {
+/** The guess format returned from the server */
+export type RawGuess = {
   uuid: Uuid;
   attemptUuid: Uuid;
   text: string;
@@ -24,25 +26,31 @@ export type RawGuessFormat = {
   isSpoiled: boolean;
 };
 
-//If updating, update GuessProperties as well
-export type GuessFormat = {
-  uuid: Uuid;
-  attemptUuid: Uuid;
-  text: string;
-  createdAt: number;
-  isSpoiled: boolean;
+export const isRawGuess = createTypeGuard<RawGuess>(
+  ["uuid", isUuid],
+  ["attemptUuid", isUuid],
+  ["text", "string"],
+  ["createdAt", "number"],
+  ["isSpoiled", "boolean"],
+);
+
+/** Validates that a value is both a successful RTKQ response (i.e., it has a `data` property), and
+ *  that the data property is a valid raw guess. */
+export const isRawGuessResponse =
+  createTypedSuccessResponseTypeGuard<RawGuess>(isRawGuess);
+
+/** The processed guess format used in Redux and saved in IndexedDB */
+export type TGuess = RawGuess & {
   isAnswer: boolean;
   isExcluded: boolean;
 };
 
-export const isGuess = createTypeGuard<GuessFormat>(
-  new Map<string, TypeGuardPropertyValidator>([
-    ["uuid", isUuid],
-    ["attemptUuid", isUuid],
-    ["text", "string"],
-    ["createdAt", "number"],
-    ["isSpoiled", "boolean"],
-    ["isAnswer", "boolean"],
-    ["isExcluded", "boolean"],
-  ]),
+export const isGuess = createTypeGuard<TGuess>(
+  ["uuid", isUuid],
+  ["attemptUuid", isUuid],
+  ["text", "string"],
+  ["createdAt", "number"],
+  ["isSpoiled", "boolean"],
+  ["isAnswer", "boolean"],
+  ["isExcluded", "boolean"],
 );

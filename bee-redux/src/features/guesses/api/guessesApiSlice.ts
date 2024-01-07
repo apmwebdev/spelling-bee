@@ -10,13 +10,18 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { apiSlice } from "@/features/api";
+import {
+  apiSlice,
+  createRtkqCustomErrorResponse,
+  isFetchBaseQueryErrorResponse,
+} from "@/features/api";
 import { RootState } from "@/app/store";
 import { selectAnswerWords, selectExcludedWords } from "@/features/puzzle";
 import {
-  GuessFormat,
+  isRawGuessResponse,
   RailsGuessFormat,
-  RawGuessFormat,
+  RawGuess,
+  TGuess,
 } from "@/features/guesses";
 import {
   UuidRecordStatus,
@@ -24,7 +29,7 @@ import {
 } from "@/features/api/types/apiTypes";
 import { devLog } from "@/util";
 
-const railsifyGuess = (guess: GuessFormat): RailsGuessFormat => {
+const railsifyGuess = (guess: TGuess): RailsGuessFormat => {
   return {
     uuid: guess.uuid,
     user_puzzle_attempt_uuid: guess.attemptUuid,
@@ -35,9 +40,9 @@ const railsifyGuess = (guess: GuessFormat): RailsGuessFormat => {
 };
 
 export const processGuess = (
-  { uuid, attemptUuid, text, createdAt, isSpoiled }: RawGuessFormat,
+  { uuid, attemptUuid, text, createdAt, isSpoiled }: RawGuess,
   state: RootState,
-): GuessFormat => {
+): TGuess => {
   const answerWords = selectAnswerWords(state);
   const isAnswer = answerWords.includes(text);
   let isExcluded = false;
@@ -58,23 +63,35 @@ export const processGuess = (
 
 export const guessesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getGuesses: builder.query<GuessFormat[], string>({
+    getGuesses: builder.query<TGuess[], string>({
       query: (attempt_uuid) => ({
         url: `/user_puzzle_attempt_guesses/${attempt_uuid}`,
       }),
     }),
-    addGuess: builder.mutation<GuessFormat, GuessFormat>({
-      queryFn: async (guess: GuessFormat, api, _extraOptions, baseQuery) => {
+    addGuess: builder.mutation<TGuess, TGuess>({
+      queryFn: async (guess: TGuess, api, _extraOptions, baseQuery) => {
         const state = api.getState() as RootState;
-        const { data } = await baseQuery({
+        const response = await baseQuery({
           url: "/guesses",
           method: "POST",
           body: { guess: railsifyGuess(guess) },
         });
-        return { data: processGuess(data as RawGuessFormat, state) };
+        //Happy path
+        if (isRawGuessResponse(response)) {
+          return { data: processGuess(response.data, state) };
+        }
+        //An error response in the expected format. Return as is
+        if (isFetchBaseQueryErrorResponse(response)) {
+          return response;
+        }
+        //Unexpected response. Return error
+        return createRtkqCustomErrorResponse({
+          data: response,
+          error: "Invalid response format for addGuess",
+        });
       },
     }),
-    addBulkGuesses: builder.mutation<UuidRecordStatus[], GuessFormat[]>({
+    addBulkGuesses: builder.mutation<UuidRecordStatus[], TGuess[]>({
       query: (guessData) => ({
         url: "/guesses/bulk_add",
         method: "POST",

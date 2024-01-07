@@ -1,11 +1,17 @@
-import { hasAllProperties, isPlainObject } from "@/types/globalTypes";
+import {
+  createTypeGuard,
+  hasAllProperties,
+  isPlainObject,
+} from "@/types/globalTypes";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
 //Success Responses
 
 /** Successful responses returned by RTK Query always have a `data` property. Depending on how
- *  the response is accessed, however, the data property may be nested. */
+ *  the response is accessed, however, the data property may be nested.
+ *  baseQuery responses are either SuccessResponse or ErrorResponse when accessed from apiSlice or
+ *  inside an endpoint queryFn */
 export type SuccessResponse = { data: any };
 
 /** Basic type guard for a successful RTK Query response. This is necessary because the built-in
@@ -52,32 +58,21 @@ export type ErrorBaseData = {
   error: string;
 };
 
-/** A type guard for an error type defined by RTK Query */
-export const isFetchBaseQueryErrorResponse = (
-  response: any,
-): response is { error: FetchBaseQueryError } =>
-  isErrorResponse(response) && "status" in response.error;
-
-/** A type guard for an error type defined by RTK Query */
-export const isSerializedErrorResponse = (
-  response: any,
-): response is { error: SerializedError } =>
-  isErrorResponse(response) && !("status" in response.error);
-
 export type BasicError = {
   data: ErrorBaseData;
   status: number;
 };
 
-export const isBasicError = (response: any): response is BasicError =>
-  "data" in response &&
-  "error" in response.data &&
-  typeof response.data.error === "string";
+export const isBasicError = (toTest: any): toTest is BasicError =>
+  "data" in toTest &&
+  "error" in toTest.data &&
+  typeof toTest.data.error === "string";
 
 /** When accessing an RTK Query error response directly from a query initiated with the initiate()
- *  method (i.e., not through a React hook, and `await`-ing the response), this is the
- *  minimum structure that is returned. Some errors return additional data in the
- *  error.data object, but all of them should at least return error.data.error. */
+ *  method (i.e., not through a React hook, and `await`-ing the response), or from an endpoint
+ *  queryFn, this is the minimum structure that is returned. Some errors return additional data in
+ *  the error.data object, but all of them should at least return error.data.error.
+ *  Structure is { error: { data: { error: string }, status: number } } */
 export type RawBasicError = {
   error: BasicError;
 };
@@ -107,6 +102,107 @@ export const isRawTypedError =
   (response: any): response is RawTypedError<ErrorType> => {
     return isRawBasicError(response) && errorTypeValidator(response.error.data);
   };
+
+export type FetchBaseQueryNumberError = {
+  data: any;
+  status: number;
+};
+
+export const isFetchBaseQueryNumberError =
+  createTypeGuard<FetchBaseQueryNumberError>(
+    ["data", null],
+    ["status", "number"],
+  );
+
+export type FetchBaseQueryFetchError = {
+  status: "FETCH_ERROR";
+  data?: undefined;
+  error: string;
+};
+
+export const isFetchBaseQueryFetchError =
+  createTypeGuard<FetchBaseQueryFetchError>(
+    ["status", (prop: any) => prop === "FETCH_ERROR"],
+    ["error", "string"],
+  );
+
+export type FetchBaseQueryParsingError = {
+  status: "PARSING ERROR";
+  originalStatus: number;
+  data: string;
+  error: string;
+};
+
+export const isFetchBaseQueryParsingError =
+  createTypeGuard<FetchBaseQueryParsingError>(
+    ["status", (prop: any) => prop === "PARSING_ERROR"],
+    ["originalStatus", "number"],
+    ["data", "string"],
+    ["error", "string"],
+  );
+
+export type FetchBaseQueryCustomError = {
+  status: "CUSTOM_ERROR";
+  data?: unknown;
+  error: string;
+};
+
+export const isFetchBaseQueryCustomError =
+  createTypeGuard<FetchBaseQueryCustomError>(
+    ["status", (prop: any) => prop === "CUSTOM_ERROR"],
+    ["error", "string"],
+  );
+
+export type RtkqFetchBaseQueryError =
+  | FetchBaseQueryNumberError
+  | FetchBaseQueryFetchError
+  | FetchBaseQueryParsingError
+  | FetchBaseQueryCustomError;
+
+export const isFetchBaseQueryError = (
+  toTest: any,
+): toTest is FetchBaseQueryError => {
+  return (
+    isFetchBaseQueryNumberError(toTest) ||
+    isFetchBaseQueryFetchError(toTest) ||
+    isFetchBaseQueryParsingError(toTest) ||
+    isFetchBaseQueryCustomError(toTest)
+  );
+};
+
+export type FetchBaseQueryErrorResponse = {
+  error: FetchBaseQueryError & RtkqFetchBaseQueryError;
+};
+
+/** A type guard for an error type defined by RTK Query */
+export const isFetchBaseQueryErrorResponse = (
+  response: any,
+): response is FetchBaseQueryErrorResponse => {
+  if (!isErrorResponse(response)) return false;
+  return isFetchBaseQueryError(response.error);
+};
+
+export const createRtkqCustomErrorResponse = ({
+  data,
+  error,
+}: {
+  data?: any;
+  error: string;
+}): FetchBaseQueryErrorResponse => {
+  return {
+    error: {
+      status: "CUSTOM_ERROR",
+      data,
+      error,
+    },
+  };
+};
+
+/** A type guard for an error type defined by RTK Query */
+export const isSerializedErrorResponse = (
+  response: any,
+): response is { error: SerializedError } =>
+  isErrorResponse(response) && !("status" in response.error);
 
 //Rails responses
 

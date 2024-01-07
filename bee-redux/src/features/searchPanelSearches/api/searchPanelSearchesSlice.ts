@@ -30,7 +30,7 @@ import {
   getIdbAttemptSearches,
   updateIdbSearchPanelSearchUuids,
 } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import {
   createAddItemThunk,
   createDataResolverThunk,
@@ -134,7 +134,7 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
     api.dispatch(deleteSearchPanelSearch(uuid));
     //Delete from IndexedDB
     const idbResult = await deleteIdbSearchPanelSearch(uuid).catch((err) =>
-      devLog("Can't delete SPS from IndexedDB due to invalid UUID:", uuid, err),
+      errLog("Can't delete SPS from IndexedDB due to invalid UUID:", uuid, err),
     );
     //Delete on server if user is logged in
     let rtkqResult;
@@ -145,7 +145,7 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
           searchPanelSearchesApiSlice.endpoints.deleteSearch.initiate(uuid),
         )
         .unwrap()
-        .catch((err) => devLog("Can't delete SPS from server:", err));
+        .catch((err) => errLog("Can't delete SPS from server:", err));
     }
     Promise.all([idbResult, rtkqResult]).then(() => devLog("SPS deleted"));
   },

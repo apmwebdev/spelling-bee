@@ -13,7 +13,7 @@
 import { CompleteHintProfile, HintProfilesData } from "@/features/hintProfiles";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
-import { GuessFormat } from "@/features/guesses";
+import { TGuess } from "@/features/guesses";
 import { hasAllProperties, isPlainObject } from "@/types/globalTypes";
 import { createTypedSuccessResponseTypeGuard } from "@/features/api";
 
@@ -46,7 +46,7 @@ export type UserPuzzleData = {
   searches: SearchPanelSearchData[];
   attempts: UserPuzzleAttempt[];
   currentAttempt: string;
-  guesses: GuessFormat[];
+  guesses: TGuess[];
 };
 
 export const isUserPuzzleData = (toTest: any): toTest is UserPuzzleData => {

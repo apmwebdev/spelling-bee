@@ -1,5 +1,5 @@
 import Dexie, { DexieError, IndexableType, Table } from "dexie";
-import { GuessFormat } from "@/features/guesses";
+import { TGuess } from "@/features/guesses";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
@@ -10,11 +10,11 @@ import {
   UuidRecord,
   UuidUpdateData,
 } from "@/features/api/types/apiTypes";
-import { devLog } from "@/util";
+import { errLog } from "@/util";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<UserPuzzleAttempt>;
-  guesses!: Table<GuessFormat>;
+  guesses!: Table<TGuess>;
   hintProfiles!: Table<HintProfileData>;
   hintPanels!: Table<HintPanelData>;
   searchPanelSearches!: Table<SearchPanelSearchData>;
@@ -116,7 +116,7 @@ export const createIdbUuidUpdateFn =
       try {
         await idbTable.update(item.oldUuid, { uuid: item.newUuid });
       } catch (err) {
-        devLog("Error:", err);
+        errLog("Error:", err);
       }
     }
     return newUuids;

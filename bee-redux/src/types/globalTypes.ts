@@ -107,21 +107,31 @@ export const EMAIL_REGEX =
 export const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\d\sa-zA-Z]).{10,128}$/;
 
-/** @see createTypeGuard */
+/** The different ways to validate a property in createTypeGuard:
+ *  1. If the validator is null, the property only needs to exist in the object to be valid
+ *  2. If the validator is a string, the property needs to be the typeof that string
+ *  3. If the validator is a predicate or type guard function, that function validates the property
+ *     and needs to return true when passed the property as an argument. */
 export type TypeGuardPropertyValidator =
+  | null
   | string
-  | ((toTest: any) => toTest is any);
+  | ((toTest: any) => toTest is any)
+  | ((toTest: any) => boolean);
 
-/** A factory function to make creating type guards easier. Give it a map of properties +
- * validation for those properties (`validProperties`) to create the type guard function, then pass
- * an object (`toTest`) to the created type guard to type check that object
- * @param validProperties A Map of the valid and necessary properties of the type being tested.
- * The key is the name of the property. The value is the validation for that property.
- * - A string will be used in a simple typeof check (`typeof toTest[key] === value`)
- * - A function will be treated as a validation function (`value(toTest[key]`) */
-export const createTypeGuard =
-  <ValidType>(validProperties: Map<string, TypeGuardPropertyValidator>) =>
-  (toTest: any): toTest is ValidType => {
+/** A factory function to make creating type guards easier. Give it an array of properties +
+ * validation for those properties (`validators`) to create the type guard function, then pass
+ * an object (`toTest`) to the created type guard to type check that object.
+ * @param validators An array of tuples with the properties of the type being tested. The first
+ * item in the tuple is the name of the property. The second item is the validation for that
+ * property. This array of tuples is then turned into a Map for ease of use.
+ * */
+export const createTypeGuard = <ValidType>(
+  ...validators: Array<[string, TypeGuardPropertyValidator]>
+) => {
+  const validProperties = new Map<string, TypeGuardPropertyValidator>(
+    validators,
+  );
+  return (toTest: any): toTest is ValidType => {
     //This app doesn't use object constructors or classes, so toTest should be a plain object
     if (!isPlainObject(toTest)) return false;
     if (!hasAllProperties(toTest, validProperties.keys())) return false;
@@ -134,3 +144,4 @@ export const createTypeGuard =
     }
     return true;
   };
+};

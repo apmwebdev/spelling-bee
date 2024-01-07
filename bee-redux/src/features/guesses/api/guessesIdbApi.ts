@@ -4,7 +4,7 @@ import {
   idb,
   idbInsertWithRetry,
 } from "@/lib/idb";
-import { GuessFormat } from "@/features/guesses";
+import { TGuess } from "@/features/guesses";
 
 import { Uuid } from "@/features/api";
 
@@ -12,10 +12,10 @@ export const getIdbAttemptGuesses = (attemptUuid: Uuid) => {
   return idb.guesses.where("attemptUuid").equals(attemptUuid).toArray();
 };
 
-export const addIdbGuess = idbInsertWithRetry<GuessFormat>(
+export const addIdbGuess = idbInsertWithRetry<TGuess>(
   idb.guesses.add.bind(idb.guesses),
 );
-// export const addIdbGuess = (guess: GuessFormat) => idb.guesses.add(guess);
+// export const addIdbGuess = (guess: TGuess) => idb.guesses.add(guess);
 
 export const bulkAddIdbGuesses = createBulkAddIdbDataFn(addIdbGuess);
 

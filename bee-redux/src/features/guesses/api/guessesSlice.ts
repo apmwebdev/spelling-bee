@@ -15,7 +15,7 @@ import { RootState } from "@/app/store";
 import { calculateScore, devLog } from "@/util";
 import { createInitialState, Statuses } from "@/types/globalTypes";
 import { guessesApiSlice } from "@/features/guesses/api/guessesApiSlice";
-import { GuessFormat, isGuess } from "@/features/guesses/types/guessTypes";
+import { isGuess, TGuess } from "@/features/guesses/types/guessTypes";
 import {
   createAddItemThunk,
   createDataResolverThunk,
@@ -33,9 +33,9 @@ import {
 
 const modelDisplayName = "guess";
 
-const initialState = createInitialState<GuessFormat[]>([]);
+const initialState = createInitialState<TGuess[]>([]);
 
-const updateGuessUuidsReducer = createUuidUpdateReducer<GuessFormat[]>({
+const updateGuessUuidsReducer = createUuidUpdateReducer<TGuess[]>({
   modelDisplayName,
 });
 
@@ -43,11 +43,11 @@ export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    setGuesses: (state, { payload }: PayloadAction<GuessFormat[]>) => {
+    setGuesses: (state, { payload }: PayloadAction<TGuess[]>) => {
       state.data = payload;
       state.status = Statuses.UpToDate;
     },
-    addGuess: (state, { payload }: PayloadAction<GuessFormat>) => {
+    addGuess: (state, { payload }: PayloadAction<TGuess>) => {
       state.data.push(payload);
     },
     deleteGuess: (state, { payload }: PayloadAction<Uuid>) => {
@@ -86,7 +86,7 @@ export const guessesSlice = createSlice({
 export const { setGuesses, addGuess, deleteGuess, updateGuessUuids } =
   guessesSlice.actions;
 
-export const addGuessThunk = createAddItemThunk<GuessFormat>({
+export const addGuessThunk = createAddItemThunk<TGuess>({
   itemDisplayType: "guess",
   actionType: "guesses/addGuessThunk",
   validationFn: isGuess,
@@ -102,7 +102,7 @@ export const syncGuessUuids = createUuidSyncThunk({
   stateUuidUpdateFn: updateGuessUuids,
 });
 
-export const resolveGuessesData = createDataResolverThunk<GuessFormat>({
+export const resolveGuessesData = createDataResolverThunk<TGuess>({
   modelDisplayName: "guess",
   actionType: "guesses/resolveGuessesData",
   primaryDataKey: DataSourceKeys.serverData,
@@ -112,10 +112,7 @@ export const resolveGuessesData = createDataResolverThunk<GuessFormat>({
   syncUuidFn: syncGuessUuids,
 });
 
-export const setGuessesFromIdbThunk = createSetDataFromIdbThunk<
-  GuessFormat,
-  Uuid
->({
+export const setGuessesFromIdbThunk = createSetDataFromIdbThunk<TGuess, Uuid>({
   modelDisplayName,
   actionType: "guesses/setGuessesFromIdbThunk",
   getIdbDataFn: getIdbAttemptGuesses,

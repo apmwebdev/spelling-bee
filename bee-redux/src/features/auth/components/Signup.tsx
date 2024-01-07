@@ -17,7 +17,7 @@ import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
 import { useUserInfoValidation } from "@/hooks/useUserInfoValidation";
 import { PasswordFields } from "@/features/auth/components/PasswordFields";
-import { devLog } from "@/util";
+import { errLog } from "@/util";
 import { MoreActionsDropdown } from "@/features/auth/components/MoreActionsDropdown";
 import { isBasicError } from "@/features/api";
 
@@ -77,7 +77,7 @@ export function Signup() {
         resetForm();
         message.update(response.success, "Success");
       } catch (err) {
-        devLog("Failed to save user: ", err);
+        errLog("Failed to save user: ", err);
         if (isBasicError(err)) {
           message.update(err.data.error, "Error");
         } else {

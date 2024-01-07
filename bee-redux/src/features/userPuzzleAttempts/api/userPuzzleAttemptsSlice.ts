@@ -25,7 +25,7 @@ import {
 import { RootState } from "@/app/store";
 import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
 import { last } from "lodash";
-import { devLog } from "@/util";
+import { errLog } from "@/util";
 import {
   addIdbAttempt,
   bulkAddIdbAttempts,
@@ -69,7 +69,7 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
     addAttempt: (state, { payload }: PayloadAction<UserPuzzleAttempt>) => {
       if (!isUserPuzzleAttempt(payload)) {
-        devLog("Invalid attempt:", payload);
+        errLog("Invalid attempt:", payload);
         return;
       }
       state.data.attempts.push(payload);
@@ -77,14 +77,14 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
     deleteAttempt: (state, { payload }: PayloadAction<Uuid>) => {
       if (!isUuid(payload)) {
-        devLog("Can't delete user puzzle attempt: Invalid UUID.", payload);
+        errLog("Can't delete user puzzle attempt: Invalid UUID.", payload);
         return;
       }
       const upaIndexToDelete = state.data.attempts.findIndex(
         (attempt) => attempt.uuid === payload,
       );
       if (upaIndexToDelete === -1) {
-        devLog("Can't delete user puzzle attempt: Not found.", payload);
+        errLog("Can't delete user puzzle attempt: Not found.", payload);
         return;
       }
       if (state.data.currentAttempt.uuid === payload) {

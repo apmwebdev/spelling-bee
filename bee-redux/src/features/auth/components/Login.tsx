@@ -15,7 +15,7 @@ import { AuthMessageOutput, useLoginMutation } from "@/features/auth";
 import { LoginData } from "@/features/auth/types/authTypes";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
-import { devLog } from "@/util";
+import { errLog } from "@/util";
 import { MoreActionsDropdown } from "@/features/auth/components/MoreActionsDropdown";
 import { isBasicError, isFetchBaseQueryErrorResponse } from "@/features/api";
 
@@ -48,7 +48,7 @@ export function Login({
          * here. */
         await login(formData).unwrap();
       } catch (err) {
-        devLog("Failed to log in:", err);
+        errLog("Failed to log in:", err);
         if (
           isFetchBaseQueryErrorResponse(err) &&
           typeof err.error.data === "string"

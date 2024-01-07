@@ -20,11 +20,11 @@ import {
   setAttempts,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 import {
-  GuessFormat,
   processGuess,
   resolveGuessesData,
   setGuesses,
   setGuessesFromIdbThunk,
+  TGuess,
 } from "@/features/guesses";
 import { RootState } from "@/app/store";
 import {
@@ -33,7 +33,7 @@ import {
   setSearchPanelSearches,
   setSearchPanelSearchesFromIdbThunk,
 } from "@/features/searchPanelSearches";
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import { getIdbAttemptGuesses } from "@/features/guesses/api/guessesIdbApi";
 import { getIdbAttemptSearches } from "@/features/searchPanelSearches/api/searchPanelSearchesIdbApi";
 import { DexieGeneralError, isDexieGeneralError } from "@/lib/idb";
@@ -62,7 +62,7 @@ type UpdIdbDataItem<DataType> =
 type UserPuzzleDataContainer = {
   serverData: Promise<UserPuzzleData> | null;
   idbAttempts: UpdIdbDataItem<UserPuzzleAttempt[]>;
-  idbGuesses: UpdIdbDataItem<GuessFormat[]>;
+  idbGuesses: UpdIdbDataItem<TGuess[]>;
   idbSearches: UpdIdbDataItem<SearchPanelSearchData[]>;
   resolvedFirst: "IDB" | "SERVER" | null;
   guessesResolved: boolean;
@@ -127,7 +127,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         upd.resolvedFirst = "SERVER";
       } else {
         //Unexpected response
-        devLog("Unexpected response fetching user puzzle data:", response);
+        errLog("Unexpected response fetching user puzzle data:", response);
       }
       // Only attempt to load IDB guesses and searches if we have a userPuzzleAttempt UUID
       if (upd.currentAttemptUuid !== BLANK_UUID) {
@@ -180,6 +180,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           });
           upd.guessesResolved = true;
         } else {
+          //TODO: If upd.idbGuesses isn't an array, should it attempt to fetch IDB guesses?
           devLog("upd.idbGuesses isn't an array. Skipping.");
         }
       }
@@ -195,6 +196,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
             serverData: serverResult.value.searches,
           });
         } else {
+          //TODO: If upd.idbSearches isn't an array, should it attempt to fetch IDB searches?
           devLog("upd.idbSearches isn't an array. Skipping.");
         }
       }
@@ -237,6 +239,12 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         "Neither server nor IDB returned attempt data. Create a new user puzzle attempt",
       );
       api.dispatch(generateNewAttemptThunk());
+    } else {
+      //If we got here, that means that the first query succeeded and the second failed.
+      // Nothing more needs to happen
+      devLog(
+        "First query succeeded, second failed. No further processing needs to happen",
+      );
     }
   },
 );
@@ -260,13 +268,13 @@ export const loadInitialGuessData = createAsyncThunk(
     //Get IndexedDB guesses
     upd.idbGuesses = await getIdbAttemptGuesses(upd.currentAttemptUuid).catch(
       (err) => {
-        devLog("Error fetching IDB guesses:", err);
+        errLog("Error fetching IDB guesses:", err);
         return null;
       },
     );
     //If IndexedDB query failed, exit early
     if (!Array.isArray(upd.idbGuesses)) {
-      devLog("IDB guesses is not an array. Exiting.", upd.idbGuesses);
+      errLog("IDB guesses is not an array. Exiting.", upd.idbGuesses);
       return;
     }
     //If IDB attempts resolved first successfully
@@ -301,13 +309,13 @@ export const loadInitialSearchData = createAsyncThunk(
     //Get IndexedDB searches
     upd.idbSearches = await getIdbAttemptSearches(upd.currentAttemptUuid).catch(
       (err) => {
-        devLog("Error fetching IDB SPSs:", err);
+        errLog("Error fetching IDB SPSs:", err);
         return null;
       },
     );
     //If IndexedDB query failed, exit early
     if (!Array.isArray(upd.idbSearches)) {
-      devLog("IDB searches is not an array. Exiting.", upd.idbSearches);
+      errLog("IDB searches is not an array. Exiting.", upd.idbSearches);
       return;
     }
     //If IDB attempts resolved first successfully

@@ -28,7 +28,7 @@ import {
 } from "@/features/api/types/apiTypes";
 import { StateShape } from "@/types/globalTypes";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import { RootState } from "@/app/store";
 import { bulkDeleteIdbGuesses } from "@/features/guesses/api/guessesIdbApi";
 import { isEqual } from "lodash";
@@ -205,7 +205,7 @@ export const createDataResolverThunk = <DataType extends UuidRecord>({
       .dispatch(addBulkServerDataEndpoint.initiate(serverDataToAdd))
       .catch((err) => {
         //TODO: Add better error handling
-        devLog(`Error bulk updating ${modelDisplayName}:`, err);
+        errLog(`Error bulk updating ${modelDisplayName}:`, err);
         return null;
       });
     if (isSuccessResponse(serverResult)) {
@@ -222,7 +222,7 @@ export const createDataResolverThunk = <DataType extends UuidRecord>({
     await bulkDeleteIdbGuesses(dataToDelete);
     const idbResult = await addBulkIdbData(idbDataToAdd).catch((err) => {
       //TODO: Add better error handling
-      devLog(`Error bulk updating IDB ${modelDisplayName}:`, err);
+      errLog(`Error bulk updating IDB ${modelDisplayName}:`, err);
       return null;
     });
     if (
@@ -263,7 +263,7 @@ export const createSetDataFromIdbThunk = <
       api.dispatch(setDataReducer(results));
     } catch (err) {
       //TODO: Add better error handling
-      devLog(
+      errLog(
         `Error when attempting to load ${modelDisplayName} data from IndexedDB:`,
         err,
       );
@@ -280,10 +280,9 @@ export const createAddItemThunk = <DataType extends UuidRecord>({
   addServerItemEndpoint,
 }: CreateAddItemThunkArgs<DataType>) =>
   createAsyncThunk(actionType, async (itemToAdd: DataType, api) => {
-    //do stuff
     if (!validationFn(itemToAdd)) {
       //TODO: Add better error handling
-      devLog(`Invalid ${itemDisplayType}. Exiting.`, itemToAdd);
+      errLog(`Invalid ${itemDisplayType}. Exiting.`, itemToAdd);
       return;
     }
     const state = api.getState() as RootState;
@@ -302,7 +301,7 @@ export const createAddItemThunk = <DataType extends UuidRecord>({
       (isErrorResponse(results.serverData) || results.serverData === null)
     ) {
       //TODO: Add better error handling
-      devLog(`Couldn't save ${itemDisplayType} locally or remotely. Deleting.`);
+      errLog(`Couldn't save ${itemDisplayType} locally or remotely. Deleting.`);
       api.dispatch(deleteItemReducer(originalUuid));
       return;
     }
