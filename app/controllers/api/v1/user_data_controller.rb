@@ -9,7 +9,6 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class Api::V1::UserDataController < ApplicationController
-  # before_action :authenticate_user!, only: :user_puzzle_data
 
   def user_base_data
     if user_signed_in?
@@ -20,10 +19,6 @@ class Api::V1::UserDataController < ApplicationController
   end
 
   def user_puzzle_data
-    unless user_signed_in?
-      render json: {error: "User not found"}, status: 401
-      return
-    end
     unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
       render json: {error: "Invalid puzzle ID"}, status: 400
       return
@@ -31,6 +26,10 @@ class Api::V1::UserDataController < ApplicationController
     puzzle_id = params[:puzzle_id].to_i
     unless Puzzle.exists?(puzzle_id)
       render json: {error: "Puzzle not found"}, status: 404
+      return
+    end
+    unless user_signed_in?
+      render json: {searches: [], attempts: [], guesses: [], current_attempt: Constants::BLANK_UUID}
       return
     end
     # Attempts

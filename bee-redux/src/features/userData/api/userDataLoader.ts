@@ -107,7 +107,10 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         upd.resolvedFirst = "IDB";
         api.dispatch(setAttempts(response));
         upd.currentAttemptUuid = last(response)?.uuid ?? BLANK_UUID;
-      } else if (isUserPuzzleDataResponse(response)) {
+      } else if (
+        isUserPuzzleDataResponse(response) &&
+        response.data.attempts.length > 0
+      ) {
         //Server query resolved first with success
         devLog("Server resolved first with success:", response);
         upd.resolvedFirst = "SERVER";
@@ -121,9 +124,13 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         //IndexedDB query resolved first with error or empty array
         devLog("IDB resolved first with error or empty array:", response);
         upd.resolvedFirst = "IDB";
-      } else if (isErrorResponse(response)) {
-        //Server resolved first with error
-        devLog("Server resolved first with error:", response);
+      } else if (
+        isErrorResponse(response) ||
+        (isUserPuzzleDataResponse(response) &&
+          response.data.attempts.length === 0)
+      ) {
+        //Server resolved first with error or no data
+        devLog("Server resolved first with error or no data:", response);
         upd.resolvedFirst = "SERVER";
       } else {
         //Unexpected response

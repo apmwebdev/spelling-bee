@@ -22,7 +22,7 @@ import {
   UserPrefsFormData,
   UserPuzzleData,
 } from "@/features/userData/types/userDataTypes";
-import { devLog } from "@/util";
+import { errLog } from "@/util";
 
 // Meant to be used within an updateQueryData function to update state immutably.
 // The 'prefs' parameter is a draft state and can be mutated safely. Because the
@@ -125,11 +125,14 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         try {
           await api.queryFulfilled;
         } catch (err) {
-          //If the query fails, that's fine. It probably means the user isn't logged in
-          devLog("getUserPuzzleData endpoint failed:", err);
+          errLog("getUserPuzzleData endpoint failed:", err);
         }
         const cacheEntry = api.getCacheEntry();
-        if (cacheEntry.isSuccess && cacheEntry.data) {
+        if (
+          cacheEntry.isSuccess &&
+          cacheEntry.data &&
+          cacheEntry.data.attempts.length > 0
+        ) {
           const { data } = cacheEntry;
           api.dispatch(
             userPuzzleAttemptsApiSlice.util.upsertQueryData(
