@@ -66,21 +66,7 @@ export const guessesSlice = createSlice({
     },
     updateGuessUuids: updateGuessUuidsReducer,
   },
-  extraReducers: (builder) => {
-    // builder
-    //   .addMatcher(
-    //     guessesApiSlice.endpoints.getGuesses.matchFulfilled,
-    //     (state, { payload }) => {
-    //       state.data = payload;
-    //     },
-    //   )
-    //   .addMatcher(
-    //     guessesApiSlice.endpoints.addGuess.matchFulfilled,
-    //     (state, { payload }) => {
-    //       state.data.push(payload);
-    //     },
-    //   );
-  },
+  extraReducers: (builder) => {},
 });
 
 export const { setGuesses, addGuess, deleteGuess, updateGuessUuids } =
