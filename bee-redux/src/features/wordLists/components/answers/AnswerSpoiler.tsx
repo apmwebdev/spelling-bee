@@ -12,11 +12,8 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "@/features/wordLists";
-import {
-  RailsGuessFormData,
-  selectCurrentAttempt,
-  useAddGuessMutation,
-} from "@/features/guesses";
+import { TGuess, useAddGuessMutation } from "@/features/guesses";
+import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
   const currentAttempt = useAppSelector(selectCurrentAttempt);
@@ -41,14 +38,14 @@ export function AnswerSpoiler({ word }: { word: string }) {
   };
 
   const spoiler = (spoilerText: string) => {
-    const spoilerData: RailsGuessFormData = {
-      guess: {
-        uuid: crypto.randomUUID(),
-        user_puzzle_attempt_uuid: currentAttempt.uuid,
-        text: word,
-        created_at: Date.now(),
-        is_spoiled: true,
-      },
+    const spoilerData: TGuess = {
+      uuid: crypto.randomUUID(),
+      attemptUuid: currentAttempt.uuid,
+      text: word,
+      createdAt: Date.now(),
+      isSpoiled: true,
+      isAnswer: true,
+      isExcluded: false,
     };
 
     return (

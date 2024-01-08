@@ -12,7 +12,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { SortOrderKeys, Statuses } from "@/types";
+import { SortOrderKeys, Statuses } from "@/types/globalTypes";
 
 export enum SortType {
   Alphabetical = "alphabetical",

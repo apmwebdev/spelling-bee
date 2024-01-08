@@ -16,20 +16,22 @@ import { CSSProperties } from "react";
 import {
   LetterPanelLocationKeys,
   LetterPanelLocationOptions,
-} from "@/features/hintPanelType_letter";
+} from "@/features/letterPanel";
 import {
   SearchPanelLocationKeys,
   SearchPanelLocationOptions,
-} from "@/features/hintPanelType_search";
+} from "@/features/searchPanel";
 import { PanelTypes, useUpdateHintPanelMutation } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function HintLocationControl({
-  panelId,
+  panelUuid,
   location,
   panelType,
   style,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   location: LetterPanelLocationKeys | SearchPanelLocationKeys;
   panelType: PanelTypes;
   style?: CSSProperties;
@@ -40,7 +42,7 @@ export function HintLocationControl({
     newLocation: LetterPanelLocationKeys | SearchPanelLocationKeys,
   ) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "location",
       typeData: {
         location: newLocation,

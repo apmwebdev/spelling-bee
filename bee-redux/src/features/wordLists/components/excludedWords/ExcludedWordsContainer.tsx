@@ -19,7 +19,7 @@ import {
   toggleExcludedWordsSettingsCollapsed,
 } from "@/features/wordLists";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 export function ExcludedWordsContainer() {
   const dispatch = useAppDispatch();

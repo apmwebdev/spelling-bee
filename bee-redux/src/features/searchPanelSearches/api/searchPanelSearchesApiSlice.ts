@@ -12,6 +12,11 @@
 
 import { apiSlice, keysToSnakeCase } from "@/features/api";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
+import { devLog } from "@/util";
+import {
+  UuidRecordStatus,
+  UuidUpdateData,
+} from "@/features/api/types/apiTypes";
 
 const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
   return {
@@ -19,32 +24,53 @@ const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
       ...keysToSnakeCase(newSearch),
       user_puzzle_attempt_uuid: newSearch.attemptUuid,
       //Remove the attempt_id key so that Rails doesn't complain
-      attempt_id: undefined,
+      attempt_uuid: undefined,
     },
   };
 };
 
 export const searchPanelSearchesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getSearches: builder.query<SearchPanelSearchData[], number>({
-      query: (attemptId) => ({
-        url: `/search_panel_search/${attemptId}`,
+    getSearches: builder.query<SearchPanelSearchData[], string>({
+      query: (attemptUuid) => ({
+        url: `/search_panel_search/${attemptUuid}`,
       }),
     }),
 
     addSearch: builder.mutation<SearchPanelSearchData, SearchPanelSearchData>({
       query: (formData) => ({
-        url: "/search_panel_searches/",
+        url: "/search_panel_searches",
         method: "POST",
         body: railsifyAddSearchData(formData),
       }),
     }),
 
-    deleteSearch: builder.mutation<boolean, number>({
-      query: (id) => ({
-        url: `/search_panel_searches/${id}`,
+    deleteSearch: builder.mutation<boolean, string>({
+      query: (uuid) => ({
+        url: `/search_panel_searches/${uuid}`,
         method: "DELETE",
       }),
+    }),
+
+    addBulkSearchPanelSearches: builder.mutation<
+      UuidRecordStatus[],
+      SearchPanelSearchData[]
+    >({
+      query: (searchData) => ({
+        url: "/search_panel_searches/bulk_add",
+        method: "POST",
+        body: searchData.map((search) => railsifyAddSearchData(search)),
+      }),
+    }),
+
+    updateSearchPanelSearchUuids: builder.mutation<
+      UuidUpdateData[],
+      UuidUpdateData[]
+    >({
+      queryFn: (uuids, api) => {
+        devLog("This endpoint hasn't been implemented yet.");
+        return { data: [] };
+      },
     }),
   }),
 });

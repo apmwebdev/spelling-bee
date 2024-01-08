@@ -10,35 +10,26 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { AppDispatch, RootState } from "@/app/store";
-import { User } from "@/features/auth";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "@/app/store";
+import { authApiSlice } from "./authApiSlice";
+import { User } from "../types/authTypes";
 //Has to be a more specific import path to avoid a circular dependency
 import { persistor } from "@/features/api/util";
+import { startAppListening } from "@/app/listenerMiddleware";
 
 type AuthState = {
   user: User | null;
   isGuest: boolean;
 };
 
-/**
- * Necessary so that user data can be removed from local storage and state
- * outside of the logout endpoint. Used by the baseQuery if it tries to run a
- * query and gets a 401.
- * @param dispatch
- */
-export const logoutThunk = (dispatch: AppDispatch) => {
-  dispatch(logoutReducer());
-  persistor.remove("user");
-  persistor.save("isGuest", "true");
-};
-
 const rehydrateAuthState = (): AuthState => {
-  const storedUser = persistor.load<User>("user");
-  const storedIsGuest = persistor.load<boolean>("isGuest");
+  const storedUser = persistor.load<any>("user");
+  // const storedIsGuest = persistor.load<boolean>("isGuest");
   const authState: AuthState = {
     user: null,
-    isGuest: storedIsGuest?.parsed === true,
+    isGuest: false,
+    // isGuest: storedIsGuest?.parsed === true,
   };
   if (storedUser) {
     const maybeUser = storedUser.parsed;
@@ -70,6 +61,38 @@ const authSlice = createSlice({
 });
 
 export const { loginReducer, logoutReducer } = authSlice.actions;
+
+/**
+ * Necessary so that user data can be removed from local storage and state
+ * outside of the logout endpoint. Used by the baseQuery if it tries to run a
+ * query and gets a 401.
+ * @param dispatch
+ */
+startAppListening({
+  type: "auth/baseQueryLogout",
+  effect: (_arg, api) => {
+    api.dispatch(logoutThunk(false));
+  },
+});
+
+export const logoutThunk = createAsyncThunk(
+  "auth/logoutThunk",
+  (withEndpoint: boolean = true, api) => {
+    const state = api.getState() as RootState;
+    const auth = selectAuth(state);
+    if (auth.user || !auth.isGuest) {
+      api.dispatch(logoutReducer());
+      if (withEndpoint) {
+        api.dispatch(authApiSlice.endpoints.logout.initiate(undefined));
+      }
+    }
+    persistor.remove("user");
+    persistor.remove("currentHintProfile");
+    persistor.remove("userPrefs");
+  },
+);
+
+export const selectAuth = (state: RootState) => state.auth;
 
 export const selectUser = (state: RootState) => state.auth.user;
 

@@ -20,5 +20,6 @@ module SpellingBee
     config.active_record.schema_format = :sql
     config.middleware.use ActionDispatch::Cookies
     config.autoload_paths << "#{root}/db/seeds"
+    config.autoload_paths << "#{root}/lib"
   end
 end

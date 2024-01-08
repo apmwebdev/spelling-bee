@@ -10,20 +10,18 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { apiSlice, persistor } from "@/features/api";
+import { apiSlice, BasicResponse, persistor } from "@/features/api";
 import {
   AuthResetData,
   AuthUpdateData,
   LoginData,
-  loginReducer,
-  logoutThunk,
   PasswordResetData,
   SignupData,
   User,
-} from "@/features/auth";
-import { BasicResponse } from "@/types";
+} from "@/features/auth/types/authTypes";
 import { startAppListening } from "@/app/listenerMiddleware";
 import { isAnyOf } from "@reduxjs/toolkit";
+import { loginReducer } from "@/features/auth";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -122,16 +120,7 @@ startAppListening({
   effect: ({ payload }, api) => {
     api.dispatch(loginReducer(payload));
     persistor.save("user", payload);
-    persistor.save("isGuest", false);
-  },
-});
-
-startAppListening({
-  matcher: authApiSlice.endpoints.logout.matchFulfilled,
-  effect: (_action, api) => {
-    api.dispatch(logoutThunk);
-    persistor.remove("currentHintProfile");
-    persistor.remove("userPrefs");
+    // persistor.save("isGuest", false);
   },
 });
 

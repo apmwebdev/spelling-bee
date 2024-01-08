@@ -15,20 +15,22 @@ import uniqid from "uniqid";
 import {
   StatusTrackingKeys,
   StatusTrackingOptions,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function PanelStatusTrackingControl({
-  panelId,
+  panelUuid,
   statusTracking,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   statusTracking: StatusTrackingKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: StatusTrackingKeys) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "statusTracking",
       statusTracking: value,
     });

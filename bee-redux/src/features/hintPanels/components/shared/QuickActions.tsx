@@ -14,19 +14,21 @@ import { ReactNode } from "react";
 import { HintContentBlurButton } from "@/features/hintPanels/components/shared/HintContentBlurButton";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function QuickActions({
-  panelId,
+  panelUuid,
   displayState,
   children,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   displayState: PanelCurrentDisplayState;
   children: ReactNode;
 }) {
   return (
     <div className="HintPanelQuickActions">
       <HintContentBlurButton
-        panelId={panelId}
+        panelUuid={panelUuid}
         isBlurred={displayState.isBlurred}
       />
       {displayState.isSettingsExpanded ? null : children}

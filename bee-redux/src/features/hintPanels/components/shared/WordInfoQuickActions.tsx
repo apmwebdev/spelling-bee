@@ -14,23 +14,28 @@ import { HintHideKnownControl } from "@/features/hintPanels/components/settings/
 import { HintRevealedLettersControl } from "@/features/hintPanels/components/settings/HintRevealedLettersControl";
 import { QuickActions } from "@/features/hintPanels/components/shared/QuickActions";
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
-import { ObscurityPanelData } from "@/features/hintPanelType_obscurity";
-import { DefinitionPanelData } from "@/features/hintPanelType_definition";
+import { ObscurityPanelData } from "@/features/obscurityPanel";
+import { DefinitionPanelData } from "@/features/definitionPanel";
+
+import { Uuid } from "@/features/api";
 
 export function WordInfoQuickActions({
-  panelId,
+  panelUuid,
   displayState,
   typeData,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   displayState: PanelCurrentDisplayState;
   typeData: ObscurityPanelData | DefinitionPanelData;
 }) {
   return (
-    <QuickActions panelId={panelId} displayState={displayState}>
-      <HintHideKnownControl panelId={panelId} hideKnown={typeData.hideKnown} />
+    <QuickActions panelUuid={panelUuid} displayState={displayState}>
+      <HintHideKnownControl
+        panelUuid={panelUuid}
+        hideKnown={typeData.hideKnown}
+      />
       <HintRevealedLettersControl
-        panelId={panelId}
+        panelUuid={panelUuid}
         revealedLetters={typeData.revealedLetters}
       />
     </QuickActions>

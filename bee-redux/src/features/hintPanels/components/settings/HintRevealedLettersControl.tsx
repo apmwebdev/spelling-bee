@@ -15,18 +15,20 @@ import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function HintRevealedLettersControl({
-  panelId,
+  panelUuid,
   revealedLetters,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   revealedLetters: number;
 }) {
   const answerLengths = useAppSelector(selectAnswerLengths);
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleRevealedLettersChange = (e: ChangeEvent<HTMLInputElement>) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "revealedLetters",
       typeData: {
         revealedLetters: Number(e.target.value),

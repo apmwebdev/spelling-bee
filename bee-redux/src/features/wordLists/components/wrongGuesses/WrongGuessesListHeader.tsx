@@ -18,7 +18,7 @@ import {
 } from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 export function WrongGuessesListHeader() {
   const dispatch = useAppDispatch();

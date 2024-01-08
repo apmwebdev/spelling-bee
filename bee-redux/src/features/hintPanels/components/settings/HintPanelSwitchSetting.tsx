@@ -14,17 +14,19 @@ import { Switch } from "@/components/radix-ui/radix-switch";
 import {
   HintPanelBooleanKeys,
   HintPanelBooleanSettings,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
 
+import { Uuid } from "@/features/api";
+
 export function HintPanelSwitchSetting({
-  panelId,
+  panelUuid,
   settingKey,
   currentValue,
   disabled,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   settingKey: HintPanelBooleanKeys;
   currentValue: boolean;
   disabled?: boolean;
@@ -32,7 +34,7 @@ export function HintPanelSwitchSetting({
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = () => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: settingKey,
       typeData: {
         [settingKey]: !currentValue,

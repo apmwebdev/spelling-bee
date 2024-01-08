@@ -11,7 +11,7 @@
 */
 
 import { random, shuffle } from "lodash";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 /**
  * Cases

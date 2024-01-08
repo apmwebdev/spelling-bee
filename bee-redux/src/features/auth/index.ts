@@ -4,4 +4,4 @@ export * from "./components/Login";
 export * from "./components/Signup";
 export * from "./components/headerAuth/HeaderAuth";
 export * from "./routes";
-export * from "./types";
+export * from "./types/authTypes";

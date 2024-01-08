@@ -11,7 +11,7 @@
 */
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { GuessFormat, selectCorrectGuesses } from "@/features/guesses";
+import { selectCorrectGuesses, TGuess } from "@/features/guesses";
 import {
   selectFoundWordsListSettings,
   SortType,
@@ -22,7 +22,7 @@ import { FoundWordsStatus } from "./FoundWordsStatus";
 import { FoundWordsListHeader } from "./FoundWordsListHeader";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { FoundWordsSettings } from "./FoundWordsSettings";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 
 export function FoundWordsContainer() {
   const dispatch = useAppDispatch();
@@ -32,7 +32,7 @@ export function FoundWordsContainer() {
   );
 
   const generateDisplayGuessList = () => {
-    let displayGuessList: GuessFormat[] = [];
+    let displayGuessList: TGuess[] = [];
     if (correctGuesses.length === 0) {
       return displayGuessList;
     }

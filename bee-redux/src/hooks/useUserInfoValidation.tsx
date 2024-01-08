@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { EMAIL_REGEX } from "@/types";
+import { EMAIL_REGEX } from "@/types/globalTypes";
 import {
   useUserInfoFormField,
   validateField,

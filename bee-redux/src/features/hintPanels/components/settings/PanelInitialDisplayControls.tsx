@@ -26,16 +26,18 @@ import {
 import {
   PanelDisplayState,
   PanelDisplayStateKeys,
-} from "@/features/hintPanels/types";
+} from "@/features/hintPanels/types/hintPanelTypes";
+
+import { Uuid } from "@/features/api";
 
 export function PanelInitialDisplayControls({
-  panelId,
+  panelUuid,
   initialDisplayState,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   initialDisplayState: PanelDisplayState;
 }) {
-  const display = useAppSelector(selectPanelDisplayState(panelId));
+  const display = useAppSelector(selectPanelDisplayState(panelUuid));
   const [updatePanel] = useUpdateHintPanelMutation();
   return (
     <div
@@ -45,7 +47,7 @@ export function PanelInitialDisplayControls({
       <span>Initial Panel Display</span>
       <div className="PanelInitialDisplayControls">
         <PanelInitDisplayCheckboxControl
-          panelId={panelId}
+          panelUuid={panelUuid}
           settingKey={PanelDisplayStateKeys.isSticky}
           currentValue={initialDisplayState.isSticky}
           label="Sticky"
@@ -57,7 +59,7 @@ export function PanelInitialDisplayControls({
             const shouldUpdateIsBlurred =
               newValue && display.isBlurred !== initialDisplayState.isBlurred;
             updatePanel({
-              id: panelId,
+              uuid: panelUuid,
               debounceField: "initDisplayIsSticky",
               initialDisplayState: {
                 isSticky: newValue,
@@ -70,7 +72,7 @@ export function PanelInitialDisplayControls({
           }}
         />
         <PanelInitDisplayCheckboxControl
-          panelId={panelId}
+          panelUuid={panelUuid}
           settingKey={PanelDisplayStateKeys.isExpanded}
           currentValue={initialDisplayState.isExpanded}
           disabled={initialDisplayState.isSticky}
@@ -78,7 +80,7 @@ export function PanelInitialDisplayControls({
           helpBubbleContent={InitIsExpandedHelpText()}
         />
         <PanelInitDisplayCheckboxControl
-          panelId={panelId}
+          panelUuid={panelUuid}
           settingKey={PanelDisplayStateKeys.isBlurred}
           currentValue={initialDisplayState.isBlurred}
           disabled={initialDisplayState.isSticky}
@@ -86,7 +88,7 @@ export function PanelInitialDisplayControls({
           helpBubbleContent={InitIsBlurredHelpText()}
         />
         <PanelInitDisplayCheckboxControl
-          panelId={panelId}
+          panelUuid={panelUuid}
           settingKey={PanelDisplayStateKeys.isSettingsSticky}
           currentValue={initialDisplayState.isSettingsSticky}
           label="Settings Sticky"
@@ -96,7 +98,7 @@ export function PanelInitialDisplayControls({
             const shouldUpdateIsSettingsExpanded =
               newValue && !initialDisplayState.isSettingsExpanded;
             updatePanel({
-              id: panelId,
+              uuid: panelUuid,
               debounceField: "initDisplayIsSettingsSticky",
               initialDisplayState: {
                 isSettingsSticky: newValue,
@@ -108,7 +110,7 @@ export function PanelInitialDisplayControls({
           }}
         />
         <PanelInitDisplayCheckboxControl
-          panelId={panelId}
+          panelUuid={panelUuid}
           settingKey={PanelDisplayStateKeys.isSettingsExpanded}
           currentValue={initialDisplayState.isSettingsExpanded}
           disabled={initialDisplayState.isSettingsSticky}

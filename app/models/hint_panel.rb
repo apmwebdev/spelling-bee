@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class HintPanel < ApplicationRecord
+  include UuidRetryable
+
   belongs_to :hint_profile, polymorphic: true
   belongs_to :initial_display_state, class_name: "PanelDisplayState", dependent: :destroy
   belongs_to :current_display_state, class_name: "PanelDisplayState", dependent: :destroy
@@ -19,7 +21,9 @@ class HintPanel < ApplicationRecord
 
   def to_front_end
     {
-      id:,
+      uuid:,
+      hintProfileType: hint_profile_type,
+      hintProfileUuid: hint_profile_uuid,
       name:,
       displayIndex: display_index,
       initialDisplayState: initial_display_state.to_front_end,
@@ -30,6 +34,6 @@ class HintPanel < ApplicationRecord
   end
 
   def to_front_end_basic
-    {id:, name:, display_index:}
+    {uuid:, name:, display_index:}
   end
 end

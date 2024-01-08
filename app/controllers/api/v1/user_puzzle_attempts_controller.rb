@@ -68,7 +68,10 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     if @user_puzzle_attempt.save
       render json: @user_puzzle_attempt.to_front_end, status: 201
     else
-      render json: @user_puzzle_attempt.errors, status: 422
+      render json: {
+        error: "Couldn't save user puzzle attempt due to malformed data",
+        activeModelErrors: @user_puzzle_attempt.errors
+      }, status: 422
     end
   end
 
@@ -77,17 +80,45 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     @user_puzzle_attempt.destroy
   end
 
+  # POST /user_puzzle_attempts/bulk_add
+  def bulk_add
+    return_array = []
+    bulk_add_params[:user_puzzle_attempts].map do |attempt|
+      item_status = {uuid: attempt.uuid, isSuccess: true}
+      begin
+        attempt.save_with_uuid_retry!
+        unless item_status[:uuid] == attempt.uuid
+          item_status[:newUuid] = attempt.uuid
+        end
+      rescue
+        item_status[:isSuccess] = false
+        item_status[:error] = "Error saving user puzzle attempt"
+      end
+      return_array.push(item_status)
+    end
+    render json: return_array, status: 200
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user_puzzle_attempt
     @user_puzzle_attempt = current_user.user_puzzle_attempts
       .find_by!(uuid: params[:uuid])
+  rescue ActiveRecord::RecordNotFound
+    render json: {error: "User puzzle attempt not found"}, status: 404
   end
 
   # Only allow a list of trusted parameters through.
   def user_puzzle_attempt_params
     params.require(:user_puzzle_attempt)
       .permit(:uuid, :puzzle_id, :created_at)
+  end
+
+  def bulk_add_params
+    params.require(:user_puzzle_attempts)
+      .map do |attempt|
+        attempt.permit(:uuid, :puzzle_id, :created_at)
+      end
   end
 end

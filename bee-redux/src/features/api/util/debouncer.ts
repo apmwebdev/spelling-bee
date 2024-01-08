@@ -16,19 +16,46 @@ export type AddDebouncePayload = {
   callback: Function;
 };
 
-type debounceState = {
-  [key: string]: number;
+type DebounceState = Map<string, number>;
+
+const debouncerState: DebounceState = new Map<string, number>();
+
+/** Runs a function after a delay. The function is identified with a key. If the same function is
+ * added again while the first one is pending, the first one is overwritten. I.e. last call wins.
+ */
+export const debounce = ({ key, delay, callback }: AddDebouncePayload) => {
+  const state = debouncerState;
+  if (state.has(key)) {
+    clearTimeout(state.get(key));
+  }
+  state.set(
+    key,
+    window.setTimeout(() => {
+      callback();
+      state.delete(key);
+    }, delay),
+  );
 };
 
-const debouncerState: debounceState = {};
+type ThrottleResult = {
+  didRun: boolean;
+  value?: any;
+};
 
-export const addDebouncer = ({ key, delay, callback }: AddDebouncePayload) => {
+/** Runs a function immediately, and then sets a cooldown, identified by a key, during which the
+ * same function cannot be run again. I.e., first call wins, opposite to debounce.
+ */
+export const throttle = ({
+  key,
+  delay,
+  callback,
+}: AddDebouncePayload): ThrottleResult => {
   const state = debouncerState;
-  if (state[key]) {
-    clearTimeout(state[key]);
-  }
-  state[key] = window.setTimeout(() => {
-    callback();
-    delete state[key];
-  }, delay);
+  const throttleResult: ThrottleResult = { didRun: false };
+  if (state.has(key)) return throttleResult;
+  state.set(
+    key,
+    window.setTimeout(() => state.delete(key), delay),
+  );
+  return { didRun: true, value: callback() };
 };

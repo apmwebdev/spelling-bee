@@ -17,15 +17,17 @@ import { BasicTooltip } from "@/components/BasicTooltip";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
 
+import { Uuid } from "@/features/api";
+
 export function HintLettersOffsetControl({
-  panelId,
+  panelUuid,
   lettersOffset,
   numberOfLetters,
   disabled,
   disabledTooltip,
   style,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   lettersOffset: number;
   numberOfLetters?: number;
   disabled?: boolean;
@@ -37,7 +39,7 @@ export function HintLettersOffsetControl({
 
   const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "offset",
       typeData: {
         lettersOffset: Number(e.target.value),

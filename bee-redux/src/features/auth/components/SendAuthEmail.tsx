@@ -22,7 +22,7 @@ import {
 } from "@reduxjs/toolkit/query";
 import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query/react";
 import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import { BasicResponse, isBasicError } from "@/types";
+import { BasicResponse, isBasicError } from "@/features/api";
 
 type SendMutation = MutationTrigger<
   MutationDefinition<

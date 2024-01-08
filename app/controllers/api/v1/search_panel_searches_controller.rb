@@ -12,8 +12,8 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   before_action :set_search, only: %i[update destroy]
 
   def for_attempt_and_profile
-    unless params[:attempt_id]
-      render json: {error: "Must include attempt ID"}, status: 400
+    unless sps_params[:user_puzzle_attempt_uuid]
+      render json: {error: "Must include attempt UUID"}, status: 400
       return
     end
 
@@ -25,7 +25,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
           .hint_panels
           .where(panel_subtype_type: "SearchPanel"))
       )
-      .where(user_puzzle_attempt_id: params[:attempt_id])
+      .where(user_puzzle_attempt_uuid: sps_params[:user_puzzle_attempt_uuid])
       .map { |search| search.to_front_end }
 
     render json: searches
@@ -33,8 +33,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
 
   def create
     begin
-      search_panel = find_user_search_panel(sps_params[:search_panel_id])
-      raise ActiveRecord::RecordNotFound unless search_panel
+      search_panel = current_user.search_panels.find_by(uuid: sps_params[:search_panel_uuid])
     rescue ActiveRecord::RecordNotFound
       render json: {error: "Search panel not found"}, status: 404
       return
@@ -42,7 +41,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
 
     begin
       user_puzzle_attempt = current_user.user_puzzle_attempts
-        .find(sps_params[:user_puzzle_attempt_uuid])
+        .find_by(uuid: sps_params[:user_puzzle_attempt_uuid])
     rescue ActiveRecord::RecordNotFound
       render json: {error: "User puzzle attempt not found"}, status: 404
       return
@@ -63,10 +62,17 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
     end
 
     @search = SearchPanelSearch.new(sps_params)
+    @search.user_puzzle_attempt = user_puzzle_attempt
+    @search.search_panel = search_panel
 
-    if @search.save
+    begin
+      @search.save_with_uuid_retry!
       render json: @search.to_front_end, status: 201
-    else
+    rescue UuidRetryable::RetryLimitExceeded
+      render json: {
+        error: "Could not create guess due to a rare UUID collision"
+      }, status: 500
+    rescue ActiveRecord::RecordInvalid
       render json: @search.errors, status: 422
     end
   end
@@ -88,23 +94,10 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
     render json: {error: "Search not found"}, status: 404
   end
 
-  def find_user_search_panel(search_panel_id)
-    search_panel = SearchPanel.find_by(id: search_panel_id)
-    return nil unless search_panel
-
-    hint_panel = search_panel.hint_panel
-    return nil unless hint_panel
-
-    hint_profile = hint_panel.hint_profile
-    return nil unless hint_profile&.is_a?(UserHintProfile) && hint_profile.user == current_user
-
-    search_panel
-  end
-
   def sps_params
     params.require(:search_panel_search).permit(
-      :id,
-      :search_panel_id,
+      :uuid,
+      :search_panel_uuid,
       :user_puzzle_attempt_uuid,
       :search_string,
       :location,

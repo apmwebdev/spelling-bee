@@ -11,7 +11,7 @@
 */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { StateShape, Statuses } from "@/types";
+import { StateShape, Statuses } from "@/types/globalTypes";
 
 import { HintProfilesData } from "@/features/hintProfiles";
 

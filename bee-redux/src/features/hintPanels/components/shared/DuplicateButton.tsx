@@ -12,12 +12,14 @@
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
 
-export function DuplicateButton({ panelId }: { panelId: number }) {
+import { Uuid } from "@/features/api";
+
+export function DuplicateButton({ panelUuid }: { panelUuid: Uuid }) {
   return (
     <IconButton
       type={IconButtonTypeKeys.Duplicate}
       className="HintPanelHeaderButton"
-      // onClick={() => dispatch(duplicatePanel({ panelId }))}
+      // onClick={() => dispatch(duplicatePanel({ panelUuid }))}
       tooltip="Duplicate panel"
     />
   );

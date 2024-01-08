@@ -132,7 +132,8 @@ CREATE TABLE public.default_hint_profiles (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL
 );
 
 
@@ -169,6 +170,7 @@ CREATE TABLE public.definition_panels (
     updated_at timestamp(6) without time zone NOT NULL,
     revealed_letters integer DEFAULT 1 NOT NULL,
     separate_known boolean DEFAULT true NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
 
@@ -244,6 +246,10 @@ CREATE TABLE public.hint_panels (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     display_index integer,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
+    hint_profile_uuid uuid,
+    initial_display_state_uuid uuid,
+    panel_subtype_uuid uuid,
     CONSTRAINT non_negative_display_index CHECK ((display_index >= 0))
 );
 
@@ -280,6 +286,7 @@ CREATE TABLE public.letter_panels (
     hide_known boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0)),
     CONSTRAINT positive_number_of_letters CHECK ((number_of_letters > 0))
 );
@@ -350,6 +357,7 @@ CREATE TABLE public.obscurity_panels (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     revealed_letters integer,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
 
@@ -385,7 +393,8 @@ CREATE TABLE public.panel_display_states (
     is_settings_expanded boolean DEFAULT true NOT NULL,
     is_settings_sticky boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL
 );
 
 
@@ -498,6 +507,9 @@ CREATE TABLE public.search_panel_searches (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     search_string character varying,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
+    search_panel_uuid uuid,
+    user_puzzle_attempt_uuid uuid,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
 );
 
@@ -532,6 +544,7 @@ CREATE TABLE public.search_panels (
     letters_offset integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT no_negative_offset CHECK ((letters_offset >= 0))
 );
 
@@ -578,7 +591,9 @@ CREATE TABLE public.user_hint_profiles (
     default_panel_tracking character varying NOT NULL,
     default_panel_display_state_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid uuid DEFAULT gen_random_uuid() NOT NULL,
+    default_panel_display_state_uuid uuid
 );
 
 
@@ -612,7 +627,8 @@ CREATE TABLE public.user_prefs (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     current_hint_profile_type character varying,
-    current_hint_profile_id bigint
+    current_hint_profile_id bigint,
+    current_hint_profile_uuid uuid
 );
 
 
@@ -1011,6 +1027,20 @@ CREATE INDEX index_answers_on_word_text ON public.answers USING btree (word_text
 
 
 --
+-- Name: index_default_hint_profiles_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_default_hint_profiles_on_uuid ON public.default_hint_profiles USING btree (uuid);
+
+
+--
+-- Name: index_definition_panels_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_definition_panels_on_uuid ON public.definition_panels USING btree (uuid);
+
+
+--
 -- Name: index_guesses_on_user_puzzle_attempt_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1046,10 +1076,24 @@ CREATE INDEX index_hint_panels_on_hint_profile ON public.hint_panels USING btree
 
 
 --
+-- Name: index_hint_panels_on_hint_profile_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_hint_profile_uuid ON public.hint_panels USING btree (hint_profile_uuid);
+
+
+--
 -- Name: index_hint_panels_on_initial_display_state_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_hint_panels_on_initial_display_state_id ON public.hint_panels USING btree (initial_display_state_id);
+
+
+--
+-- Name: index_hint_panels_on_initial_display_state_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_hint_panels_on_initial_display_state_uuid ON public.hint_panels USING btree (initial_display_state_uuid);
 
 
 --
@@ -1060,10 +1104,45 @@ CREATE INDEX index_hint_panels_on_panel_subtype ON public.hint_panels USING btre
 
 
 --
+-- Name: index_hint_panels_on_panel_subtype_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_hint_panels_on_panel_subtype_uuid ON public.hint_panels USING btree (panel_subtype_uuid);
+
+
+--
 -- Name: index_hint_panels_on_status_tracking; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_hint_panels_on_status_tracking ON public.hint_panels USING btree (status_tracking);
+
+
+--
+-- Name: index_hint_panels_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_hint_panels_on_uuid ON public.hint_panels USING btree (uuid);
+
+
+--
+-- Name: index_letter_panels_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_letter_panels_on_uuid ON public.letter_panels USING btree (uuid);
+
+
+--
+-- Name: index_obscurity_panels_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_obscurity_panels_on_uuid ON public.obscurity_panels USING btree (uuid);
+
+
+--
+-- Name: index_panel_display_states_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_panel_display_states_on_uuid ON public.panel_display_states USING btree (uuid);
 
 
 --
@@ -1095,10 +1174,38 @@ CREATE INDEX index_search_panel_searches_on_search_panel_id ON public.search_pan
 
 
 --
+-- Name: index_search_panel_searches_on_search_panel_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_search_panel_searches_on_search_panel_uuid ON public.search_panel_searches USING btree (search_panel_uuid);
+
+
+--
 -- Name: index_search_panel_searches_on_user_puzzle_attempt_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_search_panel_searches_on_user_puzzle_attempt_id ON public.search_panel_searches USING btree (user_puzzle_attempt_id);
+
+
+--
+-- Name: index_search_panel_searches_on_user_puzzle_attempt_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_search_panel_searches_on_user_puzzle_attempt_uuid ON public.search_panel_searches USING btree (user_puzzle_attempt_uuid);
+
+
+--
+-- Name: index_search_panel_searches_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_search_panel_searches_on_uuid ON public.search_panel_searches USING btree (uuid);
+
+
+--
+-- Name: index_search_panels_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_search_panels_on_uuid ON public.search_panels USING btree (uuid);
 
 
 --
@@ -1116,6 +1223,13 @@ CREATE INDEX index_user_hint_profiles_on_default_panel_display_state_id ON publi
 
 
 --
+-- Name: index_user_hint_profiles_on_default_panel_display_state_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_hint_profiles_on_default_panel_display_state_uuid ON public.user_hint_profiles USING btree (default_panel_display_state_uuid);
+
+
+--
 -- Name: index_user_hint_profiles_on_default_panel_tracking; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1127,6 +1241,13 @@ CREATE INDEX index_user_hint_profiles_on_default_panel_tracking ON public.user_h
 --
 
 CREATE INDEX index_user_hint_profiles_on_user_id ON public.user_hint_profiles USING btree (user_id);
+
+
+--
+-- Name: index_user_hint_profiles_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_hint_profiles_on_uuid ON public.user_hint_profiles USING btree (uuid);
 
 
 --
@@ -1214,6 +1335,14 @@ CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
 
 
 --
+-- Name: search_panel_searches fk_rails_0d208c56ea; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches
+    ADD CONSTRAINT fk_rails_0d208c56ea FOREIGN KEY (search_panel_uuid) REFERENCES public.search_panels(uuid);
+
+
+--
 -- Name: search_panel_searches fk_rails_153f638c99; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1230,11 +1359,27 @@ ALTER TABLE ONLY public.user_prefs
 
 
 --
+-- Name: user_hint_profiles fk_rails_3b367e53a1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_hint_profiles
+    ADD CONSTRAINT fk_rails_3b367e53a1 FOREIGN KEY (default_panel_display_state_uuid) REFERENCES public.panel_display_states(uuid);
+
+
+--
 -- Name: guesses fk_rails_4a9154fa82; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.guesses
     ADD CONSTRAINT fk_rails_4a9154fa82 FOREIGN KEY (user_puzzle_attempt_id) REFERENCES public.user_puzzle_attempts(id);
+
+
+--
+-- Name: search_panel_searches fk_rails_4bd84abb69; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_panel_searches
+    ADD CONSTRAINT fk_rails_4bd84abb69 FOREIGN KEY (user_puzzle_attempt_uuid) REFERENCES public.user_puzzle_attempts(uuid);
 
 
 --
@@ -1267,6 +1412,14 @@ ALTER TABLE ONLY public.user_hint_profiles
 
 ALTER TABLE ONLY public.hint_panels
     ADD CONSTRAINT fk_rails_9a68662294 FOREIGN KEY (status_tracking) REFERENCES public.status_tracking_options(key);
+
+
+--
+-- Name: hint_panels fk_rails_a62a9ce390; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hint_panels
+    ADD CONSTRAINT fk_rails_a62a9ce390 FOREIGN KEY (initial_display_state_uuid) REFERENCES public.panel_display_states(uuid);
 
 
 --
@@ -1383,6 +1536,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231011153938'),
 ('20231119195913'),
 ('20231120084355'),
-('20231120090819');
+('20231120090819'),
+('20231127233418'),
+('20231128021153'),
+('20231128030814'),
+('20231128232734');
 
 

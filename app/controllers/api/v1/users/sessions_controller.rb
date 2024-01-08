@@ -14,6 +14,14 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
   respond_to :json
 
+  def check_auth
+    if user_signed_in?
+      render json: current_user.to_front_end, status: 200
+      return
+    end
+    render json: {error: "No user"}, status: 404
+  end
+
   private
 
   def respond_with(current_user, _opts = {})

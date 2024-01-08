@@ -11,20 +11,21 @@
 */
 
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
-import { SortOrderKeys } from "@/types";
+import { SortOrderKeys } from "@/types/globalTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
+import { Uuid } from "@/features/api";
 
 export function HintSortOrderControl({
-  panelId,
+  panelUuid,
   sortOrder,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   sortOrder: SortOrderKeys;
 }) {
   const [updatePanel] = useUpdateHintPanelMutation();
   const handleChange = (value: SortOrderKeys) => {
     updatePanel({
-      id: panelId,
+      uuid: panelUuid,
       debounceField: "sortOrder",
       typeData: {
         sortOrder: value,

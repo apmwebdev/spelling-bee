@@ -48,12 +48,12 @@ export const HintPanel = forwardRef(
     ref: Ref<HTMLDivElement>,
   ) => {
     const dispatch = useAppDispatch();
-    const display = useAppSelector(selectPanelDisplayState(panel.id));
+    const display = useAppSelector(selectPanelDisplayState(panel.uuid));
 
     const toggleExpanded = () => {
       dispatch(
         setPanelDisplayPropThunk({
-          panelId: panel.id,
+          panelUuid: panel.uuid,
           property: PanelCurrentDisplayStateProperties.isExpanded,
           value: !display.isExpanded,
         }),
@@ -81,7 +81,7 @@ export const HintPanel = forwardRef(
         open={display.isExpanded}
       >
         <PanelHeader
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           isPanelExpanded={display.isExpanded}
           attributes={attributes}
           listeners={listeners}

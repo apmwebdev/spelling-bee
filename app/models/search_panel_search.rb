@@ -9,14 +9,16 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class SearchPanelSearch < ApplicationRecord
+  include UuidRetryable
+
   belongs_to :search_panel
   belongs_to :user_puzzle_attempt
 
   def to_front_end
     {
-      id:,
-      searchPanelId: search_panel_id,
-      attemptId: user_puzzle_attempt_id,
+      uuid:,
+      searchPanelUuid: search_panel_uuid,
+      attemptUuid: user_puzzle_attempt_uuid,
       searchString: search_string,
       location:,
       lettersOffset: letters_offset,

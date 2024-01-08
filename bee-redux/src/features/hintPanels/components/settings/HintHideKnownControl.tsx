@@ -12,18 +12,20 @@
 
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
-import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
+import { HintPanelBooleanKeys } from "@/features/hintPanels/types/hintPanelTypes";
+
+import { Uuid } from "@/features/api";
 
 export function HintHideKnownControl({
-  panelId,
+  panelUuid,
   hideKnown,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   hideKnown: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.hideKnown}
       currentValue={hideKnown}
     />

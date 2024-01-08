@@ -17,7 +17,8 @@ import {
 } from "@/features/auth";
 import { useStatusMessage } from "@/hooks/useStatusMessage";
 import { FormMessage } from "@/components/FormMessage";
-import { isBasicError } from "@/types";
+
+import { isBasicError } from "@/features/api";
 
 export function ResendConfirmation({
   passedInMessage,

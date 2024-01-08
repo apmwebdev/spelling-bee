@@ -27,15 +27,22 @@ Rails.application.routes.draw do
       # Auth
       devise_scope :user do
         post "auth/confirmation/resend", to: "users/confirmations#resend"
+        get "auth/check", to: "users/sessions#check_auth"
       end
       # Puzzles
       get "puzzles/latest", to: "puzzles#latest"
       get "puzzles/:identifier", to: "puzzles#show"
       resources :puzzles, only: [:index]
       # Attempts and guesses
-      get "user_puzzle_attempts_for_puzzle/:puzzle_id",
+      get "puzzle_user_puzzle_attempts/:puzzle_id",
         to: "user_puzzle_attempts#index_for_puzzle"
-      resources :user_puzzle_attempts, param: :uuid, except: :update
+      resources :user_puzzle_attempts, param: :uuid, except: :update do
+        collection do
+          post :bulk_add
+        end
+      end
+      get "user_puzzle_attempt_guesses/:user_puzzle_attempt_uuid",
+        to: "guesses#index_for_attempt"
       resources :guesses, param: :uuid, only: :create
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
@@ -50,15 +57,13 @@ Rails.application.routes.draw do
       # Hints
       get "hint_profiles", to: "user_hint_profiles#get_all_hint_profiles"
       resources :user_hint_profiles
-      resources :hint_panels, except: [:index, :show] do
+      resources :hint_panels, param: :uuid, except: [:index, :show] do
         put "move", on: :collection
       end
       # Search panel searches
-      get "search_panel_search/:attempt_id",
+      get "search_panel_search/:attempt_uuid",
         to: "search_panel_searches#for_attempt_and_profile"
-      resources :search_panel_searches, only: [:create, :update, :destroy]
-      # Words
-      resources :words, only: [:index, :show]
+      resources :search_panel_searches, param: :uuid, only: [:create, :update, :destroy]
       # Root
       root "puzzles#latest"
     end

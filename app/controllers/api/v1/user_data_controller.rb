@@ -21,30 +21,41 @@ class Api::V1::UserDataController < ApplicationController
 
   def user_puzzle_data
     unless user_signed_in?
-      render json: {searches: [], attempts: [{id: 0, guesses: []}], currentAttempt: 0}
+      render json: {error: "User not found"}, status: 401
       return
     end
     unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
-      render json: {error: "Invalid puzzle ID"}, status: :bad_request
+      render json: {error: "Invalid puzzle ID"}, status: 400
       return
     end
     puzzle_id = params[:puzzle_id].to_i
     unless Puzzle.exists?(puzzle_id)
-      render json: {error: "Puzzle not found"}, status: :not_found
+      render json: {error: "Puzzle not found"}, status: 404
       return
     end
     # Attempts
     @user_puzzle_attempts = UserPuzzleAttempt
-      .includes(:guesses)
       .where("puzzle_id = ?", puzzle_id)
       .where(user: current_user)
+      .order(:created_at)
+
     if @user_puzzle_attempts.any?
       attempts = @user_puzzle_attempts.map do |attempt|
         attempt.to_front_end
       end
+      guesses = @user_puzzle_attempts.last.guesses
+        .map { |guess| guess.to_front_end }
     else
-      new_attempt = UserPuzzleAttempt.create!(user: current_user, puzzle_id:)
+      new_attempt = UserPuzzleAttempt.new(user: current_user, puzzle_id:)
+      begin
+        new_attempt.save_with_uuid_retry!
+      rescue UuidRetryable::RetryLimitExceeded
+        render json: {
+          error: "Could not create user puzzle attempt due to a rare UUID collision"
+        }, status: 500
+      end
       attempts = [new_attempt.to_front_end]
+      guesses = []
     end
     # Searches
     searches = SearchPanelSearch
@@ -57,6 +68,6 @@ class Api::V1::UserDataController < ApplicationController
       .where(user_puzzle_attempt_id: attempts.last[:id])
       .map { |search| search.to_front_end }
 
-    render json: {searches:, attempts:, currentAttempt: attempts.last[:id]}
+    render json: {searches:, attempts:, currentAttempt: attempts.last[:uuid], guesses:}
   end
 end

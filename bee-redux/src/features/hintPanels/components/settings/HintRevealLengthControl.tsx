@@ -12,18 +12,20 @@
 
 import { HintPanelSwitchSetting } from "@/features/hintPanels/components/settings/HintPanelSwitchSetting";
 
-import { HintPanelBooleanKeys } from "@/features/hintPanels/types";
+import { HintPanelBooleanKeys } from "@/features/hintPanels/types/hintPanelTypes";
+
+import { Uuid } from "@/features/api";
 
 export function HintRevealLengthControl({
-  panelId,
+  panelUuid,
   revealLength,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   revealLength: boolean;
 }) {
   return (
     <HintPanelSwitchSetting
-      panelId={panelId}
+      panelUuid={panelUuid}
       settingKey={HintPanelBooleanKeys.revealLength}
       currentValue={revealLength}
     />

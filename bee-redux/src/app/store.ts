@@ -23,6 +23,7 @@ import wordListSettingsReducer from "@/features/wordLists/api/wordListSettingsSl
 import hintProfilesReducer from "@/features/hintProfiles/api/hintProfilesSlice";
 import hintPanelsReducer from "@/features/hintPanels/api/hintPanelsSlice";
 import searchPanelSearchesReducer from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
+import userPuzzleAttemptsReducer from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 import { apiSlice } from "@/features/api/api/apiSlice";
 import { listenerMiddleware } from "@/app/listenerMiddleware";
 
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   hintProfiles: hintProfilesReducer,
   hintPanels: hintPanelsReducer,
   searchPanelSearches: searchPanelSearchesReducer,
+  userPuzzleAttempts: userPuzzleAttemptsReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

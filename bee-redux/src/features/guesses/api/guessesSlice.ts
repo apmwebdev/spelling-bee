@@ -12,116 +12,115 @@
 
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore } from "@/util";
-import { guessesApiSlice } from "./guessesApiSlice";
-import { QueryThunkArg } from "@reduxjs/toolkit/dist/query/core/buildThunks";
-import { Statuses } from "@/types";
-import { AttemptFormat, GuessFormat } from "@/features/guesses";
-import { BLANK_UUID } from "@/features/api";
+import { calculateScore, devLog } from "@/util";
+import { createInitialState, Statuses } from "@/types/globalTypes";
+import { guessesApiSlice } from "@/features/guesses/api/guessesApiSlice";
+import { isGuess, TGuess } from "@/features/guesses/types/guessTypes";
+import {
+  createAddItemThunk,
+  createDataResolverThunk,
+  createSetDataFromIdbThunk,
+  createUuidSyncThunk,
+  createUuidUpdateReducer,
+} from "@/features/api/util/synchronizer";
+import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
+import {
+  addIdbGuess,
+  bulkAddIdbGuesses,
+  getIdbAttemptGuesses,
+  updateIdbGuessUuids,
+} from "@/features/guesses/api/guessesIdbApi";
 
-type CurrentAttemptsFulfilledResponse = PayloadAction<
-  AttemptFormat[],
-  string,
-  {
-    arg: QueryThunkArg & {
-      originalArgs: any;
-    };
-    requestId: string;
-    requestStatus: "fulfilled";
-  } & {
-    fulfilledTimeStamp: number;
-    baseQueryMeta: unknown;
-    RTK_autoBatch: true;
-  },
-  never
->;
+const modelDisplayName = "guess";
 
-type AddGuessFulfilledResponse = PayloadAction<
-  GuessFormat,
-  string,
-  {
-    arg: QueryThunkArg & {
-      originalArgs: any;
-    };
-    requestId: string;
-    requestStatus: "fulfilled";
-  } & {
-    fulfilledTimeStamp: number;
-    baseQueryMeta: unknown;
-    RTK_autoBatch: true;
-  },
-  never
->;
+const initialState = createInitialState<TGuess[]>([]);
 
-export type GuessesStateData = {
-  currentAttempt: AttemptFormat;
-  attempts: AttemptFormat[];
-};
-
-export type GuessesState = {
-  data: GuessesStateData;
-  status: Statuses;
-};
-
-const initialState: GuessesState = {
-  data: {
-    currentAttempt: {
-      uuid: BLANK_UUID,
-      createdAt: 0,
-      puzzleId: 0,
-      guesses: [],
-    },
-    attempts: [],
-  },
-  status: Statuses.Initial,
-};
+const updateGuessUuidsReducer = createUuidUpdateReducer<TGuess[]>({
+  modelDisplayName,
+});
 
 export const guessesSlice = createSlice({
   name: "guesses",
   initialState,
   reducers: {
-    setCurrentAttempt: (state, action: { payload: string; type: string }) => {
-      const newCurrent = state.data.attempts.find(
-        (attempt) => attempt.uuid === action.payload,
-      );
-      if (newCurrent) {
-        state.data.currentAttempt = newCurrent;
+    setGuesses: (state, { payload }: PayloadAction<TGuess[]>) => {
+      state.data = payload;
+      state.status = Statuses.UpToDate;
+    },
+    addGuess: (state, { payload }: PayloadAction<TGuess>) => {
+      state.data.push(payload);
+    },
+    deleteGuess: (state, { payload }: PayloadAction<Uuid>) => {
+      if (!isUuid(payload)) {
+        devLog("Can't delete guess: Invalid UUID.", payload);
+        return;
       }
+      const guessIndexToDelete = state.data.findIndex(
+        (guess) => guess.uuid === payload,
+      );
+      if (guessIndexToDelete === -1) {
+        devLog("Can't delete guess: Not found.", payload);
+        return;
+      }
+      state.data.splice(guessIndexToDelete, 1);
     },
-    addGuess: (state, { payload }: PayloadAction<GuessFormat>) => {
-      state.data.currentAttempt.guesses.push(payload);
-    },
+    updateGuessUuids: updateGuessUuidsReducer,
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher<AddGuessFulfilledResponse>(
-        guessesApiSlice.endpoints.addGuess.matchFulfilled,
-        (state, { payload }) => {
-          state.data.currentAttempt.guesses.push(payload);
-        },
-      )
-      .addMatcher<CurrentAttemptsFulfilledResponse>(
-        guessesApiSlice.endpoints.getCurrentAttempts.matchFulfilled,
-        (state, { payload }) => {
-          state.data.attempts = payload;
-          state.data.currentAttempt = payload.slice(-1)[0];
-          state.status = Statuses.UpToDate;
-        },
-      );
+    // builder
+    //   .addMatcher(
+    //     guessesApiSlice.endpoints.getGuesses.matchFulfilled,
+    //     (state, { payload }) => {
+    //       state.data = payload;
+    //     },
+    //   )
+    //   .addMatcher(
+    //     guessesApiSlice.endpoints.addGuess.matchFulfilled,
+    //     (state, { payload }) => {
+    //       state.data.push(payload);
+    //     },
+    //   );
   },
 });
 
-export const { setCurrentAttempt } = guessesSlice.actions;
+export const { setGuesses, addGuess, deleteGuess, updateGuessUuids } =
+  guessesSlice.actions;
 
-export const selectCurrentAttempt = (state: RootState) =>
-  state.guesses.data.currentAttempt;
-export const selectCurrentAttemptUuid = createSelector(
-  [selectCurrentAttempt],
-  (attempt) => attempt.uuid,
-);
-export const selectAttempts = (state: RootState) => state.guesses.data.attempts;
-export const selectGuesses = (state: RootState) =>
-  state.guesses.data.currentAttempt.guesses;
+export const addGuessThunk = createAddItemThunk<TGuess>({
+  itemDisplayType: "guess",
+  actionType: "guesses/addGuessThunk",
+  validationFn: isGuess,
+  addItemReducer: addGuess,
+  deleteItemReducer: deleteGuess,
+  addIdbItemFn: addIdbGuess,
+  addServerItemEndpoint: guessesApiSlice.endpoints.addGuess,
+});
+
+export const syncGuessUuids = createUuidSyncThunk({
+  serverUuidUpdateFn: guessesApiSlice.endpoints.updateGuessUuids.initiate,
+  idbUuidUpdateFn: updateIdbGuessUuids,
+  stateUuidUpdateFn: updateGuessUuids,
+});
+
+export const resolveGuessesData = createDataResolverThunk<TGuess>({
+  modelDisplayName: "guess",
+  actionType: "guesses/resolveGuessesData",
+  primaryDataKey: DataSourceKeys.serverData,
+  setDataReducer: setGuesses,
+  addBulkServerDataEndpoint: guessesApiSlice.endpoints.addBulkGuesses,
+  addBulkIdbData: bulkAddIdbGuesses,
+  syncUuidFn: syncGuessUuids,
+});
+
+export const setGuessesFromIdbThunk = createSetDataFromIdbThunk<TGuess, Uuid>({
+  modelDisplayName,
+  actionType: "guesses/setGuessesFromIdbThunk",
+  getIdbDataFn: getIdbAttemptGuesses,
+  validationFn: Array.isArray,
+  setDataReducer: setGuesses,
+});
+
+export const selectGuesses = (state: RootState) => state.guesses.data;
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
   guesses.map((guess) => guess.text),
 );

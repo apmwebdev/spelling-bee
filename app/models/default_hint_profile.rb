@@ -9,12 +9,14 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class DefaultHintProfile < ApplicationRecord
+  include UuidRetryable
+
   has_many :hint_panels, as: :hint_profile, dependent: :destroy
   has_many :user_prefs, as: :current_hint_profile
 
   def to_front_end_complete
     return_obj = {
-      id:,
+      uuid:,
       type: self.class.name,
       name:,
       panels: hint_panels.map do |panel|
@@ -27,7 +29,7 @@ class DefaultHintProfile < ApplicationRecord
 
   def to_front_end_basic
     {
-      id:,
+      uuid:,
       type: self.class.name,
       name:
     }

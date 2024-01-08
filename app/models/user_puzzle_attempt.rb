@@ -9,6 +9,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class UserPuzzleAttempt < ApplicationRecord
+  include UuidRetryable
+
   belongs_to :user
   belongs_to :puzzle
   has_many :guesses, dependent: :destroy
@@ -18,10 +20,10 @@ class UserPuzzleAttempt < ApplicationRecord
     {
       uuid:,
       puzzleId: puzzle_id,
-      createdAt: created_at.to_i,
-      guesses: guesses.map do |guess|
-        guess.to_front_end
-      end
+      createdAt: created_at.to_i
+      # guesses: guesses.map do |guess|
+      #   guess.to_front_end
+      # end
     }
   end
 end

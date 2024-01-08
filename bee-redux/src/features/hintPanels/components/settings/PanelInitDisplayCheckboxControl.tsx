@@ -14,11 +14,13 @@ import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 import { ReactNode } from "react";
 import { HelpBubble } from "@/components/HelpBubble";
 import { capitalizeFirstLetter } from "@/util";
-import { PanelDisplayStateKeys } from "@/features/hintPanels/types";
+import { PanelDisplayStateKeys } from "@/features/hintPanels/types/hintPanelTypes";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function PanelInitDisplayCheckboxControl({
-  panelId,
+  panelUuid,
   settingKey,
   currentValue,
   disabled,
@@ -26,7 +28,7 @@ export function PanelInitDisplayCheckboxControl({
   helpBubbleContent,
   customHandler,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   settingKey: PanelDisplayStateKeys;
   currentValue: boolean;
   disabled?: boolean;
@@ -40,7 +42,7 @@ export function PanelInitDisplayCheckboxControl({
       customHandler();
     } else {
       updatePanel({
-        id: panelId,
+        uuid: panelUuid,
         debounceField: `initDisplay${capitalizeFirstLetter(settingKey)}`,
         initialDisplayState: {
           [settingKey]: !currentValue,

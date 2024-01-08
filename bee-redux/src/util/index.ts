@@ -83,10 +83,42 @@ export const getNextPuzzleDateString = (dateString: string) => {
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const devLog = (...to_log: any[]) => {
+const formatTimestamp = (date: Date) => {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  const hours = `${date.getHours()}`.padStart(2, "0");
+  const minutes = `${date.getMinutes()}`.padStart(2, "0");
+  const seconds = `${date.getSeconds()}`.padStart(2, "0");
+  const ms = `${date.getMilliseconds()}`.padStart(3, "0");
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${ms}`;
+};
+
+const betterLog = (style: string, ...toLog: any[]) => {
+  const now = new Date();
+  const error = new Error();
+  const stack = error.stack?.split("\n");
+  //Chrome adds "Error" as the first element in the stack trace, while Firefox doesn't
+  if (stack && stack[0] === "Error") stack.shift();
+  const callerInfo = stack?.[2].trim() ?? "No stack trace";
+  console.log(
+    `%c${callerInfo}: ${formatTimestamp(now)}`,
+    style,
+    "\n",
+    ...toLog,
+  );
+};
+
+export const devLog = (...toLog: any[]) => {
   if (import.meta.env.DEV) {
-    const error = new Error();
-    const callerInfo = error.stack?.split("\n")[1].trim() ?? "No stack trace";
-    console.log(`${callerInfo}:\n`, ...to_log);
+    const style =
+      "display: inline-block; padding: 2px 4px; background-color: #004400; color: hsl(0 0% 100% 0.8)";
+    betterLog(style, ...toLog);
   }
+};
+
+export const errLog = (...toLog: any[]) => {
+  const style =
+    "display: inline-block; padding: 2px 4px; background-color: #660000; color: hsl(0 0% 100% 0.8)";
+  betterLog(style, ...toLog);
 };

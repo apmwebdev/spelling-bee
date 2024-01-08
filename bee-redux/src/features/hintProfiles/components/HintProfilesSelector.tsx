@@ -11,7 +11,6 @@
 */
 
 import * as Select from "@/components/radix-ui/radix-select";
-import uniqid from "uniqid";
 import {
   HintProfileBasicData,
   hintProfilesApiSlice,
@@ -29,14 +28,14 @@ export function HintProfilesSelector() {
   const [setCurrentHintProfile] = useSetCurrentHintProfileMutation();
 
   const composeValueString = (profile: HintProfileBasicData): string => {
-    return `${profile.type} ${profile.id}`;
+    return `${profile.type} ${profile.uuid}`;
   };
 
   const parseValueString = (valueString: string): HintProfileBasicData => {
     const splitValue = valueString.split(" ");
     return {
       type: splitValue[0] as HintProfileTypes,
-      id: Number(splitValue[1]),
+      uuid: splitValue[1],
     };
   };
 
@@ -44,7 +43,7 @@ export function HintProfilesSelector() {
     const parsedValue = parseValueString(value);
     setCurrentHintProfile({
       current_hint_profile_type: parsedValue.type,
-      current_hint_profile_id: parsedValue.id,
+      current_hint_profile_uuid: parsedValue.uuid,
     });
   };
 
@@ -65,7 +64,7 @@ export function HintProfilesSelector() {
             {profiles.data?.userHintProfiles.length ? (
               profiles.data.userHintProfiles.map((profile) => (
                 <Select.Item
-                  key={uniqid()}
+                  key={profile.uuid}
                   value={composeValueString(profile)}
                   itemText={profile.name}
                 />
@@ -83,7 +82,7 @@ export function HintProfilesSelector() {
             <Select.Label>Default hint profiles</Select.Label>
             {profiles.data?.defaultHintProfiles.map((profile) => (
               <Select.Item
-                key={uniqid()}
+                key={profile.uuid}
                 value={composeValueString(profile)}
                 itemText={profile.name}
               />

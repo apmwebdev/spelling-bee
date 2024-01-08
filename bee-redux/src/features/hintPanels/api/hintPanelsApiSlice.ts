@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { addDebouncer, apiSlice, keysToSnakeCase } from "@/features/api";
+import { apiSlice, debounce, keysToSnakeCase } from "@/features/api";
 import { RootState } from "@/app/store";
 import { createSelector } from "@reduxjs/toolkit";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -22,14 +22,13 @@ import {
   HintPanelUpdateForm,
   MoveHintPanelData,
   RailsHintPanelUpdateForm,
-} from "@/features/hintPanels/types";
-import { HintProfileTypes } from "@/features/hintProfiles/types";
-import { devLog } from "@/util";
+} from "@/features/hintPanels/types/hintPanelTypes";
+import { HintProfileTypes } from "@/features/hintProfiles/types/hintProfileTypes";
+import { devLog, errLog } from "@/util";
 
 const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
   const railsData: RailsHintPanelUpdateForm = {
     hint_panel: {
-      id: formData.id,
       name: formData.name,
       display_index: formData.displayIndex,
       status_tracking: formData.statusTracking,
@@ -67,7 +66,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
             (draftState) => {
               if (!draftState) return;
               const panel = draftState.panels.find(
-                (hintPanel) => hintPanel.id === formData.id,
+                (hintPanel) => hintPanel.uuid === formData.uuid,
               );
               if (!panel) return;
               if (formData.name) panel.name = formData.name;
@@ -97,19 +96,19 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
         const query = async () => {
           try {
             const response = await baseQuery({
-              url: `/hint_panels/${formData.id}`,
+              url: `/hint_panels/${formData.uuid}`,
               method: "PATCH",
               body: railsifyUpdatePanelData(formData),
             });
             devLog("Response:", response);
           } catch (err) {
-            devLog("Couldn't update DB with updated panel data:", err);
+            errLog("Couldn't update DB with updated panel data:", err);
           }
         };
         //Debounce query if applicable. Otherwise, just run it.
         if (formData.debounceField) {
-          addDebouncer({
-            key: `${formData.debounceField}Panel${formData.id}`,
+          debounce({
+            key: `${formData.debounceField}Panel${formData.uuid}`,
             delay: 1000,
             callback: query,
           });
@@ -151,7 +150,9 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
                 shouldPersist = false;
                 return;
               }
-              if (draftState.panels.at(formData.oldIndex)?.id !== formData.id) {
+              if (
+                draftState.panels.at(formData.oldIndex)?.uuid !== formData.uuid
+              ) {
                 shouldPersist = false;
                 return;
               }
@@ -180,7 +181,7 @@ export const hintPanelsApiSlice = apiSlice.injectEndpoints({
               body: keysToSnakeCase(formData),
             });
           } catch (err) {
-            devLog("Couldn't update panel order:", err);
+            errLog("Couldn't update panel order:", err);
             return { data: false };
           }
         }
@@ -200,5 +201,5 @@ export const selectPanels = createSelector(
 
 export const selectPanelIds = createSelector([selectPanels], (panels) => {
   if (!panels) return [];
-  return panels.map((panel) => panel.id);
+  return panels.map((panel) => panel.uuid);
 });

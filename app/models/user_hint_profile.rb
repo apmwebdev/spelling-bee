@@ -9,16 +9,19 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class UserHintProfile < ApplicationRecord
+  include UuidRetryable
+
   belongs_to :user
   belongs_to :status_tracking_option, foreign_key: :default_panel_tracking
-  belongs_to :default_panel_display_state, class_name: "PanelDisplayState", dependent: :destroy
+  belongs_to :default_panel_display_state, class_name: "PanelDisplayState",
+    dependent: :destroy
   accepts_nested_attributes_for :default_panel_display_state
   has_many :hint_panels, as: :hint_profile, dependent: :destroy
   has_one :user_pref, as: :current_hint_profile
 
   def to_front_end_complete
     return_obj = {
-      id:,
+      uuid:,
       type: self.class.name,
       name:,
       defaultPanelTracking: default_panel_tracking,
@@ -33,7 +36,7 @@ class UserHintProfile < ApplicationRecord
 
   def to_front_end_basic
     {
-      id:,
+      uuid:,
       type: self.class.name,
       name:
     }

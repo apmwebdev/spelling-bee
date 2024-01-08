@@ -14,40 +14,40 @@ import uniqid from "uniqid";
 import { PanelStatusTrackingControl } from "./PanelStatusTrackingControl";
 import { PanelNameInputForm } from "./PanelNameInputForm";
 import { PanelInitialDisplayControls } from "./PanelInitialDisplayControls";
-import {
-  isLetterPanelData,
-  LetterPanelSettings,
-} from "@/features/hintPanelType_letter";
-import {
-  isSearchPanelData,
-  SearchPanelSettings,
-} from "@/features/hintPanelType_search";
-import { ObscurityPanelSettings } from "@/features/hintPanelType_obscurity";
-import { DefinitionPanelSettings } from "@/features/hintPanelType_definition";
-import { HintPanelData } from "@/features/hintPanels/types";
-import { isObscurityPanelData } from "@/features/hintPanelType_obscurity/types";
-import { isDefinitionPanelData } from "@/features/hintPanelType_definition/types";
+import { isLetterPanelData, LetterPanelSettings } from "@/features/letterPanel";
+import { isSearchPanelData, SearchPanelSettings } from "@/features/searchPanel";
+import { ObscurityPanelSettings } from "@/features/obscurityPanel";
+import { DefinitionPanelSettings } from "@/features/definitionPanel";
+import { HintPanelData } from "@/features/hintPanels/types/hintPanelTypes";
+import { isObscurityPanelData } from "@/features/obscurityPanel/types/obscurityPanelTypes";
+import { isDefinitionPanelData } from "@/features/definitionPanel/types/definitionPanelTypes";
 
 export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   const typeSpecificSettings = () => {
     if (isLetterPanelData(panel.typeData)) {
       return (
-        <LetterPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <LetterPanelSettings panelUuid={panel.uuid} typeData={panel.typeData} />
       );
     }
     if (isSearchPanelData(panel.typeData)) {
       return (
-        <SearchPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <SearchPanelSettings panelUuid={panel.uuid} typeData={panel.typeData} />
       );
     }
     if (isObscurityPanelData(panel.typeData)) {
       return (
-        <ObscurityPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <ObscurityPanelSettings
+          panelUuid={panel.uuid}
+          typeData={panel.typeData}
+        />
       );
     }
     if (isDefinitionPanelData(panel.typeData)) {
       return (
-        <DefinitionPanelSettings panelId={panel.id} typeData={panel.typeData} />
+        <DefinitionPanelSettings
+          panelUuid={panel.uuid}
+          typeData={panel.typeData}
+        />
       );
     }
   };
@@ -58,16 +58,16 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
       {typeSpecificSettings()}
       <div className="GeneralPanelSettings">
         <PanelStatusTrackingControl
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           statusTracking={panel.statusTracking}
         />
         <PanelNameInputForm
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           currentName={panel.name}
           inputId={`PanelNameInput${uniqid()}`}
         />
         <PanelInitialDisplayControls
-          panelId={panel.id}
+          panelUuid={panel.uuid}
           initialDisplayState={panel.initialDisplayState}
         />
       </div>

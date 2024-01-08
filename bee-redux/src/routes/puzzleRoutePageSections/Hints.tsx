@@ -12,7 +12,7 @@
 
 import { useAppSelector } from "@/app/hooks";
 
-import { Statuses } from "@/types";
+import { Statuses } from "@/types/globalTypes";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import { HintPanels, selectCurrentPanelData } from "@/features/hintPanels";
 

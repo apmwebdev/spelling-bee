@@ -13,12 +13,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
+import { Uuid } from "@/features/api";
+
 export function PanelNameInputForm({
-  panelId,
+  panelUuid,
   currentName,
   inputId,
 }: {
-  panelId: number;
+  panelUuid: Uuid;
   currentName: string;
   inputId: string;
 }) {
@@ -31,7 +33,7 @@ export function PanelNameInputForm({
       setName(val);
       if (val.length > 0) {
         updatePanel({
-          id: panelId,
+          uuid: panelUuid,
           debounceField: "name",
           name: val,
         });

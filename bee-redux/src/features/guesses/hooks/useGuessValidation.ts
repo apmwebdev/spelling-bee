@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { GuessFormat } from "@/features/guesses";
+import { TGuess } from "@/features/guesses";
 import { GuessMessagesOutput } from "@/features/guesses/hooks/useGuessMessages";
 import { useAppSelector } from "@/app/hooks";
 import { selectCenterLetter, selectValidLetters } from "@/features/puzzle";
@@ -25,7 +25,7 @@ export enum GuessErrorTypes {
 }
 
 export type GuessValidationOutput = {
-  validate: (guessValue: string, guesses: GuessFormat[]) => boolean;
+  validate: (guessValue: string, guesses: TGuess[]) => boolean;
 };
 
 export const validationCurry = ({
@@ -39,7 +39,7 @@ export const validationCurry = ({
 }) => {
   const regex = new RegExp(`^[${validLetters.join("")}]+$`);
 
-  return (guessValue: string, guesses: GuessFormat[]) => {
+  return (guessValue: string, guesses: TGuess[]) => {
     const errors: GuessErrorTypes[] = [];
 
     if (guessValue.length < 4) {
