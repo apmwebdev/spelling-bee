@@ -46,6 +46,7 @@ import {
 import { last } from "lodash";
 import { PromiseExtended } from "dexie";
 import { BLANK_UUID, isErrorResponse, Uuid } from "@/features/api";
+import { isEmptyArray, isPopulatedArray } from "@/types/globalTypes";
 
 /** A type that consists of either the data from a successful query, set via a generic, plus the
  *  different error types that can result from both RTK Query and Dexie. Null is an option since
@@ -117,10 +118,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         api.dispatch(loadUserPuzzleServerData(response.data));
         upd.currentAttemptUuid =
           last(response.data.attempts)?.uuid ?? BLANK_UUID;
-      } else if (
-        isDexieGeneralError(response) ||
-        (Array.isArray(response) && response.length === 0)
-      ) {
+      } else if (isDexieGeneralError(response) || isEmptyArray(response)) {
         //IndexedDB query resolved first with error or empty array
         devLog("IDB resolved first with error or empty array:", response);
         upd.resolvedFirst = "IDB";
@@ -159,10 +157,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
     devLog("Server and IDB queries all settled", upd);
     devLog("promises =", promises);
     if (
-      idbAttemptsResult.status === "fulfilled" &&
-      idbAttemptsResult.value.length > 0 &&
-      serverResult.status === "fulfilled" &&
-      isUserPuzzleData(serverResult.value)
+      isIdbSettledSuccess(idbAttemptsResult) &&
+      isServerSettledSuccess(serverResult)
     ) {
       //Both queries were successful. Order doesn't matter.
       devLog(
@@ -209,8 +205,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       }
     } else if (
       upd.resolvedFirst === "IDB" &&
-      isErrorOrEmpty(idbAttemptsResult) &&
-      serverResult.status === "fulfilled"
+      !isIdbSettledSuccess(idbAttemptsResult) &&
+      isServerSettledSuccess(serverResult)
     ) {
       //IDB was first and failed, server was successful
       devLog(
@@ -221,9 +217,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       //TODO: Still try to load guesses and SPSs from IDB?
     } else if (
       upd.resolvedFirst === "SERVER" &&
-      serverResult.status === "rejected" &&
-      idbAttemptsResult.status === "fulfilled" &&
-      idbAttemptsResult.value.length > 0
+      !isServerSettledSuccess(serverResult) &&
+      isIdbSettledSuccess(idbAttemptsResult)
     ) {
       //Server was first and failed, IDB was successful
       devLog(
@@ -238,8 +233,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       );
       await Promise.allSettled([idbGuesses, idbSearches]);
     } else if (
-      serverResult.status === "rejected" &&
-      isErrorOrEmpty(idbAttemptsResult)
+      !isIdbSettledSuccess(idbAttemptsResult) &&
+      !isServerSettledSuccess(serverResult)
     ) {
       //Both server and IDB failed. Order doesn't matter.
       devLog(
@@ -250,7 +245,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       //If we got here, that means that the first query succeeded and the second failed.
       // Nothing more needs to happen
       devLog(
-        "First query succeeded, second failed. No further processing needs to happen",
+        "First query succeeded, second failed. No further processing needed",
       );
     }
   },
@@ -350,6 +345,22 @@ export const loadInitialSearchData = createAsyncThunk(
   },
 );
 
-export const isErrorOrEmpty = (promise: PromiseSettledResult<Array<any>>) => {
-  return promise.status === "rejected" || promise.value.length === 0;
+type SettledResponse =
+  | PromiseSettledResult<UserPuzzleAttempt[]>
+  | PromiseSettledResult<UserPuzzleData>;
+
+export const isIdbSettledSuccess = (
+  response: SettledResponse,
+): response is PromiseFulfilledResult<UserPuzzleAttempt[]> => {
+  return response.status === "fulfilled" && isPopulatedArray(response.value);
+};
+
+export const isServerSettledSuccess = (
+  response: SettledResponse,
+): response is PromiseFulfilledResult<UserPuzzleData> => {
+  return (
+    response.status === "fulfilled" &&
+    isUserPuzzleDataResponse(response.value) &&
+    response.value.data.attempts.length > 0
+  );
 };

@@ -145,3 +145,27 @@ export const createTypeGuard = <ValidType>(
     return true;
   };
 };
+
+export const isEmptyArray = (toTest: any) => {
+  return Array.isArray(toTest) && toTest.length === 0;
+};
+
+export const isPopulatedArray = (toTest: any) => {
+  return Array.isArray(toTest) && toTest.length > 0;
+};
+
+export const isPromiseSettledResult = (
+  toTest: any,
+): toTest is PromiseSettledResult<any> => {
+  if (!("status" in toTest)) return false;
+  if (toTest.status !== "fulfilled" && toTest.status !== "rejected") {
+    return false;
+  }
+  if (toTest.status === "fulfilled" && !("value" in toTest)) return false;
+  if (toTest.status === "rejected" && !("reason" in toTest)) return false;
+  return true;
+};
+
+export const isRejectedPromiseSettled = (toTest: any) => {
+  return isPromiseSettledResult(toTest) && toTest.status === "rejected";
+};
