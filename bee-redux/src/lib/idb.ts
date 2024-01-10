@@ -4,13 +4,12 @@ import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { HintPanelData } from "@/features/hintPanels";
-import * as crypto from "crypto";
 import {
   isUuid,
   UuidRecord,
   UuidUpdateData,
 } from "@/features/api/types/apiTypes";
-import { errLog } from "@/util";
+import { devLog, errLog } from "@/util";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<UserPuzzleAttempt>;
@@ -89,6 +88,7 @@ export const idbInsertWithRetry = <RecordType extends UuidRecord>(
     record: RecordType,
     retryCount: number = 0,
   ): Promise<IndexableType | null> => {
+    devLog("idbInsertWithRetry");
     try {
       return await insertFn(record);
     } catch (err) {
@@ -97,11 +97,14 @@ export const idbInsertWithRetry = <RecordType extends UuidRecord>(
         err.name === "ConstraintError" &&
         retryCount < MAX_IDB_RETRIES
       ) {
-        record.uuid = crypto.randomUUID();
-        return retryableInsertFn(record, retryCount + 1);
+        //The record is from Redux, so it can't be modified. Create a copy if the UUID needs to be
+        // changed.
+        const newRecord = structuredClone(record);
+        newRecord.uuid = crypto.randomUUID();
+        return retryableInsertFn(newRecord, retryCount + 1);
       }
       // TODO: Add better error handling here
-      console.error("Error saving record:", record, err);
+      errLog("Error saving record:", record, err);
       return null;
     }
   };
@@ -109,17 +112,36 @@ export const idbInsertWithRetry = <RecordType extends UuidRecord>(
 };
 
 export const createIdbUuidUpdateFn =
-  <DataType extends UuidRecord>(idbTable: Table<DataType, IndexableType>) =>
+  <DataType extends UuidRecord>({
+    idbTable,
+    addFn,
+  }: {
+    idbTable: Table<DataType, IndexableType>;
+    addFn: IdbAddFn<DataType>;
+  }) =>
   async (uuids: UuidUpdateData[]) => {
-    const newUuids: UuidUpdateData[] = [];
+    devLog("idbUuidUpdateFn");
+    const returnUuids: UuidUpdateData[] = [];
     for (const item of uuids) {
+      let original: DataType | undefined;
+      let newUuid: IndexableType | null = null;
       try {
-        await idbTable.update(item.oldUuid, { uuid: item.newUuid });
+        original = await idbTable.get(item.oldUuid);
       } catch (err) {
-        errLog("Error:", err);
+        errLog("Error fetching original record:", err);
+      }
+      if (!original) continue;
+      original.uuid = item.newUuid;
+      try {
+        newUuid = await addFn(original);
+      } catch (err) {
+        errLog("Error adding updated record", err, original);
+      }
+      if (isUuid(newUuid) && newUuid !== item.newUuid) {
+        returnUuids.push({ oldUuid: item.newUuid, newUuid });
       }
     }
-    return newUuids;
+    return returnUuids;
   };
 
 export type IdbAddFn<DataType> = (
@@ -130,13 +152,17 @@ export type IdbAddFn<DataType> = (
 export const createBulkAddIdbDataFn =
   <DataType extends UuidRecord>(addFn: IdbAddFn<DataType>) =>
   async (records: DataType[]) => {
+    devLog("bulkAddIdbData");
     //TODO: Eventually use the bulk add functionality in Dexie for this. Need to figure out exactly
     // how errors are handled first though.
     const newUuids: UuidUpdateData[] = [];
     for (const record of records) {
+      devLog("bulkAddIdbData record:", record);
       const uuid = record.uuid;
       const result = await addFn(record);
+      devLog("bulkAddIdbData result:", result);
       if (isUuid(result) && result !== uuid) {
+        devLog("bulkAddIdbData UUIDs don't match:", record.uuid, result);
         newUuids.push({
           oldUuid: uuid,
           newUuid: result,

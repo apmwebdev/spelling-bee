@@ -27,4 +27,7 @@ export const bulkDeleteIdbGuesses = (uuids: Uuid[]) => {
   return idb.guesses.bulkDelete(uuids);
 };
 
-export const updateIdbGuessUuids = createIdbUuidUpdateFn(idb.guesses);
+export const updateIdbGuessUuids = createIdbUuidUpdateFn({
+  idbTable: idb.guesses,
+  addFn: addIdbGuess,
+});

@@ -20,10 +20,7 @@ class UserPuzzleAttempt < ApplicationRecord
     {
       uuid:,
       puzzleId: puzzle_id,
-      createdAt: created_at.to_i
-      # guesses: guesses.map do |guess|
-      #   guess.to_front_end
-      # end
+      createdAt: (BigDecimal(created_at.to_f.to_s) * 1000).to_i
     }
   end
 end

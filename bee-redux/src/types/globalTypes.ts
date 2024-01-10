@@ -18,6 +18,9 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
  * @param {any} toTest
  */
 export function isPlainObject(toTest: any) {
+  if (toTest === null || typeof toTest !== "object") {
+    return false;
+  }
   return Object.getPrototypeOf(toTest) === Object.prototype;
 }
 
@@ -29,6 +32,7 @@ export function hasAllProperties(
   obj: object,
   properties: string[] | IterableIterator<string>,
 ) {
+  if (obj === null || !(typeof obj === "object")) return false;
   for (const property of properties) {
     if (property in obj) continue;
     return false;
@@ -112,11 +116,37 @@ export const PASSWORD_REGEX =
  *  2. If the validator is a string, the property needs to be the typeof that string
  *  3. If the validator is a predicate or type guard function, that function validates the property
  *     and needs to return true when passed the property as an argument. */
-export type TypeGuardPropertyValidator =
+type TypeValidator =
   | null
   | string
   | ((toTest: any) => toTest is any)
   | ((toTest: any) => boolean);
+
+export const isTypeValidator = (toTest: any): toTest is TypeValidator => {
+  return (
+    toTest === null ||
+    typeof toTest === "string" ||
+    typeof toTest === "function"
+  );
+};
+
+type TypeValidatorContainer = {
+  validator: TypeValidator;
+  isOptional: boolean;
+};
+
+export const isTypeValidatorContainer = (
+  toTest: any,
+): toTest is TypeValidatorContainer => {
+  if (!isPlainObject(toTest)) return false;
+  return (
+    hasAllProperties(toTest, ["validator", "isOptional"]) &&
+    isTypeValidator(toTest.validator) &&
+    typeof toTest.isOptional === "boolean"
+  );
+};
+
+export type TypeGuardValidator = TypeValidator | TypeValidatorContainer;
 
 /** A factory function to make creating type guards easier. Give it an array of properties +
  * validation for those properties (`validators`) to create the type guard function, then pass
@@ -126,20 +156,56 @@ export type TypeGuardPropertyValidator =
  * property. This array of tuples is then turned into a Map for ease of use.
  * */
 export const createTypeGuard = <ValidType>(
-  ...validators: Array<[string, TypeGuardPropertyValidator]>
+  ...validators: Array<[string, TypeGuardValidator]>
 ) => {
-  const validProperties = new Map<string, TypeGuardPropertyValidator>(
-    validators,
-  );
+  const validProperties = new Map<string, TypeGuardValidator>(validators);
+  const propIsValid = ({
+    validator,
+    prop,
+  }: {
+    validator: TypeGuardValidator;
+    prop: any;
+  }) => {
+    if (typeof validator === "string") {
+      if (!(typeof prop === validator)) return false;
+    } else if (typeof validator === "function") {
+      if (!validator(prop)) return false;
+    }
+    return true;
+  };
   return (toTest: any): toTest is ValidType => {
     //This app doesn't use object constructors or classes, so toTest should be a plain object
     if (!isPlainObject(toTest)) return false;
-    if (!hasAllProperties(toTest, validProperties.keys())) return false;
     for (const [key, value] of validProperties) {
-      if (typeof value === "string") {
-        if (!(typeof toTest[key] === value)) return false;
-      } else if (typeof value === "function") {
-        if (!value(toTest[key])) return false;
+      if (isTypeValidatorContainer(value) && !value.isOptional) {
+        if (!(key in toTest)) return false;
+        if (value.validator === null) continue;
+        if (
+          !propIsValid({
+            validator: value.validator,
+            prop: toTest[key],
+          })
+        )
+          return false;
+      } else if (isTypeValidatorContainer(value) && value.isOptional) {
+        if (
+          key in toTest &&
+          !propIsValid({
+            validator: value.validator,
+            prop: toTest[key],
+          })
+        )
+          return false;
+      } else {
+        if (!(key in toTest)) return false;
+        if (value === null) continue;
+        if (
+          !propIsValid({
+            validator: value,
+            prop: toTest[key],
+          })
+        )
+          return false;
       }
     }
     return true;
@@ -164,8 +230,4 @@ export const isPromiseSettledResult = (
   if (toTest.status === "fulfilled" && !("value" in toTest)) return false;
   if (toTest.status === "rejected" && !("reason" in toTest)) return false;
   return true;
-};
-
-export const isRejectedPromiseSettled = (toTest: any) => {
-  return isPromiseSettledResult(toTest) && toTest.status === "rejected";
 };

@@ -20,7 +20,7 @@ import {
   UserBaseData,
   UserPrefsData,
   UserPrefsFormData,
-  UserPuzzleData,
+  UserPuzzleDataResponse,
 } from "@/features/userData/types/userDataTypes";
 import { errLog } from "@/util";
 
@@ -116,11 +116,11 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
      * - getSearches
      * - getDefinitions (not implemented yet)
      */
-    getUserPuzzleData: builder.query<UserPuzzleData, number>({
+    getUserPuzzleData: builder.query<UserPuzzleDataResponse, number>({
       query: (puzzleId: number) => ({
         url: `/user_puzzle_data/${puzzleId}`,
       }),
-      providesTags: ["User"],
+      // providesTags: ["User"],
       onQueryStarted: async (_puzzleId, api) => {
         try {
           await api.queryFulfilled;
@@ -130,10 +130,10 @@ export const userDataApiSlice = apiSlice.injectEndpoints({
         const cacheEntry = api.getCacheEntry();
         if (
           cacheEntry.isSuccess &&
-          cacheEntry.data &&
-          cacheEntry.data.attempts.length > 0
+          cacheEntry.data?.data &&
+          cacheEntry.data.data.attempts.length > 0
         ) {
-          const { data } = cacheEntry;
+          const data = cacheEntry.data.data;
           api.dispatch(
             userPuzzleAttemptsApiSlice.util.upsertQueryData(
               "getPuzzleAttempts",

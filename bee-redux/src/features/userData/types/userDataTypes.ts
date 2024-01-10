@@ -14,8 +14,7 @@ import { CompleteHintProfile, HintProfilesData } from "@/features/hintProfiles";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts";
 import { TGuess } from "@/features/guesses";
-import { hasAllProperties, isPlainObject } from "@/types/globalTypes";
-import { createTypedSuccessResponseTypeGuard } from "@/features/api";
+import { createTypeGuard } from "@/types/globalTypes";
 
 export enum ColorSchemes {
   Auto = "auto",
@@ -49,13 +48,30 @@ export type UserPuzzleData = {
   guesses: TGuess[];
 };
 
-export const isUserPuzzleData = (toTest: any): toTest is UserPuzzleData => {
-  return (
-    //TODO: Eventually check for currentAttempt as well
-    isPlainObject(toTest) &&
-    hasAllProperties(toTest, ["searches", "attempts", "guesses"])
-  );
+export const isUserPuzzleData = createTypeGuard<UserPuzzleData>(
+  ["attempts", Array.isArray],
+  ["guesses", Array.isArray],
+  ["searches", Array.isArray],
+  ["currentAttempt", "string"],
+);
+
+export type UserPuzzleDataResponse = {
+  isAuthenticated: boolean;
+  data?: UserPuzzleData;
 };
 
-export const isUserPuzzleDataResponse =
-  createTypedSuccessResponseTypeGuard<UserPuzzleData>(isUserPuzzleData);
+export const isUserPuzzleDataResponse = createTypeGuard<UserPuzzleDataResponse>(
+  ["isAuthenticated", "boolean"],
+  ["data", { validator: isUserPuzzleData, isOptional: true }],
+);
+
+export type FullUserPuzzleDataResponse = {
+  isAuthenticated: boolean;
+  data: UserPuzzleData;
+};
+
+export const isFullUserPuzzleDataResponse = (
+  response: any,
+): response is FullUserPuzzleDataResponse => {
+  return isUserPuzzleDataResponse(response) && "data" in response;
+};

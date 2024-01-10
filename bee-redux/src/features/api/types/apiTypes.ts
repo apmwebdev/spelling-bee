@@ -90,18 +90,25 @@ export type UuidRecord = {
   [key: string]: any;
 };
 
-/** This type is the return format for combineUnique, a function for merging data from IndexedDB and
- * the server for display. `displayData` is the combined data for storing in Redux and displaying.
- * `idbUpdateData` is data that was present on the server but not in IndexedDB, so the data needs to
- * be added to IndexedDB. `serverUpdateData` is the opposite: Data that was present in IndexedDB but
- * not on the server, so it needs to be added to the server.
+/** Return format for `combineUnique`, a function for merging data from IndexedDB and the server.
+ * It returns an array of the combined, deduplicated data (`displayData`), as well as data that
+ * needs to be added to IndexedDB and the server.
  * @see combineForDisplayAndSync
  */
 export type ResolvedDataContainer<DataType> = {
   //TODO: If this makes everything into an array, the other containers should do that too
+  /** Container for the combined, deduplicated data, to be returned and stored in Redux state */
   displayData: DataType[];
+  /** Data that was present in the server data, but not in IndexedDB. Add it to IndexedDB. */
   idbDataToAdd: DataType[];
+  /** Data that was present in the IndexedDB data, but not in server data. Add to server DB. */
   serverDataToAdd: DataType[];
+  /** A list of UUIDs for records that conflict. Each combineUnique implementation specifies which
+   * data store (IndexedDB or server DB) should take precedence in case records conflict. This
+   * array is passed to the secondary data store so that the conflicting records can be overwritten
+   * with data from the primary data store. This is necessary if, e.g., a guess for the word
+   * "foobar" is stored both locally and server-side, but for some reason the UUIDs don't match up.
+   * In that case, delete the local version and replace it with the server version. */
   dataToDelete: Uuid[];
 };
 
@@ -157,7 +164,8 @@ export type CreateDataResolverThunkArgs<DataType> = SynchronizerThunkArgs & {
   >;
   /** For any data that is present on the server but not in IndexedDB, it needs to be added to
    * IndexedDB. This is the function for doing that. */
-  addBulkIdbData: (items: DataType[]) => Promise<UuidUpdateData[]>;
+  bulkAddIdbDataFn: (items: DataType[]) => Promise<UuidUpdateData[]>;
+  bulkDeleteIdbDataFn: (uuids: Uuid[]) => PromiseExtended<void>;
   /** If there is a UUID collision when attempting to save a record in one data store, the UUID
    * will be regenerated and the save action attempted again. That change then needs to be
    * propagated to Redux and the other data store as well. This is the function for doing that. */

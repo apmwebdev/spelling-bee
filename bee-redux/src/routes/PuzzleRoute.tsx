@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useCurrentPuzzle } from "@/features/puzzle";
 import { Status } from "@/routes/puzzleRoutePageSections/Status";
 import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
@@ -18,26 +18,23 @@ import { Puzzle } from "@/routes/puzzleRoutePageSections/Puzzle";
 import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
 import { PuzzleAndStatus } from "@/routes/puzzleRoutePageSections/PuzzleAndStatus";
 import { SingleColumn } from "@/routes/puzzleRoutePageSections/SingleColumn";
-import { useAppDispatch } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { getUserPuzzleDataThunk } from "@/features/userData/api/userDataLoader";
+import { selectUser } from "@/features/auth";
 
 export function PuzzleRoute() {
   const dispatch = useAppDispatch();
   const puzzleQ = useCurrentPuzzle();
+  const user = useAppSelector(selectUser);
   // const [getUserPuzzleData] = useLazyGetUserPuzzleDataQuery();
   const columns = useColumnBreakpoints();
-  const previousPuzzleIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (puzzleQ.isSuccess) {
       const currentPuzzleId = puzzleQ.data.id;
-      if (currentPuzzleId !== previousPuzzleIdRef.current) {
-        // getUserPuzzleData(currentPuzzleId);
-        dispatch(getUserPuzzleDataThunk(currentPuzzleId));
-        previousPuzzleIdRef.current = currentPuzzleId;
-      }
+      dispatch(getUserPuzzleDataThunk(currentPuzzleId));
     }
-  }, [puzzleQ]);
+  }, [puzzleQ, user]);
 
   const content = (columns: number) => {
     if (columns === 3) {

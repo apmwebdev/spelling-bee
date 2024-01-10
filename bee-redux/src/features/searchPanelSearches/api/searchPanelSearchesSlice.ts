@@ -26,6 +26,7 @@ import { RootState } from "@/app/store";
 import {
   addIdbSearchPanelSearch,
   bulkAddIdbSearchPanelSearches,
+  bulkDeleteIdbSearchPanelSearches,
   deleteIdbSearchPanelSearch,
   getIdbAttemptSearches,
   updateIdbSearchPanelSearchUuids,
@@ -112,7 +113,8 @@ export const resolveSearchPanelSearchData =
     setDataReducer: setSearchPanelSearches,
     addBulkServerDataEndpoint:
       searchPanelSearchesApiSlice.endpoints.addBulkSearchPanelSearches,
-    addBulkIdbData: bulkAddIdbSearchPanelSearches,
+    bulkAddIdbDataFn: bulkAddIdbSearchPanelSearches,
+    bulkDeleteIdbDataFn: bulkDeleteIdbSearchPanelSearches,
     syncUuidFn: syncSearchPanelSearchUuids,
   });
 
@@ -134,7 +136,7 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
     api.dispatch(deleteSearchPanelSearch(uuid));
     //Delete from IndexedDB
     const idbResult = await deleteIdbSearchPanelSearch(uuid).catch((err) =>
-      errLog("Can't delete SPS from IndexedDB due to invalid UUID:", uuid, err),
+      errLog("Can't delete SPS from IndexedDB:", uuid, err),
     );
     //Delete on server if user is logged in
     let rtkqResult;

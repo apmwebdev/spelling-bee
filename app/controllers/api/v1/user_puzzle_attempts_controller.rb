@@ -62,8 +62,12 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
       return
     end
 
-    @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params)
+    @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params.except(:created_at))
     @user_puzzle_attempt.user = current_user
+    precise_timestamp = BigDecimal(user_puzzle_attempt_params[:created_at].to_s)
+    seconds_timestamp = precise_timestamp / 1000
+    @user_puzzle_attempt.created_at = Time.at(seconds_timestamp)
+    # Rails.logger.info "Create Attempt: #{@user_puzzle_attempt.inspect}"
 
     if @user_puzzle_attempt.save
       render json: @user_puzzle_attempt.to_front_end, status: 201
@@ -83,12 +87,17 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   # POST /user_puzzle_attempts/bulk_add
   def bulk_add
     return_array = []
-    bulk_add_params[:user_puzzle_attempts].map do |attempt|
-      item_status = {uuid: attempt.uuid, isSuccess: true}
+    bulk_add_params.each do |attempt|
+      item_status = {uuid: attempt[:uuid], isSuccess: true}
       begin
-        attempt.save_with_uuid_retry!
-        unless item_status[:uuid] == attempt.uuid
-          item_status[:newUuid] = attempt.uuid
+        new_attempt = UserPuzzleAttempt.new(attempt.except(:created_at))
+        new_attempt.user = current_user
+        # TODO: Validate timestamp?
+        seconds_timestamp = attempt[:created_at] / 1000.0
+        new_attempt.created_at = Time.at(seconds_timestamp)
+        new_attempt.save_with_uuid_retry!
+        unless item_status[:uuid] == new_attempt.uuid
+          item_status[:newUuid] = new_attempt.uuid
         end
       rescue
         item_status[:isSuccess] = false
@@ -118,7 +127,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   def bulk_add_params
     params.require(:user_puzzle_attempts)
       .map do |attempt|
-        attempt.permit(:uuid, :puzzle_id, :created_at)
+        attempt.permit(:uuid, :puzzle_id, :created_at).to_h
       end
   end
 end

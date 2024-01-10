@@ -25,10 +25,12 @@ import {
 import { RootState } from "@/app/store";
 import { userPuzzleAttemptsApiSlice } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
 import { last } from "lodash";
-import { errLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import {
   addIdbAttempt,
   bulkAddIdbAttempts,
+  bulkDeleteIdbAttempts,
+  deleteIdbAttempt,
   updateIdbAttemptUuids,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
 import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
@@ -109,16 +111,7 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
     updateAttemptUuids: attemptUuidUpdateReducer,
   },
-  extraReducers: (builder) => {
-    // builder.addMatcher<CurrentAttemptsFulfilledResponse>(
-    //   userPuzzleAttemptsApiSlice.endpoints.getPuzzleAttempts.matchFulfilled,
-    //   (state, { payload }) => {
-    //     state.data.attempts = payload;
-    //     state.data.currentAttempt = payload.slice(-1)[0];
-    //     state.status = Statuses.UpToDate;
-    //   },
-    // );
-  },
+  extraReducers: (builder) => {},
 });
 
 export const {
@@ -152,6 +145,7 @@ export const addAttemptThunk = createAddItemThunk<UserPuzzleAttempt>({
 export const generateNewAttemptThunk = createAsyncThunk(
   "userPuzzleAttempts/generateNewGuestAttemptThunk",
   async (_arg, api) => {
+    devLog("generateNewAttemptThunk");
     const state = api.getState() as RootState;
     const puzzleId = selectPuzzleId(state);
     api.dispatch(addAttemptThunk(generateUserPuzzleAttempt(puzzleId)));
@@ -172,9 +166,40 @@ export const resolveAttemptsData = createDataResolverThunk<UserPuzzleAttempt>({
   setDataReducer: setAttempts,
   addBulkServerDataEndpoint:
     userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts,
-  addBulkIdbData: bulkAddIdbAttempts,
+  bulkAddIdbDataFn: bulkAddIdbAttempts,
+  bulkDeleteIdbDataFn: bulkDeleteIdbAttempts,
   syncUuidFn: syncAttemptUuids,
 });
+
+export const deleteUserPuzzleAttemptThunk = createAsyncThunk(
+  "userPuzzleAttempts/deleteUserPuzzleAttemptThunk",
+  async (uuid: Uuid, api) => {
+    const state = api.getState() as RootState;
+    if (state.userPuzzleAttempts.data.attempts.length <= 1) {
+      errLog("Can't remove last user puzzle attempt");
+      return;
+    }
+    //Delete from state
+    api.dispatch(deleteAttempt(uuid));
+    //Delete from IndexedDB
+    const idbResult = await deleteIdbAttempt(uuid).catch((err) =>
+      errLog("Can't delete user puzzle attempt from IndexedDB:", uuid, err),
+    );
+    //Delete on server if user is logged in
+    let rtkqResult;
+    if (state.auth.user) {
+      rtkqResult = api
+        .dispatch(
+          userPuzzleAttemptsApiSlice.endpoints.deleteAttempt.initiate(uuid),
+        )
+        .unwrap()
+        .catch((err) =>
+          errLog("Can't delete user puzzle attempt from server:", err),
+        );
+    }
+    Promise.all([idbResult, rtkqResult]).then(() => devLog("Attempt deleted"));
+  },
+);
 
 export const selectCurrentAttempt = (state: RootState) =>
   state.userPuzzleAttempts.data.currentAttempt;

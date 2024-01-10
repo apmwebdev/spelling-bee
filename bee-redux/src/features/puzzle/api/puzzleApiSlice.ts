@@ -11,7 +11,7 @@
 */
 
 import { apiSlice } from "@/features/api";
-import { calculateScore, devLog } from "@/util";
+import { calculateScore } from "@/util";
 import { sortBy } from "lodash";
 
 export type Rank = {
@@ -168,7 +168,6 @@ export const puzzleApiSlice = apiSlice.injectEndpoints({
         url: `/puzzles/${identifier}`,
       }),
       transformResponse: (response: PuzzleFormatRaw, _meta, arg) => {
-        devLog("getPuzzle:", arg);
         const answerWords = response.answers.map((answer) => answer.word);
         const answerLengths = (answerWords: string[]) => {
           const returnArray: number[] = [];

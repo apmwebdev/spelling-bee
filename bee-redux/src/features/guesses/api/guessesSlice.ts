@@ -27,6 +27,7 @@ import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
 import {
   addIdbGuess,
   bulkAddIdbGuesses,
+  bulkDeleteIdbGuesses,
   getIdbAttemptGuesses,
   updateIdbGuessUuids,
 } from "@/features/guesses/api/guessesIdbApi";
@@ -94,7 +95,8 @@ export const resolveGuessesData = createDataResolverThunk<TGuess>({
   primaryDataKey: DataSourceKeys.serverData,
   setDataReducer: setGuesses,
   addBulkServerDataEndpoint: guessesApiSlice.endpoints.addBulkGuesses,
-  addBulkIdbData: bulkAddIdbGuesses,
+  bulkAddIdbDataFn: bulkAddIdbGuesses,
+  bulkDeleteIdbDataFn: bulkDeleteIdbGuesses,
   syncUuidFn: syncGuessUuids,
 });
 

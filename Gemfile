@@ -16,7 +16,6 @@ gem "rack-cors"
 gem "nokogiri"
 gem "dotenv", "~> 2.8"
 gem "dotenv-rails", "~> 2.8"
-gem "puma-daemon"
 gem "logger"
 
 # Devise
@@ -67,4 +66,8 @@ group :development do
   # gem "spring"
   gem "letter_opener"
   gem "standard"
+end
+
+group :production do
+  gem "puma-daemon"
 end

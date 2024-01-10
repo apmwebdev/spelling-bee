@@ -11,11 +11,20 @@
 */
 
 import { IconButton, IconButtonTypeKeys } from "@/components/IconButton";
-import { useDeleteAttemptMutation } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsApiSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import {
+  deleteUserPuzzleAttemptThunk,
+  selectCurrentAttemptUuid,
+} from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
+import { BLANK_UUID } from "@/features/api";
 
 export function DeleteAttemptButton() {
-  const [deleteAttempt] = useDeleteAttemptMutation();
-  const handleClick = () => {};
+  const dispatch = useAppDispatch();
+  const currentAttemptUuid = useAppSelector(selectCurrentAttemptUuid);
+  const handleClick = () => {
+    if (currentAttemptUuid === BLANK_UUID) return;
+    dispatch(deleteUserPuzzleAttemptThunk(currentAttemptUuid));
+  };
 
   return (
     <IconButton

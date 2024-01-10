@@ -40,6 +40,11 @@ export const deleteIdbSearchPanelSearch = (uuid: Uuid) => {
   return idb.searchPanelSearches.delete(uuid);
 };
 
-export const updateIdbSearchPanelSearchUuids = createIdbUuidUpdateFn(
-  idb.searchPanelSearches,
-);
+export const bulkDeleteIdbSearchPanelSearches = (uuids: Uuid[]) => {
+  return idb.searchPanelSearches.bulkDelete(uuids);
+};
+
+export const updateIdbSearchPanelSearchUuids = createIdbUuidUpdateFn({
+  idbTable: idb.searchPanelSearches,
+  addFn: addIdbSearchPanelSearch,
+});

@@ -30,7 +30,6 @@ import { StateShape } from "@/types/globalTypes";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { devLog, errLog } from "@/util";
 import { RootState } from "@/app/store";
-import { bulkDeleteIdbGuesses } from "@/features/guesses/api/guessesIdbApi";
 import { isEqual } from "lodash";
 import {
   isErrorResponse,
@@ -96,6 +95,15 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
   primaryDataKey: DataSourceKeys;
   nonUuidUniqueKeys?: string[];
 }): ResolvedDataContainer<DataType> => {
+  devLog(
+    "combineForDisplayAndSync:",
+    "data:",
+    data,
+    "primaryDataKey:",
+    primaryDataKey,
+    "nonUuidUniqueKeys:",
+    nonUuidUniqueKeys,
+  );
   /** The data that takes precedence in case there's a conflict between local and server data. This
    * should normally be server data, i.e., `data.serverData`. */
   const primaryData = data[primaryDataKey];
@@ -108,23 +116,13 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
   /** Whichever data can be overwritten in case there's a conflict between server and IndexedDB
    * data.This should normally be the IndexedDB data, i.e., `data.idbData`. */
   const secondaryData = data[secondaryDataKey];
-  /** Container for the combined, deduplicated data, to be returned and stored in Redux state */
   const displayData: DataType[] = [];
-  /** Another piece of the return data. Tracks any records that are missing from the server or
-   * IndexedDB so that they can be added and the data stores kept in sync. The values from the maps
-   * are eventually spread into arrays, but maps are used here for easier lookup by UUID. */
   const updateMaps = {
     [DataSourceKeys.idbData]: new Map<Uuid, DataType>(),
     [DataSourceKeys.serverData]: new Map<Uuid, DataType>(),
   } as const;
-  /** Final piece of the return data: A list of UUIDs that should be deleted from the secondary
-   * data store because they match a unique key from the primary data but aren't identical. Some
-   * records may be replaced by records from the primary data. This is necessary if, e.g., a guess
-   * for the word "foobar" is stored both locally and server-side, but for some reason the UUIDs
-   * don't match up. In that case, delete the local one and use the server version. */
   const dataToDelete = new Set<Uuid>();
   nonUuidUniqueKeys ??= [];
-  /** The nonUuidUniqueKeys, plus "uuid", in a Set to remove duplicates */
   const uniqueKeys = new Set([...nonUuidUniqueKeys, "uuid"]);
   /** Used to track UUIDs from primary data to make it easier for the secondary data to know what
    * records the primary data is missing. */
@@ -136,7 +134,7 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
     for (const uniqueKey of uniqueKeys) {
       if (!(uniqueKey in item)) {
         //TODO: Add better error handling
-        devLog(`Key ${uniqueKey} not present in item.`, item, data);
+        errLog(`Key ${uniqueKey} not present in item.`, item, data);
         continue primaryDataLoop;
       }
       const matchingItem = secondaryData.find(
@@ -144,10 +142,12 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
       );
       //If the secondary data store doesn't have the item, add it
       if (!matchingItem && !updateMaps[secondaryDataKey].has(item.uuid)) {
+        devLog("item not in secondary store:", item, matchingItem);
         updateMaps[secondaryDataKey].set(item.uuid, item);
       }
       //If `matchingItem` isn't identical to `item`, mark it for deletion and replace it with `item`
       if (matchingItem && !isEqual(item, matchingItem)) {
+        devLog("item and matchItem not equal:", item, matchingItem);
         dataToDelete.add(matchingItem.uuid);
         if (!updateMaps[secondaryDataKey].has(item.uuid)) {
           updateMaps[secondaryDataKey].set(item.uuid, item);
@@ -161,10 +161,9 @@ export const combineForDisplayAndSync = <DataType extends UuidRecord>({
    * data. Since partial matches were already addressed in `primaryDataLoop`, this logic can be
    * much simpler. */
   for (const item of secondaryData) {
-    devLog("secondary data item:", item);
     if (dataToDelete.has(item.uuid)) continue;
     if (!uuids.has(item.uuid)) {
-      devLog("Don't delete item, item not present in primary data");
+      devLog("item not in primaryData:", item, uuids);
       displayData.push(item);
       updateMaps[primaryDataKey].set(item.uuid, item);
     }
@@ -189,42 +188,56 @@ export const createDataResolverThunk = <DataType extends UuidRecord>({
   primaryDataKey,
   setDataReducer,
   addBulkServerDataEndpoint,
-  addBulkIdbData,
+  bulkAddIdbDataFn,
+  bulkDeleteIdbDataFn,
   syncUuidFn,
 }: CreateDataResolverThunkArgs<DataType>) =>
   createAsyncThunk(actionType, async (data: DiffContainer<DataType>, api) => {
+    devLog(`${modelDisplayName} dataResolverThunk`);
+    const combinedData = combineForDisplayAndSync({
+      data,
+      primaryDataKey,
+      //TODO: Add other unique keys
+    });
+    devLog("combinedData:", combinedData);
     const { displayData, idbDataToAdd, serverDataToAdd, dataToDelete } =
-      combineForDisplayAndSync({
-        data,
-        primaryDataKey,
-        //TODO: Add other unique keys
-      });
+      combinedData;
     api.dispatch(setDataReducer(displayData));
     const idbAndReduxUuidsToUpdate: UuidUpdateData[] = [];
-    const serverResult = await api
-      .dispatch(addBulkServerDataEndpoint.initiate(serverDataToAdd))
-      .catch((err) => {
-        //TODO: Add better error handling
-        errLog(`Error bulk updating ${modelDisplayName}:`, err);
-        return null;
-      });
-    if (isSuccessResponse(serverResult)) {
-      for (const result of serverResult.data) {
-        //TODO: Handle errors somehow?
-        if (result.isSuccess && result.newUuid) {
-          idbAndReduxUuidsToUpdate.push({
-            oldUuid: result.uuid,
-            newUuid: result.newUuid,
-          });
+    if (serverDataToAdd.length > 0) {
+      const serverResult = await api
+        .dispatch(addBulkServerDataEndpoint.initiate(serverDataToAdd))
+        .catch((err) => {
+          //TODO: Add better error handling
+          errLog(`Error bulk updating ${modelDisplayName}:`, err);
+          return null;
+        });
+      devLog("serverResult:", serverResult);
+      if (isSuccessResponse(serverResult)) {
+        for (const result of serverResult.data) {
+          //TODO: Handle errors somehow?
+          if (result.isSuccess && result.newUuid) {
+            devLog("newUuid:", result);
+            idbAndReduxUuidsToUpdate.push({
+              oldUuid: result.uuid,
+              newUuid: result.newUuid,
+            });
+          }
         }
       }
     }
-    await bulkDeleteIdbGuesses(dataToDelete);
-    const idbResult = await addBulkIdbData(idbDataToAdd).catch((err) => {
-      //TODO: Add better error handling
-      errLog(`Error bulk updating IDB ${modelDisplayName}:`, err);
-      return null;
-    });
+    if (dataToDelete.length > 0) {
+      await bulkDeleteIdbDataFn(dataToDelete);
+    }
+    let idbResult: UuidUpdateData[] | null = null;
+    if (idbDataToAdd.length > 0) {
+      idbResult = await bulkAddIdbDataFn(idbDataToAdd).catch((err) => {
+        //TODO: Add better error handling
+        errLog(`Error bulk updating IDB ${modelDisplayName}:`, err);
+        return null;
+      });
+      devLog("idbResult:", idbResult);
+    }
     if (
       idbAndReduxUuidsToUpdate.length > 0 ||
       (idbResult && idbResult.length > 0)
@@ -280,6 +293,7 @@ export const createAddItemThunk = <DataType extends UuidRecord>({
   addServerItemEndpoint,
 }: CreateAddItemThunkArgs<DataType>) =>
   createAsyncThunk(actionType, async (itemToAdd: DataType, api) => {
+    devLog("addItemThunk:", itemToAdd);
     if (!validationFn(itemToAdd)) {
       //TODO: Add better error handling
       errLog(`Invalid ${itemDisplayType}. Exiting.`, itemToAdd);

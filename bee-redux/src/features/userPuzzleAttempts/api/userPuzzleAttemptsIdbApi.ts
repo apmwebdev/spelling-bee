@@ -49,4 +49,7 @@ export const bulkDeleteIdbAttempts = (uuids: Uuid[]) => {
   return idb.attempts.bulkDelete(uuids);
 };
 
-export const updateIdbAttemptUuids = createIdbUuidUpdateFn(idb.attempts);
+export const updateIdbAttemptUuids = createIdbUuidUpdateFn({
+  idbTable: idb.attempts,
+  addFn: addIdbAttempt,
+});

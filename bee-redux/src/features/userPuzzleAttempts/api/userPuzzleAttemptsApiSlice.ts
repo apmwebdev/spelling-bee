@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { apiSlice, keysToSnakeCase } from "@/features/api";
+import { apiSlice, keysToSnakeCase, Uuid } from "@/features/api";
 import { RootState } from "@/app/store";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { devLog, errLog } from "@/util";
@@ -43,8 +43,8 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     deleteAttempt: builder.mutation({
-      query: (attemptId: number) => ({
-        url: `/user_puzzle_attempts/${attemptId}`,
+      query: (attemptUuid: Uuid) => ({
+        url: `/user_puzzle_attempts/${attemptUuid}`,
         method: "DELETE",
       }),
     }),
