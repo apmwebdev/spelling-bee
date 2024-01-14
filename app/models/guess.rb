@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# An attempt by a user to guess a puzzle answer, or an answer that a user chose to reveal
 class Guess < ApplicationRecord
   include UuidRetryable
   include TimeConverter
@@ -19,7 +22,7 @@ class Guess < ApplicationRecord
       attemptUuid: user_puzzle_attempt_uuid,
       text:,
       createdAt: jsify_timestamp(created_at),
-      isSpoiled: is_spoiled
+      isSpoiled: is_spoiled,
     }
   end
 end

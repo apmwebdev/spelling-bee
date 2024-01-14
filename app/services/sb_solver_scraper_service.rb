@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,11 +10,10 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
 require "open-uri"
 require "nokogiri"
 
+# Past puzzle data needs to be retrieved from sbsolver.com
 module SbSolverScraperService
   def self.get_puzzle(id)
     return_object = {
@@ -20,7 +21,7 @@ module SbSolverScraperService
       center_letter: "",
       outer_letters: [],
       answers: [],
-      sb_solver_id: id
+      sb_solver_id: id,
     }
     url = "https://www.sbsolver.com/s/#{id}"
     return_object[:sb_solver_url] = url
@@ -61,19 +62,19 @@ module SbSolverScraperService
     write_log "Seed Puzzles: Starting at #{DateTime.now}"
     start_id.upto(end_id) do |id|
       write_log "Starting import for puzzle #{id}"
-      if Puzzle.find_by(id: id).nil?
+      if Puzzle.find_by(id:).nil?
         sleep(rand(0..2))
         puzzle_data = get_puzzle(id)
         write_log "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
-        sb_solver_puzzle = SbSolverPuzzle.create({sb_solver_id: id})
+        sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
         puzzle = Puzzle.create({
           date: puzzle_data[:date],
           center_letter: puzzle_data[:center_letter],
           outer_letters: puzzle_data[:outer_letters],
-          origin: sb_solver_puzzle
+          origin: sb_solver_puzzle,
         })
         puzzle_data[:answers].each do |item|
-          word = Word.create_or_find_by({text: item})
+          word = Word.create_or_find_by({ text: item })
           if word.frequency.nil?
             write_log "Fetching datamuse data for \"#{item}\""
             datamuse_data = DatamuseApiService.get_word_data(item)
@@ -83,7 +84,7 @@ module SbSolverScraperService
           else
             write_log "Datamuse data already exists for \"#{item}\""
           end
-          Answer.create({puzzle: puzzle, word_text: item})
+          Answer.create({ puzzle:, word_text: item })
         end
         puzzle.create_excluded_words_cache
         write_log "Created excluded words cache"

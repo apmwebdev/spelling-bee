@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,9 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A puzzle, containing the valid letters, and, by association, valid answers
+# Is associated with (but doesn't contain directly) other data about the puzzle
+# extraneous to the game itself
 class Puzzle < ApplicationRecord
   belongs_to :origin, polymorphic: true
   has_many :answers
@@ -22,8 +27,9 @@ class Puzzle < ApplicationRecord
 
   def create_excluded_words_cache
     return unless excluded_words.nil?
+
     set_valid_letters
-    valid_letters_regex = "^[#{valid_letters.join("")}]+$"
+    valid_letters_regex = "^[#{valid_letters.join('')}]+$"
     excluded_words_array = Word
       .where("CHAR_LENGTH(text) >= 4")
       .where("text ~ ?", valid_letters_regex)
@@ -36,6 +42,7 @@ class Puzzle < ApplicationRecord
   def set_pangrams
     @pangrams ||= []
     return unless @pangrams.empty?
+
     set_valid_letters
     @pangrams = Answer
       .where(puzzle_id: id)
@@ -47,6 +54,7 @@ class Puzzle < ApplicationRecord
   def set_perfect_pangrams
     @perfect_pangrams ||= []
     return unless @perfect_pangrams.empty?
+
     set_pangrams
     @perfect_pangrams = []
     @pangrams.each do |pan_word|
@@ -56,7 +64,7 @@ class Puzzle < ApplicationRecord
   end
 
   def set_is_latest
-    @is_latest = Puzzle.last === self
+    @is_latest = Puzzle.last == self
   end
 
   def set_derived_fields
@@ -76,11 +84,9 @@ class Puzzle < ApplicationRecord
       validLetters: @valid_letters,
       pangrams: @pangrams,
       perfectPangrams: @perfect_pangrams,
-      answers: answers.map do |answer|
-        answer.to_front_end
-      end.sort_by { |answer| answer[:word] },
+      answers: answers.map(&:to_front_end).sort_by { |answer| answer[:word] },
       excludedWords: excluded_words,
-      isLatest: @is_latest
+      isLatest: @is_latest,
     }
   end
 end

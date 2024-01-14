@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::PuzzlesController < ApplicationController
   before_action :set_puzzle, only: %i[show update destroy]
 
@@ -70,7 +73,7 @@ class Api::V1::PuzzlesController < ApplicationController
       if capital_index.nil? || num_of_caps > 1
         @puzzle = Puzzle.includes(:answers, :words).find_by!(
           center_letter: identifier.first.downcase,
-          outer_letters: identifier[1..6].downcase.chars.sort
+          outer_letters: identifier[1..6].downcase.chars.sort,
         )
         # Otherwise, there is exactly one capital letter, so use that as the
         # center letter.
@@ -78,7 +81,7 @@ class Api::V1::PuzzlesController < ApplicationController
         center_letter = identifier[capital_index]
         @puzzle = Puzzle.includes(:answers, :words).find_by!(
           center_letter: center_letter.downcase,
-          outer_letters: identifier.delete(center_letter).downcase.chars.sort
+          outer_letters: identifier.delete(center_letter).downcase.chars.sort,
         )
       end
 

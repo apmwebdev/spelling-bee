@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# For _resending_ account confirmation emails. Initial sending happens automatically
 class Api::V1::Users::ConfirmationsController < Devise::ConfirmationsController
   include RackSessionsFix
   respond_to :json
@@ -26,11 +27,9 @@ class Api::V1::Users::ConfirmationsController < Devise::ConfirmationsController
 
   def resend
     user = User.find_by_email(resend_params[:email])
-    if user && !user.confirmed?
-      user.resend_confirmation_instructions
-    end
+    user.resend_confirmation_instructions if user && !user.confirmed?
     render json: {
-      success: I18n.t("devise.confirmations.send_paranoid_instructions")
+      success: I18n.t("devise.confirmations.send_paranoid_instructions"),
     }, status: 200
   end
 

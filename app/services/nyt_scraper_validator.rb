@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# Validates data scraped by NytScraperService
 class NytScraperValidator
   def initialize(logger, json_data)
     @logger = logger
@@ -68,7 +69,7 @@ class NytScraperValidator
   end
 
   def bad_puzzle(to_log, puzzle_data)
-    err_log "Invalid puzzle for #{puzzle_data["printDate"]}: #{to_log}"
+    err_log "Invalid puzzle for #{puzzle_data['printDate']}: #{to_log}"
   end
 
   def valid_puzzle?(puzzle_data)
@@ -98,6 +99,7 @@ class NytScraperValidator
 
   def valid_puzzles?(puzzles)
     return false unless puzzles.is_a?(Array)
+
     puzzles.all? { |puzzle| valid_puzzle?(puzzle) }
   end
 
@@ -117,11 +119,13 @@ class NytScraperValidator
   def valid_outer_letters_array?(letters)
     return false unless letters.is_a?(Array)
     return false unless letters.length == 6
+
     letters.all? { |letter| valid_letter?(letter) }
   end
 
   def valid_answers?(answers)
     return false unless answers.is_a?(Array)
+
     answers.all? { |answer| answer.is_a?(String) }
   end
 end

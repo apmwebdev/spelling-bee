@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -66,7 +68,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "spelling_bee_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = {host: "https://superspellingbee.com"}
+  config.action_mailer.default_url_options = { host: "https://superspellingbee.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV["SMTP_SERVER"],
@@ -76,7 +78,7 @@ Rails.application.configure do
     authentication: "plain",
     enable_starttls: true,
     open_timeout: 5,
-    read_timeout: 5
+    read_timeout: 5,
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

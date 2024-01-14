@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# Controls login and logout
 class Api::V1::Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
   respond_to :json
@@ -18,26 +19,22 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     if user_signed_in?
       render json: {
         isAuthenticated: true,
-        user: current_user.to_front_end
+        user: current_user.to_front_end,
       }
       return
     end
-    render json: {isAuthenticated: false}
+    render json: { isAuthenticated: false }
   end
 
   private
 
   def respond_with(current_user, _opts = {})
-    render json: current_user.to_front_end, status: 200
+    render json: current_user.to_front_end
   end
 
   def respond_to_on_destroy
-    if current_user
-      render json: {
-        success: "Logged out successfully."
-      }, status: 200
-    else
-      raise ApiError.new("Couldn't find an active sessions", 401)
-    end
+    raise ApiError.new("Couldn't find an active sessions", 401) unless current_user
+
+    render json: { success: "Logged out successfully." }
   end
 end

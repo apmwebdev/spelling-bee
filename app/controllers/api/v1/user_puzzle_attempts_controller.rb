@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   include TimestampConverter
   before_action :set_user_puzzle_attempt, only: %i[show update destroy]
@@ -21,22 +24,19 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # GET /user_puzzle_attempts_for_puzzle
   def index_for_puzzle
-    unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
-      raise ApiError.new("Invalid puzzle ID")
-    end
+    raise ApiError, "Invalid puzzle ID" unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
+
     puzzle_id = params[:puzzle_id].to_i
-    unless Puzzle.exists?(puzzle_id)
-      raise NotFoundError.new(nil, "Puzzle")
-    end
+
+    raise NotFoundError.new(nil, "Puzzle") unless Puzzle.exists?(puzzle_id)
+
     @user_puzzle_attempts = UserPuzzleAttempt
       .includes(:guesses)
       .where("puzzle_id = ?", puzzle_id)
       .where(user: current_user)
 
     if @user_puzzle_attempts.any?
-      attempts_array = @user_puzzle_attempts.map do |attempt|
-        attempt.to_front_end
-      end
+      attempts_array = @user_puzzle_attempts.map(&:to_front_end)
       render json: attempts_array
     else
       render json: []
@@ -57,7 +57,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
       .where(puzzle_id: puzzle.id).count
 
     if existing_attempts_count >= 10
-      raise ApiError.new("#{error_base}: You've reached the maximum number of attempts for this puzzle.")
+      raise ApiError, "#{error_base}: You've reached the maximum number of attempts for this puzzle."
     end
 
     @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params.except(:created_at))
@@ -71,7 +71,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
       raise e
     rescue ActiveRecord::RecordInvalid => e
       raise RecordInvalidError.new(error_base, e, @user_puzzle_attempt.errors)
-    rescue => e
+    rescue StandardError => e
       raise ApiError.new(message: error_base, original_error: e)
     end
   rescue ActiveRecord::RecordNotFound => e
@@ -88,16 +88,14 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
     error_base = "Couldn't create user puzzle attempt"
     return_array = []
     bulk_add_params.each do |item|
-      item_status = {uuid: item[:uuid], isSuccess: false}
+      item_status = { uuid: item[:uuid], isSuccess: false }
       begin
         Puzzle.find(item[:puzzle_id])
         new_attempt = UserPuzzleAttempt.new(item.except(:created_at))
         new_attempt.user = current_user
         new_attempt.created_at = railsify_timestamp(item[:created_at])
         new_attempt.save_with_uuid_retry!
-        unless item_status[:uuid] == new_attempt.uuid
-          item_status[:newUuid] = new_attempt.uuid
-        end
+        item_status[:newUuid] = new_attempt.uuid unless item_status[:uuid] == new_attempt.uuid
         item_status[:isSuccess] = true
         error = nil
       rescue ActiveRecord::RecordNotFound => e
@@ -108,7 +106,7 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
         active_model_errors = new_attempt.errors if new_attempt && new_attempt.errors.present?
         error = RecordInvalidError.new(error_base, e)
         error.active_model_errors = active_model_errors if active_model_errors
-      rescue => e
+      rescue StandardError => e
         error = ApiError.new(message: error_base, original_error: e)
       end
       item_status[:error] = error.to_front_end if error

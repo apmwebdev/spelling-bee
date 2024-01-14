@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -13,14 +15,14 @@ Rails.application.routes.draw do
     path_names: {
       sign_in: "login",
       sign_out: "logout",
-      registration: "signup"
+      registration: "signup",
     },
     controllers: {
       sessions: "api/v1/users/sessions",
       registrations: "api/v1/users/registrations",
       passwords: "api/v1/users/passwords",
       confirmations: "api/v1/users/confirmations",
-      unlocks: "api/v1/users/unlocks"
+      unlocks: "api/v1/users/unlocks",
     }
   namespace :api do
     namespace :v1 do
@@ -57,9 +59,9 @@ Rails.application.routes.draw do
       match "current_hint_profile",
         to: "user_prefs#set_current_hint_profile",
         via: [:post, :put]
-      get "current_hint_profile", to: "user_prefs#get_current_hint_profile"
+      get "current_hint_profile", to: "user_prefs#show_current_hint_profile"
       # Hints
-      get "hint_profiles", to: "user_hint_profiles#get_all_hint_profiles"
+      get "hint_profiles", to: "user_hint_profiles#all_hint_profiles_index"
       resources :user_hint_profiles
       resources :hint_panels, param: :uuid, except: [:index, :show] do
         put "move", on: :collection

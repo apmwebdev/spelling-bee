@@ -1,0 +1,38 @@
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+Lint/MissingSuper:
+  AllowedParentClasses: [StandardError, ApiError]
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/SymbolArray:
+  Enabled: false
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma

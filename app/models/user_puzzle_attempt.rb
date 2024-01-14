@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A user's attempt at a given puzzle. This allows users to try and solve puzzles
+# multiple times, since they can have multiple UserPuzzleAttempts per puzzle
 class UserPuzzleAttempt < ApplicationRecord
   include UuidRetryable
   include TimeConverter
@@ -21,7 +25,7 @@ class UserPuzzleAttempt < ApplicationRecord
     {
       uuid:,
       puzzleId: puzzle_id,
-      createdAt: jsify_timestamp(created_at)
+      createdAt: jsify_timestamp(created_at),
     }
   end
 end

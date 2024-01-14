@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,11 +10,12 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::UserHintProfilesController < AuthRequiredController
   before_action :set_user_hint_profile, only: %i[show update destroy]
-  skip_before_action :authenticate_user!, only: :get_all_hint_profiles
+  skip_before_action :authenticate_user!, only: :all_hint_profiles_index
 
-  def get_all_hint_profiles
+  def all_hint_profiles_index
     if user_signed_in?
       render json: HintPresenter.present_all_profiles(current_user)
     else
@@ -36,26 +39,28 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
   def create
     error_base = "Couldn't create hint profile"
     if current_user.user_hint_profiles.count >= 20
-      raise ApiError.new("#{error_base}: You have reached the maximum number of hint profiles.")
+      raise ApiError, "#{error_base}: You have reached the maximum number of hint profiles."
     end
 
     @user_hint_profile = UserHintProfile.new(user_hint_profile_params)
 
-    if @user_hint_profile.save
+    begin
+      @user_hint_profile.save!
       render json: @user_hint_profile.to_front_end_complete, status: 201
-    else
-      raise RecordInvalidError.new(error_base, nil, @user_hint_profile.errors)
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @user_hint_profile.errors)
     end
   end
 
   # PATCH/PUT /user_hint_profiles/1
   def update
     error_base = "Couldn't update hint profile"
-    if @user_hint_profile.update(user_hint_profile_params)
+    begin
+      @user_hint_profile.update!(user_hint_profile_params)
       # TODO: Does this need to be `to_front_end_complete` ?
       render json: @user_hint_profile.to_front_end_complete
-    else
-      raise RecordInvalidError.new(error_base, nil, @user_hint_profile.errors)
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @user_hint_profile.errors)
     end
   end
 
@@ -79,7 +84,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
     params.require(:user_hint_profile).permit(
       :name, :user_id, :default_panel_tracking,
       default_panel_display_state_attributes: [:is_expanded, :is_blurred,
-        :is_sticky, :is_settings_expanded, :is_settings_sticky]
+        :is_sticky, :is_settings_expanded, :is_settings_sticky,],
     )
   end
 end

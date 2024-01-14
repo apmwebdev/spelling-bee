@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# Class for representing extra puzzle data for puzzles scraped directly from the
+# Spelling Bee game website.
 class NytPuzzle < ApplicationRecord
   has_one :puzzle, as: :origin
 end

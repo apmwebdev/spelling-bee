@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# For controlling account sign-up process
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
   respond_to :json
@@ -38,12 +39,12 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   def respond_with(current_user, _opts = {})
     if resource.persisted?
       render json: {
-        success: I18n.t('devise.registrations.signed_up_but_unconfirmed'),
+        success: I18n.t("devise.registrations.signed_up_but_unconfirmed"),
       }, status: 200
     else
       raise ApiError.new(
         message: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}",
-        status: 422
+        status: 422,
       )
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# Module for resetting a primary key for a given model in Postgres
 module ResetId
   def self.reset(*to_reset)
     to_reset.each do |item_to_reset|
@@ -18,7 +19,7 @@ module ResetId
       elsif item_to_reset < ActiveRecord::Base
         ActiveRecord::Base.connection.reset_pk_sequence!(item_to_reset.table_name)
       else
-        raise ArgumentError.new "Argument must be a table name or Active Record class"
+        raise ArgumentError, "Argument must be a table name or Active Record class"
       end
     end
   end

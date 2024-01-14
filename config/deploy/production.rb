@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -11,10 +13,10 @@
 server ENV["SERVER_IP"], user: ENV["SERVER_USER"], roles: %w[app db web],
   port: ENV["SSH_PORT"]
 set :default_env, {
-  RAILS_ENV: "production"
+  RAILS_ENV: "production",
 }
 set :ssh_options, {
-  keys: [ENV["SSH_KEY_PATH"]]
+  keys: [ENV["SSH_KEY_PATH"]],
 }
 set :env_file, ".env.production"
 

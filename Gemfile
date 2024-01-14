@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -9,28 +11,24 @@ gem "rails", "~> 7.0.6"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
-# Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
-
-gem "rack-cors"
-gem "nokogiri"
-gem "dotenv", "~> 2.8"
-gem "dotenv-rails", "~> 2.8"
-gem "logger"
-
-# Devise
+gem "bcrypt_pbkdf", "~> 1.0"
+gem "capistrano", "~> 3.18"
+gem "capistrano-dotenv"
+gem "capistrano-rails", "~> 1.6"
+gem "capistrano-rbenv", "~> 2.2"
 gem "devise"
 gem "devise-jwt"
 gem "devise-jwt-cookie", git: "https://github.com/apmwebdev/devise-jwt-cookie", ref: "acc4cc9"
-gem "jsonapi-serializer"
-
-# Capistrano
-gem "capistrano", "~> 3.18"
-gem "capistrano-rails", "~> 1.6"
-gem "capistrano-rbenv", "~> 2.2"
-gem "capistrano-dotenv"
+gem "dotenv", "~> 2.8"
+gem "dotenv-rails", "~> 2.8"
 gem "ed25519", "~> 1.2"
-gem "bcrypt_pbkdf", "~> 1.0"
+gem "jsonapi-serializer"
+gem "logger"
+gem "nokogiri"
+gem "puma", "~> 5.0"
+gem "rack-cors"
+gem "rubocop", "~> 1.56"
+gem "rubocop-rails", "~> 2.23"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
@@ -40,9 +38,6 @@ gem "bcrypt_pbkdf", "~> 1.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
@@ -65,7 +60,6 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem "letter_opener"
-  gem "standard"
 end
 
 group :production do

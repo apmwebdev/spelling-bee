@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A correct answer for a puzzle, as determined by the puzzle creator
 class Answer < ApplicationRecord
   belongs_to :puzzle
   belongs_to :word, foreign_key: :word_text
@@ -16,7 +19,7 @@ class Answer < ApplicationRecord
     {
       word: word_text,
       frequency: word.frequency,
-      definitions: word.definitions
+      definitions: word.definitions,
     }
   end
 end

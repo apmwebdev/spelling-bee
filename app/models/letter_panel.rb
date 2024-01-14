@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A hint panel type for showing hints based on certain substrings within answers,
+# such as the first letter or first two letters.
 class LetterPanel < ApplicationRecord
   include UuidRetryable
 
@@ -21,7 +25,7 @@ class LetterPanel < ApplicationRecord
       outputType: output_type,
       numberOfLetters: number_of_letters,
       lettersOffset: letters_offset,
-      hideKnown: hide_known
+      hideKnown: hide_known,
     }
   end
 end

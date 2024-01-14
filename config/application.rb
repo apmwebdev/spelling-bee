@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -14,6 +16,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module SpellingBee
+  # :nodoc:
   class Application < Rails::Application
     config.load_defaults 7.0
     config.api_only = true

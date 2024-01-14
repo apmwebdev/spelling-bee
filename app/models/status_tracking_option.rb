@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class StatusTrackingOption < ActiveRecord::Base
   self.primary_key = :key
   has_many :user_hint_profiles, primary_key: :key, foreign_key: :default_panel_tracking

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A word in the English language, regardless of whether it is an answer or not.
+# The definitions and frequency data are stored here.
 class Word < ApplicationRecord
   self.primary_key = :text
   has_many :answers, primary_key: :text, foreign_key: :word_text

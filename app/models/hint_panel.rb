@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A hint panel within a hint profile. This class holds data common to any hint panel.
+# It has a panel_subtype association for data specific to a particular panel type.
 class HintPanel < ApplicationRecord
   include UuidRetryable
 
@@ -29,11 +33,11 @@ class HintPanel < ApplicationRecord
       initialDisplayState: initial_display_state.to_front_end,
       currentDisplayState: current_display_state.to_front_end,
       statusTracking: status_tracking,
-      typeData: panel_subtype.to_front_end
+      typeData: panel_subtype.to_front_end,
     }
   end
 
   def to_front_end_basic
-    {uuid:, name:, display_index:}
+    { uuid:, name:, display_index: }
   end
 end

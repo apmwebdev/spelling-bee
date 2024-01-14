@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::UserDataController < ApplicationController
   def user_base_data
     if user_signed_in?
@@ -18,15 +21,14 @@ class Api::V1::UserDataController < ApplicationController
   end
 
   def user_puzzle_data
-    unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
-      raise ApiError.new("Invalid puzzle ID")
-    end
+    raise ApiError, "Invalid puzzle ID" unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
+
     puzzle_id = params[:puzzle_id].to_i
-    unless Puzzle.exists?(puzzle_id)
-      raise NotFoundError.new(nil, "Puzzle")
-    end
+
+    raise NotFoundError.new(nil, "Puzzle") unless Puzzle.exists?(puzzle_id)
+
     unless user_signed_in?
-      render json: {isAuthenticated: false}
+      render json: { isAuthenticated: false }
       return
     end
     # Attempts
@@ -36,11 +38,9 @@ class Api::V1::UserDataController < ApplicationController
       .order(:created_at)
 
     if @user_puzzle_attempts.any?
-      attempts = @user_puzzle_attempts.map do |attempt|
-        attempt.to_front_end
-      end
+      attempts = @user_puzzle_attempts.map(&:to_front_end)
       guesses = @user_puzzle_attempts.last.guesses
-        .map { |guess| guess.to_front_end }
+        .map(&:to_front_end)
     else
       attempts = []
       guesses = []
@@ -54,7 +54,7 @@ class Api::V1::UserDataController < ApplicationController
           .hint_panels
           .where(panel_subtype_type: "SearchPanel")))
       .where(user_puzzle_attempt_id: attempts.last[:id])
-      .map { |search| search.to_front_end }
+      .map(&:to_front_end)
 
     render json: {
       isAuthenticated: true,
@@ -62,8 +62,8 @@ class Api::V1::UserDataController < ApplicationController
         attempts:,
         searches:,
         guesses:,
-        currentAttempt: attempts.last[:uuid]
-      }
+        currentAttempt: attempts.last[:uuid],
+      },
     }
   end
 end

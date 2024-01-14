@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
+# Super Spelling Bee - A vocabulary game with integrated hints
+# Copyright (C) 2023 Austin Miller
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# See the LICENSE file or https://www.gnu.org/licenses/ for more details.
+
 require "logger"
 
+# Seed the excluded words array for existing puzzles
 class SeedExcludedWords
+  # :nodoc:
   class ExcludedWordsSeederLogger < Logger
     def initialize
       super("log/excluded_words_seeder.log", "daily", 1024 * 1024 * 10)
@@ -19,9 +31,8 @@ class SeedExcludedWords
 
   def seed_for_puzzle(puzzle)
     @logger.info "Checking excluded words cache for puzzle #{puzzle.id}"
-    unless puzzle.excluded_words.nil?
-      return @logger.info "Cache already exists. Exiting"
-    end
+    return @logger.info "Cache already exists. Exiting" unless puzzle.excluded_words.nil?
+
     @logger.info "Creating cache"
     puzzle.create_excluded_words_cache
   end

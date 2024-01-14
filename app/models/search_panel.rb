@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A hint panel type for searching for a substring within each answer
 class SearchPanel < ApplicationRecord
   include UuidRetryable
 
@@ -21,7 +24,7 @@ class SearchPanel < ApplicationRecord
       uuid:,
       location:,
       outputType: output_type,
-      lettersOffset: letters_offset
+      lettersOffset: letters_offset,
     }
   end
 end

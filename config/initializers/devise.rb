@@ -209,10 +209,10 @@ Devise.setup do |config|
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
   config.maximum_attempts = if Rails.env.development?
-    2
-  else
-    7
-  end
+                              2
+                            else
+                              7
+                            end
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
@@ -319,10 +319,10 @@ Devise.setup do |config|
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
 
     jwt.dispatch_requests = [
-      ["POST", %r{\A/auth/login\z}]
+      ["POST", %r{\A/auth/login\z}],
     ]
     jwt.revocation_requests = [
-      ["DELETE", %r{\A/auth/logout\z}]
+      ["DELETE", %r{\A/auth/logout\z}],
     ]
     jwt.expiration_time = 2.weeks.to_i
   end

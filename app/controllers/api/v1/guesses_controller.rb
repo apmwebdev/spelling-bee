@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -10,6 +12,7 @@
 
 require "securerandom"
 
+# :nodoc:
 class Api::V1::GuessesController < AuthRequiredController
   include TimestampConverter
   before_action :set_guess, only: %i[show update destroy]
@@ -18,7 +21,7 @@ class Api::V1::GuessesController < AuthRequiredController
   def index_for_attempt
     guesses = current_user.user_puzzle_attempts
       .find_by!(uuid: params[:user_puzzle_attempt_uuid])
-      .guesses.map { |guess| guess.to_front_end }
+      .guesses.map(&:to_front_end)
     render json: guesses, status: 200
   rescue ActiveRecord::RecordNotFound => e
     raise NotFoundError.new("Couldn't find guesses", "User puzzle attempt", e)
@@ -31,9 +34,8 @@ class Api::V1::GuessesController < AuthRequiredController
       .find_by!(uuid: guess_params[:user_puzzle_attempt_uuid])
 
     if user_puzzle_attempt.guesses.count >= 200
-      raise ApiError.new(
+      raise ApiError,
         "#{error_base}: You've reached the maximum number of guesses for this puzzle attempt."
-      )
     end
 
     @guess = user_puzzle_attempt.guesses.new(guess_params.except(:created_at))
@@ -55,16 +57,14 @@ class Api::V1::GuessesController < AuthRequiredController
     error_base = "Couldn't create guess"
     return_array = []
     bulk_add_params.each do |item|
-      item_status = {uuid: item[:uuid], isSuccess: false}
+      item_status = { uuid: item[:uuid], isSuccess: false }
       begin
         current_user.user_puzzle_attempts
           .find_by!(uuid: item[:user_puzzle_attempt_uuid])
         new_guess = Guess.new(item.except(:created_at))
         new_guess.created_at = railsify_timestamp(item[:created_at])
         new_guess.save_with_uuid_retry!
-        unless item_status[:uuid] == new_guess.uuid
-          item_status[:newUuid] = new_guess.uuid
-        end
+        item_status[:newUuid] = new_guess.uuid unless item_status[:uuid] == new_guess.uuid
         item_status[:isSuccess] = true
         error = nil
       rescue ActiveRecord::RecordNotFound => e
@@ -75,7 +75,7 @@ class Api::V1::GuessesController < AuthRequiredController
         active_model_errors = new_guess.errors if new_guess && new_guess.errors.present?
         error = RecordInvalidError.new(error_base, e)
         error.active_model_errors = active_model_errors if active_model_errors
-      rescue => e
+      rescue StandardError => e
         error = ApiError.new(message: error_base, original_error: e)
       end
       item_status[:error] = error.to_front_end if error

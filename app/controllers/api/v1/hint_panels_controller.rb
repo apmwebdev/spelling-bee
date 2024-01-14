@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::HintPanelsController < AuthRequiredController
   before_action :set_hint_panel, only: %i[update destroy move]
 
@@ -18,9 +21,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
     profile = current_user.user_hint_profiles.find(profile_uuid)
 
     if profile.hint_panels.count >= 20
-      raise ApiError.new(
+      raise ApiError,
         "#{error_base}: You have reached the maximum number of hint panels for this hint profile."
-      )
     end
 
     @hint_panel = HintPanel.new(hint_panel_create_params)
@@ -43,34 +45,34 @@ class Api::V1::HintPanelsController < AuthRequiredController
     if @hint_panel.hint_profile.instance_of?(::DefaultHintProfile)
       raise ApiError.new(
         "#{error_base}: Unable to persist changes to default hint profiles",
-        403
+        403,
       )
     end
     the_params = hint_panel_update_params
-    if the_params[:initial_display_state_attributes]
-      unless @hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
-        raise RecordInvalidError.new(error_base, nil, @hint_panel.initial_display_state.errors)
-      end
+    if the_params[:initial_display_state_attributes] &&
+       !@hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
+      raise RecordInvalidError.new(error_base, nil, @hint_panel.initial_display_state.errors)
     end
-    if the_params[:current_display_state_attributes]
-      unless @hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
-        raise RecordInvalidError.new(error_base, nil, @hint_panel.current_display_state.errors)
-      end
+    if the_params[:current_display_state_attributes] &&
+       !@hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
+      raise RecordInvalidError.new(error_base, nil, @hint_panel.current_display_state.errors)
     end
+
     if the_params[:panel_subtype_attributes]
-      if @hint_panel.panel_subtype_type == "LetterPanel"
+      case @hint_panel.panel_subtype_type
+      when "LetterPanel"
         unless @hint_panel.panel_subtype.update(letter_update_params)
           raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
-      elsif @hint_panel.panel_subtype_type == "SearchPanel"
+      when "SearchPanel"
         unless @hint_panel.panel_subtype.update(search_update_params)
           raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
-      elsif @hint_panel.panel_subtype_type == "ObscurityPanel"
+      when "ObscurityPanel"
         unless @hint_panel.panel_subtype.update(obscurity_update_params)
           raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
-      elsif @hint_panel.panel_subtype_type == "DefinitionPanel"
+      when "DefinitionPanel"
         unless @hint_panel.panel_subtype.update(definition_update_params)
           raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
@@ -80,8 +82,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
       hint_panel_update_params.except(
         :initial_display_state_attributes,
         :current_display_state_attributes,
-        :panel_subtype_attributes
-      )
+        :panel_subtype_attributes,
+      ),
     )
       render json: @hint_panel.to_front_end, status: 200
     else
@@ -102,25 +104,25 @@ class Api::V1::HintPanelsController < AuthRequiredController
       .where(hint_profile_type: "UserHintProfile")
       .where(hint_profile_uuid: @hint_panel.hint_profile_uuid)
 
-    if old_index > panels.size || new_index > panels.size || old_index < 0 ||
-        new_index < 0 || old_index == new_index || panels.size < 2
-      raise ApiError.new("Invalid move")
+    if old_index > panels.size || new_index > panels.size || old_index.negative? ||
+       new_index.negative? || old_index == new_index || panels.size < 2
+      raise ApiError, "Invalid move"
     end
 
     panels_array = panels
       .to_a
-      .sort_by { |panel| panel.display_index }
+      .sort_by(&:display_index)
     panels_array
       .insert(new_index, panels_array.delete_at(old_index))
     relevant_panels = panels_array.slice(
-      (new_index > old_index) ? old_index : new_index,
-      (old_index - new_index).abs + 1
+      new_index > old_index ? old_index : new_index,
+      (old_index - new_index).abs + 1,
     )
       .each_with_index do |panel, i|
         panel.display_index = i
         panel.save
       end
-    render json: relevant_panels.map { |panel| {name: panel.name, index: panel.display_index} }
+    render json: relevant_panels.map { |panel| { name: panel.name, index: panel.display_index } }
   end
 
   private
@@ -139,36 +141,36 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :hint_profile_uuid,
       :status_tracking,
       :panel_subtype_type,
-      initial_display_state_attributes: [
-        :uuid,
-        :is_expanded,
-        :is_blurred,
-        :is_sticky,
-        :is_settings_expanded,
-        :is_settings_sticky
+      initial_display_state_attributes: %i[
+        uuid
+        is_expanded
+        is_blurred
+        is_sticky
+        is_settings_expanded
+        is_settings_sticky
       ],
-      current_display_state_attributes: [
-        :uuid,
-        :is_expanded,
-        :is_blurred,
-        :is_sticky,
-        :is_settings_expanded,
-        :is_settings_sticky
+      current_display_state_attributes: %i[
+        uuid
+        is_expanded
+        is_blurred
+        is_sticky
+        is_settings_expanded
+        is_settings_sticky
       ],
-      panel_subtype_attributes: [
-        :uuid,
-        :hide_known,
-        :reveal_length,
-        :show_obscurity,
-        :sort_order,
-        :location,
-        :output_type,
-        :number_of_letters,
-        :letters_offset,
-        :separate_known,
-        :revealed_letters,
-        :click_to_define
-      ]
+      panel_subtype_attributes: %i[
+        uuid
+        hide_known
+        reveal_length
+        show_obscurity
+        sort_order
+        location
+        output_type
+        number_of_letters
+        letters_offset
+        separate_known
+        revealed_letters
+        click_to_define
+      ],
     )
   end
 
@@ -178,34 +180,34 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :name,
       :hint_profile_uuid,
       :status_tracking,
-      initial_display_state_attributes: [
-        :is_expanded,
-        :is_blurred,
-        :is_sticky,
-        :is_settings_expanded,
-        :is_settings_sticky
+      initial_display_state_attributes: %i[
+        is_expanded
+        is_blurred
+        is_sticky
+        is_settings_expanded
+        is_settings_sticky
       ],
-      current_display_state_attributes: [
-        :is_expanded,
-        :is_blurred,
-        :is_sticky,
-        :is_settings_expanded,
-        :is_settings_sticky
+      current_display_state_attributes: %i[
+        is_expanded
+        is_blurred
+        is_sticky
+        is_settings_expanded
+        is_settings_sticky
       ],
-      panel_subtype_attributes: [
-        :hide_known,
-        :reveal_length,
-        :show_obscurity,
-        :sort_order,
-        :location,
-        :output_type,
-        :number_of_letters,
-        :letters_offset,
-        :separate_known,
-        :revealed_letters,
-        :click_to_define,
-        :sort_order
-      ]
+      panel_subtype_attributes: %i[
+        hide_known
+        reveal_length
+        show_obscurity
+        sort_order
+        location
+        output_type
+        number_of_letters
+        letters_offset
+        separate_known
+        revealed_letters
+        click_to_define
+        sort_order
+      ],
     )
   end
 
@@ -215,7 +217,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :location,
       :output_type,
       :number_of_letters,
-      :letters_offset
+      :letters_offset,
     )
   end
 
@@ -223,7 +225,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
     params[:hint_panel].fetch(:panel_subtype_attributes).permit(
       :location,
       :output_type,
-      :letters_offset
+      :letters_offset,
     )
   end
 
@@ -234,7 +236,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :separate_known,
       :reveal_length,
       :click_to_define,
-      :sort_order
+      :sort_order,
     )
   end
 
@@ -244,11 +246,11 @@ class Api::V1::HintPanelsController < AuthRequiredController
       :revealed_letters,
       :reveal_length,
       :show_obscurity,
-      :sort_order
+      :sort_order,
     )
   end
 
   def hint_panel_move_params
-    params.require([:uuid, :old_index, :new_index])
+    params.require(%i[uuid old_index new_index])
   end
 end

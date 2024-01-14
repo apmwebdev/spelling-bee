@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class UserPref < ApplicationRecord
   belongs_to :user
   belongs_to :current_hint_profile, polymorphic: true, primary_key: :uuid,
@@ -18,7 +21,7 @@ class UserPref < ApplicationRecord
       colorScheme: color_scheme,
       currentHintProfile: {
         type: current_hint_profile_type,
-        uuid: current_hint_profile_uuid
+        uuid: current_hint_profile_uuid,
       }
     }
   end

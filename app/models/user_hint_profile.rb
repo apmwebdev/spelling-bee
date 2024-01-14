@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# A user-created hint profile, as opposed to a DefaultHintProfile
 class UserHintProfile < ApplicationRecord
   include UuidRetryable
 
@@ -26,9 +29,7 @@ class UserHintProfile < ApplicationRecord
       name:,
       defaultPanelTracking: default_panel_tracking,
       defaultPanelDisplayState: default_panel_display_state.to_front_end,
-      panels: hint_panels.map do |panel|
-        panel.to_front_end
-      end
+      panels: hint_panels.map(&:to_front_end),
     }
     return_obj[:panels].sort_by! { |panel| panel[:displayIndex] }
     return_obj
@@ -38,7 +39,7 @@ class UserHintProfile < ApplicationRecord
     {
       uuid:,
       type: self.class.name,
-      name:
+      name:,
     }
   end
 end

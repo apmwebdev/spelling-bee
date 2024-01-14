@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class PanelDisplayState < ApplicationRecord
   include UuidRetryable
 
@@ -22,7 +25,7 @@ class PanelDisplayState < ApplicationRecord
       isBlurred: is_blurred,
       isSticky: is_sticky,
       isSettingsExpanded: is_settings_expanded,
-      isSettingsSticky: is_settings_sticky
+      isSettingsSticky: is_settings_sticky,
     }
   end
 end

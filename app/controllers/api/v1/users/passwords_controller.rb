@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,8 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# frozen_string_literal: true
-
+# For sending password reset emails and updating password from resulting email link
 class Api::V1::Users::PasswordsController < Devise::PasswordsController
   # POST /resource/password
   def create
@@ -17,13 +18,11 @@ class Api::V1::Users::PasswordsController < Devise::PasswordsController
 
     # Devise is in paranoid mode, so successfully_sent? should always evaluate
     # to true
-    if successfully_sent?(resource)
-      render json: {
-        success: I18n.t("devise.passwords.send_paranoid_instructions",)
-      }, status: 200
-    else
-      raise ApiError.new("Couldn't send email")
-    end
+    raise ApiError, "Couldn't send email" unless successfully_sent?(resource)
+
+    render json: {
+      success: I18n.t("devise.passwords.send_paranoid_instructions"),
+    }
   end
 
   # GET /api/v1/auth/password/edit?reset_password_token=abcdef
@@ -36,11 +35,9 @@ class Api::V1::Users::PasswordsController < Devise::PasswordsController
   def update
     self.resource = resource_class.reset_password_by_token(resource_params)
 
-    if resource.errors.empty?
-      resource.unlock_access! if unlockable?(resource)
-      redirect_to ENV["AFTER_PASSWORD_RESET_URL"]
-    else
-      raise ApiError.new("Couldn't reset password", 400, resource.errors)
-    end
+    raise ApiError.new("Couldn't reset password", 400, resource.errors) unless resource.errors.empty?
+
+    resource.unlock_access! if unlockable?(resource)
+    redirect_to ENV["AFTER_PASSWORD_RESET_URL"]
   end
 end

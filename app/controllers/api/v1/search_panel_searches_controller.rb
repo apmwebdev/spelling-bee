@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -8,6 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+# :nodoc:
 class Api::V1::SearchPanelSearchesController < AuthRequiredController
   before_action :set_search, only: %i[update destroy]
 
@@ -22,10 +25,10 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
           .user_pref
           .current_hint_profile
           .hint_panels
-          .where(panel_subtype_type: "SearchPanel"))
+          .where(panel_subtype_type: "SearchPanel")),
       )
       .where(user_puzzle_attempt_uuid: sps_params[:user_puzzle_attempt_uuid])
-      .map { |search| search.to_front_end }
+      .map(&:to_front_end)
 
     render json: searches
   end
@@ -46,11 +49,11 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
     end
 
     if search_panel.search_panel_searches.count >= 20
-      raise ApiError.new("#{error_base}: You've reached the maximum number of searches for this search panel.")
+      raise ApiError, "#{error_base}: You've reached the maximum number of searches for this search panel."
     end
 
     if user_puzzle_attempt.search_panel_searches.count >= 60
-      raise ApiError.new("#{error_base}: You've reached the maximum number of searches for this puzzle attempt.")
+      raise ApiError, "#{error_base}: You've reached the maximum number of searches for this puzzle attempt."
     end
 
     @search = SearchPanelSearch.new(sps_params)
@@ -64,7 +67,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
       raise e
     rescue ActiveRecord::RecordInvalid => e
       raise RecordInvalidError.new(error_base, e, @search.errors)
-    rescue => e
+    rescue StandardError => e
       raise ApiError.new(message: error_base, original_error: e)
     end
   end
@@ -95,7 +98,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
       :location,
       :letters_offset,
       :output_type,
-      :created_at
+      :created_at,
     )
   end
 end
