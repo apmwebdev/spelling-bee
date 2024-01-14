@@ -27,8 +27,8 @@ gem "logger"
 gem "nokogiri"
 gem "puma", "~> 5.0"
 gem "rack-cors"
-gem "rubocop", "~> 1.56"
-gem "rubocop-rails", "~> 2.23"
+gem "rubocop", "~> 1.56", require: false
+gem "rubocop-rails", "~> 2.23", require: false
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
