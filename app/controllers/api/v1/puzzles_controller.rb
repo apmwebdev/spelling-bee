@@ -94,7 +94,7 @@ class Api::V1::PuzzlesController < ApplicationController
       raise ApiError.new("Invalid puzzle identifier", 400)
     end
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new(nil, "Puzzle", e)
+    raise NotFoundError.new("Couldn't set puzzle", "Puzzle", e)
   end
 
   # Only allow a list of trusted parameters through.

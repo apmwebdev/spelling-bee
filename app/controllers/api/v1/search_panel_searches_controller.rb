@@ -86,7 +86,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   def set_search
     @search = current_user.search_panel_searches.find_by!(uuid: params[:uuid])
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new(nil, "Search panel search", e)
+    raise NotFoundError.new("Couldn't set search", "Search panel search", e)
   end
 
   def sps_params

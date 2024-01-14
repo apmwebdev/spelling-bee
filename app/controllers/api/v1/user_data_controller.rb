@@ -21,11 +21,11 @@ class Api::V1::UserDataController < ApplicationController
   end
 
   def user_puzzle_data
-    raise ApiError, "Invalid puzzle ID" unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
+    error_base = "Couldn't fetch user puzzle data"
+    raise ApiError, "#{error_base}: Invalid puzzle ID" unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
 
     puzzle_id = params[:puzzle_id].to_i
-
-    raise NotFoundError.new(nil, "Puzzle") unless Puzzle.exists?(puzzle_id)
+    raise NotFoundError.new(error_base, "Puzzle") unless Puzzle.exists?(puzzle_id)
 
     unless user_signed_in?
       render json: { isAuthenticated: false }

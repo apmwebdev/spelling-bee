@@ -15,7 +15,7 @@ require "nokogiri"
 require "json"
 require "logger"
 
-# Scrapes puzzle data from the NYT Times Spelling Bee site
+# Scrapes puzzle data from the NYT Spelling Bee site
 class NytScraperService
   # :nodoc:
   class NytScraperLogger < Logger

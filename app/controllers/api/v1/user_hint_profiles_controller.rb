@@ -76,7 +76,7 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
     # TODO: Change to use UUID
     @user_hint_profile = current_user.user_hint_profiles.find(params[:id])
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new(nil, "User hint profile", e)
+    raise NotFoundError.new("Couldn't set user hint profile", "User hint profile", e)
   end
 
   # Only allow a list of trusted parameters through.

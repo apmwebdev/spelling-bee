@@ -17,11 +17,9 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   def update
     resource_updated = update_user(current_user, account_update_params)
-    if resource_updated
-      render json: current_user.to_front_end, status: 200
-      return
-    end
-    raise RecordInvalidError("Couldn't update user", nil, current_user.errors)
+    raise RecordInvalidError.new("Couldn't update user", nil, current_user.errors) unless resource_updated
+
+    render json: current_user.to_front_end, status: 200
   end
 
   protected
@@ -37,15 +35,12 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def respond_with(current_user, _opts = {})
-    if resource.persisted?
-      render json: {
-        success: I18n.t("devise.registrations.signed_up_but_unconfirmed"),
-      }, status: 200
-    else
+    unless resource.persisted?
       raise ApiError.new(
         message: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}",
         status: 422,
       )
     end
+    render json: { success: I18n.t("devise.registrations.signed_up_but_unconfirmed") }
   end
 end

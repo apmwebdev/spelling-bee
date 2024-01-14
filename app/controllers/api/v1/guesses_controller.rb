@@ -24,7 +24,7 @@ class Api::V1::GuessesController < AuthRequiredController
       .guesses.map(&:to_front_end)
     render json: guesses, status: 200
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new("Couldn't find guesses", "User puzzle attempt", e)
+    raise NotFoundError.new("Couldn't fetch guesses", "User puzzle attempt", e)
   end
 
   # POST /guesses
@@ -90,7 +90,7 @@ class Api::V1::GuessesController < AuthRequiredController
   def set_guess
     @guess = current_user.guesses.find_by!(uuid: params[:uuid])
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new(record_type: "Guess", original_error: e)
+    raise NotFoundError.new("Couldn't set guess", "Guess", e)
   end
 
   # Only allow a list of trusted parameters through.

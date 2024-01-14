@@ -131,7 +131,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
   def set_hint_panel
     @hint_panel = current_user.hint_panels.find_by!(uuid: params[:uuid])
   rescue ActiveRecord::RecordNotFound => e
-    raise NotFoundError.new(nil, "Hint panel", e)
+    raise NotFoundError.new("Couldn't set hint panel", "Hint panel", e)
   end
 
   def hint_panel_create_params

@@ -49,6 +49,7 @@ class Api::V1::UserPrefsController < AuthRequiredController
   private
 
   def set_user_pref
+    # Don't need to use ! version of find_by here. All users have a user_pref.
     @user_pref = UserPref.find_by_user_id(current_user.id)
   end
 
