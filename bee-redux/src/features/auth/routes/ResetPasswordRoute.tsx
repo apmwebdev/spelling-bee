@@ -60,6 +60,7 @@ export function ResetPasswordRoute() {
         resetForm();
         message.update(response.success, "Success");
       } catch (err) {
+        //TODO: Update logic
         console.error("Failed to save password:", err);
         if (isBasicError(err)) {
           message.update(err.data.error, "Error");

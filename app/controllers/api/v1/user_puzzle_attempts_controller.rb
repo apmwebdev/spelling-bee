@@ -9,6 +9,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
+  include TimestampConverter
   before_action :set_user_puzzle_attempt, only: %i[show update destroy]
 
   # GET /user_puzzle_attempts
@@ -21,26 +22,24 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   # GET /user_puzzle_attempts_for_puzzle
   def index_for_puzzle
     unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
-      render json: {error: "Invalid puzzle ID"}, status: :bad_request
-      return
+      raise ApiError.new("Invalid puzzle ID")
     end
     puzzle_id = params[:puzzle_id].to_i
     unless Puzzle.exists?(puzzle_id)
-      render json: {error: "Puzzle not found"}, status: :not_found
-      return
+      raise NotFoundError.new(nil, "Puzzle")
     end
     @user_puzzle_attempts = UserPuzzleAttempt
       .includes(:guesses)
       .where("puzzle_id = ?", puzzle_id)
       .where(user: current_user)
+
     if @user_puzzle_attempts.any?
       attempts_array = @user_puzzle_attempts.map do |attempt|
         attempt.to_front_end
       end
       render json: attempts_array
     else
-      new_attempt = UserPuzzleAttempt.create!(user: current_user, puzzle_id:)
-      render json: [new_attempt.to_front_end]
+      render json: []
     end
   end
 
@@ -51,32 +50,32 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # POST /user_puzzle_attempts
   def create
+    error_base = "Couldn't create user puzzle attempt"
     puzzle_id = user_puzzle_attempt_params[:puzzle_id]
+    puzzle = Puzzle.find(puzzle_id)
     existing_attempts_count = current_user.user_puzzle_attempts
-      .where(puzzle_id: puzzle_id).count
+      .where(puzzle_id: puzzle.id).count
 
     if existing_attempts_count >= 10
-      render json: {
-        error: "You've reached the maximum number of attempts for this puzzle."
-      }, status: 400
-      return
+      raise ApiError.new("#{error_base}: You've reached the maximum number of attempts for this puzzle.")
     end
 
     @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params.except(:created_at))
     @user_puzzle_attempt.user = current_user
-    precise_timestamp = BigDecimal(user_puzzle_attempt_params[:created_at].to_s)
-    seconds_timestamp = precise_timestamp / 1000
-    @user_puzzle_attempt.created_at = Time.at(seconds_timestamp)
-    # Rails.logger.info "Create Attempt: #{@user_puzzle_attempt.inspect}"
+    @user_puzzle_attempt.created_at = railsify_timestamp(user_puzzle_attempt_params[:created_at])
 
-    if @user_puzzle_attempt.save
+    begin
+      @user_puzzle_attempt.save_with_uuid_retry!
       render json: @user_puzzle_attempt.to_front_end, status: 201
-    else
-      render json: {
-        error: "Couldn't save user puzzle attempt due to malformed data",
-        activeModelErrors: @user_puzzle_attempt.errors
-      }, status: 422
+    rescue UuidRetryable::RetryLimitExceeded => e
+      raise e
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @user_puzzle_attempt.errors)
+    rescue => e
+      raise ApiError.new(message: error_base, original_error: e)
     end
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(error_base, "Puzzle", e)
   end
 
   # DELETE /user_puzzle_attempts/1
@@ -86,23 +85,33 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
 
   # POST /user_puzzle_attempts/bulk_add
   def bulk_add
+    error_base = "Couldn't create user puzzle attempt"
     return_array = []
-    bulk_add_params.each do |attempt|
-      item_status = {uuid: attempt[:uuid], isSuccess: true}
+    bulk_add_params.each do |item|
+      item_status = {uuid: item[:uuid], isSuccess: false}
       begin
-        new_attempt = UserPuzzleAttempt.new(attempt.except(:created_at))
+        Puzzle.find(item[:puzzle_id])
+        new_attempt = UserPuzzleAttempt.new(item.except(:created_at))
         new_attempt.user = current_user
-        # TODO: Validate timestamp?
-        seconds_timestamp = attempt[:created_at] / 1000.0
-        new_attempt.created_at = Time.at(seconds_timestamp)
+        new_attempt.created_at = railsify_timestamp(item[:created_at])
         new_attempt.save_with_uuid_retry!
         unless item_status[:uuid] == new_attempt.uuid
           item_status[:newUuid] = new_attempt.uuid
         end
-      rescue
-        item_status[:isSuccess] = false
-        item_status[:error] = "Error saving user puzzle attempt"
+        item_status[:isSuccess] = true
+        error = nil
+      rescue ActiveRecord::RecordNotFound => e
+        error = NotFoundError.new(error_base, "Puzzle", e)
+      rescue UuidRetryable::RetryLimitExceeded => e
+        error = e
+      rescue ActiveRecord::RecordInvalid => e
+        active_model_errors = new_attempt.errors if new_attempt && new_attempt.errors.present?
+        error = RecordInvalidError.new(error_base, e)
+        error.active_model_errors = active_model_errors if active_model_errors
+      rescue => e
+        error = ApiError.new(message: error_base, original_error: e)
       end
+      item_status[:error] = error.to_front_end if error
       return_array.push(item_status)
     end
     render json: return_array, status: 200
@@ -114,8 +123,8 @@ class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
   def set_user_puzzle_attempt
     @user_puzzle_attempt = current_user.user_puzzle_attempts
       .find_by!(uuid: params[:uuid])
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "User puzzle attempt not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(nil, "User puzzle attempt", e)
   end
 
   # Only allow a list of trusted parameters through.

@@ -14,6 +14,10 @@ class ApplicationController < ActionController::API
 
   protected
 
+  rescue_from ApiError do |e|
+    render json: e.to_front_end, status: e.status
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name])

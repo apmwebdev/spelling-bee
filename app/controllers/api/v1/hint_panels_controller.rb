@@ -13,14 +13,14 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
   # POST /hint_panels
   def create
+    error_base = "Couldn't create hint panel"
     profile_uuid = hint_panel_create_params[:hint_profile_uuid]
     profile = current_user.user_hint_profiles.find(profile_uuid)
 
     if profile.hint_panels.count >= 20
-      render json: {
-        error: "You have reached the maximum number of hint panels for this hint profile."
-      }, status: 400
-      return
+      raise ApiError.new(
+        "#{error_base}: You have reached the maximum number of hint panels for this hint profile."
+      )
     end
 
     @hint_panel = HintPanel.new(hint_panel_create_params)
@@ -28,56 +28,51 @@ class Api::V1::HintPanelsController < AuthRequiredController
     begin
       @hint_panel.save_with_uuid_retry!
       render json: @hint_panel, status: 201
-    rescue UuidRetryable::RetryLimitExceeded
-      render json: {
-        error: "Could not create hint panel due to a rare UUID collision"
-      }, status: 500
-    rescue ActiveRecord::RecordInvalid
-      render json: @hint_panel.errors, status: 422
+    rescue UuidRetryable::RetryLimitExceeded => e
+      raise e
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @hint_panel.errors)
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "User hint profile not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(error_base, "User hint profile", e)
   end
 
   # PATCH/PUT /hint_panels/1
   def update
+    error_base = "Couldn't update hint panel"
     if @hint_panel.hint_profile.instance_of?(::DefaultHintProfile)
-      render json: {error: "Can't change default profiles"}, status: 403
-      return
+      raise ApiError.new(
+        "#{error_base}: Unable to persist changes to default hint profiles",
+        403
+      )
     end
     the_params = hint_panel_update_params
     if the_params[:initial_display_state_attributes]
       unless @hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
-        render json: @hint_panel.initial_display_state.errors, status: 422
-        return
+        raise RecordInvalidError.new(error_base, nil, @hint_panel.initial_display_state.errors)
       end
     end
     if the_params[:current_display_state_attributes]
       unless @hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
-        render json: @hint_panel.current_display_state.errors, status: 422
-        return
+        raise RecordInvalidError.new(error_base, nil, @hint_panel.current_display_state.errors)
       end
     end
     if the_params[:panel_subtype_attributes]
       if @hint_panel.panel_subtype_type == "LetterPanel"
         unless @hint_panel.panel_subtype.update(letter_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: 422
-          return
+          raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
       elsif @hint_panel.panel_subtype_type == "SearchPanel"
         unless @hint_panel.panel_subtype.update(search_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: 422
-          return
+          raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
       elsif @hint_panel.panel_subtype_type == "ObscurityPanel"
         unless @hint_panel.panel_subtype.update(obscurity_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: 422
-          return
+          raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
       elsif @hint_panel.panel_subtype_type == "DefinitionPanel"
         unless @hint_panel.panel_subtype.update(definition_update_params)
-          render json: @hint_panel.panel_subtype.errors, status: 422
-          return
+          raise RecordInvalidError.new(error_base, nil, @hint_panel.panel_subtype.errors)
         end
       end
     end
@@ -90,7 +85,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
     )
       render json: @hint_panel.to_front_end, status: 200
     else
-      render json: @hint_panel.errors, status: 422
+      raise RecordInvalidError.new(error_base, nil, @hint_panel.errors)
     end
   end
 
@@ -109,8 +104,7 @@ class Api::V1::HintPanelsController < AuthRequiredController
 
     if old_index > panels.size || new_index > panels.size || old_index < 0 ||
         new_index < 0 || old_index == new_index || panels.size < 2
-      render json: {error: "Invalid move"}, status: 400
-      return
+      raise ApiError.new("Invalid move")
     end
 
     panels_array = panels
@@ -134,8 +128,8 @@ class Api::V1::HintPanelsController < AuthRequiredController
   # Use callbacks to share common setup or constraints between actions.
   def set_hint_panel
     @hint_panel = current_user.hint_panels.find_by!(uuid: params[:uuid])
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Hint panel not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(nil, "Hint panel", e)
   end
 
   def hint_panel_create_params

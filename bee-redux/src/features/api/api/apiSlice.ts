@@ -52,7 +52,10 @@ const baseQueryWithAuth = async (
     });
     if (authCheck.didRun) {
       const authCheckResponse = await authCheck.value;
-      if (authCheckResponse.error) {
+      if (
+        authCheckResponse.error ||
+        authCheckResponse.isAuthenticated === false
+      ) {
         devLog("Auth check returned error. Log out", arg, authCheckResponse);
         api.dispatch({ type: "auth/baseQueryLogout" });
       }

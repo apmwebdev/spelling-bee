@@ -10,6 +10,7 @@
 
 class UserPuzzleAttempt < ApplicationRecord
   include UuidRetryable
+  include TimeConverter
 
   belongs_to :user
   belongs_to :puzzle
@@ -20,7 +21,7 @@ class UserPuzzleAttempt < ApplicationRecord
     {
       uuid:,
       puzzleId: puzzle_id,
-      createdAt: (BigDecimal(created_at.to_f.to_s) * 1000).to_i
+      createdAt: jsify_timestamp(created_at)
     }
   end
 end

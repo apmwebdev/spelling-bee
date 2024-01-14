@@ -10,6 +10,7 @@
 
 class SearchPanelSearch < ApplicationRecord
   include UuidRetryable
+  include TimeConverter
 
   belongs_to :search_panel
   belongs_to :user_puzzle_attempt
@@ -23,7 +24,7 @@ class SearchPanelSearch < ApplicationRecord
       location:,
       lettersOffset: letters_offset,
       outputType: output_type,
-      createdAt: created_at.to_i
+      createdAt: jsify_timestamp(created_at)
     }
   end
 end

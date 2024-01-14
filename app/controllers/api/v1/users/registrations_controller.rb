@@ -20,7 +20,7 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
       render json: current_user.to_front_end, status: 200
       return
     end
-    render json: current_user.to_front_end, status: 400
+    raise RecordInvalidError("Couldn't update user", nil, current_user.errors)
   end
 
   protected
@@ -41,9 +41,10 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
         success: I18n.t('devise.registrations.signed_up_but_unconfirmed'),
       }, status: 200
     else
-      render json: {
-        error: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}"
-      }, status: 422
+      raise ApiError.new(
+        message: "User couldn't be created. #{current_user.errors.full_messages.to_sentence}",
+        status: 422
+      )
     end
   end
 end

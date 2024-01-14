@@ -11,6 +11,7 @@
 require "securerandom"
 
 class Api::V1::GuessesController < AuthRequiredController
+  include TimestampConverter
   before_action :set_guess, only: %i[show update destroy]
 
   # GET /user_puzzle_attempt_guesses/:attempt_uuid
@@ -19,37 +20,68 @@ class Api::V1::GuessesController < AuthRequiredController
       .find_by!(uuid: params[:user_puzzle_attempt_uuid])
       .guesses.map { |guess| guess.to_front_end }
     render json: guesses, status: 200
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "User puzzle attempt not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new("Couldn't find guesses", "User puzzle attempt", e)
   end
 
   # POST /guesses
   def create
+    error_base = "Couldn't create guess"
     user_puzzle_attempt = current_user.user_puzzle_attempts
       .find_by!(uuid: guess_params[:user_puzzle_attempt_uuid])
 
     if user_puzzle_attempt.guesses.count >= 200
-      render json: {
-        error: "You've reached the maximum number of guesses for this puzzle attempt."
-      }, status: 400
-      return
+      raise ApiError.new(
+        "#{error_base}: You've reached the maximum number of guesses for this puzzle attempt."
+      )
     end
 
-    @guess = user_puzzle_attempt.guesses.new(guess_params)
+    @guess = user_puzzle_attempt.guesses.new(guess_params.except(:created_at))
+    @guess.created_at = railsify_timestamp(guess_params[:created_at])
 
     begin
       @guess.save_with_uuid_retry!
-      # TODO: Make the front end check for a different UUID in the response
       render json: @guess.to_front_end, status: 201
-    rescue UuidRetryable::RetryLimitExceeded
-      render json: {
-        error: "Could not create guess due to a rare UUID collision"
-      }, status: 500
-    rescue ActiveRecord::RecordInvalid
-      render json: @guess.errors, status: 422
+    rescue UuidRetryable::RetryLimitExceeded => e
+      raise e
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @guess.errors)
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "User puzzle attempt not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(error_base, "User puzzle attempt", e)
+  end
+
+  def bulk_add
+    error_base = "Couldn't create guess"
+    return_array = []
+    bulk_add_params.each do |item|
+      item_status = {uuid: item[:uuid], isSuccess: false}
+      begin
+        current_user.user_puzzle_attempts
+          .find_by!(uuid: item[:user_puzzle_attempt_uuid])
+        new_guess = Guess.new(item.except(:created_at))
+        new_guess.created_at = railsify_timestamp(item[:created_at])
+        new_guess.save_with_uuid_retry!
+        unless item_status[:uuid] == new_guess.uuid
+          item_status[:newUuid] = new_guess.uuid
+        end
+        item_status[:isSuccess] = true
+        error = nil
+      rescue ActiveRecord::RecordNotFound => e
+        error = NotFoundError.new(error_base, "User puzzle attempt", e)
+      rescue UuidRetryable::RetryLimitExceeded => e
+        error = e
+      rescue ActiveRecord::RecordInvalid => e
+        active_model_errors = new_guess.errors if new_guess && new_guess.errors.present?
+        error = RecordInvalidError.new(error_base, e)
+        error.active_model_errors = active_model_errors if active_model_errors
+      rescue => e
+        error = ApiError.new(message: error_base, original_error: e)
+      end
+      item_status[:error] = error.to_front_end if error
+      return_array.push(item_status)
+    end
+    render json: return_array, status: 200
   end
 
   private
@@ -57,8 +89,8 @@ class Api::V1::GuessesController < AuthRequiredController
   # Use callbacks to share common setup or constraints between actions.
   def set_guess
     @guess = current_user.guesses.find_by!(uuid: params[:uuid])
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Guess not found"}, status: 404
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(record_type: "Guess", original_error: e)
   end
 
   # Only allow a list of trusted parameters through.
@@ -66,5 +98,14 @@ class Api::V1::GuessesController < AuthRequiredController
     params
       .require(:guess)
       .permit(:uuid, :user_puzzle_attempt_uuid, :text, :created_at, :is_spoiled)
+  end
+
+  def bulk_add_params
+    params.require(:guesses)
+      .map do |item|
+        item
+          .permit(:uuid, :user_puzzle_attempt_uuid, :text, :created_at, :is_spoiled)
+          .to_h
+      end
   end
 end

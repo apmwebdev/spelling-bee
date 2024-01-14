@@ -10,6 +10,7 @@
 
 class Guess < ApplicationRecord
   include UuidRetryable
+  include TimeConverter
   belongs_to :user_puzzle_attempt
 
   def to_front_end
@@ -17,7 +18,7 @@ class Guess < ApplicationRecord
       uuid:,
       attemptUuid: user_puzzle_attempt_uuid,
       text:,
-      createdAt: created_at.to_i,
+      createdAt: jsify_timestamp(created_at),
       isSpoiled: is_spoiled
     }
   end

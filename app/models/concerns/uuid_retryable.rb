@@ -5,7 +5,7 @@ require "securerandom"
 module UuidRetryable
   extend ActiveSupport::Concern
 
-  class RetryLimitExceeded < StandardError; end
+  class RetryLimitExceeded < ApiError; end
 
   def save_with_uuid_retry!(max_retries: 3)
     attempts = 0
@@ -13,7 +13,12 @@ module UuidRetryable
       save!
     rescue ActiveRecord::RecordNotUnique
       attempts += 1
-      raise RetryLimitExceeded if attempts >= max_retries
+      if attempts >= max_retries
+        raise RetryLimitExceeded.new(
+          message: "Could not save #{self.class.name}: Retry limit exceeded",
+          status: 500
+        )
+      end
       self.uuid = SecureRandom.uuid
       retry
     end

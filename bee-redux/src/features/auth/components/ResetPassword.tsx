@@ -16,6 +16,7 @@ export function ResetPassword() {
   const [emailValue, setEmailValue] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    //TODO: Implement this? If not, is it still needed?
     e.preventDefault();
   };
 

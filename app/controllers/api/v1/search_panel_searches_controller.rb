@@ -13,8 +13,7 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
 
   def for_attempt_and_profile
     unless sps_params[:user_puzzle_attempt_uuid]
-      render json: {error: "Must include attempt UUID"}, status: 400
-      return
+      raise ApiError.new("Error fetching searches", "Must include attempt UUID")
     end
 
     searches = SearchPanelSearch
@@ -32,33 +31,26 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   end
 
   def create
+    error_base = "Couldn't create search"
     begin
-      search_panel = current_user.search_panels.find_by(uuid: sps_params[:search_panel_uuid])
-    rescue ActiveRecord::RecordNotFound
-      render json: {error: "Search panel not found"}, status: 404
-      return
+      search_panel = current_user.search_panels.find_by!(uuid: sps_params[:search_panel_uuid])
+    rescue ActiveRecord::RecordNotFound => e
+      raise NotFoundError.new(error_base, "Search panel", e)
     end
 
     begin
       user_puzzle_attempt = current_user.user_puzzle_attempts
-        .find_by(uuid: sps_params[:user_puzzle_attempt_uuid])
-    rescue ActiveRecord::RecordNotFound
-      render json: {error: "User puzzle attempt not found"}, status: 404
-      return
+        .find_by!(uuid: sps_params[:user_puzzle_attempt_uuid])
+    rescue ActiveRecord::RecordNotFound => e
+      raise NotFoundError.new(error_base, "User puzzle attempt", e)
     end
 
     if search_panel.search_panel_searches.count >= 20
-      render json: {
-        error: "You've reached the maximum number of searches for this search panel."
-      }, status: 400
-      return
+      raise ApiError.new("#{error_base}: You've reached the maximum number of searches for this search panel.")
     end
 
     if user_puzzle_attempt.search_panel_searches.count >= 60
-      render json: {
-        error: "You've reached the maximum number of searches for this puzzle attempt."
-      }, status: 400
-      return
+      raise ApiError.new("#{error_base}: You've reached the maximum number of searches for this puzzle attempt.")
     end
 
     @search = SearchPanelSearch.new(sps_params)
@@ -68,16 +60,17 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
     begin
       @search.save_with_uuid_retry!
       render json: @search.to_front_end, status: 201
-    rescue UuidRetryable::RetryLimitExceeded
-      render json: {
-        error: "Could not create guess due to a rare UUID collision"
-      }, status: 500
-    rescue ActiveRecord::RecordInvalid
-      render json: @search.errors, status: 422
+    rescue UuidRetryable::RetryLimitExceeded => e
+      raise e
+    rescue ActiveRecord::RecordInvalid => e
+      raise RecordInvalidError.new(error_base, e, @search.errors)
+    rescue => e
+      raise ApiError.new(message: error_base, original_error: e)
     end
   end
 
   def update
+    raise ApiError.new("Not implemented", 500)
   end
 
   def destroy
@@ -88,10 +81,9 @@ class Api::V1::SearchPanelSearchesController < AuthRequiredController
   private
 
   def set_search
-    # TODO: Make this use UUID instead of ID
-    @search = current_user.search_panel_searches.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: {error: "Search not found"}, status: 404
+    @search = current_user.search_panel_searches.find_by!(uuid: params[:uuid])
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(nil, "Search panel search", e)
   end
 
   def sps_params

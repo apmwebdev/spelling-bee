@@ -77,6 +77,7 @@ export function Signup() {
         resetForm();
         message.update(response.success, "Success");
       } catch (err) {
+        //TODO: Update this logic
         errLog("Failed to save user: ", err);
         if (isBasicError(err)) {
           message.update(err.data.error, "Error");

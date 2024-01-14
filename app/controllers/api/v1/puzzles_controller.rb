@@ -55,7 +55,7 @@ class Api::V1::PuzzlesController < ApplicationController
     # convert it to a date and find the puzzle that way.
     if identifier.match(date_regex)
       puzzle_date = Date.parse(identifier.delete("_"))
-      @puzzle = Puzzle.includes(:answers, :words).find_by_date(puzzle_date)
+      @puzzle = Puzzle.includes(:answers, :words).find_by_date!(puzzle_date)
 
       # If identifier is a letter string, check if there are any capital letters.
       # If there's exactly one, use that as the center letter. Otherwise, use
@@ -68,7 +68,7 @@ class Api::V1::PuzzlesController < ApplicationController
       # If there are no capital letters or multiple capital letters, use the
       # first letter as the center letter.
       if capital_index.nil? || num_of_caps > 1
-        @puzzle = Puzzle.includes(:answers, :words).find_by(
+        @puzzle = Puzzle.includes(:answers, :words).find_by!(
           center_letter: identifier.first.downcase,
           outer_letters: identifier[1..6].downcase.chars.sort
         )
@@ -76,7 +76,7 @@ class Api::V1::PuzzlesController < ApplicationController
         # center letter.
       else
         center_letter = identifier[capital_index]
-        @puzzle = Puzzle.includes(:answers, :words).find_by(
+        @puzzle = Puzzle.includes(:answers, :words).find_by!(
           center_letter: center_letter.downcase,
           outer_letters: identifier.delete(center_letter).downcase.chars.sort
         )
@@ -88,8 +88,10 @@ class Api::V1::PuzzlesController < ApplicationController
 
       # If identifier doesn't match any known format, return a 400.
     else
-      render json: {}, status: :bad_request
+      raise ApiError.new("Invalid puzzle identifier", 400)
     end
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(nil, "Puzzle", e)
   end
 
   # Only allow a list of trusted parameters through.

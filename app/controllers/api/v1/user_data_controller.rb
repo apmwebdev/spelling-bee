@@ -18,18 +18,14 @@ class Api::V1::UserDataController < ApplicationController
   end
 
   def user_puzzle_data
-    puts "\n\n user puzzle data \n\n"
     unless /\A\d{1,5}\z/.match?(params[:puzzle_id].to_s)
-      render json: {error: "Invalid puzzle ID"}, status: 400
-      return
+      raise ApiError.new("Invalid puzzle ID")
     end
     puzzle_id = params[:puzzle_id].to_i
     unless Puzzle.exists?(puzzle_id)
-      render json: {error: "Puzzle not found"}, status: 404
-      return
+      raise NotFoundError.new(nil, "Puzzle")
     end
     unless user_signed_in?
-      puts "\n\n user puzzle data user not signed in \n\n"
       render json: {isAuthenticated: false}
       return
     end

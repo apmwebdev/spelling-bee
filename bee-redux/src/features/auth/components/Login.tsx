@@ -48,6 +48,7 @@ export function Login({
          * here. */
         await login(formData).unwrap();
       } catch (err) {
+        //TODO: Update this logic
         errLog("Failed to log in:", err);
         if (
           isFetchBaseQueryErrorResponse(err) &&

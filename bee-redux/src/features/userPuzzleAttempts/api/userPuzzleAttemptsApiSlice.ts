@@ -31,7 +31,9 @@ export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
         }
         const response = await baseQuery(
           `/puzzle_user_puzzle_attempts/${puzzleId}`,
-        );
+        ).catch((err) => {
+          return err;
+        });
         return response as { data: UserPuzzleAttempt[] };
       },
     }),

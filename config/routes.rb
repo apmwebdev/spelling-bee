@@ -43,7 +43,11 @@ Rails.application.routes.draw do
       end
       get "user_puzzle_attempt_guesses/:user_puzzle_attempt_uuid",
         to: "guesses#index_for_attempt"
-      resources :guesses, param: :uuid, only: :create
+      resources :guesses, param: :uuid, only: :create do
+        collection do
+          post :bulk_add
+        end
+      end
       # General user data
       get "user_base_data", to: "user_data#user_base_data"
       get "user_puzzle_data/:puzzle_id", to: "user_data#user_puzzle_data"
@@ -63,7 +67,11 @@ Rails.application.routes.draw do
       # Search panel searches
       get "search_panel_search/:attempt_uuid",
         to: "search_panel_searches#for_attempt_and_profile"
-      resources :search_panel_searches, param: :uuid, only: [:create, :update, :destroy]
+      resources :search_panel_searches, param: :uuid, only: [:create, :update, :destroy] do
+        collection do
+          post :bulk_add
+        end
+      end
       # Root
       root "puzzles#latest"
     end

@@ -16,10 +16,13 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
 
   def check_auth
     if user_signed_in?
-      render json: current_user.to_front_end, status: 200
+      render json: {
+        isAuthenticated: true,
+        user: current_user.to_front_end
+      }
       return
     end
-    render json: {error: "No user"}, status: 404
+    render json: {isAuthenticated: false}
   end
 
   private
@@ -34,9 +37,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
         success: "Logged out successfully."
       }, status: 200
     else
-      render json: {
-        error: "Couldn't find an active session."
-      }, status: 401
+      raise ApiError.new("Couldn't find an active sessions", 401)
     end
   end
 end

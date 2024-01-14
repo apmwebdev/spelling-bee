@@ -22,7 +22,7 @@ class Api::V1::Users::PasswordsController < Devise::PasswordsController
         success: I18n.t("devise.passwords.send_paranoid_instructions",)
       }, status: 200
     else
-      render json: { error: "Couldn't send email" }, status: 400
+      raise ApiError.new("Couldn't send email")
     end
   end
 
@@ -40,10 +40,7 @@ class Api::V1::Users::PasswordsController < Devise::PasswordsController
       resource.unlock_access! if unlockable?(resource)
       redirect_to ENV["AFTER_PASSWORD_RESET_URL"]
     else
-      render json: {
-        error: "Couldn't reset password",
-        errorMessages: resource.errors
-      }, status: 400
+      raise ApiError.new("Couldn't reset password", 400, resource.errors)
     end
   end
 end

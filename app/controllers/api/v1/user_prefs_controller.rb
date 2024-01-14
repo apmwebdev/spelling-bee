@@ -18,15 +18,17 @@ class Api::V1::UserPrefsController < AuthRequiredController
 
   # PATCH/PUT /user_prefs/1
   def update
+    error_base = "Couldn't update user preferences"
     if @user_pref.update(user_pref_params)
       render json: @user_pref.to_front_end
     else
-      render json: @user_pref.errors, status: 422
+      raise RecordInvalidError.new(error_base, nil, @user_pref.errors)
     end
   end
 
   # Might not be needed
   def get_current_hint_profile
+    # TODO: Should this be `to_front_end_complete`?
     render json: @user_pref.current_hint_profile.to_front_end_complete
   end
 

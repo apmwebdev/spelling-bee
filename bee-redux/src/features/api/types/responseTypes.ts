@@ -231,3 +231,12 @@ export type RawActiveModelError = RawTypedError<ActiveModelError>;
 
 export const isRawActiveModelError =
   isRawTypedError<ActiveModelError>(isActiveModelError);
+
+export type ApiError = {
+  apiError: {
+    message: string;
+    status: number;
+    originalError?: string;
+    activeModelErrors?: { [key: string]: string[] };
+  };
+};

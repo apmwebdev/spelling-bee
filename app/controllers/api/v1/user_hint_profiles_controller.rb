@@ -34,11 +34,9 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
 
   # POST /user_hint_profiles
   def create
+    error_base = "Couldn't create hint profile"
     if current_user.user_hint_profiles.count >= 20
-      render json: {
-        error: "You have reached the maximum number of user hint profiles."
-      }, status: 400
-      return
+      raise ApiError.new("#{error_base}: You have reached the maximum number of hint profiles.")
     end
 
     @user_hint_profile = UserHintProfile.new(user_hint_profile_params)
@@ -46,16 +44,18 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
     if @user_hint_profile.save
       render json: @user_hint_profile.to_front_end_complete, status: 201
     else
-      render json: @user_hint_profile.errors, status: 422
+      raise RecordInvalidError.new(error_base, nil, @user_hint_profile.errors)
     end
   end
 
   # PATCH/PUT /user_hint_profiles/1
   def update
+    error_base = "Couldn't update hint profile"
     if @user_hint_profile.update(user_hint_profile_params)
+      # TODO: Does this need to be `to_front_end_complete` ?
       render json: @user_hint_profile.to_front_end_complete
     else
-      render json: @user_hint_profile.errors, status: :unprocessable_entity
+      raise RecordInvalidError.new(error_base, nil, @user_hint_profile.errors)
     end
   end
 
@@ -68,7 +68,10 @@ class Api::V1::UserHintProfilesController < AuthRequiredController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user_hint_profile
+    # TODO: Change to use UUID
     @user_hint_profile = current_user.user_hint_profiles.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    raise NotFoundError.new(nil, "User hint profile", e)
   end
 
   # Only allow a list of trusted parameters through.

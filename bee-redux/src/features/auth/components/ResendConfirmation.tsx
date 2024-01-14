@@ -43,6 +43,7 @@ export function ResendConfirmation({
       setEmailValue("");
       message.update(response.success, "Success");
     } catch (err) {
+      //TODO: Update this logic
       if (isBasicError(err)) {
         message.update(err.data.error, "Error");
       } else {
