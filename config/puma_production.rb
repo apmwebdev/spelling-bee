@@ -10,7 +10,6 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-require "puma/daemon"
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
@@ -28,4 +27,3 @@ pidfile "/home/deploy/ssb/shared/tmp/pids/puma.pid"
 state_path "/home/deploy/ssb/shared/tmp/pids/puma.state"
 workers ENV.fetch("WEB_CONCURRENCY", 2)
 plugin :tmp_restart
-daemonize
