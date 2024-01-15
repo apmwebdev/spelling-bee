@@ -14,7 +14,7 @@ require "open-uri"
 require "json"
 
 # Retrieves definition and frequency data for a word
-module DatamuseApiService
+module ExternalServices::DatamuseApiService
   def self.get_word_data(word)
     return_object = {
       text: word,
