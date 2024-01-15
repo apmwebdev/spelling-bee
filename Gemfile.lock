@@ -256,6 +256,11 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
     ruby-progressbar (1.13.0)
+    sentry-rails (5.16.1)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     sshkit (1.21.5)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -305,6 +310,8 @@ DEPENDENCIES
   rails (~> 7.0.6)
   rubocop (~> 1.56)
   rubocop-rails (~> 2.23)
+  sentry-rails
+  sentry-ruby
   tzinfo-data
 
 RUBY VERSION

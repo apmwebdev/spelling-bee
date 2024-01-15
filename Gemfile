@@ -29,6 +29,8 @@ gem "puma", "~> 5.0"
 gem "rack-cors"
 gem "rubocop", "~> 1.56", require: false
 gem "rubocop-rails", "~> 2.23", require: false
+gem "sentry-rails"
+gem "sentry-ruby"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
