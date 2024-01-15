@@ -10,7 +10,6 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-
 require "dotenv"
 Dotenv.load(".env.development", ".env.development.local")
 
@@ -34,3 +33,15 @@ append :linked_files, "config/master.key", ".env.production",
   "config/database.yml", "db/seeds/words_alpha.txt.zip", "bee-redux/env/.env.production.local"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets",
   "vendor/bundle", ".bundle", "public/system", "public/uploads"
+
+namespace :puma do
+  desc "Restart Puma using systemd"
+  task :restart do
+    on roles(:app) do
+      execute :sudo, "systemctl restart puma.service"
+    end
+  end
+end
+
+# After publishing changes, restart Puma
+after "deploy:publishing", "puma:restart"
