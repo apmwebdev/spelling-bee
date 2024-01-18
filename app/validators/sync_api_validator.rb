@@ -50,7 +50,7 @@ class SyncApiValidator < ExternalServiceValidatorBase
     hash_properties_are_valid?(json, "origin_data", [
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["id", Integer],
-      ["json_data", String, ->(p) { valid_json?(p) }],
+      ["json_data", Hash],
       ["nyt_id", Integer],
       ["updated_at", String, ->(p) { valid_date?(p) }],
     ],)
