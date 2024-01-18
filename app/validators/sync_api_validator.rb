@@ -18,7 +18,7 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    @logger.info "Beginning Sync API response validation..."
+    @logger.info "SyncApiValidator: Beginning Sync API response validation..."
     hash_properties_are_valid?(json, "response", [
       ["data", Array, ->(prop) { valid_response_data?(prop) }],
       ["last_id", Integer, ->(prop) { PuzzleIdentifierService.validate_id_format(prop) }],
@@ -26,7 +26,7 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid_response_data?(json)
-    error_base = "response[\"data\"] is invalid"
+    error_base = "SyncApiValidator: response[\"data\"] is invalid"
     unless json.is_a?(Array)
       err_log "#{error_base}: Must be array: #{json}"
       return false

@@ -48,7 +48,7 @@ class ExternalServiceValidatorBase
         next
       end
       unless object[key].is_a?(type)
-        err_log "#{display_name}['#{key}'] isn't a #{type.class.name}."
+        err_log "#{display_name}['#{key}'] isn't a #{type}: #{object[key]}"
         is_valid = false
         # If the property is the wrong type, it won't pass validation, so go to next property
         next
@@ -73,7 +73,7 @@ class ExternalServiceValidatorBase
     JSON.parse(json_string)
     true
   rescue JSON::ParserError, TypeError => e
-    err_log "Invalid JSON: #{e.message}"
+    err_log "valid_json?: Invalid JSON: #{e.message}"
     false
   end
 end
