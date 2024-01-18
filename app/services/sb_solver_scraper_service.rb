@@ -25,7 +25,7 @@ module SbSolverScraperService
     }
     url = "https://www.sbsolver.com/s/#{id}"
     return_object[:sb_solver_url] = url
-    doc = Nokogiri::HTML(URI.open(url))
+    doc = Nokogiri::HTML(URI::HTTPS.open(url))
 
     # Date
     date_string = doc.css(".bee-date a").first.text

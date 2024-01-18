@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::UserPuzzleAttemptsController < AuthRequiredController
+class FrontEndApi::V1::UserPuzzleAttemptsController < FrontEndApi::AuthRequiredController
   include TimestampConverter
   before_action :set_user_puzzle_attempt, only: %i[show update destroy]
 

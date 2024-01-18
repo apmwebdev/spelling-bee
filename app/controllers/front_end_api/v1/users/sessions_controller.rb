@@ -11,8 +11,9 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # Controls login and logout
-class Api::V1::Users::SessionsController < Devise::SessionsController
+class FrontEndApi::V1::Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
+  include ApiErrorRescuable
   respond_to :json
 
   def check_auth

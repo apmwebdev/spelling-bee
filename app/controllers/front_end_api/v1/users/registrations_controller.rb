@@ -11,8 +11,9 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # For controlling account sign-up process
-class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
+class FrontEndApi::V1::Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
+  include ApiErrorRescuable
   respond_to :json
 
   def update

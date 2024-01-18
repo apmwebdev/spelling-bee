@@ -10,7 +10,14 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
-  include ApiErrorRescuable
+namespace :scraper do
+  desc "Import latest puzzle from Spelling Bee"
+  task import_latest: :environment do
+    NytScraperService.new.import_latest_puzzle
+  end
+
+  desc "Import all puzzle data from Spelling Bee"
+  task import_all: :environment do
+    NytScraperService.new.import_all_puzzles
+  end
 end

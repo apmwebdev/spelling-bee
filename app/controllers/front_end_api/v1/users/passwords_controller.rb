@@ -11,7 +11,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # For sending password reset emails and updating password from resulting email link
-class Api::V1::Users::PasswordsController < Devise::PasswordsController
+class FrontEndApi::V1::Users::PasswordsController < Devise::PasswordsController
+  include ApiErrorRescuable
   # POST /resource/password
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)

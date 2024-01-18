@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::UserPrefsController < AuthRequiredController
+class FrontEndApi::V1::UserPrefsController < FrontEndApi::AuthRequiredController
   before_action :set_user_pref
 
   # GET /user_prefs/1

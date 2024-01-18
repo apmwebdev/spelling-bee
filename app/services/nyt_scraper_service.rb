@@ -30,6 +30,7 @@ class NytScraperService
 
   def initialize
     @logger = NytScraperLogger.new
+    @validator = NytScraperValidator.new(@logger)
   end
 
   def fetch_puzzle_json
@@ -75,13 +76,13 @@ class NytScraperService
   def import_latest_puzzle
     @logger.info "Importing latest puzzle..."
     puzzles_json = fetch_puzzle_json
-    create_puzzle_from_json(puzzles_json["today"]) if NytScraperValidator.new(@logger, puzzles_json).today_valid?
+    create_puzzle_from_json(puzzles_json["today"]) if @validator.today_valid?(puzzles_json)
   end
 
   def import_all_puzzles
     @logger.info "Importing all puzzles..."
     puzzles_json = fetch_puzzle_json
-    return unless NytScraperValidator.new(@logger, puzzles_json).valid?
+    return unless @validator.valid?(puzzles_json)
 
     @days_arr = [*puzzles_json["pastPuzzles"]["lastWeek"]]
     @days_arr.push(*puzzles_json["pastPuzzles"]["thisWeek"])

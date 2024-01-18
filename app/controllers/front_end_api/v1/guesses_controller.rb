@@ -13,7 +13,7 @@
 require "securerandom"
 
 # :nodoc:
-class Api::V1::GuessesController < AuthRequiredController
+class FrontEndApi::V1::GuessesController < FrontEndApi::AuthRequiredController
   include TimestampConverter
   before_action :set_guess, only: %i[show update destroy]
 

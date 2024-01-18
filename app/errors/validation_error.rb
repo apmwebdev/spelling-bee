@@ -10,15 +10,4 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Controls account unlocks
-class Api::V1::Users::UnlocksController < Devise::UnlocksController
-  # GET /resource/unlock?unlock_token=abcdef
-  def show
-    self.resource = resource_class.unlock_access_by_token(params[:unlock_token])
-    if resource.errors.empty?
-      redirect_to ENV["AFTER_UNLOCK_URL"]
-      return
-    end
-    redirect_to ENV["AFTER_UNSUCCESSFUL_UNLOCK_URL"]
-  end
-end
+class ValidationError < ApiError; end

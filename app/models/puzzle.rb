@@ -89,4 +89,12 @@ class Puzzle < ApplicationRecord
       isLatest: @is_latest,
     }
   end
+
+  def to_sync_api
+    {
+      puzzle_data: self,
+      origin_data: origin,
+      answer_words: answers.pluck(:word_text),
+    }
+  end
 end

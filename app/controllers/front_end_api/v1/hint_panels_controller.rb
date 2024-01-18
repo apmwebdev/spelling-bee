@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::HintPanelsController < AuthRequiredController
+class FrontEndApi::V1::HintPanelsController < FrontEndApi::AuthRequiredController
   before_action :set_hint_panel, only: %i[update destroy move]
 
   # POST /hint_panels

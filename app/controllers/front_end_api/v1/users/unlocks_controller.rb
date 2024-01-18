@@ -10,7 +10,16 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
+# Controls account unlocks
+class FrontEndApi::V1::Users::UnlocksController < Devise::UnlocksController
   include ApiErrorRescuable
+  # GET /resource/unlock?unlock_token=abcdef
+  def show
+    self.resource = resource_class.unlock_access_by_token(params[:unlock_token])
+    if resource.errors.empty?
+      redirect_to ENV["AFTER_UNLOCK_URL"]
+      return
+    end
+    redirect_to ENV["AFTER_UNSUCCESSFUL_UNLOCK_URL"]
+  end
 end

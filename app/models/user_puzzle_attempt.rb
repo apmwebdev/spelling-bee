@@ -19,7 +19,7 @@ class UserPuzzleAttempt < ApplicationRecord
   belongs_to :user
   belongs_to :puzzle
   has_many :guesses, dependent: :destroy
-  has_many :search_panel_searches
+  has_many :search_panel_searches, dependent: :destroy
 
   def to_front_end
     {
