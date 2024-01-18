@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::SearchPanelSearchesController < AuthRequiredController
+class FrontEndApi::V1::SearchPanelSearchesController < FrontEndApi::AuthRequiredController
   before_action :set_search, only: %i[update destroy]
 
   def for_attempt_and_profile

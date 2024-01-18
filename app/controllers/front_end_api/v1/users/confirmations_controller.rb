@@ -11,8 +11,9 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # For _resending_ account confirmation emails. Initial sending happens automatically
-class Api::V1::Users::ConfirmationsController < Devise::ConfirmationsController
+class FrontEndApi::V1::Users::ConfirmationsController < Devise::ConfirmationsController
   include RackSessionsFix
+  include ApiErrorRescuable
   respond_to :json
 
   # GET /resource/confirmation?confirmation_token=abcdef
@@ -30,7 +31,7 @@ class Api::V1::Users::ConfirmationsController < Devise::ConfirmationsController
     user.resend_confirmation_instructions if user && !user.confirmed?
     render json: {
       success: I18n.t("devise.confirmations.send_paranoid_instructions"),
-    }, status: 200
+    }
   end
 
   private

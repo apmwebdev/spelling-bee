@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::UserHintProfilesController < AuthRequiredController
+class FrontEndApi::V1::UserHintProfilesController < FrontEndApi::AuthRequiredController
   before_action :set_user_hint_profile, only: %i[show update destroy]
   skip_before_action :authenticate_user!, only: :all_hint_profiles_index
 

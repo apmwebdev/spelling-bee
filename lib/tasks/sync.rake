@@ -10,7 +10,10 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
-  include ApiErrorRescuable
+namespace :sync_api do
+  desc "Sync puzzle data"
+  task :sync_latest_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
+    first_puzzle_identifier = args[:first_puzzle_identifier]
+    SyncApiService.new.sync_recent_puzzles(first_puzzle_identifier)
+  end
 end

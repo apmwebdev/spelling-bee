@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Super Spelling Bee - A vocabulary game with integrated hints
 # Copyright (C) 2023 Austin Miller
 #
@@ -10,7 +8,9 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
-  include ApiErrorRescuable
+class AddSyncApiKeyToUsers < ActiveRecord::Migration[7.0]
+  def change
+    add_column :users, :sync_api_key, :string
+    add_index :users, :sync_api_key, unique: true
+  end
 end

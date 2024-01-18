@@ -11,20 +11,20 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 Rails.application.routes.draw do
-  devise_for :users, path: "api/v1/auth",
+  devise_for :users, path: "front_end_api/v1/auth",
     path_names: {
       sign_in: "login",
       sign_out: "logout",
       registration: "signup",
     },
     controllers: {
-      sessions: "api/v1/users/sessions",
-      registrations: "api/v1/users/registrations",
-      passwords: "api/v1/users/passwords",
-      confirmations: "api/v1/users/confirmations",
-      unlocks: "api/v1/users/unlocks",
+      sessions: "front_end_api/v1/users/sessions",
+      registrations: "front_end_api/v1/users/registrations",
+      passwords: "front_end_api/v1/users/passwords",
+      confirmations: "front_end_api/v1/users/confirmations",
+      unlocks: "front_end_api/v1/users/unlocks",
     }
-  namespace :api do
+  namespace :front_end_api do
     namespace :v1 do
       # Auth
       devise_scope :user do
@@ -79,6 +79,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :sync_api do
+    namespace :v1 do
+      get "puzzle_data/:first_puzzle_identifier", to: "puzzle_data#sync_recent_puzzles"
+    end
+  end
+
   # Defines the root path route ("/")
-  root "api/v1/puzzles#latest"
+  root "front_end_api/v1/puzzles#latest"
 end

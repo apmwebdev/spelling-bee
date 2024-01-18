@@ -705,7 +705,8 @@ CREATE TABLE public.users (
     unconfirmed_email character varying,
     failed_attempts integer DEFAULT 0 NOT NULL,
     locked_at timestamp(6) without time zone,
-    unlock_token character varying
+    unlock_token character varying,
+    sync_api_key character varying
 );
 
 
@@ -1314,6 +1315,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: index_users_on_sync_api_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_sync_api_key ON public.users USING btree (sync_api_key);
+
+
+--
 -- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1540,6 +1548,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231127233418'),
 ('20231128021153'),
 ('20231128030814'),
-('20231128232734');
+('20231128232734'),
+('20240117185320');
 
 

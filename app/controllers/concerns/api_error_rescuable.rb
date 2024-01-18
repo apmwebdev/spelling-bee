@@ -10,7 +10,14 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
-  include ApiErrorRescuable
+# Mixin for responding to ApiErrors. Necessary because custom Devise controllers
+# don't inherit from ApplicationController.
+module ApiErrorRescuable
+  extend ActiveSupport::Concern
+
+  included do
+    rescue_from ApiError do |e|
+      render json: e.to_front_end, status: e.status
+    end
+  end
 end

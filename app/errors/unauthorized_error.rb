@@ -10,7 +10,12 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Base controller for the app. Handles logic common to all controllers
-class ApplicationController < ActionController::API
-  include ApiErrorRescuable
+# Custom error type for 401 errors
+class UnauthorizedError < ApiError
+  def initialize(
+    message = "Unauthorized",
+    original_error = nil
+  )
+    super(message, 401, original_error)
+  end
 end

@@ -2,6 +2,10 @@ Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/SpaceInsideHashLiteralBraces:
@@ -25,6 +29,8 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 Style/ClassAndModuleChildren:
+  Enabled: false
+Style/RedundantReturn:
   Enabled: false
 Style/StringLiterals:
   EnforcedStyle: double_quotes

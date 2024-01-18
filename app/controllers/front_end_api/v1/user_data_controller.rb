@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-class Api::V1::UserDataController < ApplicationController
+class FrontEndApi::V1::UserDataController < FrontEndApi::FrontEndApiController
   def user_base_data
     if user_signed_in?
       render json: UserDataPresenter.present_user_base_data(current_user)
