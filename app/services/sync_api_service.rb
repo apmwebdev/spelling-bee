@@ -35,23 +35,25 @@ class SyncApiService
   # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
   # method until it gets to the most recent puzzle.
   def sync_one_page_of_puzzle_data(first_puzzle_identifier)
+    handle_error = lambda do |msg|
+      @logger.error msg
+      { error: msg }
+    end
     base_msg = "sync_one_page_of_puzzle_data"
     @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
     url = "#{ENV['PRODUCTION_SYNC_API_URL']}/sync_recent_puzzles/#{first_puzzle_identifier}"
     authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
-    response = URI::HTTPS.open(url, "Authorization" => authorization_token).read
+    response = URI.open(url, "Authorization" => authorization_token)&.read
+    return handle_error.call("#{base_msg}: Response is nil. Exiting.") unless response
+
     begin
       json = JSON.parse(response)
     rescue JSON::ParserError => e
-      error_message = "#{base_msg}: Unable to parse JSON response for Sync API: #{e.inspect}"
-      @logger.error error_message
-      return { error: error_message }
+      return handle_error.call("#{base_msg}: Unable to parse JSON response for Sync API: #{e.inspect}")
     end
-    unless @validator.valid?(json)
-      error_message = "#{base_msg}: Invalid Sync API response"
-      @logger.error error_message
-      return { error: error_message }
-    end
+
+    return handle_error.call("#{base_msg}: Invalid Sync API response") unless @validator.valid?(json)
+
     @logger.info "#{base_msg}: Begin loop through data array"
     json["data"].each do |item|
       puzzle_data = item["puzzle_data"]
