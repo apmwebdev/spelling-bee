@@ -34,7 +34,7 @@ module PuzzleIdentifierService
   # Needs to be a stand-alone method because some controllers only accept a puzzle ID as an
   # identifier
   def self.validate_id_format(identifier)
-    ID_REGEX.match?(identifier)
+    ID_REGEX.match?(identifier.to_s)
   end
 
   def self.validate_id_format!(identifier)
@@ -42,7 +42,7 @@ module PuzzleIdentifierService
   end
 
   def self.validate_letter_format(identifier)
-    LETTER_REGEX.match?(identifier)
+    LETTER_REGEX.match?(identifier.to_s)
   end
 
   def self.validate_letter_format!(identifier)
@@ -50,7 +50,7 @@ module PuzzleIdentifierService
   end
 
   def self.validate_date_format(identifier)
-    DATE_REGEX.match?(identifier)
+    DATE_REGEX.match?(identifier.to_s)
   end
 
   def self.validate_date_format!(identifier)
@@ -59,40 +59,42 @@ module PuzzleIdentifierService
 
   # Find puzzle by ID, date string, or letters
   def self.find_puzzle(identifier)
+    # Make sure the identifier is a string so that it will work with regex and other string manipulation tools
+    string_identifier = identifier.to_s
     # If the identifier is a date string, delete any underscores from it, then
     # convert it to a date and find the puzzle that way.
-    if validate_date_format(identifier)
-      puzzle_date = Date.parse(identifier.delete("_"))
+    if validate_date_format(string_identifier)
+      puzzle_date = Date.parse(string_identifier.delete("_"))
       Puzzle.includes(:answers, :words).find_by!(date: puzzle_date)
 
       # If identifier is a letter string, check if there are any capital letters.
       # If there's exactly one, use that as the center letter. Otherwise, use
       # the first letter in the string as the center letter.
-    elsif validate_letter_format(identifier)
+    elsif validate_letter_format(string_identifier)
       # What is the index of the first capital letter? Returns nil for none
-      capital_index = /[A-Z]/ =~ identifier
+      capital_index = /[A-Z]/ =~ string_identifier
       # How many capital letters are there?
-      num_of_caps = identifier.count("A-Z")
+      num_of_caps = string_identifier.count("A-Z")
       # If there are no capital letters or multiple capital letters, use the
       # first letter as the center letter.
       if capital_index.nil? || num_of_caps > 1
         Puzzle.includes(:answers, :words).find_by!(
-          center_letter: identifier.first.downcase,
-          outer_letters: identifier[1..6].downcase.chars.sort,
+          center_letter: string_identifier.first.downcase,
+          outer_letters: string_identifier[1..6].downcase.chars.sort,
         )
         # Otherwise, there is exactly one capital letter, so use that as the
         # center letter.
       else
-        center_letter = identifier[capital_index]
+        center_letter = string_identifier[capital_index]
         Puzzle.includes(:answers, :words).find_by!(
           center_letter: center_letter.downcase,
-          outer_letters: identifier.delete(center_letter).downcase.chars.sort,
+          outer_letters: string_identifier.delete(center_letter).downcase.chars.sort,
         )
       end
 
       # If identifier is only digits, check if there's a puzzle with that ID.
-    elsif validate_id_format(identifier)
-      Puzzle.includes(:answers, :words).find(identifier.to_i)
+    elsif validate_id_format(string_identifier)
+      Puzzle.includes(:answers, :words).find(string_identifier.to_i)
 
       # If identifier doesn't match any known format, return a 400.
     else
