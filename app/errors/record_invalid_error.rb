@@ -18,6 +18,7 @@ class RecordInvalidError < ApiError
     active_model_errors = nil
   )
     @message = "#{error_base}: " if error_base && error_base != ""
+    @message ||= ""
     @message += "Malformed data"
     @status = 422
     @original_error = original_error

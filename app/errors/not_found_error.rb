@@ -18,6 +18,7 @@ class NotFoundError < ApiError
     original_error = nil
   )
     @message = "#{error_base}: " if error_base && error_base != ""
+    @message ||= ""
     @message += "#{record_type} not found"
     @status = 404
     @original_error = original_error
