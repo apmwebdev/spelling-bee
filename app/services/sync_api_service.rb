@@ -41,7 +41,7 @@ class SyncApiService
     end
     base_msg = "sync_one_page_of_puzzle_data"
     @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
-    url = "#{ENV['PRODUCTION_SYNC_API_URL']}/sync_recent_puzzles/#{first_puzzle_identifier}"
+    url = "#{ENV['PRODUCTION_SYNC_API_URL']}/recent_puzzles/#{first_puzzle_identifier}"
     authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
     response = URI.open(url, "Authorization" => authorization_token)&.read
     return handle_error.call("#{base_msg}: Response is nil. Exiting.") unless response

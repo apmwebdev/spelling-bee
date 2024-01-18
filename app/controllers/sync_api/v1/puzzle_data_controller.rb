@@ -15,7 +15,7 @@
 # as the host, receiving the request.
 class SyncApi::V1::PuzzleDataController < SyncApi::V1::SyncApiController
   # GET .../puzzle_data/:id
-  def sync_recent_puzzles
+  def recent_puzzles
     return_data = []
     identifier = params[:first_puzzle_identifier].to_s
     current_puzzle = PuzzleIdentifierService.find_puzzle(identifier)

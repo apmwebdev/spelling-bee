@@ -81,7 +81,7 @@ Rails.application.routes.draw do
 
   namespace :sync_api do
     namespace :v1 do
-      get "puzzle_data/:first_puzzle_identifier", to: "puzzle_data#sync_recent_puzzles"
+      get "recent_puzzles/:first_puzzle_identifier", to: "puzzle_data#recent_puzzles"
     end
   end
 
