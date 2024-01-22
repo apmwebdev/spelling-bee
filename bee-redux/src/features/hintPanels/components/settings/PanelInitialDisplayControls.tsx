@@ -40,10 +40,7 @@ export function PanelInitialDisplayControls({
   const display = useAppSelector(selectPanelDisplayState(panelUuid));
   const [updatePanel] = useUpdateHintPanelMutation();
   return (
-    <div
-      className="PanelInitialDisplayControlsContainer"
-      style={{ gridColumn: "1/3" }}
-    >
+    <div className="PanelInitialDisplayControlsContainer">
       <span>Initial Panel Display</span>
       <div className="PanelInitialDisplayControls">
         <PanelInitDisplayCheckboxControl
