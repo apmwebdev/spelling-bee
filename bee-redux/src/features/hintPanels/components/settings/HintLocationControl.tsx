@@ -51,7 +51,7 @@ export function HintLocationControl({
   };
 
   return (
-    <div className="LetterPanelLocationControl" style={style}>
+    <div className="HintPanelLocationControl" style={style}>
       <span>Location:</span>
       <Select.Root value={location} onValueChange={handleChange}>
         <Select.Trigger className="SmallSelect" style={{ width: "12em" }} />

@@ -35,7 +35,7 @@ export function SettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
   };
   return (
     <Toggle.Root
-      className="PanelSettingsToggle HintPanelHeaderButton IconButton"
+      className="PanelSettingsToggle IconButton IconButton_Square"
       pressed={display.isSettingsExpanded}
       onPressedChange={toggleExpanded}
     >

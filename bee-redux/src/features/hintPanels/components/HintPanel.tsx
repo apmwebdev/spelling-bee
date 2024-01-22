@@ -21,10 +21,22 @@ import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import {
   HintPanelData,
   PanelCurrentDisplayStateProperties,
+  PanelTypes,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
 } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
+import {
+  LetterPanelData,
+  LetterPanelQuickActions,
+} from "@/features/letterPanel";
+import {
+  SearchPanelData,
+  SearchPanelQuickActions,
+} from "@/features/searchPanel";
+import { WordInfoQuickActions } from "@/features/hintPanels/components/shared/WordInfoQuickActions";
+import { ObscurityPanelData } from "@/features/obscurityPanel";
+import { DefinitionPanelData } from "@/features/definitionPanel";
 
 export const HintPanel = forwardRef(
   (
@@ -48,14 +60,14 @@ export const HintPanel = forwardRef(
     ref: Ref<HTMLDivElement>,
   ) => {
     const dispatch = useAppDispatch();
-    const display = useAppSelector(selectPanelDisplayState(panel.uuid));
+    const displayState = useAppSelector(selectPanelDisplayState(panel.uuid));
 
     const toggleExpanded = () => {
       dispatch(
         setPanelDisplayPropThunk({
           panelUuid: panel.uuid,
           property: PanelCurrentDisplayStateProperties.isExpanded,
-          value: !display.isExpanded,
+          value: !displayState.isExpanded,
         }),
       );
     };
@@ -73,16 +85,47 @@ export const HintPanel = forwardRef(
       return classes;
     };
 
+    const quickActionsRouter = {
+      [PanelTypes.Letter]: (
+        <LetterPanelQuickActions
+          panelUuid={panel.uuid}
+          displayState={displayState}
+          typeData={panel.typeData as LetterPanelData}
+        />
+      ),
+      [PanelTypes.Search]: (
+        <SearchPanelQuickActions
+          panelUuid={panel.uuid}
+          displayState={displayState}
+          typeData={panel.typeData as SearchPanelData}
+        />
+      ),
+      [PanelTypes.Obscurity]: (
+        <WordInfoQuickActions
+          panelUuid={panel.uuid}
+          displayState={displayState}
+          typeData={panel.typeData as ObscurityPanelData}
+        />
+      ),
+      [PanelTypes.Definition]: (
+        <WordInfoQuickActions
+          panelUuid={panel.uuid}
+          displayState={displayState}
+          typeData={panel.typeData as DefinitionPanelData}
+        />
+      ),
+    };
+
     return (
       <Collapsible.Root
         ref={ref}
         style={style}
         className={cssClasses()}
-        open={display.isExpanded}
+        open={displayState.isExpanded}
       >
         <PanelHeader
           panelUuid={panel.uuid}
-          isPanelExpanded={display.isExpanded}
+          isPanelExpanded={displayState.isExpanded}
           attributes={attributes}
           listeners={listeners}
         >
@@ -93,7 +136,8 @@ export const HintPanel = forwardRef(
           />
         </PanelHeader>
         <Collapsible.Content className="HintPanelContent">
-          {display.isSettingsExpanded ? (
+          {quickActionsRouter[panel.typeData.panelType]}
+          {displayState.isSettingsExpanded ? (
             <HintPanelSettings panel={panel} />
           ) : null}
           <HintPanelContentContainer panel={panel} />

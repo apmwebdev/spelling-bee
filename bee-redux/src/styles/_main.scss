@@ -64,7 +64,7 @@ body {
 .PuzzleMain {
   display: grid;
   width: 100%;
-  justify-content: center;
+  justify-items: center;
 
   .App___threeColumns & {
     grid-template-columns: repeat(3, 1fr);
@@ -80,6 +80,7 @@ body {
 
 .PuzzleMain_section {
   max-width: 600px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -89,16 +90,18 @@ body {
 .PuzzleSectionTabs {
   & > .TabsContent[data-state="active"] {
     display: grid;
-    place-items: center;
+    align-items: center;
+    justify-content: stretch;
     background-color: $black;
   }
 }
 
 .SingleColumnTabs {
-  .TabsRoot {
+  width: 100%;
+  &.TabsRoot {
     border: none;
   }
-  .TabsContent {
+  &.TabsContent {
     padding: 8px 0px 0px;
   }
 }
@@ -168,12 +171,12 @@ button {
   @include button-mixin;
   font-size: 20px;
   padding: 4px 12px;
-  &.Square {
-    padding: 4px;
-    &.Small {
-      font-size: 16px;
-      padding: 3px;
-    }
+  &.IconButton_Square {
+    padding: 6px;
+  }
+  &.IconButton_Small {
+    font-size: 16px;
+    padding: 3px;
   }
   &.CloseButton {
     padding: 4px;

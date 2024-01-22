@@ -10,16 +10,8 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import {
-  LetterHintPanel,
-  LetterPanelData,
-  LetterPanelQuickActions,
-} from "@/features/letterPanel";
-import {
-  SearchHintPanel,
-  SearchPanelData,
-  SearchPanelQuickActions,
-} from "@/features/searchPanel";
+import { LetterHintPanel, LetterPanelData } from "@/features/letterPanel";
+import { SearchHintPanel, SearchPanelData } from "@/features/searchPanel";
 import {
   ObscurityHintPanel,
   ObscurityPanelData,
@@ -31,7 +23,6 @@ import {
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerWords } from "@/features/puzzle";
 import { HintContentBlur } from "@/features/hintPanels/components/shared/HintContentBlur";
-import { WordInfoQuickActions } from "@/features/hintPanels/components/shared/WordInfoQuickActions";
 import {
   HintPanelData,
   PanelTypes,
@@ -47,71 +38,34 @@ export function HintPanelContentContainer({ panel }: { panel: HintPanelData }) {
   }
 
   const panelTypeRouter = {
-    [PanelTypes.Letter]: {
-      content: (
-        <LetterHintPanel
-          letterData={panel.typeData as LetterPanelData}
-          statusTracking={panel.statusTracking}
-        />
-      ),
-      quickActions: (
-        <LetterPanelQuickActions
-          panelUuid={panel.uuid}
-          displayState={displayState}
-          typeData={panel.typeData as LetterPanelData}
-        />
-      ),
-    },
-    [PanelTypes.Search]: {
-      content: (
-        <SearchHintPanel
-          searchPanelData={panel.typeData as SearchPanelData}
-          statusTracking={panel.statusTracking}
-        />
-      ),
-      quickActions: (
-        <SearchPanelQuickActions
-          panelUuid={panel.uuid}
-          displayState={displayState}
-          typeData={panel.typeData as SearchPanelData}
-        />
-      ),
-    },
-    [PanelTypes.Obscurity]: {
-      content: (
-        <ObscurityHintPanel
-          obscurityPanelData={panel.typeData as ObscurityPanelData}
-        />
-      ),
-      quickActions: (
-        <WordInfoQuickActions
-          panelUuid={panel.uuid}
-          displayState={displayState}
-          typeData={panel.typeData as ObscurityPanelData}
-        />
-      ),
-    },
-    [PanelTypes.Definition]: {
-      content: (
-        <DefinitionHintPanel
-          definitionPanelData={panel.typeData as DefinitionPanelData}
-        />
-      ),
-      quickActions: (
-        <WordInfoQuickActions
-          panelUuid={panel.uuid}
-          displayState={displayState}
-          typeData={panel.typeData as DefinitionPanelData}
-        />
-      ),
-    },
+    [PanelTypes.Letter]: (
+      <LetterHintPanel
+        letterData={panel.typeData as LetterPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
+    [PanelTypes.Search]: (
+      <SearchHintPanel
+        searchPanelData={panel.typeData as SearchPanelData}
+        statusTracking={panel.statusTracking}
+      />
+    ),
+    [PanelTypes.Obscurity]: (
+      <ObscurityHintPanel
+        obscurityPanelData={panel.typeData as ObscurityPanelData}
+      />
+    ),
+    [PanelTypes.Definition]: (
+      <DefinitionHintPanel
+        definitionPanelData={panel.typeData as DefinitionPanelData}
+      />
+    ),
   };
 
   return (
     <div className="HintPanelContentContainer">
-      {panelTypeRouter[panel.typeData.panelType].quickActions}
       <HintContentBlur isBlurred={displayState.isBlurred} />
-      {panelTypeRouter[panel.typeData.panelType].content}
+      {panelTypeRouter[panel.typeData.panelType]}
     </div>
   );
 }
