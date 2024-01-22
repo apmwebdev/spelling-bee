@@ -103,676 +103,676 @@ body {
   }
 }
 
-  .NonPuzzleLayout {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding: 16px;
-  }
+.NonPuzzleLayout {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+}
 
-  .NonPuzzleMain {
-    width: clamp(600px, 60%, 1280px);
+.NonPuzzleMain {
+  width: clamp(600px, 60%, 1280px);
+  background-color: $dark-gray-1;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  border: 1.5px solid $dark-gray-5;
+}
+
+
+
+
+/**********************/
+/***   COMPONENTS   ***/
+/**********************/
+
+
+
+
+/***   Buttons   ***/
+
+@mixin button-mixin {
+  @include button-colors($accent-hue);
+  display: grid;
+  place-content: center;
+  touch-action: manipulation;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@mixin gray-button-mixin {
+  display: grid;
+  place-content: center;
+  border: 1px solid $dark-gray-2;
+  background-color: $dark-gray-2;
+  &:hover {
     background-color: $dark-gray-1;
-    padding: 16px;
-    border-radius: var(--border-radius);
-    border: 1.5px solid $dark-gray-5;
+    border-color: $mid-gray-darker;
   }
+  &:focus {
+    box-shadow: 0 0 0 1px $mid-gray-darker;
+  }
+}
 
+button {
+  border-radius: var(--border-radius);
+}
 
+.standardButton {
+  @include button-mixin;
+  font-size: var(--small-font);
+  padding: 8px 16px;
+}
 
-
-  /**********************/
-  /***   COMPONENTS   ***/
-  /**********************/
-
-
-
-
-  /***   Buttons   ***/
-
-  @mixin button-mixin {
-    @include button-colors($accent-hue);
-    display: grid;
-    place-content: center;
-    touch-action: manipulation;
-    &:disabled {
-      cursor: not-allowed;
+.IconButton {
+  @include button-mixin;
+  font-size: 20px;
+  padding: 4px 12px;
+  &.Square {
+    padding: 4px;
+    &.Small {
+      font-size: 16px;
+      padding: 3px;
     }
   }
+  &.CloseButton {
+    padding: 4px;
+  }
+}
 
-  @mixin gray-button-mixin {
-    display: grid;
-    place-content: center;
-    border: 1px solid $dark-gray-2;
+.IconButton-group {
+  display: grid;
+  gap: 8px;
+  &.group-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  &.group-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/***   Checkbox   ***/
+
+.CheckboxRoot {
+  @include basic-hover;
+  @include basic-focus;
+  color: $line-bright;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  min-width: 1.5em;
+  height: 1.5em;
+  min-height: 1.5em;
+  //padding: 8px;
+  border-radius: var(--border-radius);
+  border: 1.5px solid border-color-dark($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  &[data-disabled] {
+    border-color: border-color-dark-disabled($accent-hue);
+    background-color: bg-color-dark-disabled($accent-hue);
+    cursor: not-allowed;
+  }
+}
+
+/***   Collapsible   ***/
+.CollapsibleRoot {
+  display: flex;
+  flex-direction: column;
+}
+
+.CollapsibleTrigger {
+  padding: 8px 24px;
+  border: 1.5px solid transparent;
+  background-color: inherit;
+  &:hover {
+    background-color: $dark-gray-1;
+    border-color: $mid-gray-darker;
+  }
+  &:focus {
+    box-shadow: 0 0 0 1px $mid-gray-darker;
+  }
+}
+
+.CollapsibleContent {
+  padding: 16px;
+}
+
+/***   Dialog   ***/
+
+.DialogOverlay {
+  position: fixed;
+  z-index: 2;
+  inset: 0px;
+  background-color: hsl(0 0% 5% / 0.9);
+}
+
+.DialogContent {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--border-radius);
+  background-color: $dark-gray-2;
+  border: 2px solid $dark-gray-5;
+}
+
+.DialogClose {
+  @include gray-button-mixin;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.DialogTitle {
+  text-align: center;
+  font-size: calc(1.33333333 * var(--font-size));
+}
+
+/***   Dropdown Menu   ***/
+
+.DropdownMenuArrow {
+  fill: $dark-gray-4;
+}
+
+.DropdownMenuContent {
+  background-color: $dark-gray-4;
+  z-index: 2;
+  padding: 4px 0px 2px;
+  border-radius: var(--border-radius);
+  font-size: var(--small-font);
+}
+
+.DropdownMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: highlight-color-dark($accent-hue);
+  }
+}
+
+.DropdownMenuItem_icon {
+  font-size: 1.2em;
+  //margin-right: 8px;
+}
+
+.DropdownMenuSeparator {
+  height: 1px;
+  margin: 4px 0px;
+  background-color: $light-gray;
+}
+
+.DropdownMenuTrigger {
+  @include basic-focus-gray;
+  font-size: var(--small-font);
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  border: 1.5px solid $mid-gray-darker;
+  background-color: $dark-gray-3;
+  &:hover {
     background-color: $dark-gray-2;
+  }
+  &[data-state="open"] {
+    background-color: $dark-gray-1;
+    border-color: $mid-gray;
+  }
+}
+
+.DropdownMenuTrigger___withChevron {
+  padding: 8px 16px 8px 8px;
+}
+
+/***   Help Bubble   ***/
+
+.HelpBubbleTrigger {
+  @include basic-focus;
+  color: $text-main-dark;
+  height: 1.2em;
+  min-height: 1.2em;
+  width: 1.2em;
+  min-width: 1.2em;
+  border-radius: 1.2em;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background-color: inherit;
+}
+
+/***   HR   ***/
+
+.Hr {
+  width: 100%;
+  border: none;
+  border-top: 2px solid $dark-gray-5;
+}
+
+/***   Input   ***/
+
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"]
+{
+  $this-hue: $accent-hue;
+  width: 25ch;
+  padding: 4px 8px;
+  color: $line-mid;
+  border-radius: var(--border-radius);
+  border: 1.5px solid border-color-dark($this-hue);
+  background-color: bg-color-darker($this-hue);
+  font-size: var(--smaller-font);
+  &::placeholder {
+    font-style: italic;
+    color: $text-disabled-dark;
+  }
+  &:hover {
+    border-color: border-color-dark-hover($this-hue);
+  }
+  &:focus {
+    background-color: bg-color-darkest($this-hue);
+  }
+  &.TextInput___invalid {
+    background-color: bg-color-darker($error-hue);
+    border-color: border-color-dark($error-hue);
     &:hover {
-      background-color: $dark-gray-1;
-      border-color: $mid-gray-darker;
+      border-color: border-color-dark-hover($error-hue);
     }
     &:focus {
-      box-shadow: 0 0 0 1px $mid-gray-darker;
+      background-color: bg-color-darkest($error-hue);
     }
   }
+}
 
-  button {
-    border-radius: var(--border-radius);
+input[type="email"] {
+  width: 30ch;
+}
+
+input[type="number"] {
+  @include basic-hover;
+  @include basic-focus;
+  color: $line-bright;
+  background-color: bg-color-darker($accent-hue);
+  border-radius: var(--border-radius);
+  font-size: var(--smaller-font);
+  padding: 4px 8px;
+  border: 1.5px solid border-color-dark($accent-hue);
+  &:hover {
+    border-color: border-color-dark-hover($accent-hue);
   }
-
-  .standardButton {
-    @include button-mixin;
-    font-size: var(--small-font);
-    padding: 8px 16px;
+  &:focus {
+    box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
   }
-
-  .IconButton {
-    @include button-mixin;
-    font-size: 20px;
-    padding: 4px 12px;
-    &.Square {
-      padding: 4px;
-      &.Small {
-        font-size: 16px;
-        padding: 3px;
-      }
-    }
-    &.CloseButton {
-      padding: 4px;
-    }
+  &[disabled] {
+    color: $text-disabled-dark;
+    background-color: $dark-gray-3;
+    border-color: border-color-dark-disabled($accent-hue);
+    cursor: not-allowed;
   }
+}
 
-  .IconButton-group {
-    display: grid;
-    gap: 8px;
-    &.group-2 {
-      grid-template-columns: 1fr 1fr;
-    }
-    &.group-3 {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+/***   Links   ***/
+
+a {
+  $this-hue: $yellow-hue;
+  text-decoration: underline;
+  color: ui-line-color-dark($this-hue);
+  border-radius: var(--border-radius);
+  &:hover {
+    color: ui-line-color-hover-dark($this-hue);
   }
+  &:focus {
+    box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
+  }
+}
 
-  /***   Checkbox   ***/
+a.ButtonLink, div.ButtonLink {
+  $this-hue: $yellow-hue;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  .App___threeColumns & {
+    padding: 6px 16px;
+  }
+  gap: 4px;
+  border: 1.5px solid ui-line-color-dark($this-hue);
+  //border: 1.5px solid;
+  &:hover {
+    color: ui-line-color-hover-dark($this-hue);
+    border-color: ui-line-color-hover-dark($this-hue);
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 3px shadow-color-focus($this-hue);
+  }
+  &.disabled {
+    color: border-color-dark-disabled($this-hue);
+    border-color: border-color-dark-disabled($this-hue);
+  }
+  span {
+    font-size: 14px;
+  }
+}
 
-  .CheckboxRoot {
-    @include basic-hover;
-    @include basic-focus;
-    color: $line-bright;
+/***   Popover   ***/
+
+.PopoverContent {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px 12px 12px;
+  max-width: calc(40 * var(--font-size));
+  border-radius: var(--border-radius);
+  border: 2px solid $light-gray;
+  background-color: $mid-gray;
+  //box-shadow: 0 0 0px 4px $dark-gray;
+  &:focus {
+    outline: none;
+  }
+  span {
+    align-self: center;
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 1.5em;
-    min-width: 1.5em;
-    height: 1.5em;
-    min-height: 1.5em;
-    //padding: 8px;
-    border-radius: var(--border-radius);
-    border: 1.5px solid border-color-dark($accent-hue);
-    background-color: bg-color-darker($accent-hue);
-    &[data-disabled] {
-      border-color: border-color-dark-disabled($accent-hue);
-      background-color: bg-color-dark-disabled($accent-hue);
-      cursor: not-allowed;
-    }
   }
+}
 
-  /***   Collapsible   ***/
-  .CollapsibleRoot {
-    display: flex;
+.PopoverCloseButton {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $light-gray;
+}
+
+.PopoverArrow {
+  z-index: 1;
+  fill: $light-gray;
+}
+
+/***   Select   ***/
+
+.SelectTrigger {
+  @include basic-hover;
+  @include basic-focus;
+  width: 10em;
+  font-size: var(--small-font);
+  border: 1.5px solid border-color-dark($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  line-height: 1.2;
+  &.SmallSelect {
+    font-size: var(--smaller-font);
+    padding: 4px 8px;
+    width: 11em;
+    gap: 6px;
+  }
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.SelectIcon {
+  width: 1em;
+  height: 1em;
+}
+
+.SelectContent {
+  z-index: 2;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-size: var(--small-font);
+  padding: 3px 0px;
+  border: 1.5px solid border-color-dark($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  &:hover {
+    border-color: border-color-dark-hover($accent-hue);
+  }
+  &.SmallSelect {
+    font-size: var(--smaller-font);
+    padding: 2px 0px;
+  }
+}
+
+.SelectLabel {
+  font-size: calc(0.9375 * var(--small-font));
+  padding: 6px 16px;
+  font-style: italic;
+  color: $text-disabled-dark;
+  border-color: $line-disabled;
+  .SmallSelect & {
+    padding: 4px 12px;
+  }
+}
+
+.SelectItem {
+  position: relative;
+  cursor: pointer;
+  padding: 6px 6px 6px 28px;
+  user-select: none;
+  &[data-highlighted] {
+    background-color: highlight-color-dark($accent-hue);
+  }
+  .SmallSelect & {
+    padding: 5px 5px 5px 24px;
+  }
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 6px;
+  .SmallSelect & {
+    left: 4px;
+  }
+}
+
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  height: 24px;
+  background-color: bg-color-darkest($accent-hue);
+  &.up {
+    border-bottom: 1.5px solid border-color-dark($accent-hue);
+  }
+  &.down {
+    border-top: 1.5px solid border-color-dark($accent-hue);
+  }
+}
+
+/*** Scroll Area ***/
+
+.ScrollAreaScrollbar {
+  display: flex;
+  user-select: none;
+  touch-action: none;
+  padding: 2px;
+  background: #333;
+  border-radius: 12px;
+  //transition: background 160ms ease-out;
+  &[data-orientation='horizontal'] {
     flex-direction: column;
+    height: 12px;
   }
+}
 
-  .CollapsibleTrigger {
-    padding: 8px 24px;
-    border: 1.5px solid transparent;
-    background-color: inherit;
-    &:hover {
-      background-color: $dark-gray-1;
-      border-color: $mid-gray-darker;
-    }
-    &:focus {
-      box-shadow: 0 0 0 1px $mid-gray-darker;
-    }
-  }
-
-  .CollapsibleContent {
-    padding: 16px;
-  }
-
-  /***   Dialog   ***/
-
-  .DialogOverlay {
-    position: fixed;
-    z-index: 2;
-    inset: 0px;
-    background-color: hsl(0 0% 5% / 0.9);
-  }
-
-  .DialogContent {
-    position: fixed;
-    z-index: 2;
+.ScrollAreaThumb {
+  flex: 1;
+  background: #666;
+  border-radius: 12px;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    border-radius: var(--border-radius);
-    background-color: $dark-gray-2;
-    border: 2px solid $dark-gray-5;
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
   }
+}
 
-  .DialogClose {
-    @include gray-button-mixin;
-    position: absolute;
-    top: 12px;
-    right: 12px;
+/***   Switch   ***/
+
+.SwitchRoot {
+  @include basic-hover;
+  @include basic-focus;
+  display: block;
+  position: relative;
+  border-radius: 9999px;
+  width: 42px;
+  height: 25px;
+  border: 1.5px solid border-color-dark($accent-hue);
+  background-color: bg-color-darker($accent-hue);
+  &[data-state='checked'] {
+    background-color: highlight-color-dark($accent-hue);
+    border-color: border-color-dark-hover($accent-hue);
   }
-
-  .DialogTitle {
-    text-align: center;
-    font-size: calc(1.33333333 * var(--font-size));
+  &[data-disabled] {
+    background-color: bg-color-dark-disabled($accent-hue);
+    border-color: border-color-dark-disabled($accent-hue);
+    cursor: not-allowed;
   }
+}
 
-  /***   Dropdown Menu   ***/
-
-  .DropdownMenuArrow {
-    fill: $dark-gray-4;
+.SwitchThumb {
+  display: block;
+  position: relative;
+  border-radius: 9999px;
+  height: 18px;
+  width: 18px;
+  transform: translateX(-2px);
+  background-color: $line-bright;
+  &[data-state='checked'] {
+    transform: translateX(15px);
   }
-
-  .DropdownMenuContent {
-    background-color: $dark-gray-4;
-    z-index: 2;
-    padding: 4px 0px 2px;
-    border-radius: var(--border-radius);
-    font-size: var(--small-font);
+  &[data-disabled] {
+    background-color: $line-disabled;
   }
+}
 
-  .DropdownMenuItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    cursor: pointer;
-    &:hover {
-      background-color: highlight-color-dark($accent-hue);
-    }
+/***   Tabs   ***/
+
+.TabsRoot {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1.5px solid $dark-gray-5;
+  width: 100%;
+  align-self: stretch;
+}
+
+.TabsList {
+  display: grid;
+  background-color: $dark-gray-2;
+}
+
+.TabsTrigger {
+  padding: 8px 8px 10px 8px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid $dark-gray-5;
+  color: $text-secondary-dark;
+  &:hover {
+    background-color: $dark-gray-1;
+    padding-bottom: 8px;
+    border-bottom: 3px solid $dark-gray-5;
   }
-
-  .DropdownMenuItem_icon {
-    font-size: 1.2em;
-    //margin-right: 8px;
-  }
-
-  .DropdownMenuSeparator {
-    height: 1px;
-    margin: 4px 0px;
-    background-color: $light-gray;
-  }
-
-  .DropdownMenuTrigger {
-    @include basic-focus-gray;
-    font-size: var(--small-font);
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    gap: 8px;
-    border: 1.5px solid $mid-gray-darker;
-    background-color: $dark-gray-3;
-    &:hover {
-      background-color: $dark-gray-2;
-    }
-    &[data-state="open"] {
-      background-color: $dark-gray-1;
-      border-color: $mid-gray;
-    }
-  }
-
-  .DropdownMenuTrigger___withChevron {
-    padding: 8px 16px 8px 8px;
-  }
-
-  /***   Help Bubble   ***/
-
-  .HelpBubbleTrigger {
-    @include basic-focus;
+  &[data-state="active"] {
     color: $text-main-dark;
-    height: 1.2em;
-    min-height: 1.2em;
-    width: 1.2em;
-    min-width: 1.2em;
-    border-radius: 1.2em;
-    border: 1px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-    background-color: inherit;
+    background-color: bg-color-dark($accent-hue);
+    padding-bottom: 8px;
+    border-bottom: 3px solid highlight-color-dark($accent-hue);
   }
+}
+.TabsContent {
+  padding: 8px;
+  background-color: $dark-gray-1;
+}
 
-  /***   HR   ***/
+/***   Toggle   ***/
 
-  .Hr {
-    width: 100%;
-    border: none;
-    border-top: 2px solid $dark-gray-5;
+.ToggleRoot {
+  &[data-disabled] {
+    cursor: not-allowed;
   }
+}
 
-  /***   Input   ***/
+/***   Toggle Group   ***/
 
-  input[type="text"],
-  input[type="search"],
-  input[type="password"],
-  input[type="email"]
-  {
-    $this-hue: $accent-hue;
-    width: 25ch;
-    padding: 4px 8px;
-    color: $line-mid;
-    border-radius: var(--border-radius);
-    border: 1.5px solid border-color-dark($this-hue);
-    background-color: bg-color-darker($this-hue);
-    font-size: var(--smaller-font);
-    &::placeholder {
-      font-style: italic;
-      color: $text-disabled-dark;
-    }
-    &:hover {
-      border-color: border-color-dark-hover($this-hue);
-    }
-    &:focus {
-      background-color: bg-color-darkest($this-hue);
-    }
-    &.TextInput___invalid {
-      background-color: bg-color-darker($error-hue);
-      border-color: border-color-dark($error-hue);
-      &:hover {
-        border-color: border-color-dark-hover($error-hue);
-      }
-      &:focus {
-        background-color: bg-color-darkest($error-hue);
-      }
-    }
-  }
-
-  input[type="email"] {
-    width: 30ch;
-  }
-
-  input[type="number"] {
-    @include basic-hover;
-    @include basic-focus;
-    color: $line-bright;
-    background-color: bg-color-darker($accent-hue);
-    border-radius: var(--border-radius);
-    font-size: var(--smaller-font);
-    padding: 4px 8px;
-    border: 1.5px solid border-color-dark($accent-hue);
-    &:hover {
-      border-color: border-color-dark-hover($accent-hue);
-    }
-    &:focus {
-      box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
-    }
-    &[disabled] {
-      color: $text-disabled-dark;
-      background-color: $dark-gray-3;
-      border-color: border-color-dark-disabled($accent-hue);
-      cursor: not-allowed;
-    }
-  }
-
-  /***   Links   ***/
-
-  a {
-    $this-hue: $yellow-hue;
-    text-decoration: underline;
-    color: ui-line-color-dark($this-hue);
-    border-radius: var(--border-radius);
-    &:hover {
-      color: ui-line-color-hover-dark($this-hue);
-    }
-    &:focus {
-      box-shadow: 0 0 0 3px shadow-color-focus($accent-hue);
-    }
-  }
-
-  a.ButtonLink, div.ButtonLink {
-    $this-hue: $yellow-hue;
-    border-radius: var(--border-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 12px;
-    .App___threeColumns & {
-      padding: 6px 16px;
-    }
-    gap: 4px;
-    border: 1.5px solid ui-line-color-dark($this-hue);
-    //border: 1.5px solid;
-    &:hover {
-      color: ui-line-color-hover-dark($this-hue);
-      border-color: ui-line-color-hover-dark($this-hue);
-    }
-    &:focus {
-      box-shadow: 0px 0px 0px 3px shadow-color-focus($this-hue);
-    }
-    &.disabled {
-      color: border-color-dark-disabled($this-hue);
-      border-color: border-color-dark-disabled($this-hue);
-    }
-    span {
-      font-size: 14px;
-    }
-  }
-
-  /***   Popover   ***/
-
-  .PopoverContent {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 8px 12px 12px 12px;
-    max-width: calc(40 * var(--font-size));
-    border-radius: var(--border-radius);
-    border: 2px solid $light-gray;
-    background-color: $mid-gray;
-    //box-shadow: 0 0 0px 4px $dark-gray;
-    &:focus {
-      outline: none;
-    }
-    span {
-      align-self: center;
-      display: flex;
-      align-items: center;
-    }
-  }
-
-  .PopoverCloseButton {
-    align-self: flex-start;
-    margin-top: 4px;
-    padding: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid $light-gray;
-  }
-
-  .PopoverArrow {
-    z-index: 1;
-    fill: $light-gray;
-  }
-
-  /***   Select   ***/
-
-  .SelectTrigger {
-    @include basic-hover;
-    @include basic-focus;
-    width: 10em;
-    font-size: var(--small-font);
-    border: 1.5px solid border-color-dark($accent-hue);
-    background-color: bg-color-darker($accent-hue);
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    line-height: 1.2;
-    &.SmallSelect {
-      font-size: var(--smaller-font);
-      padding: 4px 8px;
-      width: 11em;
-      gap: 6px;
-    }
-    span {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
-
-  .SelectIcon {
-    width: 1em;
-    height: 1em;
-  }
-
-  .SelectContent {
-    z-index: 2;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    font-size: var(--small-font);
-    padding: 3px 0px;
-    border: 1.5px solid border-color-dark($accent-hue);
-    background-color: bg-color-darker($accent-hue);
-    &:hover {
-      border-color: border-color-dark-hover($accent-hue);
-    }
-    &.SmallSelect {
-      font-size: var(--smaller-font);
-      padding: 2px 0px;
-    }
-  }
-
-  .SelectLabel {
-    font-size: calc(0.9375 * var(--small-font));
-    padding: 6px 16px;
-    font-style: italic;
-    color: $text-disabled-dark;
-    border-color: $line-disabled;
-    .SmallSelect & {
-      padding: 4px 12px;
-    }
-  }
-
-  .SelectItem {
-    position: relative;
-    cursor: pointer;
-    padding: 6px 6px 6px 28px;
-    user-select: none;
-    &[data-highlighted] {
-      background-color: highlight-color-dark($accent-hue);
-    }
-    .SmallSelect & {
-      padding: 5px 5px 5px 24px;
-    }
-  }
-
-  .SelectItemIndicator {
-    position: absolute;
-    left: 6px;
-    .SmallSelect & {
-      left: 4px;
-    }
-  }
-
-  .SelectScrollButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    height: 24px;
-    background-color: bg-color-darkest($accent-hue);
-    &.up {
-      border-bottom: 1.5px solid border-color-dark($accent-hue);
-    }
-    &.down {
-      border-top: 1.5px solid border-color-dark($accent-hue);
-    }
-  }
-
-  /*** Scroll Area ***/
-
-  .ScrollAreaScrollbar {
-    display: flex;
-    user-select: none;
-    touch-action: none;
-    padding: 2px;
-    background: #333;
-    border-radius: 12px;
-    //transition: background 160ms ease-out;
-    &[data-orientation='horizontal'] {
-      flex-direction: column;
-      height: 12px;
-    }
-  }
-
-  .ScrollAreaThumb {
-    flex: 1;
-    background: #666;
-    border-radius: 12px;
-    position: relative;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      min-width: 44px;
-      min-height: 44px;
-    }
-  }
-
-  /***   Switch   ***/
-
-  .SwitchRoot {
-    @include basic-hover;
-    @include basic-focus;
-    display: block;
-    position: relative;
-    border-radius: 9999px;
-    width: 42px;
-    height: 25px;
-    border: 1.5px solid border-color-dark($accent-hue);
-    background-color: bg-color-darker($accent-hue);
-    &[data-state='checked'] {
-      background-color: highlight-color-dark($accent-hue);
-      border-color: border-color-dark-hover($accent-hue);
-    }
-    &[data-disabled] {
-      background-color: bg-color-dark-disabled($accent-hue);
-      border-color: border-color-dark-disabled($accent-hue);
-      cursor: not-allowed;
-    }
-  }
-
-  .SwitchThumb {
-    display: block;
-    position: relative;
-    border-radius: 9999px;
-    height: 18px;
-    width: 18px;
-    transform: translateX(-2px);
-    background-color: $line-bright;
-    &[data-state='checked'] {
-      transform: translateX(15px);
-    }
-    &[data-disabled] {
-      background-color: $line-disabled;
-    }
-  }
-
-  /***   Tabs   ***/
-
-  .TabsRoot {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    border: 1.5px solid $dark-gray-5;
-    width: 100%;
-    align-self: stretch;
-  }
-
-  .TabsList {
-    display: grid;
-    background-color: $dark-gray-2;
-  }
-
-  .TabsTrigger {
-    padding: 8px 8px 10px 8px;
+.ToggleGroup {
+  $this-hue: $accent-hue;
+  border-radius: var(--border-radius);
+  border: 1.5px solid border-color-dark($this-hue);
+  overflow: hidden;
+  display: flex;
+  gap: 1px;
+  background-color: border-color-dark($this-hue);
+  button {
     border-radius: 0;
-    border: none;
-    border-bottom: 1px solid $dark-gray-5;
+    padding: 4px 12px;
+    background-color: $dark-gray-1;
     color: $text-secondary-dark;
-    &:hover {
-      background-color: $dark-gray-1;
-      padding-bottom: 8px;
-      border-bottom: 3px solid $dark-gray-5;
-    }
-    &[data-state="active"] {
+    &[data-state="on"] {
       color: $text-main-dark;
       background-color: bg-color-dark($accent-hue);
-      padding-bottom: 8px;
-      border-bottom: 3px solid highlight-color-dark($accent-hue);
     }
   }
-  .TabsContent {
-    padding: 8px;
-    background-color: $dark-gray-1;
-  }
+}
 
-  /***   Toggle   ***/
+/***   Tooltip   ***/
 
-  .ToggleRoot {
-    &[data-disabled] {
-      cursor: not-allowed;
-    }
-  }
+.TooltipContent {
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  font-size: var(--smaller-font);
+  background-color: $light-gray-bg;
+  color: $dark-gray-1;
+  padding: 6px 12px;
+  z-index: 3;
+  //border: 1px solid $dark-gray-lighter;
+  //box-shadow: 0px 0px 0px 3px $dark-gray;
+}
 
-  /***   Toggle Group   ***/
-
-  .ToggleGroup {
-    $this-hue: $accent-hue;
-    border-radius: var(--border-radius);
-    border: 1.5px solid border-color-dark($this-hue);
-    overflow: hidden;
-    display: flex;
-    gap: 1px;
-    background-color: border-color-dark($this-hue);
-    button {
-      border-radius: 0;
-      padding: 4px 12px;
-      background-color: $dark-gray-1;
-      color: $text-secondary-dark;
-      &[data-state="on"] {
-        color: $text-main-dark;
-        background-color: bg-color-dark($accent-hue);
-      }
-    }
-  }
-
-  /***   Tooltip   ***/
-
-  .TooltipContent {
-    display: flex;
-    align-items: center;
-    border-radius: var(--border-radius);
-    font-size: var(--smaller-font);
-    background-color: $light-gray-bg;
-    color: $dark-gray-1;
-    padding: 6px 12px;
-    z-index: 3;
-    //border: 1px solid $dark-gray-lighter;
-    //box-shadow: 0px 0px 0px 3px $dark-gray;
-  }
-
-  .TooltipArrow {
-    fill: $light-gray-bg;
-  }
+.TooltipArrow {
+  fill: $light-gray-bg;
+}
 
 
 
 
-  /*****************/
-  /***   OTHER   ***/
-  /*****************/
+/*****************/
+/***   OTHER   ***/
+/*****************/
 
 
 
 
-  .spacer {
-    height: var(--font-size);
-  }
+.spacer {
+  height: var(--font-size);
+}
