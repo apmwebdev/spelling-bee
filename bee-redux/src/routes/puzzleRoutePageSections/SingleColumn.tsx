@@ -22,7 +22,10 @@ export function SingleColumn() {
     <div className="PuzzleMain_section">
       <PuzzleNav />
       <Progress />
-      <Tabs.Root defaultValue="puzzle" className="PuzzleSectionTabs">
+      <Tabs.Root
+        defaultValue="puzzle"
+        className="PuzzleSectionTabs SingleColumnTabs"
+      >
         <Tabs.List style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
           <Tabs.Trigger value="puzzle">Puzzle</Tabs.Trigger>
           <Tabs.Trigger value="words">Words</Tabs.Trigger>

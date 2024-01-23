@@ -42,7 +42,7 @@ export function HintContentBlurButton({
       type={isBlurred ? IconButtonTypeKeys.Show : IconButtonTypeKeys.Hide}
       tooltip={isBlurred ? "Show hint content" : "Hide hint content"}
       onClick={handleClick}
-      className="HintContentBlurButton"
+      className="HintContentBlurButton IconButton IconButton_Square"
     />
   );
 }

@@ -10,20 +10,6 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-@use 'colors' as *;
-
-.Error_title {
-  padding: 8px;
-  color: var(--text-secondary-large);
-  text-decoration: underline;
-}
-
-.Error_subtitle {
-  padding: 8px;
-  font-weight: bold;
-}
-
-.Error_message {
-  font-size: calc(1.5 * var(--font-size));
-  padding: 16px;
+export function WrongGuessesSettings() {
+  return <div className="WordListSettingsContent">Coming soon!</div>;
 }

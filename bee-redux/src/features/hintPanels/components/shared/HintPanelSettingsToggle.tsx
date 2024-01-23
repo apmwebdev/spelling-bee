@@ -10,8 +10,6 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import * as Toggle from "@/components/radix-ui/radix-toggle";
-import { Icon } from "@iconify/react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   PanelCurrentDisplayStateProperties,
@@ -20,8 +18,9 @@ import {
 } from "@/features/hintPanels";
 
 import { Uuid } from "@/features/api";
+import { SettingsToggle } from "@/components/SettingsToggle";
 
-export function SettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
+export function HintPanelSettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
   const dispatch = useAppDispatch();
   const display = useAppSelector(selectPanelDisplayState(panelUuid));
   const toggleExpanded = () => {
@@ -34,12 +33,9 @@ export function SettingsToggle({ panelUuid }: { panelUuid: Uuid }) {
     );
   };
   return (
-    <Toggle.Root
-      className="PanelSettingsToggle HintPanelHeaderButton IconButton"
-      pressed={display.isSettingsExpanded}
-      onPressedChange={toggleExpanded}
-    >
-      <Icon icon="mdi:cog" />
-    </Toggle.Root>
+    <SettingsToggle
+      isPressed={display.isSettingsExpanded}
+      clickHandler={toggleExpanded}
+    />
   );
 }

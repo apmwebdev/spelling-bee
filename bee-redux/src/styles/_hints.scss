@@ -41,6 +41,16 @@
   padding: 6px 4px;
 }
 
+@mixin hint-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  .App___oneColumn & {
+    grid-template-columns: 1fr;
+  }
+  justify-content: stretch;
+  gap: 8px;
+}
+
 
 
 
@@ -69,12 +79,12 @@
 .HintPanel {
   position: relative;
   border-radius: var(--border-radius);
-  border: 1.5px solid $dark-gray-5;
+  border: 1.5px solid var(--dark-gray-5);
   overflow: hidden;
-  background-color: $dark-gray-1;
+  background-color: var(--dark-gray-1);
   &[data-state="closed"] {
-    color: $line-mid;
-    border-color: $dark-gray-5;
+    color: var(--line-mid);
+    border-color: var(--dark-gray-5);
   }
   &.Dragging {
     opacity: 20%;
@@ -84,7 +94,7 @@
     outline: 3px dotted;
   }
   &.Sorting {
-    border-color: $mid-gray-lighter;
+    border-color: var(--mid-gray-lighter);
   }
 }
 
@@ -95,8 +105,8 @@
   align-items: center;
   gap: 6px;
   padding: 3px 4px;
-  background-color: $dark-gray-2;
-  border-bottom: 1px solid $dark-gray-5;
+  background-color: var(--dark-gray-2);
+  border-bottom: 1px solid var(--dark-gray-5);
   .HintPanel[data-state="closed"] & {
     border-bottom-color: transparent;
   }
@@ -114,25 +124,25 @@ button.HintPanelHeaderButton {
   justify-content: center;
   font-weight: bold;
   padding: 8px;
-  border: 1px solid $dark-gray-2;
-  background-color: $dark-gray-2;
+  border: 1px solid var(--dark-gray-2);
+  background-color: var(--dark-gray-2);
   &.IconButton {
     font-size: calc(1.11111111 * var(--font-size));
   }
   &:hover {
-    background-color: $dark-gray-1;
-    border-color: $mid-gray-darker;
+    background-color: var(--dark-gray-1);
+    border-color: var(--mid-gray-darker);
   }
   &:focus {
-    box-shadow: 0 0 0 1px $mid-gray-darker;
+    box-shadow: 0 0 0 1px var(--mid-gray-darker);
   }
   .HintPanel[data-state="closed"] & {
-    color: $line-mid;
+    color: var(--line-mid);
     background-color: inherit;
-    border-color: $dark-gray-2;
+    border-color: var(--dark-gray-2);
     &:hover {
-      background-color: $dark-gray-1;
-      border-color: $mid-gray-darker;
+      background-color: var(--dark-gray-1);
+      border-color: var(--mid-gray-darker);
     }
   }
 }
@@ -140,25 +150,25 @@ button.HintPanelHeaderButton {
 button.IconButton.DragHandle {
   cursor: move;
   .HintPanel.Overlay & {
-    background-color: $line-bright;
-    color: $dark-gray-2;
+    background-color: var(--line-bright);
+    color: var(--dark-gray-2);
   }
 }
 
-button.PanelSettingsToggle {
+button.SettingsToggle {
   $this-hue: $accent-hue;
   padding: 8px;
-  color: $line-bright;
+  color: var(--line-bright);
   &[data-state="on"] {
-    background-color: $line-mid;
+    background-color: var(--line-mid);
     border-color: transparent;
-    color: $dark-gray-2;
+    color: var(--dark-gray-2);
     &:hover {
-      background-color: $line-bright;
+      background-color: var(--line-bright);
     }
     .HintPanel[data-state="closed"] & {
-      background-color: $line-mid;
-      color: $dark-gray-2;
+      background-color: var(--line-mid);
+      color: var(--dark-gray-2);
     }
   }
 }
@@ -170,35 +180,18 @@ button.PanelSettingsToggle {
   justify-content: center;
 }
 
-.SettingsCollapsible {
-  font-size: var(--small-font);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  border: 1.5px solid $dark-gray-5;
-  background-color: $dark-gray-2;
-  margin-bottom: 8px;
-  //border-color: border-color($this-hue);
-  span.disabled {
-    color: $text-disabled-dark;
-  }
-  &[data-state="closed"] {
-    color: $line-mid;
-    border-color: $dark-gray-4;
-  }
-}
-
 .SettingsCollapsibleHeader {
   padding: 2px;
-  background-color: $dark-gray-3;
-  border-bottom: 1px solid $dark-gray-5;
+  background-color: var(--dark-gray-3);
+  border-bottom: 1px solid var(--dark-gray-5);
   button {
     border: 1.5px solid transparent;
     &.button {
-      background-color: $dark-gray-3;
+      background-color: var(--dark-gray-3);
     }
     &:hover {
-      border-color: $dark-gray-5;
-      background-color: $dark-gray-2;
+      border-color: var(--dark-gray-5);
+      background-color: var(--dark-gray-2);
       //border-color: transparent;
     }
   }
@@ -217,7 +210,9 @@ button.PanelSettingsToggle {
 }
 
 .HintPanelSettings {
-  @extend .SettingsCollapsible;
+  border: 1.5px solid var(--dark-gray-5);
+  margin-bottom: 8px;
+  padding: 16px;
 }
 
 .HintPanelSettingsHeader {
@@ -232,17 +227,10 @@ button.PanelSettingsToggle {
 }
 
 .GeneralPanelSettings {
-  border-top: 2px solid $dark-gray-5;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  .App___oneColumn & {
-    grid-template-columns: 1fr;
-  }
-  justify-content: stretch;
+  border-top: 2px solid var(--dark-gray-5);
   align-items: center;
-  column-gap: 8px;
-  row-gap: 8px;
-  padding: 8px 8px;
+  padding: 8px;
+  @include hint-settings-grid;
 }
 
 .GeneralPanelSettingsStatusTracking, .PanelNameInputForm {
@@ -254,11 +242,15 @@ button.PanelSettingsToggle {
 
 .PanelInitialDisplayControlsContainer {
   display: grid;
+  grid-column: 1 / 3;
   align-items: center;
   justify-content: stretch;
   gap: 12px;
-  border-top: 1px solid $dark-gray-5;
+  border-top: 1px solid var(--dark-gray-5);
   padding-top: 8px;
+  .App___oneColumn & {
+    grid-column: 1 / 2;
+  }
 }
 
 .PanelInitialDisplayControls {
@@ -267,6 +259,9 @@ button.PanelSettingsToggle {
   align-items: flex-start;
   justify-content: stretch;
   gap: 12px;
+  .App___oneColumn & {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .PanelInitDisplayControl label {
@@ -277,7 +272,7 @@ button.PanelSettingsToggle {
   justify-content: center;
   .CheckboxRoot[data-disabled] + div {
     span {
-      color: $text-disabled-dark;
+      color: var(--text-disabled);
     }
   }
 }
@@ -290,7 +285,7 @@ button.PanelSettingsToggle {
 
 .HintLettersOffsetControl {
   &.disabled {
-    color: $text-disabled-dark;
+    color: var(--text-disabled);
   }
 }
 
@@ -322,14 +317,23 @@ button.PanelSettingsToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  //gap: 32px;
+  padding-bottom: 8px;
   > div {
     display: flex;
     align-items: center;
-    //justify-content: stretch;
     gap: 8px;
   }
+  .App___oneColumn & {
+    align-items: flex-start;
+    > div {
+      display: grid;
+    }
+  }
+  > div.HintPanelQuickActions_buttons {
+    display: flex;
+  }
 }
+
 
 .HintContentBlur {
   position: absolute;
@@ -341,27 +345,18 @@ button.PanelSettingsToggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $dark-gray-4;
+  background-color: var(--dark-gray-4);
   border-radius: var(--border-radius);
 }
 
 .PanelSettings {
   padding: 8px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: stretch;
-  gap: 8px;
+  @include hint-settings-grid;
   > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-}
-
-.PanelOverlay {
-  background-color: white;
-  color: black;
-  padding: 24px;
 }
 
 
@@ -407,8 +402,8 @@ button.PanelSettingsToggle {
 
 .LetterPanel_WLG_TrackingKey {
   padding: 2px 8px;
-  background-color: $dark-gray-2;
-  border: 1px solid $line-darkest;
+  background-color: var(--dark-gray-2);
+  border: 1px solid var(--line-darkest);
 }
 
 .LetterPanel_WordLengthGrid {
@@ -428,7 +423,7 @@ button.PanelSettingsToggle {
   .LetterPanel_WLG_TotalColumn,
   .LetterPanel_WLG_TotalRow,
   {
-    border-left: 1px solid $line-darkest;
+    border-left: 1px solid var(--line-darkest);
   }
 
 }
@@ -443,11 +438,11 @@ button.PanelSettingsToggle {
 .LetterPanel_WLG_RowHeader,
 .LetterPanel_WLG_TotalRow,
 {
-  border-top: 1px solid $line-darkest;
+  border-top: 1px solid var(--line-darkest);
 }
 
 .LetterPanel_WLG_ContentFull {
-  background-color: $dark-gray-2;
+  background-color: var(--dark-gray-2);
 }
 
 .LetterPanel_WordCountList,
@@ -484,8 +479,8 @@ button.PanelSettingsToggle {
 
 .LetterPanel_WCL_CellCount {
   @include hint-cell;
-  border: 1px solid $line-darkest;
-  background-color: $dark-gray-2;
+  border: 1px solid var(--line-darkest);
+  background-color: var(--dark-gray-2);
 }
 
 .LetterPanel_LPL_Row {
@@ -495,7 +490,7 @@ button.PanelSettingsToggle {
   column-gap: 16px;
   row-gap: 8px;
   padding: 8px;
-  border-bottom: 1px solid $line-darkest;
+  border-bottom: 1px solid var(--line-darkest);
 }
 
 
@@ -519,6 +514,25 @@ button.PanelSettingsToggle {
   }
 }
 
+.SearchPanelSettings {
+  .HintPanelLocationControl {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    .App___oneColumn & {
+      grid-row: auto;
+      grid-column: auto;
+    }
+  }
+  .HintLettersOffsetControl {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    .App___oneColumn & {
+      grid-row: auto;
+      grid-column: auto;
+    }
+  }
+}
+
 .SearchPanelResults {
   display: flex;
   flex-direction: column;
@@ -529,8 +543,8 @@ button.PanelSettingsToggle {
   border-radius: var(--border-radius);
   position: relative;
   overflow: hidden;
-  border: 1.5px solid $dark-gray-5;
-  background-color: $dark-gray-2;
+  border: 1.5px solid var(--dark-gray-5);
+  background-color: var(--dark-gray-2);
 }
 
 .SearchHintSearchResultHeader {
@@ -540,8 +554,8 @@ button.PanelSettingsToggle {
   align-items: center;
   justify-content: center;
   padding: 2px;
-  background-color: $dark-gray-3;
-  border-bottom: 1px solid $dark-gray-5;
+  background-color: var(--dark-gray-3);
+  border-bottom: 1px solid var(--dark-gray-5);
 }
 
 .IconButton.SearchResultHeaderRemoveButton {
@@ -550,14 +564,14 @@ button.PanelSettingsToggle {
   top: 2px;
   padding: 4px;
   font-size: 16px;
-  background-color: $dark-gray-3;
-  border-color: $dark-gray-3;
+  background-color: var(--dark-gray-3);
+  border-color: var(--dark-gray-3);
   &:hover {
-    border-color: $dark-gray-5;
-    background-color: $dark-gray-1;
+    border-color: var(--dark-gray-5);
+    background-color: var(--dark-gray-1);
   }
   &:focus {
-    box-shadow: 0 0 0 1.5px $dark-gray-5;
+    box-shadow: 0 0 0 1.5px var(--dark-gray-5);
   }
 }
 
@@ -578,16 +592,16 @@ button.PanelSettingsToggle {
   //padding: 1.5px;
   border-radius: var(--border-radius);
   overflow: hidden;
-  border: 1px solid $mid-gray;
-  background-color: $mid-gray;
+  border: 1px solid var(--mid-gray);
+  background-color: var(--mid-gray);
 }
 
 .SearchPanelResultKeyItem {
-  background-color: $dark-gray-3;
+  background-color: var(--dark-gray-3);
   header {
     padding: 6px 8px;
-    background-color: $dark-gray-4;
-    border-bottom: 1px solid $mid-gray;
+    background-color: var(--dark-gray-4);
+    border-bottom: 1px solid var(--mid-gray);
   }
   > div {
     padding: 6px 8px;
@@ -608,18 +622,18 @@ button.PanelSettingsToggle {
     @include hint-cell;
   }
   td {
-    border: 1px solid $mid-gray;
+    border: 1px solid var(--mid-gray);
     &.HasContent {
-      background-color: $dark-gray-1;
+      background-color: var(--dark-gray-1);
     }
     &:last-child {
       border-right-color: transparent;
-      background-color: $dark-gray-1;
+      background-color: var(--dark-gray-1);
     }
   }
   th {
-    border-bottom: 1px solid $mid-gray-lighter;
-    background-color: $dark-gray-2;
+    border-bottom: 1px solid var(--mid-gray-lighter);
+    background-color: var(--dark-gray-2);
   }
 }
 
@@ -659,7 +673,7 @@ button.PanelSettingsToggle {
 .ObscurityPanelTable {
   th, td {
     text-align: left;
-    border: 1px solid $mid-gray;
+    border: 1px solid var(--mid-gray);
   }
   td {
     padding: 6px 12px;
@@ -669,7 +683,7 @@ button.PanelSettingsToggle {
     padding: 8px 12px;
   }
   thead {
-    background-color: $dark-gray-2;
+    background-color: var(--dark-gray-2);
   }
 }
 

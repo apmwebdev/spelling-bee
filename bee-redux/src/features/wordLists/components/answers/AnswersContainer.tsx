@@ -17,16 +17,15 @@ import {
   selectRemainingAnswerWords,
   selectValidLetters,
 } from "@/features/puzzle";
-import { WordListScroller } from "../WordListScroller";
 import {
   selectAnswersListSettings,
+  setAnswersSortOrder,
   toggleAnswersSettingsCollapsed,
 } from "@/features/wordLists";
 import answerSorter from "./answerSorter";
 import { selectSpoiledWords } from "@/features/guesses";
-import { AnswersListHeader } from "./AnswersListHeader";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { AnswersSettings } from "@/features/wordLists/components/answers/AnswersSettings";
+import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();
@@ -37,6 +36,7 @@ export function AnswersContainer() {
   const validLetters = useAppSelector(selectValidLetters);
   const {
     settingsCollapsed,
+    sortType,
     sortOrder,
     remainingAndSpoiledOnly,
     remainingRevealFirstLetter,
@@ -60,25 +60,25 @@ export function AnswersContainer() {
 
   return (
     <div className="AnswersContainer">
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() => dispatch(toggleAnswersSettingsCollapsed())}
-      >
-        <AnswersSettings />
-      </SettingsCollapsible>
       <div className="AnswersStatus WordListStatus">
         There are{" "}
         <span className="WordListStatusCount">{answerWords.length}</span>{" "}
         answers for this puzzle.
       </div>
-      <div className="WordListContainer">
-        <AnswersListHeader />
-        <WordListScroller
-          wordList={displayList}
-          allowPopovers={true}
-          useSpoilers={true}
-        />
-      </div>
+      <WordListContainer
+        wordList={displayList}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () => dispatch(toggleAnswersSettingsCollapsed()),
+          settingsComponent: <AnswersSettings />,
+        }}
+        sortType={sortType}
+        sortOrder={sortOrder}
+        setSortOrder={setAnswersSortOrder}
+        emptyListMessage="No answers"
+        allowPopovers={true}
+        useSpoilers={true}
+      />
     </div>
   );
 }

@@ -33,14 +33,12 @@ export function SearchPanelSettings({
         panelUuid={panelUuid}
         location={location}
         panelType={PanelTypes.Search}
-        style={{ gridRow: "2/3", gridColumn: "1/2" }}
       />
       <HintLettersOffsetControl
         panelUuid={panelUuid}
         lettersOffset={lettersOffset}
         disabled={location === SearchPanelLocationKeys.Anywhere}
         disabledTooltip="Can't use Offset with 'Location' set to 'Anywhere'"
-        style={{ gridRow: "2/3", gridColumn: "2/3" }}
       />
     </div>
   );

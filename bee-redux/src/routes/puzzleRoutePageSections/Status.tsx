@@ -19,7 +19,6 @@ export function Status() {
     <div className="Status PuzzleMain_section">
       <Progress />
       <WordLists />
-      {/* TODO: Add attempt functionality */}
       <AttemptControls />
     </div>
   );

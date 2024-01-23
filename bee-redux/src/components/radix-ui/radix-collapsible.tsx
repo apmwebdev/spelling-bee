@@ -41,12 +41,31 @@ export const Root = forwardRef(
 export const Trigger = (
   props: IntrinsicAttributes &
     CollapsibleTriggerProps &
+    RefAttributes<HTMLButtonElement>,
+) => {
+  const { children, className, ...otherProps } = props;
+  return (
+    <Collapsible.Trigger
+      {...otherProps}
+      className={classNames("CollapsibleTrigger", className)}
+    >
+      {children}
+    </Collapsible.Trigger>
+  );
+};
+
+export const TitleTrigger = (
+  props: IntrinsicAttributes &
+    CollapsibleTriggerProps &
     RefAttributes<HTMLButtonElement> & { title: string },
 ) => {
   const { title, className, ...rest } = props;
   return (
     <Collapsible.Trigger asChild>
-      <button {...rest} className={classNames("CollapsibleTrigger", className)}>
+      <button
+        {...rest}
+        className={classNames("CollapsibleTitleTrigger", className)}
+      >
         <HeaderDisclosureWidget title={title} />
       </button>
     </Collapsible.Trigger>

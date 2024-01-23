@@ -11,29 +11,35 @@
 */
 
 //Hues
-$yellow-hue: 51;
-$accent-hue: $yellow-hue + 150;
-$title-hue: $yellow-hue + 150;
+
+$yellow-hue: 50;
+$accent-hue: $yellow-hue + 165;
+$title-hue: $yellow-hue + 0;
 
 $success-hue: 130;
 $warning-hue: 56;
 $error-hue: 0;
 
 //Backgrounds
+
 @function bg-color-dark($hue) {
-  @return hsl($hue, 40%, 18%);
+  @return hsl($hue, 45%, 18%);
 }
 
 @function bg-color-dark-hover($hue) {
-  @return hsl($hue, 40%, 15%);
+  @return hsl($hue, 45%, 15%);
 }
 
 @function bg-color-darker($hue) {
-  @return hsl($hue, 40%, 10%);
+  @return hsl($hue, 45%, 10%);
 }
 
 @function bg-color-darkest($hue) {
-  @return hsl($hue, 40%, 5%);
+  @return hsl($hue, 45%, 5%);
+}
+
+@function bg-color-dark-inactive($hue) {
+  @return hsl($hue, 32%, 21%);
 }
 
 @function bg-color-dark-disabled($hue) {
@@ -41,8 +47,9 @@ $error-hue: 0;
 }
 
 //Borders
+
 @function border-color-dark($hue) {
-  @return hsl($hue, 28%, 28%);
+  @return hsl($hue, 28%, 29%);
 }
 
 @function border-color-dark-hover($hue) {
@@ -53,11 +60,30 @@ $error-hue: 0;
   @return hsl($hue, 12%, 25%);
 }
 
+// Shadows
+
 @function shadow-color-focus($hue) {
   @return hsl($hue, 20%, 70%, 0.2);
 }
 
-//Interactive Elements
+@function inset-shadow-color($hue) {
+  @return hsl($hue, 60%, 9%);
+}
+
+@function inset-shadow-color-hover($hue) {
+  @return hsl($hue, 70%, 7%);
+}
+
+@function inset-shadow-color-focus($hue) {
+  @return hsl($hue, 70%, 1%);
+}
+
+@function inset-shadow-color-inactive($hue) {
+  @return hsl($hue, 50%, 12%);
+}
+
+//Interactive element colors
+
 @function highlight-color-dark($hue) {
   @return hsl($hue, 60%, 40%);
 }
@@ -70,44 +96,30 @@ $error-hue: 0;
   @return hsl($hue, 75%, 45%);
 }
 
-//Status Text
+//Shadows
+
+@function button-inset-shadow($hue) {
+  @return inset 0px 0px 1px 2px $hue;
+}
+
+//Status text
+
 @function status-text-dark($hue) {
   @return hsl($hue, 85%, 82%);
 }
 
-//Gray Backgrounds
-$black: #050505; // body background
-$dark-gray-1: #121212; // main element content background
-$dark-gray-2: #1e1e1e; // main element header background, child element content background
-$dark-gray-3: #282828; // child element header background
-$dark-gray-4: #313131; // child element collapsed header background
-$dark-gray-5: #393939; // element border
-$mid-gray-darker: #444;
-$mid-gray: #555;
-$mid-gray-lighter: #666;
-$light-gray: #999;
-$light-gray-bg: #ddd;
-
-//Gray Lines
+//Returns a "white" color value with the given opacity, which will show as gray on dark backgrounds.
 @function gray-alpha($opacity) {
   @return rgba(255, 255, 255, $opacity);
 }
-$line-bright: gray-alpha(0.80);
-$line-mid: gray-alpha(0.73);
-$line-disabled: gray-alpha(0.36);
-$line-darkest: gray-alpha(0.3);
 
-//Text
+//Text - Leave these since there will be ones for light theme as well
+$line-bright: gray-alpha(0.80);
 $text-main-dark: $line-bright;
 $text-secondary-dark: gray-alpha(0.63);
 $text-secondary-large-dark: gray-alpha(0.55);
 $text-disabled-dark: gray-alpha(0.55);
-
-//One-off colors
-$yellow-main: hsl($yellow-hue, 85%, 27%);
-$yellow-line: hsl($yellow-hue, 78%, 50%);
-$accent-title: hsl($title-hue, 50%, 60%);
-$accent-title-hover: hsl($title-hue, 60%, 50%);
+$text-highlight-dark: gray-alpha(0.90);
 
 //Mixins
 @mixin basic-hover($hue: $accent-hue) {
@@ -145,6 +157,39 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 }
 
 :root {
+  //Gray backgrounds
+  --black: #050505; // Body background
+  --dark-gray-1: #121212; // Main element content (e.g., section) background
+  --dark-gray-2: #1e1e1e; // Main element header background, child element content background
+  --dark-gray-3: #282828; // Child element header background
+  --dark-gray-4:  #313131; // Child element collapsed header background
+  --dark-gray-5: #393939; // Element border
+  --mid-gray-darker: #444; // Border/shadow for grey buttons, disabled elements
+  --mid-gray: #555; // Contrast gray, used as a background/border in various places
+  --mid-gray-lighter: #666; // Used rarely as high contrast border
+  --light-gray: #999; // Border/line color for popovers, tooltips, etc.
+  --light-gray-bg: #ddd; // BG color for tooltips, meant to be inverse of normal color scheme
+
+  //Gray lines
+  --line-bright: #{gray-alpha(0.80)};
+  --line-mid: #{gray-alpha(0.73)};
+  --line-disabled: #{gray-alpha(0.36)};
+  --line-darkest: #{gray-alpha(0.3)};
+
+  //Text
+  --text-main: #{$text-main-dark};
+  --text-secondary: #{$text-secondary-dark};
+  --text-secondary-large: #{$text-secondary-large-dark};
+  --text-disabled: #{$text-disabled-dark};
+  --text-highlight: #{$text-highlight-dark};
+
+  //One-off colors
+  --yellow-main: hsl(#{$yellow-hue}, 85%, 30%);
+  --yellow-line: hsl(#{$yellow-hue}, 60%, 50%);
+  --accent-title: var(--yellow-line); //hsl(#{$title-hue}, 60%, 60%);
+  --accent-title-hover: var(--yellow-line); //hsl(#{$title-hue}, 70%, 50%);
+
+  //Status Text
   --success-text: #{status-text-dark($success-hue)};
   --warning-text: #{status-text-dark($warning-hue)};
   --error-text: #{status-text-dark($error-hue)};

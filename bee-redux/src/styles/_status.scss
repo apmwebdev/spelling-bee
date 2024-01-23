@@ -30,8 +30,8 @@
   .App___oneColumn & {
     gap: 8px;
   }
-  background-color: $dark-gray-2;
-  border: 1.5px solid $dark-gray-5;
+  background-color: var(--dark-gray-2);
+  border: 1.5px solid var(--dark-gray-5);
   padding: 8px 16px;
   border-radius: var(--border-radius);
 }
@@ -46,7 +46,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px;
-  border-bottom: 2px solid $mid-gray;
+  border-bottom: 2px solid var(--mid-gray);
   .App___threeColumns & {
     gap: 16px;
     padding: 8px 8px 16px;
@@ -80,7 +80,7 @@
   height: calc(0.7 * var(--gap-length));
   width: calc(0.7 * var(--gap-length));
   border-radius: calc(0.7 * var(--gap-length));
-  background-color: $mid-gray;
+  background-color: var(--mid-gray);
   &:not(:first-child):before {
     content: "";
     position: absolute;
@@ -88,12 +88,12 @@
     width: var(--gap-length);
     left: calc(-1 * var(--gap-length));
     top: calc(0.3 * var(--gap-length));
-    background-color: $mid-gray;
+    background-color: var(--mid-gray);
   }
   &:not(.active ~ .RankTic) {
-    background-color: $yellow-line;
+    background-color: var(--yellow-line);
     &:not(:first-child):before {
-      background-color: $yellow-line;
+      background-color: var(--yellow-line);
     }
   }
 }
@@ -166,21 +166,28 @@
 
 .WordListContainer {
   border-radius: var(--border-radius);
-  border: 1px solid $line-darkest;
+  border: 1px solid var(--line-darkest);
   overflow: hidden;
-  header {
-    font-size: var(--small-font);
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid $mid-gray;
-    > div {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  }
+}
+.WordListHeader {
+  font-size: var(--small-font);
+  border-bottom: 1px solid var(--mid-gray);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.WordListHeader_mainControls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.WordListHeader_sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .WordList {
@@ -234,15 +241,15 @@ button.WordPopoverTrigger {
 
 .hasPopover {
   &.perfect, &.pangram {
-    color: $yellow-line;
+    color: var(--yellow-line);
   }
 }
 
 button.Revealer {
   padding: 3px 8px;
-  border: 1px solid $mid-gray;
+  border: 1px solid var(--mid-gray);
   text-align: left;
-  background-color: $dark-gray-2;
+  background-color: var(--dark-gray-2);
   &:hover, &:active {
     text-decoration: underline;
   }

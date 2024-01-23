@@ -20,13 +20,12 @@
 }
 
 :root {
-  /* Border radius */
   --border-radius: 6px;
 }
 
 body {
-  color: $line-bright;
-  background-color: $black;
+  color: var(--line-bright);
+  background-color: var(--black);
   font-size: 16px;
 }
 
@@ -64,7 +63,7 @@ body {
 .PuzzleMain {
   display: grid;
   width: 100%;
-  justify-content: center;
+  justify-items: center;
 
   .App___threeColumns & {
     grid-template-columns: repeat(3, 1fr);
@@ -80,6 +79,7 @@ body {
 
 .PuzzleMain_section {
   max-width: 600px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -89,8 +89,19 @@ body {
 .PuzzleSectionTabs {
   & > .TabsContent[data-state="active"] {
     display: grid;
-    place-items: center;
-    background-color: $black;
+    align-items: center;
+    justify-content: stretch;
+    background-color: var(--black);
+  }
+}
+
+.SingleColumnTabs {
+  width: 100%;
+  &.TabsRoot {
+    border: none;
+  }
+  &.TabsContent {
+    padding: 8px 0px 0px;
   }
 }
 
@@ -103,10 +114,10 @@ body {
 
 .NonPuzzleMain {
   width: clamp(600px, 60%, 1280px);
-  background-color: $dark-gray-1;
+  background-color: var(--dark-gray-1);
   padding: 16px;
   border-radius: var(--border-radius);
-  border: 1.5px solid $dark-gray-5;
+  border: 1.5px solid var(--dark-gray-5);
 }
 
 
@@ -121,8 +132,8 @@ body {
 
 /***   Buttons   ***/
 
-@mixin button-mixin {
-  @include button-colors($accent-hue);
+@mixin button-mixin($hue: $accent-hue) {
+  @include button-colors($hue);
   display: grid;
   place-content: center;
   touch-action: manipulation;
@@ -134,14 +145,14 @@ body {
 @mixin gray-button-mixin {
   display: grid;
   place-content: center;
-  border: 1px solid $dark-gray-2;
-  background-color: $dark-gray-2;
+  border: 1px solid var(--dark-gray-2);
+  background-color: var(--dark-gray-2);
   &:hover {
-    background-color: $dark-gray-1;
-    border-color: $mid-gray-darker;
+    background-color: var(--dark-gray-1);
+    border-color: var(--mid-gray-darker);
   }
   &:focus {
-    box-shadow: 0 0 0 1px $mid-gray-darker;
+    box-shadow: 0 0 0 1px var(--mid-gray-darker);
   }
 }
 
@@ -159,12 +170,12 @@ button {
   @include button-mixin;
   font-size: 20px;
   padding: 4px 12px;
-  &.Square {
-    padding: 4px;
-    &.Small {
-      font-size: 16px;
-      padding: 3px;
-    }
+  &.IconButton_Square {
+    padding: 6px;
+  }
+  &.IconButton_Small {
+    font-size: 16px;
+    padding: 3px;
   }
   &.CloseButton {
     padding: 4px;
@@ -187,7 +198,7 @@ button {
 .CheckboxRoot {
   @include basic-hover;
   @include basic-focus;
-  color: $line-bright;
+  color: var(--line-bright);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,26 +218,23 @@ button {
 }
 
 /***   Collapsible   ***/
+
 .CollapsibleRoot {
-  display: flex;
-  flex-direction: column;
+  //display: flex;
+  //flex-direction: column;
 }
 
-.CollapsibleTrigger {
+.CollapsibleTitleTrigger {
   padding: 8px 24px;
   border: 1.5px solid transparent;
   background-color: inherit;
   &:hover {
-    background-color: $dark-gray-1;
-    border-color: $mid-gray-darker;
+    background-color: var(--dark-gray-1);
+    border-color: var(--mid-gray-darker);
   }
   &:focus {
-    box-shadow: 0 0 0 1px $mid-gray-darker;
+    box-shadow: 0 0 0 1px var(--mid-gray-darker);
   }
-}
-
-.CollapsibleContent {
-  padding: 16px;
 }
 
 /***   Dialog   ***/
@@ -250,8 +258,8 @@ button {
   align-items: center;
   gap: 16px;
   border-radius: var(--border-radius);
-  background-color: $dark-gray-2;
-  border: 2px solid $dark-gray-5;
+  background-color: var(--dark-gray-2);
+  border: 2px solid var(--dark-gray-5);
 }
 
 .DialogClose {
@@ -269,11 +277,11 @@ button {
 /***   Dropdown Menu   ***/
 
 .DropdownMenuArrow {
-  fill: $dark-gray-4;
+  fill: var(--dark-gray-4);
 }
 
 .DropdownMenuContent {
-  background-color: $dark-gray-4;
+  background-color: var(--dark-gray-4);
   z-index: 2;
   padding: 4px 0px 2px;
   border-radius: var(--border-radius);
@@ -299,7 +307,7 @@ button {
 .DropdownMenuSeparator {
   height: 1px;
   margin: 4px 0px;
-  background-color: $light-gray;
+  background-color: var(--light-gray);
 }
 
 .DropdownMenuTrigger {
@@ -309,14 +317,14 @@ button {
   align-items: center;
   padding: 8px;
   gap: 8px;
-  border: 1.5px solid $mid-gray-darker;
-  background-color: $dark-gray-3;
+  border: 1.5px solid var(--mid-gray-darker);
+  background-color: var(--dark-gray-3);
   &:hover {
-    background-color: $dark-gray-2;
+    background-color: var(--dark-gray-2);
   }
   &[data-state="open"] {
-    background-color: $dark-gray-1;
-    border-color: $mid-gray;
+    background-color: var(--dark-gray-1);
+    border-color: var(--mid-gray);
   }
 }
 
@@ -328,7 +336,7 @@ button {
 
 .HelpBubbleTrigger {
   @include basic-focus;
-  color: $text-main-dark;
+  color: var(--text-main);
   height: 1.2em;
   min-height: 1.2em;
   width: 1.2em;
@@ -347,7 +355,7 @@ button {
 .Hr {
   width: 100%;
   border: none;
-  border-top: 2px solid $dark-gray-5;
+  border-top: 2px solid var(--dark-gray-5);
 }
 
 /***   Input   ***/
@@ -360,14 +368,14 @@ input[type="email"]
   $this-hue: $accent-hue;
   width: 25ch;
   padding: 4px 8px;
-  color: $line-mid;
+  color: var(--line-mid);
   border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
   background-color: bg-color-darker($this-hue);
   font-size: var(--smaller-font);
   &::placeholder {
     font-style: italic;
-    color: $text-disabled-dark;
+    color: var(--text-disabled);
   }
   &:hover {
     border-color: border-color-dark-hover($this-hue);
@@ -394,7 +402,7 @@ input[type="email"] {
 input[type="number"] {
   @include basic-hover;
   @include basic-focus;
-  color: $line-bright;
+  color: var(--line-bright);
   background-color: bg-color-darker($accent-hue);
   border-radius: var(--border-radius);
   font-size: var(--smaller-font);
@@ -407,8 +415,8 @@ input[type="number"] {
     box-shadow: 0px 0px 0px 3px bg-color-darkest($accent-hue);
   }
   &[disabled] {
-    color: $text-disabled-dark;
-    background-color: $dark-gray-3;
+    color: var(--text-disabled);
+    background-color: var(--dark-gray-3);
     border-color: border-color-dark-disabled($accent-hue);
     cursor: not-allowed;
   }
@@ -419,7 +427,8 @@ input[type="number"] {
 a {
   $this-hue: $yellow-hue;
   text-decoration: underline;
-  color: ui-line-color-dark($this-hue);
+  //color: ui-line-color-dark($this-hue);
+  color: var(--yellow-line);
   border-radius: var(--border-radius);
   &:hover {
     color: ui-line-color-hover-dark($this-hue);
@@ -440,7 +449,8 @@ a.ButtonLink, div.ButtonLink {
     padding: 6px 16px;
   }
   gap: 4px;
-  border: 1.5px solid ui-line-color-dark($this-hue);
+  //border: 1.5px solid ui-line-color-dark($this-hue);
+  border: 1.5px solid var(--yellow-line);
   //border: 1.5px solid;
   &:hover {
     color: ui-line-color-hover-dark($this-hue);
@@ -469,8 +479,8 @@ a.ButtonLink, div.ButtonLink {
   padding: 8px 12px 12px 12px;
   max-width: calc(40 * var(--font-size));
   border-radius: var(--border-radius);
-  border: 2px solid $light-gray;
-  background-color: $mid-gray;
+  border: 2px solid var(--light-gray);
+  background-color: var(--mid-gray);
   //box-shadow: 0 0 0px 4px $dark-gray;
   &:focus {
     outline: none;
@@ -489,12 +499,12 @@ a.ButtonLink, div.ButtonLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $light-gray;
+  border: 1px solid var(--light-gray);
 }
 
 .PopoverArrow {
   z-index: 1;
-  fill: $light-gray;
+  fill: var(--light-gray);
 }
 
 /***   Select   ***/
@@ -551,8 +561,8 @@ a.ButtonLink, div.ButtonLink {
   font-size: calc(0.9375 * var(--small-font));
   padding: 6px 16px;
   font-style: italic;
-  color: $text-disabled-dark;
-  border-color: $line-disabled;
+  color: var(--text-disabled);
+  border-color: var(--line-disabled);
   .SmallSelect & {
     padding: 4px 12px;
   }
@@ -628,6 +638,27 @@ a.ButtonLink, div.ButtonLink {
   }
 }
 
+/***   Settings Collapsible   ***/
+
+.SettingsCollapsible {
+  font-size: var(--small-font);
+  border-radius: var(--border-radius);
+  background-color: var(--dark-gray-2);
+  border: 1.5px solid transparent;
+  overflow: hidden;
+  span.disabled {
+    color: var(--text-disabled-dark);
+  }
+  &[data-state="open"] {
+    border-color: var(--dark-gray-5);
+  }
+  &[data-state="closed"] {
+    color: var(--line-mid);
+    background-color: transparent;
+    border: 1.5px solid transparent;
+  }
+}
+
 /***   Switch   ***/
 
 .SwitchRoot {
@@ -658,12 +689,12 @@ a.ButtonLink, div.ButtonLink {
   height: 18px;
   width: 18px;
   transform: translateX(-2px);
-  background-color: $line-bright;
+  background-color: var(--line-bright);
   &[data-state='checked'] {
     transform: translateX(15px);
   }
   &[data-disabled] {
-    background-color: $line-disabled;
+    background-color: var(--line-disabled);
   }
 }
 
@@ -672,37 +703,38 @@ a.ButtonLink, div.ButtonLink {
 .TabsRoot {
   border-radius: var(--border-radius);
   overflow: hidden;
-  border: 1.5px solid $dark-gray-5;
+  border: 1.5px solid var(--dark-gray-5);
   width: 100%;
   align-self: stretch;
 }
 
 .TabsList {
   display: grid;
-  background-color: $dark-gray-2;
+  background-color: var(--dark-gray-2);
 }
 
 .TabsTrigger {
+  $this-hue: $accent-hue;
   padding: 8px 8px 10px 8px;
   border-radius: 0;
   border: none;
-  border-bottom: 1px solid $dark-gray-5;
-  color: $text-secondary-dark;
+  border-bottom: 1px solid var(--dark-gray-5);
+  color: var(--text-secondary);
   &:hover {
-    background-color: $dark-gray-1;
+    background-color: var(--dark-gray-1);
     padding-bottom: 8px;
-    border-bottom: 3px solid $dark-gray-5;
+    border-bottom: 3px solid var(--dark-gray-5);
   }
   &[data-state="active"] {
-    color: $text-main-dark;
-    background-color: bg-color-dark($accent-hue);
+    color: var(--text-main);
+    background-color: bg-color-dark-hover($this-hue);
     padding-bottom: 8px;
-    border-bottom: 3px solid highlight-color-dark($accent-hue);
+    border-bottom: 3px solid highlight-color-dark($this-hue);
   }
 }
 .TabsContent {
   padding: 8px;
-  background-color: $dark-gray-1;
+  background-color: var(--dark-gray-1);
 }
 
 /***   Toggle   ***/
@@ -715,23 +747,55 @@ a.ButtonLink, div.ButtonLink {
 
 /***   Toggle Group   ***/
 
-.ToggleGroup {
+.ToggleGroupRoot {
   $this-hue: $accent-hue;
   border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
   overflow: hidden;
   display: flex;
-  gap: 1px;
+  gap: 1.5px;
   background-color: border-color-dark($this-hue);
-  button {
-    border-radius: 0;
-    padding: 4px 12px;
-    background-color: $dark-gray-1;
-    color: $text-secondary-dark;
-    &[data-state="on"] {
-      color: $text-main-dark;
-      background-color: bg-color-dark($accent-hue);
+}
+
+.ToggleGroupItem {
+  $this-hue: $accent-hue;
+  //--bg-color: #{$dark-gray-2};
+  --bg-color: #{bg-color-dark-inactive($this-hue)};
+  border-radius: 0;
+  padding: 4px 12px;
+  background-color: var(--bg-color);
+  border: 1.5px solid var(--bg-color);
+  color: var(--text-secondary);
+  &:hover {
+    border-color: border-color-dark-hover($this-hue);
+  }
+  &:focus {
+    --bg-color: #{bg-color-dark($this-hue)};
+    border-color: border-color-dark-hover($this-hue);
+    box-shadow: button-inset-shadow(inset-shadow-color-inactive($this-hue));
+  }
+  &[data-state="on"] {
+    --bg-color: #{bg-color-dark-hover($this-hue)};
+    color: var(--text-highlight);
+    box-shadow: button-inset-shadow(inset-shadow-color($this-hue));
+    border-color: inset-shadow-color($this-hue);
+    &:hover {
+      border-color: border-color-dark-hover($this-hue);
+      box-shadow: button-inset-shadow(inset-shadow-color-hover($this-hue));
     }
+    &:focus {
+      --bg-color: #{bg-color-darker($this-hue)};
+      border-color: border-color-dark-hover($this-hue);
+      box-shadow: button-inset-shadow(inset-shadow-color-focus($this-hue));
+    }
+  }
+  &:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+  &:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
 }
 
@@ -742,8 +806,8 @@ a.ButtonLink, div.ButtonLink {
   align-items: center;
   border-radius: var(--border-radius);
   font-size: var(--smaller-font);
-  background-color: $light-gray-bg;
-  color: $dark-gray-1;
+  background-color: var(--light-gray-bg);
+  color: var(--dark-gray-1);
   padding: 6px 12px;
   z-index: 3;
   //border: 1px solid $dark-gray-lighter;
@@ -751,7 +815,7 @@ a.ButtonLink, div.ButtonLink {
 }
 
 .TooltipArrow {
-  fill: $light-gray-bg;
+  fill: var(--light-gray-bg);
 }
 
 

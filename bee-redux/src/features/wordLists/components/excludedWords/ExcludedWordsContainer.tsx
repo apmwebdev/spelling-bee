@@ -12,49 +12,48 @@
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectExcludedWords } from "@/features/puzzle";
-import { WordListScroller } from "../WordListScroller";
-import { ExcludedWordsListHeader } from "./ExcludedWordsListHeader";
 import {
   selectExcludedWordsListSettings,
+  setExcludedWordsSortOrder,
   toggleExcludedWordsSettingsCollapsed,
 } from "@/features/wordLists";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
+import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 import { SortOrderKeys } from "@/types/globalTypes";
+import { ExcludedWordsSettings } from "@/features/wordLists/components/excludedWords/ExcludedWordsSettings";
 
 export function ExcludedWordsContainer() {
   const dispatch = useAppDispatch();
   const excludedWords = useAppSelector(selectExcludedWords);
-  const { sortOrder, settingsCollapsed } = useAppSelector(
+  const { sortType, sortOrder, settingsCollapsed } = useAppSelector(
     selectExcludedWordsListSettings,
   );
-  const displayList = [...excludedWords];
+  const generateSortedWordList = () => {
+    const displayList = [...excludedWords];
+    if (sortOrder === SortOrderKeys.asc) return displayList.sort();
+    return displayList.sort().reverse();
+  };
 
   return (
     <div className="ExcludedWordsContainer">
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() =>
-          dispatch(toggleExcludedWordsSettingsCollapsed())
-        }
-      >
-        blah
-      </SettingsCollapsible>
       <div className="WordListStatus">
         There are{" "}
         <span className="WordListStatusCount">{excludedWords.length}</span>{" "}
         words excluded from this puzzle.
       </div>
-      <div className="WordListContainer">
-        <ExcludedWordsListHeader />
-        <WordListScroller
-          wordList={
-            sortOrder === SortOrderKeys.asc
-              ? displayList
-              : displayList.reverse()
-          }
-          allowPopovers={false}
-        />
-      </div>
+      <WordListContainer
+        wordList={generateSortedWordList()}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () =>
+            dispatch(toggleExcludedWordsSettingsCollapsed()),
+          settingsComponent: <ExcludedWordsSettings />,
+        }}
+        sortType={sortType}
+        sortOrder={sortOrder}
+        setSortOrder={setExcludedWordsSortOrder}
+        emptyListMessage="No excluded words"
+        allowPopovers={false}
+      />
     </div>
   );
 }

@@ -179,15 +179,14 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       );
       //Resolve guesses
       if (!upd.guessesResolved) {
-        // devLog("Resolve guess data");
         if (Array.isArray(upd.idbGuesses)) {
-          // devLog(
-          //   "IDB was first to resolve and was successful. Loaded IDB guesses, now resolve guesses",
-          // );
+          const serverGuessData = serverResult.value.data.guesses.map((guess) =>
+            processGuess(guess, state),
+          );
           api.dispatch(
             resolveGuessesData({
               idbData: upd.idbGuesses,
-              serverData: serverResult.value.data.guesses,
+              serverData: serverGuessData,
             }),
           );
           upd.guessesResolved = true;
@@ -198,11 +197,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       }
       //Resolve searches
       if (!upd.searchesResolved) {
-        // devLog("Resolve search panel search data");
         if (Array.isArray(upd.idbSearches)) {
-          // devLog(
-          //   "IDB was first to resolve and was successful. Loaded IDB searches, now resolve searches",
-          // );
           api.dispatch(
             resolveSearchPanelSearchData({
               idbData: upd.idbSearches,
@@ -277,7 +272,6 @@ const loadUserPuzzleServerData = createAsyncThunk(
 export const loadInitialGuessData = createAsyncThunk(
   "userData/loadInitialGuessData",
   async (upd: UserPuzzleDataContainer, api) => {
-    // devLog("loadInitialGuessData");
     //Get IndexedDB guesses
     upd.idbGuesses = await getIdbAttemptGuesses(upd.currentAttemptUuid).catch(
       (err) => {
@@ -292,24 +286,19 @@ export const loadInitialGuessData = createAsyncThunk(
     }
     //If IDB attempts resolved first successfully
     if (upd.resolvedFirst === "IDB") {
-      // devLog(
-      //   "IDB resolved first and was successful, guesses IDB query was also successful:",
-      //   upd.idbGuesses,
-      // );
       api.dispatch(setGuesses(upd.idbGuesses));
       return;
     }
     //If server resolved first successfully
     if (upd.resolvedFirst === "SERVER" && isUserPuzzleData(upd.serverData)) {
-      // devLog(
-      //   "Server resolved first and was successful, guesses IDB query was also successful. " +
-      //     "Resolve server and IDB guesses.",
-      //   upd.idbGuesses,
-      // );
+      const state = api.getState() as RootState;
+      const serverGuessData = upd.serverData.guesses.map((guess) =>
+        processGuess(guess, state),
+      );
       api.dispatch(
         resolveGuessesData({
           idbData: upd.idbGuesses,
-          serverData: upd.serverData.guesses,
+          serverData: serverGuessData,
         }),
       );
       upd.guessesResolved = true;
@@ -320,7 +309,6 @@ export const loadInitialGuessData = createAsyncThunk(
 export const loadInitialSearchData = createAsyncThunk(
   "userData/loadInitialSearchData",
   async (upd: UserPuzzleDataContainer, api) => {
-    // devLog("loadInitialSearchData");
     //Get IndexedDB searches
     upd.idbSearches = await getIdbAttemptSearches(upd.currentAttemptUuid).catch(
       (err) => {
@@ -335,20 +323,11 @@ export const loadInitialSearchData = createAsyncThunk(
     }
     //If IDB attempts resolved first successfully
     if (upd.resolvedFirst === "IDB") {
-      // devLog(
-      //   "IDB resolved first and was successful, SPSs IDB query was also successful:",
-      //   upd.idbSearches,
-      // );
       api.dispatch(setSearchPanelSearches(upd.idbSearches));
       return;
     }
     //If server resolved first successfully
     if (upd.resolvedFirst === "SERVER" && isUserPuzzleData(upd.serverData)) {
-      // devLog(
-      //   "Server resolved first and was successful, SPSs IDB query was also successful. " +
-      //     "Resolve server and IDB SPSs.",
-      //   upd.idbSearches,
-      // );
       api.dispatch(
         resolveSearchPanelSearchData({
           idbData: upd.idbSearches,

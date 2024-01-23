@@ -15,6 +15,7 @@ import { HintContentBlurButton } from "@/features/hintPanels/components/shared/H
 import { PanelCurrentDisplayState } from "@/features/hintPanels";
 
 import { Uuid } from "@/features/api";
+import { HintPanelSettingsToggle } from "@/features/hintPanels/components/shared/HintPanelSettingsToggle";
 
 export function QuickActions({
   panelUuid,
@@ -27,10 +28,13 @@ export function QuickActions({
 }) {
   return (
     <div className="HintPanelQuickActions">
-      <HintContentBlurButton
-        panelUuid={panelUuid}
-        isBlurred={displayState.isBlurred}
-      />
+      <div className="HintPanelQuickActions_buttons">
+        <HintPanelSettingsToggle panelUuid={panelUuid} />
+        <HintContentBlurButton
+          panelUuid={panelUuid}
+          isBlurred={displayState.isBlurred}
+        />
+      </div>
       {displayState.isSettingsExpanded ? null : children}
     </div>
   );
