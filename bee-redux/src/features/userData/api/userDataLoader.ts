@@ -184,10 +184,13 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
           // devLog(
           //   "IDB was first to resolve and was successful. Loaded IDB guesses, now resolve guesses",
           // );
+          const serverGuessData = serverResult.value.data.guesses.map((guess) =>
+            processGuess(guess, state),
+          );
           api.dispatch(
             resolveGuessesData({
               idbData: upd.idbGuesses,
-              serverData: serverResult.value.data.guesses,
+              serverData: serverGuessData,
             }),
           );
           upd.guessesResolved = true;
@@ -306,10 +309,14 @@ export const loadInitialGuessData = createAsyncThunk(
       //     "Resolve server and IDB guesses.",
       //   upd.idbGuesses,
       // );
+      const state = api.getState() as RootState;
+      const serverGuessData = upd.serverData.guesses.map((guess) =>
+        processGuess(guess, state),
+      );
       api.dispatch(
         resolveGuessesData({
           idbData: upd.idbGuesses,
-          serverData: upd.serverData.guesses,
+          serverData: serverGuessData,
         }),
       );
       upd.guessesResolved = true;
