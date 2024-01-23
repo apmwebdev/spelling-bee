@@ -61,3 +61,22 @@
   justify-content: flex-end;
   gap: 0.4em;
 }
+
+.PuzzleSearchForm {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .PuzzleSearchForm_searchInput {
+    padding-left: 30px; //Not sure why, but this seems to be the correct spacing
+  }
+
+  .PuzzleSearchForm_searchSymbol {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-disabled);
+  }
+}

@@ -31,10 +31,11 @@ export function PuzzleSearch() {
 
   return (
     <div className="PuzzleSearch">
-      <form className="PuzzleSearch" onSubmit={handleSearch}>
-        <Icon icon="mdi:search" />
+      <form className="PuzzleSearchForm" onSubmit={handleSearch}>
+        <Icon icon="mdi:search" className="PuzzleSearchForm_searchSymbol" />
         <input
           type="text"
+          className="PuzzleSearchForm_searchInput"
           name="identifierInput"
           value={puzzleIdentifier}
           placeholder="Date, ID, or letters"
