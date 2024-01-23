@@ -36,13 +36,17 @@ $error-hue: 0;
   @return hsl($hue, 40%, 5%);
 }
 
+@function bg-color-dark-inactive($hue) {
+  @return hsl($hue, 32%, 21%);
+}
+
 @function bg-color-dark-disabled($hue) {
   @return hsl($hue, 18%, 22%);
 }
 
 //Borders
 @function border-color-dark($hue) {
-  @return hsl($hue, 28%, 28%);
+  @return hsl($hue, 28%, 29%);
 }
 
 @function border-color-dark-hover($hue) {
@@ -57,6 +61,21 @@ $error-hue: 0;
   @return hsl($hue, 20%, 70%, 0.2);
 }
 
+@function inset-shadow-color($hue) {
+  @return hsl($hue, 60%, 9%);
+}
+
+@function inset-shadow-color-hover($hue) {
+  @return hsl($hue, 70%, 7%);
+}
+
+@function inset-shadow-color-focus($hue) {
+  @return hsl($hue, 70%, 1%);
+}
+
+@function inset-shadow-color-inactive($hue) {
+  @return hsl($hue, 50%, 12%);
+}
 //Interactive Elements
 @function highlight-color-dark($hue) {
   @return hsl($hue, 60%, 40%);
@@ -102,6 +121,7 @@ $text-main-dark: $line-bright;
 $text-secondary-dark: gray-alpha(0.63);
 $text-secondary-large-dark: gray-alpha(0.55);
 $text-disabled-dark: gray-alpha(0.55);
+$text-highlight-dark: gray-alpha(0.90);
 
 //One-off colors
 $yellow-main: hsl($yellow-hue, 85%, 27%);
@@ -142,6 +162,12 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
     background-color: bg-color-dark-disabled($hue);
     border-color: border-color-dark-disabled($hue);
   }
+}
+
+//Shadows
+
+@function button-inset-shadow($hue) {
+  @return inset 0px 0px 1px 2.5px $hue;
 }
 
 :root {

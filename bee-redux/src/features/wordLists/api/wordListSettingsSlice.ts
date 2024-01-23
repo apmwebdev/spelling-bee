@@ -38,12 +38,14 @@ export type WrongGuessesSettingsFormat = {
 };
 
 export type ExcludedWordsSettingsFormat = {
+  sortType: SortType.Alphabetical;
   sortOrder: SortOrderKeys;
   letterFilter: string[];
   settingsCollapsed: boolean;
 };
 
 export type AnswerListSettingsFormat = {
+  sortType: SortType.Alphabetical;
   sortOrder: SortOrderKeys;
   letterFilter: string[];
   remainingAndSpoiledOnly: boolean;
@@ -88,11 +90,13 @@ const initialState: WordListSettingsState = {
       settingsCollapsed: true,
     },
     excludedWords: {
+      sortType: SortType.Alphabetical,
       sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       settingsCollapsed: true,
     },
     answers: {
+      sortType: SortType.Alphabetical,
       sortOrder: SortOrderKeys.asc,
       letterFilter: [],
       remainingAndSpoiledOnly: false,

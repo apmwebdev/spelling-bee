@@ -14,12 +14,13 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectWrongGuesses } from "@/features/guesses";
 import {
   selectWrongGuessesListSettings,
-  SortType,
+  setWrongGuessesSortOrder,
+  setWrongGuessesSortType,
   toggleWrongGuessesSettingsCollapsed,
 } from "@/features/wordLists";
-import { WrongGuessesListContainer } from "./WrongGuessesListContainer";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
-import { SortOrderKeys } from "@/types/globalTypes";
+import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
+import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();
@@ -28,32 +29,12 @@ export function WrongGuessesContainer() {
     selectWrongGuessesListSettings,
   );
 
-  const generateDisplayGuessList = () => {
-    if (wrongGuesses.length === 0) {
-      return [];
-    }
-
-    const displayGuessList = [...wrongGuesses];
-    if (sortType === SortType.Alphabetical) {
-      displayGuessList.sort((a, b) => {
-        if (a.text < b.text) {
-          return sortOrder === SortOrderKeys.asc ? -1 : 1;
-        }
-        if (a.text > b.text) {
-          return sortOrder === SortOrderKeys.asc ? 1 : -1;
-        }
-        return 0;
-      });
-    } else {
-      displayGuessList.sort((a, b) => {
-        if (sortOrder === SortOrderKeys.asc) {
-          return a.createdAt - b.createdAt;
-        }
-        return b.createdAt - a.createdAt;
-      });
-    }
-
-    return displayGuessList.map((guess) => guess.text);
+  const generateSortedGuessWordList = () => {
+    return getSortedGuessWordList({
+      guessList: wrongGuesses,
+      sortType,
+      sortOrder,
+    });
   };
 
   return (
@@ -69,7 +50,15 @@ export function WrongGuessesContainer() {
         <span className="WordListStatusCount">{wrongGuesses.length}</span>{" "}
         incorrect {wrongGuesses.length === 1 ? "guess" : "guesses"}.
       </div>
-      <WrongGuessesListContainer wordList={generateDisplayGuessList()} />
+      <WordListContainer
+        wordList={generateSortedGuessWordList()}
+        sortType={sortType}
+        sortOrder={sortOrder}
+        setSortType={setWrongGuessesSortType}
+        setSortOrder={setWrongGuessesSortOrder}
+        emptyListMessage="No incorrect guesses"
+        allowPopovers={false}
+      />
     </div>
   );
 }

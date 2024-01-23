@@ -727,23 +727,55 @@ a.ButtonLink, div.ButtonLink {
 
 /***   Toggle Group   ***/
 
-.ToggleGroup {
+.ToggleGroupRoot {
   $this-hue: $accent-hue;
   border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
   overflow: hidden;
   display: flex;
-  gap: 1px;
+  gap: 1.5px;
   background-color: border-color-dark($this-hue);
-  button {
-    border-radius: 0;
-    padding: 4px 12px;
-    background-color: $dark-gray-1;
-    color: $text-secondary-dark;
-    &[data-state="on"] {
-      color: $text-main-dark;
-      background-color: bg-color-dark($accent-hue);
+}
+
+.ToggleGroupItem {
+  $this-hue: $accent-hue;
+  //--bg-color: #{$dark-gray-2};
+  --bg-color: #{bg-color-dark-inactive($this-hue)};
+  border-radius: 0;
+  padding: 4px 12px;
+  background-color: var(--bg-color);
+  border: 1.5px solid var(--bg-color);
+  color: $text-secondary-dark;
+  &:hover {
+    border-color: border-color-dark-hover($this-hue);
+  }
+  &:focus {
+    --bg-color: #{bg-color-dark($this-hue)};
+    border-color: border-color-dark-hover($this-hue);
+    box-shadow: button-inset-shadow(inset-shadow-color-inactive($this-hue));
+  }
+  &[data-state="on"] {
+    --bg-color: #{bg-color-dark-hover($this-hue)};
+    color: $text-highlight-dark;
+    box-shadow: button-inset-shadow(inset-shadow-color($this-hue));
+    border-color: inset-shadow-color($this-hue);
+    &:hover {
+      border-color: border-color-dark-hover($this-hue);
+      box-shadow: button-inset-shadow(inset-shadow-color-hover($this-hue));
     }
+    &:focus {
+      --bg-color: #{bg-color-darker($this-hue)};
+      border-color: border-color-dark-hover($this-hue);
+      box-shadow: button-inset-shadow(inset-shadow-color-focus($this-hue));
+    }
+  }
+  &:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+  &:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
 }
 
