@@ -11,6 +11,7 @@
 */
 
 //Hues
+
 $yellow-hue: 51;
 $accent-hue: $yellow-hue + 150;
 $title-hue: $yellow-hue + 150;
@@ -20,6 +21,7 @@ $warning-hue: 56;
 $error-hue: 0;
 
 //Backgrounds
+
 @function bg-color-dark($hue) {
   @return hsl($hue, 40%, 18%);
 }
@@ -45,6 +47,7 @@ $error-hue: 0;
 }
 
 //Borders
+
 @function border-color-dark($hue) {
   @return hsl($hue, 28%, 29%);
 }
@@ -56,6 +59,8 @@ $error-hue: 0;
 @function border-color-dark-disabled($hue) {
   @return hsl($hue, 12%, 25%);
 }
+
+// Shadows
 
 @function shadow-color-focus($hue) {
   @return hsl($hue, 20%, 70%, 0.2);
@@ -76,7 +81,9 @@ $error-hue: 0;
 @function inset-shadow-color-inactive($hue) {
   @return hsl($hue, 50%, 12%);
 }
-//Interactive Elements
+
+//Interactive element colors
+
 @function highlight-color-dark($hue) {
   @return hsl($hue, 60%, 40%);
 }
@@ -89,12 +96,14 @@ $error-hue: 0;
   @return hsl($hue, 75%, 45%);
 }
 
-//Status Text
+//Status text
+
 @function status-text-dark($hue) {
   @return hsl($hue, 85%, 82%);
 }
 
-//Gray Backgrounds
+//Gray backgrounds
+
 $black: #050505; // body background
 $dark-gray-1: #121212; // main element content background
 $dark-gray-2: #1e1e1e; // main element header background, child element content background
@@ -167,10 +176,43 @@ $accent-title-hover: hsl($title-hue, 60%, 50%);
 //Shadows
 
 @function button-inset-shadow($hue) {
-  @return inset 0px 0px 1px 2.5px $hue;
+  @return inset 0px 0px 1px 2px $hue;
 }
 
 :root {
+  //Gray backgrounds
+  --black: #{$black};
+  --dark-gray-1: #{$dark-gray-1};
+  --dark-gray-2: #{$dark-gray-2};
+  --dark-gray-3: #{$dark-gray-3};
+  --dark-gray-4: #{$dark-gray-4};
+  --dark-gray-5: #{$dark-gray-5};
+  --mid-gray-darker: #{$mid-gray-darker};
+  --mid-gray: #{$mid-gray};
+  --mid-gray-lighter: #{$mid-gray-lighter};
+  --light-gray: #{$light-gray};
+  --light-gray-bg: #{$light-gray-bg};
+
+  //Gray lines
+  --line-bright: #{$line-bright};
+  --line-mid: #{$line-mid};
+  --line-disabled: #{$line-disabled};
+  --line-darkest: #{$line-darkest};
+
+  //Text
+  --text-main: #{$text-main-dark};
+  --text-secondary: #{$text-secondary-dark};
+  --text-secondary-large: #{$text-secondary-large-dark};
+  --text-disabled: #{$text-disabled-dark};
+  --text-highlight: #{$text-highlight-dark};
+
+  //One-off colors
+  --yellow-main: #{$yellow-main};
+  --yellow-line: #{$yellow-line};
+  --accent-title: #{$accent-title};
+  --accent-title-hover: #{$accent-title-hover};
+
+  //Status Text
   --success-text: #{status-text-dark($success-hue)};
   --warning-text: #{status-text-dark($warning-hue)};
   --error-text: #{status-text-dark($error-hue)};

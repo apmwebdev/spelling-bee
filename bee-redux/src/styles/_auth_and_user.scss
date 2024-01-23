@@ -83,7 +83,7 @@
 .Auth_fieldDescription {
   grid-column: 1/4;
   font-size: 14px;
-  color: $text-disabled-dark;
+  color: var(--text-disabled);
   font-style: italic;
   min-height: 1em;
   text-align: right;

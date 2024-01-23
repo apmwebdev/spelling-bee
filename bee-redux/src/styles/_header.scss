@@ -13,8 +13,8 @@
 @use 'colors' as *;
 
 .Header___common {
-  border-bottom: 1.5px solid $dark-gray-5;
-  background-color: $dark-gray-2;
+  border-bottom: 1.5px solid var(--dark-gray-5);
+  background-color: var(--dark-gray-2);
   font-size: var(--font-size);
   display: flex;
   align-items: center;
@@ -48,9 +48,9 @@
   font-size: var(--large-font);
   font-weight: bold;
   text-decoration: none;
-  color: $accent-title;
+  color: var(--accent-title);
   &:hover {
-    color: $accent-title-hover;
+    color: var(--accent-title-hover);
     text-decoration: none;
   }
 }

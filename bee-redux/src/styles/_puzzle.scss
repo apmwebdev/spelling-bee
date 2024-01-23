@@ -56,15 +56,15 @@
 }
 
 .AnswerAlertMessage, .ErrorAlertMessage {
-  border: 1px solid $line-darkest;
+  border: 1px solid var(--line-darkest);
   padding: 10px 14px;
 }
 
 .AnswerAlertMessage {
   position: relative;
   &.PangramAlertMessage {
-    border-color: $yellow-main;
-    background-color: $yellow-main;
+    border-color: var(--yellow-main);
+    background-color: var(--yellow-main);
   }
 }
 
@@ -76,9 +76,9 @@
 }
 
 .ErrorAlertMessage {
-  border-color: $line-bright;
-  background-color: $line-bright;
-  color: $dark-gray-1;
+  border-color: var(--line-bright);
+  background-color: var(--line-bright);
+  color: var(--dark-gray-1);
 }
 
 .GuessInputContainer {
@@ -108,7 +108,7 @@
     top: 0;
     width: 2px;
     height: calc(2.25 * var(--font-size));
-    background-color: $yellow-line;
+    background-color: var(--yellow-line);
   }
   &.non-empty:after {
     right: -4px;
@@ -123,10 +123,10 @@
     color: white;
   }
   &.centerLetter {
-    color: $yellow-line;
+    color: var(--yellow-line);
   }
   &.invalid {
-    color: $line-disabled;
+    color: var(--line-disabled);
   }
 }
 
@@ -148,14 +148,14 @@
   height: 33.3333333333%;
   touch-action: manipulation;
   polygon {
-    fill: $mid-gray-darker;
-    stroke: $black;
+    fill: var(--mid-gray-darker);
+    stroke: var(--black);
   }
   text {
-    fill: $line-bright;
+    fill: var(--line-bright);
   }
   &.centerLetter polygon {
-    fill: $yellow-main; //#887711
+    fill: var(--yellow-main); //#887711
   }
   &:focus {
     z-index: 2;
