@@ -131,7 +131,8 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
         upd.resolvedFirst = "IDB";
       } else if (
         isErrorResponse(response) ||
-        (isUserPuzzleDataResponse(response) && !response.isAuthenticated) ||
+        (isUserPuzzleDataResponse(response) &&
+          !isFullUserPuzzleDataResponse(response)) ||
         (isFullUserPuzzleDataResponse(response) &&
           response.data.attempts.length === 0)
       ) {

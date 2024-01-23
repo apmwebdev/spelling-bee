@@ -50,20 +50,19 @@ class FrontEndApi::V1::UserDataController < FrontEndApi::FrontEndApiController
             .where(panel_subtype_type: "SearchPanel")))
         .where(user_puzzle_attempt_id: attempts.last[:id])
         .map(&:to_front_end)
-    else
-      attempts = []
-      guesses = []
-      searches = []
-    end
+      current_attempt = attempts.last[:uuid]
 
-    render json: {
-      isAuthenticated: true,
-      data: {
-        attempts:,
-        searches:,
-        guesses:,
-        currentAttempt: attempts.last[:uuid],
-      },
-    }
+      render json: {
+        isAuthenticated: true,
+        data: {
+          attempts:,
+          searches:,
+          guesses:,
+          currentAttempt: current_attempt,
+        },
+      }
+    else
+      render json: { isAuthenticated: true }
+    end
   end
 end
