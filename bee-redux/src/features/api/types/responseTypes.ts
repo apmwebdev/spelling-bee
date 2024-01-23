@@ -133,13 +133,14 @@ export type FetchBaseQueryParsingError = {
   error: string;
 };
 
-export const isFetchBaseQueryParsingError =
-  createTypeGuard<FetchBaseQueryParsingError>(
-    ["status", (prop: any) => prop === "PARSING_ERROR"],
-    ["originalStatus", "number"],
-    ["data", "string"],
-    ["error", "string"],
-  );
+export const isFetchBaseQueryParsingError = createTypeGuard<
+  FetchBaseQueryParsingError & FetchBaseQueryError
+>(
+  ["status", (prop: any) => prop === "PARSING_ERROR"],
+  ["originalStatus", "number"],
+  ["data", "string"],
+  ["error", "string"],
+);
 
 export type FetchBaseQueryCustomError = {
   status: "CUSTOM_ERROR";

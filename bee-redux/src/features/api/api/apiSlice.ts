@@ -19,7 +19,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { BaseQueryExtraOptions } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 //Has to be a more specific import path to avoid a circular dependency
-import { devLog } from "@/util";
+import { devLog, errLog } from "@/util";
 import { RootState } from "@/app/store";
 import { throttle } from "@/features/api";
 
@@ -54,7 +54,7 @@ const baseQueryWithAuth = async (
       const authCheckResponse = await authCheck.value;
       if (
         authCheckResponse.error ||
-        authCheckResponse.isAuthenticated === false
+        authCheckResponse.data?.isAuthenticated === false
       ) {
         devLog("Auth check returned error. Log out", arg, authCheckResponse);
         api.dispatch({ type: "auth/baseQueryLogout" });
@@ -63,18 +63,20 @@ const baseQueryWithAuth = async (
   }
   const response = await baseQuery(arg, api, extraOptions);
   if (response.error) {
-    devLog("response: arg:", arg, "error:", response);
+    errLog("response: arg:", arg, "error:", response);
+    if (
+      (response.error.status === 401 ||
+        // @ts-ignore. FFS TypeScript
+        response.error.originalStatus === 401) &&
+      !state.auth.isGuest &&
+      argUrl !== "/auth/check" &&
+      argUrl !== "/auth/logout"
+    ) {
+      devLog("Received error for original query. Log out", arg);
+      api.dispatch({ type: "auth/baseQueryLogout" });
+    }
   } else {
     devLog("response: arg:", arg, "data:", response);
-  }
-  if (
-    response.error?.status === 401 &&
-    !state.auth.isGuest &&
-    argUrl !== "/auth/check" &&
-    argUrl !== "/auth/logout"
-  ) {
-    devLog("Received error for original query. Log out", arg);
-    api.dispatch({ type: "auth/baseQueryLogout" });
   }
   return response;
 };

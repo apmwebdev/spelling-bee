@@ -299,6 +299,7 @@ export const createAddItemThunk = <DataType extends UuidRecord>({
       errLog(`Invalid ${itemDisplayType}. Exiting.`, itemToAdd);
       return;
     }
+
     const state = api.getState() as RootState;
     const originalUuid = itemToAdd.uuid;
     api.dispatch(addItemReducer(itemToAdd));
