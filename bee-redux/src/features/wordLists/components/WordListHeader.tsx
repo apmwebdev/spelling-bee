@@ -14,37 +14,57 @@ import { SortType } from "@/features/wordLists";
 import { SortOrderKeys } from "@/types/globalTypes";
 import { AlphaSortToggle } from "@/features/wordLists/components/AlphaSortToggle";
 import { FoundSortToggle } from "@/features/wordLists/components/FoundSortToggle";
+import { WordListContainerSettingsData } from "@/features/wordLists/components/WordListContainer";
+import { SettingsToggle } from "@/components/SettingsToggle";
+import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 
-export type WordListHeaderProps = {
+export type WordListSortProps = {
   sortType: SortType;
   sortOrder: SortOrderKeys;
   setSortType?: Function;
   setSortOrder: Function;
 };
 
+export type WordListHeaderProps = WordListSortProps & {
+  settingsData: WordListContainerSettingsData;
+};
+
 export function WordListHeader(props: WordListHeaderProps) {
-  const { sortType, setSortType } = props;
+  const { settingsData, ...sortProps } = props;
+  const { isExpanded, toggleIsExpanded, settingsComponent } = settingsData;
+  const { sortType, setSortType } = sortProps;
   const generateToggles = () => {
     if (setSortType) {
       return (
         <>
-          <AlphaSortToggle {...props} />
-          <FoundSortToggle {...props} />
+          <AlphaSortToggle {...sortProps} />
+          <FoundSortToggle {...sortProps} />
         </>
       );
     }
     if (sortType === SortType.Alphabetical) {
-      return <AlphaSortToggle {...props} />;
+      return <AlphaSortToggle {...sortProps} />;
     }
-    return <FoundSortToggle {...props} />;
+    return <FoundSortToggle {...sortProps} />;
   };
 
   return (
-    <header>
-      <div>
-        <span>Sort</span>
-        <div className="ToggleGroupRoot">{generateToggles()}</div>
+    <header className="WordListHeader">
+      <div className="WordListHeader_mainControls">
+        <SettingsToggle
+          isPressed={isExpanded}
+          clickHandler={toggleIsExpanded}
+        />
+        <div className="WordListHeader_sortContainer">
+          <span>Sort</span>
+          <div className="ToggleGroupRoot">{generateToggles()}</div>
+        </div>
       </div>
+      {isExpanded && (
+        <SettingsCollapsible isExpanded={isExpanded}>
+          {settingsComponent}
+        </SettingsCollapsible>
+      )}
     </header>
   );
 }

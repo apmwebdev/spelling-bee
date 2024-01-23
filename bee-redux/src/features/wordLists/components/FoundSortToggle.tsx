@@ -10,12 +10,12 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { WordListHeaderProps } from "@/features/wordLists/components/WordListHeader";
+import { WordListSortProps } from "@/features/wordLists/components/WordListHeader";
 import { SortType } from "@/features/wordLists";
 import { useAppDispatch } from "@/app/hooks";
 import { SortOrderKeys } from "@/types/globalTypes";
 
-export function FoundSortToggle(props: WordListHeaderProps) {
+export function FoundSortToggle(props: WordListSortProps) {
   const dispatch = useAppDispatch();
   const { sortType, sortOrder, setSortType, setSortOrder } = props;
   const getToggleLabel = () => {

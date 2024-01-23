@@ -24,7 +24,6 @@ import {
 } from "@/features/wordLists";
 import answerSorter from "./answerSorter";
 import { selectSpoiledWords } from "@/features/guesses";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { AnswersSettings } from "@/features/wordLists/components/answers/AnswersSettings";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 
@@ -61,12 +60,6 @@ export function AnswersContainer() {
 
   return (
     <div className="AnswersContainer">
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() => dispatch(toggleAnswersSettingsCollapsed())}
-      >
-        <AnswersSettings />
-      </SettingsCollapsible>
       <div className="AnswersStatus WordListStatus">
         There are{" "}
         <span className="WordListStatusCount">{answerWords.length}</span>{" "}
@@ -74,6 +67,11 @@ export function AnswersContainer() {
       </div>
       <WordListContainer
         wordList={displayList}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () => dispatch(toggleAnswersSettingsCollapsed()),
+          settingsComponent: <AnswersSettings />,
+        }}
         sortType={sortType}
         sortOrder={sortOrder}
         setSortOrder={setAnswersSortOrder}

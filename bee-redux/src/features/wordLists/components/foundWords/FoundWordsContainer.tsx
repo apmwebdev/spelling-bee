@@ -19,7 +19,6 @@ import {
   toggleFoundWordsSettingsCollapsed,
 } from "@/features/wordLists";
 import { FoundWordsStatus } from "./FoundWordsStatus";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { FoundWordsSettings } from "./FoundWordsSettings";
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
@@ -41,15 +40,14 @@ export function FoundWordsContainer() {
 
   return (
     <div className="FoundWordsContainer">
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() => dispatch(toggleFoundWordsSettingsCollapsed())}
-      >
-        <FoundWordsSettings />
-      </SettingsCollapsible>
       <FoundWordsStatus />
       <WordListContainer
         wordList={generateSortedGuessWordList()}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () => dispatch(toggleFoundWordsSettingsCollapsed()),
+          settingsComponent: <FoundWordsSettings />,
+        }}
         sortType={sortType}
         sortOrder={sortOrder}
         setSortType={setFoundWordsSortType}

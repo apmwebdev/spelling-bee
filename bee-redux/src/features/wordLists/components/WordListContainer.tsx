@@ -14,9 +14,17 @@ import { SortType } from "@/features/wordLists/api/wordListSettingsSlice";
 import { SortOrderKeys } from "@/types/globalTypes";
 import { WordListHeader } from "@/features/wordLists/components/WordListHeader";
 import { WordListScroller } from "@/features/wordLists/components/WordListScroller";
+import { ReactElement } from "react";
+
+export type WordListContainerSettingsData = {
+  isExpanded: boolean;
+  toggleIsExpanded: (state: boolean) => any;
+  settingsComponent: ReactElement;
+};
 
 export function WordListContainer({
   wordList,
+  settingsData,
   sortType,
   sortOrder,
   setSortType,
@@ -26,6 +34,7 @@ export function WordListContainer({
   useSpoilers,
 }: {
   wordList: string[];
+  settingsData: WordListContainerSettingsData;
   sortType: SortType;
   sortOrder: SortOrderKeys;
   setSortType?: Function;
@@ -34,22 +43,24 @@ export function WordListContainer({
   allowPopovers: boolean;
   useSpoilers?: boolean;
 }) {
-  if (wordList.length === 0) {
-    return <div className="WordList empty">{emptyListMessage}</div>;
-  }
   return (
     <div className="WordListContainer">
       <WordListHeader
+        settingsData={settingsData}
         sortType={sortType}
         sortOrder={sortOrder}
         setSortType={setSortType}
         setSortOrder={setSortOrder}
       />
-      <WordListScroller
-        wordList={wordList}
-        allowPopovers={allowPopovers}
-        useSpoilers={useSpoilers}
-      />
+      {wordList.length > 0 ? (
+        <WordListScroller
+          wordList={wordList}
+          allowPopovers={allowPopovers}
+          useSpoilers={useSpoilers}
+        />
+      ) : (
+        <div className="WordList empty">{emptyListMessage}</div>
+      )}
     </div>
   );
 }

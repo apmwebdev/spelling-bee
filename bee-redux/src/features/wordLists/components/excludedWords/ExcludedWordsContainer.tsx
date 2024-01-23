@@ -17,9 +17,9 @@ import {
   setExcludedWordsSortOrder,
   toggleExcludedWordsSettingsCollapsed,
 } from "@/features/wordLists";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 import { SortOrderKeys } from "@/types/globalTypes";
+import { ExcludedWordsSettings } from "@/features/wordLists/components/excludedWords/ExcludedWordsSettings";
 
 export function ExcludedWordsContainer() {
   const dispatch = useAppDispatch();
@@ -35,14 +35,6 @@ export function ExcludedWordsContainer() {
 
   return (
     <div className="ExcludedWordsContainer">
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() =>
-          dispatch(toggleExcludedWordsSettingsCollapsed())
-        }
-      >
-        No content
-      </SettingsCollapsible>
       <div className="WordListStatus">
         There are{" "}
         <span className="WordListStatusCount">{excludedWords.length}</span>{" "}
@@ -50,6 +42,12 @@ export function ExcludedWordsContainer() {
       </div>
       <WordListContainer
         wordList={generateSortedWordList()}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () =>
+            dispatch(toggleExcludedWordsSettingsCollapsed()),
+          settingsComponent: <ExcludedWordsSettings />,
+        }}
         sortType={sortType}
         sortOrder={sortOrder}
         setSortOrder={setExcludedWordsSortOrder}

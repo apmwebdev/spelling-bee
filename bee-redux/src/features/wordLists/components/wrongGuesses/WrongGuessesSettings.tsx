@@ -10,19 +10,6 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import * as Collapsible from "@/components/radix-ui/radix-collapsible";
-import React from "react";
-
-export function SettingsCollapsible({
-  isExpanded,
-  children,
-}: {
-  isExpanded: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <Collapsible.Root className="SettingsCollapsible" open={isExpanded}>
-      <Collapsible.Content>{children}</Collapsible.Content>
-    </Collapsible.Root>
-  );
+export function WrongGuessesSettings() {
+  return <div className="WordListSettingsContent">Coming soon!</div>;
 }

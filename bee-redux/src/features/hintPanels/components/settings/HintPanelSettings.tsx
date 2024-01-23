@@ -53,7 +53,7 @@ export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
   };
 
   return (
-    <div className="HintPanelSettings">
+    <div className="HintPanelSettings SettingsCollapsible">
       <div className="HintPanelSettingsHeader">Settings</div>
       {typeSpecificSettings()}
       <div className="GeneralPanelSettings">

@@ -18,9 +18,9 @@ import {
   setWrongGuessesSortType,
   toggleWrongGuessesSettingsCollapsed,
 } from "@/features/wordLists";
-import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
+import { WrongGuessesSettings } from "@/features/wordLists/components/wrongGuesses/WrongGuessesSettings";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();
@@ -39,12 +39,6 @@ export function WrongGuessesContainer() {
 
   return (
     <div>
-      <SettingsCollapsible
-        isExpanded={!settingsCollapsed}
-        toggleIsExpanded={() => dispatch(toggleWrongGuessesSettingsCollapsed())}
-      >
-        No content
-      </SettingsCollapsible>
       <div className="WordListStatus">
         You've made{" "}
         <span className="WordListStatusCount">{wrongGuesses.length}</span>{" "}
@@ -52,6 +46,12 @@ export function WrongGuessesContainer() {
       </div>
       <WordListContainer
         wordList={generateSortedGuessWordList()}
+        settingsData={{
+          isExpanded: !settingsCollapsed,
+          toggleIsExpanded: () =>
+            dispatch(toggleWrongGuessesSettingsCollapsed()),
+          settingsComponent: <WrongGuessesSettings />,
+        }}
         sortType={sortType}
         sortOrder={sortOrder}
         setSortType={setWrongGuessesSortType}

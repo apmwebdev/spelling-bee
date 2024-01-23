@@ -129,7 +129,7 @@ export const HintPanel = forwardRef(
           attributes={attributes}
           listeners={listeners}
         >
-          <Collapsible.Trigger
+          <Collapsible.TitleTrigger
             className="HintPanelHeaderCollapseButton HintPanelHeaderButton"
             onClick={toggleExpanded}
             title={panel.name}

@@ -168,19 +168,26 @@
   border-radius: var(--border-radius);
   border: 1px solid $line-darkest;
   overflow: hidden;
-  header {
-    font-size: var(--small-font);
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid $mid-gray;
-    > div {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  }
+}
+.WordListHeader {
+  font-size: var(--small-font);
+  border-bottom: 1px solid $mid-gray;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.WordListHeader_mainControls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.WordListHeader_sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .WordList {

@@ -155,7 +155,7 @@ button.IconButton.DragHandle {
   }
 }
 
-button.PanelSettingsToggle {
+button.SettingsToggle {
   $this-hue: $accent-hue;
   padding: 8px;
   color: $line-bright;
@@ -178,23 +178,6 @@ button.PanelSettingsToggle {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.SettingsCollapsible {
-  font-size: var(--small-font);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  border: 1.5px solid $dark-gray-5;
-  background-color: $dark-gray-2;
-  margin-bottom: 8px;
-  //border-color: border-color($this-hue);
-  span.disabled {
-    color: $text-disabled-dark;
-  }
-  &[data-state="closed"] {
-    color: $line-mid;
-    border-color: $dark-gray-4;
-  }
 }
 
 .SettingsCollapsibleHeader {
@@ -227,7 +210,9 @@ button.PanelSettingsToggle {
 }
 
 .HintPanelSettings {
-  @extend .SettingsCollapsible;
+  border: 1.5px solid $dark-gray-5;
+  margin-bottom: 8px;
+  padding: 16px;
 }
 
 .HintPanelSettingsHeader {
