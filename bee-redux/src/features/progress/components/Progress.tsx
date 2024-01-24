@@ -14,7 +14,7 @@ import { useAppSelector } from "@/app/hooks";
 import { BlankRank, Rank, useCurrentPuzzle } from "@/features/puzzle";
 import { selectScore } from "@/features/guesses";
 import { ProgressBar } from "./ProgressBar";
-import { FoundWordsStatus } from "@/features/wordLists/components/foundWords/FoundWordsStatus";
+import { ProgressStatus } from "@/features/progress/components/ProgressStatus";
 
 export function Progress() {
   const puzzleQ = useCurrentPuzzle();
@@ -42,7 +42,7 @@ export function Progress() {
         <div className="CurrentRank">{currentRank().name}</div>
         <ProgressBar ranks={ranks} currentRank={currentRank()} />
       </div>
-      <FoundWordsStatus />
+      <ProgressStatus />
     </div>
   );
 }

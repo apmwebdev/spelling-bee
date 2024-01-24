@@ -11,30 +11,30 @@
 */
 
 import {
-  selectFoundWordsListSettings,
-  setFoundWordsPangramsShowTotal,
-  setFoundWordsPerfectPangramsShowTotal,
-  setFoundWordsShowPerfectPangrams,
-  setFoundWordsWordsShowTotal,
+  selectKnownWordsListSettings,
+  setKnownWordsPangramsShowTotal,
+  setKnownWordsPerfectPangramsShowTotal,
+  setKnownWordsShowPerfectPangrams,
+  setKnownWordsWordsShowTotal,
 } from "@/features/wordLists";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
-export function FoundWordsSettings() {
+export function KnownWordsSettings() {
   const dispatch = useAppDispatch();
   const {
     wordsShowTotal,
     pangramsShowTotal,
     showPerfectPangrams,
     perfectPangramsShowTotal,
-  } = useAppSelector(selectFoundWordsListSettings);
+  } = useAppSelector(selectKnownWordsListSettings);
   return (
-    <div className="WordListSettingsContent found">
+    <div className="WordListSettingsContent known">
       <label>
         <input
           type="checkbox"
           checked={wordsShowTotal}
           onChange={(e) =>
-            dispatch(setFoundWordsWordsShowTotal(e.target.checked))
+            dispatch(setKnownWordsWordsShowTotal(e.target.checked))
           }
         />
         <span>Show total words</span>
@@ -44,7 +44,7 @@ export function FoundWordsSettings() {
           type="checkbox"
           checked={pangramsShowTotal}
           onChange={(e) =>
-            dispatch(setFoundWordsPangramsShowTotal(e.target.checked))
+            dispatch(setKnownWordsPangramsShowTotal(e.target.checked))
           }
         />
         <span>Show total pangrams</span>
@@ -54,7 +54,7 @@ export function FoundWordsSettings() {
           type="checkbox"
           checked={showPerfectPangrams}
           onChange={(e) =>
-            dispatch(setFoundWordsShowPerfectPangrams(e.target.checked))
+            dispatch(setKnownWordsShowPerfectPangrams(e.target.checked))
           }
         />
         <span>Include perfect pangrams</span>
@@ -65,7 +65,7 @@ export function FoundWordsSettings() {
           checked={perfectPangramsShowTotal}
           disabled={!showPerfectPangrams}
           onChange={(e) =>
-            dispatch(setFoundWordsPerfectPangramsShowTotal(e.target.checked))
+            dispatch(setKnownWordsPerfectPangramsShowTotal(e.target.checked))
           }
         />
         <span className={showPerfectPangrams ? "" : "disabled"}>

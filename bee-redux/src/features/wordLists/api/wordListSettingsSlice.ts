@@ -19,7 +19,7 @@ export enum SortType {
   FoundOrder = "foundOrder",
 }
 
-export type FoundWordsSettingsFormat = {
+export type KnownWordsSettingsFormat = {
   sortType: SortType;
   sortOrder: SortOrderKeys;
   letterFilter: string[];
@@ -57,7 +57,7 @@ export type AnswerListSettingsFormat = {
 };
 
 export type WordListSettingsFormat = {
-  foundWords: FoundWordsSettingsFormat;
+  knownWords: KnownWordsSettingsFormat;
   wrongGuesses: WrongGuessesSettingsFormat;
   excludedWords: ExcludedWordsSettingsFormat;
   answers: AnswerListSettingsFormat;
@@ -73,7 +73,7 @@ export type WordListSettingsState = {
 
 const initialState: WordListSettingsState = {
   data: {
-    foundWords: {
+    knownWords: {
       sortType: SortType.Alphabetical,
       sortOrder: SortOrderKeys.asc,
       letterFilter: [],
@@ -117,39 +117,39 @@ export const wordListSettingsSlice = createSlice({
   name: "wordListSettings",
   initialState,
   reducers: {
-    setFoundWordsSortType: (state, action) => {
-      state.data.foundWords.sortType = action.payload;
+    setKnownWordsSortType: (state, action) => {
+      state.data.knownWords.sortType = action.payload;
     },
-    setFoundWordsSortOrder: (state, action) => {
-      state.data.foundWords.sortOrder = action.payload;
+    setKnownWordsSortOrder: (state, action) => {
+      state.data.knownWords.sortOrder = action.payload;
     },
-    setFoundWordsWordsShowTotal: (
+    setKnownWordsWordsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.wordsShowTotal = action.payload;
+      state.data.knownWords.wordsShowTotal = action.payload;
     },
-    setFoundWordsPangramsShowTotal: (
+    setKnownWordsPangramsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.pangramsShowTotal = action.payload;
+      state.data.knownWords.pangramsShowTotal = action.payload;
     },
-    setFoundWordsShowPerfectPangrams: (
+    setKnownWordsShowPerfectPangrams: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.showPerfectPangrams = action.payload;
+      state.data.knownWords.showPerfectPangrams = action.payload;
     },
-    setFoundWordsPerfectPangramsShowTotal: (
+    setKnownWordsPerfectPangramsShowTotal: (
       state,
       action: { payload: boolean; type: string },
     ) => {
-      state.data.foundWords.perfectPangramsShowTotal = action.payload;
+      state.data.knownWords.perfectPangramsShowTotal = action.payload;
     },
-    toggleFoundWordsSettingsCollapsed: (state) => {
-      state.data.foundWords.settingsCollapsed =
-        !state.data.foundWords.settingsCollapsed;
+    toggleKnownWordsSettingsCollapsed: (state) => {
+      state.data.knownWords.settingsCollapsed =
+        !state.data.knownWords.settingsCollapsed;
     },
     setWrongGuessesSortType: (state, action) => {
       state.data.wrongGuesses.sortType = action.payload;
@@ -195,13 +195,13 @@ export const wordListSettingsSlice = createSlice({
 });
 
 export const {
-  setFoundWordsSortType,
-  setFoundWordsSortOrder,
-  setFoundWordsWordsShowTotal,
-  setFoundWordsPangramsShowTotal,
-  setFoundWordsShowPerfectPangrams,
-  setFoundWordsPerfectPangramsShowTotal,
-  toggleFoundWordsSettingsCollapsed,
+  setKnownWordsSortType,
+  setKnownWordsSortOrder,
+  setKnownWordsWordsShowTotal,
+  setKnownWordsPangramsShowTotal,
+  setKnownWordsShowPerfectPangrams,
+  setKnownWordsPerfectPangramsShowTotal,
+  toggleKnownWordsSettingsCollapsed,
   setWrongGuessesSortType,
   setWrongGuessesSortOrder,
   toggleWrongGuessesSettingsCollapsed,
@@ -216,8 +216,8 @@ export const {
   toggleAnswersSettingsCollapsed,
 } = wordListSettingsSlice.actions;
 
-export const selectFoundWordsListSettings = (state: RootState) =>
-  state.wordListSettings.data.foundWords;
+export const selectKnownWordsListSettings = (state: RootState) =>
+  state.wordListSettings.data.knownWords;
 export const selectWrongGuessesListSettings = (state: RootState) =>
   state.wordListSettings.data.wrongGuesses;
 export const selectExcludedWordsListSettings = (state: RootState) =>

@@ -18,15 +18,15 @@ import {
   selectPerfectPangrams,
   selectTotalPoints,
 } from "@/features/puzzle";
-import { selectFoundWordsListSettings } from "@/features/wordLists";
+import { selectKnownWordsListSettings } from "@/features/wordLists";
 
-export function FoundWordsStatus() {
+export function ProgressStatus() {
   const {
     wordsShowTotal,
     pangramsShowTotal,
     showPerfectPangrams,
     perfectPangramsShowTotal,
-  } = useAppSelector(selectFoundWordsListSettings);
+  } = useAppSelector(selectKnownWordsListSettings);
   const answers = useAppSelector(selectAnswers);
   const correctGuessWords = useAppSelector(selectCorrectGuessWords);
   const pangrams = useAppSelector(selectPangrams);
@@ -38,16 +38,16 @@ export function FoundWordsStatus() {
   const answerCount = answers.length;
   let countClass = "ProgressStatusCount ";
 
-  let foundPointsCountClasses = countClass;
+  let knownPointsCountClasses = countClass;
   if (correctCount === 0) {
-    foundPointsCountClasses += "ErrorText";
+    knownPointsCountClasses += "ErrorText";
   } else if (correctCount === answerCount) {
-    foundPointsCountClasses += "SuccessText";
+    knownPointsCountClasses += "SuccessText";
   } else {
-    foundPointsCountClasses += "WarningText";
+    knownPointsCountClasses += "WarningText";
   }
 
-  const foundWordsTrackingText = () => {
+  const knownWordsTrackingText = () => {
     let text = `${correctCount}`;
     if (wordsShowTotal) {
       text += `/${answerCount}`;
@@ -56,7 +56,7 @@ export function FoundWordsStatus() {
     return (
       <div className="words ProgressStatus_item">
         <span>Words:</span>
-        <span className={foundPointsCountClasses}>{text}</span>
+        <span className={knownPointsCountClasses}>{text}</span>
       </div>
     );
   };
@@ -66,7 +66,7 @@ export function FoundWordsStatus() {
       <div className="points ProgressStatus_item">
         <span>Points:</span>
         <span
-          className={foundPointsCountClasses}
+          className={knownPointsCountClasses}
         >{`${currentPoints}/${totalPoints}`}</span>
       </div>
     );
@@ -131,7 +131,7 @@ export function FoundWordsStatus() {
 
   return (
     <div className="ProgressStatus">
-      {foundWordsTrackingText()}
+      {knownWordsTrackingText()}
       {pointsTrackingText()}
       {pangramsTrackingText()}
       {perfectPangramsTrackingText()}

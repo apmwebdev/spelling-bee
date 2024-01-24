@@ -13,21 +13,21 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectCorrectGuesses } from "@/features/guesses";
 import {
-  selectFoundWordsListSettings,
-  setFoundWordsSortOrder,
-  setFoundWordsSortType,
-  toggleFoundWordsSettingsCollapsed,
+  selectKnownWordsListSettings,
+  setKnownWordsSortOrder,
+  setKnownWordsSortType,
+  toggleKnownWordsSettingsCollapsed,
 } from "@/features/wordLists";
-import { FoundWordsStatus } from "./FoundWordsStatus";
-import { FoundWordsSettings } from "./FoundWordsSettings";
+import { KnownWordsStatus } from "./KnownWordsStatus";
+import { KnownWordsSettings } from "./KnownWordsSettings";
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 
-export function FoundWordsContainer() {
+export function KnownWordsContainer() {
   const dispatch = useAppDispatch();
   const correctGuesses = useAppSelector(selectCorrectGuesses);
   const { sortType, sortOrder, settingsCollapsed } = useAppSelector(
-    selectFoundWordsListSettings,
+    selectKnownWordsListSettings,
   );
 
   const generateSortedGuessWordList = () => {
@@ -39,20 +39,20 @@ export function FoundWordsContainer() {
   };
 
   return (
-    <div className="FoundWordsContainer">
-      <FoundWordsStatus />
+    <div className="KnownWordsContainer">
+      <KnownWordsStatus />
       <WordListContainer
         wordList={generateSortedGuessWordList()}
         settingsData={{
           isExpanded: !settingsCollapsed,
-          toggleIsExpanded: () => dispatch(toggleFoundWordsSettingsCollapsed()),
-          settingsComponent: <FoundWordsSettings />,
+          toggleIsExpanded: () => dispatch(toggleKnownWordsSettingsCollapsed()),
+          settingsComponent: <KnownWordsSettings />,
         }}
         sortType={sortType}
         sortOrder={sortOrder}
-        setSortType={setFoundWordsSortType}
-        setSortOrder={setFoundWordsSortOrder}
-        emptyListMessage="No found words"
+        setSortType={setKnownWordsSortType}
+        setSortOrder={setKnownWordsSortOrder}
+        emptyListMessage="No known words"
         allowPopovers={true}
       />
     </div>
