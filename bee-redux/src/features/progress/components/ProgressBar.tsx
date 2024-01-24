@@ -11,13 +11,13 @@
 */
 
 import uniqid from "uniqid";
-import { Rank, RanksType } from "@/features/puzzle";
+import { Rank, TRanks } from "@/features/puzzle";
 
 export function ProgressBar({
   ranks,
   currentRank,
 }: {
-  ranks: RanksType | [Rank];
+  ranks: TRanks | [Rank];
   currentRank: Rank;
 }) {
   return (

@@ -19,11 +19,12 @@ import {
   LetterPanelData,
 } from "../types/letterPanelTypes";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswerWords, selectKnownWords } from "@/features/puzzle";
+import { selectAnswerWords } from "@/features/puzzle";
 import {
   StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hintPanels";
+import { selectKnownAnswerWords } from "@/features/progress/api/progressSelectors";
 
 export function LetterHintPanel({
   letterData,
@@ -33,7 +34,7 @@ export function LetterHintPanel({
   statusTracking: StatusTrackingKeys;
 }) {
   const answers = useAppSelector(selectAnswerWords);
-  const knownWords = useAppSelector(selectKnownWords);
+  const knownWords = useAppSelector(selectKnownAnswerWords);
 
   if (!isLetterPanelData(letterData)) return;
 

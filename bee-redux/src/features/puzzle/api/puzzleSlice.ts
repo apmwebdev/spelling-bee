@@ -14,20 +14,11 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { calculateScore, devLog } from "@/util";
 import { shuffle, sortBy } from "lodash";
-import { selectGuessWords } from "@/features/guesses";
-import {
-  AnswerFormat,
-  BlankPuzzle,
-  puzzleApiSlice,
-  PuzzleFormat,
-} from "./puzzleApiSlice";
-import { StateShape, Statuses } from "@/types/globalTypes";
+import { puzzleApiSlice } from "./puzzleApiSlice";
+import { createInitialState, Statuses } from "@/types/globalTypes";
+import { BlankPuzzle, TPuzzle } from "@/features/puzzle/types/puzzleTypes";
 
-const initialState: StateShape<PuzzleFormat> = {
-  data: BlankPuzzle,
-  status: Statuses.Initial,
-  error: undefined,
-};
+const initialState = createInitialState<TPuzzle>(BlankPuzzle);
 
 export const puzzleSlice = createSlice({
   name: "puzzle",
@@ -69,7 +60,6 @@ export const puzzleSlice = createSlice({
 
 export const { shuffleOuterLetters } = puzzleSlice.actions;
 
-export const selectPuzzle = (state: RootState) => state.puzzle.data;
 export const selectPuzzleId = (state: RootState) => state.puzzle.data.id;
 export const selectDate = (state: RootState) => state.puzzle.data.date;
 export const selectCenterLetter = (state: RootState) =>
@@ -87,69 +77,6 @@ export const selectAnswers = (state: RootState) => state.puzzle.data.answers;
 export const selectExcludedWords = (state: RootState) =>
   state.puzzle.data.excludedWords;
 export const selectIsLatest = (state: RootState) => state.puzzle.data.isLatest;
-
-// Derived data
-export const selectKnownAnswers = createSelector(
-  [selectAnswers, selectGuessWords],
-  (answers, guessWords) =>
-    answers.filter((answer) => guessWords.includes(answer.word)),
-);
-
-export const selectKnownWords = createSelector(
-  [selectKnownAnswers],
-  (answers) => answers.map((answer) => answer.word),
-);
-
-export type LetterAnswers = {
-  known: AnswerFormat[];
-  unknown: AnswerFormat[];
-  all: AnswerFormat[];
-};
-
-export const createLetterAnswers = (): LetterAnswers => ({
-  known: [],
-  unknown: [],
-  all: [],
-});
-
-export type AnswersByLetter = {
-  [letter: string]: LetterAnswers;
-};
-
-export type AnswersByLetterSortable = {
-  asc: AnswersByLetter;
-  desc: AnswersByLetter;
-};
-
-export const selectAnswersByLetter = createSelector(
-  [selectAnswers, selectKnownWords],
-  (answers, knownWords) => {
-    const asc: AnswersByLetter = {};
-    const desc: AnswersByLetter = {};
-    const answersByLetterSortable: AnswersByLetterSortable = { asc, desc };
-    for (const answer of answers) {
-      const firstLetter = answer.word[0];
-      if (asc[firstLetter] === undefined) {
-        asc[firstLetter] = createLetterAnswers();
-        desc[firstLetter] = createLetterAnswers();
-      }
-      asc[firstLetter].all.push(answer);
-      desc[firstLetter].all.unshift(answer);
-      if (knownWords.includes(answer.word)) {
-        asc[firstLetter].known.push(answer);
-        desc[firstLetter].known.unshift(answer);
-      } else {
-        asc[firstLetter].unknown.push(answer);
-        desc[firstLetter].unknown.unshift(answer);
-      }
-    }
-    for (const letter in asc) {
-      asc[letter].unknown.sort((a, b) => a.word.length - b.word.length);
-      desc[letter].unknown.sort((a, b) => b.word.length - a.word.length);
-    }
-    return answersByLetterSortable;
-  },
-);
 
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
   if (answers && answers.length > 0) {
@@ -173,19 +100,6 @@ export const selectAnswerLengths = createSelector(
       }
     }
     return sortBy(answerLengths);
-  },
-);
-
-export const selectRemainingAnswers = createSelector(
-  [selectAnswers, selectKnownWords],
-  (answers, knownWords) =>
-    answers.filter((answer) => !knownWords.includes(answer.word)),
-);
-
-export const selectRemainingAnswerWords = createSelector(
-  [selectRemainingAnswers],
-  (answers) => {
-    return answers.map((answer) => answer.word);
   },
 );
 

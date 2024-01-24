@@ -10,10 +10,10 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { LetterAnswers } from "@/features/puzzle";
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { Word } from "./Word";
 import { DefinitionPanelData } from "../";
+import { LetterAnswers } from "@/features/progress/types/progressTypes";
 
 export function LetterTab({
   letter,

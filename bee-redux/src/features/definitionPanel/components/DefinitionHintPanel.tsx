@@ -12,9 +12,9 @@
 
 import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
-import { selectAnswersByLetter } from "@/features/puzzle";
 import { LetterTab } from "./LetterTab";
 import { DefinitionPanelData } from "../";
+import { selectAnswersByLetter } from "@/features/progress/api/progressSelectors";
 
 export function DefinitionHintPanel({
   definitionPanelData,

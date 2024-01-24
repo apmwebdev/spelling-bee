@@ -12,9 +12,9 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { BlankRank, Rank, useCurrentPuzzle } from "@/features/puzzle";
-import { selectScore } from "@/features/guesses";
 import { ProgressBar } from "./ProgressBar";
 import { ProgressStatus } from "@/features/progress/components/ProgressStatus";
+import { selectScore } from "@/features/progress/api/progressSelectors";
 
 export function Progress() {
   const puzzleQ = useCurrentPuzzle();

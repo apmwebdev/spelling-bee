@@ -11,7 +11,6 @@
 */
 
 import { useAppSelector } from "@/app/hooks";
-import { selectCorrectGuessWords, selectScore } from "@/features/guesses";
 import {
   selectAnswers,
   selectPangrams,
@@ -19,6 +18,10 @@ import {
   selectTotalPoints,
 } from "@/features/puzzle";
 import { selectKnownWordsListSettings } from "@/features/wordLists";
+import {
+  selectCorrectGuessWords,
+  selectScore,
+} from "@/features/progress/api/progressSelectors";
 
 export function KnownWordsStatus() {
   const {

@@ -12,7 +12,7 @@
 
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { calculateScore, devLog } from "@/util";
+import { devLog } from "@/util";
 import { createInitialState, Statuses } from "@/types/globalTypes";
 import { guessesApiSlice } from "@/features/guesses/api/guessesApiSlice";
 import { isGuess, TGuess } from "@/features/guesses/types/guessTypes";
@@ -109,28 +109,13 @@ export const setGuessesFromIdbThunk = createSetDataFromIdbThunk<TGuess, Uuid>({
 });
 
 export const selectGuesses = (state: RootState) => state.guesses.data;
+
 export const selectGuessWords = createSelector([selectGuesses], (guesses) =>
   guesses.map((guess) => guess.text),
 );
-export const selectCorrectGuesses = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => guess.isAnswer && !guess.isSpoiled),
-);
-export const selectCorrectGuessWords = createSelector(
-  [selectCorrectGuesses],
-  (guesses) =>
-    guesses
-      .filter((guess) => guess.isAnswer && !guess.isSpoiled)
-      .map((guess) => guess.text),
-);
+
 export const selectSpoiledWords = createSelector([selectGuesses], (guesses) =>
   guesses.filter((guess) => guess.isSpoiled).map((guess) => guess.text),
-);
-export const selectWrongGuesses = createSelector([selectGuesses], (guesses) =>
-  guesses.filter((guess) => !guess.isAnswer),
-);
-export const selectScore = createSelector(
-  [selectCorrectGuessWords],
-  (correctGuessWords) => calculateScore(correctGuessWords),
 );
 
 export default guessesSlice.reducer;

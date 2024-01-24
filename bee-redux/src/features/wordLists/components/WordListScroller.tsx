@@ -15,7 +15,7 @@ import uniqid from "uniqid";
 import { WordWithPopover } from "./WordWithPopover";
 import { AnswerSpoiler } from "./answers/AnswerSpoiler";
 import { useAppSelector } from "@/app/hooks";
-import { selectRemainingAnswerWords } from "@/features/puzzle";
+import { selectRemainingAnswerWords } from "@/features/progress/api/progressSelectors";
 
 export function WordListScroller({
   wordList,

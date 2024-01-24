@@ -11,12 +11,7 @@
 */
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import {
-  selectAnswerWords,
-  selectKnownWords,
-  selectRemainingAnswerWords,
-  selectValidLetters,
-} from "@/features/puzzle";
+import { selectAnswerWords, selectValidLetters } from "@/features/puzzle";
 import {
   selectAnswersListSettings,
   setAnswersSortOrder,
@@ -26,12 +21,16 @@ import answerSorter from "./answerSorter";
 import { selectSpoiledWords } from "@/features/guesses";
 import { AnswersSettings } from "@/features/wordLists/components/answers/AnswersSettings";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
+import {
+  selectKnownAnswerWords,
+  selectRemainingAnswerWords,
+} from "@/features/progress/api/progressSelectors";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();
   const answerWords = useAppSelector(selectAnswerWords);
   const remainingWords = useAppSelector(selectRemainingAnswerWords);
-  const knownWords = useAppSelector(selectKnownWords);
+  const knownWords = useAppSelector(selectKnownAnswerWords);
   const spoiledWords = useAppSelector(selectSpoiledWords);
   const validLetters = useAppSelector(selectValidLetters);
   const {
