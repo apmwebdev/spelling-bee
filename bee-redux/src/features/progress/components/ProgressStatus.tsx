@@ -12,132 +12,91 @@
 
 import { useAppSelector } from "@/app/hooks";
 import {
-  selectAnswers,
-  selectPangrams,
-  selectPerfectPangrams,
-  selectTotalPoints,
-} from "@/features/puzzle";
-import { selectKnownWordsListSettings } from "@/features/wordLists";
-import {
-  selectCorrectGuessWords,
-  selectScore,
-} from "@/features/progress/api/progressSelectors";
+  selectProgressData,
+  selectProgressSettings,
+} from "@/features/progress/api/progressSlice";
+import { trackingStatusClasses } from "@/util";
 
 export function ProgressStatus() {
-  const {
-    wordsShowTotal,
-    pangramsShowTotal,
-    showPerfectPangrams,
-    perfectPangramsShowTotal,
-  } = useAppSelector(selectKnownWordsListSettings);
-  const answers = useAppSelector(selectAnswers);
-  const correctGuessWords = useAppSelector(selectCorrectGuessWords);
-  const pangrams = useAppSelector(selectPangrams);
-  const perfectPangrams = useAppSelector(selectPerfectPangrams);
-  const currentPoints = useAppSelector(selectScore);
-  const totalPoints = useAppSelector(selectTotalPoints);
+  const { showTotalWords, showTotalPoints } = useAppSelector(
+    selectProgressSettings,
+  );
+  const { answerData, scoreData, percentageData, rankData } =
+    useAppSelector(selectProgressData);
+  const statusClasses = trackingStatusClasses({
+    baseClass: "ProgressStatusCount",
+    currentCount: answerData.knownCount,
+    totalCount: answerData.totalCount,
+  });
 
-  const correctCount = correctGuessWords.length;
-  const answerCount = answers.length;
-  let countClass = "ProgressStatusCount ";
-
-  let knownPointsCountClasses = countClass;
-  if (correctCount === 0) {
-    knownPointsCountClasses += "ErrorText";
-  } else if (correctCount === answerCount) {
-    knownPointsCountClasses += "SuccessText";
-  } else {
-    knownPointsCountClasses += "WarningText";
-  }
-
-  const knownWordsTrackingText = () => {
-    let text = `${correctCount}`;
-    if (wordsShowTotal) {
-      text += `/${answerCount}`;
+  const wordsTrackingText = () => {
+    let text = `${answerData.knownCount}`;
+    if (showTotalWords) {
+      text += `/${answerData.totalCount}`;
     }
-
     return (
       <div className="words ProgressStatus_item">
-        <span>Words:</span>
-        <span className={knownPointsCountClasses}>{text}</span>
+        <span className={statusClasses}>{text}</span>
+        <span>words</span>
       </div>
     );
   };
 
   const pointsTrackingText = () => {
+    let pointsText = `${scoreData.current}`;
+    if (showTotalPoints) {
+      pointsText += `/${scoreData.total}`;
+    }
     return (
       <div className="points ProgressStatus_item">
-        <span>Points:</span>
-        <span
-          className={knownPointsCountClasses}
-        >{`${currentPoints}/${totalPoints}`}</span>
+        <span className={statusClasses}>{pointsText}</span>
+        <span>points</span>
       </div>
     );
   };
 
-  const pangramsTrackingText = () => {
-    const currentPangrams = pangrams.filter((p) =>
-      correctGuessWords.includes(p),
-    ).length;
-    const totalPangrams = pangrams.length;
-    let text = `${currentPangrams}`;
-    if (pangramsShowTotal) {
-      text += `/${totalPangrams}`;
-    }
-    let pangramCountClasses = countClass;
-    if (currentPangrams === 0) {
-      pangramCountClasses += "ErrorText";
-    } else if (currentPangrams === totalPangrams) {
-      pangramCountClasses += "SuccessText";
-    } else {
-      pangramCountClasses += "WarningText";
-    }
+  const percentComplete = () => {
+    const val = percentageData.pointsFound;
+    if (Number.isNaN(val)) return "0";
+
+    const formattedVal = val.toFixed(2);
+    if (formattedVal.slice(-2) === "00") return formattedVal.slice(0, -3);
+
+    return formattedVal;
+  };
+
+  const percentageTrackingText = () => {
+    const percentageCompleteText = `${percentComplete()}%`;
     return (
-      <div className="pangrams ProgressStatus_item">
-        <span>Pangrams:</span>
-        <span className={pangramCountClasses}>{text}</span>
+      <div className="ProgressStatus_item">
+        <span className={statusClasses}>{percentageCompleteText}</span>
+        <span>complete</span>
       </div>
     );
   };
 
-  const perfectPangramsTrackingText = () => {
-    if (showPerfectPangrams) {
-      const currentPerfectPangrams = perfectPangrams.filter((p) =>
-        correctGuessWords.includes(p),
-      ).length;
-      const totalPerfectPangrams = perfectPangrams.length;
-      if (totalPerfectPangrams === 0) {
-        return <div className="perfect">(no perfect)</div>;
-      }
-      let text = `${currentPerfectPangrams}`;
-      if (perfectPangramsShowTotal) {
-        text += `/${totalPerfectPangrams}`;
-      }
-      let perfectClasses = countClass;
-      if (currentPerfectPangrams === 0) {
-        perfectClasses += "ErrorText";
-      } else if (currentPerfectPangrams === totalPerfectPangrams) {
-        perfectClasses += "SuccessText";
-      } else {
-        perfectClasses += "WarningText";
-      }
-      return (
-        <div className="perfect ProgressStatus_item">
-          <span>(Perfect: </span>
-          <span className={perfectClasses}>{text}</span>
-          <span>)</span>
-        </div>
-      );
-    }
-    return "";
+  const rankTrackingText = () => {
+    if (!rankData.nextRank) return null;
+    return (
+      <div className="ProgressStatus_item ProgressStatus_rankTracking">
+        <span>
+          {rankData.pointsUntilNextRank} pt
+          {rankData.pointsUntilNextRank === 1 ? "" : "s"} to next rank:
+        </span>
+        <span>
+          {rankData.nextRank.baseRank.name} (
+          {rankData.nextRank.baseRank.multiplier * 100}%)
+        </span>
+      </div>
+    );
   };
 
   return (
     <div className="ProgressStatus">
-      {knownWordsTrackingText()}
+      {wordsTrackingText()}
       {pointsTrackingText()}
-      {pangramsTrackingText()}
-      {perfectPangramsTrackingText()}
+      {percentageTrackingText()}
+      {rankTrackingText()}
     </div>
   );
 }

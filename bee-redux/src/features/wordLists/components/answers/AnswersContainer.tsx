@@ -24,7 +24,7 @@ import { WordListContainer } from "@/features/wordLists/components/WordListConta
 import {
   selectKnownAnswerWords,
   selectRemainingAnswerWords,
-} from "@/features/progress/api/progressSelectors";
+} from "@/features/progress/api/progressSlice";
 
 export function AnswersContainer() {
   const dispatch = useAppDispatch();

@@ -24,7 +24,7 @@ import {
   StatusTrackingKeys,
   SubstringHintOutputKeys,
 } from "@/features/hintPanels";
-import { selectKnownAnswerWords } from "@/features/progress/api/progressSelectors";
+import { selectKnownAnswerWords } from "@/features/progress/api/progressSlice";
 
 export function LetterHintPanel({
   letterData,

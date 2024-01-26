@@ -20,7 +20,7 @@ import {
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 import { WrongGuessesSettings } from "@/features/wordLists/components/wrongGuesses/WrongGuessesSettings";
-import { selectWrongGuesses } from "@/features/progress/api/progressSelectors";
+import { selectWrongGuesses } from "@/features/progress/api/progressSlice";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();

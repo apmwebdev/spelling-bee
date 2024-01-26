@@ -53,11 +53,17 @@
   }
 }
 
-.CurrentRank {
+.ProgressRank_currentRank {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100px;
+  gap: 2px;
+}
+
+.ProgressRank_currentRankMultiplier {
+  font-size: var(--smaller-font);
+  color: var(--text-secondary);
 }
 
 .ProgressBar {
@@ -90,7 +96,7 @@
     top: calc(0.3 * var(--gap-length));
     background-color: var(--mid-gray);
   }
-  &:not(.active ~ .RankTic) {
+  &.active, &:has(~ .RankTic.active) {
     background-color: var(--yellow-line);
     &:not(:first-child):before {
       background-color: var(--yellow-line);
@@ -99,26 +105,27 @@
 }
 
 .ProgressStatus {
+  display: flex;
   padding: 8px;
   align-items: center;
   justify-content: center;
   font-size: var(--small-font);
-  display: flex;
   gap: 20px;
   .App___threeColumns & {
     padding: 16px 8px;
-    gap: 20px;
-  }
-  > div:not(.perfect) {
-    display: flex;
-    gap: 4px;
   }
 }
 
 .ProgressStatus_item {
   display: flex;
-  .App___oneColumn & {
+  flex-direction: column;
+  gap: 6px;
+  .App___threeColumns & {
+    flex-direction: row;
+  }
+  &.ProgressStatus_rankTracking {
     flex-direction: column;
+    gap: 2px;
   }
 }
 
@@ -147,20 +154,30 @@
 }
 
 .WordListStatus {
-  padding: 16px 8px;
+  padding: 8px;
   align-items: center;
   font-size: var(--small-font);
-  &.KnownWordsStatus {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    > div:not(.perfect) {
-      display: flex;
-      gap: 4px;
-    }
+  .App___threeColumns & {
+    padding: 16px 8px;
   }
   .WordListStatusCount {
     font-weight: bold;
+  }
+}
+
+.KnownWordsStatus {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  > div:not(.perfect) {
+    display: flex;
+    gap: 4px;
+  }
+}
+.KnownWordsStatus_item {
+  display: flex;
+  .App___oneColumn & {
+    flex-direction: column;
   }
 }
 

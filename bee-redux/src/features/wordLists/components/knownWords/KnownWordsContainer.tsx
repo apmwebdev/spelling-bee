@@ -21,7 +21,7 @@ import { KnownWordsStatus } from "./KnownWordsStatus";
 import { KnownWordsSettings } from "./KnownWordsSettings";
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
-import { selectCorrectGuesses } from "@/features/progress/api/progressSelectors";
+import { selectCorrectGuesses } from "@/features/progress/api/progressSlice";
 
 export function KnownWordsContainer() {
   const dispatch = useAppDispatch();

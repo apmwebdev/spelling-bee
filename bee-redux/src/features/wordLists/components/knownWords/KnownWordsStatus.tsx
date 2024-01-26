@@ -21,7 +21,8 @@ import { selectKnownWordsListSettings } from "@/features/wordLists";
 import {
   selectCorrectGuessWords,
   selectScore,
-} from "@/features/progress/api/progressSelectors";
+} from "@/features/progress/api/progressSlice";
+import { trackingStatusClasses } from "@/util";
 
 export function KnownWordsStatus() {
   const {
@@ -39,16 +40,12 @@ export function KnownWordsStatus() {
 
   const correctCount = correctGuessWords.length;
   const answerCount = answers.length;
-  let countClass = "ProgressStatusCount ";
-
-  let knownPointsCountClasses = countClass;
-  if (correctCount === 0) {
-    knownPointsCountClasses += "ErrorText";
-  } else if (correctCount === answerCount) {
-    knownPointsCountClasses += "SuccessText";
-  } else {
-    knownPointsCountClasses += "WarningText";
-  }
+  const COUNT_BASE_CLASS = "WordListStatusCount";
+  const statusClasses = trackingStatusClasses({
+    baseClass: COUNT_BASE_CLASS,
+    currentCount: correctCount,
+    totalCount: answerCount,
+  });
 
   const knownWordsTrackingText = () => {
     let text = `${correctCount}`;
@@ -57,19 +54,19 @@ export function KnownWordsStatus() {
     }
 
     return (
-      <div className="words ProgressStatus_item">
+      <div className="words KnownWordsStatus_item">
         <span>Words:</span>
-        <span className={knownPointsCountClasses}>{text}</span>
+        <span className={statusClasses}>{text}</span>
       </div>
     );
   };
 
   const pointsTrackingText = () => {
     return (
-      <div className="points ProgressStatus_item">
+      <div className="points KnownWordsStatus_item">
         <span>Points:</span>
         <span
-          className={knownPointsCountClasses}
+          className={statusClasses}
         >{`${currentPoints}/${totalPoints}`}</span>
       </div>
     );
@@ -84,16 +81,13 @@ export function KnownWordsStatus() {
     if (pangramsShowTotal) {
       text += `/${totalPangrams}`;
     }
-    let pangramCountClasses = countClass;
-    if (currentPangrams === 0) {
-      pangramCountClasses += "ErrorText";
-    } else if (currentPangrams === totalPangrams) {
-      pangramCountClasses += "SuccessText";
-    } else {
-      pangramCountClasses += "WarningText";
-    }
+    const pangramCountClasses = trackingStatusClasses({
+      baseClass: COUNT_BASE_CLASS,
+      currentCount: currentPangrams,
+      totalCount: totalPangrams,
+    });
     return (
-      <div className="pangrams ProgressStatus_item">
+      <div className="pangrams KnownWordsStatus_item">
         <span>Pangrams:</span>
         <span className={pangramCountClasses}>{text}</span>
       </div>
@@ -113,16 +107,13 @@ export function KnownWordsStatus() {
       if (perfectPangramsShowTotal) {
         text += `/${totalPerfectPangrams}`;
       }
-      let perfectClasses = countClass;
-      if (currentPerfectPangrams === 0) {
-        perfectClasses += "ErrorText";
-      } else if (currentPerfectPangrams === totalPerfectPangrams) {
-        perfectClasses += "SuccessText";
-      } else {
-        perfectClasses += "WarningText";
-      }
+      const perfectClasses = trackingStatusClasses({
+        baseClass: COUNT_BASE_CLASS,
+        currentCount: currentPerfectPangrams,
+        totalCount: totalPerfectPangrams,
+      });
       return (
-        <div className="perfect ProgressStatus_item">
+        <div className="perfect KnownWordsStatus_item">
           <span>(Perfect: </span>
           <span className={perfectClasses}>{text}</span>
           <span>)</span>
@@ -133,7 +124,7 @@ export function KnownWordsStatus() {
   };
 
   return (
-    <div className="ProgressStatus">
+    <div className="WordListStatus KnownWordsStatus">
       {knownWordsTrackingText()}
       {pointsTrackingText()}
       {pangramsTrackingText()}

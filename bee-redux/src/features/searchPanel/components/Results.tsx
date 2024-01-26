@@ -24,7 +24,7 @@ import {
   StatusTrackingKeys,
 } from "@/features/hintPanels";
 import { SearchPanelLocationKeys } from "..";
-import { selectKnownAnswerWords } from "@/features/progress/api/progressSelectors";
+import { selectKnownAnswerWords } from "@/features/progress/api/progressSlice";
 
 export function Results({
   searches,

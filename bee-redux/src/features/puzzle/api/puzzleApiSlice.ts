@@ -14,11 +14,9 @@ import { apiSlice } from "@/features/api";
 import { calculateScore } from "@/util";
 import { sortBy } from "lodash";
 import {
-  Rank,
-  Ranks,
+  generatePuzzleRanks,
   RawPuzzle,
   TPuzzle,
-  TRanks,
 } from "@/features/puzzle/types/puzzleTypes";
 
 export const puzzleApiSlice = apiSlice.injectEndpoints({
@@ -46,12 +44,7 @@ export const puzzleApiSlice = apiSlice.injectEndpoints({
           answerWords,
           totalPoints,
           answerLengths: answerLengths(answerWords),
-          ranks: Ranks.map(
-            (rank): Rank => ({
-              ...rank,
-              score: Math.round(rank.multiplier * totalPoints),
-            }),
-          ) as TRanks,
+          ranks: generatePuzzleRanks(totalPoints),
         };
         return processedResponse;
       },

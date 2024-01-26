@@ -10,107 +10,115 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-export type Rank = {
+export type BaseRank = {
   id: string;
   name: string;
   multiplier: number;
-  rank: number;
-  score: number;
+  level: number;
 };
 
-export type TRanks = [
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-  Rank,
-];
-
-export const BlankRank: Rank = {
-  id: "noPuzzle",
-  name: "No Puzzle",
-  multiplier: 0,
-  rank: 0,
-  score: 0,
-};
-
-export const Ranks: TRanks = [
+export const BASE_RANKS: BaseRank[] = [
   {
     id: "beginner",
     name: "Beginner",
     multiplier: 0,
-    rank: 1,
-    score: 0,
+    level: 1,
   },
   {
     id: "goodStart",
     name: "Good Start",
     multiplier: 0.02,
-    rank: 2,
-    score: 0,
+    level: 2,
   },
   {
     id: "movingUp",
     name: "Moving Up",
     multiplier: 0.05,
-    rank: 3,
-    score: 0,
+    level: 3,
   },
   {
     id: "good",
     name: "Good",
     multiplier: 0.08,
-    rank: 4,
-    score: 0,
+    level: 4,
   },
   {
     id: "solid",
     name: "Solid",
     multiplier: 0.15,
-    rank: 5,
-    score: 0,
+    level: 5,
   },
   {
     id: "nice",
     name: "Nice",
     multiplier: 0.25,
-    rank: 6,
-    score: 0,
+    level: 6,
   },
   {
     id: "great",
     name: "Great",
     multiplier: 0.4,
-    rank: 7,
-    score: 0,
+    level: 7,
   },
   {
     id: "amazing",
     name: "Amazing",
     multiplier: 0.5,
-    rank: 8,
-    score: 0,
+    level: 8,
   },
   {
     id: "genius",
     name: "Genius",
     multiplier: 0.7,
-    rank: 9,
-    score: 0,
+    level: 9,
   },
   {
     id: "queenBee",
     name: "Queen Bee",
     multiplier: 1,
-    rank: 10,
-    score: 0,
+    level: 10,
   },
 ];
+
+export type PuzzleRank = {
+  baseRank: BaseRank;
+  pointThreshold: number;
+};
+
+export const BLANK_RANK: PuzzleRank = {
+  baseRank: {
+    id: "noPuzzle",
+    name: "No puzzle",
+    multiplier: 0,
+    level: 0,
+  },
+  pointThreshold: 0,
+};
+
+export const generatePuzzleRanks = (totalPoints: number): PuzzleRank[] => {
+  return BASE_RANKS.map((baseRank) => {
+    return {
+      baseRank,
+      pointThreshold: Math.round(baseRank.multiplier * totalPoints),
+    };
+  });
+};
+
+export const getNextRank = (
+  startingRank: PuzzleRank | undefined,
+  ranks: PuzzleRank[],
+) => {
+  if (
+    startingRank === undefined ||
+    ranks.length === 0 ||
+    startingRank.baseRank.multiplier === 1
+  ) {
+    return undefined;
+  }
+  return ranks.find(
+    (rank) => rank.baseRank.level === startingRank.baseRank.level + 1,
+  );
+};
 
 export type TAnswer = {
   word: string;
@@ -136,7 +144,7 @@ export type TPuzzle = RawPuzzle & {
   answerWords: string[];
   totalPoints: number;
   answerLengths: number[];
-  ranks: TRanks | [Rank];
+  ranks: PuzzleRank[];
 };
 
 export const BlankPuzzle: TPuzzle = {
@@ -154,5 +162,5 @@ export const BlankPuzzle: TPuzzle = {
   answerWords: [],
   totalPoints: 0,
   answerLengths: [],
-  ranks: [BlankRank],
+  ranks: [],
 };

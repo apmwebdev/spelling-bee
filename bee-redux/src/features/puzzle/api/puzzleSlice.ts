@@ -77,6 +77,7 @@ export const selectAnswers = (state: RootState) => state.puzzle.data.answers;
 export const selectExcludedWords = (state: RootState) =>
   state.puzzle.data.excludedWords;
 export const selectIsLatest = (state: RootState) => state.puzzle.data.isLatest;
+export const selectRanks = (state: RootState) => state.puzzle.data.ranks;
 
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
   if (answers && answers.length > 0) {

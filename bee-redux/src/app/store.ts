@@ -24,6 +24,7 @@ import hintProfilesReducer from "@/features/hintProfiles/api/hintProfilesSlice";
 import hintPanelsReducer from "@/features/hintPanels/api/hintPanelsSlice";
 import searchPanelSearchesReducer from "@/features/searchPanelSearches/api/searchPanelSearchesSlice";
 import userPuzzleAttemptsReducer from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
+import progressReducer from "@/features/progress/api/progressSlice";
 import { apiSlice } from "@/features/api/api/apiSlice";
 import { listenerMiddleware } from "@/app/listenerMiddleware";
 
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   hintPanels: hintPanelsReducer,
   searchPanelSearches: searchPanelSearchesReducer,
   userPuzzleAttempts: userPuzzleAttemptsReducer,
+  progress: progressReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

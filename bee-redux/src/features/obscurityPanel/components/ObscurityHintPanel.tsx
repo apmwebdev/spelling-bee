@@ -21,7 +21,7 @@ import {
   selectKnownAnswers,
   selectKnownAnswerWords,
   selectRemainingAnswers,
-} from "@/features/progress/api/progressSelectors";
+} from "@/features/progress/api/progressSlice";
 
 const sortByFrequency = (sortOrder: SortOrderKeys, ...answers: TAnswer[]) => {
   return answers.sort((a, b) =>

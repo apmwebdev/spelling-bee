@@ -14,7 +14,7 @@ import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { useAppSelector } from "@/app/hooks";
 import { LetterTab } from "./LetterTab";
 import { DefinitionPanelData } from "../";
-import { selectAnswersByLetter } from "@/features/progress/api/progressSelectors";
+import { selectAnswersByLetter } from "@/features/progress/api/progressSlice";
 
 export function DefinitionHintPanel({
   definitionPanelData,
