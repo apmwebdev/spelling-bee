@@ -80,8 +80,9 @@ export function ProgressStatus() {
     return (
       <div className="ProgressStatus_item ProgressStatus_rankTracking">
         <span>
-          {rankData.pointsUntilNextRank} pt
-          {rankData.pointsUntilNextRank === 1 ? "" : "s"} to next rank:
+          <span className={statusClasses}>{rankData.pointsUntilNextRank}</span>{" "}
+          pt
+          {rankData.pointsUntilNextRank === 1 ? "" : "s"} to:
         </span>
         <span>
           {rankData.nextRank.baseRank.name} (
