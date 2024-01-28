@@ -11,5 +11,5 @@
 */
 
 export function ExcludedWordsSettings() {
-  return <div className="WordListSettingsContent">Coming soon!</div>;
+  return <div className="WordListSettings">Coming soon!</div>;
 }

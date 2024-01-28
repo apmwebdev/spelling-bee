@@ -30,9 +30,18 @@ export function AnswersSettings() {
     remainingLocation,
     remainingGroupWithLetter,
   } = useAppSelector(selectAnswersListSettings);
+
+  const handleRemainingLocationChange = (value: string) => {
+    /* Ensure that one of the two options is always selected.
+     * By default, clicking an already-selected button in a toggle group will send an empty string
+     * to the change event, effectively deselecting all options. This prevents that.
+     */
+    if (value !== "") dispatch(setAnswersRemainingLocation(value));
+  };
+
   return (
-    <div className="WordListSettingsContent answers">
-      <label>
+    <div className="WordListSettings AnswersSettings">
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={remainingAndSpoiledOnly}
@@ -42,7 +51,7 @@ export function AnswersSettings() {
         />
         <span>Show spoiled and unrevealed answers only</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={remainingRevealFirstLetter}
@@ -52,7 +61,7 @@ export function AnswersSettings() {
         />
         <span>Show first letter of unrevealed answers</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={remainingRevealLength}
@@ -62,7 +71,7 @@ export function AnswersSettings() {
         />
         <span>Show length of unrevealed answers</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={remainingGroupWithLetter}
@@ -75,16 +84,16 @@ export function AnswersSettings() {
           Group unrevealed answers by first letter
         </span>
       </label>
-      <div>
+      <div className="WordListSettings_item AnswersSettings_remainingLocation">
+        <div>Show remaining answers at the:</div>
         <ToggleGroup.Root
           type="single"
           value={remainingLocation}
-          onValueChange={(val) => dispatch(setAnswersRemainingLocation(val))}
+          onValueChange={(val) => handleRemainingLocationChange(val)}
         >
           <ToggleGroup.Item value="beginning">Beginning</ToggleGroup.Item>
           <ToggleGroup.Item value="end">End</ToggleGroup.Item>
         </ToggleGroup.Root>
-        <span>Show remaining answers at the {remainingLocation}</span>
       </div>
     </div>
   );

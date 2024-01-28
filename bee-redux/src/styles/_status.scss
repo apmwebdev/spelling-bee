@@ -134,23 +134,32 @@
   font-weight: bold;
 }
 
-.WordListSettingsContent {
+.WordListSettings {
   padding: 8px;
-  label, > div {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-  &.known {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-  }
-  &.answers {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+}
+
+.KnownWordsSettings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.AnswersSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.WordListSettings_item {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.AnswersSettings_remainingLocation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .WordListStatus {

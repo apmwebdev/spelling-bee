@@ -28,8 +28,8 @@ export function KnownWordsSettings() {
     perfectPangramsShowTotal,
   } = useAppSelector(selectKnownWordsListSettings);
   return (
-    <div className="WordListSettingsContent known">
-      <label>
+    <div className="WordListSettings KnownWordsSettings">
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={wordsShowTotal}
@@ -39,7 +39,7 @@ export function KnownWordsSettings() {
         />
         <span>Show total words</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={pangramsShowTotal}
@@ -49,7 +49,7 @@ export function KnownWordsSettings() {
         />
         <span>Show total pangrams</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={showPerfectPangrams}
@@ -59,7 +59,7 @@ export function KnownWordsSettings() {
         />
         <span>Include perfect pangrams</span>
       </label>
-      <label>
+      <label className="WordListSettings_item">
         <input
           type="checkbox"
           checked={perfectPangramsShowTotal}
