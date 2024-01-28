@@ -18,6 +18,7 @@ import {
   setKnownWordsWordsShowTotal,
 } from "@/features/wordLists";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 
 export function KnownWordsSettings() {
   const dispatch = useAppDispatch();
@@ -30,42 +31,38 @@ export function KnownWordsSettings() {
   return (
     <div className="WordListSettings KnownWordsSettings">
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={wordsShowTotal}
-          onChange={(e) =>
-            dispatch(setKnownWordsWordsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsWordsShowTotal(Boolean(isChecked)))
           }
         />
         <span>Show total words</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={pangramsShowTotal}
-          onChange={(e) =>
-            dispatch(setKnownWordsPangramsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsPangramsShowTotal(Boolean(isChecked)))
           }
         />
         <span>Show total pangrams</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={showPerfectPangrams}
-          onChange={(e) =>
-            dispatch(setKnownWordsShowPerfectPangrams(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsShowPerfectPangrams(Boolean(isChecked)))
           }
         />
         <span>Include perfect pangrams</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={perfectPangramsShowTotal}
           disabled={!showPerfectPangrams}
-          onChange={(e) =>
-            dispatch(setKnownWordsPerfectPangramsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsPerfectPangramsShowTotal(Boolean(isChecked)))
           }
         />
         <span className={showPerfectPangrams ? "" : "disabled"}>

@@ -20,6 +20,7 @@ import {
   setAnswersRemainingRevealLength,
 } from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
+import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 
 export function AnswersSettings() {
   const dispatch = useAppDispatch();
@@ -42,42 +43,38 @@ export function AnswersSettings() {
   return (
     <div className="WordListSettings AnswersSettings">
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={remainingAndSpoiledOnly}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingAndSpoiledOnly(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingAndSpoiledOnly(isChecked))
           }
         />
         <span>Show spoiled and unrevealed answers only</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={remainingRevealFirstLetter}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingRevealFirstLetter(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingRevealFirstLetter(isChecked))
           }
         />
         <span>Show first letter of unrevealed answers</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={remainingRevealLength}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingRevealLength(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingRevealLength(isChecked))
           }
         />
         <span>Show length of unrevealed answers</span>
       </label>
       <label className="WordListSettings_item">
-        <input
-          type="checkbox"
+        <Checkbox
           checked={remainingGroupWithLetter}
           disabled={!remainingRevealFirstLetter}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingGroupWithLetter(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingGroupWithLetter(isChecked))
           }
         />
         <span className={remainingRevealFirstLetter ? "" : "disabled"}>
