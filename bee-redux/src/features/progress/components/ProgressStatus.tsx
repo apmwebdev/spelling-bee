@@ -10,94 +10,18 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { useAppSelector } from "@/app/hooks";
-import {
-  selectProgressData,
-  selectProgressSettings,
-} from "@/features/progress/api/progressSlice";
-import { trackingStatusClasses } from "@/util";
+import { AnswersStatus } from "@/features/progress/components/progressStatus/AnswersStatus";
+import { ScoreStatus } from "@/features/progress/components/progressStatus/ScoreStatus";
+import { PercentageStatus } from "@/features/progress/components/progressStatus/PercentageStatus";
+import { RankStatus } from "@/features/progress/components/progressStatus/RankStatus";
 
 export function ProgressStatus() {
-  const { showTotalWords, showTotalPoints } = useAppSelector(
-    selectProgressSettings,
-  );
-  const { answerData, scoreData, percentageData, rankData } =
-    useAppSelector(selectProgressData);
-  const statusClasses = trackingStatusClasses({
-    baseClass: "ProgressStatusCount",
-    currentCount: answerData.knownCount,
-    totalCount: answerData.totalCount,
-  });
-
-  const wordsTrackingText = () => {
-    let text = `${answerData.knownCount}`;
-    if (showTotalWords) {
-      text += `/${answerData.totalCount}`;
-    }
-    return (
-      <div className="words ProgressStatus_item">
-        <span className={statusClasses}>{text}</span>
-        <span>words</span>
-      </div>
-    );
-  };
-
-  const pointsTrackingText = () => {
-    let pointsText = `${scoreData.current}`;
-    if (showTotalPoints) {
-      pointsText += `/${scoreData.total}`;
-    }
-    return (
-      <div className="points ProgressStatus_item">
-        <span className={statusClasses}>{pointsText}</span>
-        <span>points</span>
-      </div>
-    );
-  };
-
-  const percentComplete = () => {
-    const val = percentageData.pointsFound;
-    if (Number.isNaN(val)) return "0";
-
-    const formattedVal = val.toFixed(2);
-    if (formattedVal.slice(-2) === "00") return formattedVal.slice(0, -3);
-
-    return formattedVal;
-  };
-
-  const percentageTrackingText = () => {
-    const percentageCompleteText = `${percentComplete()}%`;
-    return (
-      <div className="ProgressStatus_item">
-        <span className={statusClasses}>{percentageCompleteText}</span>
-        <span>complete</span>
-      </div>
-    );
-  };
-
-  const rankTrackingText = () => {
-    if (!rankData.nextRank) return null;
-    return (
-      <div className="ProgressStatus_item ProgressStatus_rankTracking">
-        <span>
-          <span className={statusClasses}>{rankData.pointsUntilNextRank}</span>{" "}
-          pt
-          {rankData.pointsUntilNextRank === 1 ? "" : "s"} to:
-        </span>
-        <span>
-          {rankData.nextRank.baseRank.name} (
-          {rankData.nextRank.baseRank.multiplier * 100}%)
-        </span>
-      </div>
-    );
-  };
-
   return (
     <div className="ProgressStatus">
-      {wordsTrackingText()}
-      {pointsTrackingText()}
-      {percentageTrackingText()}
-      {rankTrackingText()}
+      <AnswersStatus />
+      <ScoreStatus />
+      <PercentageStatus />
+      <RankStatus />
     </div>
   );
 }

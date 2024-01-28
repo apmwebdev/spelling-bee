@@ -21,14 +21,17 @@ import {
   selectRanks,
   selectTotalPoints,
 } from "@/features/puzzle/api/puzzleSlice";
-import { calculateScore } from "@/util";
+import { calculateScore, trackingStatusClasses } from "@/util";
 import {
+  AnswerProgress,
   AnswersByLetter,
   AnswersByLetterSortable,
   createLetterAnswers,
+  PercentageProgress,
   ProgressData,
   ProgressStatusSettings,
   RankProgress,
+  ScoreProgress,
 } from "@/features/progress/types/progressTypes";
 import { createInitialState, Statuses } from "@/types/globalTypes";
 import { RootState } from "@/app/store";
@@ -62,6 +65,12 @@ export const { setProgressShowTotalWords, setProgressShowTotalPoints } =
   progressSlice.actions;
 
 export const selectProgressSettings = (state: RootState) => state.progress.data;
+
+export const selectProgressShowTotalWords = (state: RootState) =>
+  state.progress.data.showTotalWords;
+
+export const selectProgressShowTotalPoints = (state: RootState) =>
+  state.progress.data.showTotalPoints;
 
 export const selectKnownAnswers = createSelector(
   [selectAnswers, selectGuessWords],
@@ -122,6 +131,49 @@ export const selectCurrentOrBlankRank = createSelector(
   (currentRank) => currentRank ?? BLANK_RANK,
 );
 
+export const selectAnswerProgress = createSelector(
+  [selectAnswers, selectCorrectGuessWords, selectSpoiledWords],
+  (answers, foundAnswers, spoiledAnswers): AnswerProgress => {
+    const knownCount = foundAnswers.length + spoiledAnswers.length;
+
+    return {
+      totalCount: answers.length,
+      foundCount: foundAnswers.length,
+      spoiledCount: spoiledAnswers.length,
+      knownCount,
+      remainingCount: answers.length - knownCount,
+    };
+  },
+);
+
+export const selectScoreProgress = createSelector(
+  [selectScore, selectTotalPoints, selectSpoiledWords],
+  (score, totalPoints, spoiledAnswers): ScoreProgress => {
+    const spoiledPoints = calculateScore(spoiledAnswers);
+
+    return {
+      score,
+      totalPoints,
+      spoiledPoints,
+      pointsCeiling: totalPoints - spoiledPoints,
+    };
+  },
+);
+
+export const selectPercentageProgress = createSelector(
+  [selectScore, selectTotalPoints, selectSpoiledWords],
+  (score, totalPoints, spoiledAnswers): PercentageProgress => {
+    const spoiledPoints = calculateScore(spoiledAnswers);
+    const spoiledPointsPercentage = (spoiledPoints / totalPoints) * 100;
+
+    return {
+      pointsFoundPercent: (score / totalPoints) * 100,
+      pointsSpoiledPercent: spoiledPointsPercentage,
+      pointsAchievablePercent: 100 - spoiledPointsPercentage,
+    };
+  },
+);
+
 export const selectRankProgress = createSelector(
   [selectCurrentRank, selectRanks, selectScore],
   (currentRank, ranks, score): RankProgress => {
@@ -130,6 +182,7 @@ export const selectRankProgress = createSelector(
       if (currentRank === undefined || nextRank === undefined) return 0;
       return nextRank.pointThreshold - score;
     };
+
     return {
       currentRank: currentRank ?? BLANK_RANK,
       nextRank,
@@ -138,47 +191,29 @@ export const selectRankProgress = createSelector(
   },
 );
 
+export const selectProgressStatusClasses = createSelector(
+  [selectAnswerProgress],
+  (answerProgress) => {
+    return trackingStatusClasses({
+      baseClass: "ProgressStatusCount",
+      currentCount: answerProgress.knownCount,
+      totalCount: answerProgress.totalCount,
+    });
+  },
+);
+
 export const selectProgressData = createSelector(
   [
-    selectCorrectGuessWords,
-    selectSpoiledWords,
-    selectAnswers,
-    selectScore,
-    selectTotalPoints,
+    selectAnswerProgress,
+    selectScoreProgress,
+    selectPercentageProgress,
     selectRankProgress,
   ],
-  (
-    foundAnswers,
-    spoiledAnswers,
-    answers,
-    score,
-    totalPoints,
-    rankData,
-  ): ProgressData => {
-    const knownCount = foundAnswers.length + spoiledAnswers.length;
-    const spoiledPoints = calculateScore(spoiledAnswers);
-    const pointsFoundPercentage = (score / totalPoints) * 100;
-    const spoiledPointsPercentage = (spoiledPoints / totalPoints) * 100;
-
+  (answerData, scoreData, percentageData, rankData): ProgressData => {
     return {
-      answerData: {
-        totalCount: answers.length,
-        foundCount: foundAnswers.length,
-        spoiledCount: spoiledAnswers.length,
-        knownCount,
-        remainingCount: answers.length - knownCount,
-      },
-      scoreData: {
-        current: score,
-        total: totalPoints,
-        spoiledPoints,
-        maxAchievable: totalPoints - spoiledPoints,
-      },
-      percentageData: {
-        pointsFound: pointsFoundPercentage,
-        pointsSpoiled: spoiledPointsPercentage,
-        pointsAchievable: 100 - spoiledPointsPercentage,
-      },
+      answerData,
+      scoreData,
+      percentageData,
       rankData,
     };
   },

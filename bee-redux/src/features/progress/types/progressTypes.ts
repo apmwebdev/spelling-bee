@@ -17,6 +17,27 @@ export type ProgressStatusSettings = {
   showTotalPoints: boolean;
 };
 
+export type AnswerProgress = {
+  totalCount: number;
+  foundCount: number;
+  spoiledCount: number;
+  knownCount: number;
+  remainingCount: number;
+};
+
+export type ScoreProgress = {
+  score: number;
+  totalPoints: number;
+  spoiledPoints: number;
+  pointsCeiling: number;
+};
+
+export type PercentageProgress = {
+  pointsFoundPercent: number;
+  pointsSpoiledPercent: number;
+  pointsAchievablePercent: number;
+};
+
 export type RankProgress = {
   currentRank: PuzzleRank;
   nextRank: PuzzleRank | undefined;
@@ -28,24 +49,9 @@ export type RankProgress = {
  * clear.
  */
 export type ProgressData = {
-  answerData: {
-    totalCount: number;
-    foundCount: number;
-    spoiledCount: number;
-    knownCount: number;
-    remainingCount: number;
-  };
-  scoreData: {
-    current: number;
-    total: number;
-    spoiledPoints: number;
-    maxAchievable: number;
-  };
-  percentageData: {
-    pointsFound: number;
-    pointsSpoiled: number;
-    pointsAchievable: number;
-  };
+  answerData: AnswerProgress;
+  scoreData: ScoreProgress;
+  percentageData: PercentageProgress;
   rankData: RankProgress;
 };
 
