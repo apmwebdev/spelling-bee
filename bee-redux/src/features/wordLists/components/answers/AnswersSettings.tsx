@@ -21,6 +21,10 @@ import {
 } from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
 import { Checkbox } from "@/components/radix-ui/radix-checkbox";
+import {
+  isRemainingAnswersLocation,
+  RemainingAnswersLocations,
+} from "@/features/wordLists/types/wordListTypes";
 
 export function AnswersSettings() {
   const dispatch = useAppDispatch();
@@ -29,15 +33,18 @@ export function AnswersSettings() {
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
-    remainingGroupWithLetter,
+    remainingGroupWithFirstLetter,
   } = useAppSelector(selectAnswersListSettings);
 
   const handleRemainingLocationChange = (value: string) => {
     /* Ensure that one of the two options is always selected.
      * By default, clicking an already-selected button in a toggle group will send an empty string
-     * to the change event, effectively deselecting all options. This prevents that.
+     * to the change event, effectively deselecting all options.
+     * This guard condition prevents that and any other unexpected values.
      */
-    if (value !== "") dispatch(setAnswersRemainingLocation(value));
+    if (!isRemainingAnswersLocation(value)) return;
+
+    dispatch(setAnswersRemainingLocation(value));
   };
 
   return (
@@ -46,7 +53,7 @@ export function AnswersSettings() {
         <Checkbox
           checked={remainingAndSpoiledOnly}
           onCheckedChange={(isChecked) =>
-            dispatch(setAnswersRemainingAndSpoiledOnly(isChecked))
+            dispatch(setAnswersRemainingAndSpoiledOnly(Boolean(isChecked)))
           }
         />
         <span>Show spoiled and unrevealed answers only</span>
@@ -55,7 +62,7 @@ export function AnswersSettings() {
         <Checkbox
           checked={remainingRevealFirstLetter}
           onCheckedChange={(isChecked) =>
-            dispatch(setAnswersRemainingRevealFirstLetter(isChecked))
+            dispatch(setAnswersRemainingRevealFirstLetter(Boolean(isChecked)))
           }
         />
         <span>Show first letter of unrevealed answers</span>
@@ -64,17 +71,17 @@ export function AnswersSettings() {
         <Checkbox
           checked={remainingRevealLength}
           onCheckedChange={(isChecked) =>
-            dispatch(setAnswersRemainingRevealLength(isChecked))
+            dispatch(setAnswersRemainingRevealLength(Boolean(isChecked)))
           }
         />
         <span>Show length of unrevealed answers</span>
       </label>
       <label className="WordListSettings_item">
         <Checkbox
-          checked={remainingGroupWithLetter}
+          checked={remainingGroupWithFirstLetter}
           disabled={!remainingRevealFirstLetter}
           onCheckedChange={(isChecked) =>
-            dispatch(setAnswersRemainingGroupWithLetter(isChecked))
+            dispatch(setAnswersRemainingGroupWithLetter(Boolean(isChecked)))
           }
         />
         <span className={remainingRevealFirstLetter ? "" : "disabled"}>
@@ -88,8 +95,12 @@ export function AnswersSettings() {
           value={remainingLocation}
           onValueChange={(val) => handleRemainingLocationChange(val)}
         >
-          <ToggleGroup.Item value="beginning">Beginning</ToggleGroup.Item>
-          <ToggleGroup.Item value="end">End</ToggleGroup.Item>
+          <ToggleGroup.Item value={RemainingAnswersLocations.beginning}>
+            Beginning
+          </ToggleGroup.Item>
+          <ToggleGroup.Item value={RemainingAnswersLocations.end}>
+            End
+          </ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
     </div>

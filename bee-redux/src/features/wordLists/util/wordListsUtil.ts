@@ -11,8 +11,8 @@
 */
 
 import { TGuess } from "@/features/guesses";
-import { SortType } from "@/features/wordLists";
 import { SortOrderKeys } from "@/types/globalTypes";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export const sortGuessList = ({
   guessList,

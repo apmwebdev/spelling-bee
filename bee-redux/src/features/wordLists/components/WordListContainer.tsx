@@ -10,11 +10,11 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { SortType } from "@/features/wordLists/api/wordListSettingsSlice";
 import { SortOrderKeys } from "@/types/globalTypes";
 import { WordListHeader } from "@/features/wordLists/components/WordListHeader";
 import { WordListScroller } from "@/features/wordLists/components/WordListScroller";
 import { ReactElement } from "react";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export type WordListContainerSettingsData = {
   isExpanded: boolean;

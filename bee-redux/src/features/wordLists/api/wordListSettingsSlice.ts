@@ -10,181 +10,150 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
-import { SortOrderKeys, Statuses } from "@/types/globalTypes";
+import { createInitialState, SortOrderKeys } from "@/types/globalTypes";
+import {
+  RemainingAnswersLocations,
+  SortType,
+  WordListSettingsFormat,
+} from "@/features/wordLists/types/wordListTypes";
 
-export enum SortType {
-  Alphabetical = "alphabetical",
-  FoundOrder = "foundOrder",
-}
-
-export type KnownWordsSettingsFormat = {
-  sortType: SortType;
-  sortOrder: SortOrderKeys;
-  letterFilter: string[];
-  wordsShowTotal: boolean;
-  pangramsShowTotal: boolean;
-  showPerfectPangrams: boolean;
-  perfectPangramsShowTotal: boolean;
-  settingsCollapsed: boolean;
-};
-
-export type WrongGuessesSettingsFormat = {
-  sortType: SortType;
-  sortOrder: SortOrderKeys;
-  letterFilter: string[];
-  settingsCollapsed: boolean;
-};
-
-export type ExcludedWordsSettingsFormat = {
-  sortType: SortType.Alphabetical;
-  sortOrder: SortOrderKeys;
-  letterFilter: string[];
-  settingsCollapsed: boolean;
-};
-
-export type AnswerListSettingsFormat = {
-  sortType: SortType.Alphabetical;
-  sortOrder: SortOrderKeys;
-  letterFilter: string[];
-  remainingAndSpoiledOnly: boolean;
-  remainingRevealFirstLetter: boolean;
-  remainingRevealLength: boolean;
-  remainingLocation: "beginning" | "end";
-  remainingGroupWithLetter: boolean;
-  settingsCollapsed: boolean;
-};
-
-export type WordListSettingsFormat = {
-  knownWords: KnownWordsSettingsFormat;
-  wrongGuesses: WrongGuessesSettingsFormat;
-  excludedWords: ExcludedWordsSettingsFormat;
-  answers: AnswerListSettingsFormat;
-  general: {
-    groupByFirstLetter: boolean;
-  };
-};
-
-export type WordListSettingsState = {
-  data: WordListSettingsFormat;
-  status: Statuses;
-};
-
-const initialState: WordListSettingsState = {
-  data: {
-    knownWords: {
-      sortType: SortType.Alphabetical,
-      sortOrder: SortOrderKeys.asc,
-      letterFilter: [],
-      wordsShowTotal: true,
-      pangramsShowTotal: true,
-      showPerfectPangrams: true,
-      perfectPangramsShowTotal: true,
-      settingsCollapsed: true,
-    },
-    wrongGuesses: {
-      sortType: SortType.FoundOrder,
-      sortOrder: SortOrderKeys.desc,
-      letterFilter: [],
-      settingsCollapsed: true,
-    },
-    excludedWords: {
-      sortType: SortType.Alphabetical,
-      sortOrder: SortOrderKeys.asc,
-      letterFilter: [],
-      settingsCollapsed: true,
-    },
-    answers: {
-      sortType: SortType.Alphabetical,
-      sortOrder: SortOrderKeys.asc,
-      letterFilter: [],
-      remainingAndSpoiledOnly: false,
-      remainingRevealFirstLetter: true,
-      remainingRevealLength: true,
-      remainingLocation: "beginning",
-      remainingGroupWithLetter: true,
-      settingsCollapsed: true,
-    },
-    general: {
-      groupByFirstLetter: true,
-    },
+const initialState = createInitialState<WordListSettingsFormat>({
+  knownWords: {
+    sortType: SortType.Alphabetical,
+    sortOrder: SortOrderKeys.asc,
+    letterFilter: [],
+    wordsShowTotal: true,
+    pangramsShowTotal: true,
+    showPerfectPangrams: true,
+    perfectPangramsShowTotal: true,
+    settingsCollapsed: true,
   },
-  status: Statuses.Initial,
-};
+  wrongGuesses: {
+    sortType: SortType.FoundOrder,
+    sortOrder: SortOrderKeys.desc,
+    letterFilter: [],
+    settingsCollapsed: true,
+  },
+  excludedWords: {
+    sortType: SortType.Alphabetical,
+    sortOrder: SortOrderKeys.asc,
+    letterFilter: [],
+    settingsCollapsed: true,
+  },
+  answers: {
+    sortType: SortType.Alphabetical,
+    sortOrder: SortOrderKeys.asc,
+    letterFilter: [],
+    remainingAndSpoiledOnly: false,
+    remainingRevealFirstLetter: true,
+    remainingRevealLength: true,
+    remainingLocation: RemainingAnswersLocations.beginning,
+    remainingGroupWithFirstLetter: true,
+    settingsCollapsed: true,
+  },
+  general: {
+    groupByFirstLetter: true,
+  },
+});
 
 export const wordListSettingsSlice = createSlice({
   name: "wordListSettings",
   initialState,
   reducers: {
-    setKnownWordsSortType: (state, action) => {
-      state.data.knownWords.sortType = action.payload;
+    setKnownWordsSortType: (state, { payload }: PayloadAction<SortType>) => {
+      state.data.knownWords.sortType = payload;
     },
-    setKnownWordsSortOrder: (state, action) => {
-      state.data.knownWords.sortOrder = action.payload;
+    setKnownWordsSortOrder: (
+      state,
+      { payload }: PayloadAction<SortOrderKeys>,
+    ) => {
+      state.data.knownWords.sortOrder = payload;
     },
     setKnownWordsWordsShowTotal: (
       state,
-      action: { payload: boolean; type: string },
+      { payload }: PayloadAction<boolean>,
     ) => {
-      state.data.knownWords.wordsShowTotal = action.payload;
+      state.data.knownWords.wordsShowTotal = payload;
     },
     setKnownWordsPangramsShowTotal: (
       state,
-      action: { payload: boolean; type: string },
+      { payload }: PayloadAction<boolean>,
     ) => {
-      state.data.knownWords.pangramsShowTotal = action.payload;
+      state.data.knownWords.pangramsShowTotal = payload;
     },
     setKnownWordsShowPerfectPangrams: (
       state,
-      action: { payload: boolean; type: string },
+      { payload }: PayloadAction<boolean>,
     ) => {
-      state.data.knownWords.showPerfectPangrams = action.payload;
+      state.data.knownWords.showPerfectPangrams = payload;
     },
     setKnownWordsPerfectPangramsShowTotal: (
       state,
-      action: { payload: boolean; type: string },
+      { payload }: PayloadAction<boolean>,
     ) => {
-      state.data.knownWords.perfectPangramsShowTotal = action.payload;
+      state.data.knownWords.perfectPangramsShowTotal = payload;
     },
     toggleKnownWordsSettingsCollapsed: (state) => {
       state.data.knownWords.settingsCollapsed =
         !state.data.knownWords.settingsCollapsed;
     },
-    setWrongGuessesSortType: (state, action) => {
-      state.data.wrongGuesses.sortType = action.payload;
+    setWrongGuessesSortType: (state, { payload }: PayloadAction<SortType>) => {
+      state.data.wrongGuesses.sortType = payload;
     },
-    setWrongGuessesSortOrder: (state, action) => {
-      state.data.wrongGuesses.sortOrder = action.payload;
+    setWrongGuessesSortOrder: (
+      state,
+      { payload }: PayloadAction<SortOrderKeys>,
+    ) => {
+      state.data.wrongGuesses.sortOrder = payload;
     },
     toggleWrongGuessesSettingsCollapsed: (state) => {
       state.data.wrongGuesses.settingsCollapsed =
         !state.data.wrongGuesses.settingsCollapsed;
     },
-    setExcludedWordsSortOrder: (state, action) => {
-      state.data.excludedWords.sortOrder = action.payload;
+    setExcludedWordsSortOrder: (
+      state,
+      { payload }: PayloadAction<SortOrderKeys>,
+    ) => {
+      state.data.excludedWords.sortOrder = payload;
     },
     toggleExcludedWordsSettingsCollapsed: (state) => {
       state.data.excludedWords.settingsCollapsed =
         !state.data.excludedWords.settingsCollapsed;
     },
-    setAnswersSortOrder: (state, action) => {
-      state.data.answers.sortOrder = action.payload;
+    setAnswersSortOrder: (state, { payload }: PayloadAction<SortOrderKeys>) => {
+      state.data.answers.sortOrder = payload;
     },
-    setAnswersRemainingAndSpoiledOnly: (state, action) => {
-      state.data.answers.remainingAndSpoiledOnly = action.payload;
+    setAnswersRemainingAndSpoiledOnly: (
+      state,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      state.data.answers.remainingAndSpoiledOnly = payload;
     },
-    setAnswersRemainingRevealFirstLetter: (state, action) => {
-      state.data.answers.remainingRevealFirstLetter = action.payload;
+    setAnswersRemainingRevealFirstLetter: (
+      state,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      state.data.answers.remainingRevealFirstLetter = payload;
     },
-    setAnswersRemainingRevealLength: (state, action) => {
-      state.data.answers.remainingRevealLength = action.payload;
+    setAnswersRemainingRevealLength: (
+      state,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      state.data.answers.remainingRevealLength = payload;
     },
-    setAnswersRemainingLocation: (state, action) => {
-      state.data.answers.remainingLocation = action.payload;
+    setAnswersRemainingGroupWithLetter: (
+      state,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      state.data.answers.remainingGroupWithFirstLetter = payload;
     },
-    setAnswersRemainingGroupWithLetter: (state, action) => {
-      state.data.answers.remainingGroupWithLetter = action.payload;
+    setAnswersRemainingLocation: (
+      state,
+      { payload }: PayloadAction<RemainingAnswersLocations>,
+    ) => {
+      state.data.answers.remainingLocation = payload;
     },
     toggleAnswersSettingsCollapsed: (state) => {
       state.data.answers.settingsCollapsed =

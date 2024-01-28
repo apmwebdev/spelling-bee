@@ -72,6 +72,12 @@ export type EnumeratedOptions = {
   [key: string]: EnumerableOption;
 };
 
+/** There are multiple places where lists of answers, guesses, etc. can be custom sorted by the
+ * end user. In all of these places, whether to sort in ascending order or descending order is part
+ * of the sorting options, so it makes sense to have a global way to define this.
+ * SortOrderKeys.asc = "asc" (Ascending)
+ * SortOrderKeys.desc = "desc" (Descending)
+ */
 export enum SortOrderKeys {
   asc = "asc",
   desc = "desc",

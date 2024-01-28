@@ -41,7 +41,7 @@ export function AnswersContainer() {
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
-    remainingGroupWithLetter,
+    remainingGroupWithFirstLetter,
   } = useAppSelector(selectAnswersListSettings);
 
   const displayList = answerSorter({
@@ -54,7 +54,7 @@ export function AnswersContainer() {
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
-    remainingGroupWithLetter,
+    remainingGroupWithFirstLetter: remainingGroupWithFirstLetter,
   });
 
   return (
