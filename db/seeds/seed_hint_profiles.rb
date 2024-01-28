@@ -14,7 +14,7 @@
 module SeedHintProfiles
   def self.default_display_state
     PanelDisplayState.new(
-      is_expanded: false,
+      is_expanded: true,
       is_blurred: false,
       is_sticky: false,
       is_settings_expanded: false,
@@ -79,7 +79,7 @@ module SeedHintProfiles
         separate_known: false,
         revealed_letters: 1,
         reveal_length: true,
-        click_to_define: false,
+        click_to_define: true,
         sort_order: "asc",
       ),
       **boilerplate_fields(ssb_profile),
@@ -301,7 +301,7 @@ module SeedHintProfiles
         hide_known: false,
         revealed_letters: 1,
         separate_known: false,
-        click_to_define: false,
+        click_to_define: true,
         reveal_length: true,
         sort_order: "asc",
       ),
