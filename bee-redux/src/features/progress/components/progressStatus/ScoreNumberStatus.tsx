@@ -17,13 +17,13 @@ import {
   selectScoreProgress,
 } from "@/features/progress/api/progressSlice";
 
-export function ScoreStatus() {
+export function ScoreNumberStatus() {
   const { score, totalPoints } = useAppSelector(selectScoreProgress);
   const showTotalPoints = useAppSelector(selectProgressShowTotalPoints);
-  const statusClasses = useAppSelector(selectProgressStatusClasses);
+  const numberClasses = useAppSelector(selectProgressStatusClasses);
 
   const text = () => {
-    if (showTotalPoints) return `${score}/${totalPoints}`;
+    if (showTotalPoints) return `${score} / ${totalPoints}`;
     return `${score}`;
 
     // if (spoiledPoints === 0) {
@@ -35,9 +35,9 @@ export function ScoreStatus() {
   };
 
   return (
-    <div className="ProgressStatus_item">
-      <span className={statusClasses}>{text()}</span>
-      <span>points</span>
+    <div className="ProgressNumbers_item">
+      <span className="ProgressNumbers_itemLabel">Points:</span>
+      <span className={numberClasses}>{text()}</span>
     </div>
   );
 }

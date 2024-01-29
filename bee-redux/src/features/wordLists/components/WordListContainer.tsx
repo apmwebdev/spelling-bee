@@ -15,6 +15,7 @@ import { WordListHeader } from "@/features/wordLists/components/WordListHeader";
 import { WordListScroller } from "@/features/wordLists/components/WordListScroller";
 import { ReactElement } from "react";
 import { SortType } from "@/features/wordLists/types/wordListTypes";
+import { TGuess } from "@/features/guesses";
 
 export type WordListContainerSettingsData = {
   isExpanded: boolean;
@@ -33,7 +34,7 @@ export function WordListContainer({
   allowPopovers,
   useSpoilers,
 }: {
-  wordList: string[];
+  wordList: string[] | TGuess[];
   settingsData: WordListContainerSettingsData;
   sortType: SortType;
   sortOrder: SortOrderKeys;

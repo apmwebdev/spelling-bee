@@ -16,9 +16,9 @@ import {
   selectProgressStatusClasses,
 } from "@/features/progress/api/progressSlice";
 
-export function PercentageStatus() {
+export function PercentageNumberStatus() {
   const { pointsKnownPercent } = useAppSelector(selectPercentageProgress);
-  const statusClasses = useAppSelector(selectProgressStatusClasses);
+  const numberClasses = useAppSelector(selectProgressStatusClasses);
 
   const processPercentString = (val: number) => {
     const formatPercentString = (val: number) => {
@@ -48,9 +48,9 @@ export function PercentageStatus() {
   };
 
   return (
-    <div className="ProgressStatus_item">
-      <span className={statusClasses}>{text()}</span>
-      <span>complete</span>
+    <div className="ProgressNumbers_item">
+      <span className="ProgressNumbers_itemLabel">Percent:</span>
+      <span className={numberClasses}>{text()}</span>
     </div>
   );
 }

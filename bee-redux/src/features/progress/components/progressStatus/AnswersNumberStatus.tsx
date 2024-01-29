@@ -17,13 +17,13 @@ import {
   selectProgressStatusClasses,
 } from "@/features/progress/api/progressSlice";
 
-export function AnswersStatus() {
+export function AnswersNumberStatus() {
   const { totalCount, knownCount } = useAppSelector(selectAnswerProgress);
   const showTotalWords = useAppSelector(selectProgressShowTotalWords);
-  const statusClasses = useAppSelector(selectProgressStatusClasses);
+  const numberClasses = useAppSelector(selectProgressStatusClasses);
 
   const text = () => {
-    if (showTotalWords) return `${knownCount}/${totalCount}`;
+    if (showTotalWords) return `${knownCount} / ${totalCount}`;
     return `${knownCount}`;
 
     // if (spoiledCount === 0) {
@@ -35,9 +35,9 @@ export function AnswersStatus() {
   };
 
   return (
-    <div className="ProgressStatus_item">
-      <span className={statusClasses}>{text()}</span>
-      <span>words</span>
+    <div className="ProgressNumbers_item">
+      <span className="ProgressNumbers_itemLabel">Words:</span>
+      <span className={numberClasses}>{text()}</span>
     </div>
   );
 }

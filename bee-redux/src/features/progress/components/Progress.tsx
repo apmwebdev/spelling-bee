@@ -10,14 +10,18 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { ProgressRank } from "./ProgressRank";
-import { ProgressStatus } from "@/features/progress/components/ProgressStatus";
+import { ProgressRank } from "@/features/progress/components/ProgressRank";
+import { ProgressBar } from "@/features/progress/components/ProgressBar";
+import { ProgressNumbers } from "@/features/progress/components/ProgressNumbers";
 
 export function Progress() {
   return (
     <div className="Progress">
-      <ProgressRank />
-      <ProgressStatus />
+      <ProgressNumbers />
+      <div className="Progress_rankSection">
+        <ProgressBar />
+        <ProgressRank />
+      </div>
     </div>
   );
 }

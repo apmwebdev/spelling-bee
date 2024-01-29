@@ -16,24 +16,32 @@ import { WordWithPopover } from "./WordWithPopover";
 import { AnswerSpoiler } from "./answers/AnswerSpoiler";
 import { useAppSelector } from "@/app/hooks";
 import { selectRemainingAnswerWords } from "@/features/progress/api/progressSlice";
+import { isGuess, TGuess } from "@/features/guesses";
 
 export function WordListScroller({
   wordList,
   allowPopovers,
   useSpoilers,
 }: {
-  wordList: string[];
+  wordList: string[] | TGuess[];
   allowPopovers: boolean;
   useSpoilers?: boolean;
 }) {
   const remainingAnswerWords = useAppSelector(selectRemainingAnswerWords);
 
-  const listItem = (word: string) => {
+  const listItem = (item: string | TGuess) => {
+    let word = "";
+    if (isGuess(item)) {
+      word = item.text;
+    } else {
+      word = item;
+    }
+
     if (useSpoilers && remainingAnswerWords.includes(word)) {
       return <AnswerSpoiler word={word} />;
     }
     if (allowPopovers) {
-      return <WordWithPopover word={word} />;
+      return <WordWithPopover item={item} />;
     }
     return <span>{word}</span>;
   };
@@ -42,8 +50,8 @@ export function WordListScroller({
     <ScrollArea.Root type="auto">
       <ScrollArea.Viewport>
         <ul className="WordList hasContent">
-          {wordList.map((word) => (
-            <li key={uniqid()}>{listItem(word)}</li>
+          {wordList.map((item) => (
+            <li key={uniqid()}>{listItem(item)}</li>
           ))}
         </ul>
       </ScrollArea.Viewport>

@@ -19,8 +19,8 @@ export function ProgressStatus() {
   return (
     <div className="ProgressStatus">
       <AnswersStatus />
-      <ScoreStatus />
       <PercentageStatus />
+      <ScoreStatus />
       <RankStatus />
     </div>
   );

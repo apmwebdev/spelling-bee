@@ -119,10 +119,27 @@ export const selectScore = createSelector(
   (correctGuessWords) => calculateScore(correctGuessWords),
 );
 
+export const selectSpoiledPoints = createSelector(
+  [selectSpoiledWords],
+  (spoiledWords) => calculateScore(spoiledWords),
+);
+
+export const selectKnownPoints = createSelector(
+  [selectScore, selectSpoiledPoints],
+  (score, spoiledPoints) => score + spoiledPoints,
+);
+
 export const selectCurrentRank = createSelector(
   [selectRanks, selectScore],
   (ranks, score) => {
     return ranks.findLast((rank) => rank.pointThreshold <= score);
+  },
+);
+
+export const selectKnownRank = createSelector(
+  [selectRanks, selectScore],
+  (ranks, knownPoints) => {
+    return ranks.findLast((rank) => rank.pointThreshold <= knownPoints);
   },
 );
 
@@ -147,14 +164,13 @@ export const selectAnswerProgress = createSelector(
 );
 
 export const selectScoreProgress = createSelector(
-  [selectScore, selectTotalPoints, selectSpoiledWords],
-  (score, totalPoints, spoiledAnswers): ScoreProgress => {
-    const spoiledPoints = calculateScore(spoiledAnswers);
-
+  [selectScore, selectTotalPoints, selectSpoiledPoints, selectKnownPoints],
+  (score, totalPoints, spoiledPoints, knownPoints): ScoreProgress => {
     return {
       score,
       totalPoints,
       spoiledPoints,
+      knownPoints,
       pointsCeiling: totalPoints - spoiledPoints,
     };
   },
@@ -169,6 +185,7 @@ export const selectPercentageProgress = createSelector(
     return {
       pointsFoundPercent: (score / totalPoints) * 100,
       pointsSpoiledPercent: spoiledPointsPercentage,
+      pointsKnownPercent: ((score + spoiledPoints) / totalPoints) * 100,
       pointsAchievablePercent: 100 - spoiledPointsPercentage,
     };
   },
@@ -195,7 +212,7 @@ export const selectProgressStatusClasses = createSelector(
   [selectAnswerProgress],
   (answerProgress) => {
     return trackingStatusClasses({
-      baseClass: "ProgressStatusCount",
+      baseClass: "ProgressNumbers_itemNumber",
       currentCount: answerProgress.knownCount,
       totalCount: answerProgress.totalCount,
     });

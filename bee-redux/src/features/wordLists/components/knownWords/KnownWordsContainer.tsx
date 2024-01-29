@@ -19,20 +19,20 @@ import {
 } from "@/features/wordLists";
 import { KnownWordsStatus } from "./KnownWordsStatus";
 import { KnownWordsSettings } from "./KnownWordsSettings";
-import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
+import { getSortedGuessList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
-import { selectCorrectGuesses } from "@/features/progress/api/progressSlice";
+import { selectKnownAnswerGuesses } from "@/features/progress/api/progressSlice";
 
 export function KnownWordsContainer() {
   const dispatch = useAppDispatch();
-  const correctGuesses = useAppSelector(selectCorrectGuesses);
+  const knownAnswerGuesses = useAppSelector(selectKnownAnswerGuesses);
   const { sortType, sortOrder, settingsCollapsed } = useAppSelector(
     selectKnownWordsListSettings,
   );
 
   const generateSortedGuessWordList = () => {
-    return getSortedGuessWordList({
-      guessList: correctGuesses,
+    return getSortedGuessList({
+      guessList: knownAnswerGuesses,
       sortType,
       sortOrder,
     });

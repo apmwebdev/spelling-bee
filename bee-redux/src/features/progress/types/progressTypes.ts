@@ -29,12 +29,14 @@ export type ScoreProgress = {
   score: number;
   totalPoints: number;
   spoiledPoints: number;
+  knownPoints: number;
   pointsCeiling: number;
 };
 
 export type PercentageProgress = {
   pointsFoundPercent: number;
   pointsSpoiledPercent: number;
+  pointsKnownPercent: number;
   pointsAchievablePercent: number;
 };
 
