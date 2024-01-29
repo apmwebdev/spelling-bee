@@ -520,7 +520,7 @@ a.ButtonLink, div.ButtonLink {
 .SelectTrigger {
   @include basic-hover;
   @include basic-focus;
-  width: 10em;
+  width: 9em;
   font-size: var(--small-font);
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);

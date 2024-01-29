@@ -18,6 +18,8 @@ import {
 } from "@/features/guesses/api/guessesSlice";
 import {
   selectAnswers,
+  selectPangrams,
+  selectPerfectPangrams,
   selectRanks,
   selectTotalPoints,
 } from "@/features/puzzle/api/puzzleSlice";
@@ -208,6 +210,45 @@ export const selectRankProgress = createSelector(
   },
 );
 
+export const selectPangramProgress = createSelector(
+  [selectPangrams, selectCorrectGuessWords, selectSpoiledWords],
+  (pangrams, foundWords, spoiledWords): AnswerProgress => {
+    const totalCount = pangrams.length;
+    const foundCount = pangrams.filter((p) => foundWords.includes(p)).length;
+    const spoiledCount = pangrams.filter((p) =>
+      spoiledWords.includes(p),
+    ).length;
+    const knownCount = foundCount + spoiledCount;
+
+    return {
+      totalCount,
+      foundCount,
+      spoiledCount,
+      knownCount,
+      remainingCount: totalCount - knownCount,
+    };
+  },
+);
+
+export const selectPerfectPangramProgress = createSelector(
+  [selectPerfectPangrams, selectCorrectGuessWords, selectSpoiledWords],
+  (perfects, foundWords, spoiledWords): AnswerProgress => {
+    const totalCount = perfects.length;
+    const foundCount = perfects.filter((p) => foundWords.includes(p)).length;
+    const spoiledCount = perfects.filter((p) =>
+      spoiledWords.includes(p),
+    ).length;
+    const knownCount = foundCount + spoiledCount;
+
+    return {
+      totalCount,
+      foundCount,
+      spoiledCount,
+      knownCount,
+      remainingCount: totalCount - knownCount,
+    };
+  },
+);
 export const selectProgressStatusClasses = createSelector(
   [selectAnswerProgress],
   (answerProgress) => {
@@ -219,6 +260,16 @@ export const selectProgressStatusClasses = createSelector(
   },
 );
 
+export const selectFoundStatusClasses = createSelector(
+  [selectAnswerProgress],
+  (answerProgress) => {
+    return trackingStatusClasses({
+      baseClass: "ProgressNumbers_itemNumber",
+      currentCount: answerProgress.foundCount,
+      totalCount: answerProgress.totalCount,
+    });
+  },
+);
 export const selectProgressData = createSelector(
   [
     selectAnswerProgress,

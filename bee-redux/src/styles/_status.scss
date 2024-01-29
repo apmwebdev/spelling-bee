@@ -243,12 +243,12 @@
 }
 
 .WordListStatus {
-  padding: 8px;
+  padding: 4px 8px 12px;
   align-items: center;
   font-size: var(--small-font);
-  .App___threeColumns & {
-    padding: 16px 8px;
-  }
+  //.App___threeColumns & {
+  //  padding: 16px 8px;
+  //}
   .WordListStatusCount {
     font-weight: bold;
   }
@@ -258,16 +258,35 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  > div:not(.perfect) {
-    display: flex;
-    gap: 4px;
-  }
 }
-.KnownWordsStatus_item {
+
+.KnownWordsStatusItem {
   display: flex;
-  .App___oneColumn & {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  //.App___oneColumn & {
+  //  flex-direction: column;
+  //}
+}
+
+.KWSI_count {
+  font-weight: bold;
+}
+
+.KWSI_found {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 1px;
+  //border-bottom: 1px solid var(--text-secondary);
+}
+
+.KnownWordsStatusItem_data {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 4px;
+  //display: flex;
+  //gap: 6px;
 }
 
 .WordListContainer {
