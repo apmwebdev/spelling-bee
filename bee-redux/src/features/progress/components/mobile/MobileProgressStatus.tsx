@@ -10,18 +10,16 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { AnswersStatus } from "@/features/progress/components/progressStatus/AnswersStatus";
-import { ScoreStatus } from "@/features/progress/components/progressStatus/ScoreStatus";
-import { PercentageStatus } from "@/features/progress/components/progressStatus/PercentageStatus";
-import { RankStatus } from "@/features/progress/components/progressStatus/RankStatus";
+import { AnswersStatus } from "@/features/progress/components/mobile/AnswersStatus";
+import { ScoreStatus } from "@/features/progress/components/mobile/ScoreStatus";
+import { PercentageStatus } from "@/features/progress/components/mobile/PercentageStatus";
 
-export function ProgressStatus() {
+export function MobileProgressStatus() {
   return (
-    <div className="ProgressStatus">
+    <div className="MobileProgressStatus">
       <AnswersStatus />
-      <PercentageStatus />
       <ScoreStatus />
-      <RankStatus />
+      <PercentageStatus />
     </div>
   );
 }

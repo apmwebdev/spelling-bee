@@ -14,14 +14,13 @@ import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { PuzzleControls } from "@/features/puzzle/components/PuzzleControls";
 import { WordLists } from "@/features/wordLists";
 import { Hints } from "@/routes/puzzleRoutePageSections/Hints";
-import { PuzzleNav } from "@/features/puzzle";
-import { Progress } from "@/features/progress";
+import { AttemptControls } from "@/features/userPuzzleAttempts";
+import { MobileProgress } from "@/features/progress/components/mobile/MobileProgress";
 
 export function SingleColumn() {
   return (
     <div className="PuzzleMain_section">
-      <PuzzleNav />
-      <Progress />
+      <MobileProgress />
       <Tabs.Root
         defaultValue="puzzle"
         className="PuzzleSectionTabs SingleColumnTabs"
@@ -41,8 +40,7 @@ export function SingleColumn() {
           <Hints />
         </Tabs.Content>
       </Tabs.Root>
-      {/* TODO: Add attempt functionality */}
-      {/*<AttemptControls />*/}
+      <AttemptControls />
     </div>
   );
 }

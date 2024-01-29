@@ -10,16 +10,13 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { MobileHamburgerMenu } from "@/features/header/MobileHamburgerMenu";
-import { MobileAuth } from "@/features/auth/components/MobileAuth";
-import { PuzzleNav } from "@/features/puzzle";
+export const processPercentString = (val: number) => {
+  const formatPercentString = (val: number) => {
+    if (Number.isNaN(val)) return "0";
+    const formattedVal = val.toFixed(2);
+    if (formattedVal.slice(-2) === "00") return formattedVal.slice(0, -3);
+    return formattedVal;
+  };
 
-export function MobileHeader() {
-  return (
-    <div className="Header___mobile Header___common">
-      <MobileHamburgerMenu />
-      <PuzzleNav />
-      <MobileAuth />
-    </div>
-  );
-}
+  return formatPercentString(val) + "%";
+};

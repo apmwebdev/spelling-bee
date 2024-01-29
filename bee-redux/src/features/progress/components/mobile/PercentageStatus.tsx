@@ -15,41 +15,17 @@ import {
   selectPercentageProgress,
   selectProgressStatusClasses,
 } from "@/features/progress/api/progressSlice";
+import { processPercentString } from "@/features/progress/util/progressUtil";
 
 export function PercentageStatus() {
   const { pointsKnownPercent } = useAppSelector(selectPercentageProgress);
   const statusClasses = useAppSelector(selectProgressStatusClasses);
 
-  const processPercentString = (val: number) => {
-    const formatPercentString = (val: number) => {
-      if (Number.isNaN(val)) return "0";
-      const formattedVal = val.toFixed(2);
-      if (formattedVal.slice(-2) === "00") return formattedVal.slice(0, -3);
-      return formattedVal;
-    };
-
-    return formatPercentString(val) + "%";
-  };
-
-  const text = () => {
-    return processPercentString(pointsKnownPercent);
-
-    // if (
-    //   Number.isNaN(pointsFoundPercent) ||
-    //   Number.isNaN(pointsSpoiledPercent) ||
-    //   pointsSpoiledPercent === 0
-    // ) {
-    //   return processPercentString(pointsFoundPercent);
-    // }
-    //
-    // return `${processPercentString(
-    //   pointsFoundPercent,
-    // )} + ${processPercentString(pointsSpoiledPercent)}`;
-  };
-
   return (
     <div className="ProgressStatus_item">
-      <span className={statusClasses}>{text()}</span>
+      <span className={statusClasses}>
+        {processPercentString(pointsKnownPercent)}
+      </span>
       <span>complete</span>
     </div>
   );

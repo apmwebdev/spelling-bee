@@ -13,6 +13,7 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectRanks } from "@/features/puzzle";
 import { selectCurrentOrBlankRank } from "@/features/progress/api/progressSlice";
+import classNames from "classnames/dedupe";
 
 export function ProgressBar() {
   const ranks = useAppSelector(selectRanks);
@@ -24,7 +25,9 @@ export function ProgressBar() {
         return (
           <div
             key={rank.baseRank.level}
-            className={`RankTic${rank === currentRank ? " active" : ""}`}
+            className={classNames("RankTic", {
+              RankTic___active: rank === currentRank,
+            })}
           ></div>
         );
       });

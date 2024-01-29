@@ -304,6 +304,14 @@ button {
   //margin-right: 8px;
 }
 
+.DropdownMenuLabel {
+  @extend .DropdownMenuItem;
+  cursor: default;
+  &:hover {
+    background-color: inherit;
+  }
+}
+
 .DropdownMenuSeparator {
   height: 1px;
   margin: 4px 0px;

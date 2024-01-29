@@ -43,7 +43,7 @@ export function PuzzleNav() {
     return (
       <ButtonLink
         to={urlString}
-        className="puzzle-nav-link"
+        className="PuzzleNav_link"
         disabled={puzzleId === 1}
       >
         <Icon icon="mdi:arrow-collapse-left" />
@@ -61,7 +61,7 @@ export function PuzzleNav() {
     return (
       <ButtonLink
         to={urlString}
-        className="puzzle-nav-link"
+        className="PuzzleNav_link"
         disabled={puzzleId === 1}
       >
         <Icon icon="mdi:arrow-left" />
@@ -77,11 +77,7 @@ export function PuzzleNav() {
       urlString += `${puzzleId + 1}`;
     }
     return (
-      <ButtonLink
-        to={urlString}
-        className="puzzle-nav-link"
-        disabled={isLatest}
-      >
+      <ButtonLink to={urlString} className="PuzzleNav_link" disabled={isLatest}>
         <Icon icon="mdi:arrow-right" />
       </ButtonLink>
     );
@@ -91,7 +87,7 @@ export function PuzzleNav() {
     return (
       <ButtonLink
         to="../puzzles/latest"
-        className="puzzle-nav-link"
+        className="PuzzleNav_link"
         disabled={isLatest}
       >
         <Icon icon="mdi:arrow-collapse-right" />
@@ -99,15 +95,29 @@ export function PuzzleNav() {
     );
   };
 
+  const title = () => {
+    let text = "";
+    if (columns === 1) {
+      const [year, month, day] = puzzleDate.split("-");
+      //Remove leading zero from day and month
+      const shortDay = day.replace(/^0/, "");
+      const shortMonth = month.replace(/^0/, "");
+      //Use a 2-digit year
+      const shortYear = year.slice(2);
+      //TODO: This date format only works for the US. Is that OK?
+      text = `${shortMonth}/${shortDay}/${shortYear}`;
+    } else {
+      text = `Spelling Bee ${puzzleId}: ${puzzleDate}`;
+    }
+
+    return <h1 className="PuzzleNav_title">{text}</h1>;
+  };
+
   return (
     <nav className="PuzzleNav">
       {firstPuzzleLink()}
       {previousPuzzleLink()}
-      <h1 className="PuzzleNav_title">
-        {columns === 1
-          ? `${puzzleDate}`
-          : `Spelling Bee ${puzzleId}: ${puzzleDate}`}
-      </h1>
+      {title()}
       {nextPuzzleLink()}
       {latestPuzzleLink()}
     </nav>

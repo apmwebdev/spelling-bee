@@ -10,16 +10,10 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { MobileHamburgerMenu } from "@/features/header/MobileHamburgerMenu";
-import { MobileAuth } from "@/features/auth/components/MobileAuth";
-import { PuzzleNav } from "@/features/puzzle";
+import { useAppSelector } from "@/app/hooks";
+import { selectCurrentOrBlankRank } from "@/features/progress/api/progressSlice";
 
-export function MobileHeader() {
-  return (
-    <div className="Header___mobile Header___common">
-      <MobileHamburgerMenu />
-      <PuzzleNav />
-      <MobileAuth />
-    </div>
-  );
+export function MobileRankStatus() {
+  const { baseRank } = useAppSelector(selectCurrentOrBlankRank);
+  return <div className="MobileRankStatus">{baseRank.name}</div>;
 }

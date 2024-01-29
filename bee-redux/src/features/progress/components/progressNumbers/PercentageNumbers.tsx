@@ -12,24 +12,20 @@
 
 import { useAppSelector } from "@/app/hooks";
 import {
+  selectPercentageProgress,
   selectProgressStatusClasses,
-  selectRankProgress,
 } from "@/features/progress/api/progressSlice";
+import { processPercentString } from "@/features/progress/util/progressUtil";
 
-export function RankStatus() {
-  const { nextRank, pointsUntilNextRank } = useAppSelector(selectRankProgress);
-  const statusClasses = useAppSelector(selectProgressStatusClasses);
-
-  if (!nextRank) return null;
+export function PercentageNumbers() {
+  const { pointsKnownPercent } = useAppSelector(selectPercentageProgress);
+  const numberClasses = useAppSelector(selectProgressStatusClasses);
 
   return (
-    <div className="ProgressStatus_item ProgressStatus_rankTracking">
-      <span>
-        <span className={statusClasses}>{pointsUntilNextRank}</span> pt
-        {pointsUntilNextRank === 1 ? "" : "s"} to:
-      </span>
-      <span>
-        {nextRank.baseRank.name} ({nextRank.baseRank.multiplier * 100}%)
+    <div className="ProgressNumbers_item">
+      <span className="ProgressNumbers_itemLabel">Complete:</span>
+      <span className={numberClasses}>
+        {processPercentString(pointsKnownPercent)}
       </span>
     </div>
   );

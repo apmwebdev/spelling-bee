@@ -14,6 +14,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenuContentProps,
   DropdownMenuItemProps,
+  DropdownMenuLabelProps,
   DropdownMenuSeparatorProps,
   DropdownMenuTriggerProps,
 } from "@radix-ui/react-dropdown-menu";
@@ -26,7 +27,6 @@ export {
   CheckboxItem,
   Group,
   ItemIndicator,
-  Label,
   RadioGroup,
   RadioItem,
   Root,
@@ -65,6 +65,22 @@ export const Item = (
     {props.children}
   </DropdownMenu.Item>
 );
+
+export const Label = (
+  props: IntrinsicAttributes &
+    DropdownMenuLabelProps &
+    RefAttributes<HTMLDivElement>,
+) => {
+  const { className, children, ...otherProps } = props;
+  return (
+    <DropdownMenu.Label
+      {...otherProps}
+      className={classNames("DropdownMenuLabel", className)}
+    >
+      {children}
+    </DropdownMenu.Label>
+  );
+};
 
 export const Separator = (
   props: IntrinsicAttributes &

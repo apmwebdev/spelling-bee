@@ -17,6 +17,10 @@ import { useNavigate } from "react-router-dom";
 
 export function MobileHamburgerMenu() {
   const navigate = useNavigate();
+
+  const handleHomeSelect = () => {
+    navigate("/");
+  };
   const handleLatestPuzzleSelect = () => {
     navigate("/puzzles/latest");
   };
@@ -47,6 +51,12 @@ export function MobileHamburgerMenu() {
         <Icon icon="mdi:menu" className="DropdownMenuIconTrigger" />
       </DropdownMenu.Trigger>
       <DropdownMenu.ContentWithPortal align="start" collisionPadding={8}>
+        <DropdownMenu.Label>Super Spelling Bee</DropdownMenu.Label>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item onSelect={handleHomeSelect}>
+          <DropdownLinkIcon />
+          Home
+        </DropdownMenu.Item>
         <DropdownMenu.Item onSelect={handleLatestPuzzleSelect}>
           <DropdownLinkIcon />
           Latest Puzzle

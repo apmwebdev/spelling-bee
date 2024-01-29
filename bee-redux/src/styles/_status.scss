@@ -51,6 +51,18 @@
   row-gap: var(--progress-gap);
 }
 
+.MobileProgress {
+  display: flex;
+  flex-direction: column;
+}
+
+.MobileProgress_rankSection {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 8px;
+}
+
 .ProgressNumbers {
   grid-row: 1 / 4;
   grid-column: 1 / 2;
@@ -124,12 +136,16 @@
     top: calc(0.3 * var(--gap-length));
     background-color: var(--mid-gray);
   }
-  &.active, &:has(~ .RankTic.active) {
+  &.RankTic___active, &:has(~ .RankTic___active) {
     background-color: var(--yellow-line);
     &:not(:first-child):before {
       background-color: var(--yellow-line);
     }
   }
+}
+
+.RankTic___active {
+  position: relative;
 }
 
 .ProgressRank {
@@ -173,30 +189,30 @@
   //top: 20px;
 }
 
-//.ProgressStatus {
-//  display: flex;
-//  padding: 8px;
-//  align-items: center;
-//  justify-content: center;
-//  font-size: var(--small-font);
-//  gap: 20px;
-//  .App___threeColumns & {
-//    padding: 16px 8px;
-//  }
-//}
-//
-//.ProgressStatus_item {
-//  display: flex;
-//  flex-direction: column;
-//  gap: 6px;
-//  .App___threeColumns & {
-//    flex-direction: row;
-//  }
-//  &.ProgressStatus_rankTracking {
-//    flex-direction: column;
-//    gap: 2px;
-//  }
-//}
+.MobileProgressStatus {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--small-font);
+  gap: 20px;
+  .App___threeColumns & {
+    padding: 16px 8px;
+  }
+}
+
+.ProgressStatus_item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  .App___threeColumns & {
+    flex-direction: row;
+  }
+  &.ProgressStatus_rankTracking {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
 
 .WordListSettings {
   padding: 8px;

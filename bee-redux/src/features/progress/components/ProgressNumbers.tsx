@@ -10,16 +10,16 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { AnswersNumberStatus } from "@/features/progress/components/progressStatus/AnswersNumberStatus";
-import { ScoreNumberStatus } from "@/features/progress/components/progressStatus/ScoreNumberStatus";
-import { PercentageNumberStatus } from "@/features/progress/components/progressStatus/PercentageNumberStatus";
+import { AnswerNumbers } from "@/features/progress/components/progressNumbers/AnswerNumbers";
+import { ScoreNumbers } from "@/features/progress/components/progressNumbers/ScoreNumbers";
+import { PercentageNumbers } from "@/features/progress/components/progressNumbers/PercentageNumbers";
 
 export function ProgressNumbers() {
   return (
     <div className="ProgressNumbers">
-      <AnswersNumberStatus />
-      <ScoreNumberStatus />
-      <PercentageNumberStatus />
+      <AnswerNumbers />
+      <ScoreNumbers />
+      <PercentageNumbers />
     </div>
   );
 }

@@ -41,6 +41,12 @@
   gap: 8px;
 }
 
+.PuzzleNav_link {
+  .App___oneColumn & {
+    padding: 4px 8px;
+  }
+}
+
 .PuzzleNav_title {
   font-size: var(--font-size);
 }

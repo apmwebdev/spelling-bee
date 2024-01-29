@@ -11,7 +11,7 @@
 */
 
 import { CurrentRank } from "@/features/progress/components/CurrentRank";
-import { NextRank } from "@/features/progress/components/progressStatus/NextRank";
+import { NextRank } from "@/features/progress/components/NextRank";
 
 export function ProgressRank() {
   return (

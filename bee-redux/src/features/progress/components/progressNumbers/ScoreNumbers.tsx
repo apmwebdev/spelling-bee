@@ -12,31 +12,24 @@
 
 import { useAppSelector } from "@/app/hooks";
 import {
-  selectAnswerProgress,
-  selectProgressShowTotalWords,
+  selectProgressShowTotalPoints,
   selectProgressStatusClasses,
+  selectScoreProgress,
 } from "@/features/progress/api/progressSlice";
 
-export function AnswersNumberStatus() {
-  const { totalCount, knownCount } = useAppSelector(selectAnswerProgress);
-  const showTotalWords = useAppSelector(selectProgressShowTotalWords);
+export function ScoreNumbers() {
+  const { score, totalPoints } = useAppSelector(selectScoreProgress);
+  const showTotalPoints = useAppSelector(selectProgressShowTotalPoints);
   const numberClasses = useAppSelector(selectProgressStatusClasses);
 
   const text = () => {
-    if (showTotalWords) return `${knownCount} / ${totalCount}`;
-    return `${knownCount}`;
-
-    // if (spoiledCount === 0) {
-    //   if (showTotalWords) return `${foundCount}/${totalCount}`;
-    //   return `${foundCount}`;
-    // }
-    // if (showTotalWords) return `${foundCount} + ${spoiledCount}/${totalCount}`;
-    // return `${foundCount} + ${spoiledCount}`;
+    if (showTotalPoints) return `${score} / ${totalPoints}`;
+    return `${score}`;
   };
 
   return (
     <div className="ProgressNumbers_item">
-      <span className="ProgressNumbers_itemLabel">Words:</span>
+      <span className="ProgressNumbers_itemLabel">Points:</span>
       <span className={numberClasses}>{text()}</span>
     </div>
   );
