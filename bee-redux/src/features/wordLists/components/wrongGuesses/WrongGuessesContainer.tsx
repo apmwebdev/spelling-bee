@@ -11,7 +11,6 @@
 */
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectWrongGuesses } from "@/features/guesses";
 import {
   selectWrongGuessesListSettings,
   setWrongGuessesSortOrder,
@@ -21,6 +20,7 @@ import {
 import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 import { WrongGuessesSettings } from "@/features/wordLists/components/wrongGuesses/WrongGuessesSettings";
+import { selectWrongGuesses } from "@/features/progress/api/progressSlice";
 
 export function WrongGuessesContainer() {
   const dispatch = useAppDispatch();

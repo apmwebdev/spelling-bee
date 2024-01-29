@@ -11,48 +11,48 @@
 */
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectCorrectGuesses } from "@/features/guesses";
 import {
-  selectFoundWordsListSettings,
-  setFoundWordsSortOrder,
-  setFoundWordsSortType,
-  toggleFoundWordsSettingsCollapsed,
+  selectKnownWordsListSettings,
+  setKnownWordsSortOrder,
+  setKnownWordsSortType,
+  toggleKnownWordsSettingsCollapsed,
 } from "@/features/wordLists";
-import { FoundWordsStatus } from "./FoundWordsStatus";
-import { FoundWordsSettings } from "./FoundWordsSettings";
-import { getSortedGuessWordList } from "@/features/wordLists/util/wordListsUtil";
+import { KnownWordsStatus } from "./KnownWordsStatus";
+import { KnownWordsSettings } from "./KnownWordsSettings";
+import { getSortedGuessList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
+import { selectKnownAnswerGuesses } from "@/features/progress/api/progressSlice";
 
-export function FoundWordsContainer() {
+export function KnownWordsContainer() {
   const dispatch = useAppDispatch();
-  const correctGuesses = useAppSelector(selectCorrectGuesses);
+  const knownAnswerGuesses = useAppSelector(selectKnownAnswerGuesses);
   const { sortType, sortOrder, settingsCollapsed } = useAppSelector(
-    selectFoundWordsListSettings,
+    selectKnownWordsListSettings,
   );
 
   const generateSortedGuessWordList = () => {
-    return getSortedGuessWordList({
-      guessList: correctGuesses,
+    return getSortedGuessList({
+      guessList: knownAnswerGuesses,
       sortType,
       sortOrder,
     });
   };
 
   return (
-    <div className="FoundWordsContainer">
-      <FoundWordsStatus />
+    <div className="KnownWordsContainer">
+      <KnownWordsStatus />
       <WordListContainer
         wordList={generateSortedGuessWordList()}
         settingsData={{
           isExpanded: !settingsCollapsed,
-          toggleIsExpanded: () => dispatch(toggleFoundWordsSettingsCollapsed()),
-          settingsComponent: <FoundWordsSettings />,
+          toggleIsExpanded: () => dispatch(toggleKnownWordsSettingsCollapsed()),
+          settingsComponent: <KnownWordsSettings />,
         }}
         sortType={sortType}
         sortOrder={sortOrder}
-        setSortType={setFoundWordsSortType}
-        setSortOrder={setFoundWordsSortOrder}
-        emptyListMessage="No found words"
+        setSortType={setKnownWordsSortType}
+        setSortOrder={setKnownWordsSortOrder}
+        emptyListMessage="No known words"
         allowPopovers={true}
       />
     </div>

@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { AnswerFormat } from "@/features/puzzle";
+import { TAnswer } from "@/features/puzzle";
 import { usageExplanation } from "@/features/obscurityPanel/util";
 import { DefinitionPanelData } from "@/features/definitionPanel/types/definitionPanelTypes";
 import classNames from "classnames/dedupe";
@@ -20,7 +20,7 @@ export function Word({
   definitionPanelData,
   isKnown,
 }: {
-  answer: AnswerFormat;
+  answer: TAnswer;
   definitionPanelData: DefinitionPanelData;
   isKnown: boolean;
 }) {

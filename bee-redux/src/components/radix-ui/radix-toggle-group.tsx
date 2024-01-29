@@ -24,14 +24,17 @@ export const Root = (
   props: IntrinsicAttributes &
     ((ToggleGroupSingleProps | ToggleGroupMultipleProps) &
       RefAttributes<HTMLDivElement>),
-) => (
-  <ToggleGroup.Root
-    {...props}
-    className={classNames("ToggleGroupRoot", props.className)}
-  >
-    {props.children}
-  </ToggleGroup.Root>
-);
+) => {
+  const { className, children, ...otherProps } = props;
+  return (
+    <ToggleGroup.Root
+      {...otherProps}
+      className={classNames("ToggleGroupRoot", className)}
+    >
+      {children}
+    </ToggleGroup.Root>
+  );
+};
 
 export const Item = (
   props: IntrinsicAttributes &

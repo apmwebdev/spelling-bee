@@ -13,24 +13,34 @@
 import * as Popover from "@/components/radix-ui/radix-popover";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswers, selectPangrams } from "@/features/puzzle";
+import { isGuess, TGuess } from "@/features/guesses";
+import classNames from "classnames/dedupe";
 
-export function WordWithPopover({ word }: { word: string }) {
+export function WordWithPopover({ item }: { item: string | TGuess }) {
+  let word = "";
+  let isSpoiled = false;
+  if (isGuess(item)) {
+    word = item.text;
+    if (item.isSpoiled) isSpoiled = true;
+  } else {
+    word = item;
+  }
+
   const completeWord = useAppSelector(selectAnswers).find(
     (answer) => answer.word === word,
   );
   const pangrams = useAppSelector(selectPangrams);
   const isPangram = pangrams.includes(word);
-  const isPerfect = isPangram && word.length === 7;
-  let spanClasses = "hasPopover";
-  if (isPerfect) {
-    spanClasses += " perfect";
-  } else if (isPangram) {
-    spanClasses += " pangram";
-  }
+  const wordClasses = classNames("WordPopover_word", {
+    WordPopover_word___pangram: isPangram,
+    WordPopover_word___perfect: isPangram && word.length === 7,
+    WordPopover_word___spoiled: isSpoiled,
+  });
+
   return (
     <Popover.Root>
       <Popover.Trigger className="WordPopoverTrigger">
-        <span className={spanClasses}>{word}</span>
+        <span className={wordClasses}>{word}</span>
       </Popover.Trigger>
       <Popover.ContentWithPortal>
         <span>{completeWord?.definitions[0]}</span>

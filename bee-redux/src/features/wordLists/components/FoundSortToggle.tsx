@@ -11,9 +11,9 @@
 */
 
 import { WordListSortProps } from "@/features/wordLists/components/WordListHeader";
-import { SortType } from "@/features/wordLists";
 import { useAppDispatch } from "@/app/hooks";
 import { SortOrderKeys } from "@/types/globalTypes";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export function FoundSortToggle(props: WordListSortProps) {
   const dispatch = useAppDispatch();

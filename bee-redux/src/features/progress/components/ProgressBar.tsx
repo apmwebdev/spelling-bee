@@ -10,26 +10,35 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import uniqid from "uniqid";
-import { Rank, RanksType } from "@/features/puzzle";
+import { useAppSelector } from "@/app/hooks";
+import { selectRanks } from "@/features/puzzle";
+import { selectCurrentOrBlankRank } from "@/features/progress/api/progressSlice";
+import classNames from "classnames/dedupe";
 
-export function ProgressBar({
-  ranks,
-  currentRank,
-}: {
-  ranks: RanksType | [Rank];
-  currentRank: Rank;
-}) {
-  return (
-    <div className="ProgressBar">
-      {ranks.map((rank) => {
+export function ProgressBar() {
+  const ranks = useAppSelector(selectRanks);
+  const currentRank = useAppSelector(selectCurrentOrBlankRank);
+
+  const content = () => {
+    if (ranks.length > 0) {
+      return ranks.map((rank) => {
         return (
           <div
-            key={uniqid()}
-            className={`RankTic${rank === currentRank ? " active" : ""}`}
+            key={rank.baseRank.level}
+            className={classNames("RankTic", {
+              RankTic___active: rank === currentRank,
+            })}
           ></div>
         );
-      })}
-    </div>
-  );
+      });
+    }
+    // If ranks.length === 0, it's a blank puzzle. Return a blank progress bar.
+    const returnArray = [];
+    for (let i = 0; i < 10; i++) {
+      returnArray.push(<div key={i} className="RankTic"></div>);
+    }
+    return returnArray;
+  };
+
+  return <div className="ProgressBar">{content()}</div>;
 }

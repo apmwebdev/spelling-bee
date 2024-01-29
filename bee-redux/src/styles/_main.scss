@@ -37,7 +37,7 @@ body {
   --font-size: 16px;
   --large-font: calc(1.11111111 * var(--font-size));
   --small-font: calc(0.88888889 * var(--font-size));
-  --smaller-font: 14px; //Set absolute value to not go lower than 14px
+  --smaller-font: calc(0.77777778 * var(--font-size));
 
   font-size: var(--font-size);
   text-align: center;
@@ -304,6 +304,14 @@ button {
   //margin-right: 8px;
 }
 
+.DropdownMenuLabel {
+  @extend .DropdownMenuItem;
+  cursor: default;
+  &:hover {
+    background-color: inherit;
+  }
+}
+
 .DropdownMenuSeparator {
   height: 1px;
   margin: 4px 0px;
@@ -512,7 +520,7 @@ a.ButtonLink, div.ButtonLink {
 .SelectTrigger {
   @include basic-hover;
   @include basic-focus;
-  width: 10em;
+  width: 9em;
   font-size: var(--small-font);
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);

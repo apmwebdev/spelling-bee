@@ -51,7 +51,7 @@ type answerSorterParams = {
   remainingRevealFirstLetter: boolean;
   remainingRevealLength: boolean;
   remainingLocation: "beginning" | "end";
-  remainingGroupWithLetter: boolean;
+  remainingGroupWithFirstLetter: boolean;
 };
 
 export default function answerSorter({
@@ -64,7 +64,7 @@ export default function answerSorter({
   remainingRevealFirstLetter,
   remainingRevealLength,
   remainingLocation,
-  remainingGroupWithLetter,
+  remainingGroupWithFirstLetter,
 }: answerSorterParams) {
   const flSort = (a: string, b: string) => {
     return a[0].localeCompare(b[0]);
@@ -145,7 +145,7 @@ export default function answerSorter({
     return result;
   };
 
-  if (remainingGroupWithLetter && remainingRevealFirstLetter) {
+  if (remainingGroupWithFirstLetter && remainingRevealFirstLetter) {
     //revealFirstLetter true, groupWithLetter true
     //Variables are location, length, and sort order
     // 8 cases

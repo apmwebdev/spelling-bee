@@ -24,7 +24,7 @@ export function MobileAuthLinks() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger showIcon={false}>
-        <Icon icon="mdi:user" />
+        <Icon icon="mdi:user-outline" />
       </DropdownMenu.Trigger>
       <DropdownMenu.ContentWithPortal collisionPadding={8}>
         <DropdownMenu.Item onSelect={handleLoginSelect}>

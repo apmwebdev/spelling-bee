@@ -10,14 +10,14 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { selectAnswersListSettings } from "@/features/wordLists";
-import { TGuess, useAddGuessMutation } from "@/features/guesses";
+import { addGuessThunk, TGuess } from "@/features/guesses";
 import { selectCurrentAttempt } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
 
 export function AnswerSpoiler({ word }: { word: string }) {
+  const dispatch = useAppDispatch();
   const currentAttempt = useAppSelector(selectCurrentAttempt);
-  const [addGuess] = useAddGuessMutation();
   const { remainingRevealFirstLetter, remainingRevealLength } = useAppSelector(
     selectAnswersListSettings,
   );
@@ -52,7 +52,7 @@ export function AnswerSpoiler({ word }: { word: string }) {
       <button
         className="Revealer"
         style={{ width: `${determineWidth()}px` }}
-        onClick={() => addGuess(spoilerData)}
+        onClick={() => dispatch(addGuessThunk(spoilerData))}
       >
         {spoilerText}
       </button>

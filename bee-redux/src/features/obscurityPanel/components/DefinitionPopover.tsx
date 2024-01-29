@@ -11,13 +11,13 @@
 */
 
 import * as Popover from "@/components/radix-ui/radix-popover";
-import { AnswerFormat } from "@/features/puzzle";
+import { TAnswer } from "@/features/puzzle";
 
 export function DefinitionPopover({
   answer,
   displayString,
 }: {
-  answer: AnswerFormat;
+  answer: TAnswer;
   displayString?: string;
 }) {
   return (

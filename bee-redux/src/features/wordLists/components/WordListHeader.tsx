@@ -10,13 +10,13 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { SortType } from "@/features/wordLists";
 import { SortOrderKeys } from "@/types/globalTypes";
 import { AlphaSortToggle } from "@/features/wordLists/components/AlphaSortToggle";
 import { FoundSortToggle } from "@/features/wordLists/components/FoundSortToggle";
 import { WordListContainerSettingsData } from "@/features/wordLists/components/WordListContainer";
 import { SettingsToggle } from "@/components/SettingsToggle";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export type WordListSortProps = {
   sortType: SortType;

@@ -10,9 +10,9 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { Progress } from "@/features/progress";
 import { WordLists } from "@/features/wordLists";
 import { AttemptControls } from "@/features/userPuzzleAttempts";
+import { Progress } from "@/features/progress/components/Progress";
 
 export function Status() {
   return (

@@ -11,24 +11,19 @@
 */
 
 import { useAppSelector } from "@/app/hooks";
-import {
-  AnswerFormat,
-  selectAnswerLengths,
-  selectAnswers,
-  selectKnownAnswers,
-  selectKnownWords,
-  selectRemainingAnswers,
-} from "@/features/puzzle";
+import { selectAnswerLengths, selectAnswers, TAnswer } from "@/features/puzzle";
 import { usageExplanation } from "src/features/obscurityPanel";
 import { DefinitionPopover } from "./DefinitionPopover";
 import { last } from "lodash";
 import { ObscurityPanelData } from "../";
 import { SortOrderKeys } from "@/types/globalTypes";
+import {
+  selectKnownAnswers,
+  selectKnownAnswerWords,
+  selectRemainingAnswers,
+} from "@/features/progress/api/progressSlice";
 
-const sortByFrequency = (
-  sortOrder: SortOrderKeys,
-  ...answers: AnswerFormat[]
-) => {
+const sortByFrequency = (sortOrder: SortOrderKeys, ...answers: TAnswer[]) => {
   return answers.sort((a, b) =>
     sortOrder === SortOrderKeys.asc
       ? b.frequency - a.frequency
@@ -41,7 +36,7 @@ const displayUnknownWord = ({
   revealedLetters,
   revealLength,
 }: {
-  answer: AnswerFormat;
+  answer: TAnswer;
   revealedLetters: number;
   revealLength: boolean;
 }) => {
@@ -58,7 +53,7 @@ export function ObscurityHintPanel({
   const allAnswers = useAppSelector(selectAnswers);
   const remainingAnswers = useAppSelector(selectRemainingAnswers);
   const knownAnswers = useAppSelector(selectKnownAnswers);
-  const knownWords = useAppSelector(selectKnownWords);
+  const knownWords = useAppSelector(selectKnownAnswerWords);
   const answerLengths = useAppSelector(selectAnswerLengths);
   const {
     hideKnown,
@@ -70,7 +65,7 @@ export function ObscurityHintPanel({
   } = obscurityPanelData;
 
   const content = () => {
-    let answers: AnswerFormat[];
+    let answers: TAnswer[];
     if (hideKnown) {
       answers = sortByFrequency(sortOrder, ...remainingAnswers);
     } else if (!hideKnown && separateKnown) {

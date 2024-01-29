@@ -11,8 +11,8 @@
 */
 
 import { TGuess } from "@/features/guesses";
-import { SortType } from "@/features/wordLists";
 import { SortOrderKeys } from "@/types/globalTypes";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export const sortGuessList = ({
   guessList,
@@ -49,7 +49,7 @@ export const getGuessWordList = (guessList: TGuess[]) => {
   return guessList.map((guess) => guess.text);
 };
 
-export const getSortedGuessWordList = ({
+export const getSortedGuessList = ({
   guessList,
   sortType,
   sortOrder,
@@ -60,10 +60,27 @@ export const getSortedGuessWordList = ({
 }) => {
   if (guessList.length === 0) return [];
 
-  const sortedGuesses = sortGuessList({
+  return sortGuessList({
     guessList,
     sortType,
     sortOrder,
   });
-  return getGuessWordList(sortedGuesses);
+};
+
+export const getSortedGuessWordList = ({
+  guessList,
+  sortType,
+  sortOrder,
+}: {
+  guessList: TGuess[];
+  sortType: SortType;
+  sortOrder: SortOrderKeys;
+}) => {
+  return getGuessWordList(
+    sortGuessList({
+      guessList,
+      sortType,
+      sortOrder,
+    }),
+  );
 };

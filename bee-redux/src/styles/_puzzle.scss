@@ -24,7 +24,7 @@
 .PuzzleControls {
   width: 80vw;
   .App___oneColumn & {
-    width: 60vw;
+    width: 64vw;
   }
   max-width: 320px;
   display: flex;
@@ -39,6 +39,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.PuzzleNav_link {
+  .App___oneColumn & {
+    padding: 4px 8px;
+  }
 }
 
 .PuzzleNav_title {

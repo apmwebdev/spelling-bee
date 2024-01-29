@@ -11,61 +11,58 @@
 */
 
 import {
-  selectFoundWordsListSettings,
-  setFoundWordsPangramsShowTotal,
-  setFoundWordsPerfectPangramsShowTotal,
-  setFoundWordsShowPerfectPangrams,
-  setFoundWordsWordsShowTotal,
+  selectKnownWordsListSettings,
+  setKnownWordsPangramsShowTotal,
+  setKnownWordsPerfectPangramsShowTotal,
+  setKnownWordsShowPerfectPangrams,
+  setKnownWordsWordsShowTotal,
 } from "@/features/wordLists";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { Checkbox } from "@/components/radix-ui/radix-checkbox";
 
-export function FoundWordsSettings() {
+export function KnownWordsSettings() {
   const dispatch = useAppDispatch();
   const {
     wordsShowTotal,
     pangramsShowTotal,
     showPerfectPangrams,
     perfectPangramsShowTotal,
-  } = useAppSelector(selectFoundWordsListSettings);
+  } = useAppSelector(selectKnownWordsListSettings);
   return (
-    <div className="WordListSettingsContent found">
-      <label>
-        <input
-          type="checkbox"
+    <div className="WordListSettings KnownWordsSettings">
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={wordsShowTotal}
-          onChange={(e) =>
-            dispatch(setFoundWordsWordsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsWordsShowTotal(Boolean(isChecked)))
           }
         />
         <span>Show total words</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={pangramsShowTotal}
-          onChange={(e) =>
-            dispatch(setFoundWordsPangramsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsPangramsShowTotal(Boolean(isChecked)))
           }
         />
         <span>Show total pangrams</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={showPerfectPangrams}
-          onChange={(e) =>
-            dispatch(setFoundWordsShowPerfectPangrams(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsShowPerfectPangrams(Boolean(isChecked)))
           }
         />
         <span>Include perfect pangrams</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={perfectPangramsShowTotal}
           disabled={!showPerfectPangrams}
-          onChange={(e) =>
-            dispatch(setFoundWordsPerfectPangramsShowTotal(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setKnownWordsPerfectPangramsShowTotal(Boolean(isChecked)))
           }
         />
         <span className={showPerfectPangrams ? "" : "disabled"}>

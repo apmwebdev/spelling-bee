@@ -10,6 +10,8 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
+import classNames from "classnames/dedupe";
+
 export const calculateScore = (words: string[]) => {
   return words.reduce((score, word) => {
     if (word.length === 4) {
@@ -121,4 +123,20 @@ export const errLog = (...toLog: any[]) => {
   const style =
     "display: inline-block; padding: 2px 4px; background-color: #660000; color: hsl(0 0% 100% 0.8)";
   betterLog(style, ...toLog);
+};
+
+export const trackingStatusClasses = ({
+  baseClass,
+  currentCount,
+  totalCount,
+}: {
+  baseClass: string;
+  currentCount: number;
+  totalCount: number;
+}) => {
+  return classNames(baseClass, {
+    ErrorText: currentCount === 0,
+    SuccessText: currentCount === totalCount,
+    WarningText: currentCount > 0 && currentCount < totalCount,
+  });
 };

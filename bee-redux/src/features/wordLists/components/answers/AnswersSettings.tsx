@@ -20,6 +20,11 @@ import {
   setAnswersRemainingRevealLength,
 } from "@/features/wordLists";
 import * as ToggleGroup from "@/components/radix-ui/radix-toggle-group";
+import { Checkbox } from "@/components/radix-ui/radix-checkbox";
+import {
+  isRemainingAnswersLocation,
+  RemainingAnswersLocations,
+} from "@/features/wordLists/types/wordListTypes";
 
 export function AnswersSettings() {
   const dispatch = useAppDispatch();
@@ -28,63 +33,75 @@ export function AnswersSettings() {
     remainingRevealFirstLetter,
     remainingRevealLength,
     remainingLocation,
-    remainingGroupWithLetter,
+    remainingGroupWithFirstLetter,
   } = useAppSelector(selectAnswersListSettings);
+
+  const handleRemainingLocationChange = (value: string) => {
+    /* Ensure that one of the two options is always selected.
+     * By default, clicking an already-selected button in a toggle group will send an empty string
+     * to the change event, effectively deselecting all options.
+     * This guard condition prevents that and any other unexpected values.
+     */
+    if (!isRemainingAnswersLocation(value)) return;
+
+    dispatch(setAnswersRemainingLocation(value));
+  };
+
   return (
-    <div className="WordListSettingsContent answers">
-      <label>
-        <input
-          type="checkbox"
+    <div className="WordListSettings AnswersSettings">
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={remainingAndSpoiledOnly}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingAndSpoiledOnly(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingAndSpoiledOnly(Boolean(isChecked)))
           }
         />
         <span>Show spoiled and unrevealed answers only</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={remainingRevealFirstLetter}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingRevealFirstLetter(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingRevealFirstLetter(Boolean(isChecked)))
           }
         />
         <span>Show first letter of unrevealed answers</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
+      <label className="WordListSettings_item">
+        <Checkbox
           checked={remainingRevealLength}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingRevealLength(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingRevealLength(Boolean(isChecked)))
           }
         />
         <span>Show length of unrevealed answers</span>
       </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={remainingGroupWithLetter}
+      <label className="WordListSettings_item">
+        <Checkbox
+          checked={remainingGroupWithFirstLetter}
           disabled={!remainingRevealFirstLetter}
-          onChange={(e) =>
-            dispatch(setAnswersRemainingGroupWithLetter(e.target.checked))
+          onCheckedChange={(isChecked) =>
+            dispatch(setAnswersRemainingGroupWithLetter(Boolean(isChecked)))
           }
         />
         <span className={remainingRevealFirstLetter ? "" : "disabled"}>
           Group unrevealed answers by first letter
         </span>
       </label>
-      <div>
+      <div className="WordListSettings_item AnswersSettings_remainingLocation">
+        <div>Show remaining answers at the:</div>
         <ToggleGroup.Root
           type="single"
           value={remainingLocation}
-          onValueChange={(val) => dispatch(setAnswersRemainingLocation(val))}
+          onValueChange={(val) => handleRemainingLocationChange(val)}
         >
-          <ToggleGroup.Item value="beginning">Beginning</ToggleGroup.Item>
-          <ToggleGroup.Item value="end">End</ToggleGroup.Item>
+          <ToggleGroup.Item value={RemainingAnswersLocations.beginning}>
+            Beginning
+          </ToggleGroup.Item>
+          <ToggleGroup.Item value={RemainingAnswersLocations.end}>
+            End
+          </ToggleGroup.Item>
         </ToggleGroup.Root>
-        <span>Show remaining answers at the {remainingLocation}</span>
       </div>
     </div>
   );

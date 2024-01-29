@@ -11,9 +11,9 @@
 */
 
 import { WordListSortProps } from "@/features/wordLists/components/WordListHeader";
-import { SortType } from "@/features/wordLists";
 import { SortOrderKeys } from "@/types/globalTypes";
 import { useAppDispatch } from "@/app/hooks";
+import { SortType } from "@/features/wordLists/types/wordListTypes";
 
 export function AlphaSortToggle(props: WordListSortProps) {
   const dispatch = useAppDispatch();

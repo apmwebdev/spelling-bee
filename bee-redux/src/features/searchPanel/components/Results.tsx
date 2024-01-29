@@ -11,11 +11,7 @@
 */
 
 import { useAppSelector } from "@/app/hooks";
-import {
-  selectAnswerLengths,
-  selectAnswerWords,
-  selectKnownWords,
-} from "@/features/puzzle";
+import { selectAnswerLengths, selectAnswerWords } from "@/features/puzzle";
 import {
   Result,
   ResultData,
@@ -28,6 +24,7 @@ import {
   StatusTrackingKeys,
 } from "@/features/hintPanels";
 import { SearchPanelLocationKeys } from "..";
+import { selectKnownAnswerWords } from "@/features/progress/api/progressSlice";
 
 export function Results({
   searches,
@@ -38,7 +35,7 @@ export function Results({
 }) {
   const answers = useAppSelector(selectAnswerWords);
   const answerLengths = useAppSelector(selectAnswerLengths);
-  const knownWords = useAppSelector(selectKnownWords);
+  const knownWords = useAppSelector(selectKnownAnswerWords);
 
   const generateSearchResultData = (
     searchObject: SearchPanelSearchData,

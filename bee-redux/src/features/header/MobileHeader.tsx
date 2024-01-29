@@ -11,14 +11,14 @@
 */
 
 import { MobileHamburgerMenu } from "@/features/header/MobileHamburgerMenu";
-import { HeaderTitle } from "@/features/header/HeaderTitle";
 import { MobileAuth } from "@/features/auth/components/MobileAuth";
+import { PuzzleNav } from "@/features/puzzle";
 
 export function MobileHeader() {
   return (
     <div className="Header___mobile Header___common">
       <MobileHamburgerMenu />
-      <HeaderTitle />
+      <PuzzleNav />
       <MobileAuth />
     </div>
   );
