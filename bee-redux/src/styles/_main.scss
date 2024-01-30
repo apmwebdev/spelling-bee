@@ -485,7 +485,7 @@ a.ButtonLink, div.ButtonLink {
   align-items: flex-start;
   gap: 8px;
   padding: 8px 12px 12px 12px;
-  max-width: calc(40 * var(--font-size));
+  max-width: var(--radix-popover-content-available-width);
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
   background-color: var(--mid-gray);
