@@ -12,7 +12,6 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
-import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
 import { WordLengthGrid } from "./wordLengthGrid/WordLengthGrid";
 import {
   GridData,
@@ -22,6 +21,8 @@ import {
   TotalColumn,
 } from "@/features/letterPanel/types/letterPanelTypes";
 import { createSubstringHintDataCell, GridRow } from "@/features/hintPanels";
+import { LetterPanelKey } from "@/features/letterPanel/components/LetterPanelKey";
+import { HorizontalScrollContainer } from "@/components/HorizontalScrollContainer";
 
 export function WordLengthGridContainer({
   answers,
@@ -143,14 +144,18 @@ export function WordLengthGridContainer({
   };
 
   return (
-    <div className="LetterPanel_WLG_Container">
-      <WordLengthGridKey statusTracking={statusTracking} />
-      <WordLengthGrid
-        {...generateData()}
-        statusTracking={statusTracking}
-        hideKnown={hideKnown}
-      />
-      <div>Excluded words: {generateData().excludedAnswers}</div>
-    </div>
+    <>
+      <LetterPanelKey statusTracking={statusTracking} />
+      <HorizontalScrollContainer>
+        <WordLengthGrid
+          {...generateData()}
+          statusTracking={statusTracking}
+          hideKnown={hideKnown}
+        />
+      </HorizontalScrollContainer>
+      <div className="LetterPanel_WLG_excludedWords">
+        Excluded words: {generateData().excludedAnswers}
+      </div>
+    </>
   );
 }

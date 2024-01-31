@@ -10,17 +10,13 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { FormEvent, useState } from "react";
 import { Results } from "@/features/searchPanel/components/Results";
-import { useSelector } from "react-redux";
 import { StatusTrackingKeys } from "@/features/hintPanels/";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import {
-  addSearchPanelSearchThunk,
-  selectSpsByPanel,
-} from "@/features/searchPanelSearches";
+import { useAppSelector } from "@/app/hooks";
+import { selectSpsByPanel } from "@/features/searchPanelSearches";
 import { SearchPanelData } from "..";
-import { selectCurrentAttemptUuid } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
+import { SearchPanelForm } from "@/features/searchPanel/components/SearchPanelForm";
+import { HorizontalScrollContainer } from "@/components/HorizontalScrollContainer";
 
 export function SearchHintPanel({
   searchPanelData,
@@ -29,44 +25,14 @@ export function SearchHintPanel({
   searchPanelData: SearchPanelData;
   statusTracking: StatusTrackingKeys;
 }) {
-  const dispatch = useAppDispatch();
-  const [searchValue, setSearchValue] = useState("");
-  const currentAttemptUuid = useSelector(selectCurrentAttemptUuid);
   const panelSearches = useAppSelector(selectSpsByPanel(searchPanelData.uuid));
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    //TODO: Add debounce here
-    dispatch(
-      addSearchPanelSearchThunk({
-        uuid: crypto.randomUUID(),
-        searchPanelUuid: searchPanelData.uuid,
-        attemptUuid: currentAttemptUuid,
-        searchString: searchValue,
-        location: searchPanelData.location,
-        lettersOffset: searchPanelData.lettersOffset,
-        outputType: searchPanelData.outputType,
-        createdAt: Date.now(),
-      }),
-    );
-    setSearchValue("");
-  };
 
   return (
     <div className="SearchHintPanel">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="search"
-          className="SearchHintInput"
-          value={searchValue}
-          placeholder="Search..."
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <button type="submit" className="standardButton">
-          Search
-        </button>
-      </form>
-      <Results searches={panelSearches} tracking={statusTracking} />
+      <SearchPanelForm searchPanelData={searchPanelData} />
+      <HorizontalScrollContainer>
+        <Results searches={panelSearches} tracking={statusTracking} />
+      </HorizontalScrollContainer>
     </div>
   );
 }

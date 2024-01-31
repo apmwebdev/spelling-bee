@@ -11,9 +11,9 @@
 */
 
 import {
-  HintPanelData,
   PanelDisplayState,
   StatusTrackingKeys,
+  THintPanel,
 } from "@/features/hintPanels";
 import { BLANK_UUID, Uuid } from "@/features/api";
 
@@ -43,7 +43,7 @@ export type UserHintProfileComplete = UserHintProfileBasic & {
   defaultPanelTracking: StatusTrackingKeys;
   /** The display state that newly created panels come in with */
   defaultPanelDisplayState: PanelDisplayState;
-  panels: HintPanelData[];
+  panels: THintPanel[];
 };
 
 export type DefaultHintProfileBasic = HintProfileData & {
@@ -51,7 +51,7 @@ export type DefaultHintProfileBasic = HintProfileData & {
 };
 
 export type DefaultHintProfileComplete = DefaultHintProfileBasic & {
-  panels: HintPanelData[];
+  panels: THintPanel[];
 };
 
 export type CompleteHintProfile =
@@ -68,7 +68,7 @@ export type UserHintProfileForm = {
   name: string;
   default_panel_tracking: StatusTrackingKeys;
   default_panel_display_state: PanelDisplayState;
-  panels: HintPanelData[];
+  panels: THintPanel[];
 };
 
 export type CurrentHintProfileFormData = {

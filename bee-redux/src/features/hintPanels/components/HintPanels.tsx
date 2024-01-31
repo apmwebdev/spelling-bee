@@ -32,10 +32,10 @@ import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { hintProfilesApiSlice } from "@/features/hintProfiles";
 import {
   HintPanel,
-  HintPanelData,
   selectPanelIds,
   selectPanels,
   SortableHintPanel,
+  THintPanel,
   useChangeHintPanelOrderMutation,
 } from "@/features/hintPanels";
 
@@ -52,7 +52,7 @@ export function HintPanels() {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  const [activePanel, setActivePanel] = useState<HintPanelData | null>(null);
+  const [activePanel, setActivePanel] = useState<THintPanel | null>(null);
   const [changeHintPanelOrder] = useChangeHintPanelOrderMutation();
 
   const handleDragStart = (e: DragStartEvent) => {

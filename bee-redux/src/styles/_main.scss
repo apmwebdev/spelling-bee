@@ -41,22 +41,19 @@ body {
 
   font-size: var(--font-size);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   &.App___threeColumns {
     --font-size: 18px;
   }
 }
 
-.SSB_TopContainer {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
 .PuzzleMainContainer {
   width: 100%;
-  padding: 16px;
-  .App___oneColumn & {
-    padding: 8px;
+  padding: 8px;
+  .App___threeColumns & {
+    padding: 12px;
   }
 }
 
@@ -64,43 +61,41 @@ body {
   display: grid;
   width: 100%;
   justify-items: center;
-
   .App___threeColumns & {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .App___twoColumns & {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     .PuzzleMain_section {
-      justify-self: center;
-      padding: 0px 8px;
+      padding: 0px 4px;
     }
   }
 }
 
 .PuzzleMain_section {
-  max-width: 600px;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   gap: 8px;
 }
 
 .PuzzleSectionTabs {
   & > .TabsContent[data-state="active"] {
-    display: grid;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: stretch;
     background-color: var(--black);
   }
 }
 
 .SingleColumnTabs {
   width: 100%;
+  max-width: calc(100vw - 16px);
   &.TabsRoot {
     border: none;
   }
-  &.TabsContent {
+  & > .TabsContent {
     padding: 8px 0px 0px;
   }
 }
@@ -356,6 +351,20 @@ button {
   justify-content: center;
   padding: 2px;
   background-color: inherit;
+}
+
+/***   Horizontal Scroll Container   ***/
+
+.HorizontalScrollContainer_outer {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+.HorizontalScrollContainer_inner {
+  display: flex;
+  justify-content: center;
+  min-width: max-content;
 }
 
 /***   HR   ***/

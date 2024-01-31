@@ -47,7 +47,7 @@ const railsifyUpdatePanelData = (formData: HintPanelUpdateForm) => {
 export const hintPanelsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // ⚠️
-    // createHintPanel: builder.mutation<t.HintPanelData, t.HintPanelCreateForm>({}),
+    // createHintPanel: builder.mutation<t.THintPanel, t.HintPanelCreateForm>({}),
 
     /**
      * ✅

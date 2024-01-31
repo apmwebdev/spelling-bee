@@ -10,9 +10,18 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { PanelTypes, SubstringHintOutputKeys } from "@/features/hintPanels";
-import { EnumeratedOptions } from "@/types/globalTypes";
-import { Uuid } from "@/features/api";
+import {
+  isHintPanel,
+  PanelTypes,
+  SubstringHintOutputKeys,
+  THintPanel,
+} from "@/features/hintPanels";
+import {
+  createTypeGuard,
+  EnumeratedOptions,
+  isEnumValue,
+} from "@/types/globalTypes";
+import { isUuid, Uuid } from "@/features/api";
 
 /**
  * For search panels, should it search for the search string at the start,
@@ -29,19 +38,30 @@ export const SearchPanelLocationOptions: EnumeratedOptions = {
   end: { title: "End of Word" },
   anywhere: { title: "Anywhere in Word" },
 };
+
 export type SearchPanelBaseData = {
-  searchString: string;
   location: SearchPanelLocationKeys;
   lettersOffset: number;
   outputType: SubstringHintOutputKeys;
 };
+
 export type SearchPanelData = SearchPanelBaseData & {
   panelType: PanelTypes;
-  // ID is necessary for search panels so that searches know which panel they
-  // belong to
+  // Uuid is necessary for the SearchPanel object itself, not just the parent HintPanel object,
+  // because search panel searches belong to search panels, not hint panels.
   uuid: Uuid;
 };
 
-export function isSearchPanelData(a: any): a is SearchPanelData {
-  return a.panelType === PanelTypes.Search;
-}
+export const isSearchPanelData = createTypeGuard<SearchPanelData>(
+  ["location", isEnumValue(SearchPanelLocationKeys)],
+  ["lettersOffset", "number"],
+  ["outputType", isEnumValue(SubstringHintOutputKeys)],
+  ["uuid", isUuid],
+  ["panelType", (prop) => prop === PanelTypes.Search],
+);
+
+export type TSearchPanel = THintPanel & { typeData: SearchPanelData };
+
+export const isSearchPanel = (toTest: any): toTest is TSearchPanel => {
+  return isHintPanel(toTest) && isSearchPanelData(toTest.typeData);
+};

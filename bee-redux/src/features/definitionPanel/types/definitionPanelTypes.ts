@@ -10,12 +10,15 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { PanelTypes } from "@/features/hintPanels";
-import { SortOrderKeys } from "@/types/globalTypes";
+import { isHintPanel, PanelTypes, THintPanel } from "@/features/hintPanels";
+import {
+  createTypeGuard,
+  isEnumValue,
+  SortOrderKeys,
+} from "@/types/globalTypes";
 import { Uuid } from "@/features/api";
 
-export type DefinitionPanelFormData = {
-  uuid: Uuid;
+export type DefinitionPanelBaseData = {
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
@@ -23,10 +26,27 @@ export type DefinitionPanelFormData = {
   revealLength: boolean;
   sortOrder: SortOrderKeys;
 };
-export type DefinitionPanelData = DefinitionPanelFormData & {
+
+export type DefinitionPanelFormData = DefinitionPanelBaseData & {
+  uuid: Uuid;
+};
+
+export type DefinitionPanelData = DefinitionPanelBaseData & {
   panelType: PanelTypes;
 };
 
-export function isDefinitionPanelData(a: any): a is DefinitionPanelData {
-  return a.panelType === PanelTypes.Definition;
-}
+export const isDefinitionPanelData = createTypeGuard<DefinitionPanelData>(
+  ["hideKnown", "boolean"],
+  ["revealedLetters", "number"],
+  ["separateKnown", "boolean"],
+  ["showObscurity", "boolean"],
+  ["revealLength", "boolean"],
+  ["sortOrder", isEnumValue(SortOrderKeys)],
+  ["panelType", (prop) => prop === PanelTypes.Definition],
+);
+
+export type TDefinitionPanel = THintPanel & { typeData: DefinitionPanelData };
+
+export const isDefinitionPanel = (toTest: any): toTest is TDefinitionPanel => {
+  return isHintPanel(toTest) && isDefinitionPanelData(toTest.typeData);
+};

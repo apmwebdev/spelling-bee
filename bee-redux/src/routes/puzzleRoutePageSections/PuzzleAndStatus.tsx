@@ -15,6 +15,7 @@ import * as Tabs from "@/components/radix-ui/radix-tabs";
 import { WordLists } from "@/features/wordLists";
 import { PuzzleNav } from "@/features/puzzle";
 import { Progress } from "@/features/progress";
+import { AttemptControls } from "@/features/userPuzzleAttempts";
 
 export function PuzzleAndStatus() {
   return (
@@ -33,8 +34,7 @@ export function PuzzleAndStatus() {
           <WordLists />
         </Tabs.Content>
       </Tabs.Root>
-      {/* TODO: Add attempt functionality */}
-      {/*<AttemptControls />*/}
+      <AttemptControls />
     </div>
   );
 }

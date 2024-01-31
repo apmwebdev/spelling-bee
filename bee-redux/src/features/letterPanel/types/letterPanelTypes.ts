@@ -12,12 +12,18 @@
 
 import {
   GridRow,
+  isHintPanel,
   PanelTypes,
   StatusTrackingKeys,
   SubstringHintDataCell,
   SubstringHintOutputKeys,
+  THintPanel,
 } from "@/features/hintPanels";
-import { EnumeratedOptions } from "@/types/globalTypes";
+import {
+  createTypeGuard,
+  EnumeratedOptions,
+  isEnumValue,
+} from "@/types/globalTypes";
 import { Uuid } from "@/features/api";
 
 /**
@@ -36,30 +42,46 @@ export const LetterPanelLocationOptions: EnumeratedOptions = {
   start: { title: "Start of Word" },
   end: { title: "End of Word" },
 };
-export type LetterPanelFormData = {
-  uuid: Uuid;
+
+export type LetterPanelBaseData = {
   location: LetterPanelLocationKeys;
   outputType: SubstringHintOutputKeys;
   /** How many letters to reveal */
   numberOfLetters: number;
-  /**
-   * How many letters "in" from the start/end of the word should it start revealing
+  /** How many letters "in" from the start/end of the word should it start revealing
    * letters? E.g., with a location == "start", numberOfLetters == 1, and
    * offset == 1, it would reveal the second letter of each answer instead of the
    * first.
    */
   lettersOffset: number;
-  /** Whether to show rows that consist only of known words */
+  /** Whether to show rows and columns that consist only of known words */
   hideKnown: boolean;
 };
-export type LetterPanelData = LetterPanelFormData & {
+
+export type LetterPanelFormData = LetterPanelBaseData & {
+  uuid: Uuid;
+};
+
+export type LetterPanelData = LetterPanelBaseData & {
   panelType: PanelTypes;
 };
 
-export function isLetterPanelData(a: any): a is LetterPanelData {
-  return a.panelType === PanelTypes.Letter;
-}
+export const isLetterPanelData = createTypeGuard<LetterPanelData>(
+  ["location", isEnumValue(LetterPanelLocationKeys)],
+  ["outputType", isEnumValue(SubstringHintOutputKeys)],
+  ["numberOfLetters", "number"],
+  ["lettersOffset", "number"],
+  ["hideKnown", "boolean"],
+  ["panelType", (prop) => prop === PanelTypes.Letter],
+);
 
+export type TLetterPanel = THintPanel & { typeData: LetterPanelData };
+
+export const isLetterPanel = (toTest: any): toTest is TLetterPanel => {
+  return isHintPanel(toTest) && isLetterPanelData(toTest.typeData);
+};
+
+/** Data to pass to child components of the letter panel */
 export type LetterHintSubsectionProps = {
   answers: string[];
   knownWords: string[];

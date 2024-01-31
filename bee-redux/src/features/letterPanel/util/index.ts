@@ -18,6 +18,7 @@ import { ListData, ListRows } from "../components/WordCountList";
 import {
   StatusTrackingKeys,
   SubstringHintDataCell,
+  SubstringHintOutputKeys,
 } from "@/features/hintPanels";
 
 export const getTdClasses = (
@@ -108,4 +109,27 @@ export const generateListData = ({
     }
   }
   return { excludedAnswers, listRows };
+};
+
+/** For use in HintPanelContentMain. That component needs to make it so some parts of a hint panel
+ * are horizontally scrollable to make sure that the hint panel doesn't become wider than the
+ * viewport and mess up the UI on small mobile screens. But not all parts of a hint panel's content
+ * need to be scrollable, so it needs to be able to put some content in a nonscrollable div that
+ * will always remain centered, and potentially wide content in a scrollable div.
+ *
+ * For letter panels, the grid or list should be scrollable, but the key should not be. The key
+ * should always be small enough to fit into the hint panel, no matter the screen size.
+ *
+ * However, not all letter panel types need a key. The Word Length Grid and Word Count List do, but
+ * Letters Only does not.
+ *
+ * Therefore, HintPanelContentMain should add a key to the nonscrollable content, but only if that
+ * letter panel's output type requires a key. This function determines that.
+ * @param outputType
+ */
+export const letterPanelNeedsKey = (outputType: SubstringHintOutputKeys) => {
+  return (
+    outputType === SubstringHintOutputKeys.WordLengthGrid ||
+    outputType === SubstringHintOutputKeys.WordCountList
+  );
 };

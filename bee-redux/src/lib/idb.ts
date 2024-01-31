@@ -3,7 +3,7 @@ import { TGuess } from "@/features/guesses";
 import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
-import { HintPanelData } from "@/features/hintPanels";
+import { THintPanel } from "@/features/hintPanels";
 import {
   isUuid,
   UuidRecord,
@@ -15,7 +15,7 @@ export class SsbDexie extends Dexie {
   attempts!: Table<UserPuzzleAttempt>;
   guesses!: Table<TGuess>;
   hintProfiles!: Table<HintProfileData>;
-  hintPanels!: Table<HintPanelData>;
+  hintPanels!: Table<THintPanel>;
   searchPanelSearches!: Table<SearchPanelSearchData>;
 
   //TODO: Send updatedAt timestamp to front end for hint profiles and hint panels and index it here

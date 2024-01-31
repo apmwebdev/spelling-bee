@@ -74,6 +74,12 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  .App___twoColumns & {
+    gap: 8px;
+  }
+  .App___oneColumn & {
+    gap: 4px;
+  }
 }
 
 .HintPanel {
@@ -192,13 +198,13 @@ button.SettingsToggle {
     &:hover {
       border-color: var(--dark-gray-5);
       background-color: var(--dark-gray-2);
-      //border-color: transparent;
     }
   }
   .SettingsCollapsible[data-state="closed"] & {
     border-bottom-color: transparent;
   }
 }
+
 .SettingsCollapsibleHeaderButton {
   display: flex;
   width: 100%;
@@ -301,11 +307,10 @@ button.SettingsToggle {
   padding: 8px;
 }
 
-.HintPanelContentContainer {
+.HintPanelContentMain {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
 }
 
@@ -377,22 +382,13 @@ button.SettingsToggle {
   padding: 8px 0px;
 }
 
-.LetterPanel_WLG_Container,
-.LetterPanel_WCL_Container {
+.LetterPanelKey {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  //margin-top: 8px;
-}
-
-.LetterPanel_WLG_Key {
-  font-size: var(--small-font);
-  display: flex;
+  justify-content: center;
   gap: 4px;
-  align-items: center;
-  justify-content: start;
-  //align-self: flex-start;
-  padding: 4px;
+  padding: 4px 4px 8px;
+  font-size: var(--small-font);
   div {
     display: flex;
     align-items: center;
@@ -400,10 +396,15 @@ button.SettingsToggle {
   }
 }
 
-.LetterPanel_WLG_TrackingKey {
-  padding: 2px 8px;
+.LetterPanelKey_trackingValue {
+  padding: 4px 8px;
   background-color: var(--dark-gray-2);
   border: 1px solid var(--line-darkest);
+  font-family: "Roboto Mono", monospace;
+}
+
+.LetterPanel_WLG_excludedWords {
+  padding: 4px 0px;
 }
 
 .LetterPanel_WordLengthGrid {
@@ -452,11 +453,9 @@ button.SettingsToggle {
   align-items: center;
   //gap: 8px;
   padding: 12px 8px;
-  margin-top: 4px;
 }
 
 .LetterPanel_WordCountList {
-  border-top: 1px dotted;
   font-family: "Roboto Mono", monospace;
   font-size: 15.5px;
 }
@@ -503,15 +502,13 @@ button.SettingsToggle {
 
 
 
-.SearchHintPanel {
-  form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px;
-    margin-bottom: 8px;
-  }
+.SearchPanelForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 .SearchPanelSettings {
