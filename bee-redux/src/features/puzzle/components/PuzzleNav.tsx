@@ -18,6 +18,7 @@ import {
   dateRegex,
   getNextPuzzleDateString,
   getPreviousPuzzleDateString,
+  trimZeroes,
 } from "@/util";
 import { ButtonLink } from "@/components/ButtonLink";
 import { useColumnBreakpoints } from "@/hooks/useColumnBreakpoints";
@@ -100,8 +101,8 @@ export function PuzzleNav() {
     if (columns === 1) {
       const [year, month, day] = puzzleDate.split("-");
       //Remove leading zero from day and month
-      const shortDay = day.replace(/^0/, "");
-      const shortMonth = month.replace(/^0/, "");
+      const shortDay = trimZeroes(day);
+      const shortMonth = trimZeroes(month);
       //Use a 2-digit year
       const shortYear = year.slice(2);
       //TODO: This date format only works for the US. Is that OK?

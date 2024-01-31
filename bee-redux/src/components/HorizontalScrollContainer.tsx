@@ -10,22 +10,16 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import {
-  StatusTrackingKeys,
-  StatusTrackingOptions,
-} from "@/features/hintPanels";
+import { ReactNode } from "react";
 
-export function WordLengthGridKey({
-  statusTracking,
+export function HorizontalScrollContainer({
+  children,
 }: {
-  statusTracking: StatusTrackingKeys;
+  children: ReactNode;
 }) {
   return (
-    <div className="LetterPanel_WLG_Key">
-      <div>Key: Showing</div>
-      <div className="LetterPanel_WLG_TrackingKey">
-        {StatusTrackingOptions[statusTracking].compactTitle}
-      </div>
+    <div className="HorizontalScrollContainer_outer">
+      <div className="HorizontalScrollContainer_inner">{children}</div>
     </div>
   );
 }

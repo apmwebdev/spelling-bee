@@ -37,30 +37,32 @@
 }
 
 .Progress {
-  font-size: var(--small-font);
   --progress-gap: 3px;
   --progress-child-padding: 6px;
+  font-size: var(--small-font);
+  display: grid;
+  grid-template: repeat(3, 1fr) / max-content auto;
+  //align-items: center;
+  padding: 0px 8px 8px;
+  row-gap: var(--progress-gap);
   .App___threeColumns & {
     --progress-gap: 6px;
     --progress-child-padding: 6px;
   }
-  display: grid;
-  grid-template: repeat(3, 1fr) / max-content auto;
-  align-items: center;
-  padding: 0px 8px 8px;
-  row-gap: var(--progress-gap);
-}
-
-.MobileProgress {
-  display: flex;
-  flex-direction: column;
 }
 
 .MobileProgress_rankSection {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  max-width: 100%;
   gap: 16px;
+  align-items: center;
   justify-content: center;
   padding: 8px;
+}
+
+.MobileProgress_barContainer {
+  container-type: inline-size;
 }
 
 .ProgressNumbers {
@@ -102,38 +104,43 @@
   align-items: center;
   gap: var(--progress-gap);
   padding: var(--progress-child-padding);
+  container-type: inline-size;
 }
 
 .ProgressBar {
-  --gap-length: 12px;
+  --circle-diameter: clamp(10px, 4cqw, 16px);
+  /* There are 10 circles (rank tics) and 9 lines connecting the circles on the progress bar. The
+  lines should take up whatever space the circles don't. Therefore, they should each be 1/9 of
+  (container width - (10 * circle diameter)).
+   */
+  --line-length: calc((100cqw - (10 * var(--circle-diameter))) / 9);
   padding: 2px;
   .App___twoColumns & {
-    --gap-length: 16px;
-    padding: 4px;
+    padding: 6px;
   }
   .App___threeColumns & {
-    --gap-length: 20px;
     padding: 6px;
   }
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--gap-length);
+  gap: var(--line-length);
 }
 
 .RankTic {
   position: relative;
-  height: calc(0.7 * var(--gap-length));
-  width: calc(0.7 * var(--gap-length));
-  border-radius: calc(0.7 * var(--gap-length));
+  height: var(--circle-diameter);
+  width: var(--circle-diameter);
+  border-radius: 100%;
   background-color: var(--mid-gray);
   &:not(:first-child):before {
     content: "";
     position: absolute;
-    height: calc(0.1 * var(--gap-length));
-    width: var(--gap-length);
-    left: calc(-1 * var(--gap-length));
-    top: calc(0.3 * var(--gap-length));
+    height: clamp(1.5px, calc(0.1 * var(--circle-diameter)), 3px);
+    width: var(--line-length);
+    left: calc(-1 * var(--line-length));
+    top: 50%;
+    transform: translateY(-50%);
     background-color: var(--mid-gray);
   }
   &.RankTic___active, &:has(~ .RankTic___active) {

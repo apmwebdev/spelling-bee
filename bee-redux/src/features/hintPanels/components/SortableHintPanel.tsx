@@ -12,10 +12,10 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { HintPanelData } from "@/features/hintPanels/types/hintPanelTypes";
+import { THintPanel } from "@/features/hintPanels/types/hintPanelTypes";
 import { HintPanel } from "@/features/hintPanels";
 
-export function SortableHintPanel({ panel }: { panel: HintPanelData }) {
+export function SortableHintPanel({ panel }: { panel: THintPanel }) {
   const {
     attributes,
     listeners,

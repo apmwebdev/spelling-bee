@@ -11,6 +11,7 @@
 */
 
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { errLog } from "@/util";
 
 /** Checks whether something is a "plain" object, since lots of things, like arrays and
  *  functions, are also technically objects. Checking whether the immediate prototype of
@@ -117,18 +118,50 @@ export const EMAIL_REGEX =
 export const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\d\sa-zA-Z]).{10,128}$/;
 
+/** Base types for use in the createTypeGuard function that can be checked with typeof.
+ * @see createTypeGuard
+ */
+export type TypeGuardBaseTypes =
+  | "boolean"
+  | "string"
+  | "number"
+  | "bigint"
+  | "symbol"
+  | "undefined"
+  | "object"
+  | "function";
+
+/** For use in createTypeGuard as a validator function. Checks if a property is one of the values
+ * in an enum, since these are compiled down to regular objects.
+ * @param {object} enumObj The enum to check against. The enum's keys will be the object's keys,
+ *   and its values will be the object's values.
+ * @see createTypeGuard
+ */
+export const isEnumValue = (enumObj: object) => {
+  return (val: any): boolean => {
+    return Object.values(enumObj).includes(val);
+  };
+};
+
 /** The different ways to validate a property in createTypeGuard:
  *  1. If the validator is null, the property only needs to exist in the object to be valid
- *  2. If the validator is a string, the property needs to be the typeof that string
+ *  2. If the validator is a string from TypeGuardBaseTypes, the property needs to be the typeof
+ *     that string.
  *  3. If the validator is a predicate or type guard function, that function validates the property
- *     and needs to return true when passed the property as an argument. */
-type TypeValidator =
+ *     and needs to return true when passed the property as an argument.
+ */
+type TypeValidatorBase =
   | null
-  | string
+  | TypeGuardBaseTypes
   | ((toTest: any) => toTest is any)
   | ((toTest: any) => boolean);
 
-export const isTypeValidator = (toTest: any): toTest is TypeValidator => {
+/** Type predicate for TypeValidatorBase.
+ * @see TypeValidatorBase
+ */
+export const isTypeValidatorBase = (
+  toTest: any,
+): toTest is TypeValidatorBase => {
   return (
     toTest === null ||
     typeof toTest === "string" ||
@@ -136,84 +169,118 @@ export const isTypeValidator = (toTest: any): toTest is TypeValidator => {
   );
 };
 
-type TypeValidatorContainer = {
-  validator: TypeValidator;
+/** A container that holds a TypeValidatorBase as well as additional options for type checking with
+ * that base validator.
+ */
+type TypeValidatorWithOptions = {
+  validator: TypeValidatorBase;
+  /** When true, a property must pass validation with `validator` only if it is present in the
+   * object. I.e.: For a property with key `key` in object `obj`, `!(key in obj)` is valid.
+   * Note that this doesn't mean that the property can be null or undefined if it IS present.
+   */
   isOptional: boolean;
 };
 
-export const isTypeValidatorContainer = (
+export const isTypeValidatorWithOptions = (
   toTest: any,
-): toTest is TypeValidatorContainer => {
+): toTest is TypeValidatorWithOptions => {
   if (!isPlainObject(toTest)) return false;
   return (
     hasAllProperties(toTest, ["validator", "isOptional"]) &&
-    isTypeValidator(toTest.validator) &&
+    isTypeValidatorBase(toTest.validator) &&
     typeof toTest.isOptional === "boolean"
   );
 };
 
-export type TypeGuardValidator = TypeValidator | TypeValidatorContainer;
+export type TypeValidator = TypeValidatorBase | TypeValidatorWithOptions;
 
 /** A factory function to make creating type guards easier. Give it an array of properties +
  * validation for those properties (`validators`) to create the type guard function, then pass
  * an object (`toTest`) to the created type guard to type check that object.
  * @param validators An array of tuples with the properties of the type being tested. The first
  * item in the tuple is the name of the property. The second item is the validation for that
- * property. This array of tuples is then turned into a Map for ease of use.
+ * property.
  * */
 export const createTypeGuard = <ValidType>(
-  ...validators: Array<[string, TypeGuardValidator]>
+  ...validators: [string, TypeValidator][]
 ) => {
-  const validProperties = new Map<string, TypeGuardValidator>(validators);
+  //The factory function
+
+  //Reusable function for testing a prop and validator. This is defined here, but only used in the
+  // returned type guard function, below.
   const propIsValid = ({
     validator,
     prop,
   }: {
-    validator: TypeGuardValidator;
+    validator: TypeValidator;
     prop: any;
   }) => {
     if (typeof validator === "string") {
+      //If the validator is a string, the prop must be the `typeof` that string
       if (!(typeof prop === validator)) return false;
     } else if (typeof validator === "function") {
       if (!validator(prop)) return false;
     }
     return true;
   };
+
+  const errorBase = "Custom type guard error";
+  const invalidate = (...toLog: any[]) => {
+    errLog(errorBase, ...toLog);
+  };
+
+  //The generated type guard function
   return (toTest: any): toTest is ValidType => {
     //This app doesn't use object constructors or classes, so toTest should be a plain object
-    if (!isPlainObject(toTest)) return false;
-    for (const [key, value] of validProperties) {
-      if (isTypeValidatorContainer(value) && !value.isOptional) {
-        if (!(key in toTest)) return false;
+    if (!isPlainObject(toTest)) {
+      // invalidate("toTest isn't a plain object:", toTest);
+      return false;
+    }
+    for (const [key, value] of validators) {
+      if (isTypeValidatorWithOptions(value) && !value.isOptional) {
+        if (!(key in toTest)) {
+          // invalidate(`Missing key ${key}`);
+          return false;
+        }
         if (value.validator === null) continue;
         if (
           !propIsValid({
             validator: value.validator,
             prop: toTest[key],
           })
-        )
+        ) {
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
-      } else if (isTypeValidatorContainer(value) && value.isOptional) {
+        }
+      } else if (isTypeValidatorWithOptions(value) && value.isOptional) {
         if (
           key in toTest &&
           !propIsValid({
             validator: value.validator,
             prop: toTest[key],
           })
-        )
+        ) {
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
+        }
       } else {
-        if (!(key in toTest)) return false;
+        if (!(key in toTest)) {
+          // invalidate(`Missing key ${key}`);
+          return false;
+        }
         if (value === null) continue;
         if (
           !propIsValid({
             validator: value,
             prop: toTest[key],
           })
-        )
+        ) {
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
+        }
       }
     }
+    //If we got here, none of the properties failed validation. Object is valid.
     return true;
   };
 };

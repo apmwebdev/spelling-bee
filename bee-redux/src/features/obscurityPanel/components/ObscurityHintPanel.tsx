@@ -12,7 +12,7 @@
 
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths, selectAnswers, TAnswer } from "@/features/puzzle";
-import { usageExplanation } from "src/features/obscurityPanel";
+import { formatFrequency, usageExplanation } from "src/features/obscurityPanel";
 import { DefinitionPopover } from "./DefinitionPopover";
 import { last } from "lodash";
 import { ObscurityPanelData } from "../";
@@ -88,8 +88,10 @@ export function ObscurityHintPanel({
                 answer.word
               )}
             </td>
-            <td>{answer.frequency}</td>
-            <td>{usageExplanation(answer.frequency)}</td>
+            <td>{formatFrequency(answer.frequency)}</td>
+            <td className="ObscurityPanel_usageExplanation">
+              {usageExplanation(answer.frequency)}
+            </td>
           </tr>
         );
       }
@@ -109,8 +111,10 @@ export function ObscurityHintPanel({
               displayUnknownWord({ answer, revealedLetters, revealLength })
             )}
           </td>
-          <td>{answer.frequency}</td>
-          <td>{usageExplanation(answer.frequency)}</td>
+          <td>{formatFrequency(answer.frequency)}</td>
+          <td className="ObscurityPanel_usageExplanation">
+            {usageExplanation(answer.frequency)}
+          </td>
         </tr>
       );
     });
@@ -125,7 +129,7 @@ export function ObscurityHintPanel({
         <thead>
           <tr>
             <th scope="col">Word</th>
-            <th scope="col">Frequency</th>
+            <th scope="col">Freq.</th>
             <th scope="col">Usage</th>
           </tr>
         </thead>

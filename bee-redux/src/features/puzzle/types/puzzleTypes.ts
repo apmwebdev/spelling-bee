@@ -120,6 +120,18 @@ export const getNextRank = (
   );
 };
 
+/** I'm saving frequency values in Rails as BigDecimals, just in case I need the precision in
+ * the future. This might be unnecessary. Rails encodes BigDecimals in JSON as strings to save
+ * precision, so RawAnswer's `frequency` prop is a string. Because I don't currently need precision
+ * with the frequency data, I'm just converting that string to a normal number in JS for the
+ * `TAnswer` type.
+ */
+export type RawAnswer = {
+  word: string;
+  frequency: string;
+  definitions: string[];
+};
+
 export type TAnswer = {
   word: string;
   frequency: number;
@@ -134,12 +146,13 @@ export type RawPuzzle = {
   validLetters: string[];
   pangrams: string[];
   perfectPangrams: string[];
-  answers: TAnswer[];
+  answers: RawAnswer[];
   excludedWords: string[];
   isLatest: boolean;
 };
 
-export type TPuzzle = RawPuzzle & {
+export type TPuzzle = Omit<RawPuzzle, "answers"> & {
+  answers: TAnswer[];
   shuffledOuterLetters: string[];
   answerWords: string[];
   totalPoints: number;

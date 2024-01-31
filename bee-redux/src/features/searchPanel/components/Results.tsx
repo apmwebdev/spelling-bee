@@ -17,7 +17,6 @@ import {
   ResultData,
   SearchPanelSearchData,
 } from "@/features/searchPanelSearches";
-import uniqid from "uniqid";
 import {
   createSubstringHintDataCell,
   GridRow,
@@ -100,7 +99,7 @@ export function Results({
       const resultData = generateSearchResultData(searchObject);
       return (
         <Result
-          key={uniqid()}
+          key={searchObject.uuid}
           resultData={resultData}
           statusTracking={tracking}
         />

@@ -11,7 +11,6 @@
 */
 
 import uniqid from "uniqid";
-import { WordLengthGridKey } from "./wordLengthGrid/WordLengthGridKey";
 import {
   generateListData,
   LetterHintSubsectionProps,
@@ -21,6 +20,7 @@ import {
   SubstringHintDataCell,
 } from "@/features/hintPanels/types/hintPanelTypes";
 import { getSubstringHintStatusClasses } from "@/features/hintPanels";
+import { LetterPanelKey } from "@/features/letterPanel/components/LetterPanelKey";
 
 export type ListRow = {
   [substring: string]: SubstringHintDataCell;
@@ -98,11 +98,11 @@ export function WordCountList({
     }
 
     return (
-      <div className="LetterPanel_WCL_Container">
-        <WordLengthGridKey statusTracking={statusTracking} />
+      <>
+        <LetterPanelKey statusTracking={statusTracking} />
         <div className="LetterPanel_WordCountList">{startingLetterDivs}</div>
         <div>Excluded words: {excludedAnswers}</div>
-      </div>
+      </>
     );
   };
 

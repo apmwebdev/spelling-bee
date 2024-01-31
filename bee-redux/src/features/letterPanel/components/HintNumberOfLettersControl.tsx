@@ -10,12 +10,12 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { ChangeEvent } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
 import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 
 import { Uuid } from "@/features/api";
+import { NumberInput } from "@/components/NumberInput";
 
 export function HintNumberOfLettersControl({
   panelUuid,
@@ -26,25 +26,26 @@ export function HintNumberOfLettersControl({
 }) {
   const answerLengths = useAppSelector(selectAnswerLengths);
   const [updatePanel] = useUpdateHintPanelMutation();
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+  const updateValue = (newValue: number) => {
     updatePanel({
       uuid: panelUuid,
       debounceField: "numberOfLetters",
       typeData: {
-        numberOfLetters: Number(e.target.value),
+        numberOfLetters: newValue,
       },
     });
   };
+
   return (
     <div className="NumberOfLettersControl">
       <span>Number of Letters:</span>
-      <input
+      <NumberInput
         className="LetterPanelNumberOfLettersInput"
-        type="number"
         value={numberOfLetters}
         min={1}
         max={answerLengths.length ? answerLengths.slice(-1)[0] : 0}
-        onChange={handleChange}
+        updateFn={updateValue}
       />
     </div>
   );

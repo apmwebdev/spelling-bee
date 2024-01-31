@@ -11,7 +11,10 @@
 */
 
 import { TAnswer } from "@/features/puzzle";
-import { usageExplanation } from "@/features/obscurityPanel/util";
+import {
+  formatFrequency,
+  usageExplanation,
+} from "@/features/obscurityPanel/util/obscurityPanelUtil";
 import { DefinitionPanelData } from "@/features/definitionPanel/types/definitionPanelTypes";
 import classNames from "classnames/dedupe";
 
@@ -45,7 +48,7 @@ export function Word({
       </div>
       {showObscurity ? (
         <div className="italic">
-          Frequency: {answer.frequency} (
+          Frequency: {formatFrequency(answer.frequency)} (
           {usageExplanation(answer.frequency).toLowerCase()})
         </div>
       ) : null}

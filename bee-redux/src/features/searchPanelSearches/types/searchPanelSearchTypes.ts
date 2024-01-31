@@ -14,76 +14,35 @@ import {
   GridRow,
   StatusTrackingKeys,
   SubstringHintDataCell,
+  SubstringHintOutputKeys,
 } from "@/features/hintPanels";
 import {
   SearchPanelBaseData,
   SearchPanelLocationKeys,
-} from "@/features/searchPanel";
-import { hasAllProperties } from "@/types/globalTypes";
-import { devLog } from "@/util";
+} from "@/features/searchPanel/types/searchPanelTypes";
+import { createTypeGuard, isEnumValue } from "@/types/globalTypes";
 import { isUuid, Uuid } from "@/features/api";
 
 //If changing, change SearchPanelSearchProperties as well
 export type SearchPanelSearchData = SearchPanelBaseData & {
-  //inherits searchString, location, lettersOffset, and outputType
+  //inherits location, lettersOffset, and outputType
   uuid: Uuid;
   attemptUuid: Uuid;
   searchPanelUuid: Uuid;
+  searchString: string;
   createdAt: number;
 };
 
-export const SearchPanelSearchProperties = [
-  "uuid",
-  "attemptUuid",
-  "searchPanelUuid",
-  "createdAt",
-  "searchString",
-  "location",
-  "lettersOffset",
-  "outputType",
-];
-
-export const isSearchPanelSearch = (
-  toTest: any,
-): toTest is SearchPanelSearchData => {
-  if (!hasAllProperties(toTest, SearchPanelSearchProperties)) {
-    devLog("Doesn't have all properties");
-    return false;
-  }
-  if (!isUuid(toTest.uuid)) {
-    devLog("uuid isn't a UUID");
-    return false;
-  }
-  if (!isUuid(toTest.attemptUuid)) {
-    devLog("attemptUuid isn't a UUID");
-    return false;
-  }
-  if (!isUuid(toTest.searchPanelUuid)) {
-    devLog("searchPanelUuid isn't a UUID");
-    return false;
-  }
-  if (!(typeof toTest.createdAt === "number")) {
-    devLog("createdAt isn't a number");
-    return false;
-  }
-  if (!(typeof toTest.searchString === "string")) {
-    devLog("searchString isn't a string");
-    return false;
-  }
-  if (!(typeof toTest.location === "string")) {
-    devLog("Invalid location", SearchPanelLocationKeys);
-    return false;
-  }
-  if (!(typeof toTest.lettersOffset === "number")) {
-    devLog("lettersOffset isn't a number");
-    return false;
-  }
-  if (!(typeof toTest.outputType === "string")) {
-    devLog("Invalid outputType");
-    return false;
-  }
-  return true;
-};
+export const isSearchPanelSearch = createTypeGuard<SearchPanelSearchData>(
+  ["uuid", isUuid],
+  ["attemptUuid", isUuid],
+  ["searchPanelUuid", isUuid],
+  ["createdAt", "number"],
+  ["searchString", "string"],
+  ["location", isEnumValue(SearchPanelLocationKeys)],
+  ["lettersOffset", "number"],
+  ["outputType", isEnumValue(SubstringHintOutputKeys)],
+);
 
 export type ResultData = {
   searchObject: SearchPanelSearchData;

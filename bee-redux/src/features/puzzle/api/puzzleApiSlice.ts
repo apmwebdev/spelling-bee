@@ -16,6 +16,7 @@ import { sortBy } from "lodash";
 import {
   generatePuzzleRanks,
   RawPuzzle,
+  TAnswer,
   TPuzzle,
 } from "@/features/puzzle/types/puzzleTypes";
 
@@ -25,8 +26,16 @@ export const puzzleApiSlice = apiSlice.injectEndpoints({
       query: (identifier: string) => ({
         url: `/puzzles/${identifier}`,
       }),
-      transformResponse: (response: RawPuzzle, _meta, arg) => {
-        const answerWords = response.answers.map((answer) => answer.word);
+      transformResponse: (response: RawPuzzle, _meta, _arg) => {
+        const answerWords: string[] = [];
+        const processedAnswers: TAnswer[] = [];
+        response.answers.forEach((rawAnswer) => {
+          answerWords.push(rawAnswer.word);
+          processedAnswers.push({
+            ...rawAnswer,
+            frequency: Number(rawAnswer.frequency),
+          });
+        });
         const answerLengths = (answerWords: string[]) => {
           const returnArray: number[] = [];
           for (const answer of answerWords) {
@@ -40,6 +49,7 @@ export const puzzleApiSlice = apiSlice.injectEndpoints({
 
         const processedResponse: TPuzzle = {
           ...response,
+          answers: processedAnswers,
           shuffledOuterLetters: [...response.outerLetters],
           answerWords,
           totalPoints,

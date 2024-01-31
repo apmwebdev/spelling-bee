@@ -19,7 +19,9 @@ export function MobileProgress() {
     <div className="MobileProgress">
       <div className="MobileProgress_rankSection">
         <MobileRankStatus />
-        <ProgressBar />
+        <div className="MobileProgress_barContainer">
+          <ProgressBar />
+        </div>
       </div>
       <MobileProgressStatus />
     </div>

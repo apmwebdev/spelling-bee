@@ -10,12 +10,15 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { PanelTypes } from "@/features/hintPanels";
-import { SortOrderKeys } from "@/types/globalTypes";
+import { isHintPanel, PanelTypes, THintPanel } from "@/features/hintPanels";
+import {
+  createTypeGuard,
+  isEnumValue,
+  SortOrderKeys,
+} from "@/types/globalTypes";
 import { Uuid } from "@/features/api";
 
-export type ObscurityPanelFormData = {
-  uuid: Uuid;
+export type ObscurityPanelBaseData = {
   hideKnown: boolean;
   revealedLetters: number;
   separateKnown: boolean;
@@ -23,10 +26,27 @@ export type ObscurityPanelFormData = {
   revealLength: boolean;
   sortOrder: SortOrderKeys;
 };
-export type ObscurityPanelData = ObscurityPanelFormData & {
+
+export type ObscurityPanelFormData = ObscurityPanelBaseData & {
+  uuid: Uuid;
+};
+
+export type ObscurityPanelData = ObscurityPanelBaseData & {
   panelType: PanelTypes;
 };
 
-export function isObscurityPanelData(a: any): a is ObscurityPanelData {
-  return a.panelType === PanelTypes.Obscurity;
-}
+export const isObscurityPanelData = createTypeGuard<ObscurityPanelData>(
+  ["hideKnown", "boolean"],
+  ["revealedLetters", "number"],
+  ["separateKnown", "boolean"],
+  ["clickToDefine", "boolean"],
+  ["revealLength", "boolean"],
+  ["sortOrder", isEnumValue(SortOrderKeys)],
+  ["panelType", (prop) => prop === PanelTypes.Obscurity],
+);
+
+export type TObscurityPanel = THintPanel & { typeData: ObscurityPanelData };
+
+export const isObscurityPanel = (toTest: any): toTest is TObscurityPanel => {
+  return isHintPanel(toTest) && isObscurityPanelData(toTest.typeData);
+};

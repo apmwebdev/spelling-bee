@@ -140,3 +140,7 @@ export const trackingStatusClasses = ({
     WarningText: currentCount > 0 && currentCount < totalCount,
   });
 };
+
+export const trimZeroes = (str: string) => {
+  return str.replace(/^0+/, "");
+};

@@ -153,11 +153,12 @@ export const deleteSearchPanelSearchThunk = createAsyncThunk(
   },
 );
 
-export const selectSearchPanelSearches = (state: RootState) =>
-  state.searchPanelSearches.data;
+export const selectSearchPanelSearches = (state: RootState) => {
+  return state.searchPanelSearches.data;
+};
 export const selectSpsByPanel = (panelUuid: Uuid) =>
-  createSelector([selectSearchPanelSearches], (searches) =>
-    searches.filter((search) => search.searchPanelUuid === panelUuid),
-  );
+  createSelector([selectSearchPanelSearches], (searches) => {
+    return searches.filter((search) => search.searchPanelUuid === panelUuid);
+  });
 
 export default searchPanelSearchesSlice.reducer;

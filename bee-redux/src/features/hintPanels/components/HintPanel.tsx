@@ -13,17 +13,17 @@
 import { PanelHeader } from "./shared/PanelHeader";
 import * as Collapsible from "@/components/radix-ui/radix-collapsible";
 import { HintPanelSettings } from "@/features/hintPanels/components/settings/HintPanelSettings";
-import { HintPanelContentContainer } from "@/features/hintPanels/components/shared/HintPanelContentContainer";
+import { HintPanelContentMain } from "@/features/hintPanels/components/shared/HintPanelContentMain";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { CSSProperties, forwardRef, Ref } from "react";
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import {
-  HintPanelData,
   PanelCurrentDisplayStateProperties,
   PanelTypes,
   selectPanelDisplayState,
   setPanelDisplayPropThunk,
+  THintPanel,
 } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
 import {
@@ -49,7 +49,7 @@ export const HintPanel = forwardRef(
       attributes,
       listeners,
     }: {
-      panel: HintPanelData;
+      panel: THintPanel;
       isOverlay: boolean;
       isDragging: boolean;
       isSorting?: boolean;
@@ -140,7 +140,7 @@ export const HintPanel = forwardRef(
           {displayState.isSettingsExpanded ? (
             <HintPanelSettings panel={panel} />
           ) : null}
-          <HintPanelContentContainer panel={panel} />
+          <HintPanelContentMain panel={panel} />
         </Collapsible.Content>
       </Collapsible.Root>
     );

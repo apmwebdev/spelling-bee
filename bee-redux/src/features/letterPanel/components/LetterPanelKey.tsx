@@ -10,11 +10,22 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-export const usageExplanation = (frequency: number) => {
-  if (frequency >= 100) return "Ubiquitous";
-  if (frequency >= 10) return "Very Common";
-  if (frequency >= 1) return "Common";
-  if (frequency >= 0.1) return "Uncommon";
-  if (frequency >= 0.01) return "Obscure";
-  return "Very Obscure";
-};
+import {
+  StatusTrackingKeys,
+  StatusTrackingOptions,
+} from "@/features/hintPanels";
+
+export function LetterPanelKey({
+  statusTracking,
+}: {
+  statusTracking: StatusTrackingKeys;
+}) {
+  return (
+    <div className="LetterPanelKey">
+      <div>Key: Showing</div>
+      <div className="LetterPanelKey_trackingValue">
+        {StatusTrackingOptions[statusTracking].compactTitle}
+      </div>
+    </div>
+  );
+}

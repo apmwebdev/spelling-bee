@@ -40,10 +40,8 @@ export function App() {
     return (
       <AppProvider>
         <div className={appClasses}>
-          <div className="SSB_TopContainer">
-            <Header />
-            <Outlet />
-          </div>
+          <Header />
+          <Outlet />
         </div>
       </AppProvider>
     );

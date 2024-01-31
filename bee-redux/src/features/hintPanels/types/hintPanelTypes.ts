@@ -28,9 +28,15 @@ import {
   DefinitionPanelData,
   DefinitionPanelFormData,
 } from "@/features/definitionPanel";
-import { EnumeratedOptions, SortOrderKeys } from "@/types/globalTypes";
+import {
+  createTypeGuard,
+  EnumeratedOptions,
+  isEnumValue,
+  isPlainObject,
+  SortOrderKeys,
+} from "@/types/globalTypes";
 import { HintProfileTypes } from "@/features/hintProfiles";
-import { Uuid } from "@/features/api";
+import { isUuid, Uuid } from "@/features/api";
 
 export enum PanelTypes {
   Letter = "letter",
@@ -197,7 +203,18 @@ export enum PanelCurrentDisplayStateProperties {
   isSettingsExpanded = "isSettingsExpanded",
 }
 
-export type HintPanelData = {
+export type HintPanelTypeData =
+  | LetterPanelData
+  | SearchPanelData
+  | ObscurityPanelData
+  | DefinitionPanelData;
+
+export const isHintPanelTypeData = createTypeGuard<HintPanelTypeData>([
+  "panelType",
+  isEnumValue(PanelTypes),
+]);
+
+export type THintPanel = {
   uuid: Uuid;
   hintProfileType: HintProfileTypes;
   hintProfileUuid: Uuid;
@@ -206,12 +223,20 @@ export type HintPanelData = {
   initialDisplayState: PanelDisplayState;
   currentDisplayState: PanelDisplayState;
   statusTracking: StatusTrackingKeys;
-  typeData:
-    | LetterPanelData
-    | SearchPanelData
-    | ObscurityPanelData
-    | DefinitionPanelData;
+  typeData: HintPanelTypeData;
 };
+
+export const isHintPanel = createTypeGuard<THintPanel>(
+  ["uuid", isUuid],
+  ["hintProfileType", isEnumValue(HintProfileTypes)],
+  ["hintProfileUuid", isUuid],
+  ["name", "string"],
+  ["displayIndex", "number"],
+  ["initialDisplayState", isPlainObject],
+  ["currentDisplayState", isPlainObject],
+  ["statusTracking", isEnumValue(StatusTrackingKeys)],
+  ["typeData", isHintPanelTypeData],
+);
 
 export type HintPanelCreateForm = {
   uuid: Uuid;

@@ -18,11 +18,11 @@ import { isLetterPanelData, LetterPanelSettings } from "@/features/letterPanel";
 import { isSearchPanelData, SearchPanelSettings } from "@/features/searchPanel";
 import { ObscurityPanelSettings } from "@/features/obscurityPanel";
 import { DefinitionPanelSettings } from "@/features/definitionPanel";
-import { HintPanelData } from "@/features/hintPanels/types/hintPanelTypes";
+import { THintPanel } from "@/features/hintPanels/types/hintPanelTypes";
 import { isObscurityPanelData } from "@/features/obscurityPanel/types/obscurityPanelTypes";
 import { isDefinitionPanelData } from "@/features/definitionPanel/types/definitionPanelTypes";
 
-export function HintPanelSettings({ panel }: { panel: HintPanelData }) {
+export function HintPanelSettings({ panel }: { panel: THintPanel }) {
   const typeSpecificSettings = () => {
     if (isLetterPanelData(panel.typeData)) {
       return (
