@@ -233,13 +233,13 @@ export const createTypeGuard = <ValidType>(
   return (toTest: any): toTest is ValidType => {
     //This app doesn't use object constructors or classes, so toTest should be a plain object
     if (!isPlainObject(toTest)) {
-      invalidate("toTest isn't a plain object:", toTest);
+      // invalidate("toTest isn't a plain object:", toTest);
       return false;
     }
     for (const [key, value] of validators) {
       if (isTypeValidatorWithOptions(value) && !value.isOptional) {
         if (!(key in toTest)) {
-          invalidate(`Missing key ${key}`);
+          // invalidate(`Missing key ${key}`);
           return false;
         }
         if (value.validator === null) continue;
@@ -249,7 +249,7 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          invalidate(`${key} is invalid:`, toTest[key]);
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       } else if (isTypeValidatorWithOptions(value) && value.isOptional) {
@@ -260,12 +260,12 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          invalidate(`${key} is invalid:`, toTest[key]);
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       } else {
         if (!(key in toTest)) {
-          invalidate(`Missing key ${key}`);
+          // invalidate(`Missing key ${key}`);
           return false;
         }
         if (value === null) continue;
@@ -275,7 +275,7 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          invalidate(`${key} is invalid:`, toTest[key]);
+          // invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       }

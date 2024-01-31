@@ -10,7 +10,7 @@
   See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 */
 
-import { ChangeEvent, CSSProperties, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { useAppSelector } from "@/app/hooks";
 import { selectAnswerLengths } from "@/features/puzzle";
 import { BasicTooltip } from "@/components/BasicTooltip";
@@ -18,6 +18,7 @@ import { useUpdateHintPanelMutation } from "@/features/hintPanels";
 import classNames from "classnames/dedupe";
 
 import { Uuid } from "@/features/api";
+import { NumberInput } from "@/components/NumberInput";
 
 export function HintLettersOffsetControl({
   panelUuid,
@@ -37,12 +38,12 @@ export function HintLettersOffsetControl({
   const answerLengths = useAppSelector(selectAnswerLengths);
   const [updatePanel] = useUpdateHintPanelMutation();
 
-  const handleOffsetChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const updateValue = (newValue: number) => {
     updatePanel({
       uuid: panelUuid,
       debounceField: "offset",
       typeData: {
-        lettersOffset: Number(e.target.value),
+        lettersOffset: newValue,
       },
     });
   };
@@ -56,9 +57,8 @@ export function HintLettersOffsetControl({
         style={style}
       >
         <span>Offset:</span>
-        <input
+        <NumberInput
           className="HintOffsetInput"
-          type="number"
           value={lettersOffset}
           min={0}
           max={
@@ -67,7 +67,7 @@ export function HintLettersOffsetControl({
               : 0
           }
           disabled={disabled}
-          onChange={handleOffsetChange}
+          updateFn={updateValue}
         />
       </div>
     </BasicTooltip>
