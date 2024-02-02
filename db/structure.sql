@@ -738,7 +738,8 @@ CREATE TABLE public.words (
     frequency numeric,
     definitions character varying[],
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    hint character varying
 );
 
 
@@ -1549,6 +1550,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231128021153'),
 ('20231128030814'),
 ('20231128232734'),
-('20240117185320');
+('20240117185320'),
+('20240202065829');
 
 
