@@ -20,4 +20,15 @@ namespace :scraper do
   task import_all: :environment do
     NytScraperService.new.import_all_puzzles
   end
+
+  desc "Test SbSolver #fetch_puzzle method"
+  task test_sbs_fetch: :environment do
+    puts SbSolverScraperService.new.fetch_puzzle(100)
+  end
+
+  desc "Import puzzles between ID A and B"
+  # e.g. rake "scraper:import_sbs[1, 2081]"
+  task :import_sbs, [:starting_id, :ending_id] => :environment do |_t, args|
+    SbSolverScraperService.new.seed_puzzles(args[:starting_id], args[:ending_id])
+  end
 end

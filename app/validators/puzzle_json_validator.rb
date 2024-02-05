@@ -10,10 +10,10 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# :nodoc:
+# Validates puzzle data from either the NYT site or Sync API
 class PuzzleJsonValidator < ExternalServiceValidatorBase
   def valid_nyt_puzzle?(json)
-    hash_properties_are_valid?(json, "puzzle", [
+    hash_properties_are_valid?(object: json, object_name: "puzzle", method_name: __method__, props: [
       ["displayDate", String, ->(p) { valid_date?(p) }],
       ["centerLetter", String, ->(p) { valid_letter?(p) }],
       ["outerLetters", Array, ->(p) { valid_outer_letters?(p) }],
@@ -22,7 +22,7 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
   end
 
   def valid_sync_api_puzzle?(json)
-    hash_properties_are_valid?(json, "puzzle_data", [
+    hash_properties_are_valid?(object: json, object_name: "puzzle_data", method_name: __method__, props: [
       ["center_letter", String, ->(p) { valid_letter?(p) }],
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["date", String, ->(p) { valid_date?(p) }],
@@ -36,36 +36,37 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
   end
 
   def valid_letter?(letter)
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     result = letter.match?(/\A[a-zA-Z]\z/)
-    err_log "Invalid letter for puzzle JSON: #{letter}" unless result
+    method_logger.error "Invalid letter: #{letter}" unless result
     result
   end
 
   def valid_outer_letters?(letters)
-    error_base = "Invalid outer letters for puzzle JSON"
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     unless letters.is_a?(Array)
-      err_log "#{error_base}: Not an array: #{letters}"
+      method_logger.error "Not an array: #{letters}"
       return false
     end
     unless letters.length == 6
-      err_log "#{error_base}: Letters array is the wrong length: #{letters.length}"
+      method_logger.error "#Letters array is the wrong length: #{letters.length}"
       return false
     end
     unless letters.all? { |letter| valid_letter?(letter) }
-      err_log "#{error_base}: Must be letters: #{letters}"
+      method_logger.error "#Must be letters: #{letters}"
       return false
     end
     return true
   end
 
   def valid_word_array?(answer_words)
-    error_base = "Invalid answer words"
+    method_logger = @logger.with_method("#{self.class.name}.#{__method__}")
     unless answer_words.is_a?(Array)
-      err_log "#{error_base}: Not an array: #{answer_words}"
+      method_logger.error "Not an array: #{answer_words}"
       return false
     end
     unless answer_words.all? { |answer| answer.is_a?(String) }
-      err_log "#{error_base}: Some answers aren't strings: #{answer_words}"
+      method_logger.error "Some answers aren't strings: #{answer_words}"
       return false
     end
     return true

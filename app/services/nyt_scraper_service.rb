@@ -13,23 +13,11 @@
 require "open-uri"
 require "nokogiri"
 require "json"
-require "logger"
 
 # Scrapes puzzle data from the NYT Spelling Bee site
 class NytScraperService
-  # :nodoc:
-  class NytScraperLogger < Logger
-    def initialize
-      super("log/nyt_scraper.log", "weekly")
-      @formatter = proc do |severity, datetime, _progname, msg|
-        timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-        "#{severity} #{timestamp} - #{msg}\n"
-      end
-    end
-  end
-
   def initialize
-    @logger = NytScraperLogger.new
+    @logger = ContextualLogger.new("log/nyt_scraper.log", "weekly")
     @validator = NytScraperValidator.new(@logger)
   end
 
@@ -40,47 +28,50 @@ class NytScraperService
   end
 
   def create_puzzle_from_json(puzzle_json)
+    method_logger = @logger.with_method(__method__)
     print_date = puzzle_json["printDate"]
-    @logger.info "Checking DB for #{print_date} puzzle."
+    method_logger.info "Checking DB for #{print_date} puzzle."
     puzzle_date = Date.parse(print_date)
-    return @logger.info "Puzzle exists." if Puzzle.exists?(date: puzzle_date)
+    return method_logger.info "Puzzle exists." if Puzzle.exists?(date: puzzle_date)
 
-    @logger.info "Puzzle not present. Starting import..."
+    method_logger.info "Puzzle not present. Starting import..."
     nyt_puzzle = NytPuzzle.create!({ nyt_id: puzzle_json["id"], json_data: puzzle_json })
-    @logger.info "Created NytPuzzle."
+    method_logger.info "Created NytPuzzle."
     puzzle = Puzzle.create!({
       date: puzzle_date,
       center_letter: puzzle_json["centerLetter"],
       outer_letters: puzzle_json["outerLetters"],
       origin: nyt_puzzle,
     })
-    @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
+    method_logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
     puzzle_json["answers"].each do |answer|
       word = Word.create_or_find_by({ text: answer })
-      if word.frequency.nil?
-        @logger.info "Fetching datamuse data for \"#{answer}\"."
-        datamuse_data = DatamuseApiService.get_word_data(answer)
-        word.frequency = datamuse_data[:frequency]
-        word.definitions = datamuse_data[:definitions]
-        word.save
-      else
-        @logger.info "Datamuse data already exists for \"#{answer}\"."
+      unless word.frequency.nil?
+        method_logger.info "Datamuse data already exists for \"#{answer}\"."
+        next
       end
+      method_logger.info "Fetching datamuse data for \"#{answer}\"."
+      datamuse_data = DatamuseApiService.get_word_data(answer)
+      word.frequency = datamuse_data[:frequency]
+      word.definitions = datamuse_data[:definitions]
+      word.save!
       Answer.create!({ puzzle:, word_text: answer })
     end
     puzzle.create_excluded_words_cache
-    @logger.info "Created excluded words cache"
-    @logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
+    method_logger.info "Created excluded words cache"
+    method_logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
   end
 
   def import_latest_puzzle
-    @logger.info "Importing latest puzzle..."
+    method_logger = @logger.with_method(__method__)
+    method_logger.info "Importing latest puzzle..."
     puzzles_json = fetch_puzzle_json
     create_puzzle_from_json(puzzles_json["today"]) if @validator.today_valid?(puzzles_json)
   end
 
   def import_all_puzzles
-    @logger.info "Importing all puzzles..."
+    method_logger = @logger.with_method(__method__)
+    method_logger.info "Importing all puzzles..."
     puzzles_json = fetch_puzzle_json
     return unless @validator.valid?(puzzles_json)
 
@@ -92,7 +83,12 @@ class NytScraperService
   end
 
   def log_test
-    write_log("test")
-    write_log("test 2")
+    method_logger = @logger.with_method(__method__)
+    method_logger.debug "Debug log test"
+    method_logger.info "Info log test"
+    method_logger.warn "Warning log test"
+    method_logger.error "Error log test"
+    method_logger.fatal "Fatal log test"
+    method_logger.unknown "Unknown log test"
   end
 end

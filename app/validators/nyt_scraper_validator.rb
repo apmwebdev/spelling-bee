@@ -18,27 +18,27 @@ class NytScraperValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    hash_properties_are_valid?(json, "response", [
+    hash_properties_are_valid?(object: json, object_name: "response", method_name: __method__, props: [
       ["today", Hash, ->(p) { @puzzle_validator.valid_nyt_puzzle?(p) }],
       ["pastPuzzles", Hash, ->(p) { past_puzzles_valid?(p) }],
     ],)
   end
 
   def past_puzzles_valid?(json)
-    hash_properties_are_valid?(json, "pastPuzzles", [
+    hash_properties_are_valid?(object: json, object_name: "pastPuzzles", method_name: __method__, props: [
       ["thisWeek", Array, ->(p) { valid_puzzle_array?(p) }],
       ["lastWeek", Array, ->(p) { valid_puzzle_array?(p) }],
     ],)
   end
 
   def today_valid?(json)
-    error_base = "today_valid? = false"
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     unless json.is_a?(Hash)
-      err_log "#{error_base}: 'json' is not a hash."
+      method_logger.error "'json' is not a hash."
       return false
     end
     unless json.key?("today")
-      err_log "#{error_base}: Key 'today' doesn't exist in hash."
+      method_logger.error "Key 'today' doesn't exist in hash."
       return false
     end
 

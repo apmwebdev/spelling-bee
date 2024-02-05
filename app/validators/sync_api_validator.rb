@@ -18,28 +18,29 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    @logger.info "SyncApiValidator: Beginning Sync API response validation..."
-    hash_properties_are_valid?(json, "response", [
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
+    method_logger.info "Beginning Sync API response validation..."
+    hash_properties_are_valid?(object: json, object_name: "response", method_name: __method__, props: [
       ["data", Array, ->(prop) { valid_response_data?(prop) }],
       ["last_id", Integer, ->(prop) { PuzzleIdentifierService.validate_id_format(prop) }],
     ],)
   end
 
   def valid_response_data?(json)
-    error_base = "SyncApiValidator: response[\"data\"] is invalid"
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     unless json.is_a?(Array)
-      err_log "#{error_base}: Must be array: #{json}"
+      method_logger.error "Must be array: #{json}"
       return false
     end
     unless json.all? { |item| valid_data_item?(item) }
-      err_log "#{error_base}: Some items are invalid"
+      method_logger.error "Some items are invalid"
       return false
     end
     return true
   end
 
   def valid_data_item?(json)
-    hash_properties_are_valid?(json, "data_item", [
+    hash_properties_are_valid?(object: json, object_name: "data_item", method_name: __method__, props: [
       ["puzzle_data", Hash, ->(p) { @puzzle_validator.valid_sync_api_puzzle?(p) }],
       ["origin_data", Hash, ->(p) { valid_nyt_origin_data?(p) || valid_sb_solver_origin_data?(p) }],
       ["answer_words", Array, ->(p) { @puzzle_validator.valid_word_array?(p) }],
@@ -47,7 +48,7 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid_nyt_origin_data?(json)
-    hash_properties_are_valid?(json, "origin_data", [
+    hash_properties_are_valid?(object: json, object_name: "origin_data", method_name: __method__, props: [
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["id", Integer],
       ["json_data", Hash],
@@ -57,7 +58,7 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid_sb_solver_origin_data?(json)
-    hash_properties_are_valid?(json, "origin_data", [
+    hash_properties_are_valid?(object: json, object_name: "origin_data", method_name: __method__, props: [
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["id", Integer],
       ["sb_solver_id", Integer],

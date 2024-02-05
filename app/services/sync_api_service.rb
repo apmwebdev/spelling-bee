@@ -15,19 +15,8 @@ require "open-uri"
 # This is the service that is the client half of the Sync API. It is designed to be used by a dev
 # environment to get the most up-to-date puzzle data from the production environment.
 class SyncApiService
-  # :nodoc:
-  class SyncApiLogger < Logger
-    def initialize
-      super("log/sync_api.log", "weekly")
-      @formatter = proc do |severity, datetime, _progname, msg|
-        timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-        "#{severity} #{timestamp} - #{msg}\n"
-      end
-    end
-  end
-
   def initialize
-    @logger = SyncApiLogger.new
+    @logger = ContextualLogger.new("log/sync_api.log", "weekly")
     @validator = SyncApiValidator.new(@logger)
   end
 
@@ -35,33 +24,33 @@ class SyncApiService
   # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
   # method until it gets to the most recent puzzle.
   def sync_one_page_of_puzzle_data(first_puzzle_identifier)
+    method_logger = @logger.with_method(__method__)
     handle_error = lambda do |msg|
-      @logger.error msg
+      method_logger.fatal msg
       { error: msg }
     end
-    base_msg = "sync_one_page_of_puzzle_data"
-    @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
+    method_logger.info "Starting with #{first_puzzle_identifier}"
     url = "#{ENV['PRODUCTION_SYNC_API_URL']}/recent_puzzles/#{first_puzzle_identifier}"
     authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
     response = URI.open(url, "Authorization" => authorization_token)&.read
-    return handle_error.call("#{base_msg}: Response is nil. Exiting.") unless response
+    return handle_error.call("Response is nil. Exiting.") unless response
 
     begin
       json = JSON.parse(response)
     rescue JSON::ParserError => e
-      return handle_error.call("#{base_msg}: Unable to parse JSON response for Sync API: #{e.inspect}")
+      return handle_error.call("Unable to parse JSON response for Sync API: #{e.inspect}")
     end
 
-    return handle_error.call("#{base_msg}: Invalid Sync API response") unless @validator.valid?(json)
+    return handle_error.call("Invalid Sync API response") unless @validator.valid?(json)
 
-    @logger.info "#{base_msg}: Begin loop through data array"
+    method_logger.info "Begin loop through data array"
     json["data"].each do |item|
       puzzle_data = item["puzzle_data"]
       puzzle_id = puzzle_data["id"].to_i
-      @logger.info "#{base_msg}: Syncing puzzle #{puzzle_id}"
+      method_logger.info "Syncing puzzle #{puzzle_id}"
       existing_puzzle = Puzzle.find_by(id: puzzle_id)
       if existing_puzzle && Date.parse(puzzle_data["date"]) == existing_puzzle.date
-        @logger.info "#{base_msg}: Data for puzzle #{puzzle_id} already matches. Skipping."
+        method_logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
         next
       end
 
@@ -71,18 +60,18 @@ class SyncApiService
   end
 
   def sync_recent_puzzles(first_puzzle_identifier)
-    base_msg = "sync_recent_puzzles"
-    @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
+    method_logger = @logger.with_method(__method__)
+    method_logger.info "Starting with #{first_puzzle_identifier}"
     starting_identifier = first_puzzle_identifier
     loop do
-      @logger.info "#{base_msg}: Iterating loop"
+      method_logger.info "Iterating loop"
       result = sync_one_page_of_puzzle_data(starting_identifier)
       if result[:error]
-        @logger.error "#{base_msg}: Error returned. Breaking loop."
+        method_logger.error "Error returned. Breaking loop."
         break
       end
       if result["data"].length < 50
-        @logger.info "#{base_msg}: Data length < 50. Last puzzle reached. Breaking loop."
+        method_logger.info "Data length < 50. Last puzzle reached. Breaking loop."
         break
       end
       starting_identifier = result["last_id"].to_i + 1
@@ -123,16 +112,17 @@ class SyncApiService
   end
 
   def create_answers(puzzle, answer_words)
+    method_logger = @logger.with_method(__method__)
     answer_words.each do |answer_word|
       word = Word.create_or_find_by({ text: answer_word })
       if word.frequency.nil?
-        @logger.info "Fetching datamuse data for \"#{answer_word}\"."
+        method_logger.info "Fetching datamuse data for \"#{answer_word}\"."
         datamuse_data = DatamuseApiService.get_word_data(answer_word)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
         word.save!
       else
-        @logger.info "Datamuse data already exists for \"#{answer_word}\"."
+        method_logger.info "Datamuse data already exists for \"#{answer_word}\"."
       end
       Answer.create!({ puzzle:, word_text: answer_word })
     end
