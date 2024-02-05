@@ -60,7 +60,7 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
   end
 
   def valid_word_array?(answer_words)
-    method_logger = @logger.with_method("#{self.class.name}.#{__method__}")
+    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     unless answer_words.is_a?(Array)
       method_logger.error "Not an array: #{answer_words}"
       return false

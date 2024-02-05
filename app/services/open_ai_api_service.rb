@@ -18,11 +18,16 @@ require "json"
 class OpenAiApiService
   def initialize
     @logger = ContextualLogger.new("log/open_ai_api.log", "weekly")
+    @validator = OpenAiApiValidator.new(@logger)
   end
 
   def send_request(content, return_json: true)
     method_logger = @logger.with_method(__method__)
     method_logger.info "content = #{content}"
+    if content.nil? || content == ""
+      method_logger.fatal "No content. Exiting."
+      return
+    end
     uri = URI.parse("https://api.openai.com/v1/chat/completions")
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json"
@@ -48,20 +53,15 @@ class OpenAiApiService
     end
   end
 
-  def test_connection
-    response = send_request("What is OpenAI?", return_json: false)
-    puts response.body if response
-  end
-
-  def generate_message_content(words)
+  def generate_message_content(words_data)
     method_logger = @logger.with_method(__method__)
-    unless words.is_a?(Array)
-      method_logger.fatal "'words' isn't an array. Exiting."
+    unless @validator.valid_answer_list_hash?(words_data)
+      method_logger.fatal "'words_data' is invalid. Exiting. words_data: #{words_data}"
       return
     end
 
     message_opener = "Provide definition hints for the following words:"
-    words_string = "#{words.join(', ')}\n"
+    words_string = "#{words_data[:word_set].to_a.join(', ')}\n"
     explanation_parts = []
     explanation_parts.push "Respond in JSON format. There should be an outer object containing an array with the key"
     explanation_parts.push "\"word_hints\". The array should contain an object for each word. The keys in this object"
@@ -79,14 +79,15 @@ class OpenAiApiService
     "#{message_opener} #{words_string} #{explanation_parts.join(' ')}"
   end
 
-  # Recursively build an answer list (a Set, later converted to an array) to send to the API
-  def generate_answer_array(data = { limit: 200, puzzle_id: 1, last_word: nil, word_set: Set.new })
+  # Recursively build an answer list (as a Set, later converted to an array) to send to the API for hints
+  def generate_answer_list(data = { limit: 200, puzzle_id: 1, last_word: nil, word_set: Set.new })
     method_logger = @logger.with_method(__method__)
     if data[:word_set].size >= data[:limit]
       method_logger.info "Size limit reached. Exiting."
       return data
     end
 
+    # Get all words for the given puzzle ID
     words = Word.joins(:puzzles).where(puzzles: { id: data[:puzzle_id] }).order(:text)
     if words.empty?
       method_logger.error "Words not found for puzzle ID #{data[:puzzle_id]}"
@@ -95,7 +96,8 @@ class OpenAiApiService
 
     # Skip to the word after the last_word, if last_word is not nil
     words = words.drop_while { |word| data[:last_word] && word.text != data[:last_word] }
-    words = words.drop(1) unless data[:last_word].nil? # Drop the last_word itself to start with the next word
+    # Drop the last_word itself to start with the next word
+    words = words.drop(1) unless data[:last_word].nil?
     words.each do |word|
       if data[:word_set].size >= data[:limit]
         method_logger.info "Size limit reached. Exiting."
@@ -109,16 +111,96 @@ class OpenAiApiService
         next
       end
 
-      method_logger.info "Adding \"#{word.text}\" to word array."
+      method_logger.info "Adding \"#{word.text}\" to word set."
       data[:word_set].add(word.text)
     end
     data[:puzzle_id] = data[:puzzle_id] + 1
     data[:last_word] = nil
-    generate_answer_array(data)
+    generate_answer_list(data)
   end
 
-  def seed_existing_answer_hints
+  def parse_response(response)
+    method_logger = @logger.with_method(__method__)
+    return method_logger.fatal "No response" if response.nil?
+
+    begin
+      parsed_body = JSON.parse(response.body, symbolize_names: true)
+    rescue JSON::ParserError, TypeError => e
+      method_logger.fatal "Body is invalid JSON: #{e.message} Exiting. body = #{body}"
+      return
+    end
+
+    unless @validator.valid_response_body?(parsed_body)
+      method_logger.fatal "Invalid response body"
+      return
+    end
+
+    content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
+    content[:word_hints]
+  end
+
+  def add_hint_to_word(word_hint)
+    method_logger = @logger.with_method(__method__)
+    unless @validator.valid_word_hint?(word_hint)
+      error_message = "Invalid word hint: #{word_hint}"
+      method_logger.fatal error_message
+      raise StandardError, error_message
+    end
+
+    begin
+      word = Word.find(word_hint[:word])
+    rescue ActiveRecord::RecordNotFound => e
+      method_logger.fatal "Can't find word \"#{word_hint[:word]}\""
+      raise e
+    end
+
+    word.hint = word_hint[:hint]
+    word.save!
+    method_logger.info "Saved \"#{word.text}\" hint: #{word.hint}"
+  end
+
+  # In its own method so it's more easily testable
+  def save_hints(word_hints)
+    method_logger = @logger.with_method(__method__)
+    unless word_hints.is_a?(Array)
+      method_logger.fatal "word_hints isn't an array: #{word_hints}"
+      return
+    end
+
+    method_logger.debug "word_hints length is #{word_hints.length}"
+    word_hints.each do |word_hint|
+      add_hint_to_word(word_hint)
+    end
+  end
+
+  def seed_answer_hints
     method_logger = @logger.with_method(__method__)
     # stuff
+  end
+
+  def test_connection
+    response = send_request("What is OpenAI?", return_json: false)
+    puts response.body if response
+  end
+
+  def test_hint_seeding
+    method_logger = @logger.with_method(__method__)
+    words_data = generate_answer_list({ limit: 20, puzzle_id: 1, last_word: nil, word_set: Set.new })
+    method_logger.debug words_data
+
+    message_content = generate_message_content(words_data)
+    method_logger.debug message_content
+
+    response = send_request(message_content)
+    unless response
+      method_logger.fatal "No response"
+      return
+    end
+    method_logger.debug "Response body: #{response.body}"
+
+    word_hints = parse_response(response)
+    method_logger.debug "Word hints: #{word_hints}"
+
+    save_hints(word_hints)
   end
 end

@@ -30,7 +30,8 @@ class ExternalServiceValidatorBase
   # @param [Hash] object The object being tested
   # @param [String] object_name How the object being tested should be referred to in error messages
   # @param [Symbol, String] method_name How the method invoking this method should be referred to in error messages
-  # @param [Array<Array>] props An array of triples with the property key, type, and (optionally) a validation lambda
+  # @param [Array<Array>] props An array of triples with the property key, type or array of types, and (optionally) a
+  # validation lambda
   # @return [Boolean] True if the object is valid, false otherwise
   def hash_properties_are_valid?(object:, object_name:, method_name:, props:)
     method_logger = @logger.with_method("#{self.class.name}##{method_name} hash_properties_are_valid?")
@@ -57,8 +58,14 @@ class ExternalServiceValidatorBase
         next
       end
 
-      unless object[key].is_a?(type)
+      if type.is_a?(Class) && !object[key].is_a?(type)
         method_logger.error "#{object_name}['#{key}'] isn't a #{type}: #{object[key]}"
+        is_valid = false
+        next
+      end
+
+      if type.is_a?(Array) && !type.include?(object[key].class)
+        method_logger.error "#{object_name}['#{key}'] isn't any of #{type}: #{object[key]}"
         is_valid = false
         next
       end
