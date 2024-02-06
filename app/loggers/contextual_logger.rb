@@ -32,15 +32,30 @@ class ContextualLogger < Logger
   #   end
   # @param [Symbol, String, NilClass] method_name The name of the method to display in log messages
   def with_method(method_name)
+    method_name ||= "Unknown method"
+    base_message = "[#{self.class.name}##{__method__}]"
     contextual_logger = self
     logger_proxy = Object.new
 
     [:debug, :info, :warn, :error, :fatal, :unknown].each do |severity_method|
-      logger_proxy.define_singleton_method(severity_method) do |message|
-        # For :error, :fatal, and :unknown, output the message to the console as well
+      logger_proxy.define_singleton_method(severity_method) do |message, puts_and: nil, puts_only: false|
+        unless puts_and.nil? || puts_and == !!puts_and
+          contextual_logger.error "#{base_message} puts_and is not a boolean or nil"
+          return
+        end
+
+        unless puts_only == !!puts_only
+          contextual_logger.error "#{base_message} puts_only is not a boolean"
+          return
+        end
+
         full_message = "[#{method_name}] #{message}"
-        puts full_message if [:error, :fatal, :unknown].include?(severity_method)
-        contextual_logger.send(severity_method, full_message)
+        if puts_only || puts_and
+          puts full_message
+        elsif puts_and.nil? && [:error, :fatal, :unknown].include?(severity_method)
+          puts full_message
+        end
+        contextual_logger.send(severity_method, full_message) unless puts_only
       end
     end
 

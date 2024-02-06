@@ -11,19 +11,21 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # Validator for the OpenAI API
-class OpenAiApiValidator < ExternalServiceValidatorBase
+class OpenaiApiValidator < ExternalServiceValidatorBase
   # Validates the object that holds the word list to send to the API and info on where to pick back up
-  def valid_answer_list_hash?(hash)
+  def valid_state_data?(hash)
     hash_properties_are_valid?(object: hash, object_name: "answer list object", method_name: __method__, props: [
-      [:limit, Integer, ->(p) { p.positive? }],
       [:puzzle_id, Integer, ->(p) { p.positive? }],
-      [:last_word, [String, NilClass]],
+      [:word_limit, Integer, ->(p) { p.positive? }],
       [:word_set, Set],
+      [:rpm_limit, Integer, ->(p) { p.positive? }],
+      [:request_count, Integer, ->(p) { !p.negative? }],
+      [:batch_limit, Integer, ->(p) { !p.negative? }],
+      [:batch_count, Integer, ->(p) { !p.negative? }],
     ],)
   end
 
   def valid_word_hint?(json)
-    # Assumes the string keys have been converted to symbol keys
     hash_properties_are_valid?(object: json, object_name: "word hint", method_name: __method__, props: [
       [:word, String],
       [:hint, String],
