@@ -12,9 +12,9 @@
 
 # Validator for the OpenAI API
 class OpenaiApiValidator < ExternalServiceValidatorBase
-  # Validates the object that holds the word list to send to the API and info on where to pick back up
+  # Validates the object that holds the word list and state data
   def valid_state_data?(hash)
-    hash_properties_are_valid?(object: hash, object_name: "answer list object", method_name: __method__, props: [
+    hash_properties_are_valid?(hash, display_name: "state_data", props: [
       [:puzzle_id, Integer, ->(p) { p.positive? }],
       [:word_limit, Integer, ->(p) { p.positive? }],
       [:word_set, Set],
@@ -25,73 +25,68 @@ class OpenaiApiValidator < ExternalServiceValidatorBase
     ],)
   end
 
+  def valid_state_data_with_words?(hash)
+    return false unless valid_state_data?(hash)
+
+    raise TypeError, "Word set is empty" unless hash[:word_set].length.positive?
+
+    return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
+  end
+
   def valid_word_hint?(json)
-    hash_properties_are_valid?(object: json, object_name: "word hint", method_name: __method__, props: [
+    hash_properties_are_valid?(json, display_name: "word hint", props: [
       [:word, String],
       [:hint, String],
     ],)
   end
 
   def valid_response_body?(json)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
-
-    unless json.is_a?(Hash)
-      method_logger.fatal "json isn't a hash: #{json}"
-      return false
-    end
+    raise TypeError, "json isn't a hash: #{json}" unless json.is_a?(Hash)
 
     # This and subsequent methods assume string keys have been converted to symbols
-    unless json.key?(:choices)
-      method_logger.fatal "json has no key ':choices': #{json}"
-      return false
-    end
+    raise TypeError, "json has no key ':choices': #{json}" unless json.key?(:choices)
 
     unless json[:choices].is_a?(Array)
-      method_logger.fatal "json[:choices] isn't an array: #{json[:choices]}"
-      return false
+      raise TypeError, "json[:choices] isn't an array: #{json[:choices]}"
     end
 
-    if json[:choices].empty?
-      method_logger.fatal "json[:choices] is empty: #{json[:choices]}"
-      return false
+    raise TypeError, "json[:choices] is empty: #{json[:choices]}" if json[:choices].empty?
+
+    first_choice = json[:choices].first
+    unless first_choice.key?(:message)
+      msg = "First choice is invalid: No ':message' key. First choice = #{first_choice}"
+      raise TypeError, msg
     end
 
-
-    unless json[:choices][0].key?(:message)
-      method_logger.fatal "First choice is invalid: No ':message' key. json[:choices].first = #{json[:choices].first}"
-      return false
-    end
-
-    message = json[:choices][0][:message]
+    message = first_choice[:message]
     unless message.key?(:content)
-      method_logger.fatal "Message is invalid: No ':content' key. json[:choices][0][:message] = #{message}"
-      return false
+      raise TypeError, "Message is invalid: No ':content' key. Message = #{message}"
     end
 
     content_string = message[:content]
     begin
       content = JSON.parse(content_string, symbolize_names: true)
     rescue JSON::ParserError, TypeError => e
-      method_logger.fatal "content_string is invalid JSON: #{e.message} Exiting. content_string = #{content_string}"
-      return false
+      raise TypeError, "JSON parsing of content failed: #{e.message} content = #{content_string}"
     end
 
     unless content.key?(:word_hints)
-      method_logger.fatal "Content is invalid: No ':word_hints' key. content = #{content}"
-      return false
+      raise TypeError, "Content is invalid: No ':word_hints' key. content = #{content}"
     end
 
     word_hints = content[:word_hints]
-    unless word_hints.is_a?(Array)
-      method_logger.fatal "word_hints isn't an array: #{word_hints}"
-      return false
-    end
+    raise TypeError, "word_hints isn't an array: #{word_hints}" unless word_hints.is_a?(Array)
 
     if word_hints.any? { |hint| !valid_word_hint?(hint) }
-      method_logger.fatal "Some word hints are invalid: #{word_hints}"
-      return false
+      raise TypeError, "Some word hints are invalid: #{word_hints}"
     end
 
-    true
+    return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 end

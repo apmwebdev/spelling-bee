@@ -13,7 +13,7 @@
 # Validates puzzle data from either the NYT site or Sync API
 class PuzzleJsonValidator < ExternalServiceValidatorBase
   def valid_nyt_puzzle?(json)
-    hash_properties_are_valid?(object: json, object_name: "puzzle", method_name: __method__, props: [
+    hash_properties_are_valid?(json, display_name: "puzzle", props: [
       ["displayDate", String, ->(p) { valid_date?(p) }],
       ["centerLetter", String, ->(p) { valid_letter?(p) }],
       ["outerLetters", Array, ->(p) { valid_outer_letters?(p) }],
@@ -22,7 +22,7 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
   end
 
   def valid_sync_api_puzzle?(json)
-    hash_properties_are_valid?(object: json, object_name: "puzzle_data", method_name: __method__, props: [
+    hash_properties_are_valid?(json, display_name: "puzzle_data", props: [
       ["center_letter", String, ->(p) { valid_letter?(p) }],
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["date", String, ->(p) { valid_date?(p) }],
@@ -36,40 +36,37 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
   end
 
   def valid_letter?(letter)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     result = letter.match?(/\A[a-zA-Z]\z/)
-    method_logger.error "Invalid letter: #{letter}" unless result
+    @logger.error "TypeError: Invalid letter: #{letter}" unless result
     result
   end
 
   def valid_outer_letters?(letters)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
-    unless letters.is_a?(Array)
-      method_logger.error "Not an array: #{letters}"
-      return false
-    end
+    raise TypeError, "Not an array: #{letters}" unless letters.is_a?(Array)
+
     unless letters.length == 6
-      method_logger.error "#Letters array is the wrong length: #{letters.length}"
-      return false
+      raise TypeError, "#Letters array is the wrong length: #{letters.length}"
     end
+
     unless letters.all? { |letter| valid_letter?(letter) }
-      method_logger.error "#Must be letters: #{letters}"
-      return false
+      raise TypeError, "#Must be letters: #{letters}"
     end
+
     return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 
   def valid_word_array?(answer_words)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
-    unless answer_words.is_a?(Array)
-      method_logger.error "Not an array: #{answer_words}"
-      return false
-    end
+    raise TypeError, "Not an array: #{answer_words}" unless answer_words.is_a?(Array)
     unless answer_words.all? { |answer| answer.is_a?(String) }
-      method_logger.error "Some answers aren't strings: #{answer_words}"
-      return false
+      raise TypeError, "Some answers aren't strings: #{answer_words}"
     end
     return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 
   def valid_origin_type?(origin_type)

@@ -414,6 +414,39 @@ ALTER SEQUENCE public.openai_hint_instructions_id_seq OWNED BY public.openai_hin
 
 
 --
+-- Name: openai_hint_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_requests (
+    id bigint NOT NULL,
+    openai_hint_instruction_id bigint NOT NULL,
+    word_list character varying[],
+    ai_model character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: openai_hint_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_requests_id_seq OWNED BY public.openai_hint_requests.id;
+
+
+--
 -- Name: panel_display_states; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -839,6 +872,13 @@ ALTER TABLE ONLY public.openai_hint_instructions ALTER COLUMN id SET DEFAULT nex
 
 
 --
+-- Name: openai_hint_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_requests_id_seq'::regclass);
+
+
+--
 -- Name: panel_display_states id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -979,6 +1019,14 @@ ALTER TABLE ONLY public.obscurity_panels
 
 ALTER TABLE ONLY public.openai_hint_instructions
     ADD CONSTRAINT openai_hint_instructions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_requests openai_hint_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests
+    ADD CONSTRAINT openai_hint_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -1185,6 +1233,20 @@ CREATE UNIQUE INDEX index_letter_panels_on_uuid ON public.letter_panels USING bt
 --
 
 CREATE UNIQUE INDEX index_obscurity_panels_on_uuid ON public.obscurity_panels USING btree (uuid);
+
+
+--
+-- Name: index_openai_hint_requests_on_openai_hint_instruction_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_requests_on_openai_hint_instruction_id ON public.openai_hint_requests USING btree (openai_hint_instruction_id);
+
+
+--
+-- Name: index_openai_hint_requests_on_word_list; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_requests_on_word_list ON public.openai_hint_requests USING gin (word_list);
 
 
 --
@@ -1399,6 +1461,14 @@ ALTER TABLE ONLY public.search_panel_searches
 
 
 --
+-- Name: openai_hint_requests fk_rails_0d29d99c3d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests
+    ADD CONSTRAINT fk_rails_0d29d99c3d FOREIGN KEY (openai_hint_instruction_id) REFERENCES public.openai_hint_instructions(id);
+
+
+--
 -- Name: search_panel_searches fk_rails_153f638c99; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1599,6 +1669,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231128232734'),
 ('20240117185320'),
 ('20240202065829'),
-('20240207025904');
+('20240207025904'),
+('20240207033421');
 
 

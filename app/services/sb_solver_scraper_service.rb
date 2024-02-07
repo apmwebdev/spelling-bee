@@ -20,8 +20,7 @@ class SbSolverScraperService
   end
 
   def fetch_puzzle(id)
-    method_logger = @logger.with_method(__method__)
-    method_logger.info "Starting import for puzzle #{id}"
+    @logger.info "Starting import for puzzle #{id}"
     # Data to be returned to the calling method
     data = {
       date: nil,
@@ -34,7 +33,7 @@ class SbSolverScraperService
 
     handle_error = lambda do |message|
       data[:error] = message
-      method_logger.fatal(message)
+      @logger.fatal(message)
     end
 
     url = "https://www.sbsolver.com/s/#{id}"
@@ -63,8 +62,6 @@ class SbSolverScraperService
       handle_error.call "Failed to parse date: #{e.message}"
     rescue StandardError => e
       handle_error.call(e.message)
-      data[:error] = e.message
-      method_logger.error(data[:error])
     end
 
     # Parse letters
@@ -85,7 +82,9 @@ class SbSolverScraperService
       end
     end
     if data[:center_letter].nil? || data[:outer_letters].length != 6
-      handle_error.call "Invalid letter data. center_letter = #{data[:center_letter]}, outer_letters = #{data[:outer_letters]}"
+      msg = "Invalid letter data. center_letter = #{data[:center_letter]}, "
+      msg += "outer_letters = #{data[:outer_letters]}"
+      handle_error.call msg
       return data
     end
 
@@ -102,13 +101,12 @@ class SbSolverScraperService
   end
 
   def seed_puzzles(start_id, end_id)
-    method_logger = @logger.with_method(__method__)
-    method_logger.info "Import puzzles between IDs #{start_id} and #{end_id}, inclusive"
+    @logger.info "Import puzzles between IDs #{start_id} and #{end_id}, inclusive"
 
     start_id.upto(end_id) do |id|
-      method_logger.info "Starting loop iteration, id = #{id}"
+      @logger.info "Starting loop iteration, id = #{id}"
       unless Puzzle.find_by(id:).nil?
-        method_logger.info "Puzzle #{id} already exists. Skipping."
+        @logger.info "Puzzle #{id} already exists. Skipping."
         next
       end
 
@@ -116,11 +114,11 @@ class SbSolverScraperService
       sleep(rand(0..2))
       puzzle_data = fetch_puzzle(id)
       unless puzzle_data[:error].nil?
-        method_logger.fatal "Error fetching puzzle data for puzzle #{id}: #{puzzle_data[:error]}. Exiting."
+        @logger.fatal "Error fetching data for puzzle #{id}: #{puzzle_data[:error]}. Exiting."
         break
       end
 
-      method_logger.info "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
+      @logger.info "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
       sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
       puzzle = Puzzle.create!({
         date: puzzle_data[:date],
@@ -132,11 +130,11 @@ class SbSolverScraperService
       puzzle_data[:answers].each do |item|
         word = Word.create_or_find_by({ text: item })
         unless word.frequency.nil?
-          method_logger.info "Datamuse data already exists for \"#{item}\""
+          @logger.info "Datamuse data already exists for \"#{item}\""
           next
         end
 
-        method_logger.info "Fetching datamuse data for \"#{item}\""
+        @logger.info "Fetching datamuse data for \"#{item}\""
         datamuse_data = DatamuseApiService.get_word_data(item)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
@@ -145,8 +143,8 @@ class SbSolverScraperService
       end
 
       puzzle.create_excluded_words_cache
-      method_logger.info "Created excluded words cache"
-      method_logger.info "Finished importing puzzle #{id}"
+      @logger.info "Created excluded words cache"
+      @logger.info "Finished importing puzzle #{id}"
     end
   end
 end

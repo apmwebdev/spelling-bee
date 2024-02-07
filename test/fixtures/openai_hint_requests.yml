@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  openai_hint_instruction: one
+  word_list: MyString
+  model: MyString
+
+two:
+  openai_hint_instruction: two
+  word_list: MyString
+  model: MyString

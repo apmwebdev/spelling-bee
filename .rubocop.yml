@@ -6,6 +6,8 @@ Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+Layout/LineLength:
+  Max: 100
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/SpaceInsideHashLiteralBraces:

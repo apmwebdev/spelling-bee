@@ -24,12 +24,11 @@ class SyncApiService
   # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
   # method until it gets to the most recent puzzle.
   def sync_one_page_of_puzzle_data(first_puzzle_identifier)
-    method_logger = @logger.with_method(__method__)
     handle_error = lambda do |msg|
-      method_logger.fatal msg
+      @logger.fatal msg
       { error: msg }
     end
-    method_logger.info "Starting with #{first_puzzle_identifier}"
+    @logger.info "Starting with #{first_puzzle_identifier}"
     url = "#{ENV['PRODUCTION_SYNC_API_URL']}/recent_puzzles/#{first_puzzle_identifier}"
     authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
     response = URI.open(url, "Authorization" => authorization_token)&.read
@@ -43,14 +42,14 @@ class SyncApiService
 
     return handle_error.call("Invalid Sync API response") unless @validator.valid?(json)
 
-    method_logger.info "Begin loop through data array"
+    @logger.info "Begin loop through data array"
     json["data"].each do |item|
       puzzle_data = item["puzzle_data"]
       puzzle_id = puzzle_data["id"].to_i
-      method_logger.info "Syncing puzzle #{puzzle_id}"
+      @logger.info "Syncing puzzle #{puzzle_id}"
       existing_puzzle = Puzzle.find_by(id: puzzle_id)
       if existing_puzzle && Date.parse(puzzle_data["date"]) == existing_puzzle.date
-        method_logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
+        @logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
         next
       end
 
@@ -60,18 +59,17 @@ class SyncApiService
   end
 
   def sync_recent_puzzles(first_puzzle_identifier)
-    method_logger = @logger.with_method(__method__)
-    method_logger.info "Starting with #{first_puzzle_identifier}"
+    @logger.info "Starting with #{first_puzzle_identifier}"
     starting_identifier = first_puzzle_identifier
     loop do
-      method_logger.info "Iterating loop"
+      @logger.info "Iterating loop"
       result = sync_one_page_of_puzzle_data(starting_identifier)
       if result[:error]
-        method_logger.error "Error returned. Breaking loop."
+        @logger.error "Error returned. Breaking loop."
         break
       end
       if result["data"].length < 50
-        method_logger.info "Data length < 50. Last puzzle reached. Breaking loop."
+        @logger.info "Data length < 50. Last puzzle reached. Breaking loop."
         break
       end
       starting_identifier = result["last_id"].to_i + 1
@@ -112,17 +110,16 @@ class SyncApiService
   end
 
   def create_answers(puzzle, answer_words)
-    method_logger = @logger.with_method(__method__)
     answer_words.each do |answer_word|
       word = Word.create_or_find_by({ text: answer_word })
       if word.frequency.nil?
-        method_logger.info "Fetching datamuse data for \"#{answer_word}\"."
+        @logger.info "Fetching datamuse data for \"#{answer_word}\"."
         datamuse_data = DatamuseApiService.get_word_data(answer_word)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
         word.save!
       else
-        method_logger.info "Datamuse data already exists for \"#{answer_word}\"."
+        @logger.info "Datamuse data already exists for \"#{answer_word}\"."
       end
       Answer.create!({ puzzle:, word_text: answer_word })
     end

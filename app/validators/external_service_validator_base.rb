@@ -12,38 +12,24 @@
 
 # Base class for creating validators for services that integrate external APIs.
 class ExternalServiceValidatorBase
-
   def initialize(logger)
     unless logger.is_a?(ContextualLogger)
-      raise StandardError, "Logger passed to ExternalServiceValidator must be a ContextualLogger"
+      raise TypeError, "Logger passed to #{self.class.name} must be a ContextualLogger"
     end
     @logger = logger
   end
 
-  # def err_log(to_log)
-  #   err_msg = "Invalid JSON:"
-  #   @logger.error "#{err_msg} #{to_log}"
-  # end
-
   # Tests whether a JSON hash has certain properties, and whether those properties have the correct
   # type and (optionally) whether they pass validation.
   # @param [Hash] object The object being tested
-  # @param [String] object_name How the object being tested should be referred to in error messages
-  # @param [Symbol, String] method_name How the method invoking this method should be referred to in error messages
-  # @param [Array<Array>] props An array of triples with the property key, type or array of types, and (optionally) a
-  # validation lambda
+  # @param [String] display_name How the object being tested should be referred to in error messages
+  # @param [Array<Array>] props An array of triples with the property key, type or array of types,
+  #   and (optionally) a validation lambda
   # @return [Boolean] True if the object is valid, false otherwise
-  def hash_properties_are_valid?(object:, object_name:, method_name:, props:)
-    method_logger = @logger.with_method("#{self.class.name}##{method_name} hash_properties_are_valid?")
-    unless object.is_a?(Hash)
-      method_logger.error "#{object_name} is not a hash."
-      return false
-    end
+  def hash_properties_are_valid?(object, display_name:, props:)
+    raise TypeError, "#{display_name} is not a hash" unless object.is_a?(Hash)
 
-    unless props.is_a?(Array)
-      method_logger.error "Invalid props array. props = #{[props]}"
-      return false
-    end
+    raise TypeError, "Invalid props array. props = #{[props]}" unless props.is_a?(Array)
 
     # For some validations, we want to keep going even if the property is invalid, so we need to
     # track the validity of the object in a boolean.
@@ -53,46 +39,48 @@ class ExternalServiceValidatorBase
       type = prop[1]
       validation_fn = prop[2]
       unless object.key?(key)
-        method_logger.error "#{object_name} doesn't contain key '#{key}'."
+        @logger.error "#{display_name} doesn't contain key '#{key}'."
         is_valid = false
         next
       end
 
       if type.is_a?(Class) && !object[key].is_a?(type)
-        method_logger.error "#{object_name}['#{key}'] isn't a #{type}: #{object[key]}"
+        @logger.error "#{display_name}['#{key}'] isn't a #{type}: #{object[key]}"
         is_valid = false
         next
       end
 
       if type.is_a?(Array) && !type.include?(object[key].class)
-        method_logger.error "#{object_name}['#{key}'] isn't any of #{type}: #{object[key]}"
+        @logger.error "#{display_name}['#{key}'] isn't any of #{type}: #{object[key]}"
         is_valid = false
         next
       end
 
       if validation_fn && !validation_fn.call(object[key])
-        method_logger.error "#{object_name}['#{key}'] didn't pass validation."
+        @logger.error "#{display_name}['#{key}'] didn't pass validation."
         is_valid = false
       end
     end
-    is_valid
+
+    return is_valid
+  rescue TypeError => e
+    @logger.exception(e, :fatal)
+    return false
   end
 
   def valid_date?(date_string)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     Date.parse(date_string)
-    true
-  rescue ArgumentError => e
-    method_logger.error "Invalid date format: #{date_string}. Error: #{e.message}"
-    false
+    return true
+  rescue StandardError => e
+    @logger.error "#{e.class.name}: Invalid date format: #{date_string}. Error: #{e.message}"
+    return false
   end
 
   def valid_json?(json_string)
-    method_logger = @logger.with_method("#{self.class.name}##{__method__}")
     JSON.parse(json_string)
-    true
+    return true
   rescue JSON::ParserError, TypeError => e
-    method_logger.error "Invalid JSON: #{e.message}"
-    false
+    @logger.error "#{e.class.name}: Invalid JSON: #{e.message}"
+    return false
   end
 end

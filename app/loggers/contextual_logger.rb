@@ -10,55 +10,102 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Custom logger class specifying a format and giving a logger_with_method class for convenience
+# Custom logger class specifying a format and giving a `logger_with_context` logging method for
+# convenience
 class ContextualLogger < Logger
-  def initialize(log_file, log_rotation)
-    super(log_file, log_rotation)
+  LOG_LEVELS = [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERROR, Logger::FATAL,
+    Logger::UNKNOWN,].freeze
+
+  LEVEL_SYMBOLS = [:debug, :info, :warn, :error, :fatal, :unknown].freeze
+
+  def initialize(log_file, log_rotation, log_level: nil)
+    options = {}
+    if LOG_LEVELS.include?(log_level)
+      options[:level] = log_level
+    elsif Rails.env.production?
+      options[:level] = Logger::INFO
+    end
+    super(log_file, log_rotation, **options)
     @formatter = proc do |severity, datetime, _progname, msg|
       timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-      "#{severity} #{timestamp} - #{msg}\n"
+      "#{severity}: #{timestamp} - #{msg}\n"
     end
   end
 
-  # Allows for more informative log messages by including the method name before the main message
-  # This method can be called once and assigned to a variable at the beginning of a method with the method name,
-  # and then this variable can be called the same way as an instance of the logger class to log a message
-  # prepended with the method name.
-  # For example, assuming that this logger is stored in an instance variable called @logger:
-  # @example
-  #   def some_method
-  #     method_logger = @logger.with_method(__method__)
-  #     method_logger.info "This will print a log message prepended with the method name"
-  #   end
-  # @param [Symbol, String, NilClass] method_name The name of the method to display in log messages
-  def with_method(method_name)
-    method_name ||= "Unknown method"
-    base_message = "[#{self.class.name}##{__method__}]"
-    contextual_logger = self
-    logger_proxy = Object.new
+  # This is ugly, but I want autocompletion
+  def debug(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
 
-    [:debug, :info, :warn, :error, :fatal, :unknown].each do |severity_method|
-      logger_proxy.define_singleton_method(severity_method) do |message, puts_and: nil, puts_only: false|
-        unless puts_and.nil? || puts_and == !!puts_and
-          contextual_logger.error "#{base_message} puts_and is not a boolean or nil"
-          return
-        end
+  def info(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
 
-        unless puts_only == !!puts_only
-          contextual_logger.error "#{base_message} puts_only is not a boolean"
-          return
-        end
+  def warn(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
 
-        full_message = "[#{method_name}] #{message}"
-        if puts_only || puts_and
-          puts full_message
-        elsif puts_and.nil? && [:error, :fatal, :unknown].include?(severity_method)
-          puts full_message
-        end
-        contextual_logger.send(severity_method, full_message) unless puts_only
-      end
+  # with_trace and puts_and set to true by default for error, fatal, and unknown
+  def error(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
+
+  def fatal(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
+
+  def unknown(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
+    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
+    super(message) unless puts_only
+  end
+
+  ##
+  # Log an error from an Exception (technically, a StandardError) object
+  # @param standard_error [StandardError] The exception object to log.
+  # @param severity [Symbol] The severity level for the exception. Default is :error.
+  def exception(standard_error, severity = :error)
+    unless standard_error.is_a?(StandardError)
+      raise TypeError, "standard_error must be a StandardError: #{standard_error}"
     end
 
-    logger_proxy
+    valid_severity = LEVEL_SYMBOLS.include(severity) ? severity : :error
+    message = "#{standard_error.class.name}: #{standard_error.message}"
+    send(valid_severity, message)
+  rescue TypeError => e
+    send(:fatal, e.message)
+  end
+
+  protected
+
+  def format_and_put(severity, msg, **options)
+    # Prepend the method name to the log message. Default to true.
+    with_method = options[:with_method] != false
+    # Log to STDOUT instead of log file. Default to false.
+    puts_only = options[:puts_only] == true
+    # Include stack trace. Default to false.
+    with_trace = options[:with_trace] == true
+    # Log to STDOUT _and_ log file. Default to false.
+    puts_and = options[:puts_and] == true
+    message = msg
+    # `with_trace` has higher precedence than `with_method`
+    if with_trace
+      # Only include frames from app files, not the full stack
+      trace = caller(2).filter do |frame|
+        frame.split("/").include?("spelling-bee")
+      end
+        .join("\n  ")
+      message = "#{msg}\n  #{trace}"
+    elsif with_method
+      frame = caller_locations(2)[0]
+      message = "[#{frame.base_label}] #{msg}"
+    end
+    has_stdout = !Rails.env.production?
+    puts "#{severity.upcase}: #{message}" if has_stdout && (puts_only || puts_and)
+    return message
   end
 end
