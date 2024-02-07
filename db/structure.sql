@@ -382,6 +382,38 @@ ALTER SEQUENCE public.obscurity_panels_id_seq OWNED BY public.obscurity_panels.i
 
 
 --
+-- Name: openai_hint_instructions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_instructions (
+    id bigint NOT NULL,
+    pre_word_list_text text,
+    post_word_list_text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: openai_hint_instructions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_instructions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_instructions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_instructions_id_seq OWNED BY public.openai_hint_instructions.id;
+
+
+--
 -- Name: panel_display_states; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -800,6 +832,13 @@ ALTER TABLE ONLY public.obscurity_panels ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: openai_hint_instructions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_instructions ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_instructions_id_seq'::regclass);
+
+
+--
 -- Name: panel_display_states id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -932,6 +971,14 @@ ALTER TABLE ONLY public.nyt_puzzles
 
 ALTER TABLE ONLY public.obscurity_panels
     ADD CONSTRAINT obscurity_panels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_instructions openai_hint_instructions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_instructions
+    ADD CONSTRAINT openai_hint_instructions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1551,6 +1598,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231128030814'),
 ('20231128232734'),
 ('20240117185320'),
-('20240202065829');
+('20240202065829'),
+('20240207025904');
 
 
