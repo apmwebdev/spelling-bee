@@ -447,6 +447,56 @@ ALTER SEQUENCE public.openai_hint_requests_id_seq OWNED BY public.openai_hint_re
 
 
 --
+-- Name: openai_hint_responses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_responses (
+    id bigint NOT NULL,
+    openai_hint_request_id bigint NOT NULL,
+    chat_completion_id character varying,
+    system_fingerprint character varying,
+    openai_created_timestamp timestamp(6) without time zone,
+    ai_model character varying,
+    prompt_tokens integer,
+    completion_tokens integer,
+    total_tokens integer,
+    response_time_ms integer,
+    openai_processing_ms integer,
+    openai_version character varying,
+    x_ratelimit_limit_requests integer,
+    x_ratelimit_limit_tokens integer,
+    x_ratelimit_remaining_requests integer,
+    x_ratelimit_remaining_tokens integer,
+    x_ratelimit_reset_requests character varying,
+    x_ratelimit_reset_tokens character varying,
+    x_request_id character varying,
+    http_status integer,
+    error_json jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: openai_hint_responses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_responses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_responses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_responses_id_seq OWNED BY public.openai_hint_responses.id;
+
+
+--
 -- Name: panel_display_states; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -879,6 +929,13 @@ ALTER TABLE ONLY public.openai_hint_requests ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: openai_hint_responses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_responses_id_seq'::regclass);
+
+
+--
 -- Name: panel_display_states id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1027,6 +1084,14 @@ ALTER TABLE ONLY public.openai_hint_instructions
 
 ALTER TABLE ONLY public.openai_hint_requests
     ADD CONSTRAINT openai_hint_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_responses openai_hint_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses
+    ADD CONSTRAINT openai_hint_responses_pkey PRIMARY KEY (id);
 
 
 --
@@ -1250,6 +1315,20 @@ CREATE INDEX index_openai_hint_requests_on_word_list ON public.openai_hint_reque
 
 
 --
+-- Name: index_openai_hint_responses_on_error_json; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_error_json ON public.openai_hint_responses USING gin (error_json);
+
+
+--
+-- Name: index_openai_hint_responses_on_openai_hint_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_openai_hint_request_id ON public.openai_hint_responses USING btree (openai_hint_request_id);
+
+
+--
 -- Name: index_panel_display_states_on_uuid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1450,6 +1529,14 @@ CREATE INDEX index_words_on_definitions ON public.words USING gin (definitions);
 --
 
 CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
+
+
+--
+-- Name: openai_hint_responses fk_rails_032822a478; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses
+    ADD CONSTRAINT fk_rails_032822a478 FOREIGN KEY (openai_hint_request_id) REFERENCES public.openai_hint_requests(id);
 
 
 --
@@ -1670,6 +1757,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240117185320'),
 ('20240202065829'),
 ('20240207025904'),
-('20240207033421');
+('20240207033421'),
+('20240208055651');
 
 

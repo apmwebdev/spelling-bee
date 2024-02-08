@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  openai_hint_request: one
+  chat_completion_id: MyString
+  system_fingerprint: MyString
+  openai_created_timestamp: 2024-02-07 21:56:51
+  ai_model: MyString
+  prompt_tokens: 1
+  completion_tokens: 1
+  total_tokens: 1
+  response_time_ms: 1
+  openai_processing_ms: 1
+  openai_version: MyString
+  x_ratelimit_limit_requests: 1
+  x_ratelimit_limit_tokens: 1
+  x_ratelimit_remaining_requests: 1
+  x_ratelimit_remaining_tokens: 1
+  x_ratelimit_reset_requests: MyString
+  x_ratelimit_reset_tokens: MyString
+  x_request_id: MyString
+  status: 1
+  error: 
+
+two:
+  openai_hint_request: two
+  chat_completion_id: MyString
+  system_fingerprint: MyString
+  openai_created_timestamp: 2024-02-07 21:56:51
+  ai_model: MyString
+  prompt_tokens: 1
+  completion_tokens: 1
+  total_tokens: 1
+  response_time_ms: 1
+  openai_processing_ms: 1
+  openai_version: MyString
+  x_ratelimit_limit_requests: 1
+  x_ratelimit_limit_tokens: 1
+  x_ratelimit_remaining_requests: 1
+  x_ratelimit_remaining_tokens: 1
+  x_ratelimit_reset_requests: MyString
+  x_ratelimit_reset_tokens: MyString
+  x_request_id: MyString
+  status: 1
+  error: 

@@ -216,7 +216,7 @@ class OpenaiApiService
   ##
   # Takes state data, generates a word hint request, sends it, and returns the response.
   # Re-raises exceptions after logging them
-  def generate_and_send_hint_request(state_data, instructions: nil, ai_model: nil)
+  def process_hint_request_side_effects(state_data, instructions: nil, ai_model: nil)
     unless @validator.valid_state_data_with_words?(state_data)
       raise TypeError, "State data is invalid: #{state_data}"
     end
