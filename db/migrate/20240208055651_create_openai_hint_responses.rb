@@ -37,7 +37,7 @@ class CreateOpenaiHintResponses < ActiveRecord::Migration[7.0]
         comment: "The total number of tokens used for the request + response. This is redundant, "\
           "but it's easier than trying to do generated columns with ActiveRecord, and this is "\
           "data that seems useful to have at the database level."
-      t.integer :response_time_ms,
+      t.integer :response_time_seconds,
         comment: "This is the round trip time of the request, as calculated from within the app. "\
           "It takes a timestamp right before the request is sent and another right after and "\
           "calculates the difference."

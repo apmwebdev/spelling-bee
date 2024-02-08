@@ -29,7 +29,7 @@ end
 #  prompt_tokens                  :integer
 #  completion_tokens              :integer
 #  total_tokens                   :integer
-#  response_time_ms               :integer
+#  response_time_seconds          :integer
 #  openai_processing_ms           :integer
 #  openai_version                 :string
 #  x_ratelimit_limit_requests     :integer

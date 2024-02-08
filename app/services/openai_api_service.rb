@@ -218,18 +218,52 @@ class OpenaiApiService
     request_record = OpenaiHintRequest.new
     request_record.openai_hint_instruction = instructions
     request_record.word_list = state_data[:word_set].to_a
-    request_record.ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
-    begin
-      request_record.save!
-    rescue ActiveRecord::RecordInvalid => e
-      raise ActiveRecord::RecordInvalid, "Couldn't save request: #{e.message}"
-    end
+    request_record.req_ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
+    request_record.save!
+    request_record
   end
 
-  def save_hint_response(wrapped_response)
-    response = wrapped_response[:response]
-    response_time = wrapped_response[:response_time]
+  def save_hint_response(parsed_response, request)
+    is_successful_parsed_response = @validator.successful_parsed_response?(parsed_response)
+    is_error_parsed_response = @validator.error_parsed_response?(parsed_response)
+
+    unless is_successful_parsed_response || is_error_parsed_response
+      raise TypeError, "Invalid parsed_response: #{parsed_response}"
+    end
+
+    # Basic data: Necessary and always present
     record = OpenaiHintResponse.new
+    record.openai_hint_request = request
+    record.word_hints = parsed_response[:word_hints] if is_successful_parsed_response
+    record.error_body = parsed_response[:error_body] if is_error_parsed_response
+    record.http_status = parsed_response[:http_status]
+    record.response_time_seconds = parsed_response[:response_time].round(3)
+
+    # Metadata from response body: Should be present, but save anyway if missing some or all
+    meta = parsed_response[:body_meta]
+    record.chat_completion_id = meta[:id]
+    record.system_fingerprint = meta[:system_fingerprint]
+    record.openai_created_timestamp = meta[:created]
+    record.res_ai_model = meta[:model]
+    if meta[:usage]
+      record.prompt_tokens = meta[:usage][:prompt_tokens]
+      record.completion_tokens = meta[:usage][:completion_tokens]
+      record.total_tokens = meta[:usage][:total_tokens]
+    end
+
+    # Headers: Should be present, but save anyway if missing some or all
+    headers = parsed_response[:headers]
+    record.openai_processing_ms = headers["openai-processing-ms"]
+    record.openai_version = headers["openai-version"]
+    record.x_ratelimit_limit_requests = headers["x-ratelimit-limit_requests"]
+    record.x_ratelimit_limit_tokens = headers["x-ratelimit-limit-tokens"]
+    record.x_ratelimit_remaining_requests = headers["x-ratelimit-remaining-requests"]
+    record.x_ratelimit_remaining_tokens = headers["x-ratelimit-remaining-tokens"]
+    record.x_ratelimit_reset_requests = headers["x-ratelimit-reset-requests"]
+    record.x_ratelimit_reset_tokens = headers["x-ratelimit-reset-tokens"]
+    record.x_request_id = headers["x-request-id"]
+
+    record.save!
   end
 
   ##
@@ -241,7 +275,7 @@ class OpenaiApiService
 
     response = wrapped_response[:response]
     headers = extract_headers(response)
-    status_code = response.code.to_i
+    http_status = response.code.to_i
     response_time = wrapped_response[:response_time]
 
     begin
@@ -250,14 +284,18 @@ class OpenaiApiService
       raise TypeError, "JSON.parse(response.body) failed: #{e.message}. body = #{body}"
     end
 
-    unless @validator.valid_response_body_content?(parsed_body)
-      raise TypeError, "Invalid word hints"
+    body_meta = parsed_body.exclude(:choices)
+    return_hash = { body_meta:, headers:, http_status:, response_time: }
+
+    # Make sure the response body has [:choices][0][:message][:content][:word_hints]
+    if @validator.valid_response_body_content?(parsed_body)
+      content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
+      return_hash[:word_hints] = content[:word_hints]
+      return return_hash
     end
 
-    content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
-    word_hints = content[:word_hints]
-
-    { word_hints:, headers:, status_code:, response_time: }
+    return_hash[:error_body] = parsed_body
+    return return_hash
   end
 
   ##
@@ -276,9 +314,14 @@ class OpenaiApiService
     ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
 
     message_content = generate_message_content(state_data, instructions)
-    save_hint_request(state_data, instructions, ai_model)
+    request_record = save_hint_request(state_data, instructions, ai_model)
+
     wrapped_response = send_request(message_content, ai_model:)
-    save_hint_response(wrapped_response)
+    parsed_response = parse_response(wrapped_response)
+
+    save_hint_response(parsed_response, request_record)
+
+    return parsed_response
   end
 
   ##
@@ -306,12 +349,7 @@ class OpenaiApiService
       state_data_with_words[:request_count] = 0
     end
 
-    message_content = generate_message_content(state_data_with_words, OpenaiHintInstruction.last)
-    unless message_content.is_a?(String)
-      raise TypeError, "Invalid message_content: #{message_content}"
-    end
-
-    wrapped_response = send_request(message_content)
+    wrapped_response = process_hint_request(state_data_with_words)
     word_hints = parse_response(wrapped_response)
     state_data_with_words[:request_count] += 1
     # Only track the batch count if there's a batch limit

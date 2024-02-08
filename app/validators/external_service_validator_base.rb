@@ -44,19 +44,20 @@ class ExternalServiceValidatorBase
         next
       end
 
-      if type.is_a?(Class) && !object[key].is_a?(type)
-        @logger.error "#{display_name}['#{key}'] isn't a #{type}: #{object[key]}"
+      field = object[key]
+      if type.is_a?(Class) && field.is_a?(type)
+        @logger.error "#{display_name}['#{key}'] isn't a #{type}: #{field}"
         is_valid = false
         next
       end
 
-      if type.is_a?(Array) && !type.include?(object[key].class)
-        @logger.error "#{display_name}['#{key}'] isn't any of #{type}: #{object[key]}"
+      if type.is_a?(Array) && !type.include?(field.class)
+        @logger.error "#{display_name}['#{key}'] isn't any of #{type}: #{field}"
         is_valid = false
         next
       end
 
-      if validation_fn && !validation_fn.call(object[key])
+      if !field.nil? && validation_fn && !validation_fn.call(field)
         @logger.error "#{display_name}['#{key}'] didn't pass validation."
         is_valid = false
       end

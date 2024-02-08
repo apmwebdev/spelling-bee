@@ -482,7 +482,7 @@ CREATE TABLE public.openai_hint_responses (
     prompt_tokens integer,
     completion_tokens integer,
     total_tokens integer,
-    response_time_ms integer,
+    response_time_seconds integer,
     openai_processing_ms integer,
     openai_version character varying,
     x_ratelimit_limit_requests integer,
@@ -563,10 +563,10 @@ COMMENT ON COLUMN public.openai_hint_responses.total_tokens IS 'The total number
 
 
 --
--- Name: COLUMN openai_hint_responses.response_time_ms; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN openai_hint_responses.response_time_seconds; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.openai_hint_responses.response_time_ms IS 'This is the round trip time of the request, as calculated from within the app. It takes a timestamp right before the request is sent and another right after and calculates the difference.';
+COMMENT ON COLUMN public.openai_hint_responses.response_time_seconds IS 'This is the round trip time of the request, as calculated from within the app. It takes a timestamp right before the request is sent and another right after and calculates the difference.';
 
 
 --

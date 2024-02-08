@@ -43,6 +43,10 @@ class OpenaiApiValidator < ExternalServiceValidatorBase
     ],)
   end
 
+  def valid_word_hints?(array)
+    array.all? { |hash| valid_word_hint?(hash) }
+  end
+
   def valid_wrapped_response?(wrapped_response)
     hash_properties_are_valid?(wrapped_response, display_name: "wrapped response", props: [
       [:response_time, Float],
@@ -50,20 +54,25 @@ class OpenaiApiValidator < ExternalServiceValidatorBase
     ],)
   end
 
-  def valid_hint_response?(response)
-    raise TypeError, "Not an HTTP success response" unless response.is_a?(Net::HTTPSuccess)
+  def valid_parsed_response?(hash)
+    hash_properties_are_valid?(hash, display_name: "response data", props: [
+      [:body_meta, Hash],
+      [:headers, Hash],
+      [:http_status, Integer],
+      [:response_time, Float],
+    ],)
+  end
 
-    begin
-      parsed_body = JSON.parse(response.body, symbolize_names: true)
-    rescue JSON::ParserError, TypeError => e
-      raise TypeError, "Body is invalid JSON: #{e.message}. body = #{body}"
-    end
+  def successful_parsed_response?(hash)
+    is_valid_parsed_response = valid_parsed_response?(hash)
+    has_valid_word_hints = hash_properties_are_valid?(hash, display_name: "response data", props: [
+      [:word_hints, Array, ->(p) { valid_word_hints?(p) }],
+    ],)
+    return is_valid_parsed_response && has_valid_word_hints
+  end
 
-    return false unless valid_response_body?(parsed_body)
-    valid_headers?(response)
-  rescue TypeError => e
-    @logger.exception e
-    return false
+  def error_parsed_response?(hash)
+    valid_parsed_response?(hash) && hash.key?(:error_body) && hash[:error_body].is_a?(Hash)
   end
 
   def valid_headers?(response)
