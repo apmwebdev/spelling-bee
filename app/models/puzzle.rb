@@ -104,14 +104,14 @@ end
 # Table name: puzzles
 #
 #  id             :bigint           not null, primary key
-#  center_letter  :string(1)
 #  date           :date
-#  excluded_words :string           is an Array
-#  origin_type    :string
+#  center_letter  :string(1)
 #  outer_letters  :string           is an Array
+#  origin_type    :string
+#  origin_id      :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  origin_id      :bigint
+#  excluded_words :string           is an Array
 #
 # Indexes
 #

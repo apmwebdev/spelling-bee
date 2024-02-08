@@ -11,12 +11,12 @@ end
 # Table name: search_panels
 #
 #  id             :bigint           not null, primary key
-#  letters_offset :integer          default(0), not null
 #  location       :enum             default("anywhere"), not null
 #  output_type    :enum             default("letters_list"), not null
-#  uuid           :uuid             not null
+#  letters_offset :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  uuid           :uuid             not null
 #
 # Indexes
 #

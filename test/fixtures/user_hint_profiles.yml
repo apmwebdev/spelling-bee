@@ -17,14 +17,14 @@ two:
 # Table name: user_hint_profiles
 #
 #  id                               :bigint           not null, primary key
-#  default_panel_display_state_uuid :uuid
-#  default_panel_tracking           :string           not null
 #  name                             :string
-#  uuid                             :uuid             not null
+#  user_id                          :bigint           not null
+#  default_panel_tracking           :string           not null
+#  default_panel_display_state_id   :bigint           not null
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
-#  default_panel_display_state_id   :bigint           not null
-#  user_id                          :bigint           not null
+#  uuid                             :uuid             not null
+#  default_panel_display_state_uuid :uuid
 #
 # Indexes
 #

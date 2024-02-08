@@ -17,13 +17,13 @@ two:
 # Table name: guesses
 #
 #  id                       :bigint           not null, primary key
-#  is_spoiled               :boolean
+#  user_puzzle_attempt_id   :bigint           not null
 #  text                     :string(15)
-#  user_puzzle_attempt_uuid :uuid             not null
-#  uuid                     :uuid             not null
+#  is_spoiled               :boolean
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  user_puzzle_attempt_id   :bigint           not null
+#  uuid                     :uuid             not null
+#  user_puzzle_attempt_uuid :uuid             not null
 #
 # Indexes
 #

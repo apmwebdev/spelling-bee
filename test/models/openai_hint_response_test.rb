@@ -11,29 +11,29 @@ end
 # Table name: openai_hint_responses
 #
 #  id                             :bigint           not null, primary key
-#  completion_tokens              :integer
-#  error_body                     :jsonb
-#  http_status                    :integer
+#  openai_hint_request_id         :bigint           not null
+#  word_hints                     :jsonb            is an Array
+#  chat_completion_id             :string
+#  system_fingerprint             :string
 #  openai_created_timestamp       :datetime
+#  res_ai_model                   :string
+#  prompt_tokens                  :integer
+#  completion_tokens              :integer
+#  total_tokens                   :integer
+#  response_time_ms               :integer
 #  openai_processing_ms           :integer
 #  openai_version                 :string
-#  prompt_tokens                  :integer
-#  res_ai_model                   :string
-#  response_time_ms               :integer
-#  system_fingerprint             :string
-#  total_tokens                   :integer
-#  word_hints                     :jsonb            is an Array
 #  x_ratelimit_limit_requests     :integer
 #  x_ratelimit_limit_tokens       :integer
 #  x_ratelimit_remaining_requests :integer
 #  x_ratelimit_remaining_tokens   :integer
 #  x_ratelimit_reset_requests     :string
 #  x_ratelimit_reset_tokens       :string
+#  x_request_id                   :string
+#  http_status                    :integer
+#  error_body                     :jsonb
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
-#  chat_completion_id             :string
-#  openai_hint_request_id         :bigint           not null
-#  x_request_id                   :string
 #
 # Indexes
 #

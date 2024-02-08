@@ -13,12 +13,12 @@ if Rails.env.development?
       "additional_file_patterns" => [],
       "routes" => "false",
       "models" => "true",
-      "position_in_routes" => "after", # changed
-      "position_in_class" => "after", # changed
-      "position_in_test" => "after", # changed
-      "position_in_fixture" => "after", # changed
-      "position_in_factory" => "after", # changed
-      "position_in_serializer" => "after", # changed
+      "position_in_routes" => "after",
+      "position_in_class" => "after",
+      "position_in_test" => "after",
+      "position_in_fixture" => "after",
+      "position_in_factory" => "after",
+      "position_in_serializer" => "after",
       "show_foreign_keys" => "true",
       "show_complete_foreign_keys" => "false",
       "show_indexes" => "true",
@@ -49,8 +49,8 @@ if Rails.env.development?
       "sort" => "false",
       "force" => "false",
       "frozen" => "false",
-      "classified_sort" => "true",
-      "trace" => "true", # changed
+      "classified_sort" => "false",
+      "trace" => "true",
       "wrapper_open" => nil,
       "wrapper_close" => nil,
       "with_comment" => "false",
@@ -63,4 +63,4 @@ end
 # To run manually:
 # rails annotate_models
 # rails annotate_routes
-# rails remove_annotation
+# rails remove_annotation (Yes, annotation, singular)

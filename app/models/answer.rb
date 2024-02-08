@@ -30,10 +30,10 @@ end
 # Table name: answers
 #
 #  id         :bigint           not null, primary key
+#  puzzle_id  :bigint           not null
 #  word_text  :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  puzzle_id  :bigint           not null
 #
 # Indexes
 #

@@ -47,21 +47,21 @@ end
 # Table name: hint_panels
 #
 #  id                         :bigint           not null, primary key
-#  display_index              :integer
-#  hint_profile_type          :string           not null
-#  hint_profile_uuid          :uuid
-#  initial_display_state_uuid :uuid
 #  name                       :string
-#  panel_subtype_type         :string           not null
-#  panel_subtype_uuid         :uuid
-#  status_tracking            :string           not null
-#  uuid                       :uuid             not null
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  current_display_state_id   :bigint           not null
+#  hint_profile_type          :string           not null
 #  hint_profile_id            :bigint           not null
 #  initial_display_state_id   :bigint           not null
+#  current_display_state_id   :bigint           not null
+#  status_tracking            :string           not null
+#  panel_subtype_type         :string           not null
 #  panel_subtype_id           :bigint           not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  display_index              :integer
+#  uuid                       :uuid             not null
+#  hint_profile_uuid          :uuid
+#  initial_display_state_uuid :uuid
+#  panel_subtype_uuid         :uuid
 #
 # Indexes
 #

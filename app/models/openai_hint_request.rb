@@ -21,11 +21,11 @@ end
 # Table name: openai_hint_requests
 #
 #  id                         :bigint           not null, primary key
-#  req_ai_model               :string
+#  openai_hint_instruction_id :bigint           not null
 #  word_list                  :string           is an Array
+#  req_ai_model               :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  openai_hint_instruction_id :bigint           not null
 #
 # Indexes
 #

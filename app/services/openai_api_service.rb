@@ -214,8 +214,26 @@ class OpenaiApiService
     response.to_hash.slice(*required_headers)
   end
 
+  def save_hint_request(state_data, instructions, ai_model)
+    request_record = OpenaiHintRequest.new
+    request_record.openai_hint_instruction = instructions
+    request_record.word_list = state_data[:word_set].to_a
+    request_record.ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
+    begin
+      request_record.save!
+    rescue ActiveRecord::RecordInvalid => e
+      raise ActiveRecord::RecordInvalid, "Couldn't save request: #{e.message}"
+    end
+  end
+
+  def save_hint_response(wrapped_response)
+    response = wrapped_response[:response]
+    response_time = wrapped_response[:response_time]
+    record = OpenaiHintResponse.new
+  end
+
   ##
-  # Take an OpenAI API response and return just the word_hint array.
+  # Take an OpenAI API response and return the relevant data from it.
   def parse_response(wrapped_response)
     unless @validator.valid_wrapped_response?(wrapped_response)
       raise TypeError, "Invalid wrapped response"
@@ -239,25 +257,7 @@ class OpenaiApiService
     content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
     word_hints = content[:word_hints]
 
-    { word_hints:, headers:, status_code:, response_time:}
-  end
-
-  def save_hint_request(state_data, instructions, ai_model)
-    request_record = OpenaiHintRequest.new
-    request_record.openai_hint_instruction = instructions
-    request_record.word_list = state_data[:word_set].to_a
-    request_record.ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
-    begin
-      request_record.save!
-    rescue ActiveRecord::RecordInvalid => e
-      raise ActiveRecord::RecordInvalid, "Couldn't save request: #{e.message}"
-    end
-  end
-
-  def save_hint_response(wrapped_response)
-    response = wrapped_response[:response]
-    response_time = wrapped_response[:response_time]
-    record = OpenaiHintResponse.new
+    { word_hints:, headers:, status_code:, response_time: }
   end
 
   ##

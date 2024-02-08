@@ -22,12 +22,12 @@ end
 #
 # Table name: words
 #
-#  definitions :string           is an Array
-#  frequency   :decimal(, )
-#  hint        :string
 #  text        :string           not null, primary key
+#  frequency   :decimal(, )
+#  definitions :string           is an Array
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  hint        :string
 #
 # Indexes
 #

@@ -43,9 +43,9 @@ end
 #
 #  id         :bigint           not null, primary key
 #  name       :string
-#  uuid       :uuid             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  uuid       :uuid             not null
 #
 # Indexes
 #

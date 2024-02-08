@@ -130,23 +130,23 @@ end
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  confirmation_sent_at   :datetime
-#  confirmation_token     :string
-#  confirmed_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  failed_attempts        :integer          default(0), not null
-#  jti                    :string           not null
-#  locked_at              :datetime
-#  name                   :string
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  sync_api_key           :string
-#  unconfirmed_email      :string
-#  unlock_token           :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  name                   :string
+#  jti                    :string           not null
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
+#  failed_attempts        :integer          default(0), not null
+#  locked_at              :datetime
+#  unlock_token           :string
+#  sync_api_key           :string
 #
 # Indexes
 #

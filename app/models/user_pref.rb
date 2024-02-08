@@ -32,13 +32,13 @@ end
 # Table name: user_prefs
 #
 #  id                        :bigint           not null, primary key
+#  user_id                   :bigint           not null
 #  color_scheme              :enum             default("auto"), not null
-#  current_hint_profile_type :string
-#  current_hint_profile_uuid :uuid
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
+#  current_hint_profile_type :string
 #  current_hint_profile_id   :bigint
-#  user_id                   :bigint           not null
+#  current_hint_profile_uuid :uuid
 #
 # Indexes
 #

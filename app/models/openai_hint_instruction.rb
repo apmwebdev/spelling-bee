@@ -22,8 +22,8 @@ end
 # Table name: openai_hint_instructions
 #
 #  id                  :bigint           not null, primary key
-#  post_word_list_text :text
 #  pre_word_list_text  :text
+#  post_word_list_text :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
