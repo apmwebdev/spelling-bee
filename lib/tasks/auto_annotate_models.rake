@@ -53,7 +53,7 @@ if Rails.env.development?
       "trace" => "true", # changed
       "wrapper_open" => nil,
       "wrapper_close" => nil,
-      "with_comment" => "true",
+      "with_comment" => "false",
     )
   end
 
@@ -62,3 +62,5 @@ end
 
 # To run manually:
 # rails annotate_models
+# rails annotate_routes
+# rails remove_annotation

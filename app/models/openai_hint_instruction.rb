@@ -14,6 +14,7 @@
 # The instruction set sent to the OpenAI API for hint generation. Abstracted into its own model for
 # easier replication, change tracking, and analysis.
 class OpenaiHintInstruction < ApplicationRecord
+  has_many :openai_hint_requests
 end
 
 # == Schema Information

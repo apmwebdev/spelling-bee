@@ -83,4 +83,12 @@ class ExternalServiceValidatorBase
     @logger.error "#{e.class.name}: Invalid JSON: #{e.message}"
     return false
   end
+
+  # @param key_list [Array]
+  # @param hash [Hash]
+  def keys?(key_list, hash)
+    key_set = key_list.to_set
+    hash_keys_set = hash.keys.to_set
+    key_set.subset?(hash_keys_set)
+  end
 end

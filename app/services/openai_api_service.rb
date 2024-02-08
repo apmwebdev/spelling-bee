@@ -74,7 +74,7 @@ class OpenaiApiService
   #   specified in `content`.
   # @param ai_model [String, NilClass] The AI model to use. If this param is not a string (which it
   #   isn't by default), the request will use the DEFAULT_AI_MODEL constant defined above.
-  # @return Net::HTTPResponse | String
+  # @return Net::HTTPResponse | NilClass
   def send_request(content, return_json: true, ai_model: nil)
     @logger.debug "content = #{content}"
     raise TypeError, "Invalid content" if !content.is_a?(String) || content == ""
@@ -102,18 +102,19 @@ class OpenaiApiService
     request_body[:response_format] = { type: "json_object" } if return_json
     request.body = JSON.dump(request_body)
 
-    pre_request_timestamp = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    before_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     begin
       response = http.request(request)
     rescue Net::ReadTimeout => e
       @logger.error "Request timed out: #{e.message}"
+      response = nil
     end
-    post_request_timestamp = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    turnaround_time = (post_request_timestamp - pre_request_timestamp)
-    @logger.debug("Response received, turnaround time = #{turnaround_time} seconds",
+    after_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    response_time = (after_time - before_time)
+    @logger.debug("Response received, turnaround time = #{response_time} seconds",
       puts_only: true,)
 
-    response
+    { response:, response_time: }
   end
 
   ##
@@ -175,23 +176,6 @@ class OpenaiApiService
   end
 
   ##
-  # Take an OpenAI API response and return just the word_hint array.
-  def parse_response(response)
-    raise TypeError, "No response" if response.nil?
-
-    begin
-      parsed_body = JSON.parse(response.body, symbolize_names: true)
-    rescue JSON::ParserError, TypeError => e
-      raise TypeError, "Body is invalid JSON: #{e.message}. body = #{body}"
-    end
-
-    raise TypeError, "Invalid response body" unless @validator.valid_response_body?(parsed_body)
-
-    content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
-    content[:word_hints]
-  end
-
-  ##
   # Save a hint for a word
   def add_hint_to_word(word_hint)
     raise TypeError, "Invalid word hint: #{word_hint}" unless @validator.valid_word_hint?(word_hint)
@@ -213,10 +197,73 @@ class OpenaiApiService
     end
   end
 
+  def extract_headers(response)
+    raise TypeError, "Invalid response" unless response.is_a?(Net::HTTPResponse)
+
+    required_headers = [
+      "openai-processing-ms",
+      "openai-version",
+      "x-ratelimit-limit-requests",
+      "x-ratelimit-limit-tokens",
+      "x-ratelimit-remaining-requests",
+      "x-ratelimit-remaining-tokens",
+      "x-ratelimit-reset-requests",
+      "x-ratelimit-reset-tokens",
+      "x-request-id",
+    ]
+    response.to_hash.slice(*required_headers)
+  end
+
+  ##
+  # Take an OpenAI API response and return just the word_hint array.
+  def parse_response(wrapped_response)
+    unless @validator.valid_wrapped_response?(wrapped_response)
+      raise TypeError, "Invalid wrapped response"
+    end
+
+    response = wrapped_response[:response]
+    headers = extract_headers(response)
+    status_code = response.code.to_i
+    response_time = wrapped_response[:response_time]
+
+    begin
+      parsed_body = JSON.parse(response.body, symbolize_names: true)
+    rescue JSON::ParserError, TypeError => e
+      raise TypeError, "JSON.parse(response.body) failed: #{e.message}. body = #{body}"
+    end
+
+    unless @validator.valid_response_body_content?(parsed_body)
+      raise TypeError, "Invalid word hints"
+    end
+
+    content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
+    word_hints = content[:word_hints]
+
+    { word_hints:, headers:, status_code:, response_time:}
+  end
+
+  def save_hint_request(state_data, instructions, ai_model)
+    request_record = OpenaiHintRequest.new
+    request_record.openai_hint_instruction = instructions
+    request_record.word_list = state_data[:word_set].to_a
+    request_record.ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
+    begin
+      request_record.save!
+    rescue ActiveRecord::RecordInvalid => e
+      raise ActiveRecord::RecordInvalid, "Couldn't save request: #{e.message}"
+    end
+  end
+
+  def save_hint_response(wrapped_response)
+    response = wrapped_response[:response]
+    response_time = wrapped_response[:response_time]
+    record = OpenaiHintResponse.new
+  end
+
   ##
   # Takes state data, generates a word hint request, sends it, and returns the response.
   # Re-raises exceptions after logging them
-  def process_hint_request_side_effects(state_data, instructions: nil, ai_model: nil)
+  def process_hint_request(state_data, instructions: nil, ai_model: nil)
     unless @validator.valid_state_data_with_words?(state_data)
       raise TypeError, "State data is invalid: #{state_data}"
     end
@@ -226,19 +273,12 @@ class OpenaiApiService
                    else
                      OpenaiHintInstruction.last
                    end
+    ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
+
     message_content = generate_message_content(state_data, instructions)
-
-    request_log = OpenaiHintRequest.new
-    request_log.openai_hint_instruction = OpenaiHintInstruction.last
-    request_log.word_list = state_data[:word_set].to_a
-    request_log.ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
-    begin
-      request_log.save!
-    rescue ActiveRecord::RecordInvalid => e
-      raise ActiveRecord::RecordInvalid, "Couldn't save request: #{e.message}"
-    end
-    response = send_request(message_content)
-
+    save_hint_request(state_data, instructions, ai_model)
+    wrapped_response = send_request(message_content, ai_model:)
+    save_hint_response(wrapped_response)
   end
 
   ##
@@ -271,8 +311,8 @@ class OpenaiApiService
       raise TypeError, "Invalid message_content: #{message_content}"
     end
 
-    response = send_request(message_content)
-    word_hints = parse_response(response)
+    wrapped_response = send_request(message_content)
+    word_hints = parse_response(wrapped_response)
     state_data_with_words[:request_count] += 1
     # Only track the batch count if there's a batch limit
     state_data_with_words[:batch_count] += 1 if state_data_with_words[:batch_limit].positive?
@@ -295,8 +335,15 @@ class OpenaiApiService
   ##
   # Test if it's possible to connect to the OpenAI API with the given URL, key, and request format.
   def test_connection
-    response = send_request("What is OpenAI?", return_json: false)
+    wrapped_response = send_request("What is OpenAI?", return_json: false)
+    response = wrapped_response[:response]
     puts response.body if response
+  end
+
+  def test_hash_response
+    wrapped_response = send_request("What is OpenAI?", return_json: false)
+    response = wrapped_response[:response]
+    puts response.to_hash if response
   end
 
   ##
@@ -309,7 +356,8 @@ class OpenaiApiService
     message_content = generate_message_content(state_data, OpenaiHintInstruction.last)
     @logger.debug message_content
 
-    response = send_request(message_content)
+    wrapped_response = send_request(message_content)
+    response = wrapped_response[:response]
     unless response
       @logger.fatal "No response"
       return

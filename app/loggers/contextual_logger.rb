@@ -52,7 +52,7 @@ class ContextualLogger < Logger
 
   # This is ugly, but I want autocompletion, so each severity level method is getting overridden
   # individually, with all optional parameters added explicitly.
-  # @param msg [String] The message to log
+  # @param msg [any] The message to log
   # @param starting_frame [Integer] The frame in the stack trace to start with. Default is 2 so that
   #   the frames for this logger are skipped.
   # @param with_method [Boolean] Whether to include the method name in the log message.
@@ -128,6 +128,9 @@ class ContextualLogger < Logger
 
   ##
   # Contains the bulk of the logging logic.
+  # @param msg
+  # @param severity [Symbol]
+  # @param starting_frame [Integer]
   def process_message(msg, severity, starting_frame:, **options)
     # Prepend the method name to the log message. Default to true.
     with_method = options[:with_method] != false
@@ -140,7 +143,7 @@ class ContextualLogger < Logger
     # (@puts_and_g)
     puts_and = nil_and_falsy(options[:puts_and])
 
-    message = msg
+    message = msg.to_s
     # `with_trace` has higher precedence than `with_method`
     if with_trace
       # Only include frames from app files, not the full stack
@@ -159,11 +162,18 @@ class ContextualLogger < Logger
   end
 
   # Maybe output a log message to the console, based on settings
+  # @param message [String]
+  # @param severity [Symbol]
+  # @param puts_only [Boolean, NilClass]
+  # @param puts_and [Boolean, NilClass]
   def maybe_puts(message, severity, puts_only, puts_and)
     puts "#{severity.upcase} #{message}" if should_puts?(severity, puts_only, puts_and)
   end
 
   # Determines whether a log message should be output to the console, based on settings
+  # @param severity [Symbol]
+  # @param puts_only [Boolean, NilClass]
+  # @param puts_and [Boolean, NilClass]
   def should_puts?(severity, puts_only, puts_and)
     can_puts = !Rails.env.production?
     wants_puts = puts_only || puts_and || puts_only?(severity, puts_only) ||
@@ -171,6 +181,9 @@ class ContextualLogger < Logger
     return can_puts && wants_puts
   end
 
+  # For a given message, is puts_only true or false?
+  # @param severity [Symbol]
+  # @param puts_only [Boolean, NilClass]
   def puts_only?(severity, puts_only)
     return puts_only unless puts_only.nil?
     if (@puts_only_g.is_a?(Array) && @puts_only_g.include?(severity)) || @puts_only_g == true
@@ -179,6 +192,9 @@ class ContextualLogger < Logger
     return false
   end
 
+  # For a given message, is puts_and true or false
+  # @param severity [Symbol]
+  # @param puts_and [Boolean, NilClass]
   def puts_and?(severity, puts_and)
     return puts_and unless puts_and.nil?
     if (@puts_and_g.is_a?(Array) && @puts_and_g.include?(severity)) || @puts_and_g == true

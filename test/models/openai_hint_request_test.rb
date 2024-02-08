@@ -11,7 +11,7 @@ end
 # Table name: openai_hint_requests
 #
 #  id                         :bigint           not null, primary key
-#  ai_model                   :string
+#  req_ai_model               :string
 #  word_list                  :string           is an Array
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null

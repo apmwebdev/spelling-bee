@@ -421,10 +421,31 @@ CREATE TABLE public.openai_hint_requests (
     id bigint NOT NULL,
     openai_hint_instruction_id bigint NOT NULL,
     word_list character varying[],
-    ai_model character varying,
+    req_ai_model character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: COLUMN openai_hint_requests.openai_hint_instruction_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.openai_hint_instruction_id IS 'The instructions sent to the API about how to generate the hints for this request';
+
+
+--
+-- Name: COLUMN openai_hint_requests.word_list; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.word_list IS 'The list of words sent to the API for hints';
+
+
+--
+-- Name: COLUMN openai_hint_requests.req_ai_model; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.req_ai_model IS 'The AI model requested. The ''req_'' in front is to differentiate from the modelthat the response says it used. These should be the same, but you never know.';
 
 
 --
@@ -453,10 +474,11 @@ ALTER SEQUENCE public.openai_hint_requests_id_seq OWNED BY public.openai_hint_re
 CREATE TABLE public.openai_hint_responses (
     id bigint NOT NULL,
     openai_hint_request_id bigint NOT NULL,
+    word_hints jsonb[] DEFAULT '{}'::jsonb[],
     chat_completion_id character varying,
     system_fingerprint character varying,
     openai_created_timestamp timestamp(6) without time zone,
-    ai_model character varying,
+    res_ai_model character varying,
     prompt_tokens integer,
     completion_tokens integer,
     total_tokens integer,
@@ -471,10 +493,157 @@ CREATE TABLE public.openai_hint_responses (
     x_ratelimit_reset_tokens character varying,
     x_request_id character varying,
     http_status integer,
-    error_json jsonb,
+    error_body jsonb,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_hint_request_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_hint_request_id IS 'The request associated with this response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.word_hints; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.word_hints IS 'The array of word hints returned in the response. This is substance of the response and the reason for querying the API.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.chat_completion_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.chat_completion_id IS 'The ''id'' field from the response body';
+
+
+--
+-- Name: COLUMN openai_hint_responses.system_fingerprint; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.system_fingerprint IS 'The system fingerprint from the response body, indicating the exact configuration used by the system to generate the response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_created_timestamp; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_created_timestamp IS 'The ''created'' timestamp from the body of the response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.res_ai_model; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.res_ai_model IS 'The AI model indicated in the body of the response. This *should* be the same as the one sent in the request, but I''m saving it here as well just in case.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.prompt_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.prompt_tokens IS 'The number of tokens in the request prompt, as calculated by the API';
+
+
+--
+-- Name: COLUMN openai_hint_responses.completion_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.completion_tokens IS 'The number of tokens in the response, as calculated by the API';
+
+
+--
+-- Name: COLUMN openai_hint_responses.total_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.total_tokens IS 'The total number of tokens used for the request + response. This is redundant, but it''s easier than trying to do generated columns with ActiveRecord, and this is data that seems useful to have at the database level.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.response_time_ms; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.response_time_ms IS 'This is the round trip time of the request, as calculated from within the app. It takes a timestamp right before the request is sent and another right after and calculates the difference.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_processing_ms; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_processing_ms IS 'The amount of time the model took to generate the response, as returned in the ''openai-processing-ms'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_version; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_version IS 'The version of the model used (I think?). This is a different metric than the version number at the end of the model name, e.g., the ''0125'' in ''gpt-3.5-turbo-0125''. This is a date and can be found in the ''openai-version'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_limit_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_limit_requests IS '''The maximum number of requests that are permitted before exhausting the rate limit.'' Determined by the model used and the individual account limits. Sent in the ''x-ratelimit-limit-requests'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_limit_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_limit_tokens IS '''The maximum number of tokens that are permitted before exhausting the rate limit.'' Determined by the model used and the individual account limits. Sent in the ''x-ratelimit-limit-tokens'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_remaining_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_remaining_requests IS '''The remaining number of requests that are permitted before exhausting the rate limit.'' Sent in the ''x-ratelimit-remaining-requests'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_remaining_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_remaining_tokens IS '''The remaining number of tokens that are permitted before exhausting the rate limit.'' Sent in the ''x-ratelimit-remaining-tokens'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_reset_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_reset_requests IS '''The time until the rate limit (based on requests) resets to its initial state.'' Sent in the ''x-ratelimit-reset-requests'' header. This is a string with both numbers and units, e.g. ''90ms'' or ''6m20s''.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_reset_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_reset_tokens IS '''The time until the rate limit (based on tokens) resets to its initial state.'' Sent in the ''x-ratelimit-reset-tokens'' header. This is a string with both numbers and units, e.g. ''90ms'' or ''6m20s''.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_request_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_request_id IS 'A different ID than the one sent in the body of the response. Not sure what the difference is. Saving for good measure. Included in the ''x-request-id'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.http_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.http_status IS 'The HTTP status code of the response, represented by just the integer.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.error_body; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.error_body IS 'If the API returns an error, many of the above fields will likely not be included in the response/headers. Just save the whole response.';
 
 
 --
@@ -1315,10 +1484,10 @@ CREATE INDEX index_openai_hint_requests_on_word_list ON public.openai_hint_reque
 
 
 --
--- Name: index_openai_hint_responses_on_error_json; Type: INDEX; Schema: public; Owner: -
+-- Name: index_openai_hint_responses_on_error_body; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_openai_hint_responses_on_error_json ON public.openai_hint_responses USING gin (error_json);
+CREATE INDEX index_openai_hint_responses_on_error_body ON public.openai_hint_responses USING gin (error_body);
 
 
 --
@@ -1326,6 +1495,13 @@ CREATE INDEX index_openai_hint_responses_on_error_json ON public.openai_hint_res
 --
 
 CREATE INDEX index_openai_hint_responses_on_openai_hint_request_id ON public.openai_hint_responses USING btree (openai_hint_request_id);
+
+
+--
+-- Name: index_openai_hint_responses_on_word_hints; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_word_hints ON public.openai_hint_responses USING gin (word_hints);
 
 
 --

@@ -10,6 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
+require "net/http"
+
 # Validator for the OpenAI API
 class OpenaiApiValidator < ExternalServiceValidatorBase
   # Validates the object that holds the word list and state data
@@ -27,9 +29,7 @@ class OpenaiApiValidator < ExternalServiceValidatorBase
 
   def valid_state_data_with_words?(hash)
     return false unless valid_state_data?(hash)
-
     raise TypeError, "Word set is empty" unless hash[:word_set].length.positive?
-
     return true
   rescue TypeError => e
     @logger.exception e
@@ -43,19 +43,83 @@ class OpenaiApiValidator < ExternalServiceValidatorBase
     ],)
   end
 
-  def valid_response_body?(json)
-    raise TypeError, "json isn't a hash: #{json}" unless json.is_a?(Hash)
+  def valid_wrapped_response?(wrapped_response)
+    hash_properties_are_valid?(wrapped_response, display_name: "wrapped response", props: [
+      [:response_time, Float],
+      [:response, Net::HTTPResponse],
+    ],)
+  end
 
-    # This and subsequent methods assume string keys have been converted to symbols
-    raise TypeError, "json has no key ':choices': #{json}" unless json.key?(:choices)
+  def valid_hint_response?(response)
+    raise TypeError, "Not an HTTP success response" unless response.is_a?(Net::HTTPSuccess)
 
-    unless json[:choices].is_a?(Array)
-      raise TypeError, "json[:choices] isn't an array: #{json[:choices]}"
+    begin
+      parsed_body = JSON.parse(response.body, symbolize_names: true)
+    rescue JSON::ParserError, TypeError => e
+      raise TypeError, "Body is invalid JSON: #{e.message}. body = #{body}"
     end
 
-    raise TypeError, "json[:choices] is empty: #{json[:choices]}" if json[:choices].empty?
+    return false unless valid_response_body?(parsed_body)
+    valid_headers?(response)
+  rescue TypeError => e
+    @logger.exception e
+    return false
+  end
 
-    first_choice = json[:choices].first
+  def valid_headers?(response)
+    raise TypeError, "Not an HTTPResponse" unless response.is_a?(Net::HTTPResponse)
+
+    required_headers = [
+      "openai-processing-ms",
+      "openai-version",
+      "x-ratelimit-limit-requests",
+      "x-ratelimit-limit-tokens",
+      "x-ratelimit-remaining-requests",
+      "x-ratelimit-remaining-tokens",
+      "x-ratelimit-reset-requests",
+      "x-ratelimit-reset-tokens",
+      "x-request-id",
+    ]
+    raise TypeError, "Missing required headers" unless keys?(required_headers, response.to_hash)
+  rescue TypeError => e
+    @logger.exception e
+    return false
+  end
+
+  def valid_response_body_meta?(json)
+    hash_properties_are_valid?(json, display_name: "response body", props: [
+      [:id, String],
+      [:created, Integer],
+      [:model, String],
+      [:usage, Hash, ->(p) { valid_usage_data?(p) }],
+      [:system_fingerprint, String],
+    ],)
+  end
+
+  def valid_usage_data?(json)
+    hash_properties_are_valid?(json, display_name: "usage data", props: [
+      [:prompt_tokens, Integer],
+      [:completion_token, Integer],
+      [:total_tokens, Integer],
+    ],)
+  end
+
+  def valid_response_body_content?(json)
+    hash_properties_are_valid?(json, display_name: "response content", props: [
+      [:choices, Array, ->(p) { valid_response_word_hints?(p) }],
+    ],)
+  end
+
+  def valid_response_word_hints?(json)
+    raise TypeError, "json isn't an array: #{json}" unless json.is_a?(Array)
+
+    raise TypeError, "json is empty: #{json}" if json.empty?
+
+    first_choice = json.first
+    unless first_choice.is_a?(Hash)
+      raise TypeError, "First 'choices' item isn't a hash: #{first_choice}"
+    end
+
     unless first_choice.key?(:message)
       msg = "First choice is invalid: No ':message' key. First choice = #{first_choice}"
       raise TypeError, msg

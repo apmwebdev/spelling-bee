@@ -14,9 +14,13 @@
 class CreateOpenaiHintRequests < ActiveRecord::Migration[7.0]
   def change
     create_table :openai_hint_requests do |t|
-      t.references :openai_hint_instruction, null: false, foreign_key: true
-      t.string :word_list, array: true
-      t.string :ai_model
+      t.references :openai_hint_instruction, null: false, foreign_key: true,
+        comment: "The instructions sent to the API about how to generate the hints for this request"
+      t.string :word_list, array: true,
+        comment: "The list of words sent to the API for hints"
+      t.string :req_ai_model,
+        comment: "The AI model requested. The 'req_' in front is to differentiate from the model"\
+          "that the response says it used. These should be the same, but you never know."
 
       t.timestamps
     end
