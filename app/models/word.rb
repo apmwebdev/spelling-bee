@@ -17,3 +17,20 @@ class Word < ApplicationRecord
   has_many :answers, primary_key: :text, foreign_key: :word_text
   has_many :puzzles, through: :answers
 end
+
+# == Schema Information
+#
+# Table name: words
+#
+#  definitions :string           is an Array
+#  frequency   :decimal(, )
+#  hint        :string
+#  text        :string           not null, primary key
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+# Indexes
+#
+#  index_words_on_definitions  (definitions) USING gin
+#  index_words_on_text         (text) UNIQUE
+#

@@ -15,3 +15,14 @@
 # easier replication, change tracking, and analysis.
 class OpenaiHintInstruction < ApplicationRecord
 end
+
+# == Schema Information
+#
+# Table name: openai_hint_instructions
+#
+#  id                  :bigint           not null, primary key
+#  post_word_list_text :text
+#  pre_word_list_text  :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#

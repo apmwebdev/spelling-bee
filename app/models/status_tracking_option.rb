@@ -16,3 +16,17 @@ class StatusTrackingOption < ActiveRecord::Base
   has_many :user_hint_profiles, primary_key: :key, foreign_key: :default_panel_tracking
   has_many :hint_panels, primary_key: :key, foreign_key: :status_tracking
 end
+
+# == Schema Information
+#
+# Table name: status_tracking_options
+#
+#  key        :string           not null, primary key
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_status_tracking_options_on_key  (key) UNIQUE
+#
