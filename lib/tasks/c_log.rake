@@ -10,11 +10,15 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-namespace :sync_api do
-  desc "Sync puzzle data"
-  # e.g. rake "sync_api:sync_latest_puzzles[2081]"
-  task :sync_latest_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
-    first_puzzle_identifier = args[:first_puzzle_identifier].to_i
-    SyncApiService.new.sync_recent_puzzles(first_puzzle_identifier)
+namespace :c_log do
+  desc "Run #logs"
+  task logs: :environment do
+    logger = ContextualLogger.new($stdout, puts_only_g: true)
+    driver = ContextualLoggerDriver.new
+    begin
+      driver.logs
+    rescue StandardError => e
+      logger.exception(e, :fatal, additional_message: "That caused an error: ")
+    end
   end
 end

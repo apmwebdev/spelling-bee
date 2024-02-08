@@ -19,18 +19,18 @@ namespace :openai do
   desc "Run #test_request"
   # e.g. rake "openai:test_request[20]"
   task :test_request, [:word_limit] => :environment do |_t, args|
-    OpenaiApiService.new.test_request_and_save(args[:word_limit])
+    OpenaiApiService.new.test_request_and_save(args[:word_limit].to_i)
   end
 
   desc "Run #test_request_and_save"
   # e.g. rake "openai:test_request_and_save[20]"
   task :test_request_and_save, [:word_limit] => :environment do |_t, args|
-    OpenaiApiService.new.test_request_and_save(args[:word_limit])
+    OpenaiApiService.new.test_request_and_save(args[:word_limit].to_i)
   end
 
   desc "Run #test_batching"
   # e.g. rake "openai:test_batching[20, 2]"
   task :test_batching, [:word_limit, :batch_limit] => :environment do |_t, args|
-    OpenaiApiService.new.test_batching(args[:word_limit], args[:batch_limit])
+    OpenaiApiService.new.test_batching(args[:word_limit].to_i, args[:batch_limit].to_i)
   end
 end

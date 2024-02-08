@@ -10,15 +10,22 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Custom logger class specifying a format and giving a `logger_with_context` logging method for
-# convenience
+# Custom logger class. It extends the base Logger class in the following ways:
+# - Adds method name by default to log messages
+# - Allows for stack trace with log message
+# - Can take StandardError objects and generate log messages for them
+# - Can log to console instead of the log file on a global or per message basis
 class ContextualLogger < Logger
   LOG_LEVELS = [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERROR, Logger::FATAL,
     Logger::UNKNOWN,].freeze
 
   LEVEL_SYMBOLS = [:debug, :info, :warn, :error, :fatal, :unknown].freeze
 
-  def initialize(log_file, log_rotation, log_level: nil)
+  attr_reader :puts_and_g, :puts_only_g
+
+  def initialize(log_file, log_rotation = "daily", log_level: nil,
+                 puts_and_g: [:error, :fatal, :unknown], puts_only_g: false)
+    # Built-in config
     options = {}
     if LOG_LEVELS.include?(log_level)
       options[:level] = log_level
@@ -28,84 +35,172 @@ class ContextualLogger < Logger
     super(log_file, log_rotation, **options)
     @formatter = proc do |severity, datetime, _progname, msg|
       timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-      "#{severity}: #{timestamp} - #{msg}\n"
+      "#{severity} #{timestamp} - #{msg}\n"
     end
+    # Custom config
+    @puts_and_g = puts_and_g if valid_puts_global?(puts_and_g)
+    @puts_only_g = puts_only_g if valid_puts_global?(puts_only_g)
   end
 
-  # This is ugly, but I want autocompletion
-  def debug(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  def puts_and_g=(value)
+    @puts_and_g = value if valid_puts_global?(value)
   end
 
-  def info(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  def puts_only_g=(value)
+    @puts_only_g = value if valid_puts_global?(value)
   end
 
-  def warn(msg, with_method: true, with_trace: false, puts_only: false, puts_and: false)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  # This is ugly, but I want autocompletion, so each severity level method is getting overridden
+  # individually, with all optional parameters added explicitly.
+  # @param msg [String] The message to log
+  # @param starting_frame [Integer] The frame in the stack trace to start with. Default is 2 so that
+  #   the frames for this logger are skipped.
+  # @param with_method [Boolean] Whether to include the method name in the log message.
+  # @param with_trace [Boolean] Whether to include the stack trace in the log message.
+  # @param puts_only [Boolean, NilClass] Whether to output the message to the console (using `puts`)
+  # instead of the log file. Can be nil in order to use the global @puts_only_g variable instead.
+  # @param puts_and [Boolean, NilClass] Whether to output the message to the console (using `puts`)
+  # in addition to the log file. Can be nil in order to use the global @puts_and_g variable instead.
+  def debug(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
+            puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
+  end
+
+  def info(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
+           puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
+  end
+
+  def warn(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
+           puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
   end
 
   # with_trace and puts_and set to true by default for error, fatal, and unknown
-  def error(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  def error(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
+            puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
   end
 
-  def fatal(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  def fatal(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
+            puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
   end
 
-  def unknown(msg, with_method: true, with_trace: true, puts_only: false, puts_and: true)
-    message = format_and_put(__method__, msg, with_method:, with_trace:, puts_only:, puts_and:)
-    super(message) unless puts_only
+  def unknown(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
+              puts_and: nil)
+    message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
+      puts_only:, puts_and:,)
+    super(message) unless puts_only?(__method__, puts_only)
   end
 
   ##
   # Log an error from an Exception (technically, a StandardError) object
   # @param standard_error [StandardError] The exception object to log.
   # @param severity [Symbol] The severity level for the exception. Default is :error.
-  def exception(standard_error, severity = :error)
+  def exception(standard_error, severity = :error, additional_message: nil)
     unless standard_error.is_a?(StandardError)
       raise TypeError, "standard_error must be a StandardError: #{standard_error}"
     end
 
-    valid_severity = LEVEL_SYMBOLS.include(severity) ? severity : :error
-    message = "#{standard_error.class.name}: #{standard_error.message}"
-    send(valid_severity, message)
+    valid_severity = LEVEL_SYMBOLS.include?(severity) ? severity : :error
+    message = if additional_message
+                "#{standard_error.class.name}: #{additional_message}#{standard_error.message}"
+              else
+                "#{standard_error.class.name}: #{standard_error.message}"
+              end
+    send(valid_severity, message, starting_frame: 3)
   rescue TypeError => e
-    send(:fatal, e.message)
+    send(:fatal, e.message, starting_frame: 0)
   end
 
   protected
 
-  def format_and_put(severity, msg, **options)
+  ##
+  # Contains the bulk of the logging logic.
+  def process_message(msg, severity, starting_frame:, **options)
     # Prepend the method name to the log message. Default to true.
     with_method = options[:with_method] != false
-    # Log to STDOUT instead of log file. Default to false.
-    puts_only = options[:puts_only] == true
     # Include stack trace. Default to false.
     with_trace = options[:with_trace] == true
-    # Log to STDOUT _and_ log file. Default to false.
-    puts_and = options[:puts_and] == true
+    # Log to STDOUT instead of log file. Default to false, can be nil. If set, overrides global
+    # value (@puts_only_g)
+    puts_only = nil_and_falsy(options[:puts_only])
+    # Log to STDOUT _and_ log file. Default to false, can be nil. If set, overrides global value
+    # (@puts_and_g)
+    puts_and = nil_and_falsy(options[:puts_and])
+
     message = msg
     # `with_trace` has higher precedence than `with_method`
     if with_trace
       # Only include frames from app files, not the full stack
-      trace = caller(2).filter do |frame|
+      trace = caller(starting_frame).filter do |frame|
         frame.split("/").include?("spelling-bee")
       end
         .join("\n  ")
       message = "#{msg}\n  #{trace}"
     elsif with_method
-      frame = caller_locations(2)[0]
+      frame = caller_locations(starting_frame)[0]
       message = "[#{frame.base_label}] #{msg}"
     end
-    has_stdout = !Rails.env.production?
-    puts "#{severity.upcase}: #{message}" if has_stdout && (puts_only || puts_and)
+
+    maybe_puts(message, severity, puts_only, puts_and)
     return message
+  end
+
+  # Maybe output a log message to the console, based on settings
+  def maybe_puts(message, severity, puts_only, puts_and)
+    puts "#{severity.upcase} #{message}" if should_puts?(severity, puts_only, puts_and)
+  end
+
+  # Determines whether a log message should be output to the console, based on settings
+  def should_puts?(severity, puts_only, puts_and)
+    can_puts = !Rails.env.production?
+    wants_puts = puts_only || puts_and || puts_only?(severity, puts_only) ||
+                 puts_and?(severity, puts_and)
+    return can_puts && wants_puts
+  end
+
+  def puts_only?(severity, puts_only)
+    return puts_only unless puts_only.nil?
+    if (@puts_only_g.is_a?(Array) && @puts_only_g.include?(severity)) || @puts_only_g == true
+      return true
+    end
+    return false
+  end
+
+  def puts_and?(severity, puts_and)
+    return puts_and unless puts_and.nil?
+    if (@puts_and_g.is_a?(Array) && @puts_and_g.include?(severity)) || @puts_and_g == true
+      return true
+    end
+    return false
+  end
+
+  def valid_puts_global?(to_test)
+    (to_test.is_a?(Array) && to_test.all? { |item| LEVEL_SYMBOLS.include?(item) }) ||
+      to_test.is_a?(TrueClass) || to_test.is_a?(FalseClass)
+  end
+
+  # Nil and booleans are returned as is. Other values are coerced to true.
+  def nil_and_truthy(value)
+    return value if value.nil?
+    return value != false
+  end
+
+  # Nil and booleans are returned as is. Other values are coerced to false.
+  def nil_and_falsy(value)
+    return value if value.nil?
+    return value == true
   end
 end

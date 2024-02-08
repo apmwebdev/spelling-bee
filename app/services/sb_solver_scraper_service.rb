@@ -28,13 +28,7 @@ class SbSolverScraperService
       outer_letters: [],
       answers: [],
       sb_solver_id: id,
-      error: nil,
     }
-
-    handle_error = lambda do |message|
-      data[:error] = message
-      @logger.fatal(message)
-    end
 
     url = "https://www.sbsolver.com/s/#{id}"
     data[:sb_solver_url] = url
@@ -43,13 +37,10 @@ class SbSolverScraperService
     begin
       doc = Nokogiri::HTML(URI.open(url))
     rescue OpenURI::HTTPError => e
-      handle_error.call "The request failed with HTTP error: #{e.message}"
+      raise StandardError, "The request failed with HTTP error: #{e.message}"
     rescue SocketError => e
-      handle_error.call "Could not connect to the server: #{e.message}"
-    rescue StandardError => e
-      handle_error.call "An error occurred: #{e.message}"
+      raise StandardError, "Could not connect to the server: #{e.message}"
     end
-    return data unless data[:error].nil?
 
     # Parse date
     begin
@@ -59,9 +50,7 @@ class SbSolverScraperService
       date_string = date_string_element.text
       data[:date] = Date.parse(date_string)
     rescue ArgumentError => e
-      handle_error.call "Failed to parse date: #{e.message}"
-    rescue StandardError => e
-      handle_error.call(e.message)
+      raise StandardError, "Failed to parse date: #{e.message}"
     end
 
     # Parse letters
@@ -70,8 +59,7 @@ class SbSolverScraperService
       letters.push(node["src"].slice(-7..-5))
     end
     if letters.empty? || letters.length != 7
-      handle_error.call "Can't find letters. letters = #{letters}"
-      return data
+      raise StandardError, "Can't find letters. letters = #{letters}"
     end
 
     letters.each do |letter_info|
@@ -92,12 +80,12 @@ class SbSolverScraperService
     doc.css(".bee-set td.bee-hover a").each do |node|
       data[:answers].push(node.text.downcase)
     end
-    if data[:answers].empty?
-      handle_error.call "Can't find answers: #{data[:answers]}"
-      return data
-    end
+    raise StandardError, "Can't find answers: #{data[:answers]}" if data[:answers].empty?
 
-    data
+    return data
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
+    raise e
   end
 
   def seed_puzzles(start_id, end_id)
@@ -112,10 +100,10 @@ class SbSolverScraperService
 
       # Don't overwhelm the SB Solver site
       sleep(rand(0..2))
-      puzzle_data = fetch_puzzle(id)
-      unless puzzle_data[:error].nil?
-        @logger.fatal "Error fetching data for puzzle #{id}: #{puzzle_data[:error]}. Exiting."
-        break
+      begin
+        puzzle_data = fetch_puzzle(id)
+      rescue StandardError => e
+        raise StandardError, "Error fetching data for puzzle #{id}: #{e.message}"
       end
 
       @logger.info "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
@@ -146,5 +134,7 @@ class SbSolverScraperService
       @logger.info "Created excluded words cache"
       @logger.info "Finished importing puzzle #{id}"
     end
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
   end
 end
