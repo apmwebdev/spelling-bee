@@ -42,8 +42,8 @@ if Rails.env.development?
       "hide_limit_column_types" => "integer,bigint,boolean",
       "hide_default_column_types" => "json,jsonb,hstore",
       "skip_on_db_migrate" => "false",
-      "format_bare" => "false", # changed
-      "format_rdoc" => "true", # changed
+      "format_bare" => "true",
+      "format_rdoc" => "false",
       "format_yard" => "false",
       "format_markdown" => "false",
       "sort" => "false",
