@@ -133,9 +133,6 @@ class OpenaiApiService
           "#{value}"
         @logger.error msg
       end
-    rescue NoMethodError => e
-      @logger.fatal e.message
-      raise e
     end
   end
 end

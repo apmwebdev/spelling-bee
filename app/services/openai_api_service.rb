@@ -46,10 +46,10 @@ class OpenaiApiService
   # @param format_as_json [Boolean] When true, adds a property to the request body instructing the
   #   API to return a response that is a valid JSON string. The format of this JSON needs to be
   #   specified in `content`.
-  # @param ai_model [String, NilClass] The AI model to use. If this param is not a string (which it
+  # @param ai_model [String, nil] The AI model to use. If this param is not a string (which it
   #   isn't by default), the request will use the DEFAULT_AI_MODEL constant defined above.
   # @raise [TypeError]
-  # @return Net::HTTPResponse | NilClass
+  # @return Hash
   def send_request(content, format_as_json: true, ai_model: nil)
     raise TypeError, "Invalid content" if !content.is_a?(String) || content == ""
 
@@ -90,9 +90,6 @@ class OpenaiApiService
                   puts_only: true,)
 
     { response:, response_time: }
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
@@ -133,9 +130,6 @@ class OpenaiApiService
     word_list.puzzle_id += 1
 
     generate_word_data(word_list)
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
@@ -167,9 +161,6 @@ class OpenaiApiService
     word = Word.find(word_hint[:word])
     word.hint = word_hint[:hint]
     word.save!
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
@@ -185,9 +176,6 @@ class OpenaiApiService
       save_hint(word_hint)
     end
     @logger.info "Finished saving word hints"
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
@@ -207,9 +195,6 @@ class OpenaiApiService
     # Return the newly saved record so that it can be properly linked to the response that comes
     # back
     request_record
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
@@ -255,9 +240,6 @@ class OpenaiApiService
 
     record.save!
     @logger.info "Hint response saved successfully"
-  rescue StandardError => e
-    @logger.exception e
-    raise e
   end
 
   ##
