@@ -18,14 +18,14 @@ class NytScraperValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    hash_properties_are_valid?(json, display_name: "response", props: [
+    valid_hash?(json, display_name: "response", props: [
       ["today", Hash, ->(p) { @puzzle_validator.valid_nyt_puzzle?(p) }],
       ["pastPuzzles", Hash, ->(p) { past_puzzles_valid?(p) }],
     ],)
   end
 
   def past_puzzles_valid?(json)
-    hash_properties_are_valid?(json, display_name: "pastPuzzles", props: [
+    valid_hash?(json, display_name: "pastPuzzles", props: [
       ["thisWeek", Array, ->(p) { valid_puzzle_array?(p) }],
       ["lastWeek", Array, ->(p) { valid_puzzle_array?(p) }],
     ],)

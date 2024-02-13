@@ -23,7 +23,7 @@ class ContextualLogger < Logger
 
   attr_reader :puts_and_g, :puts_only_g
 
-  def initialize(log_file, log_rotation = "daily", log_level: nil,
+  def initialize(log_file = $stdout, log_rotation = "daily", log_level: nil,
                  puts_and_g: [:error, :fatal, :unknown], puts_only_g: false)
     # Built-in config
     options = {}
@@ -64,21 +64,21 @@ class ContextualLogger < Logger
   def debug(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
             puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def info(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
            puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def warn(msg, starting_frame: 2, with_method: true, with_trace: false, puts_only: nil,
            puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
@@ -86,21 +86,21 @@ class ContextualLogger < Logger
   def error(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
             puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def fatal(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
             puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def unknown(msg, starting_frame: 2, with_method: true, with_trace: true, puts_only: nil,
               puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-      puts_only:, puts_and:,)
+                                               puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 

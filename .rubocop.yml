@@ -1,5 +1,5 @@
-Layout/ArgumentAlignment:
-  EnforcedStyle: with_fixed_indentation
+#Layout/ArgumentAlignment:
+#  EnforcedStyle: with_fixed_indentation
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/FirstArrayElementIndentation:
@@ -31,6 +31,8 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 Style/ClassAndModuleChildren:
+  Enabled: false
+Style/NumericPredicate:
   Enabled: false
 Style/RedundantReturn:
   Enabled: false

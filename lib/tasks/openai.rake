@@ -19,7 +19,7 @@ namespace :openai do
   desc "Run #test_request"
   # e.g. rake "openai:test_request[20]"
   task :test_request, [:word_limit] => :environment do |_t, args|
-    OpenaiApiService.new.test_request_and_save(args[:word_limit].to_i)
+    OpenaiApiService.new.test_request(args[:word_limit].to_i)
   end
 
   desc "Run #test_request_and_save"
