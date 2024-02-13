@@ -51,9 +51,6 @@ class OpenaiApiService
 
       self.body_meta = parsed_body.except(:choices)
       parse_and_set_content(parsed_body)
-    rescue NoMethodError => e
-      @logger.fatal e.message
-      raise e
     end
 
     def parse_and_set_content(parsed_body)

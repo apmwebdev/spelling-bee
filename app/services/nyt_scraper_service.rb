@@ -78,13 +78,4 @@ class NytScraperService
       create_puzzle_from_json(puzzle_json)
     end
   end
-
-  def log_test
-    @logger.debug "Debug log test", puts_only: true
-    @logger.info "Info log test", puts_only: true
-    @logger.warn "Warning log test", puts_only: true
-    @logger.error "Error log test", puts_only: true
-    @logger.fatal "Fatal log test", puts_only: true
-    @logger.unknown "Unknown log test", puts_only: true
-  end
 end
