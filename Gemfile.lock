@@ -296,6 +296,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    vcr (6.2.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     warden-jwt_auth (0.8.0)
@@ -346,6 +347,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   tzinfo-data
+  vcr (~> 6.2)
   webmock (~> 3.20)
   yard (~> 0.9.34)
 

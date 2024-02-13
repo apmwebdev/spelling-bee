@@ -57,8 +57,6 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
-  gem "rspec-rails", "~> 6.1"
-  gem "webmock", "~> 3.20"
 end
 
 group :development do
@@ -66,4 +64,10 @@ group :development do
   # gem "spring"
   gem "annotate", "~> 3.2"
   gem "letter_opener"
+end
+
+group :test do
+  gem "rspec-rails", "~> 6.1"
+  gem "vcr", "~> 6.2"
+  gem "webmock", "~> 3.20"
 end
