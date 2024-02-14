@@ -10,8 +10,9 @@ require "rspec/rails"
 require "webmock/rspec"
 require "vcr"
 
-# TODO: Fix
-FAKE_USER_ID = nil
+# The 'openai-organization' header value has the format /user-[0-9a-z]{24}/
+# Random part was generated with `Random.alphanumeric(24, chars: [*"0".."9", *"a".."z"])`
+FAKE_USER_ID = "user-bispkxt54u8d4zj8kpa30v7x"
 
 # VCR configuration
 VCR.configure do |config|
@@ -22,8 +23,9 @@ VCR.configure do |config|
   # config.ignore_localhost = true
   config.filter_sensitive_data("<OPENAI_API_KEY>") { ENV["OPENAI_API_KEY"] }
   config.before_record do |interaction|
-    # TODO: Fix
-    interaction.response.headers
+    # Redact the real user ID and request ID
+    interaction.response.headers["openai-organization"] = [FAKE_USER_ID]
+    interaction.response.headers["x-request-id"] = [SecureRandom.hex(32)]
   end
 end
 
@@ -35,7 +37,7 @@ end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join("spec/fixtures")
+  config.fixture_paths = Rails.root.join("spec/fixtures")
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

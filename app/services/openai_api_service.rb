@@ -36,7 +36,11 @@ class OpenaiApiService
   end
 
   def initialize(word_limit: nil, request_cutoff: nil)
-    @logger = ContextualLogger.new("log/open_ai_api.log", "weekly")
+    @logger = if Rails.env.test?
+                ContextualLogger.new(IO::NULL)
+              else
+                ContextualLogger.new("log/open_ai_api.log", "weekly")
+              end
     @validator = Validator.new(@logger)
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
     @request_cutoff = request_cutoff
