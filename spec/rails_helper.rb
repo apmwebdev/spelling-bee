@@ -10,6 +10,9 @@ require "rspec/rails"
 require "webmock/rspec"
 require "vcr"
 
+# TODO: Fix
+FAKE_USER_ID = nil
+
 # VCR configuration
 VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
@@ -17,6 +20,11 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
   config.allow_http_connections_when_no_cassette = true
   # config.ignore_localhost = true
+  config.filter_sensitive_data("<OPENAI_API_KEY>") { ENV["OPENAI_API_KEY"] }
+  config.before_record do |interaction|
+    # TODO: Fix
+    interaction.response.headers
+  end
 end
 
 begin

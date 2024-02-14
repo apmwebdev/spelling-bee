@@ -19,6 +19,8 @@ require "json"
 class OpenaiApiService
   include Constants
 
+  OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
+
   attr_accessor :batch_state
 
   # Holds the current word list and puzzle ID for building the next request
@@ -63,7 +65,7 @@ class OpenaiApiService
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json"
-    request["Authorization"] = "Bearer #{ENV['OPENAI_API_KEY']}"
+    request["Authorization"] = "Bearer #{OPENAI_API_KEY}"
     request_body = {
       model: ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL,
       messages: [
