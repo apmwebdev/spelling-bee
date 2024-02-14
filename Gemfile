@@ -6,10 +6,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.6"
+gem "rails", "~> 7.1.3"
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.5"
 
 gem "bcrypt_pbkdf", "~> 1.0"
 gem "capistrano", "~> 3.18"
@@ -31,7 +31,7 @@ gem "rubocop", "~> 1.56", require: false
 gem "rubocop-rails", "~> 2.23", require: false
 gem "sentry-rails"
 gem "sentry-ruby"
-gem "yard", "~> 0.9.34"
+gem "yard", "~> 0.9"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
