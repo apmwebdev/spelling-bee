@@ -1,5 +1,5 @@
-# Copy this default .gitignore file, removing the '.default' on the end and
-# changing it as needed
+# Copy this default .gitignore file, remove the '.default' on the end, and
+# change it as needed
 
 # See https://help.github.com/articles/ignoring-files for more about ignoring files.
 #
@@ -30,6 +30,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore files explicitly tagged as local only
+*.local
 
 /config/database.yml
 /db/seeds/words_alpha.txt.zip
