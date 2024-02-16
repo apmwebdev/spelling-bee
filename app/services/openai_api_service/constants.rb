@@ -53,5 +53,24 @@ class OpenaiApiService
       "x-ratelimit-reset-tokens",
       "x-request-id",
     ].freeze
+
+    DEFAULT_HEADERS = [
+      "date",
+      "content-type",
+      "transfer-encoding",
+      "connection",
+      "access-control-allow-origin",
+      "cache-control",
+      "strict-transport-security",
+      # "content-encoding",
+      "server",
+    ].freeze
+
+    EXPECTED_HEADERS = [
+      "openai-model",
+      "openai-organization",
+      *DEFAULT_HEADERS,
+      *RELEVANT_HEADERS,
+    ].freeze
   end
 end

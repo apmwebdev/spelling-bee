@@ -100,11 +100,15 @@ class OpenaiApiService
     end
 
     ##
+    # Extract the relevant, non-sensitive headers for storing in the DB
     # @raise [TypeError]
     def extract_headers(response)
       raise TypeError, "Invalid response" unless response.is_a?(Net::HTTPResponse)
-      # Each header value is an array with length 1, so extract just the value from this array
-      response.to_hash.slice(*RELEVANT_HEADERS).transform_values(&:first)
+      response
+        .to_hash # Turns response into a hash with headers as entries
+        .transform_keys(&:downcase) # Normalize keys before extracting relevant headers
+        .slice(*RELEVANT_HEADERS) # Extract relevant headers
+        .transform_values(&:first) # Each value is wrapped in an array; get just the value
     end
   end
 end

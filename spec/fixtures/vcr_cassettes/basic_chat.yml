@@ -1,0 +1,105 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"What
+        is OpenAI?"}]}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Feb 2024 19:52:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '2241'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59979'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 21ms
+      X-Request-Id:
+      - 564b2c42ecc49a72f2e5a8055f577e0c810261c62f48cc6b0fd0913248e2be1c
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=CH7hCOeTh4zsahMYQdqJ8e56gd9vEGsr8NT07Rnriws-1708113174-1.0-Aab1/FZiASk3QL9j+AElD360I6ON/lSnBNZvaF6NJHMaRwrQLVwRi8ay1M3prF2ADdNCiGeNKLzgFjKUE0PDol0=;
+        path=/; expires=Fri, 16-Feb-24 20:22:54 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=gafM523PjK7ed.D51y1erDfMrPoXsgXXK6FezXyWCkU-1708113174966-0.0-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 856855606ae1681c-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8syYOyTmXNOdFfEY9CAHEAWVhYVV4",
+          "object": "chat.completion",
+          "created": 1708113172,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "OpenAI is an artificial intelligence research laboratory consisting of the for-profit OpenAI LP and the non-profit OpenAI Inc. It aims to ensure artificial general intelligence (AGI) benefits all of humanity. It was founded in December 2015 by Elon Musk, Sam Altman, Greg Brockman, Ilya Sutskever, John Schulman, and Wojciech Zaremba."
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 12,
+            "completion_tokens": 80,
+            "total_tokens": 92
+          },
+          "system_fingerprint": "fp_69829325d0"
+        }
+  recorded_at: Fri, 16 Feb 2024 19:52:54 GMT
+recorded_with: VCR 6.2.0

@@ -482,7 +482,7 @@ CREATE TABLE public.openai_hint_responses (
     prompt_tokens integer,
     completion_tokens integer,
     total_tokens integer,
-    response_time_seconds integer,
+    response_time_seconds double precision,
     openai_processing_ms integer,
     openai_version character varying,
     x_ratelimit_limit_requests integer,
@@ -510,7 +510,7 @@ COMMENT ON COLUMN public.openai_hint_responses.openai_hint_request_id IS 'The re
 -- Name: COLUMN openai_hint_responses.word_hints; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.openai_hint_responses.word_hints IS 'The array of word hints returned in the response. This is substance of the response and the reason for querying the API.';
+COMMENT ON COLUMN public.openai_hint_responses.word_hints IS 'The array of word hints returned in the response.';
 
 
 --
@@ -545,14 +545,14 @@ COMMENT ON COLUMN public.openai_hint_responses.res_ai_model IS 'The AI model ind
 -- Name: COLUMN openai_hint_responses.prompt_tokens; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.openai_hint_responses.prompt_tokens IS 'The number of tokens in the request prompt, as calculated by the API';
+COMMENT ON COLUMN public.openai_hint_responses.prompt_tokens IS 'The number of tokens in the request prompt';
 
 
 --
 -- Name: COLUMN openai_hint_responses.completion_tokens; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.openai_hint_responses.completion_tokens IS 'The number of tokens in the response, as calculated by the API';
+COMMENT ON COLUMN public.openai_hint_responses.completion_tokens IS 'The number of tokens in the response';
 
 
 --
@@ -566,7 +566,7 @@ COMMENT ON COLUMN public.openai_hint_responses.total_tokens IS 'The total number
 -- Name: COLUMN openai_hint_responses.response_time_seconds; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.openai_hint_responses.response_time_seconds IS 'This is the round trip time of the request, as calculated from within the app. It takes a timestamp right before the request is sent and another right after and calculates the difference.';
+COMMENT ON COLUMN public.openai_hint_responses.response_time_seconds IS 'This is the round trip time of the request, as calculated from the app. It takes a timestamp before the request is sent and another after, and then calculates the difference between them.';
 
 
 --
@@ -1882,58 +1882,57 @@ ALTER TABLE ONLY public.hint_panels
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20230606230237'),
-('20230718021604'),
-('20230718042515'),
-('20230718061549'),
-('20230718071300'),
-('20230718072005'),
-('20230718075800'),
-('20230726033728'),
-('20230726041156'),
-('20230726041910'),
-('20230726043150'),
-('20230726045405'),
-('20230803182425'),
-('20230803205319'),
-('20230804013313'),
-('20230804013314'),
-('20230808012355'),
-('20230815032425'),
-('20230815050500'),
-('20230815052132'),
-('20230815052939'),
-('20230815055235'),
-('20230815055236'),
-('20230815062841'),
-('20230815063617'),
-('20230815064048'),
-('20230815064457'),
-('20230815065033'),
-('20230815073035'),
-('20230816121754'),
-('20230818004354'),
-('20230828060858'),
-('20230828115156'),
-('20230911051856'),
-('20230912194527'),
-('20230912210851'),
-('20230912212040'),
-('20230913100015'),
-('20231001001349'),
-('20231002213304'),
-('20231011153938'),
-('20231119195913'),
-('20231120084355'),
-('20231120090819'),
-('20231127233418'),
-('20231128021153'),
-('20231128030814'),
-('20231128232734'),
-('20240117185320'),
-('20240202065829'),
-('20240207025904'),
+('20240208055651'),
 ('20240207033421'),
-('20240208055651');
-
+('20240207025904'),
+('20240202065829'),
+('20240117185320'),
+('20231128232734'),
+('20231128030814'),
+('20231128021153'),
+('20231127233418'),
+('20231120090819'),
+('20231120084355'),
+('20231119195913'),
+('20231011153938'),
+('20231002213304'),
+('20231001001349'),
+('20230913100015'),
+('20230912212040'),
+('20230912210851'),
+('20230912194527'),
+('20230911051856'),
+('20230828115156'),
+('20230828060858'),
+('20230818004354'),
+('20230816121754'),
+('20230815073035'),
+('20230815065033'),
+('20230815064457'),
+('20230815064048'),
+('20230815063617'),
+('20230815062841'),
+('20230815055236'),
+('20230815055235'),
+('20230815052939'),
+('20230815052132'),
+('20230815050500'),
+('20230815032425'),
+('20230808012355'),
+('20230804013314'),
+('20230804013313'),
+('20230803205319'),
+('20230803182425'),
+('20230726045405'),
+('20230726043150'),
+('20230726041910'),
+('20230726041156'),
+('20230726033728'),
+('20230718075800'),
+('20230718072005'),
+('20230718071300'),
+('20230718061549'),
+('20230718042515'),
+('20230718021604'),
+('20230606230237');
 

@@ -21,7 +21,7 @@ class OpenaiApiService
 
   OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 
-  attr_accessor :batch_state
+  attr_accessor :logger, :validator
 
   # Holds the current word list and puzzle ID for building the next request
   class WordList
@@ -35,13 +35,15 @@ class OpenaiApiService
     end
   end
 
-  def initialize(word_limit: nil, request_cutoff: nil)
-    @logger = if Rails.env.test?
+  def initialize(logger: nil, validator: nil, word_limit: nil, request_cutoff: nil)
+    @logger = if logger.is_a?(ContextualLogger)
+                @logger = logger
+              elsif Rails.env.test?
                 ContextualLogger.new(IO::NULL)
               else
                 ContextualLogger.new("log/open_ai_api.log", "weekly")
               end
-    @validator = Validator.new(@logger)
+    @validator = validator.is_a?(Validator) ? validator : Validator.new(@logger)
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
     @request_cutoff = request_cutoff
   end

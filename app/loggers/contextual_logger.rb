@@ -19,7 +19,7 @@ class ContextualLogger < Logger
   include Casting
 
   LOG_LEVELS = [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERROR, Logger::FATAL,
-                Logger::UNKNOWN,].freeze
+    Logger::UNKNOWN,].freeze
 
   attr_reader :puts_and_g, :puts_only_g
 

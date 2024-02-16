@@ -15,6 +15,8 @@ require "net/http"
 class OpenaiApiService
   # Validator for the OpenAI API
   class Validator < ExternalServiceValidatorBase
+    include Constants
+
     def full_word_list?(item)
       item.is_a?(WordList) && item.word_set.length.positive?
     end
@@ -37,6 +39,16 @@ class OpenaiApiService
       ],)
     end
 
+    def valid_response_body?(body)
+      parsed_body = JSON.parse(body, symbolize_names: true)
+      raise TypeError, "Invalid body meta" unless valid_response_body_meta?(parsed_body)
+      raise TypeError, "No content" unless parsed_body.dig(:choices, 0, :message, :content)
+      return true
+    rescue StandardError => e
+      @logger.exception e
+      return false
+    end
+
     def valid_response_body_meta?(json)
       valid_hash?(json, display_name: "response body", props: [
         [:id, String],
@@ -53,6 +65,18 @@ class OpenaiApiService
         [:completion_tokens, Integer],
         [:total_tokens, Integer],
       ],)
+    end
+
+    ##
+    # @param [Net::HTTPResponse] response
+    def expected_response_headers?(response)
+      normalized_headers = response.to_hash.transform_keys(&:downcase)
+      EXPECTED_HEADERS.each do |key|
+        raise TypeError, "Missing header '#{key}'" unless normalized_headers.key?(key)
+      end
+      return true
+    rescue TypeError => e
+      @logger.exception e
     end
 
     def valid_response_body_content?(json)

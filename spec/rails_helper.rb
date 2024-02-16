@@ -24,8 +24,8 @@ VCR.configure do |config|
   config.filter_sensitive_data("<OPENAI_API_KEY>") { ENV["OPENAI_API_KEY"] }
   config.before_record do |interaction|
     # Redact the real user ID and request ID
-    interaction.response.headers["openai-organization"] = [FAKE_USER_ID]
-    interaction.response.headers["x-request-id"] = [SecureRandom.hex(32)]
+    interaction.response.headers["Openai-Organization"] = [FAKE_USER_ID]
+    interaction.response.headers["X-Request-Id"] = [SecureRandom.hex(32)]
   end
 end
 
