@@ -14,10 +14,10 @@ class OpenaiApiService
   # Data object for holding the state of the API request batches
   class BatchState
     include Constants
-    include Hashable
+    include Loggable
 
     attr_reader :request_count, :remaining_requests, :reset_requests_s, :remaining_tokens,
-                :reset_tokens_s, :puzzle_id, :word_set, :retry_count
+      :reset_tokens_s, :puzzle_id, :word_set, :retry_count
 
     # @param logger
     # @param request_count [Integer]

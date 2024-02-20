@@ -10,21 +10,26 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-# Module for converting a class instance into a hash for better logging.
-module Hashable
-  # Unique name to avoid name conflicts
-  def to_log_hash(already_hashed = [])
+# For converting an object that doesn't have a very helpful #to_s method--and thus doesn't produce
+# helpful information when logged--into a more loggable format.
+module Loggable
+  # Converts a class instance into a hash for better logging. The method has this awkward name to
+  # avoid name conflicts.
+  # @param [Array] already_hashed The instance variables for the class instance that have already
+  #   been converted to hashes with this method. Necessary to avoid circular dependencies
+  def to_loggable_hash(already_hashed = [])
     # To prevent circular references
     return "Circular reference detected" if already_hashed.include?(self)
     already_hashed.push(self)
     instance_variables.each_with_object({}) do |var, hash|
       value = instance_variable_get(var)
       key = var.to_s.delete("@")
-      hash[key] = if value.respond_to?(:to_log_hash) && already_hashed.exclude?(value)
-                    value.to_log_hash(already_hashed)
-                  else
-                    value
-                  end
+      hash[key] =
+        if value.respond_to?(:to_loggable_hash) && already_hashed.exclude?(value)
+          value.to_loggable_hash(already_hashed)
+        else
+          value
+        end
     end
   end
 end

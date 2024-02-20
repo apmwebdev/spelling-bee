@@ -10,4 +10,8 @@ module Casting
     return value if value.nil? || value == true || value == false
     return default
   end
+
+  def to_bool(value)
+    !!value
+  end
 end

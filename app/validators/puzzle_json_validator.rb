@@ -13,16 +13,16 @@
 # Validates puzzle data from either the NYT site or Sync API
 class PuzzleJsonValidator < ExternalServiceValidatorBase
   def valid_nyt_puzzle?(json)
-    valid_hash?(json, display_name: "puzzle", props: [
+    valid_hash?(json, [
       ["displayDate", String, ->(p) { valid_date?(p) }],
       ["centerLetter", String, ->(p) { valid_letter?(p) }],
       ["outerLetters", Array, ->(p) { valid_outer_letters?(p) }],
       ["answers", Array, ->(p) { valid_word_array?(p) }],
-    ],)
+    ], display_name: "puzzle",)
   end
 
   def valid_sync_api_puzzle?(json)
-    valid_hash?(json, display_name: "puzzle_data", props: [
+    valid_hash?(json, [
       ["center_letter", String, ->(p) { valid_letter?(p) }],
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["date", String, ->(p) { valid_date?(p) }],
@@ -32,7 +32,7 @@ class PuzzleJsonValidator < ExternalServiceValidatorBase
       ["origin_type", String, ->(p) { valid_origin_type?(p) }],
       ["outer_letters", Array, ->(p) { valid_outer_letters?(p) }],
       ["updated_at", String, ->(p) { valid_date?(p) }],
-    ],)
+    ], display_name: "puzzle_data",)
   end
 
   def valid_letter?(letter)

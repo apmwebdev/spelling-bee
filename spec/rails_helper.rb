@@ -9,6 +9,7 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "webmock/rspec"
 require "vcr"
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 # The 'openai-organization' header value has the format /user-[0-9a-z]{24}/
 # Random part was generated with `Random.alphanumeric(24, chars: [*"0".."9", *"a".."z"])`

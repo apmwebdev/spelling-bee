@@ -17,15 +17,15 @@ class OpenaiApiService
   class Validator < ExternalServiceValidatorBase
     include Constants
 
-    def full_word_list?(item)
-      item.is_a?(WordList) && item.word_set.length.positive?
+    def full_word_list?(word_list)
+      valid_type?(word_list, WordList, ->(p) { p.word_set.length.positive? }, should_raise: true)
     end
 
     def valid_word_hint?(json)
-      valid_hash?(json, display_name: "word hint", props: [
+      valid_hash?(json, [
         [:word, String],
         [:hint, String],
-      ],)
+      ], display_name: "word_hint",)
     end
 
     def valid_word_hints?(array)
@@ -33,10 +33,10 @@ class OpenaiApiService
     end
 
     def valid_wrapped_response?(wrapped_response)
-      valid_hash?(wrapped_response, display_name: "wrapped_response", props: [
+      valid_hash?(wrapped_response, [
         [:response_time, Float],
         [:response, Net::HTTPResponse],
-      ],)
+      ], display_name: "wrapped_response",)
     end
 
     def valid_response_body?(body)
@@ -50,21 +50,21 @@ class OpenaiApiService
     end
 
     def valid_response_body_meta?(json)
-      valid_hash?(json, display_name: "response body", props: [
+      valid_hash?(json, [
         [:id, String],
         [:created, Integer],
         [:model, String],
         [:usage, Hash, ->(p) { valid_usage_data?(p) }],
         [:system_fingerprint, String],
-      ],)
+      ], display_name: "response_body",)
     end
 
     def valid_usage_data?(json)
-      valid_hash?(json, display_name: "usage data", props: [
+      valid_hash?(json, [
         [:prompt_tokens, Integer],
         [:completion_tokens, Integer],
         [:total_tokens, Integer],
-      ],)
+      ], display_name: "usage",)
     end
 
     ##
@@ -80,9 +80,9 @@ class OpenaiApiService
     end
 
     def valid_response_body_content?(json)
-      valid_hash?(json, display_name: "response content", props: [
+      valid_hash?(json, [
         [:choices, Array, ->(p) { valid_response_word_hints?(p) }],
-      ],)
+      ], display_name: "content",)
     end
 
     def valid_response_word_hints?(json)

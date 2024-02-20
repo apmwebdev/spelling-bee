@@ -17,9 +17,7 @@
 # - Can log to console instead of the log file on a global or per message basis
 class ContextualLogger < Logger
   include Casting
-
-  LOG_LEVELS = [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERROR, Logger::FATAL,
-    Logger::UNKNOWN,].freeze
+  include Severities
 
   attr_reader :puts_and_g, :puts_only_g
 
@@ -27,9 +25,9 @@ class ContextualLogger < Logger
                  puts_and_g: [:error, :fatal, :unknown], puts_only_g: false)
     # Built-in config
     options = {}
-    if LOG_LEVELS.include?(log_level)
-      options[:level] = log_level
-    elsif Rails.env.production?
+    if log_level
+      options[:level] = parse_severity(log_level)
+    elsif log_level && Rails.env.production?
       options[:level] = Logger::INFO
     end
     super(log_file, log_rotation, **options)
@@ -65,21 +63,21 @@ class ContextualLogger < Logger
   def debug(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: false,
             puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def info(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: false,
            puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def warn(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: false,
            puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
@@ -87,21 +85,21 @@ class ContextualLogger < Logger
   def error(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: true,
             puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def fatal(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: true,
             puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
   def unknown(msg, starting_frame: 2, standard_error: nil, with_method: true, with_trace: true,
               puts_only: nil, puts_and: nil)
     message = process_message(msg, __method__, starting_frame:, with_method:, with_trace:,
-                              standard_error:, puts_only:, puts_and:,)
+      standard_error:, puts_only:, puts_and:,)
     super(message) unless puts_only?(__method__, puts_only)
   end
 
@@ -114,12 +112,13 @@ class ContextualLogger < Logger
       raise TypeError, "standard_error must be a StandardError: #{standard_error}"
     end
 
-    valid_severity = Globals::LEVEL_SYMBOLS.include?(severity) ? severity : :error
-    message = if additional_message
-                "#{standard_error.class.name}: #{additional_message}#{standard_error.message}"
-              else
-                "#{standard_error.class.name}: #{standard_error.message}"
-              end
+    valid_severity = LEVEL_SYMBOLS.include?(severity) ? severity : :error
+    message =
+      if additional_message
+        "#{standard_error.class.name}: #{additional_message}#{standard_error.message}"
+      else
+        "#{standard_error.class.name}: #{standard_error.message}"
+      end
 
     send(valid_severity, message, starting_frame: 3, standard_error:)
   rescue TypeError => e
@@ -149,24 +148,26 @@ class ContextualLogger < Logger
 
     message = msg.to_s
     if with_trace
-      trace = if standard_error.is_a?(StandardError) && !standard_error.backtrace.is_a?(Array)
-                standard_error.backtrace.filter do |frame|
-                  frame.split("/").include?("spelling-bee")
-                end
-              else
-                caller(starting_frame).filter do |frame|
-                  frame.split("/").include?("spelling-bee")
-                end
-              end
+      trace =
+        if standard_error.is_a?(StandardError) && !standard_error.backtrace.is_a?(Array)
+          standard_error.backtrace.filter do |frame|
+            frame.split("/").include?("spelling-bee")
+          end
+        else
+          caller(starting_frame).filter do |frame|
+            frame.split("/").include?("spelling-bee")
+          end
+        end
       # Only include frames from app files, not the full stack
       message = "#{message}\n  #{trace.join("\n  ")}"
     end
     if with_method
-      method_name = if standard_error.is_a?(StandardError) && standard_error.backtrace_locations
-                      standard_error.backtrace_locations&.first&.base_label
-                    else
-                      caller_locations(starting_frame)[0].base_label
-                    end
+      method_name =
+        if standard_error.is_a?(StandardError) && standard_error.backtrace_locations
+          standard_error.backtrace_locations&.first&.base_label
+        else
+          caller_locations(starting_frame)[0].base_label
+        end
       message = "[#{method_name}] #{message}"
     end
 
@@ -208,9 +209,12 @@ class ContextualLogger < Logger
   # @param puts_only [Boolean, nil]
   # @param puts_and [Boolean, nil]
   def should_puts?(severity, puts_only, puts_and)
+    error_level = parse_severity(severity)
+    return false if error_level < level
+
     can_puts = !Rails.env.production?
     wants_puts = puts_only || puts_and || puts_only?(severity, puts_only) ||
-      puts_and?(severity, puts_and)
+                 puts_and?(severity, puts_and)
     return can_puts && wants_puts
   end
 
@@ -237,7 +241,7 @@ class ContextualLogger < Logger
   end
 
   def valid_puts_global?(to_test)
-    (to_test.is_a?(Array) && to_test.all? { |item| Globals::LEVEL_SYMBOLS.include?(item) }) ||
+    (to_test.is_a?(Array) && to_test.all? { |item| LEVEL_SYMBOLS.include?(item) }) ||
       to_test.is_a?(TrueClass) || to_test.is_a?(FalseClass)
   end
 end

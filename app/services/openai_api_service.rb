@@ -18,31 +18,22 @@ require "json"
 # Connects to the OpenAI API to generate word definition hints
 class OpenaiApiService
   include Constants
+  include Messages
+  include BasicValidator
 
   OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 
   attr_accessor :logger, :validator
 
-  # Holds the current word list and puzzle ID for building the next request
-  class WordList
-    include Hashable
-
-    attr_accessor :puzzle_id, :word_set
-
-    def initialize(starting_puzzle_id = 1)
-      @puzzle_id = starting_puzzle_id.to_i
-      @word_set = Set.new
-    end
-  end
-
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cutoff: nil)
-    @logger = if logger.is_a?(ContextualLogger)
-                @logger = logger
-              elsif Rails.env.test?
-                ContextualLogger.new(IO::NULL)
-              else
-                ContextualLogger.new("log/open_ai_api.log", "weekly")
-              end
+    @logger =
+      if logger.is_a?(ContextualLogger)
+        @logger = logger
+      elsif Rails.env.test?
+        ContextualLogger.new(IO::NULL)
+      else
+        ContextualLogger.new("log/open_ai_api.log", "weekly")
+      end
     @validator = validator.is_a?(Validator) ? validator : Validator.new(@logger)
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
     @request_cutoff = request_cutoff
@@ -82,7 +73,6 @@ class OpenaiApiService
       ],
     }
     request_body[:response_format] = { type: "json_object" } if format_as_json
-    @logger.debug("request_body = #{request_body}", puts_only: true)
     request.body = JSON.dump(request_body)
 
     before_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
@@ -94,8 +84,6 @@ class OpenaiApiService
     end
     after_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     response_time = (after_time - before_time)
-    @logger.debug("Response received, turnaround time = #{response_time.round(3)} seconds",
-                  puts_only: true,)
 
     { response:, response_time: }
   end
@@ -105,10 +93,10 @@ class OpenaiApiService
   # hints.
   # @param word_list [WordList]
   def generate_word_data(word_list = WordList.new)
-    raise TypeError, "Invalid word_list: #{word_list}" unless word_list.is_a?(WordList)
+    valid_type?(word_list, WordList, should_raise: true)
 
-    if word_list.word_set.size >= @word_limit
-      @logger.info "Word list size limit reached. Exiting"
+    if word_list.word_set.length >= @word_limit
+      word_list.log_message = WORD_LIST_FULL_FRESH
       return word_list
     end
 
@@ -116,13 +104,13 @@ class OpenaiApiService
     puzzle_words = Word.joins(:puzzles).where(puzzles: { id: word_list.puzzle_id }).order(:text)
     # If words is empty, that means we've gone past the last puzzle and we're done.
     if puzzle_words.empty?
-      @logger.info "Words not found for puzzle ID #{word_list.puzzle_id}. Exiting"
+      word_list.log_message = PUZZLE_WORDS_EMPTY
       return word_list
     end
 
     puzzle_words.each do |word|
-      if word_list.word_set.size >= @word_limit
-        @logger.info "Word list size limit reached. Exiting"
+      if word_list.word_set.length >= @word_limit
+        word_list.log_message = WORD_LIST_FULL
         return word_list
       end
 
@@ -148,11 +136,8 @@ class OpenaiApiService
   # @raise [TypeError]
   # @return [String]
   def generate_message_content(word_list, instructions)
-    raise TypeError, "Invalid word_list: #{word_list}" unless @validator.full_word_list?(word_list)
-
-    unless instructions.is_a?(OpenaiHintInstruction)
-      raise TypeError, "Invalid instructions: #{instructions}"
-    end
+    @validator.full_word_list?(word_list)
+    valid_type?(instructions, OpenaiHintInstruction, should_raise: true)
 
     word_list_string = "#{word_list.word_set.to_a.join(', ')}\n"
 
@@ -280,7 +265,7 @@ class OpenaiApiService
   # Loop through the answers in batches and fetch hints for each one that doesn't already have a
   # hint, saving them to the database.
   def seed_answer_hints(batch_state, puzzle_id: 1, with_save: true)
-    @logger.info "Starting iteration. batch_state = #{batch_state.to_log_hash}"
+    @logger.info "Starting iteration. batch_state = #{batch_state.to_loggable_hash}"
 
     if @request_cutoff&.positive? && batch_state.request_count >= @request_cutoff
       @logger.info "Request cutoff reached. Exiting"
@@ -350,7 +335,7 @@ class OpenaiApiService
   def test_request(word_limit)
     @word_limit = word_limit
     word_list = generate_word_data
-    @logger.debug "word_list: #{word_list.to_log_hash}"
+    @logger.debug "word_list: #{word_list.to_loggable_hash}"
 
     message_content = generate_message_content(word_list, OpenaiHintInstruction.last)
     @logger.debug "message_content: #{message_content}"
@@ -387,7 +372,7 @@ class OpenaiApiService
     @word_limit = word_limit
     @request_cutoff = request_cutoff
     batch_state = BatchState.new(@logger)
-    @logger.debug("batch_state: #{batch_state.to_log_hash}")
+    @logger.debug("batch_state: #{batch_state.to_loggable_hash}")
     seed_answer_hints(batch_state, puzzle_id: 3, with_save: false)
   rescue StandardError => e
     @logger.exception(e, :fatal)

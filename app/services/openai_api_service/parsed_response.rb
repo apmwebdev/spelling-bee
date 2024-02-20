@@ -18,10 +18,10 @@ class OpenaiApiService
   class ParsedResponse
     include BasicValidator
     include Constants
-    include Hashable
+    include Loggable
 
     attr_reader :logger, :validator, :raw_response, :body_meta, :headers, :http_status,
-                :response_time_seconds, :word_hints, :error_body
+      :response_time_seconds, :word_hints, :error_body
 
     def initialize(logger, validator, wrapped_response)
       self.logger = logger
@@ -41,7 +41,6 @@ class OpenaiApiService
       @headers = extract_headers(response)
       @http_status = response.code.to_i
       self.response_time_seconds = wrapped_response[:response_time]
-
 
       begin
         parsed_body = JSON.parse(response.body, symbolize_names: true)
