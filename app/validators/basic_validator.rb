@@ -12,8 +12,9 @@
 
 # Provides basic validation methods useful for a wide variety of classes
 module BasicValidator
-  def valid_type?(value, type, validation_fn = nil, display_name: "value", should_raise: false)
-    @logger ||= default_logger
+  def valid_type?(value, type, validation_fn = nil, display_name: "value", should_raise: false,
+                  logger: nil)
+    @logger ||= logger
     unless type.is_a?(Class) ||
            (type.is_a?(Array) && !type.empty? && type.all? { |t| t.is_a?(Class) })
 
@@ -60,8 +61,8 @@ module BasicValidator
   # @param [Array<Array>] props An array of triples with the property key, type or array of types,
   #   and (optionally) a validation lambda
   # @return [Boolean] True if the object is valid, false otherwise
-  def valid_hash?(object, props, display_name: "hash", should_raise: false)
-    @logger ||= default_logger
+  def valid_hash?(object, props, display_name: "hash", should_raise: false, logger: nil)
+    @logger ||= logger
     raise TypeError, "#{display_name} is not a hash" unless object.is_a?(Hash)
 
     raise TypeError, "Invalid props array. props = #{[props]}" unless props.is_a?(Array)
@@ -83,7 +84,7 @@ module BasicValidator
       field = object[key]
       begin
         valid_type?(field, type, validation_fn, display_name: "#{display_name}[#{key}]",
-          should_raise: true,)
+          should_raise: true, logger:,)
       rescue TypeError => e
         status.is_valid = false
         status.messages.push(e.message)
@@ -102,13 +103,36 @@ module BasicValidator
     return false
   end
 
-  def valid_array?(object, item_class, display_name: "object", should_raise: false)
-    return valid_type?(object, Array, ->(p) { p.all? { |item| item.is_a?(item_class) } },
-      display_name:, should_raise:,)
+  ##
+  # @param [any] object
+  # @param [Class] item_class The class that all items in the array must be instances of
+  # @param [Proc, nil] item_validator The lambda that validates all items in the array
+  # @param [String] display_name How the object should be referred to in log messages
+  # @param [Boolean] should_raise Whether the method should raise a TypeError if validation fails
+  #   or merely return false
+  def valid_array?(object, item_class, item_validator = nil, display_name: "object",
+                   should_raise: false, logger: nil)
+    @logger ||= logger
+    valid_type?(item_class, Class, should_raise: true, logger:)
+    valid_type?(item_validator, [Proc, NilClass], ->(p) { p.lambda? }, should_raise: true, logger:)
+
+    return valid_type?(
+      object,
+      Array,
+      # All array items must be the right class and must pass the validation function, if provided
+      lambda do |to_test|
+        to_test.all? do |array_item|
+          array_item.is_a?(item_class) && (item_validator.nil? || item_validator.call(array_item))
+        end
+      end,
+      display_name:,
+      should_raise:,
+      logger:,
+    )
   end
 
-  def valid_date?(date_string, should_raise: false)
-    @logger ||= default_logger
+  def valid_date?(date_string, should_raise: false, logger: nil)
+    @logger ||= logger
     Date.parse(date_string)
     return true
   rescue StandardError => e
@@ -118,8 +142,8 @@ module BasicValidator
     return false
   end
 
-  def valid_json?(json_string, should_raise: false)
-    @logger ||= default_logger
+  def valid_json?(json_string, should_raise: false, logger: nil)
+    @logger ||= logger
     JSON.parse(json_string)
     return true
   rescue JSON::ParserError, TypeError => e
@@ -139,7 +163,7 @@ module BasicValidator
 
   private
 
-  def default_logger
-    ContextualLogger.new($stdout)
-  end
+  # def default_logger
+  #   ContextualLogger.new($stdout)
+  # end
 end

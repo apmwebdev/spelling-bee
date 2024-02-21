@@ -26,9 +26,22 @@ module Severities
     unknown: Logger::UNKNOWN,
   }.freeze
 
-  def parse_severity(to_parse)
-    return SEVERITIES[to_parse] if SEVERITIES.key?(to_parse)
+  def parse_severity(to_parse, default: :info, as_symbol: true)
+    if as_symbol
+      return to_parse if SEVERITIES.key?(to_parse)
+      return SEVERITIES.invert[to_parse] if SEVERITIES.value?(to_parse)
+      return default if SEVERITIES.key?(default)
+      return SEVERITIES.invert[default] if SEVERITIES.value?(default)
+      return :info
+    end
     return to_parse if SEVERITIES.value?(to_parse)
+    return SEVERITIES[to_parse] if SEVERITIES.key?(to_parse)
+    return default if SEVERITIES.value?(default)
+    return SEVERITIES[default] if SEVERITIES.key?(default)
     return SEVERITIES[:info]
+  end
+
+  def valid_severity?(value)
+    LEVEL_SYMBOLS.include?(value) || LOG_LEVELS.include?(value)
   end
 end

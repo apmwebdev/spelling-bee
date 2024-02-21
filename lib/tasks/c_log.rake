@@ -13,7 +13,7 @@
 namespace :c_log do
   desc "Run #logs"
   task logs: :environment do
-    logger = ContextualLogger.new($stdout, puts_only_g: true)
+    logger = ContextualLogger.new($stdout, global_puts_only: true)
     driver = ContextualLoggerDriver.new
     begin
       driver.logs

@@ -59,4 +59,7 @@ RSpec.configure do |config|
 
   # Arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Force spec files to use `RSpec.describe` at the top level rather than just `describe`
+  config.expose_dsl_globally = false
 end

@@ -17,16 +17,30 @@ class OpenaiApiService
   class WordList
     include Loggable
 
-    attr_accessor :puzzle_id, :word_set
-    attr_reader :log_message
+    attr_reader :puzzle_id, :word_set, :log_message
 
     ##
     # @param [Integer] starting_puzzle_id
     # @param [Set] word_set
-    def initialize(starting_puzzle_id = 1, word_set = Set.new)
-      @puzzle_id = starting_puzzle_id.to_i
-      @word_set = word_set
-      @log_message = nil
+    def initialize(starting_puzzle_id = 1, word_set = Set.new, log_message = nil)
+      self.puzzle_id = starting_puzzle_id
+      self.word_set = word_set
+      self.log_message = log_message
+    end
+
+    def puzzle_id=(value)
+      @puzzle_id = value.to_i.positive? ? value.to_i : 1
+    end
+
+    def word_set=(value)
+      @word_set =
+        if value.is_a?(Set) && value.all? { |item| item.is_a?(String) }
+          value
+        elsif value.is_a?(Array) && value.all? { |item| item.is_a?(String) }
+          Set.new(value)
+        else
+          Set.new
+        end
     end
 
     ##
@@ -34,7 +48,12 @@ class OpenaiApiService
     # @param [Symbol] severity
     # @param [Boolean] auto_trace
     def log_message=(msg, severity: :info, auto_trace: false)
-      @log_message = msg.is_a?(LogMessage) ? msg : LogMessage.new(msg, severity:, auto_trace:)
+      @log_message =
+        if msg.is_a?(LogMessage) || msg.nil?
+          msg
+        else
+          LogMessage.new(msg, severity:, auto_trace:)
+        end
     end
   end
 end

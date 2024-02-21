@@ -23,7 +23,7 @@ class OpenaiApiService
 
   OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 
-  attr_accessor :logger, :validator
+  attr_reader :logger, :validator
 
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cutoff: nil)
     @logger =
@@ -149,7 +149,7 @@ class OpenaiApiService
   # @param word_hint [Hash]
   # @raise [TypeError, ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid]
   def save_hint(word_hint)
-    raise TypeError, "Invalid word hint: #{word_hint}" unless @validator.valid_word_hint?(word_hint)
+    @validator.valid_word_hint?(word_hint)
 
     word = Word.find(word_hint[:word])
     word.hint = word_hint[:hint]
@@ -368,7 +368,7 @@ class OpenaiApiService
   end
 
   def test_batching(word_limit, request_cutoff)
-    @logger.puts_and_g = true
+    @logger.global_puts_and = true
     @word_limit = word_limit
     @request_cutoff = request_cutoff
     batch_state = BatchState.new(@logger)

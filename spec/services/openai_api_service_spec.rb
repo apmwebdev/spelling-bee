@@ -12,36 +12,34 @@
 
 require "rails_helper"
 
-describe "OpenaiApiService" do
+RSpec.describe OpenaiApiService do
   include_context "word lists"
 
-  let(:logger) { ContextualLogger.new(IO::NULL, puts_only_g: true, log_level: Logger::INFO) }
-  # logger.level = Logger::INFO
+  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_only: true, log_level: Logger::INFO) }
   let(:validator) { OpenaiApiService::Validator.new(logger) }
 
   describe "#send_request" do
     let(:service) { OpenaiApiService.new(logger:, validator:) }
 
-    context "when submitting invalid `content`" do
-      it "raises a TypeError when `content` is nil" do
+    context "when submitting invalid content" do
+      it "raises a TypeError when content is not a string", :aggregate_failures do
         expect { service.send_request(nil) }.to raise_error(TypeError)
-      end
-
-      it "raises a TypeError when `content` is an array" do
         expect { service.send_request(%w[foo bar]) }.to raise_error(TypeError)
+        expect { service.send_request({ foo: "foo", bar: "bar" }) }.to raise_error(TypeError)
+        expect { service.send_request(123) }.to raise_error(TypeError)
       end
 
-      it "raises a TypeError when `content` is an empty string" do
+      it "raises a TypeError when content is an empty string" do
         expect { service.send_request("") }.to raise_error(TypeError)
       end
 
-      it "raises a TypeError when `content` is too long" do
+      it "raises a TypeError when content is too long" do
         long_content = Random.hex(OpenaiApiService::Constants::CONTENT_CHAR_LIMIT + 1)
         expect { service.send_request(long_content) }.to raise_error(TypeError)
       end
     end
 
-    context "when submitting valid `content`", vcr: { cassette_name: "basic_chat" } do
+    context "when submitting valid content", vcr: { cassette_name: "basic_chat" } do
       let(:valid_content) { "What is OpenAI?" }
       let(:wrapped_response) { service.send_request(valid_content, format_as_json: false) }
       let(:response) { wrapped_response[:response] }
@@ -65,14 +63,10 @@ describe "OpenaiApiService" do
     let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
     let(:word_list) { OpenaiApiService::WordList.new }
 
-    context "when submitting an invalid word_list" do
-      it "raises a TypeError when word_list is nil" do
-        expect { service.generate_word_data(nil) }.to raise_error(TypeError)
-      end
-
-      it "raises a TypeError when word_list is an array" do
-        expect { service.generate_word_data(%w[aioli alit allay]) }.to raise_error(TypeError)
-      end
+    it "raises a TypeError when word_list is invalid", :aggregate_failures do
+      expect { service.generate_word_data(nil) }.to raise_error(TypeError)
+      expect { service.generate_word_data(%w[aioli alit allay]) }.to raise_error(TypeError)
+      expect { service.generate_word_data("aioli, alit, allay") }.to raise_error(TypeError)
     end
 
     context "when word set length >= word limit" do
@@ -180,7 +174,7 @@ describe "OpenaiApiService" do
       end
     end
 
-    context "when it checks all the words for a puzzle" do
+    context "when it finishes processing all the words for a puzzle" do
       let(:first_puzzle_id) { 1 }
       let(:first_puzzle_words) { words_from_strings(0, 4) }
       let(:second_puzzle_words) { words_from_strings(4, 4) }
@@ -208,7 +202,41 @@ describe "OpenaiApiService" do
 
   describe "#generate_message_content" do
     let(:service) { OpenaiApiService.new(logger:, validator:) }
-    let(:word_list) { OpenaiApiService::WordList.new }
-    # stuff
+    let(:word_list) { OpenaiApiService::WordList.new(1, Set.new(sample_words.take(5))) }
+    let(:word_list_string) { "aioli, alit, allay, allot, alloy\n" }
+    let(:pre_word_list_text) { "Text before the word list" }
+    let(:post_word_list_text) { "Text after the word list" }
+    let(:instructions) { OpenaiHintInstruction.new(pre_word_list_text:, post_word_list_text:) }
+
+    it "properly generates a message" do
+      actual = service.generate_message_content(word_list, instructions)
+      expected = "#{pre_word_list_text} #{word_list_string} #{post_word_list_text}"
+      expect(actual).to eq(expected)
+    end
+  end
+
+  describe "#save_hint" do
+    let(:service) { OpenaiApiService.new(logger:, validator:) }
+
+    context "when submitting an invalid word_hint" do
+      it "raises a TypeError if word_hint is nil" do
+        expect { service.save_hint(nil) }.to raise_error(TypeError)
+      end
+
+      it "raises a TypeError if word_hint[:hint] is missing, nil, or blank", :aggregate_failures do
+        blank_hint = { word: "aioli", hint: "" }
+        expect { service.save_hint(blank_hint) }.to raise_error(TypeError)
+        missing_hint = { word: "aioli" }
+        expect { service.save_hint(missing_hint) }.to raise_error(TypeError)
+        nil_hint = { word: "aioli", hint: nil }
+        expect { service.save_hint(nil_hint) }.to raise_error(TypeError)
+      end
+    end
+
+    it "raises an ActiveRecord::RecordNotFound error if it can't find the word" do
+      word_hint = { word: "invalid_word", hint: "hint" }
+      allow(Word).to receive(:find).with(word_hint[:word]).and_raise(ActiveRecord::RecordNotFound)
+      expect { service.save_hint(word_hint) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 end

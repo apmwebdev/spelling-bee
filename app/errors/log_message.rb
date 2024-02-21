@@ -27,7 +27,7 @@ class LogMessage < StandardError
   end
 
   def severity=(value)
-    @severity = parse_severity(value)
+    @severity = parse_severity(value, default: :info, as_symbol: true)
   end
 
   # Named with `set_` prefix for consistency with #set_backtrace

@@ -14,7 +14,7 @@
 class ContextualLoggerDriver
   def initialize
     @logger = ContextualLogger.new("log/contextual_logger_driver.log", "daily")
-    @logger.puts_only_g = true
+    @logger.global_puts_only = true
   end
 
   def logs

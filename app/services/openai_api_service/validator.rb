@@ -23,9 +23,9 @@ class OpenaiApiService
 
     def valid_word_hint?(json)
       valid_hash?(json, [
-        [:word, String],
-        [:hint, String],
-      ], display_name: "word_hint",)
+        [:word, String, ->(p) { p.length.positive? }],
+        [:hint, String, ->(p) { p.length.positive? }],
+      ], display_name: "word_hint", should_raise: true,)
     end
 
     def valid_word_hints?(array)
