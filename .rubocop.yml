@@ -16,6 +16,7 @@ Layout/FirstHashElementIndentation:
 #  AllowMultilineFinalElement: true
 Layout/LineLength:
   Max: 100
+  AllowedPatterns: '\A\s*it\s+"'
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/SpaceInsideHashLiteralBraces:

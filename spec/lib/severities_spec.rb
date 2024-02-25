@@ -13,7 +13,7 @@
 require "rails_helper"
 
 RSpec.describe Severities do
-  before(:context) do
+  before(:all) do
     # Create an anonymous class with this module included for each test
     @dummy = Class.new do
       include Severities

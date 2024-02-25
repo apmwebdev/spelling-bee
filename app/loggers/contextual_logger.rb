@@ -16,7 +16,7 @@
 # - Can take StandardError objects and generate log messages for them
 # - Can log to console instead of the log file on a global or per message basis
 class ContextualLogger < Logger
-  include Casting
+  include BooleanUtils
   include Severities
   include BasicValidator
 
@@ -133,7 +133,7 @@ class ContextualLogger < Logger
   # @param standard_error [StandardError] The exception object to log.
   # @param severity [Symbol] The severity level for the exception. Default is :error.
   def exception(standard_error, severity = :error, additional_message: nil)
-    valid_type?(standard_error, StandardError, should_raise: true, logger: self)
+    valid_type?(standard_error, StandardError, should_raise: true, logger_override: self)
 
     valid_severity =
       if standard_error.is_a?(LogMessage)
@@ -262,6 +262,6 @@ class ContextualLogger < Logger
 
   def valid_puts_global?(to_test)
     to_test == true || to_test == false ||
-      valid_array?(to_test, Symbol, ->(item) { LEVEL_SYMBOLS.include?(item) }, logger: self)
+      valid_array?(to_test, Symbol, ->(item) { LEVEL_SYMBOLS.include?(item) }, logger_override: self)
   end
 end
