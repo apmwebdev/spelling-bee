@@ -18,36 +18,36 @@ class NytScraperValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    hash_properties_are_valid?(json, "response", [
+    valid_hash?(json, [
       ["today", Hash, ->(p) { @puzzle_validator.valid_nyt_puzzle?(p) }],
       ["pastPuzzles", Hash, ->(p) { past_puzzles_valid?(p) }],
-    ],)
+    ], display_name: "response",)
   end
 
   def past_puzzles_valid?(json)
-    hash_properties_are_valid?(json, "pastPuzzles", [
+    valid_hash?(json, [
       ["thisWeek", Array, ->(p) { valid_puzzle_array?(p) }],
       ["lastWeek", Array, ->(p) { valid_puzzle_array?(p) }],
-    ],)
+    ], display_name: "pastPuzzles",)
   end
 
   def today_valid?(json)
-    error_base = "today_valid? = false"
-    unless json.is_a?(Hash)
-      err_log "#{error_base}: 'json' is not a hash."
-      return false
-    end
-    unless json.key?("today")
-      err_log "#{error_base}: Key 'today' doesn't exist in hash."
-      return false
-    end
-
+    raise TypeError, "'json' is not a hash." unless json.is_a?(Hash)
+    raise TypeError, "Key 'today' doesn't exist in hash." unless json.key?("today")
     @puzzle_validator.valid_nyt_puzzle?(json["today"])
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 
   def valid_puzzle_array?(puzzles)
-    return false unless puzzles.is_a?(Array)
-
-    puzzles.all? { |puzzle| @puzzle_validator.valid_nyt_puzzle?(puzzle) }
+    raise TypeError, "puzzles is not an array: #{puzzles}" unless puzzles.is_a?(Array)
+    unless puzzles.all? { |puzzle| @puzzle_validator.valid_nyt_puzzle?(puzzle) }
+      raise TypeError, "Not all puzzles are valid"
+    end
+    return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 end

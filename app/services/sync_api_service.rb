@@ -15,19 +15,8 @@ require "open-uri"
 # This is the service that is the client half of the Sync API. It is designed to be used by a dev
 # environment to get the most up-to-date puzzle data from the production environment.
 class SyncApiService
-  # :nodoc:
-  class SyncApiLogger < Logger
-    def initialize
-      super("log/sync_api.log", "weekly")
-      @formatter = proc do |severity, datetime, _progname, msg|
-        timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-        "#{severity} #{timestamp} - #{msg}\n"
-      end
-    end
-  end
-
   def initialize
-    @logger = SyncApiLogger.new
+    @logger = ContextualLogger.new("log/sync_api.log", "weekly")
     @validator = SyncApiValidator.new(@logger)
   end
 
@@ -36,32 +25,31 @@ class SyncApiService
   # method until it gets to the most recent puzzle.
   def sync_one_page_of_puzzle_data(first_puzzle_identifier)
     handle_error = lambda do |msg|
-      @logger.error msg
+      @logger.fatal msg
       { error: msg }
     end
-    base_msg = "sync_one_page_of_puzzle_data"
-    @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
+    @logger.info "Starting with #{first_puzzle_identifier}"
     url = "#{ENV['PRODUCTION_SYNC_API_URL']}/recent_puzzles/#{first_puzzle_identifier}"
     authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
     response = URI.open(url, "Authorization" => authorization_token)&.read
-    return handle_error.call("#{base_msg}: Response is nil. Exiting.") unless response
+    return handle_error.call("Response is nil. Exiting.") unless response
 
     begin
       json = JSON.parse(response)
     rescue JSON::ParserError => e
-      return handle_error.call("#{base_msg}: Unable to parse JSON response for Sync API: #{e.inspect}")
+      return handle_error.call("Unable to parse JSON response for Sync API: #{e.inspect}")
     end
 
-    return handle_error.call("#{base_msg}: Invalid Sync API response") unless @validator.valid?(json)
+    return handle_error.call("Invalid Sync API response") unless @validator.valid?(json)
 
-    @logger.info "#{base_msg}: Begin loop through data array"
+    @logger.info "Begin loop through data array"
     json["data"].each do |item|
       puzzle_data = item["puzzle_data"]
       puzzle_id = puzzle_data["id"].to_i
-      @logger.info "#{base_msg}: Syncing puzzle #{puzzle_id}"
+      @logger.info "Syncing puzzle #{puzzle_id}"
       existing_puzzle = Puzzle.find_by(id: puzzle_id)
       if existing_puzzle && Date.parse(puzzle_data["date"]) == existing_puzzle.date
-        @logger.info "#{base_msg}: Data for puzzle #{puzzle_id} already matches. Skipping."
+        @logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
         next
       end
 
@@ -71,18 +59,17 @@ class SyncApiService
   end
 
   def sync_recent_puzzles(first_puzzle_identifier)
-    base_msg = "sync_recent_puzzles"
-    @logger.info "#{base_msg}: Starting with #{first_puzzle_identifier}"
+    @logger.info "Starting with #{first_puzzle_identifier}"
     starting_identifier = first_puzzle_identifier
     loop do
-      @logger.info "#{base_msg}: Iterating loop"
+      @logger.info "Iterating loop"
       result = sync_one_page_of_puzzle_data(starting_identifier)
       if result[:error]
-        @logger.error "#{base_msg}: Error returned. Breaking loop."
+        @logger.error "Error returned. Breaking loop."
         break
       end
       if result["data"].length < 50
-        @logger.info "#{base_msg}: Data length < 50. Last puzzle reached. Breaking loop."
+        @logger.info "Data length < 50. Last puzzle reached. Breaking loop."
         break
       end
       starting_identifier = result["last_id"].to_i + 1

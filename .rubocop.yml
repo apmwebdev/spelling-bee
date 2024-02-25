@@ -2,14 +2,25 @@ Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
-Layout/FirstArrayElementIndentation:
-  EnforcedStyle: consistent
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+Layout/EmptyLineAfterMultilineCondition:
+  Enabled: true
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+#Layout/FirstMethodArgumentLineBreak:
+#  AllowMultilineFinalElement: true
+#Layout/FirstMethodParameterLineBreak:
+#  AllowMultilineFinalElement: true
+Layout/LineLength:
+  Max: 100
+  AllowedPatterns: '\A\s*it\s+"'
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: space
+  EnforcedStyle: compact
 Lint/MissingSuper:
   AllowedParentClasses: [StandardError, ApiError]
 Metrics/AbcSize:
@@ -30,6 +41,8 @@ Metrics/PerceivedComplexity:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
+Style/NumericPredicate:
+  Enabled: false
 Style/RedundantReturn:
   Enabled: false
 Style/StringLiterals:
@@ -42,3 +55,5 @@ Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
+Style/WordArray:
+  Enabled: false

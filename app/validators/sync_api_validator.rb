@@ -18,50 +18,46 @@ class SyncApiValidator < ExternalServiceValidatorBase
   end
 
   def valid?(json)
-    @logger.info "SyncApiValidator: Beginning Sync API response validation..."
-    hash_properties_are_valid?(json, "response", [
+    @logger.info "Beginning Sync API response validation..."
+    valid_hash?(json, [
       ["data", Array, ->(prop) { valid_response_data?(prop) }],
       ["last_id", Integer, ->(prop) { PuzzleIdentifierService.validate_id_format(prop) }],
-    ],)
+    ], display_name: "response",)
   end
 
   def valid_response_data?(json)
-    error_base = "SyncApiValidator: response[\"data\"] is invalid"
-    unless json.is_a?(Array)
-      err_log "#{error_base}: Must be array: #{json}"
-      return false
-    end
-    unless json.all? { |item| valid_data_item?(item) }
-      err_log "#{error_base}: Some items are invalid"
-      return false
-    end
+    raise TypeError, "json must be an array: #{json}" unless json.is_a?(Array)
+    raise TypeError, "Some items are invalid" unless json.all? { |item| valid_data_item?(item) }
     return true
+  rescue TypeError => e
+    @logger.exception e
+    return false
   end
 
   def valid_data_item?(json)
-    hash_properties_are_valid?(json, "data_item", [
+    valid_hash?(json, [
       ["puzzle_data", Hash, ->(p) { @puzzle_validator.valid_sync_api_puzzle?(p) }],
       ["origin_data", Hash, ->(p) { valid_nyt_origin_data?(p) || valid_sb_solver_origin_data?(p) }],
       ["answer_words", Array, ->(p) { @puzzle_validator.valid_word_array?(p) }],
-    ],)
+    ], display_name: "data_item",)
   end
 
   def valid_nyt_origin_data?(json)
-    hash_properties_are_valid?(json, "origin_data", [
+    valid_hash?(json, [
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["id", Integer],
       ["json_data", Hash],
       ["nyt_id", Integer],
       ["updated_at", String, ->(p) { valid_date?(p) }],
-    ],)
+    ], display_name: "origin_data",)
   end
 
   def valid_sb_solver_origin_data?(json)
-    hash_properties_are_valid?(json, "origin_data", [
+    valid_hash?(json, [
       ["created_at", String, ->(p) { valid_date?(p) }],
       ["id", Integer],
       ["sb_solver_id", Integer],
       ["updated_at", String, ->(p) { valid_date?(p) }],
-    ],)
+    ], display_name: "origin_data",)
   end
 end

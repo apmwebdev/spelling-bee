@@ -14,3 +14,13 @@
 class SbSolverPuzzle < ApplicationRecord
   has_one :puzzle, as: :origin
 end
+
+# == Schema Information
+#
+# Table name: sb_solver_puzzles
+#
+#  id           :bigint           not null, primary key
+#  sb_solver_id :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#

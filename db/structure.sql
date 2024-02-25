@@ -382,6 +382,290 @@ ALTER SEQUENCE public.obscurity_panels_id_seq OWNED BY public.obscurity_panels.i
 
 
 --
+-- Name: openai_hint_instructions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_instructions (
+    id bigint NOT NULL,
+    pre_word_list_text text,
+    post_word_list_text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: openai_hint_instructions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_instructions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_instructions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_instructions_id_seq OWNED BY public.openai_hint_instructions.id;
+
+
+--
+-- Name: openai_hint_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_requests (
+    id bigint NOT NULL,
+    openai_hint_instruction_id bigint NOT NULL,
+    word_list character varying[],
+    req_ai_model character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN openai_hint_requests.openai_hint_instruction_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.openai_hint_instruction_id IS 'The instructions sent to the API about how to generate the hints for this request';
+
+
+--
+-- Name: COLUMN openai_hint_requests.word_list; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.word_list IS 'The list of words sent to the API for hints';
+
+
+--
+-- Name: COLUMN openai_hint_requests.req_ai_model; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_requests.req_ai_model IS 'The AI model requested. The ''req_'' in front is to differentiate from the modelthat the response says it used. These should be the same, but you never know.';
+
+
+--
+-- Name: openai_hint_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_requests_id_seq OWNED BY public.openai_hint_requests.id;
+
+
+--
+-- Name: openai_hint_responses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.openai_hint_responses (
+    id bigint NOT NULL,
+    openai_hint_request_id bigint NOT NULL,
+    word_hints jsonb[] DEFAULT '{}'::jsonb[],
+    chat_completion_id character varying,
+    system_fingerprint character varying,
+    openai_created_timestamp timestamp(6) without time zone,
+    res_ai_model character varying,
+    prompt_tokens integer,
+    completion_tokens integer,
+    total_tokens integer,
+    response_time_seconds double precision,
+    openai_processing_ms integer,
+    openai_version character varying,
+    x_ratelimit_limit_requests integer,
+    x_ratelimit_limit_tokens integer,
+    x_ratelimit_remaining_requests integer,
+    x_ratelimit_remaining_tokens integer,
+    x_ratelimit_reset_requests character varying,
+    x_ratelimit_reset_tokens character varying,
+    x_request_id character varying,
+    http_status integer,
+    error_body jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_hint_request_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_hint_request_id IS 'The request associated with this response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.word_hints; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.word_hints IS 'The array of word hints returned in the response.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.chat_completion_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.chat_completion_id IS 'The ''id'' field from the response body';
+
+
+--
+-- Name: COLUMN openai_hint_responses.system_fingerprint; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.system_fingerprint IS 'The system fingerprint from the response body, indicating the exact configuration used by the system to generate the response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_created_timestamp; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_created_timestamp IS 'The ''created'' timestamp from the body of the response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.res_ai_model; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.res_ai_model IS 'The AI model indicated in the body of the response. This *should* be the same as the one sent in the request, but I''m saving it here as well just in case.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.prompt_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.prompt_tokens IS 'The number of tokens in the request prompt';
+
+
+--
+-- Name: COLUMN openai_hint_responses.completion_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.completion_tokens IS 'The number of tokens in the response';
+
+
+--
+-- Name: COLUMN openai_hint_responses.total_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.total_tokens IS 'The total number of tokens used for the request + response. This is redundant, but it''s easier than trying to do generated columns with ActiveRecord, and this is data that seems useful to have at the database level.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.response_time_seconds; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.response_time_seconds IS 'This is the round trip time of the request, as calculated from the app. It takes a timestamp before the request is sent and another after, and then calculates the difference between them.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_processing_ms; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_processing_ms IS 'The amount of time the model took to generate the response, as returned in the ''openai-processing-ms'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.openai_version; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.openai_version IS 'The version of the model used (I think?). This is a different metric than the version number at the end of the model name, e.g., the ''0125'' in ''gpt-3.5-turbo-0125''. This is a date and can be found in the ''openai-version'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_limit_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_limit_requests IS '''The maximum number of requests that are permitted before exhausting the rate limit.'' Determined by the model used and the individual account limits. Sent in the ''x-ratelimit-limit-requests'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_limit_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_limit_tokens IS '''The maximum number of tokens that are permitted before exhausting the rate limit.'' Determined by the model used and the individual account limits. Sent in the ''x-ratelimit-limit-tokens'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_remaining_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_remaining_requests IS '''The remaining number of requests that are permitted before exhausting the rate limit.'' Sent in the ''x-ratelimit-remaining-requests'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_remaining_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_remaining_tokens IS '''The remaining number of tokens that are permitted before exhausting the rate limit.'' Sent in the ''x-ratelimit-remaining-tokens'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_reset_requests; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_reset_requests IS '''The time until the rate limit (based on requests) resets to its initial state.'' Sent in the ''x-ratelimit-reset-requests'' header. This is a string with both numbers and units, e.g. ''90ms'' or ''6m20s''.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_ratelimit_reset_tokens; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_ratelimit_reset_tokens IS '''The time until the rate limit (based on tokens) resets to its initial state.'' Sent in the ''x-ratelimit-reset-tokens'' header. This is a string with both numbers and units, e.g. ''90ms'' or ''6m20s''.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.x_request_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.x_request_id IS 'A different ID than the one sent in the body of the response. Not sure what the difference is. Saving for good measure. Included in the ''x-request-id'' header.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.http_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.http_status IS 'The HTTP status code of the response, represented by just the integer.';
+
+
+--
+-- Name: COLUMN openai_hint_responses.error_body; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.openai_hint_responses.error_body IS 'If the API returns an error, many of the above fields will likely not be included in the response/headers. Just save the whole response.';
+
+
+--
+-- Name: openai_hint_responses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.openai_hint_responses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: openai_hint_responses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.openai_hint_responses_id_seq OWNED BY public.openai_hint_responses.id;
+
+
+--
 -- Name: panel_display_states; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -738,7 +1022,8 @@ CREATE TABLE public.words (
     frequency numeric,
     definitions character varying[],
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    hint character varying
 );
 
 
@@ -796,6 +1081,27 @@ ALTER TABLE ONLY public.nyt_puzzles ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.obscurity_panels ALTER COLUMN id SET DEFAULT nextval('public.obscurity_panels_id_seq'::regclass);
+
+
+--
+-- Name: openai_hint_instructions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_instructions ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_instructions_id_seq'::regclass);
+
+
+--
+-- Name: openai_hint_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_requests_id_seq'::regclass);
+
+
+--
+-- Name: openai_hint_responses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses ALTER COLUMN id SET DEFAULT nextval('public.openai_hint_responses_id_seq'::regclass);
 
 
 --
@@ -931,6 +1237,30 @@ ALTER TABLE ONLY public.nyt_puzzles
 
 ALTER TABLE ONLY public.obscurity_panels
     ADD CONSTRAINT obscurity_panels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_instructions openai_hint_instructions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_instructions
+    ADD CONSTRAINT openai_hint_instructions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_requests openai_hint_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests
+    ADD CONSTRAINT openai_hint_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: openai_hint_responses openai_hint_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses
+    ADD CONSTRAINT openai_hint_responses_pkey PRIMARY KEY (id);
 
 
 --
@@ -1140,6 +1470,41 @@ CREATE UNIQUE INDEX index_obscurity_panels_on_uuid ON public.obscurity_panels US
 
 
 --
+-- Name: index_openai_hint_requests_on_openai_hint_instruction_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_requests_on_openai_hint_instruction_id ON public.openai_hint_requests USING btree (openai_hint_instruction_id);
+
+
+--
+-- Name: index_openai_hint_requests_on_word_list; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_requests_on_word_list ON public.openai_hint_requests USING gin (word_list);
+
+
+--
+-- Name: index_openai_hint_responses_on_error_body; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_error_body ON public.openai_hint_responses USING gin (error_body);
+
+
+--
+-- Name: index_openai_hint_responses_on_openai_hint_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_openai_hint_request_id ON public.openai_hint_responses USING btree (openai_hint_request_id);
+
+
+--
+-- Name: index_openai_hint_responses_on_word_hints; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_openai_hint_responses_on_word_hints ON public.openai_hint_responses USING gin (word_hints);
+
+
+--
 -- Name: index_panel_display_states_on_uuid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1343,11 +1708,27 @@ CREATE UNIQUE INDEX index_words_on_text ON public.words USING btree (text);
 
 
 --
+-- Name: openai_hint_responses fk_rails_032822a478; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_responses
+    ADD CONSTRAINT fk_rails_032822a478 FOREIGN KEY (openai_hint_request_id) REFERENCES public.openai_hint_requests(id);
+
+
+--
 -- Name: search_panel_searches fk_rails_0d208c56ea; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_panel_searches
     ADD CONSTRAINT fk_rails_0d208c56ea FOREIGN KEY (search_panel_uuid) REFERENCES public.search_panels(uuid);
+
+
+--
+-- Name: openai_hint_requests fk_rails_0d29d99c3d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.openai_hint_requests
+    ADD CONSTRAINT fk_rails_0d29d99c3d FOREIGN KEY (openai_hint_instruction_id) REFERENCES public.openai_hint_instructions(id);
 
 
 --
@@ -1501,54 +1882,57 @@ ALTER TABLE ONLY public.hint_panels
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20230606230237'),
-('20230718021604'),
-('20230718042515'),
-('20230718061549'),
-('20230718071300'),
-('20230718072005'),
-('20230718075800'),
-('20230726033728'),
-('20230726041156'),
-('20230726041910'),
-('20230726043150'),
-('20230726045405'),
-('20230803182425'),
-('20230803205319'),
-('20230804013313'),
-('20230804013314'),
-('20230808012355'),
-('20230815032425'),
-('20230815050500'),
-('20230815052132'),
-('20230815052939'),
-('20230815055235'),
-('20230815055236'),
-('20230815062841'),
-('20230815063617'),
-('20230815064048'),
-('20230815064457'),
-('20230815065033'),
-('20230815073035'),
-('20230816121754'),
-('20230818004354'),
-('20230828060858'),
-('20230828115156'),
-('20230911051856'),
-('20230912194527'),
-('20230912210851'),
-('20230912212040'),
-('20230913100015'),
-('20231001001349'),
-('20231002213304'),
-('20231011153938'),
-('20231119195913'),
-('20231120084355'),
-('20231120090819'),
-('20231127233418'),
-('20231128021153'),
-('20231128030814'),
+('20240208055651'),
+('20240207033421'),
+('20240207025904'),
+('20240202065829'),
+('20240117185320'),
 ('20231128232734'),
-('20240117185320');
-
+('20231128030814'),
+('20231128021153'),
+('20231127233418'),
+('20231120090819'),
+('20231120084355'),
+('20231119195913'),
+('20231011153938'),
+('20231002213304'),
+('20231001001349'),
+('20230913100015'),
+('20230912212040'),
+('20230912210851'),
+('20230912194527'),
+('20230911051856'),
+('20230828115156'),
+('20230828060858'),
+('20230818004354'),
+('20230816121754'),
+('20230815073035'),
+('20230815065033'),
+('20230815064457'),
+('20230815064048'),
+('20230815063617'),
+('20230815062841'),
+('20230815055236'),
+('20230815055235'),
+('20230815052939'),
+('20230815052132'),
+('20230815050500'),
+('20230815032425'),
+('20230808012355'),
+('20230804013314'),
+('20230804013313'),
+('20230803205319'),
+('20230803182425'),
+('20230726045405'),
+('20230726043150'),
+('20230726041910'),
+('20230726041156'),
+('20230726033728'),
+('20230718075800'),
+('20230718072005'),
+('20230718071300'),
+('20230718061549'),
+('20230718042515'),
+('20230718021604'),
+('20230606230237');
 

@@ -14,97 +14,127 @@ require "open-uri"
 require "nokogiri"
 
 # Past puzzle data needs to be retrieved from sbsolver.com
-module SbSolverScraperService
-  def self.get_puzzle(id)
-    return_object = {
+class SbSolverScraperService
+  def initialize
+    @logger = ContextualLogger.new("log/sb_solver_scraper.log", "daily")
+  end
+
+  def fetch_puzzle(id)
+    @logger.info "Starting import for puzzle #{id}"
+    # Data to be returned to the calling method
+    data = {
       date: nil,
-      center_letter: "",
+      center_letter: nil,
       outer_letters: [],
       answers: [],
       sb_solver_id: id,
     }
+
     url = "https://www.sbsolver.com/s/#{id}"
-    return_object[:sb_solver_url] = url
-    doc = Nokogiri::HTML(URI.open(url))
+    data[:sb_solver_url] = url
 
-    # Date
-    date_string = doc.css(".bee-date a").first.text
-    return_object[:date] = Date.parse(date_string)
+    # Fetch HTML
+    begin
+      doc = Nokogiri::HTML(URI.open(url))
+    rescue OpenURI::HTTPError => e
+      raise StandardError, "The request failed with HTTP error: #{e.message}"
+    rescue SocketError => e
+      raise StandardError, "Could not connect to the server: #{e.message}"
+    end
 
-    # Letters
+    # Parse date
+    begin
+      date_string_element = doc.css(".bee-date a").first if doc
+      raise StandardError, "Date element not found" unless date_string_element
+
+      date_string = date_string_element.text
+      data[:date] = Date.parse(date_string)
+    rescue ArgumentError => e
+      raise StandardError, "Failed to parse date: #{e.message}"
+    end
+
+    # Parse letters
     letters = []
     doc.css(".bee-medium.spacer > .thinner-space-after img").each do |node|
       letters.push(node["src"].slice(-7..-5))
     end
+    if letters.empty? || letters.length != 7
+      raise StandardError, "Can't find letters. letters = #{letters}"
+    end
+
     letters.each do |letter_info|
       if letter_info[2] == "y"
-        return_object[:center_letter] = letter_info[0]
+        data[:center_letter] = letter_info[0]
       else
-        return_object[:outer_letters].push(letter_info[0])
+        data[:outer_letters].push(letter_info[0])
       end
+    end
+    if data[:center_letter].nil? || data[:outer_letters].length != 6
+      msg = "Invalid letter data. center_letter = #{data[:center_letter]}, "
+      msg += "outer_letters = #{data[:outer_letters]}"
+      handle_error.call msg
+      return data
     end
 
     # Answers
     doc.css(".bee-set td.bee-hover a").each do |node|
-      return_object[:answers].push(node.text.downcase)
+      data[:answers].push(node.text.downcase)
     end
+    raise StandardError, "Can't find answers: #{data[:answers]}" if data[:answers].empty?
 
-    return_object
+    return data
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
+    raise e
   end
 
-  def self.write_log(to_log)
-    File.write("log/sb_solver_scraper_log.txt", "#{to_log}\n", mode: "a")
-  end
+  def seed_puzzles(start_id, end_id)
+    @logger.info "Import puzzles between IDs #{start_id} and #{end_id}, inclusive"
 
-  def self.seed_puzzles(start_id, end_id)
-    file = File.new("log/sb_solver_scraper_log.txt", "a")
-    file.close
-    write_log "Seed Puzzles: Starting at #{DateTime.now}"
     start_id.upto(end_id) do |id|
-      write_log "Starting import for puzzle #{id}"
-      if Puzzle.find_by(id:).nil?
-        sleep(rand(0..2))
-        puzzle_data = get_puzzle(id)
-        write_log "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
-        sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
-        puzzle = Puzzle.create({
-          date: puzzle_data[:date],
-          center_letter: puzzle_data[:center_letter],
-          outer_letters: puzzle_data[:outer_letters],
-          origin: sb_solver_puzzle,
-        })
-        puzzle_data[:answers].each do |item|
-          word = Word.create_or_find_by({ text: item })
-          if word.frequency.nil?
-            write_log "Fetching datamuse data for \"#{item}\""
-            datamuse_data = DatamuseApiService.get_word_data(item)
-            word.frequency = datamuse_data[:frequency]
-            word.definitions = datamuse_data[:definitions]
-            word.save
-          else
-            write_log "Datamuse data already exists for \"#{item}\""
-          end
-          Answer.create({ puzzle:, word_text: item })
-        end
-        puzzle.create_excluded_words_cache
-        write_log "Created excluded words cache"
-        write_log "Finished importing puzzle #{id}"
-      else
-        write_log "Puzzle #{id} already exists. Moving to next puzzle."
+      @logger.info "Starting loop iteration, id = #{id}"
+      unless Puzzle.find_by(id:).nil?
+        @logger.info "Puzzle #{id} already exists. Skipping."
+        next
       end
-    end
-  end
 
-  def self.log_test
-    1.upto(20) do |i|
-      sleep(1)
-      write_log(i)
+      # Don't overwhelm the SB Solver site
+      sleep(rand(0..2))
+      begin
+        puzzle_data = fetch_puzzle(id)
+      rescue StandardError => e
+        raise StandardError, "Error fetching data for puzzle #{id}: #{e.message}"
+      end
+
+      @logger.info "Puzzle ID = #{id}, date = #{puzzle_data[:date]}"
+      sb_solver_puzzle = SbSolverPuzzle.create({ sb_solver_id: id })
+      puzzle = Puzzle.create!({
+        date: puzzle_data[:date],
+        center_letter: puzzle_data[:center_letter],
+        outer_letters: puzzle_data[:outer_letters],
+        origin: sb_solver_puzzle,
+      })
+
+      puzzle_data[:answers].each do |item|
+        word = Word.create_or_find_by({ text: item })
+        unless word.frequency.nil?
+          @logger.info "Datamuse data already exists for \"#{item}\""
+          next
+        end
+
+        @logger.info "Fetching datamuse data for \"#{item}\""
+        datamuse_data = DatamuseApiService.get_word_data(item)
+        word.frequency = datamuse_data[:frequency]
+        word.definitions = datamuse_data[:definitions]
+        word.save!
+        Answer.create!({ puzzle:, word_text: item })
+      end
+
+      puzzle.create_excluded_words_cache
+      @logger.info "Created excluded words cache"
+      @logger.info "Finished importing puzzle #{id}"
     end
-    write_log("blah")
-    write_log("blah2")
-    log_file = File.new("log/test_log.txt", "a")
-    log_file.puts "Date is #{DateTime.now}"
-    log_file.close
-    nil
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
   end
 end

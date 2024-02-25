@@ -13,23 +13,11 @@
 require "open-uri"
 require "nokogiri"
 require "json"
-require "logger"
 
 # Scrapes puzzle data from the NYT Spelling Bee site
 class NytScraperService
-  # :nodoc:
-  class NytScraperLogger < Logger
-    def initialize
-      super("log/nyt_scraper.log", "weekly")
-      @formatter = proc do |severity, datetime, _progname, msg|
-        timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
-        "#{severity} #{timestamp} - #{msg}\n"
-      end
-    end
-  end
-
   def initialize
-    @logger = NytScraperLogger.new
+    @logger = ContextualLogger.new("log/nyt_scraper.log", "weekly")
     @validator = NytScraperValidator.new(@logger)
   end
 
@@ -43,7 +31,7 @@ class NytScraperService
     print_date = puzzle_json["printDate"]
     @logger.info "Checking DB for #{print_date} puzzle."
     puzzle_date = Date.parse(print_date)
-    return @logger.info "Puzzle exists." if Puzzle.exists?(date: puzzle_date)
+    return @logger.info("Puzzle exists.", with_method: true) if Puzzle.exists?(date: puzzle_date)
 
     @logger.info "Puzzle not present. Starting import..."
     nyt_puzzle = NytPuzzle.create!({ nyt_id: puzzle_json["id"], json_data: puzzle_json })
@@ -57,15 +45,15 @@ class NytScraperService
     @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
     puzzle_json["answers"].each do |answer|
       word = Word.create_or_find_by({ text: answer })
-      if word.frequency.nil?
-        @logger.info "Fetching datamuse data for \"#{answer}\"."
-        datamuse_data = DatamuseApiService.get_word_data(answer)
-        word.frequency = datamuse_data[:frequency]
-        word.definitions = datamuse_data[:definitions]
-        word.save
-      else
+      unless word.frequency.nil?
         @logger.info "Datamuse data already exists for \"#{answer}\"."
+        next
       end
+      @logger.info "Fetching datamuse data for \"#{answer}\"."
+      datamuse_data = DatamuseApiService.get_word_data(answer)
+      word.frequency = datamuse_data[:frequency]
+      word.definitions = datamuse_data[:definitions]
+      word.save!
       Answer.create!({ puzzle:, word_text: answer })
     end
     puzzle.create_excluded_words_cache
@@ -89,10 +77,5 @@ class NytScraperService
     @days_arr.each do |puzzle_json|
       create_puzzle_from_json(puzzle_json)
     end
-  end
-
-  def log_test
-    write_log("test")
-    write_log("test 2")
   end
 end
