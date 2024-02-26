@@ -219,8 +219,8 @@ RSpec.describe OpenaiApiService do
     let(:service) { OpenaiApiService.new(logger:, validator:) }
 
     context "when submitting an invalid word_hint" do
-      it "raises a TypeError if word_hint is nil" do
-        expect { service.save_hint(nil) }.to raise_error(TypeError)
+      it "raises an ArgumentError if word_hint is nil" do
+        expect { service.save_hint(nil) }.to raise_error(ArgumentError)
       end
 
       it "raises a TypeError if word_hint[:hint] is missing, nil, or blank", :aggregate_failures do
@@ -238,5 +238,142 @@ RSpec.describe OpenaiApiService do
       allow(Word).to receive(:find).with(word_hint[:word]).and_raise(ActiveRecord::RecordNotFound)
       expect { service.save_hint(word_hint) }.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it "saves the hint if word and word_hint are valid" do
+      sample_word = sample_words.first
+      Word.create(text: sample_word)
+      hint_text = "This is hint text"
+      word_hint = { word: sample_word, hint: hint_text }
+      service.save_hint(word_hint)
+      word = Word.find(sample_word)
+
+      expect(word.hint).to eq(hint_text)
+    end
+  end
+
+  describe "#save_hints" do
+    let(:service) { OpenaiApiService.new(logger:, validator:) }
+    let(:hint_text) { "Hint for " }
+    let(:five_words) { sample_words.first(5) }
+    let(:word_hints) { five_words.map { |word| { word:, hint: hint_text + word } } }
+    let(:invalid_word_hints) { [{ word: "word", hint: "hint" }, { word: "missing_hint" }] }
+
+    it "raises a TypeError if word_hints is invalid", :aggregate_failures do
+      expect { service.save_hints(nil) }.to raise_error(TypeError)
+      expect { service.save_hints([]) }.to raise_error(TypeError)
+      expect { service.save_hints(invalid_word_hints) }.to raise_error(TypeError)
+    end
+
+    context "when word_hints is valid" do
+      let(:logger) { instance_double(ContextualLogger) }
+      let(:validator) do
+        instance_double(OpenaiApiService::Validator, valid_word_hints?: true,
+          valid_word_hint?: true,)
+      end
+      let(:service) { OpenaiApiService.new(logger:, validator:) }
+
+      before do
+        word_hints.each { |wh| Word.create(text: wh[:word]) }
+      end
+
+      it "logs properly" do
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages.save_hints_length(word_hints.length)).ordered
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::SAVE_HINTS_FINISHED).ordered
+        service.save_hints(word_hints)
+      end
+
+      it "adds hints to all all words in array", :aggregate_failures do
+        allow(logger).to receive(:info)
+        before_hint_count = Word.where.not(hint: nil).count
+        service.save_hints(word_hints)
+        after_hint_count = Word.where.not(hint: nil).count
+
+        expect(before_hint_count).to be(0)
+        expect(after_hint_count).to be(word_hints.length)
+      end
+    end
+  end
+
+  describe "#save_hint_request" do
+    fixtures :openai_hint_instructions
+
+    let(:logger) { instance_double(ContextualLogger, info: nil) }
+    let(:validator) { OpenaiApiService::Validator.new(logger) }
+    let(:service) { OpenaiApiService.new(logger:, validator:) }
+    let(:valid_word_list) do
+      wl = OpenaiApiService::WordList.new
+      wl.word_set = Set.new(sample_words.take(5))
+      wl
+    end
+    let(:valid_instructions) { openai_hint_instructions(:valid_instructions) }
+    let(:valid_ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
+
+    it "raises a TypeError when word_list has no words" do
+      empty_word_list = OpenaiApiService::WordList.new
+      expect { service.save_hint_request(empty_word_list, valid_instructions, valid_ai_model) }
+        .to raise_error(TypeError)
+    end
+
+    it "raises a TypeError when word_list is otherwise invalid", :aggregate_failures do
+      valid_args = [valid_instructions, valid_ai_model]
+      expect { service.save_hint_request(nil, *valid_args) }.to raise_error(TypeError)
+      expect { service.save_hint_request([], *valid_args) }.to raise_error(TypeError)
+      expect { service.save_hint_request({}, *valid_args) }.to raise_error(TypeError)
+    end
+
+    it "raises a TypeError when instructions is invalid", :aggregate_failures do
+      expect { service.save_hint_request(valid_word_list, nil, valid_ai_model) }
+        .to raise_error(TypeError)
+      expect { service.save_hint_request(valid_word_list, "foo", valid_ai_model) }
+        .to raise_error(TypeError)
+      expect { service.save_hint_request(valid_word_list, %w[foo bar], valid_ai_model) }
+        .to raise_error(TypeError)
+      expect { service.save_hint_request(valid_word_list, {}, valid_ai_model) }
+        .to raise_error(TypeError)
+    end
+
+    it "raises a TypeError when ai_model is invalid", :aggregate_failures do
+      valid_args = [valid_word_list, valid_instructions]
+      expect { service.save_hint_request(*valid_args, nil) }.to raise_error(TypeError)
+      expect { service.save_hint_request(*valid_args, 123) }.to raise_error(TypeError)
+      expect { service.save_hint_request(*valid_args, %w[foo bar]) }.to raise_error(TypeError)
+      expect { service.save_hint_request(*valid_args, {}) }.to raise_error(TypeError)
+    end
+
+    context "when arguments are valid" do
+      let(:valid_args) { [valid_word_list, valid_instructions, valid_ai_model] }
+
+      it "logs success message" do
+        expect(logger).to receive(:info).with(OpenaiApiService::Messages::SAVE_HINT_REQUEST_SUCCESS)
+        service.save_hint_request(*valid_args)
+      end
+
+      it "saves an OpenaiHintRequest" do
+        expect { service.save_hint_request(*valid_args) }
+          .to change(OpenaiHintRequest, :count).by(1)
+      end
+
+      it "returns an OpenaiHintRequest" do
+        expect(service.save_hint_request(*valid_args)).to be_a(OpenaiHintRequest)
+      end
+
+      it "returns an OpenaiHintRequest with expected properties", :aggregate_failures do
+        result = service.save_hint_request(*valid_args)
+        expect(result.req_ai_model).to eq(valid_ai_model)
+        expect(result.word_list).to eq(valid_word_list.word_set.to_a)
+        expect(result.openai_hint_instruction).to be(valid_instructions)
+      end
+    end
+  end
+
+  describe "#save_hint_response" do
+  end
+
+  describe "#log_and_send_request" do
+  end
+
+  describe "#seed_answer_hints" do
   end
 end

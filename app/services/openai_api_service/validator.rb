@@ -29,7 +29,8 @@ class OpenaiApiService
     end
 
     def valid_word_hints?(array)
-      array.all? { |hash| valid_word_hint?(hash) }
+      valid_array?(array, Hash, ->(p) { valid_word_hint?(p) },
+        should_raise: true, can_be_empty: false,)
     end
 
     def valid_wrapped_response?(wrapped_response)

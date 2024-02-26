@@ -1,0 +1,8 @@
+valid_instructions:
+  pre_word_list_text: "Provide definition hints for the following words:"
+  post_word_list_text: |
+    Respond in JSON format. There should be an outer object containing an array with the key "word_hints". The array should contain an object for each word. The keys in this object should be "word", which contains the word itself, and "hint", which contains your hint. An example of this format would be: {word_hints:[{word:"aioli",hint:"Hint text for 'aioli'"},{word:"alit",hint:"Hint text for 'alit'"}]}
+
+    Each hint should be one or two sentences and should not contain any form of the word you're providing a hint for, or any word or phrase that the submitted word can be an abbreviation for. For example, the hint for "allay" should not contain "allay," "allaying," "allays," etc. The hints should focus on the meaning of the word, although hints about the pronunciation are also acceptable. These hints are designed to replicate the user-provided hints that users provide on the New York Times Spelling Bee forums for words in that day's Spelling Bee puzzle.
+
+    Please respond only with the JSON object and nothing else.

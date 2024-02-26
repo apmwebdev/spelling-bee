@@ -317,6 +317,14 @@ RSpec.describe BasicValidator do
       @helper = BasicValidatorHelper.new
     end
 
+    it "returns the string if passed a string", :aggregate_failures do
+      type_string_a = "Boolean"
+      expect(@helper.send(:compose_type_string, type_string_a)).to eq(type_string_a)
+
+      type_string_b = "String or #to_s"
+      expect(@helper.send(:compose_type_string, type_string_b)).to eq(type_string_b)
+    end
+
     it "returns the class's name if passed a single class" do
       single_class = String
       expected_response = "String"

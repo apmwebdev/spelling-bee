@@ -27,14 +27,19 @@ class OpenaiApiService
 
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cutoff: nil)
     @logger =
-      if logger.is_a?(ContextualLogger)
+      if class_or_double?(logger, ContextualLogger)
         @logger = logger
       elsif Rails.env.test?
         ContextualLogger.new(IO::NULL)
       else
         ContextualLogger.new("log/open_ai_api.log", "weekly")
       end
-    @validator = validator.is_a?(Validator) ? validator : Validator.new(@logger)
+    @validator =
+      if class_or_double?(validator, Validator)
+        validator
+      else
+        Validator.new(@logger)
+      end
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
     @request_cutoff = request_cutoff
   end
@@ -162,9 +167,9 @@ class OpenaiApiService
   # @param word_hints [Array<Hash>]
   # @raise [TypeError]
   def save_hints(word_hints)
-    raise TypeError, "word_hints isn't an array: #{word_hints}" unless word_hints.is_a?(Array)
+    @validator.valid_word_hints?(word_hints)
 
-    @logger.debug "word_hints length is #{word_hints.length}"
+    @logger.info Messages.save_hints_length(word_hints.length)
     word_hints.each do |word_hint|
       save_hint(word_hint)
     end
@@ -176,15 +181,20 @@ class OpenaiApiService
   # @param word_list [WordList]
   # @param instructions [OpenaiHintInstruction]
   # @param ai_model [String]
-  # @raise [ActiveRecord::RecordInvalid]
+  #
+  # @raise [TypeError, ActiveRecord::RecordInvalid]
   # @return OpenaiHintRequest
   def save_hint_request(word_list, instructions, ai_model)
+    @validator.full_word_list?(word_list)
+    valid_type?(instructions, OpenaiHintInstruction, should_raise: true)
+    valid_type?(ai_model, String, should_raise: true)
+
     request_record = OpenaiHintRequest.new
     request_record.openai_hint_instruction = instructions
     request_record.word_list = word_list.word_set.to_a
     request_record.req_ai_model = ai_model
     request_record.save!
-    @logger.info "Hint request saved successfully"
+    @logger.info Messages::SAVE_HINT_REQUEST_SUCCESS
     # Return the newly saved record so that it can be properly linked to the response that comes
     # back
     request_record
@@ -195,9 +205,7 @@ class OpenaiApiService
   # @param request [OpenaiHintRequest]
   # @raise [TypeError, ActiveRecord::RecordInvalid]
   def save_hint_response(parsed_response, request)
-    unless parsed_response.is_a?(ParsedResponse)
-      raise TypeError, "Invalid parsed_response: #{parsed_response}"
-    end
+    valid_type?(parsed_response, ParsedResponse, should_raise: TypeError)
 
     # Basic data: Necessary and always present
     record = OpenaiHintResponse.new
@@ -239,17 +247,17 @@ class OpenaiApiService
   # Takes word list, generates a word hint request, saves it, sends it, gets the response,
   # parses it, saves it, returns the response.
   def log_and_send_request(word_list, instructions: nil, ai_model: nil)
-    unless @validator.full_word_list?(word_list)
+    unless @validator&.full_word_list?(word_list)
       raise TypeError, "word_list is invalid: #{word_list}"
     end
 
-    instructions = if instructions.is_a?(OpenaiHintInstruction)
-                     instructions
-                   else
-                     OpenaiHintInstruction.last
-                   end
+    instructions =
+      if instructions.is_a?(OpenaiHintInstruction)
+        instructions
+      else
+        OpenaiHintInstruction.last
+      end
     ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
-
     message_content = generate_message_content(word_list, instructions)
     request_record = save_hint_request(word_list, instructions, ai_model)
 
@@ -273,7 +281,7 @@ class OpenaiApiService
     end
 
     word_list = generate_word_data(WordList.new(puzzle_id))
-    raise TypeError, "Invalid word_list: #{word_list}" unless @validator.full_word_list?(word_list)
+    raise TypeError, "Invalid word_list: #{word_list}" unless @validator&.full_word_list?(word_list)
 
     new_puzzle_id = word_list.puzzle_id
     if batch_state.remaining_requests == 0

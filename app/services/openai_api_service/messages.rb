@@ -11,11 +11,17 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 class OpenaiApiService
+  # Module to define messages passed to logger. Keeping them here allows for easier testing
   module Messages
     WORD_LIST_FULL = "Word list is full. Exiting from `puzzle_words` loop."
-
     WORD_LIST_FULL_FRESH = "Word list is full. Exiting before `puzzle_words` loop."
-
     PUZZLE_WORDS_EMPTY = "Words not found for puzzle"
+    SAVE_HINTS_LENGTH_STATIC = "word_hints length is"
+    SAVE_HINTS_FINISHED = "Finished saving word hints"
+    SAVE_HINT_REQUEST_SUCCESS = "Hint request saved successfully"
+
+    def self.save_hints_length(length)
+      "#{SAVE_HINTS_LENGTH_STATIC} #{length}"
+    end
   end
 end

@@ -76,13 +76,14 @@ module BasicValidator
 
   # Tests whether a JSON hash has certain properties, and whether those properties have the correct
   # type and (optionally) whether they pass validation.
-  # @param object [Hash] The object being tested
-  # @param props [Array<Array>] An array of triples with the property key, type or array of types, and (optionally) a validation lambda
+  # @param object [Hash] The array being tested
+  # @param props [Array<Array>] An array of triples with the property key, type or array of types,
+  #   and (optionally) a validation lambda
   # @param display_name (see #valid_type?)
   # @param should_raise (see #valid_type?)
   # @param logger_override (see #valid_type?)
   #
-  # @return [Boolean] True if the object is valid, false otherwise
+  # @return [Boolean] True if the array is valid, false otherwise
   # @raise [TypeError, ArgumentError]
   def valid_hash?(object, props, display_name: "hash", should_raise: false, logger_override: nil)
     method_logger = determine_logger!(@logger, logger_override)
@@ -91,7 +92,7 @@ module BasicValidator
     v8n_exception_type = determine_v8n_exception_type!(should_raise)
 
     # For some validations, we want to keep going even if the property is invalid, so we need to
-    # track the validity of the object in a boolean.
+    # track the validity of the array in a boolean.
     status_struct = Struct.new(:is_valid, :messages)
     status = status_struct.new(true, [])
     props.each do |prop|
@@ -128,33 +129,44 @@ module BasicValidator
   end
 
   ##
-  # @param [any] object
+  # @param [any] array
   # @param [Class] item_class The class that all items in the array must be instances of
   # @param [Proc, nil] item_validator The lambda that validates all items in the array
-  # @param [String] display_name How the object should be referred to in log messages
+  # @param [String] display_name How the array should be referred to in log messages
   # @param [Boolean] should_raise Whether the method should raise a TypeError if validation fails
   #   or merely return false
-  def valid_array?(object, item_class, item_validator = nil, display_name: "array",
-                   should_raise: false, logger_override: nil)
-    determine_logger!(@logger, logger_override)
+  def valid_array?(array, item_class, item_validator = nil, display_name: "array",
+                   can_be_empty: true, should_raise: false, logger_override: nil)
+    method_logger = determine_logger!(@logger, logger_override)
     valid_type?(item_class, Class, should_raise: ArgumentError, logger_override:)
     valid_type?(item_validator, [Proc, NilClass], ->(p) { p.lambda? }, should_raise: ArgumentError,
       logger_override:,)
-    validate_should_raise!(should_raise)
+    v8n_exception_type = determine_v8n_exception_type!(should_raise)
+    can_be_empty = to_bool(can_be_empty)
 
-    valid_type?(
-      object,
-      Array,
-      # All array items must be the right class and must pass the validation function, if provided
-      lambda do |to_test|
-        to_test.all? do |array_item|
-          array_item.is_a?(item_class) && (item_validator.nil? || item_validator.call(array_item))
-        end
-      end,
-      display_name:,
-      should_raise:,
-      logger_override:,
-    )
+    begin
+      valid_type?(
+        array,
+        Array,
+        # All array items must be the right class and must pass the validation function, if provided
+        lambda do |to_test|
+          to_test.all? do |array_item|
+            array_item.is_a?(item_class) && (item_validator.nil? || item_validator.call(array_item))
+          end
+        end,
+        display_name:,
+        should_raise: v8n_exception_type,
+        logger_override:,
+      )
+
+      return true if can_be_empty
+      raise v8n_exception_type, "array can't be empty" if array.empty?
+      return true
+    rescue v8n_exception_type => e
+      raise e if should_raise
+      method_logger&.exception e
+      return false
+    end
   end
 
   def valid_date?(date_string, should_raise: false, logger_override: nil)
@@ -193,13 +205,18 @@ module BasicValidator
     key_set.subset?(hash_keys_set)
   end
 
+  def class_or_double?(object, valid_class)
+    object.is_a?(valid_class) || object.is_a?(RSpec::Mocks::TestDouble)
+  end
+
   private
 
   def determine_logger!(instance_logger, logger_override)
-    return logger_override if logger_override.is_a?(ContextualLogger)
-    return instance_logger if instance_logger.is_a?(ContextualLogger)
-    raise ArgumentError, "Neither instance_logger nor logger_override are ContextualLoggers:\n "\
-      "instance_logger: #{instance_logger}\n logger_override: #{logger_override}"
+    return logger_override if class_or_double?(logger_override, ContextualLogger)
+    return instance_logger if class_or_double?(instance_logger, ContextualLogger)
+    raise ArgumentError, "Neither instance_logger nor logger_override are ContextualLoggers "\
+      "or RSpec doubles: \n instance_logger: #{instance_logger}\n logger_override: "\
+      "#{logger_override}"
   end
 
   def validate_should_raise!(should_raise)
@@ -229,6 +246,8 @@ module BasicValidator
   end
 
   def compose_type_string(type)
+    return type if type.is_a?(String)
+
     return type.name if type.is_a?(Class)
 
     if type.is_a?(Array) && !type.empty? && type.all? { |item| item.is_a?(Class) }
@@ -241,6 +260,6 @@ module BasicValidator
       end
     end
 
-    raise TypeError, "type must be a class or array of classes. Passed #{type}"
+    raise TypeError, "type must be a string, class or array of classes. Passed #{type}"
   end
 end
