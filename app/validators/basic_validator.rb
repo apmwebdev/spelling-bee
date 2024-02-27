@@ -87,9 +87,16 @@ module BasicValidator
   # @raise [TypeError, ArgumentError]
   def valid_hash?(object, props, display_name: "hash", should_raise: false, logger_override: nil)
     method_logger = determine_logger!(@logger, logger_override)
-    valid_type?(object, Hash, display_name:, should_raise: ArgumentError)
-    valid_type?(props, Array, display_name: "props", should_raise: ArgumentError)
     v8n_exception_type = determine_v8n_exception_type!(should_raise)
+    valid_type?(props, Array, display_name: "props", should_raise: ArgumentError)
+
+    begin
+      valid_type?(object, Hash, display_name:, should_raise: v8n_exception_type)
+    rescue v8n_exception_type => e
+      raise e if should_raise
+      method_logger&.exception e
+      return false
+    end
 
     # For some validations, we want to keep going even if the property is invalid, so we need to
     # track the validity of the array in a boolean.
@@ -242,7 +249,7 @@ module BasicValidator
 
   def compose_failed_v8n_message(value, type, display_name = "value")
     type_string = compose_type_string(type)
-    "#{display_name} must be a(n) #{type_string} but is a #{value.class.name}: #{value}"
+    "#{display_name} must be a #{type_string} but is a #{value.class.name}: #{value}"
   end
 
   def compose_type_string(type)

@@ -32,9 +32,7 @@ class OpenaiApiService
     ##
     # Take a wrapped response object and parse it out into the relevant parts
     def parse(wrapped_response)
-      unless @validator.valid_wrapped_response?(wrapped_response)
-        raise TypeError, "Invalid wrapped response: #{wrapped_response}"
-      end
+      @validator.valid_wrapped_response?(wrapped_response)
 
       response = wrapped_response[:response]
       @raw_response = wrapped_response[:response]
@@ -45,10 +43,11 @@ class OpenaiApiService
       begin
         parsed_body = JSON.parse(response.body, symbolize_names: true)
       rescue JSON::ParserError, TypeError => e
-        raise TypeError, "JSON.parse(response.body) failed: #{e.message}. body = #{body}"
+        @logger.error "JSON.parse(response.body) failed: #{e.message}. body = #{response.body}"
+        parsed_body = response.body
       end
 
-      self.body_meta = parsed_body.except(:choices)
+      self.body_meta = parsed_body
       parse_and_set_content(parsed_body)
     end
 
@@ -70,20 +69,20 @@ class OpenaiApiService
     end
 
     def logger=(value)
-      if value.is_a?(ContextualLogger)
+      if class_or_double?(value, ContextualLogger)
         @logger = value
       else
         @logger ||= ContextualLogger.new("log/open_ai_api.log", "weekly")
-        @logger.error "@logger must be a ContextualLogger. Passed #{value}"
+        @logger.error "@logger must be a ContextualLogger or RSpec double. Passed #{value}"
       end
     end
 
     def validator=(value)
-      if value.is_a?(Validator)
+      if class_or_double?(value, Validator)
         @validator = value
       else
         @validator ||= Validator.new(@logger)
-        @logger.error "@validator must be a Validator. Passed #{value}"
+        @logger.error "@validator must be a Validator or RSpec double. Passed #{value}"
       end
     end
 
@@ -92,7 +91,8 @@ class OpenaiApiService
     # response from being saved.
     def body_meta=(value)
       if @validator.valid_response_body_meta?(value)
-        @body_meta = value
+        meta_value = value.except(:content)
+        @body_meta = meta_value
       else
         @logger.error "Invalid body_meta: #{value}"
       end
@@ -102,7 +102,7 @@ class OpenaiApiService
     # Extract the relevant, non-sensitive headers for storing in the DB
     # @raise [TypeError]
     def extract_headers(response)
-      raise TypeError, "Invalid response" unless response.is_a?(Net::HTTPResponse)
+      valid_type?(response, Net::HTTPResponse, should_raise: true)
       response
         .to_hash # Turns response into a hash with headers as entries
         .transform_keys(&:downcase) # Normalize keys before extracting relevant headers

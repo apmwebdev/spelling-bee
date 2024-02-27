@@ -37,7 +37,7 @@ class OpenaiApiService
       valid_hash?(wrapped_response, [
         [:response_time, Float],
         [:response, Net::HTTPResponse],
-      ], display_name: "wrapped_response",)
+      ], display_name: "wrapped_response", should_raise: true,)
     end
 
     def valid_response_body?(body)
@@ -102,7 +102,7 @@ class OpenaiApiService
       end
 
       message = first_choice[:message]
-      unless message.key?(:content)
+      unless message.is_a?(Hash) && message.key?(:content)
         raise TypeError, "Message is invalid: No ':content' key. Message = #{message}"
       end
 
@@ -113,7 +113,7 @@ class OpenaiApiService
         raise TypeError, "JSON parsing of content failed: #{e.message} content = #{content_string}"
       end
 
-      unless content.key?(:word_hints)
+      unless content.is_a?(Hash) && content.key?(:word_hints)
         raise TypeError, "Content is invalid: No ':word_hints' key. content = #{content}"
       end
 
