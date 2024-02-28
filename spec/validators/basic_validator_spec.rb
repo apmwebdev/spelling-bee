@@ -208,6 +208,10 @@ RSpec.describe BasicValidator do
       context "when type is an array of classes" do
         it "returns true when value is an instance of one of the classes in type",
           :aggregate_failures do
+          @helper.type = [String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+
           @helper.type = [String, Integer]
           expect(@helper.run("foo")).to be(true)
           expect(@helper.run!("foo")).to be(true)
@@ -223,6 +227,10 @@ RSpec.describe BasicValidator do
 
         it "fails when value is not an instance of one of the classes in type",
           :aggregate_failures do
+          @helper.type = [String]
+          expect(@helper.run([])).to be(false)
+          expect { @helper.run!([]) }.to raise_error(TypeError)
+
           @helper.type = [String, Integer]
           expect(@helper.run([])).to be(false)
           expect { @helper.run!([]) }.to raise_error(TypeError)
@@ -234,6 +242,51 @@ RSpec.describe BasicValidator do
           expect { @helper.run!("foo") }.to raise_error(TypeError)
           expect(@helper.run(123)).to be(false)
           expect { @helper.run!(123) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is an array of modules" do
+        it "returns true when value is an instance of a class that includes one of the modules in type",
+          :aggregate_failures do
+          @helper.type = [Enumerable]
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+
+          @helper.type = [Enumerable, Comparable]
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+          expect(@helper.run(Time.new)).to be(true)
+          expect(@helper.run!(Time.new)).to be(true)
+        end
+
+        it "fails when value is not an instance of a class that includes one of the modules in type" do
+          @helper.type = [Enumerable]
+          expect(@helper.run("foo")).to be(false)
+          expect { @helper.run!("foo") }.to raise_error(TypeError)
+          expect(@helper.run(:foo)).to be(false)
+          expect { @helper.run!(:foo) }.to raise_error(TypeError)
+
+          @helper.type = [Enumerable, Marshal]
+          expect(@helper.run("foo")).to be(false)
+          expect { @helper.run!("foo") }.to raise_error(TypeError)
+          expect(@helper.run(:foo)).to be(false)
+          expect { @helper.run!(:foo) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is an array of classes and modules" do
+        it "returns true when value.is_a? returns true for at least one item in the array" do
+          @helper.type = [Enumerable, String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+        end
+
+        it "returns true when value.is_a? returns true for all items in the array" do
+          @helper.type = [Comparable, String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
         end
       end
     end
