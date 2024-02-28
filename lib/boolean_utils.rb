@@ -44,3 +44,14 @@ module BooleanUtils
     value == true || value == false # rubocop:disable Style/MultipleComparison
   end
 end
+
+# Make it so that true and false are Booleans
+module Boolean; end
+
+class TrueClass
+  include Boolean
+end
+
+class FalseClass
+  include Boolean
+end

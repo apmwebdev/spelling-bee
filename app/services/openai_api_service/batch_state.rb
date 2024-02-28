@@ -37,7 +37,6 @@ class OpenaiApiService
       self.retry_count = retry_count
     end
 
-    ##
     # @param res [ParsedResponse]
     def update_from_response(res)
       raise TypeError, "Invalid response: #{res}" unless res.is_a?(ParsedResponse)

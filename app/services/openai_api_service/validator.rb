@@ -18,26 +18,25 @@ class OpenaiApiService
     include Constants
 
     def full_word_list?(word_list)
-      valid_type?(word_list, WordList, ->(p) { p.word_set.length.positive? }, should_raise: true)
+      valid_type!(word_list, WordList, ->(p) { p.word_set.length.positive? })
     end
 
     def valid_word_hint?(json)
-      valid_hash?(json, [
+      valid_hash!(json, [
         [:word, String, ->(p) { p.length.positive? }],
         [:hint, String, ->(p) { p.length.positive? }],
-      ], display_name: "word_hint", should_raise: true,)
+      ], display_name: "word_hint",)
     end
 
     def valid_word_hints?(array)
-      valid_array?(array, Hash, ->(p) { valid_word_hint?(p) },
-        should_raise: true, can_be_empty: false,)
+      valid_array!(array, Hash, ->(p) { valid_word_hint?(p) }, can_be_empty: false)
     end
 
     def valid_wrapped_response?(wrapped_response)
-      valid_hash?(wrapped_response, [
+      valid_hash!(wrapped_response, [
         [:response_time, Float],
         [:response, Net::HTTPResponse],
-      ], display_name: "wrapped_response", should_raise: true,)
+      ], display_name: "wrapped_response",)
     end
 
     def valid_response_body?(body)
@@ -68,7 +67,6 @@ class OpenaiApiService
       ], display_name: "usage",)
     end
 
-    ##
     # @param [Net::HTTPResponse] response
     def expected_response_headers?(response)
       normalized_headers = response.to_hash.transform_keys(&:downcase)

@@ -22,48 +22,79 @@ class BasicValidatorHelper
 
   DEFAULT_DISPLAY_NAME = "value"
   DEFAULT_SHOULD_RAISE = true
+  DEFAULT_ERROR_CLASS = TypeError
+  EXCLUDE_ARG = :exclude
+  NAMED_ARGS = [:display_name, :error_class, :logger_override].freeze
 
   # For testing a class that has no @logger instance variable at all, not just a nil one
   class NoLogger
     include BasicValidator
   end
 
-  attr_accessor :value, :type, :validation_fn, :display_name, :should_raise, :logger,
-    :logger_override
+  # Arguments can be set individually, with no validation, to allow for maximum flexibility in
+  # testing.
+  attr_accessor :logger, :value, :type, :validation_fn, :display_name,
+    :error_class, :logger_override
 
   def initialize(value: nil, type: nil, validation_fn: nil, display_name: DEFAULT_DISPLAY_NAME,
-                 should_raise: DEFAULT_SHOULD_RAISE, logger: nil, logger_override: nil)
-    reset_all(value:, type:, validation_fn:, display_name:, should_raise:, logger:,
-      logger_override:,)
+                 logger: nil, error_class: DEFAULT_ERROR_CLASS, logger_override: nil)
+    reset_all(logger:, value:, type:, validation_fn:, display_name:,
+      error_class:, logger_override:,)
   end
 
-  def reset_all(value: nil, type: nil, validation_fn: nil, display_name: DEFAULT_DISPLAY_NAME,
-                should_raise: DEFAULT_SHOULD_RAISE, logger: nil, logger_override: nil)
+  # Reset all the values to their defaults, or pass in any number of custom values to override the
+  # defaults. Good for resetting between tests.
+  def reset_all(logger: nil, value: nil, type: nil, validation_fn: nil,
+                display_name: DEFAULT_DISPLAY_NAME, error_class: DEFAULT_ERROR_CLASS,
+                logger_override: nil)
+    @logger = logger
     @value = value
     @type = type
     @validation_fn = validation_fn
     @display_name = display_name
-    @should_raise = should_raise
-    @logger = logger
+    @error_class = error_class
     @logger_override = logger_override
   end
 
-  ##
-  # Run the #valid_type? method of BasicValidator.
-  # @param p_one_offs [Array]
-  def run(*p_one_offs, **n_one_offs)
-    run_value = p_one_offs.length.positive? ? p_one_offs[0] : @value
-    run_type = p_one_offs.length >= 2 ? p_one_offs[1] : @type
-    run_validation_fn = p_one_offs.length >= 3 ? p_one_offs[2] : @validation_fn
-    run_display_name = n_one_offs.key?(:display_name) ? n_one_offs[:display_name] : @display_name
-    run_should_raise = n_one_offs.key?(:should_raise) ? n_one_offs[:should_raise] : @should_raise
-    run_logger_override =
-      if n_one_offs.key?(:logger_override)
-        n_one_offs[:logger_override]
-      else
-        @logger_override
+  # Run #valid_type? using instance variables as args by default, but excluding args passed in
+  # with EXCLUDE_ARG as the value (the `:exclude` symbol) to test what happens if arguments are not
+  # included. Any argument can be overridden by passing in a non-EXCLUDE_ARG value as well.
+  # @param positional_args [Array] The arguments that are sent to #valid_type? positionally, i.e.
+  #   value, type, and validation_fn
+  # @param named_args [Hash] The arguments that are sent to #valid_type? with names, which is all
+  #   arguments except for value, type, and validation_fn.
+  def run(*positional_args, **named_args)
+    valid_type?(*parse_positional_args(positional_args), **parse_named_args(named_args))
+  end
+
+  # Same as #run, above, but uses #valid_type! instead of #valid_type?
+  def run!(*positional_args, **named_args)
+    valid_type!(*parse_positional_args(positional_args), **parse_named_args(named_args))
+  end
+
+  def parse_positional_args(args)
+    return [@value, @type, @validation_fn] if !args.is_a?(Array) || args.empty?
+    parsed_args = []
+    return parsed_args if args[0] == EXCLUDE_ARG
+
+    parsed_args.push(args[0])
+    return parsed_args if args[1] == EXCLUDE_ARG
+
+    parsed_args.push(args.length >= 2 ? args[1] : @type)
+    return parsed_args if args[2] == EXCLUDE_ARG
+
+    parsed_args.push(args.length >= 3 ? args[2] : @validation_fn)
+    return parsed_args
+  end
+
+  def parse_named_args(args)
+    NAMED_ARGS.reduce({}) do |parsed_args, key|
+      unless args.key?(key)
+        parsed_args[key] = instance_variable_get("@#{key}")
+        next parsed_args
       end
-    valid_type?(run_value, run_type, run_validation_fn, display_name: run_display_name,
-      should_raise: run_should_raise, logger_override: run_logger_override,)
+      next parsed_args if args[key] == EXCLUDE_ARG
+      parsed_args[key] = args[key]
+    end
   end
 end

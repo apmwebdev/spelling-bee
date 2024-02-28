@@ -22,5 +22,4 @@ class ExternalServiceValidatorBase
     end
     @logger = logger
   end
-
 end

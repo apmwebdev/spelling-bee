@@ -14,7 +14,6 @@ require "net/http"
 require "uri"
 require "json"
 
-##
 # Connects to the OpenAI API to generate word definition hints
 class OpenaiApiService
   include Constants
@@ -44,7 +43,6 @@ class OpenaiApiService
     @request_cutoff = request_cutoff
   end
 
-  ##
   # Pass in content and send a request to the OpenAI API with it. Return the response.
   # @param content [String] The text the AI should respond to.
   # @param format_as_json [Boolean] When true, adds a property to the request body instructing the
@@ -93,12 +91,11 @@ class OpenaiApiService
     { response:, response_time: }
   end
 
-  ##
   # Recursively build an answer list (as a Set, later converted to an array) to send to the API for
   # hints.
   # @param word_list [WordList]
   def generate_word_data(word_list = WordList.new)
-    valid_type?(word_list, WordList, should_raise: true)
+    valid_type!(word_list, WordList)
 
     if word_list.word_set.length >= @word_limit
       word_list.log_message = WORD_LIST_FULL_FRESH
@@ -133,7 +130,6 @@ class OpenaiApiService
     generate_word_data(word_list)
   end
 
-  ##
   # Generate the content for the message sent to the OpenAI API. Combine the static instructions
   # with a dynamically generated word list get to get hints for.
   # @param word_list [WordList]
@@ -142,14 +138,13 @@ class OpenaiApiService
   # @return [String]
   def generate_message_content(word_list, instructions)
     @validator.full_word_list?(word_list)
-    valid_type?(instructions, OpenaiHintInstruction, should_raise: true)
+    valid_type!(instructions, OpenaiHintInstruction)
 
     word_list_string = "#{word_list.word_set.to_a.join(', ')}\n"
 
     "#{instructions.pre_word_list_text} #{word_list_string} #{instructions.post_word_list_text}"
   end
 
-  ##
   # Save a hint for a word
   # @param word_hint [Hash]
   # @raise [TypeError, ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid]
@@ -161,7 +156,6 @@ class OpenaiApiService
     word.save!
   end
 
-  ##
   # Loop through a word_hints array and save all the hints. This is in its own method so it's more
   # easily testable.
   # @param word_hints [Array<Hash>]
@@ -176,7 +170,6 @@ class OpenaiApiService
     @logger.info "Finished saving word hints"
   end
 
-  ##
   # Assumes that type checking/validation was already performed
   # @param word_list [WordList]
   # @param instructions [OpenaiHintInstruction]
@@ -186,8 +179,8 @@ class OpenaiApiService
   # @return OpenaiHintRequest
   def save_hint_request(word_list, instructions, ai_model)
     @validator.full_word_list?(word_list)
-    valid_type?(instructions, OpenaiHintInstruction, should_raise: true)
-    valid_type?(ai_model, String, should_raise: true)
+    valid_type!(instructions, OpenaiHintInstruction)
+    valid_type!(ai_model, String)
 
     request_record = OpenaiHintRequest.new
     request_record.openai_hint_instruction = instructions
@@ -200,12 +193,11 @@ class OpenaiApiService
     request_record
   end
 
-  ##
   # @param parsed_response [ParsedResponse]
   # @param request [OpenaiHintRequest]
   # @raise [TypeError, ActiveRecord::RecordInvalid]
   def save_hint_response(parsed_response, request)
-    valid_type?(parsed_response, ParsedResponse, should_raise: TypeError)
+    valid_type!(parsed_response, ParsedResponse)
 
     # Basic data: Necessary and always present
     record = OpenaiHintResponse.new
@@ -243,18 +235,17 @@ class OpenaiApiService
     @logger.info "Hint response saved successfully"
   end
 
-  ##
   # Takes word list, generates a word hint request, saves it, sends it, gets the response,
   # parses it, saves it, returns the response.
   def log_and_send_request(word_list, instructions: nil, ai_model: nil)
-    unless @validator&.full_word_list?(word_list)
-      raise TypeError, "word_list is invalid: #{word_list}"
-    end
+    @validator.full_word_list?(word_list)
+    valid_type!(instructions, [OpenaiHintInstruction, NilClass])
+    valid_type!(ai_model, [String, NilClass])
 
     instructions =
       if instructions.is_a?(OpenaiHintInstruction)
         instructions
-      else
+      elsif instructions.nil?
         OpenaiHintInstruction.last
       end
     ai_model = ai_model.is_a?(String) ? ai_model : DEFAULT_AI_MODEL
@@ -269,7 +260,6 @@ class OpenaiApiService
     parsed_response
   end
 
-  ##
   # Loop through the answers in batches and fetch hints for each one that doesn't already have a
   # hint, saving them to the database.
   def seed_answer_hints(batch_state, puzzle_id: 1, with_save: true)
@@ -330,7 +320,6 @@ class OpenaiApiService
     @logger.exception(e, :fatal)
   end
 
-  ##
   # Test if it's possible to connect to the OpenAI API with the given URL, key, and request format.
   def test_connection
     wrapped_response = send_request("What is OpenAI?", format_as_json: false)
@@ -338,7 +327,6 @@ class OpenaiApiService
     puts response.body if response
   end
 
-  ##
   # Test sending a hint request and parsing the response, but not saving it.
   def test_request(word_limit)
     @word_limit = word_limit
@@ -365,7 +353,6 @@ class OpenaiApiService
     @logger.exception(e, :fatal)
   end
 
-  ##
   # Test sending a hint request, parsing the response, and saving the hints. This doesn't test the
   # batching logic.
   def test_request_and_save(word_limit = nil)

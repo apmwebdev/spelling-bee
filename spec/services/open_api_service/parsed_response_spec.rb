@@ -17,7 +17,7 @@ RSpec.describe OpenaiApiService::ParsedResponse do
   include_context "word lists"
   fixtures :openai_hint_instructions
 
-  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_only: true, log_level: Logger::INFO) }
+  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
   let(:validator) { OpenaiApiService::Validator.new(logger) }
 
   describe "#initialize (mostly testing #parse method)" do
