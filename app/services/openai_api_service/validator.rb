@@ -17,22 +17,22 @@ class OpenaiApiService
   class Validator < ExternalServiceValidatorBase
     include Constants
 
-    def full_word_list?(word_list)
+    def full_word_list!(word_list)
       valid_type!(word_list, WordList, ->(p) { p.word_set.length.positive? })
     end
 
-    def valid_word_hint?(json)
+    def valid_word_hint!(json)
       valid_hash!(json, [
         [:word, String, ->(p) { p.length.positive? }],
         [:hint, String, ->(p) { p.length.positive? }],
       ], display_name: "word_hint",)
     end
 
-    def valid_word_hints?(array)
-      valid_array!(array, Hash, ->(p) { valid_word_hint?(p) }, can_be_empty: false)
+    def valid_word_hints!(array)
+      valid_array!(array, Hash, ->(p) { valid_word_hint!(p) }, can_be_empty: false)
     end
 
-    def valid_wrapped_response?(wrapped_response)
+    def valid_wrapped_response!(wrapped_response)
       valid_hash!(wrapped_response, [
         [:response_time, Float],
         [:response, Net::HTTPResponse],
@@ -85,15 +85,9 @@ class OpenaiApiService
     end
 
     def valid_response_word_hints?(json)
-      raise TypeError, "json isn't an array: #{json}" unless json.is_a?(Array)
-
-      raise TypeError, "json is empty: #{json}" if json.empty?
+      valid_array!(json, Hash, can_be_empty: false)
 
       first_choice = json.first
-      unless first_choice.is_a?(Hash)
-        raise TypeError, "First 'choices' item isn't a hash: #{first_choice}"
-      end
-
       unless first_choice.key?(:message)
         msg = "First choice is invalid: No ':message' key. First choice = #{first_choice}"
         raise TypeError, msg
@@ -115,12 +109,8 @@ class OpenaiApiService
         raise TypeError, "Content is invalid: No ':word_hints' key. content = #{content}"
       end
 
-      word_hints = content[:word_hints]
-      raise TypeError, "word_hints isn't an array: #{word_hints}" unless word_hints.is_a?(Array)
-
-      if word_hints.any? { |hint| !valid_word_hint?(hint) }
-        raise TypeError, "Some word hints are invalid: #{word_hints}"
-      end
+      valid_array!(content[:word_hints], Hash, ->(p) { valid_word_hint!(p) }, can_be_empty: false,
+        display_name: "word_hints",)
 
       return true
     rescue TypeError => e

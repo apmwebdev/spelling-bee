@@ -270,8 +270,8 @@ RSpec.describe OpenaiApiService do
     context "when word_hints is valid" do
       let(:logger) { instance_double(ContextualLogger) }
       let(:validator) do
-        instance_double(OpenaiApiService::Validator, valid_word_hints?: true,
-          valid_word_hint?: true,)
+        instance_double(OpenaiApiService::Validator, valid_word_hints!: true,
+          valid_word_hint!: true,)
       end
       let(:service) { OpenaiApiService.new(logger:, validator:) }
 
@@ -421,7 +421,7 @@ RSpec.describe OpenaiApiService do
         end
 
         it "has @word_hints with only word_hint objects" do
-          word_hints_valid = validator.valid_word_hints?(expected_result.word_hints)
+          word_hints_valid = validator.valid_word_hints!(expected_result.word_hints)
           expect(word_hints_valid).to be(true)
         end
 

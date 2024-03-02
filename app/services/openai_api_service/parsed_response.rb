@@ -30,7 +30,7 @@ class OpenaiApiService
 
     # Take a wrapped response object and parse it out into the relevant parts
     def parse(wrapped_response)
-      @validator.valid_wrapped_response?(wrapped_response)
+      @validator.valid_wrapped_response!(wrapped_response)
 
       response = wrapped_response[:response]
       @raw_response = wrapped_response[:response]

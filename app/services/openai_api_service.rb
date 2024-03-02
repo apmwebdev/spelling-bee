@@ -137,7 +137,7 @@ class OpenaiApiService
   # @raise [TypeError]
   # @return [String]
   def generate_message_content(word_list, instructions)
-    @validator.full_word_list?(word_list)
+    @validator.full_word_list!(word_list)
     valid_type!(instructions, OpenaiHintInstruction)
 
     word_list_string = "#{word_list.word_set.to_a.join(', ')}\n"
@@ -149,7 +149,7 @@ class OpenaiApiService
   # @param word_hint [Hash]
   # @raise [TypeError, ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid]
   def save_hint(word_hint)
-    @validator.valid_word_hint?(word_hint)
+    @validator.valid_word_hint!(word_hint)
 
     word = Word.find(word_hint[:word])
     word.hint = word_hint[:hint]
@@ -161,7 +161,7 @@ class OpenaiApiService
   # @param word_hints [Array<Hash>]
   # @raise [TypeError]
   def save_hints(word_hints)
-    @validator.valid_word_hints?(word_hints)
+    @validator.valid_word_hints!(word_hints)
 
     @logger.info Messages.save_hints_length(word_hints.length)
     word_hints.each do |word_hint|
@@ -178,7 +178,7 @@ class OpenaiApiService
   # @raise [TypeError, ActiveRecord::RecordInvalid]
   # @return OpenaiHintRequest
   def save_hint_request(word_list, instructions, ai_model)
-    @validator.full_word_list?(word_list)
+    @validator.full_word_list!(word_list)
     valid_type!(instructions, OpenaiHintInstruction)
     valid_type!(ai_model, String)
 
@@ -238,7 +238,7 @@ class OpenaiApiService
   # Takes word list, generates a word hint request, saves it, sends it, gets the response,
   # parses it, saves it, returns the response.
   def log_and_send_request(word_list, instructions: nil, ai_model: nil)
-    @validator.full_word_list?(word_list)
+    @validator.full_word_list!(word_list)
     valid_type!(instructions, [OpenaiHintInstruction, NilClass])
     valid_type!(ai_model, [String, NilClass])
 
@@ -271,7 +271,7 @@ class OpenaiApiService
     end
 
     word_list = generate_word_data(WordList.new(puzzle_id))
-    raise TypeError, "Invalid word_list: #{word_list}" unless @validator&.full_word_list?(word_list)
+    raise TypeError, "Invalid word_list: #{word_list}" unless @validator&.full_word_list!(word_list)
 
     new_puzzle_id = word_list.puzzle_id
     if batch_state.remaining_requests == 0
