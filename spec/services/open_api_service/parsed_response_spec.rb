@@ -14,11 +14,8 @@ require "rails_helper"
 require "json"
 
 RSpec.describe OpenaiApiService::ParsedResponse do
-  include_context "word lists"
+  include_context "openai_extended"
   fixtures :openai_hint_instructions
-
-  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
-  let(:validator) { OpenaiApiService::Validator.new(logger) }
 
   describe "#initialize (mostly testing #parse method)" do
     # Shortcut for creating new instances of ParsedResponse, since the method being tested is
@@ -36,22 +33,7 @@ RSpec.describe OpenaiApiService::ParsedResponse do
       response
     end
 
-    let(:word_limit) { 20 }
-    let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
-    let(:instructions) { openai_hint_instructions(:valid_instructions) }
-    let(:ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
-    let(:word_list) { OpenaiApiService::WordList.new(1, sample_words.take(word_limit)) }
-    let(:full_word_list) { service.generate_word_data(word_list) }
-    let(:message_content) { service.generate_message_content(full_word_list, instructions) }
-    let(:wrapped_response) do
-      VCR.use_cassette("hint_request_20") do
-        service.send_request(message_content, ai_model:)
-      end
-    end
-
     context "when initialized with a valid wrapped_response" do
-      let(:parsed_response) { create_parsed_response(wrapped_response) }
-
       it "sets @raw_response to wrapped_response[:response]" do
         expect(parsed_response.raw_response).to eq(wrapped_response[:response])
       end

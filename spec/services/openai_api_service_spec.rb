@@ -13,17 +13,10 @@
 require "rails_helper"
 
 RSpec.describe OpenaiApiService do
-  include_context "word lists"
+  include_context "openai_base"
   fixtures :openai_hint_instructions
 
-  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
-  let(:validator) { OpenaiApiService::Validator.new(logger) }
-  let(:instructions) { openai_hint_instructions(:valid_instructions) }
-  let(:ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
-
   describe "#send_request" do
-    let(:service) { OpenaiApiService.new(logger:, validator:) }
-
     context "when submitting invalid content" do
       it "raises a TypeError when content is not a string", :aggregate_failures do
         expect { service.send_request(nil) }.to raise_error(TypeError)
@@ -204,7 +197,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#generate_message_content" do
-    let(:service) { OpenaiApiService.new(logger:, validator:) }
     let(:word_list) { OpenaiApiService::WordList.new(1, Set.new(sample_words.take(5))) }
     let(:word_list_string) { "aioli, alit, allay, allot, alloy\n" }
     let(:pre_word_list_text) { "Text before the word list" }
@@ -219,8 +211,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hint" do
-    let(:service) { OpenaiApiService.new(logger:, validator:) }
-
     context "when submitting an invalid word_hint" do
       it "raises an TypeError if word_hint is nil" do
         expect { service.save_hint(nil) }.to raise_error(TypeError)
@@ -255,7 +245,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hints" do
-    let(:service) { OpenaiApiService.new(logger:, validator:) }
     let(:hint_text) { "Hint for " }
     let(:five_words) { sample_words.first(5) }
     let(:word_hints) { five_words.map { |word| { word:, hint: hint_text + word } } }
@@ -370,20 +359,7 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hint_response" do
-    let(:word_limit) { 20 }
-    let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
-    let(:word_list) { OpenaiApiService::WordList.new(1, sample_words.take(word_limit)) }
-    let(:full_word_list) { service.generate_word_data(word_list) }
-    let(:message_content) { service.generate_message_content(full_word_list, instructions) }
-    let(:request_record) { service.save_hint_request(full_word_list, instructions, ai_model) }
-    let(:wrapped_response) do
-      VCR.use_cassette("hint_request_20") do
-        service.send_request(message_content, ai_model:)
-      end
-    end
-    let(:parsed_response) do
-      OpenaiApiService::ParsedResponse.new(logger, validator, wrapped_response)
-    end
+    include_context "openai_extended"
 
     it "saves an OpenaiHintResponse when passed valid arguments" do
       expect { service.save_hint_response(parsed_response, request_record) }
@@ -392,10 +368,8 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#log_and_send_request", vcr: { cassette_name: "hint_request_20" } do
-    let(:word_limit) { 20 }
-    let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
-    let(:word_list) { OpenaiApiService::WordList.new(1, sample_words.take(word_limit)) }
-    let(:full_word_list) { service.generate_word_data(word_list) }
+    include_context "openai_extended"
+
     let(:expected_result) { service.log_and_send_request(full_word_list) }
 
     context "when valid arguments are passed in" do

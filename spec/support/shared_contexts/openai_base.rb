@@ -10,7 +10,15 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-RSpec.shared_context "word lists" do
+RSpec.shared_context "openai_base" do
+  let(:word_limit) { 20 }
+  let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
+  let(:validator) { OpenaiApiService::Validator.new(logger) }
+  let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
+
+  let(:instructions) { openai_hint_instructions(:valid_instructions) }
+  let(:ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
+
   let(:sample_words) do
     %w[
       aioli

@@ -263,6 +263,10 @@ class OpenaiApiService
   # Loop through the answers in batches and fetch hints for each one that doesn't already have a
   # hint, saving them to the database.
   def seed_answer_hints(batch_state, puzzle_id: 1, with_save: true)
+    valid_type!(batch_state, BatchState)
+    valid_type!(puzzle_id, Integer)
+    valid_type!(with_save, Boolean)
+
     @logger.info "Starting iteration. batch_state = #{batch_state.to_loggable_hash}"
 
     if @request_cutoff&.positive? && batch_state.request_count >= @request_cutoff
@@ -271,7 +275,7 @@ class OpenaiApiService
     end
 
     word_list = generate_word_data(WordList.new(puzzle_id))
-    raise TypeError, "Invalid word_list: #{word_list}" unless @validator&.full_word_list!(word_list)
+    @validator.full_word_list!(word_list)
 
     new_puzzle_id = word_list.puzzle_id
     if batch_state.remaining_requests == 0

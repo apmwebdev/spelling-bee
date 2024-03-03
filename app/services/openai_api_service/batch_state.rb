@@ -15,6 +15,7 @@ class OpenaiApiService
   class BatchState
     include Constants
     include Loggable
+    include BasicValidator
 
     attr_reader :request_count, :remaining_requests, :reset_requests_s, :remaining_tokens,
       :reset_tokens_s, :puzzle_id, :word_set, :retry_count
@@ -22,9 +23,9 @@ class OpenaiApiService
     # @param logger
     # @param request_count [Integer]
     # @param remaining_requests [Integer]
-    # @param reset_requests_s [Integer]
+    # @param reset_requests_s [Float]
     # @param remaining_tokens [Integer]
-    # @param reset_tokens_s [Integer]
+    # @param reset_tokens_s [Float]
     # @param retry_count [Integer]
     def initialize(logger, request_count: 0, remaining_requests: nil, reset_requests_s: nil,
                    remaining_tokens: nil, reset_tokens_s: nil, retry_count: 0)
@@ -39,10 +40,9 @@ class OpenaiApiService
 
     # @param res [ParsedResponse]
     def update_from_response(res)
-      raise TypeError, "Invalid response: #{res}" unless res.is_a?(ParsedResponse)
+      valid_type!(res, ParsedResponse)
 
-      @logger.debug("Headers: #{res.headers}", puts_only: true)
-
+      # @logger.debug("Headers: #{res.headers}", puts_only: true)
       @request_count += 1
       self.remaining_requests = res.headers["x-ratelimit-remaining-requests"]
       self.remaining_tokens = res.headers["x-ratelimit-remaining-tokens"]
@@ -51,10 +51,19 @@ class OpenaiApiService
     end
 
     def calculate_seconds(value)
-      pattern = /(?:(?<hours>\d+)h)?(?:(?<minutes>\d+)m)?(?:(?<seconds>\d+)s)?(?:(?<millis>\d+)ms)?/
       return nil if value.nil?
+      return value if value.is_a?(Float)
+      valid_type!(value, String)
 
+      pattern =
+        /(?:(?<hours>\d+)h)?(?:(?<minutes>\d+)m(?!s))?(?:(?<seconds>\d+)s)?(?:(?<millis>\d+)ms)?/
       matches = value.match(pattern)
+      if matches[:hours].nil? && matches[:minutes].nil? && matches[:seconds].nil? &&
+         matches[:millis].nil?
+
+        return nil
+      end
+
       hours = matches[:hours].to_f
       minutes = matches[:minutes].to_f
       seconds = matches[:seconds].to_f
@@ -70,20 +79,14 @@ class OpenaiApiService
       raise StandardError, "Can't connect to API"
     end
 
-    def to_hash
-      instance_variables.each_with_object({}) do |var, hash|
-        hash[var.to_s.delete("@")] = instance_variable_get(var)
-      end
-    end
-
     # Setters
 
     def logger=(value)
-      if value.is_a?(ContextualLogger)
+      if class_or_double?(value, ContextualLogger)
         @logger = value
       else
         @logger ||= ContextualLogger.new("log/open_ai_api.log", "weekly")
-        @logger.error "@logger must be a ContextualLogger. Passed #{value}"
+        @logger.error "@logger must be a ContextualLogger or RSpec double. Passed #{value}"
       end
     end
 
