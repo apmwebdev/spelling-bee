@@ -24,7 +24,7 @@ class OpenaiApiService
 
   attr_reader :logger, :validator
 
-  def initialize(logger: nil, validator: nil, word_limit: nil, request_cutoff: nil)
+  def initialize(logger: nil, validator: nil, word_limit: nil, request_cap: nil)
     @logger =
       if class_or_double?(logger, ContextualLogger)
         @logger = logger
@@ -40,7 +40,7 @@ class OpenaiApiService
         Validator.new(@logger)
       end
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
-    @request_cutoff = request_cutoff
+    @request_cap = request_cap
   end
 
   # Pass in content and send a request to the OpenAI API with it. Return the response.
@@ -260,42 +260,65 @@ class OpenaiApiService
     parsed_response
   end
 
+  # @return void
+  def throttle_batch(batch_state)
+    remaining_requests = batch_state.remaining_requests
+    reset_requests_s = batch_state.reset_requests_s
+    remaining_tokens = batch_state.remaining_tokens
+    reset_tokens_s = batch_state.reset_tokens_s
+
+    if remaining_requests == 0
+      @logger.warn "remaining_requests == 0. Sleeping for #{reset_requests_s} seconds"
+      sleep(reset_requests_s)
+      batch_state.reset_tokens_s =
+        if reset_tokens_s.nil? || reset_requests_s > reset_tokens_s
+          0
+        else
+          reset_tokens_s - reset_requests_s
+        end
+      batch_state.retry_count = 0
+    end
+
+    if reset_tokens_s&.positive? &&
+       remaining_tokens.is_a?(Integer) &&
+       remaining_tokens < MINIMUM_REMAINING_TOKENS
+
+      @logger.warn "remaining_tokens too low. Minimum needed to send request is "\
+        "#{MINIMUM_REMAINING_TOKENS}, current value is "\
+        "#{batch_state.remaining_tokens}. Sleeping for #{batch_state.reset_tokens_s} "\
+        "seconds."
+      sleep(batch_state.reset_tokens_s)
+      batch_state.retry_count = 0
+    end
+  end
+
   # Loop through the answers in batches and fetch hints for each one that doesn't already have a
   # hint, saving them to the database.
-  def seed_answer_hints(batch_state, puzzle_id: 1, with_save: true)
-    valid_type!(batch_state, BatchState)
-    valid_type!(puzzle_id, Integer)
-    valid_type!(with_save, Boolean)
+  # @return void
+  def fetch_hints(batch_state, puzzle_id: 1, with_save: true)
+    valid_type!(batch_state, BatchState, display_name: "batch_state")
+    valid_type!(puzzle_id, Integer, ->(p) { p.positive? }, display_name: "puzzle_id")
+    valid_type!(with_save, Boolean, display_name: "with_save")
 
-    @logger.info "Starting iteration. batch_state = #{batch_state.to_loggable_hash}"
+    @logger.info fetch_hints_start(batch_state)
 
-    if @request_cutoff&.positive? && batch_state.request_count >= @request_cutoff
-      @logger.info "Request cutoff reached. Exiting"
+    if @request_cap.is_a?(Integer) && batch_state.request_count >= @request_cap
+      @logger.info FETCH_HINTS_REQUEST_CAPPED
       return
     end
 
     word_list = generate_word_data(WordList.new(puzzle_id))
-    @validator.full_word_list!(word_list)
+    unless @validator.full_word_list?(word_list)
+      logger.info FETCH_HINTS_EMPTY_WORD_LIST
+      return
+    end
 
     new_puzzle_id = word_list.puzzle_id
-    if batch_state.remaining_requests == 0
-      @logger.warn "remaining_requests == 0. Sleeping for #{batch_state.reset_requests_s} seconds"
-      sleep(batch_state.reset_requests_s)
-      batch_state.request_count = 0
-    end
-
-    if !batch_state.remaining_tokens.nil? && batch_state.remaining_tokens < MINIMUM_REMAINING_TOKENS
-      @logger.warn "remaining_tokens too low. Minimum needed to send request is "\
-                     "#{MINIMUM_REMAINING_TOKENS}, current value is "\
-                     "#{batch_state.remaining_tokens}. Sleeping for #{batch_state.reset_tokens_s} "\
-                     "seconds."
-      sleep(batch_state.reset_tokens_s)
-    end
-
+    throttle_batch(batch_state)
     parsed_response = log_and_send_request(word_list)
     batch_state.update_from_response(parsed_response)
     if parsed_response.word_hints
-      @logger.info "Successful response: parsed_response.word_hints is not nil"
+      @logger.info FETCH_HINTS_SUCCESSFUL_RESPONSE
       batch_state.retry_count = 0
       if with_save
         save_hints(parsed_response.word_hints)
@@ -306,8 +329,8 @@ class OpenaiApiService
       @logger.error "Error response: #{parsed_response.error_body}"
       if parsed_response.http_status == 429
         batch_state.retry_count += 1
-        sleep(batch_state.sleep_from_retries)
-        return seed_answer_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
+        sleep(batch_state.sleep_time_from_retry_count)
+        return fetch_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
       end
     else
       raise TypeError, "Something went wrong with the response. Both word_hints and error_body "\
@@ -319,7 +342,12 @@ class OpenaiApiService
     # case, return nothing.
     return unless word_list.word_set.length == @word_limit
 
-    return seed_answer_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
+    return fetch_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
+  end
+
+  def seed_hints
+    batch_state = BatchState.new(@logger)
+    fetch_hints(batch_state)
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end
@@ -369,10 +397,10 @@ class OpenaiApiService
   def test_batching(word_limit, request_cutoff)
     @logger.global_puts_and = true
     @word_limit = word_limit
-    @request_cutoff = request_cutoff
+    @request_cap = request_cutoff
     batch_state = BatchState.new(@logger)
     @logger.debug("batch_state: #{batch_state.to_loggable_hash}")
-    seed_answer_hints(batch_state, puzzle_id: 3, with_save: false)
+    fetch_hints(batch_state, puzzle_id: 3, with_save: false)
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end

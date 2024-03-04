@@ -14,7 +14,6 @@ require "rails_helper"
 
 RSpec.describe OpenaiApiService do
   include_context "openai_base"
-  fixtures :openai_hint_instructions
 
   describe "#send_request" do
     context "when submitting invalid content" do
@@ -107,7 +106,7 @@ RSpec.describe OpenaiApiService do
 
     context "when the word limit is reached while looping through puzzle words" do
       let(:extra_word) { sample_words[5] }
-      let(:puzzle_words) { words_from_strings(0..5) }
+      let(:puzzle_words) { sample_words_from_strings(0..5) }
 
       before do
         allow(Word).to receive_message_chain(:joins, :where, :order).and_return(puzzle_words)
@@ -145,8 +144,8 @@ RSpec.describe OpenaiApiService do
       let(:non_hint_words) { sample_words.slice(5, 5) }
       # Make half of the puzzle words have hints, which should prevent them from being added to the
       # word list
-      let(:words_with_hints) { words_from_strings(0, 5, with_hints: true) }
-      let(:words_without_hints) { words_from_strings(5, 5) }
+      let(:words_with_hints) { sample_words_from_strings(0, 5, with_hints: true) }
+      let(:words_without_hints) { sample_words_from_strings(5, 5) }
       let(:puzzle_words) { [*words_with_hints, *words_without_hints] }
 
       before do
@@ -172,9 +171,9 @@ RSpec.describe OpenaiApiService do
 
     context "when it finishes processing all the words for a puzzle" do
       let(:first_puzzle_id) { 1 }
-      let(:first_puzzle_words) { words_from_strings(0, 4) }
-      let(:second_puzzle_words) { words_from_strings(4, 4) }
-      let(:third_puzzle_words) { words_from_strings(8, 4) }
+      let(:first_puzzle_words) { sample_words_from_strings(0, 4) }
+      let(:second_puzzle_words) { sample_words_from_strings(4, 4) }
+      let(:third_puzzle_words) { sample_words_from_strings(8, 4) }
 
       before do
         word_list.puzzle_id = first_puzzle_id
@@ -257,14 +256,10 @@ RSpec.describe OpenaiApiService do
     end
 
     context "when word_hints is valid" do
-      let(:logger) { instance_double(ContextualLogger) }
-      let(:validator) do
-        instance_double(OpenaiApiService::Validator, valid_word_hints!: true,
-          valid_word_hint!: true,)
-      end
-      let(:service) { OpenaiApiService.new(logger:, validator:) }
+      include_context "openai_test_logger"
 
       before do
+        allow(validator).to receive_messages(valid_word_hints!: true, valid_word_hint!: true)
         word_hints.each { |wh| Word.create(text: wh[:word]) }
       end
 
@@ -292,12 +287,7 @@ RSpec.describe OpenaiApiService do
     let(:logger) { instance_double(ContextualLogger, info: nil) }
     let(:validator) { OpenaiApiService::Validator.new(logger) }
     let(:service) { OpenaiApiService.new(logger:, validator:) }
-    let(:valid_word_list) do
-      wl = OpenaiApiService::WordList.new
-      wl.word_set = Set.new(sample_words.take(5))
-      wl
-    end
-    # let(:valid_instructions) { openai_hint_instructions(:valid_instructions) }
+    let(:valid_word_list) { OpenaiApiService::WordList.new(1, sample_words.take(5)) }
     let(:valid_ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
 
     it "raises a TypeError when word_list has no words" do
@@ -369,7 +359,6 @@ RSpec.describe OpenaiApiService do
 
   describe "#log_and_send_request", vcr: { cassette_name: "hint_request_20" } do
     include_context "openai_extended"
-
     let(:expected_result) { service.log_and_send_request(full_word_list) }
 
     context "when valid arguments are passed in" do
@@ -421,6 +410,149 @@ RSpec.describe OpenaiApiService do
     end
   end
 
-  describe "#seed_answer_hints" do
+  describe "#throttle_batch" do
+    include_context "openai_bypass_logger"
+    let(:batch_state) { OpenaiApiService::BatchState.new(logger) }
+    let(:sleep_time) { 10.0 }
+
+    before do
+      allow(service).to receive(:sleep)
+    end
+
+    context "when remaining_requests == 0" do
+      before do
+        batch_state.remaining_requests = 0
+      end
+
+      it "sleeps for a number of seconds equal to batch_state.reset_requests_s" do
+        batch_state.reset_requests_s = sleep_time
+
+        expect(service).to receive(:sleep).with(sleep_time)
+        service.throttle_batch(batch_state)
+      end
+
+      it "logs a warning" do
+        expect(logger).to receive(:warn)
+        service.throttle_batch(batch_state)
+      end
+    end
+  end
+
+  describe "#fetch_hints", vcr: { cassette_name: "hint_request_20" } do
+    # include_context "openai_bypass_logger"
+    include_context "openai_puzzle_words"
+    let(:word_limit) { 20 }
+    let(:logger) { instance_double(ContextualLogger).as_null_object }
+    let(:validator) { OpenaiApiService::Validator.new(logger) }
+    let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
+    let(:batch_state) { OpenaiApiService::BatchState.new(logger) }
+
+    context "when arguments trigger immediate guard conditions" do
+      it "raises a TypeError if batch_state isn't a BatchState", :aggregate_failures do
+        expect { service.fetch_hints(nil) }.to raise_error(TypeError)
+        expect { service.fetch_hints(nil, puzzle_id: 1, with_save: false) }
+          .to raise_error(TypeError)
+        expect { service.fetch_hints("foo") }.to raise_error(TypeError)
+        expect { service.fetch_hints(123) }.to raise_error(TypeError)
+        expect { service.fetch_hints([]) }.to raise_error(TypeError)
+        expect { service.fetch_hints({}) }.to raise_error(TypeError)
+      end
+
+      it "raises a TypeError if puzzle_id isn't a positive integer", :aggregate_failures do
+        expect { service.fetch_hints(batch_state, puzzle_id: nil) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: "1") }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: -1) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: 1.0) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, puzzle_id: 0) }.to raise_error(TypeError)
+      end
+
+      it "raises a TypeError if with_save isn't a boolean", :aggregate_failures do
+        expect { service.fetch_hints(batch_state, with_save: nil) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, with_save: 1) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, with_save: "foo") }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, with_save: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state, with_save: {}) }.to raise_error(TypeError)
+      end
+
+      it "returns without doing anything if @request_cap is 0", :aggregate_failures do
+        service.instance_variable_set(:@request_cap, 0)
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED)
+        expect(service).not_to receive(:generate_word_data)
+        expect(service).not_to receive(:throttle_batch)
+
+        service.fetch_hints(batch_state)
+
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+      end
+
+      it "returns without doing anything if the request count equals the request cap",
+        :aggregate_failures do
+        service.instance_variable_set(:@request_cap, 1)
+        batch_state.increment_request_count
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED)
+        expect(service).not_to receive(:generate_word_data)
+        expect(service).not_to receive(:throttle_batch)
+
+        service.fetch_hints(batch_state)
+
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+      end
+
+      it "returns without doing anything if the request count is greater than the request cap",
+        :aggregate_failures do
+        service.instance_variable_set(:@request_cap, 1)
+        batch_state.increment_request_count
+        batch_state.increment_request_count
+
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED)
+        expect(service).not_to receive(:generate_word_data)
+        expect(service).not_to receive(:throttle_batch)
+
+        service.fetch_hints(batch_state)
+
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+      end
+    end
+
+    context "when the request cap is 1", vcr: { cassette_name: "fetch_hints_limit_20_1" } do
+      fixtures :puzzles, :words, :answers
+
+      before do
+        service.instance_variable_set(:@request_cap, 1)
+      end
+
+      it "sends expected messages to logger once", :aggregate_failures do
+        allow(logger).to receive(:info).with(any_args)
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages.fetch_hints_start(batch_state)).once
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_SUCCESSFUL_RESPONSE).once
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED).once
+        service.fetch_hints(batch_state)
+      end
+
+      it "calls save_hint a number of times equal to the word limit" do
+        allow(service).to receive(:save_hint)
+        expect(service).to receive(:save_hint).exactly(word_limit).times
+        service.fetch_hints(batch_state)
+      end
+
+      it "saves one hint request" do
+        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintRequest, :count).by(1)
+      end
+
+      it "saves one hint response" do
+        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintResponse, :count).by(1)
+      end
+    end
   end
 end

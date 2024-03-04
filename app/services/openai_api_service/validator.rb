@@ -18,7 +18,14 @@ class OpenaiApiService
     include Constants
 
     def full_word_list!(word_list)
-      valid_type!(word_list, WordList, ->(p) { p.word_set.length.positive? })
+      valid_type!(word_list, WordList, ->(p) { p.word_set.length.positive? },
+        display_name: "word_list",)
+    end
+
+    def full_word_list?(word_list)
+      full_word_list!(word_list)
+    rescue TypeError
+      return false
     end
 
     def valid_word_hint!(json)
@@ -29,7 +36,8 @@ class OpenaiApiService
     end
 
     def valid_word_hints!(array)
-      valid_array!(array, Hash, ->(p) { valid_word_hint!(p) }, can_be_empty: false)
+      valid_array!(array, Hash, ->(p) { valid_word_hint!(p) }, can_be_empty: false,
+        display_name: "word_hints",)
     end
 
     def valid_wrapped_response!(wrapped_response)
@@ -85,7 +93,7 @@ class OpenaiApiService
     end
 
     def valid_response_word_hints?(json)
-      valid_array!(json, Hash, can_be_empty: false)
+      valid_array!(json, Hash, can_be_empty: false, display_name: "choices")
 
       first_choice = json.first
       unless first_choice.key?(:message)

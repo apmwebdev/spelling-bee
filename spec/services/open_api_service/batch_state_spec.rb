@@ -17,6 +17,49 @@ RSpec.describe OpenaiApiService::BatchState do
 
   let(:batch_state) { OpenaiApiService::BatchState.new(logger) }
 
+  describe "#update_from_response" do
+    include_context "openai_extended"
+
+    it "raises a TypeError if passed a non-ParsedResponse value", :aggregate_failures do
+      expect { batch_state.update_from_response(nil) }.to raise_error(TypeError)
+      expect { batch_state.update_from_response("foo") }.to raise_error(TypeError)
+      expect { batch_state.update_from_response(123) }.to raise_error(TypeError)
+      expect { batch_state.update_from_response({}) }.to raise_error(TypeError)
+      expect { batch_state.update_from_response([]) }.to raise_error(TypeError)
+    end
+
+    context "when passed a valid ParsedResponse" do
+      it "increases @request_count by 1" do
+        expect { batch_state.update_from_response(parsed_response) }
+          .to change(batch_state, :request_count).by(1)
+      end
+
+      it "correctly sets @remaining_requests based on the x-ratelimit-remaining-requests header" do
+        expected_result = 9999
+        expect { batch_state.update_from_response(parsed_response) }
+          .to change(batch_state, :remaining_requests).to(expected_result)
+      end
+
+      it "correctly sets @remaining_tokens based on the x-ratelimit-remaining-tokens header" do
+        expected_result = 59_682
+        expect { batch_state.update_from_response(parsed_response) }
+          .to change(batch_state, :remaining_tokens).to(expected_result)
+      end
+
+      it "correctly sets @reset_requests_s based on the x-ratelimit-reset-requests header" do
+        expected_result = 8.64
+        expect { batch_state.update_from_response(parsed_response) }
+          .to change(batch_state, :reset_requests_s).to(expected_result)
+      end
+
+      it "correctly sets @reset_tokens_s based on the x-ratelimit-reset-tokens header" do
+        expected_result = 0.318
+        expect { batch_state.update_from_response(parsed_response) }
+          .to change(batch_state, :reset_tokens_s).to(expected_result)
+      end
+    end
+  end
+
   describe "#calculate_seconds" do
     def run_calc(input)
       batch_state.calculate_seconds(input)
@@ -140,6 +183,27 @@ RSpec.describe OpenaiApiService::BatchState do
       duration_string = "9h90m90s90ms"
       expected_result = 37_890.09
       expect(run_calc(duration_string)).to be(expected_result)
+    end
+  end
+
+  describe "#sleep_time_from_retry_count" do
+    it "returns 0 if @retry_count is nil" do
+      batch_state.instance_variable_set(:@retry_count, nil)
+      expect(batch_state.sleep_time_from_retry_count).to eq(0)
+    end
+
+    (0...OpenaiApiService::Constants::RETRY_COUNT_SLEEP_TIMES.length).each do |retry_count|
+      it "returns the corresponding sleep time when @retry_count is #{retry_count}",
+        :aggregate_failures do
+        batch_state.retry_count = retry_count
+        expected_result = OpenaiApiService::Constants::RETRY_COUNT_SLEEP_TIMES[retry_count]
+        expect(batch_state.sleep_time_from_retry_count).to eq(expected_result)
+      end
+    end
+
+    it "raises an error when @retry_count is greater than the number of allowed retries" do
+      batch_state.retry_count = OpenaiApiService::Constants::RETRY_COUNT_SLEEP_TIMES.length
+      expect { batch_state.sleep_time_from_retry_count }.to raise_error(StandardError)
     end
   end
 end

@@ -11,6 +11,8 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 RSpec.shared_context "openai_base" do
+  fixtures :openai_hint_instructions
+
   let(:word_limit) { 20 }
   let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
   let(:validator) { OpenaiApiService::Validator.new(logger) }

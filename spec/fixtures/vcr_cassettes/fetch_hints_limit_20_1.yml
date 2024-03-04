@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: arrow, arrowroot, athwart, away,
+        awry, harrow, thataway, thaw, throw, throwaway, thwart, wahoo, wart, warty,
+        wary, watt, what, whoa, woot, worry\n Respond in JSON format. There should
+        be an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 04 Mar 2024 13:02:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '10625'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59679'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 321ms
+      X-Request-Id:
+      - 0c35ab9304c1016ca052b2b93ea55952839d3af8e6bf5da25c77e959b0f3edc3
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=7fm5GTw0xd42qQamFRZidcuYcQjG9mVnbP4ujjIfKqg-1709557331-1.0.1.1-u.M90heIdEKlUYeHzafeWn.Il1AN4KCR7eJn8JUibyFQZvjGr6cy._ZbymerMtvkBAkA4miZ2KCT59zunBZwLw;
+        path=/; expires=Mon, 04-Mar-24 13:32:11 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=ecqs1vKv8HXaACUY7aTO8AaV1Rs45W8R.R4CAfpNK9Y-1709557331079-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f20ee40808c37b-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8z2F6Olpyx4LccS4Gle9lVKHeXaEw",
+          "object": "chat.completion",
+          "created": 1709557320,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "\n{\n  \"word_hints\": [\n    {\"word\": \"arrow\", \"hint\": \"A sharp-pointed weapon that is shot from a bow\"},\n    {\"word\": \"arrowroot\", \"hint\": \"A powdery substance often used as a thickening agent in cooking\"},\n    {\"word\": \"athwart\", \"hint\": \"In a position across or against something\"},\n    {\"word\": \"away\", \"hint\": \"Not present or near; removed or to a distance\"},\n    {\"word\": \"awry\", \"hint\": \"Off course; askew or crooked\"},\n    {\"word\": \"harrow\", \"hint\": \"A farm implement used to break up and smooth soil\"},\n    {\"word\": \"thataway\", \"hint\": \"Indicating a direction away from the speaker\"},\n    {\"word\": \"thaw\", \"hint\": \"To melt or cause to melt from a solid to a liquid state\"},\n    {\"word\": \"throw\", \"hint\": \"To propel something through the air by a forward motion of the arm\"},\n    {\"word\": \"throwaway\", \"hint\": \"An item intended to be discarded after use\"},\n    {\"word\": \"thwart\", \"hint\": \"To prevent someone from accomplishing a plan or aim\"},\n    {\"word\": \"wahoo\", \"hint\": \"A type of tropical fish known for its speed and agility\"},\n    {\"word\": \"wart\", \"hint\": \"A small, rough growth on the skin\"},\n    {\"word\": \"warty\", \"hint\": \"Having the appearance or texture of a wart; bumpy or rough\"},\n    {\"word\": \"wary\", \"hint\": \"Cautious or reluctant to do something\"},\n    {\"word\": \"watt\", \"hint\": \"A unit of power equal to one joule per second\"},\n    {\"word\": \"what\", \"hint\": \"Used to ask for information or to introduce a clause\"},\n    {\"word\": \"whoa\", \"hint\": \"Used to command a person or animal to stop or slow down\"},\n    {\"word\": \"woot\", \"hint\": \"Expressing joy, excitement, or triumph\"},\n    {\"word\": \"worry\", \"hint\": \"To feel anxious or concerned about something\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 300,
+            "completion_tokens": 469,
+            "total_tokens": 769
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Mon, 04 Mar 2024 13:02:11 GMT
+recorded_with: VCR 6.2.0

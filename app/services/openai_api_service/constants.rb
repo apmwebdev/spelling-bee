@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 class OpenaiApiService
   module Constants
     # Default limit for the number of words per request to get hints for. This number is based on
@@ -31,6 +30,8 @@ class OpenaiApiService
     # https://platform.openai.com/docs/models/models
     # The limits for the different models are shown here: https://platform.openai.com/account/limits
     DEFAULT_AI_MODEL = "gpt-3.5-turbo-0125"
+
+    RETRY_COUNT_SLEEP_TIMES = [0, 60, 300].freeze
 
     # Headers from the API responses to save
     RELEVANT_HEADERS = [

@@ -1,0 +1,19 @@
+---
+puzzle_one:
+  id: 1
+  date: 2018-05-09
+  center_letter: w
+  outer_letters: [a, h, o, r, t, y]
+  origin: sbs_one (SbSolverPuzzle)
+puzzle_two:
+  id: 2
+  date: 2018-05-10
+  center_letter: i
+  outer_letters: [c, f, m, n, o, r]
+  origin: sbs_two (SbSolverPuzzle)
+puzzle_three:
+  id: 3
+  date: 2018-05-11
+  center_letter: c
+  outer_letters: [e, f, h, i, l, y]
+  origin: sbs_three (SbSolverPuzzle)
