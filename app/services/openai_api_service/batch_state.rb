@@ -18,7 +18,7 @@ class OpenaiApiService
     include Loggable
     include BasicValidator
 
-    attr_reader :request_count, :remaining_requests, :reset_requests_s, :remaining_tokens,
+    attr_reader :logger, :request_count, :remaining_requests, :reset_requests_s, :remaining_tokens,
       :reset_tokens_s, :puzzle_id, :word_set, :retry_count
 
     # @param logger [ContextualLogger]
