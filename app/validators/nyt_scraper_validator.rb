@@ -19,22 +19,22 @@ class NytScraperValidator < ExternalServiceValidatorBase
 
   def valid?(json)
     valid_hash?(json, [
-      ["today", Hash, ->(p) { @puzzle_validator.valid_nyt_puzzle?(p) }],
-      ["pastPuzzles", Hash, ->(p) { past_puzzles_valid?(p) }],
+      [:today, Hash, ->(p) { @puzzle_validator.valid_nyt_puzzle?(p) }],
+      [:pastPuzzles, Hash, ->(p) { past_puzzles_valid?(p) }],
     ], display_name: "response",)
   end
 
   def past_puzzles_valid?(json)
     valid_hash?(json, [
-      ["thisWeek", Array, ->(p) { valid_puzzle_array?(p) }],
-      ["lastWeek", Array, ->(p) { valid_puzzle_array?(p) }],
+      [:thisWeek, Array, ->(p) { valid_puzzle_array?(p) }],
+      [:lastWeek, Array, ->(p) { valid_puzzle_array?(p) }],
     ], display_name: "pastPuzzles",)
   end
 
   def today_valid?(json)
     raise TypeError, "'json' is not a hash." unless json.is_a?(Hash)
-    raise TypeError, "Key 'today' doesn't exist in hash." unless json.key?("today")
-    @puzzle_validator.valid_nyt_puzzle?(json["today"])
+    raise TypeError, "Key 'today' doesn't exist in hash." unless json.key?(:today)
+    @puzzle_validator.valid_nyt_puzzle?(json[:today])
   rescue TypeError => e
     @logger.exception e
     return false

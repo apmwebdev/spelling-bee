@@ -62,19 +62,19 @@ class SyncApiService
     @validator.valid_puzzle_response!(response)
 
     @logger.info "Begin loop through data array"
-    json["data"].each do |item|
-      puzzle_data = item["puzzle_data"]
-      puzzle_id = puzzle_data["id"].to_i
+    response[:data].each do |item|
+      puzzle_data = item[:puzzle_data]
+      puzzle_id = puzzle_data[:id].to_i
       @logger.info "Syncing puzzle #{puzzle_id}"
       existing_puzzle = Puzzle.find_by(id: puzzle_id)
-      if existing_puzzle && Date.parse(puzzle_data["date"]) == existing_puzzle.date
+      if existing_puzzle && Date.parse(puzzle_data[:date]) == existing_puzzle.date
         @logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
         next
       end
 
       update_or_create_puzzle(item, existing_puzzle)
     end
-    json
+    response
   end
 
   def sync_puzzles(first_puzzle_identifier)
@@ -85,12 +85,12 @@ class SyncApiService
       response = sync_puzzle_batch(starting_identifier)
       raise ApiError, "Error returned: #{response[:error]}" if response[:error]
 
-      if response["data"].length < 50
+      if response[:data].length < 50
         @logger.info "Data length < 50. Last puzzle reached. Exiting"
         break
       end
 
-      starting_identifier = result["last_id"].to_i + 1
+      starting_identifier = result[:last_id].to_i + 1
     end
   rescue StandardError => e
     @logger.exception(e, :fatal)
@@ -98,7 +98,7 @@ class SyncApiService
 
   def update_or_create_puzzle(data_hash, existing_puzzle)
     puzzle_data, origin_data, answer_words =
-      data_hash.values_at("puzzle_data", "origin_data", "answer_words")
+      data_hash.values_at(:puzzle_data, :origin_data, :answer_words)
 
     update_or_create_origin(puzzle_data, origin_data)
 
@@ -115,18 +115,18 @@ class SyncApiService
   end
 
   def update_or_create_origin(puzzle_data, origin_data)
-    if puzzle_data["origin_type"] == "NytPuzzle"
-      existing_origin = NytPuzzle.find_by(id: origin_data["id"].to_i)
+    if puzzle_data[:origin_type] == "NytPuzzle"
+      existing_origin = NytPuzzle.find_by(id: origin_data[:id].to_i)
       return NytPuzzle.create!(origin_data) unless existing_origin
 
       existing_origin.update!(origin_data)
-    elsif puzzle_data["origin_type"] == "SbSolverPuzzle"
-      existing_origin = SbSolverPuzzle.find_by(id: origin_data["id"].to_i)
+    elsif puzzle_data[:origin_type] == "SbSolverPuzzle"
+      existing_origin = SbSolverPuzzle.find_by(id: origin_data[:id].to_i)
       return SbSolverPuzzle.create!(origin_data) unless existing_origin
 
       existing_origin.update!(origin_data)
     else
-      raise ApiError, "Invalid origin type: #{puzzle_data['origin_type']}"
+      raise ApiError, "Invalid origin type: #{puzzle_data[:origin_type]}"
     end
   end
 

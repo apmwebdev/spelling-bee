@@ -31,7 +31,7 @@ class OpenaiApiService
     end
 
     def fetch_hints_start(batch_state)
-      "#{FETCH_HINTS_START_STATIC} #{batch_state.to_loggable_hash}"
+      "#{FETCH_HINTS_START_STATIC} #{batch_state.to_loggable_hash([batch_state.logger])}"
       # FETCH_HINTS_START_STATIC
     end
   end

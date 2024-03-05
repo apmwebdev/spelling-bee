@@ -37,28 +37,28 @@ class SyncApiService
 
     def valid_data_item?(json)
       valid_hash?(json, [
-        ["puzzle_data", Hash, ->(p) { @puzzle_validator.valid_sync_api_puzzle?(p) }],
-        ["origin_data", Hash, ->(p) { valid_nyt_origin_data?(p) || valid_sb_solver_origin_data?(p) }],
-        ["answer_words", Array, ->(p) { @puzzle_validator.valid_word_array?(p) }],
+        [:puzzle_data, Hash, ->(p) { @puzzle_validator.valid_sync_api_puzzle?(p) }],
+        [:origin_data, Hash, ->(p) { valid_nyt_origin_data?(p) || valid_sb_solver_origin_data?(p) }],
+        [:answer_words, Array, ->(p) { @puzzle_validator.valid_word_array?(p) }],
       ], display_name: "data_item",)
     end
 
     def valid_nyt_origin_data?(json)
       valid_hash?(json, [
-        ["created_at", String, ->(p) { valid_date?(p) }],
-        ["id", Integer],
-        ["json_data", Hash],
-        ["nyt_id", Integer],
-        ["updated_at", String, ->(p) { valid_date?(p) }],
+        [:created_at, String, ->(p) { valid_date?(p) }],
+        [:id, Integer],
+        [:json_data, Hash],
+        [:nyt_id, Integer],
+        [:updated_at, String, ->(p) { valid_date?(p) }],
       ], display_name: "origin_data",)
     end
 
     def valid_sb_solver_origin_data?(json)
       valid_hash?(json, [
-        ["created_at", String, ->(p) { valid_date?(p) }],
-        ["id", Integer],
-        ["sb_solver_id", Integer],
-        ["updated_at", String, ->(p) { valid_date?(p) }],
+        [:created_at, String, ->(p) { valid_date?(p) }],
+        [:id, Integer],
+        [:sb_solver_id, Integer],
+        [:updated_at, String, ->(p) { valid_date?(p) }],
       ], display_name: "origin_data",)
     end
 
