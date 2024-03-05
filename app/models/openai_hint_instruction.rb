@@ -14,6 +14,10 @@
 # easier replication, change tracking, and analysis.
 class OpenaiHintInstruction < ApplicationRecord
   has_many :openai_hint_requests
+
+  def to_hash
+    { id:, pre_word_list_text:, post_word_list_text:, created_at:, updated_at: }
+  end
 end
 
 # == Schema Information

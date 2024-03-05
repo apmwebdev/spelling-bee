@@ -48,7 +48,7 @@ class SyncApiService
 
     response = http.request(request)
 
-    json.parse(response.body)
+    JSON.parse(response.body, symbolize_names: true)
   end
 
   # The puzzle data for the Sync API is paginated, so this method is for getting one page of data
@@ -195,7 +195,8 @@ class SyncApiService
 
   def send_instructions
     instruction_count = query_instruction_count
-    instructions = OpenaiHintInstruction.order(:id).offset(instruction_count).to_a
+    instructions = OpenaiHintInstruction.offset(instruction_count).each.map(&:to_hash)
+    return @logger.info "Instructions already fully synced. Exiting" if instructions.empty?
     path = "/instructions/sync"
     response = send_post_request(path, { instructions: })
     raise ApiError, "Error sending instructions: #{response[:error]}" if response[:error]
