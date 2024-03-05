@@ -226,6 +226,8 @@ class OpenaiApiService
 
     record.save!
     @logger.info "Hint response saved successfully"
+    @logger.info "usage data: #{meta[:usage]}"
+    @logger.info "finish reason: #{parsed_response.finish_reason}"
   end
 
   # Takes word list, generates a word hint request, saves it, sends it, gets the response,
@@ -293,7 +295,8 @@ class OpenaiApiService
     valid_type!(puzzle_id, Integer, ->(p) { p.positive? }, display_name: "puzzle_id")
     valid_type!(with_save, Boolean, display_name: "with_save")
 
-    @logger.info fetch_hints_start(batch_state)
+    # @logger.info fetch_hints_start(batch_state)
+    @logger.info "Starting iteration, puzzle_id: #{puzzle_id}"
 
     if @request_cap.is_a?(Integer) && batch_state.request_count >= @request_cap
       @logger.info FETCH_HINTS_REQUEST_CAPPED

@@ -21,7 +21,7 @@ class OpenaiApiService
     include Loggable
 
     attr_reader :logger, :validator, :raw_response, :body_meta, :headers, :http_status,
-      :response_time_seconds, :word_hints, :error_body
+      :response_time_seconds, :word_hints, :error_body, :finish_reason
 
     def initialize(logger, validator, wrapped_response)
       self.logger = logger
@@ -60,6 +60,7 @@ class OpenaiApiService
       if @validator.valid_response_body_content?(parsed_body)
         content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
         @word_hints = content[:word_hints]
+        @finish_reason = parsed_body[:choices][0][:finish_reason]
       else
         @error_body = parsed_body
       end
