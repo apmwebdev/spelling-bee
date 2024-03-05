@@ -11,13 +11,13 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 namespace :sync_api do
-  desc "Sync puzzle data"
+  desc "Sync puzzles"
   # e.g. rake "sync_api:sync_latest_puzzles[2081]"
-  task :sync_latest_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
+  task :sync_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
     service = SyncApiService.new
     service.logger.global_puts_and.push(:info, :warn)
     first_puzzle_identifier = args[:first_puzzle_identifier].to_i
-    service.sync_recent_puzzles(first_puzzle_identifier)
+    service.sync_puzzles(first_puzzle_identifier)
   end
 
   desc "Sync hints"
@@ -25,5 +25,12 @@ namespace :sync_api do
     service = SyncApiService.new
     service.logger.global_puts_and.push(:info, :warn)
     service.sync_hints
+  end
+
+  desc "Send OpenAI API request instructions"
+  task send_instructions: :environment do
+    service = SyncApiService.new
+    service.logger.global_puts_and.push(:info, :warn)
+    service.send_instructions
   end
 end

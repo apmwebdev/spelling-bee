@@ -18,15 +18,15 @@ class SyncApiService
       @puzzle_validator = PuzzleJsonValidator.new(logger)
     end
 
-    def valid?(json)
-      @logger.info "Beginning Sync API response validation..."
-      valid_hash?(json, [
-        ["data", Array, ->(prop) { valid_response_data?(prop) }],
-        ["last_id", Integer, ->(prop) { PuzzleIdentifierService.validate_id_format(prop) }],
-      ], display_name: "response",)
+    def valid_puzzle_response!(json)
+      @logger.info "Beginning Sync API puzzle response validation..."
+      valid_hash!(json, [
+        [:data, Array, ->(prop) { valid_puzzle_response_data?(prop) }],
+        [:last_id, Integer, ->(prop) { PuzzleIdentifierService.validate_id_format(prop) }],
+      ], display_name: "puzzle_response",)
     end
 
-    def valid_response_data?(json)
+    def valid_puzzle_response_data?(json)
       raise TypeError, "json must be an array: #{json}" unless json.is_a?(Array)
       raise TypeError, "Some items are invalid" unless json.all? { |item| valid_data_item?(item) }
       return true

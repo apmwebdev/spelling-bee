@@ -11,11 +11,14 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 require "open-uri"
+require "net/http"
+require "uri"
 
 # This is the service that is the client half of the Sync API. It is designed to be used by a dev
 # environment to get the most up-to-date puzzle data from the production environment.
 class SyncApiService
   BASE_URL = ENV["PRODUCTION_SYNC_API_URL"]
+  AUTH_TOKEN = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}".freeze
 
   attr_accessor :logger, :validator
 
@@ -24,27 +27,39 @@ class SyncApiService
     @validator = Validator.new(@logger)
   end
 
+  def send_get_request(path)
+    full_url = "#{BASE_URL}#{path}"
+    response = URI.open(full_url, "Authorization" => AUTH_TOKEN)&.read
+    raise TypeError, "Response is nil. Exiting." unless response
+
+    JSON.parse(response, symbolize_names: true)
+  end
+
+  def send_post_request(path, body)
+    full_url = "#{BASE_URL}#{path}"
+    uri = URI.parse(full_url)
+    http = Net::HTTP.new(uri.host || "", uri.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = "application/json"
+    request["Authorization"] = AUTH_TOKEN
+    request.body = JSON.dump(body)
+
+    response = http.request(request)
+
+    json.parse(response.body)
+  end
+
   # The puzzle data for the Sync API is paginated, so this method is for getting one page of data
   # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
   # method until it gets to the most recent puzzle.
-  def sync_one_page_of_puzzle_data(first_puzzle_identifier)
-    handle_error = lambda do |msg|
-      @logger.fatal msg
-      { error: msg }
-    end
+  def sync_puzzle_batch(first_puzzle_identifier)
     @logger.info "Starting with #{first_puzzle_identifier}"
-    url = "#{ENV['PRODUCTION_SYNC_API_URL']}/recent_puzzles/#{first_puzzle_identifier}"
-    authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
-    response = URI.open(url, "Authorization" => authorization_token)&.read
-    return handle_error.call("Response is nil. Exiting.") unless response
+    path = "/recent_puzzles/#{first_puzzle_identifier}"
+    response = send_get_request(path)
 
-    begin
-      json = JSON.parse(response)
-    rescue JSON::ParserError => e
-      return handle_error.call("Unable to parse JSON response for Sync API: #{e.inspect}")
-    end
-
-    return handle_error.call("Invalid Sync API response") unless @validator.valid?(json)
+    @validator.valid_puzzle_response!(response)
 
     @logger.info "Begin loop through data array"
     json["data"].each do |item|
@@ -62,22 +77,23 @@ class SyncApiService
     json
   end
 
-  def sync_recent_puzzles(first_puzzle_identifier)
+  def sync_puzzles(first_puzzle_identifier)
     @logger.info "Starting with #{first_puzzle_identifier}"
     starting_identifier = first_puzzle_identifier
     loop do
       @logger.info "Iterating loop"
-      result = sync_one_page_of_puzzle_data(starting_identifier)
-      if result[:error]
-        @logger.error "Error returned. Breaking loop."
+      response = sync_puzzle_batch(starting_identifier)
+      raise ApiError, "Error returned: #{response[:error]}" if response[:error]
+
+      if response["data"].length < 50
+        @logger.info "Data length < 50. Last puzzle reached. Exiting"
         break
       end
-      if result["data"].length < 50
-        @logger.info "Data length < 50. Last puzzle reached. Breaking loop."
-        break
-      end
+
       starting_identifier = result["last_id"].to_i + 1
     end
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
   end
 
   def update_or_create_puzzle(data_hash, existing_puzzle)
@@ -130,18 +146,9 @@ class SyncApiService
     end
   end
 
-  def send_request(path)
-    full_url = "#{BASE_URL}#{path}"
-    authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
-    response = URI.open(full_url, "Authorization" => authorization_token)&.read
-    raise TypeError, "Response is nil. Exiting." unless response
-
-    JSON.parse(response, symbolize_names: true)
-  end
-
   def send_hint_request(page)
     path = "/word_hints/#{page}"
-    send_request(path)
+    send_get_request(path)
   end
 
   def sync_hint_batch(page)
@@ -175,6 +182,24 @@ class SyncApiService
 
       page += 1
     end
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
+  end
+
+  def query_instruction_count
+    path = "/instructions/count"
+    response = send_get_request(path)
+    raise ApiError, "Error: #{response[:error]}" if response[:error]
+    response[:data]
+  end
+
+  def send_instructions
+    instruction_count = query_instruction_count
+    instructions = OpenaiHintInstruction.order(:id).offset(instruction_count).to_a
+    path = "/instructions/sync"
+    response = send_post_request(path, { instructions: })
+    raise ApiError, "Error sending instructions: #{response[:error]}" if response[:error]
+    @logger.info "Instructions sent successfully: #{response[:success]}"
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end

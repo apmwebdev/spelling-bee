@@ -703,8 +703,8 @@ RSpec.describe OpenaiApiService do
       let(:expected_request_count) { (Word.joins(:puzzles).distinct.count.to_f / word_limit).ceil }
 
       it "sends enough requests to get hints for each puzzle word" do
-        allow(service).to receive(:send_request).and_call_original
-        expect(service).to receive(:send_request).exactly(expected_request_count).times
+        allow(service).to receive(:send_get_request).and_call_original
+        expect(service).to receive(:send_get_request).exactly(expected_request_count).times
         service.fetch_hints(batch_state)
       end
 

@@ -23,6 +23,6 @@ class SyncApi::V1::WordHintsController < SyncApi::V1::SyncApiController
     render json: { data:, page: }
   rescue StandardError => e
     puts e.message
-    render json: { error: e.message }
+    render json: { error: e.message }, status: 400
   end
 end
