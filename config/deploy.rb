@@ -18,7 +18,7 @@ lock "~> 3.18.0"
 
 # Base config
 set :application, "ssb"
-set :repo_url, "git@github.com:apmwebdev/spelling-bee.git"
+set :repo_url, "https://github.com/apmwebdev/spelling-bee.git"
 set :branch, "main"
 set :deploy_to, ENV["DEPLOY_TO"]
 set :keep_releases, 5
