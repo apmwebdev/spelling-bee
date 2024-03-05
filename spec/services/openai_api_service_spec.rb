@@ -351,9 +351,126 @@ RSpec.describe OpenaiApiService do
   describe "#save_hint_response" do
     include_context "openai_extended"
 
-    it "saves an OpenaiHintResponse when passed valid arguments" do
+    it "saves an OpenaiHintResponse when passed a valid parsed_response" do
       expect { service.save_hint_response(parsed_response, request_record) }
         .to change(OpenaiHintResponse, :count).by(1)
+    end
+
+    context "when saving the response" do
+      before do
+        service.save_hint_response(parsed_response, request_record)
+      end
+
+      let(:result) { OpenaiHintResponse.first }
+
+      it "properly links the response to the matching request record" do
+        expect(result.openai_hint_request).to eq(request_record)
+      end
+
+      it "saves word_hints as an array of the correct length" do
+        expect(result.word_hints).to be_an(Array)
+        expect(result.word_hints.length).to eq(word_limit)
+      end
+
+      it "saves a nil error_body" do
+        expect(result.error_body).to be_nil
+      end
+
+      it "saves the HTTP status code correctly" do
+        expect(result.http_status).to be_a(Integer)
+          .and eq(parsed_response.http_status)
+          .and be(200)
+      end
+
+      it "saves response_time_seconds correctly" do
+        expect(result.response_time_seconds).to be_a(Float)
+          .and eq(parsed_response.response_time_seconds)
+      end
+
+      it "saves chat_completion_id correctly" do
+        expect(result.chat_completion_id).to be_a(String)
+          .and eq(parsed_response.body_meta[:id])
+      end
+
+      it "saves system_fingerprint correctly" do
+        expect(result.system_fingerprint).to be_a(String)
+          .and eq(parsed_response.body_meta[:system_fingerprint])
+      end
+
+      it "saves openai_created_timestamp correctly" do
+        expect(result.openai_created_timestamp).to be_a(Time)
+          .and eq(Time.at(parsed_response.body_meta[:created]).utc)
+      end
+
+      it "saves res_ai_model correctly" do
+        expect(result.res_ai_model).to be_a(String)
+          .and eq(parsed_response.body_meta[:model])
+          .and eq(request_record.req_ai_model)
+      end
+
+      it "saves prompt_tokens correctly" do
+        expect(result.prompt_tokens).to be_a(Integer)
+          .and eq(parsed_response.body_meta[:usage][:prompt_tokens])
+      end
+
+      it "saves completion_tokens correctly" do
+        expect(result.completion_tokens).to be_a(Integer)
+          .and eq(parsed_response.body_meta[:usage][:completion_tokens])
+      end
+
+      it "saves total_tokens correctly" do
+        expect(result.total_tokens).to be_a(Integer)
+          .and eq(parsed_response.body_meta[:usage][:total_tokens])
+      end
+
+      it "saves openai_processing_ms correctly", :aggregate_failures do
+        expect(result.openai_processing_ms).to be_a(Integer)
+        expect(result.openai_processing_ms.to_s)
+          .to eq(parsed_response.headers["openai-processing-ms"])
+      end
+
+      it "saves openai_version correctly" do
+        expect(result.openai_version).to be_a(String)
+          .and eq(parsed_response.headers["openai-version"])
+      end
+
+      it "saves x_ratelimit_limit_requests correctly", :aggregate_failures do
+        expect(result.x_ratelimit_limit_requests).to be_a(Integer)
+        expect(result.x_ratelimit_limit_requests.to_s)
+          .to eq(parsed_response.headers["x-ratelimit-limit-requests"])
+      end
+
+      it "saves x_ratelimit_limit_tokens correctly", :aggregate_failures do
+        expect(result.x_ratelimit_limit_tokens).to be_a(Integer)
+        expect(result.x_ratelimit_limit_tokens.to_s)
+          .to eq(parsed_response.headers["x-ratelimit-limit-tokens"])
+      end
+
+      it "saves x_ratelimit_remaining_requests correctly", :aggregate_failures do
+        expect(result.x_ratelimit_remaining_requests).to be_a(Integer)
+        expect(result.x_ratelimit_remaining_requests.to_s)
+          .to eq(parsed_response.headers["x-ratelimit-remaining-requests"])
+      end
+
+      it "saves x_ratelimit_remaining_tokens correctly", :aggregate_failures do
+        expect(result.x_ratelimit_remaining_tokens).to be_a(Integer)
+        expect(result.x_ratelimit_remaining_tokens.to_s)
+          .to eq(parsed_response.headers["x-ratelimit-remaining-tokens"])
+      end
+
+      it "saves x_ratelimit_reset_requests correctly" do
+        expect(result.x_ratelimit_reset_requests)
+          .to eq(parsed_response.headers["x-ratelimit-reset-requests"])
+      end
+
+      it "saves x_ratelimit_reset_tokens correctly" do
+        expect(result.x_ratelimit_reset_tokens)
+          .to eq(parsed_response.headers["x-ratelimit-reset-tokens"])
+      end
+
+      it "saves x_request_id correctly" do
+        expect(result.x_request_id).to eq(parsed_response.headers["x-request-id"])
+      end
     end
   end
 
@@ -438,9 +555,7 @@ RSpec.describe OpenaiApiService do
     end
   end
 
-  describe "#fetch_hints", vcr: { cassette_name: "hint_request_20" } do
-    # include_context "openai_bypass_logger"
-    include_context "openai_puzzle_words"
+  describe "#fetch_hints", vcr: { cassette_name: "fetch_hints_limit_20" } do
     let(:word_limit) { 20 }
     let(:logger) { instance_double(ContextualLogger).as_null_object }
     let(:validator) { OpenaiApiService::Validator.new(logger) }
@@ -522,7 +637,7 @@ RSpec.describe OpenaiApiService do
       end
     end
 
-    context "when the request cap is 1", vcr: { cassette_name: "fetch_hints_limit_20_1" } do
+    context "when the request cap is 1" do
       fixtures :puzzles, :words, :answers
 
       before do
@@ -552,6 +667,72 @@ RSpec.describe OpenaiApiService do
 
       it "saves one hint response" do
         expect { service.fetch_hints(batch_state) }.to change(OpenaiHintResponse, :count).by(1)
+      end
+    end
+
+    context "when the request cap is 2" do
+      fixtures :puzzles, :words, :answers
+
+      before do
+        service.instance_variable_set(:@request_cap, 2)
+      end
+
+      it "sends expected messages to logger" do
+        allow(logger).to receive(:info).with(any_args)
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages.fetch_hints_start(batch_state)).once
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_SUCCESSFUL_RESPONSE).twice
+        expect(logger).to receive(:info)
+          .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED).once
+
+        service.fetch_hints(batch_state)
+      end
+
+      it "calls save_hint a number of times equal to the word limit times the request cap" do
+        allow(service).to receive(:save_hint)
+        expect(service).to receive(:save_hint).exactly(word_limit * service.request_cap).times
+        service.fetch_hints(batch_state)
+      end
+
+      it "saves two hint requests" do
+        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintRequest, :count).by(2)
+      end
+
+      it "saves two hint responses" do
+        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintResponse, :count).by(2)
+      end
+    end
+
+    context "when there is no request cap" do
+      fixtures :puzzles, :words, :answers
+
+      let(:expected_request_count) { (Word.joins(:puzzles).distinct.count.to_f / word_limit).ceil }
+
+      it "sends enough requests to get hints for each puzzle word" do
+        allow(service).to receive(:send_request).and_call_original
+        expect(service).to receive(:send_request).exactly(expected_request_count).times
+        service.fetch_hints(batch_state)
+      end
+
+      it "saves the correct number of requests and responses" do
+        expect { service.fetch_hints(batch_state) }
+          .to change(OpenaiHintRequest, :count).by(expected_request_count)
+          .and change(OpenaiHintResponse, :count).by(expected_request_count)
+      end
+
+      it "calls save_hint a number of times equal to the number of non-duplicate puzzle words" do
+        expected_result = Word.joins(:puzzles).distinct.count
+        allow(service).to receive(:save_hint).and_call_original
+        expect(service).to receive(:save_hint).exactly(expected_result).times
+        service.fetch_hints(batch_state)
+      end
+
+      it "results in no puzzle words with a nil hint field" do
+        expected_count = 0
+        service.fetch_hints(batch_state)
+        actual_count = Word.joins(:puzzles).where(words: { hint: nil }).distinct.count
+        expect(actual_count).to eq(expected_count)
       end
     end
   end

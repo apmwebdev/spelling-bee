@@ -22,7 +22,7 @@ class OpenaiApiService
 
   OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 
-  attr_reader :logger, :validator
+  attr_reader :logger, :validator, :word_limit, :request_cap
 
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cap: nil)
     @logger =
@@ -211,7 +211,7 @@ class OpenaiApiService
     meta = parsed_response.body_meta
     record.chat_completion_id = meta[:id]
     record.system_fingerprint = meta[:system_fingerprint]
-    record.openai_created_timestamp = meta[:created]
+    record.openai_created_timestamp = Time.at(meta[:created]).utc
     record.res_ai_model = meta[:model]
     if meta[:usage]
       record.prompt_tokens = meta[:usage][:prompt_tokens]
@@ -223,7 +223,7 @@ class OpenaiApiService
     headers = parsed_response.headers
     record.openai_processing_ms = headers["openai-processing-ms"]
     record.openai_version = headers["openai-version"]
-    record.x_ratelimit_limit_requests = headers["x-ratelimit-limit_requests"]
+    record.x_ratelimit_limit_requests = headers["x-ratelimit-limit-requests"]
     record.x_ratelimit_limit_tokens = headers["x-ratelimit-limit-tokens"]
     record.x_ratelimit_remaining_requests = headers["x-ratelimit-remaining-requests"]
     record.x_ratelimit_remaining_tokens = headers["x-ratelimit-remaining-tokens"]
