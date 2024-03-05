@@ -256,7 +256,7 @@ RSpec.describe OpenaiApiService do
     end
 
     context "when word_hints is valid" do
-      include_context "openai_test_logger"
+      include_context "openai_stubs"
 
       before do
         allow(validator).to receive_messages(valid_word_hints!: true, valid_word_hint!: true)
@@ -284,9 +284,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hint_request" do
-    let(:logger) { instance_double(ContextualLogger, info: nil) }
-    let(:validator) { OpenaiApiService::Validator.new(logger) }
-    let(:service) { OpenaiApiService.new(logger:, validator:) }
     let(:valid_word_list) { OpenaiApiService::WordList.new(1, sample_words.take(5)) }
     let(:valid_ai_model) { OpenaiApiService::Constants::DEFAULT_AI_MODEL }
 
@@ -528,7 +525,7 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#throttle_batch" do
-    include_context "openai_bypass_logger"
+    include_context "openai_stubs"
     let(:batch_state) { OpenaiApiService::BatchState.new(logger) }
     let(:sleep_time) { 10.0 }
 
@@ -556,10 +553,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#fetch_hints", vcr: { cassette_name: "fetch_hints_limit_20" } do
-    let(:word_limit) { 20 }
-    let(:logger) { instance_double(ContextualLogger).as_null_object }
-    let(:validator) { OpenaiApiService::Validator.new(logger) }
-    let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
     let(:batch_state) { OpenaiApiService::BatchState.new(logger) }
 
     context "when arguments trigger immediate guard conditions" do
@@ -592,7 +585,7 @@ RSpec.describe OpenaiApiService do
       end
 
       it "returns without doing anything if @request_cap is 0", :aggregate_failures do
-        service.instance_variable_set(:@request_cap, 0)
+        service.request_cap = 0
         expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED)
         expect(service).not_to receive(:generate_word_data)
@@ -606,7 +599,7 @@ RSpec.describe OpenaiApiService do
 
       it "returns without doing anything if the request count equals the request cap",
         :aggregate_failures do
-        service.instance_variable_set(:@request_cap, 1)
+        service.request_cap = 1
         batch_state.increment_request_count
         expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED)
@@ -621,7 +614,7 @@ RSpec.describe OpenaiApiService do
 
       it "returns without doing anything if the request count is greater than the request cap",
         :aggregate_failures do
-        service.instance_variable_set(:@request_cap, 1)
+        service.request_cap = 1
         batch_state.increment_request_count
         batch_state.increment_request_count
 
@@ -641,7 +634,7 @@ RSpec.describe OpenaiApiService do
       fixtures :puzzles, :words, :answers
 
       before do
-        service.instance_variable_set(:@request_cap, 1)
+        service.request_cap = 1
       end
 
       it "sends expected messages to logger once", :aggregate_failures do
@@ -674,7 +667,7 @@ RSpec.describe OpenaiApiService do
       fixtures :puzzles, :words, :answers
 
       before do
-        service.instance_variable_set(:@request_cap, 2)
+        service.request_cap = 2
       end
 
       it "sends expected messages to logger" do

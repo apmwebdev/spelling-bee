@@ -10,9 +10,15 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-RSpec.shared_context "openai_test_logger" do
+RSpec.shared_context "openai_stubs" do
   let(:word_limit) { 20 }
-  let(:logger) { instance_double(ContextualLogger) }
-  let(:validator) { instance_double(OpenaiApiService::Validator) }
+  let(:logger) { instance_double(ContextualLogger).as_null_object }
+  let(:validator) { instance_double(OpenaiApiService::Validator).as_null_object }
   let(:service) { OpenaiApiService.new(logger:, validator:) }
+
+  before do
+    allow(logger).to receive(:is_a?).with(ContextualLogger).and_return(true)
+    allow(validator).to receive(:is_a?).with(OpenaiApiService::Validator)
+      .and_return(true)
+  end
 end

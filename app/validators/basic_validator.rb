@@ -275,18 +275,11 @@ module BasicValidator
   private
 
   def determine_logger!(instance_logger, logger_override)
-    return logger_override if class_or_double?(logger_override, ContextualLogger)
-    return instance_logger if class_or_double?(instance_logger, ContextualLogger)
-    raise ArgumentError, "Neither instance_logger nor logger_override are ContextualLoggers "\
-      "or RSpec doubles: \n instance_logger: #{instance_logger}\n logger_override: "\
-      "#{logger_override}"
+    return logger_override if logger_override.is_a?(ContextualLogger)
+    return instance_logger if instance_logger.is_a?(ContextualLogger)
+    raise ArgumentError, "Neither instance_logger nor logger_override are ContextualLoggers:\n "\
+      "instance_logger: #{instance_logger}\n logger_override: #{logger_override}"
   end
-
-  # def valid_logger!(method_logger)
-  #   return true if class_or_double?(method_logger, ContextualLogger)
-  #   raise ArgumentError,
-  #     compose_failed_v8n_message(method_logger, [ContextualLogger, DOUBLE_CLASS], "logger")
-  # end
 
   def valid_asserted_type!(type)
     return true if type.is_a?(Class) || type.is_a?(Module) ||

@@ -16,6 +16,7 @@ require "json"
 
 # Connects to the OpenAI API to generate word definition hints
 class OpenaiApiService
+  include OpenaiLogger
   include Constants
   include Messages
   include BasicValidator
@@ -24,21 +25,13 @@ class OpenaiApiService
 
   attr_accessor :logger, :validator, :word_limit, :request_cap
 
+  # @param logger [ContextualLogger, nil]
+  # @param validator [Validator, nil]
+  # @param word_limit [Integer, nil]
+  # @param request_cap [Integer, nil]
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cap: nil)
-    @logger =
-      if class_or_double?(logger, ContextualLogger)
-        @logger = logger
-      elsif Rails.env.test?
-        ContextualLogger.new(IO::NULL)
-      else
-        ContextualLogger.new("log/open_ai_api.log", "weekly")
-      end
-    @validator =
-      if class_or_double?(validator, Validator)
-        validator
-      else
-        Validator.new(@logger)
-      end
+    @logger = determine_logger(logger)
+    @validator = validator || Validator.new(@logger)
     @word_limit = word_limit || DEFAULT_WORD_LIMIT
     @request_cap = request_cap
   end

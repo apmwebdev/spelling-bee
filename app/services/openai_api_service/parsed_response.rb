@@ -15,6 +15,7 @@ require "net/http"
 class OpenaiApiService
   # Holds parsed data from an API response (e.g., word list, headers, etc.)
   class ParsedResponse
+    include OpenaiLogger
     include BasicValidator
     include Constants
     include Loggable
@@ -95,16 +96,11 @@ class OpenaiApiService
     end
 
     def logger=(value)
-      if class_or_double?(value, ContextualLogger)
-        @logger = value
-      else
-        @logger ||= ContextualLogger.new("log/open_ai_api.log", "weekly")
-        @logger.error "@logger must be a ContextualLogger or RSpec double. Passed #{value}"
-      end
+      @logger = determine_logger(value)
     end
 
     def validator=(value)
-      if class_or_double?(value, Validator)
+      if value
         @validator = value
       else
         @validator ||= Validator.new(@logger)

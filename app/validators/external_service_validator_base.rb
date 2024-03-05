@@ -15,7 +15,7 @@ class ExternalServiceValidatorBase
   include BasicValidator
 
   def initialize(logger)
-    unless class_or_double?(logger, ContextualLogger)
+    unless logger.is_a?(ContextualLogger)
       raise TypeError,
         "Logger passed to #{self.class.name} must be a ContextualLogger or RSpec double"\
           "Passed #{logger.class.name}: #{logger}"

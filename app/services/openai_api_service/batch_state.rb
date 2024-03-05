@@ -13,6 +13,7 @@
 class OpenaiApiService
   # Data object for holding the state of the API request batches
   class BatchState
+    include OpenaiLogger
     include Constants
     include Loggable
     include BasicValidator
@@ -20,7 +21,7 @@ class OpenaiApiService
     attr_reader :request_count, :remaining_requests, :reset_requests_s, :remaining_tokens,
       :reset_tokens_s, :puzzle_id, :word_set, :retry_count
 
-    # @param logger
+    # @param logger [ContextualLogger]
     # @param request_count [Integer]
     # @param remaining_requests [Integer]
     # @param reset_requests_s [Float]
@@ -90,12 +91,7 @@ class OpenaiApiService
     # Setters
 
     def logger=(value)
-      if class_or_double?(value, ContextualLogger)
-        @logger = value
-      else
-        @logger ||= ContextualLogger.new("log/open_ai_api.log", "weekly")
-        @logger.error "@logger must be a ContextualLogger or RSpec double. Passed #{value}"
-      end
+      @logger = determine_logger(value)
     end
 
     def remaining_requests=(value)

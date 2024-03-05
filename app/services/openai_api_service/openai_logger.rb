@@ -10,9 +10,12 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-RSpec.shared_context "openai_bypass_logger" do
-  let(:word_limit) { 20 }
-  let(:logger) { instance_double(ContextualLogger).as_null_object }
-  let(:validator) { instance_double(OpenaiApiService::Validator).as_null_object }
-  let(:service) { OpenaiApiService.new(logger:, validator:) }
+class OpenaiApiService
+  # Shortcut for setting the logger even if none is passed in
+  module OpenaiLogger
+    def determine_logger(input_logger)
+      return input_logger if input_logger.is_a?(ContextualLogger)
+      ContextualLogger.new("log/open_ai_api.log", "weekly")
+    end
+  end
 end
