@@ -9,7 +9,7 @@ class OpenaiApiService
     # 3. 4,096 tokens per response
     # Of these, the 4k tokens/response is the most limiting. With a word limit of 140, each response
     # should be ~3k tokens, falling well under the limit with some wiggle room.
-    DEFAULT_WORD_LIMIT = 140
+    DEFAULT_WORD_LIMIT = 120
 
     # The minimum remaining tokens needed for a hint request to be sent.
     MINIMUM_REMAINING_TOKENS = 15_000
