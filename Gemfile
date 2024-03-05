@@ -24,7 +24,7 @@ gem "dotenv-rails", "~> 2.8"
 gem "ed25519", "~> 1.2"
 gem "jsonapi-serializer"
 gem "logger"
-gem "nokogiri"
+gem "nokogiri", "~> 1.16.2"
 gem "puma", "~> 5.0"
 gem "rack-cors"
 gem "rubocop", "~> 1.56", require: false
