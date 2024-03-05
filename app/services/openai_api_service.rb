@@ -22,7 +22,7 @@ class OpenaiApiService
 
   OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 
-  attr_reader :logger, :validator, :word_limit, :request_cap
+  attr_accessor :logger, :validator, :word_limit, :request_cap
 
   def initialize(logger: nil, validator: nil, word_limit: nil, request_cap: nil)
     @logger =

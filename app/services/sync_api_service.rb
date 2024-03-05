@@ -15,9 +15,13 @@ require "open-uri"
 # This is the service that is the client half of the Sync API. It is designed to be used by a dev
 # environment to get the most up-to-date puzzle data from the production environment.
 class SyncApiService
+  BASE_URL = ENV["PRODUCTION_SYNC_API_URL"]
+
+  attr_accessor :logger, :validator
+
   def initialize
     @logger = ContextualLogger.new("log/sync_api.log", "weekly")
-    @validator = SyncApiValidator.new(@logger)
+    @validator = Validator.new(@logger)
   end
 
   # The puzzle data for the Sync API is paginated, so this method is for getting one page of data
@@ -77,7 +81,8 @@ class SyncApiService
   end
 
   def update_or_create_puzzle(data_hash, existing_puzzle)
-    puzzle_data, origin_data, answer_words = data_hash.values_at("puzzle_data", "origin_data", "answer_words")
+    puzzle_data, origin_data, answer_words =
+      data_hash.values_at("puzzle_data", "origin_data", "answer_words")
 
     update_or_create_origin(puzzle_data, origin_data)
 
@@ -113,15 +118,64 @@ class SyncApiService
     answer_words.each do |answer_word|
       word = Word.create_or_find_by({ text: answer_word })
       if word.frequency.nil?
-        @logger.info "Fetching datamuse data for \"#{answer_word}\"."
+        @logger.debug "Fetching datamuse data for \"#{answer_word}\"."
         datamuse_data = DatamuseApiService.get_word_data(answer_word)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
         word.save!
       else
-        @logger.info "Datamuse data already exists for \"#{answer_word}\"."
+        @logger.debug "Datamuse data already exists for \"#{answer_word}\"."
       end
       Answer.create!({ puzzle:, word_text: answer_word })
     end
+  end
+
+  def send_request(path)
+    full_url = "#{BASE_URL}#{path}"
+    authorization_token = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}"
+    response = URI.open(full_url, "Authorization" => authorization_token)&.read
+    raise TypeError, "Response is nil. Exiting." unless response
+
+    JSON.parse(response, symbolize_names: true)
+  end
+
+  def send_hint_request(page)
+    path = "/word_hints/#{page}"
+    send_request(path)
+  end
+
+  def sync_hint_batch(page)
+    @logger.info "Starting hint batch, page: #{page}"
+    response = send_hint_request(page)
+
+    @validator.valid_hint_response!(response)
+
+    response.data.each do |word_hint|
+      word = Word.find(word_hint[:word])
+      word.hint = word_hint[:hint]
+      word.save!
+    end
+    @logger.info "Batch complete"
+    response
+  end
+
+  def sync_hints
+    @logger.info "Starting hint sync..."
+    page = 0
+    loop do
+      @logger.info "Iterating loop, page: #{page}"
+      response = sync_hint_batch(page)
+
+      raise ApiError, "Error returned: #{response[:error]}" if response[:error]
+
+      if response[:data].length < 1000
+        @logger.info "Data length < 1000. All hints synced successfully. Exiting"
+        break
+      end
+
+      page += 1
+    end
+  rescue StandardError => e
+    @logger.exception(e, :fatal)
   end
 end

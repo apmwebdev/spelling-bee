@@ -14,7 +14,16 @@ namespace :sync_api do
   desc "Sync puzzle data"
   # e.g. rake "sync_api:sync_latest_puzzles[2081]"
   task :sync_latest_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
+    service = SyncApiService.new
+    service.logger.global_puts_and.push(:info, :warn)
     first_puzzle_identifier = args[:first_puzzle_identifier].to_i
-    SyncApiService.new.sync_recent_puzzles(first_puzzle_identifier)
+    service.sync_recent_puzzles(first_puzzle_identifier)
+  end
+
+  desc "Sync hints"
+  task sync_hints: :environment do
+    service = SyncApiService.new
+    service.logger.global_puts_and.push(:info, :warn)
+    service.sync_hints
   end
 end
