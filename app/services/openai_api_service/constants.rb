@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-
 class OpenaiApiService
   module Constants
     # Default limit for the number of words per request to get hints for. This number is based on
     # the limits of the model being used, which is `gpt-3.5-turbo-0125`. This model has 3 limits:
-    # 1. 250,000 tokens per minute
-    # 2. 3,000 requests per minute
+    # 1. 60,000 tokens per minute
+    # 2. 500 requests per minute
     # 3. 4,096 tokens per response
     # Of these, the 4k tokens/response is the most limiting. With a word limit of 140, each response
     # should be ~3k tokens, falling well under the limit with some wiggle room.
@@ -14,12 +13,6 @@ class OpenaiApiService
 
     # The minimum remaining tokens needed for a hint request to be sent.
     MINIMUM_REMAINING_TOKENS = 15_000
-
-    # After tokens/response, the next most limiting factor is tokens/minute. With the input tokens
-    # and response tokens, each request + response cycle should be ~3600 tokens. With 60 requests,
-    # that would be ~216,000 tokens. Because the requests are not being batched and each request
-    # takes several seconds, however, there's no way the TPM limit should ever be reached.
-    RPM_LIMIT = 60
 
     # Character limit for the stringified request content. This prevents accidentally sending a
     # massive request (for whatever reason). Nearly all of the token length of a request is taken up
@@ -31,6 +24,8 @@ class OpenaiApiService
     # https://platform.openai.com/docs/models/models
     # The limits for the different models are shown here: https://platform.openai.com/account/limits
     DEFAULT_AI_MODEL = "gpt-3.5-turbo-0125"
+
+    RETRY_COUNT_SLEEP_TIMES = [0, 60, 300].freeze
 
     # Headers from the API responses to save
     RELEVANT_HEADERS = [

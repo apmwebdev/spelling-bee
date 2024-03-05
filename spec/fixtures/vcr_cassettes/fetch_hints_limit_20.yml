@@ -1,0 +1,592 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: arrow, arrowroot, athwart, away,
+        awry, harrow, thataway, thaw, throw, throwaway, thwart, wahoo, wart, warty,
+        wary, watt, what, whoa, woot, worry\n Respond in JSON format. There should
+        be an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 04 Mar 2024 13:02:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '10625'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59679'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 321ms
+      X-Request-Id:
+      - 74dc60350a4c8eccf21a2af3c9ed4d532bfd3db69e3a5d68eda69905268cfa87
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=7fm5GTw0xd42qQamFRZidcuYcQjG9mVnbP4ujjIfKqg-1709557331-1.0.1.1-u.M90heIdEKlUYeHzafeWn.Il1AN4KCR7eJn8JUibyFQZvjGr6cy._ZbymerMtvkBAkA4miZ2KCT59zunBZwLw;
+        path=/; expires=Mon, 04-Mar-24 13:32:11 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=ecqs1vKv8HXaACUY7aTO8AaV1Rs45W8R.R4CAfpNK9Y-1709557331079-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f20ee40808c37b-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8z2F6Olpyx4LccS4Gle9lVKHeXaEw",
+          "object": "chat.completion",
+          "created": 1709557320,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "\n{\n  \"word_hints\": [\n    {\"word\": \"arrow\", \"hint\": \"A sharp-pointed weapon that is shot from a bow\"},\n    {\"word\": \"arrowroot\", \"hint\": \"A powdery substance often used as a thickening agent in cooking\"},\n    {\"word\": \"athwart\", \"hint\": \"In a position across or against something\"},\n    {\"word\": \"away\", \"hint\": \"Not present or near; removed or to a distance\"},\n    {\"word\": \"awry\", \"hint\": \"Off course; askew or crooked\"},\n    {\"word\": \"harrow\", \"hint\": \"A farm implement used to break up and smooth soil\"},\n    {\"word\": \"thataway\", \"hint\": \"Indicating a direction away from the speaker\"},\n    {\"word\": \"thaw\", \"hint\": \"To melt or cause to melt from a solid to a liquid state\"},\n    {\"word\": \"throw\", \"hint\": \"To propel something through the air by a forward motion of the arm\"},\n    {\"word\": \"throwaway\", \"hint\": \"An item intended to be discarded after use\"},\n    {\"word\": \"thwart\", \"hint\": \"To prevent someone from accomplishing a plan or aim\"},\n    {\"word\": \"wahoo\", \"hint\": \"A type of tropical fish known for its speed and agility\"},\n    {\"word\": \"wart\", \"hint\": \"A small, rough growth on the skin\"},\n    {\"word\": \"warty\", \"hint\": \"Having the appearance or texture of a wart; bumpy or rough\"},\n    {\"word\": \"wary\", \"hint\": \"Cautious or reluctant to do something\"},\n    {\"word\": \"watt\", \"hint\": \"A unit of power equal to one joule per second\"},\n    {\"word\": \"what\", \"hint\": \"Used to ask for information or to introduce a clause\"},\n    {\"word\": \"whoa\", \"hint\": \"Used to command a person or animal to stop or slow down\"},\n    {\"word\": \"woot\", \"hint\": \"Expressing joy, excitement, or triumph\"},\n    {\"word\": \"worry\", \"hint\": \"To feel anxious or concerned about something\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 300,
+            "completion_tokens": 469,
+            "total_tokens": 769
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Mon, 04 Mar 2024 13:02:11 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: worrywart, wort, worth, worthy,
+        wrath, yarrow, cirri, coffin, coif, coin, comic, confirm, conic, coniform,
+        croci, firm, foci, formic, icon, iconic\n Respond in JSON format. There should
+        be an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Mar 2024 03:28:43 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '12128'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59678'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 322ms
+      X-Request-Id:
+      - fbe8ec3b6c2a849d8460c764d993186cb7d9de02745479a286cee2d6ef545489
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=pHREUP6DDxH009Zld85xQuzLWk2u3NlzlnPF8t6jydw-1709609323-1.0.1.1-tliWfhMjc.vbHnsL_K5U9l8FanTGtUNLV43CRzuoIhMk5sejJU9KQboZd_XVYpEtAHS71EZL.Dc5h.0fntgMwQ;
+        path=/; expires=Tue, 05-Mar-24 03:58:43 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=cxM0bJMKy1ensvrP8tzqCjZgjebpBD2Xnknfva0F06I-1709609323552-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f70433bfaa308e-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8zFlfN2LiH6NDr8cX5pTPTsa31ljD",
+          "object": "chat.completion",
+          "created": 1709609311,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "\n{\n  \"word_hints\": [\n    {\n      \"word\": \"worrywart\",\n      \"hint\": \"Someone who tends to fret or be anxious about minor things.\"\n    },\n    {\n      \"word\": \"wort\",\n      \"hint\": \"A plant or herb used for medicinal or culinary purposes.\"\n    },\n    {\n      \"word\": \"worth\",\n      \"hint\": \"Describing the value or importance of something.\"\n    },\n    {\n      \"word\": \"worthy\",\n      \"hint\": \"Deserving of respect, honor, or praise.\"\n    },\n    {\n      \"word\": \"wrath\",\n      \"hint\": \"Intense anger or fury.\"\n    },\n    {\n      \"word\": \"yarrow\",\n      \"hint\": \"A flowering plant often used in herbal medicine.\"\n    },\n    {\n      \"word\": \"cirri\",\n      \"hint\": \"Plural of a wispy cloud formation or a tendril-like structure on some organisms.\"\n    },\n    {\n      \"word\": \"coffin\",\n      \"hint\": \"A box or container used for burying the dead.\"\n    },\n    {\n      \"word\": \"coif\",\n      \"hint\": \"A type of head covering or hairstyle.\"\n    },\n    {\n      \"word\": \"coin\",\n      \"hint\": \"A small, flat piece of metal used as money.\"\n    },\n    {\n      \"word\": \"comic\",\n      \"hint\": \"Related to humor, jokes, or cartoons.\"\n    },\n    {\n      \"word\": \"confirm\",\n      \"hint\": \"To verify or corroborate something.\"\n    },\n    {\n      \"word\": \"conic\",\n      \"hint\": \"Referring to a shape with a cone-like form.\"\n    },\n    {\n      \"word\": \"coniform\",\n      \"hint\": \"Shaped like a cone or having a conical form.\"\n    },\n    {\n      \"word\": \"croci\",\n      \"hint\": \"Plural of a type of flower typically associated with spring.\"\n    },\n    {\n      \"word\": \"firm\",\n      \"hint\": \"Strong and stable or a business entity.\"\n    },\n    {\n      \"word\": \"foci\",\n      \"hint\": \"Plural of the point of convergence or emphasis.\"\n    },\n    {\n      \"word\": \"formic\",\n      \"hint\": \"Related to ants or the formic acid they produce.\"\n    },\n    {\n      \"word\": \"icon\",\n      \"hint\": \"A symbol, image, or person widely recognized or revered.\"\n    },\n    {\n      \"word\": \"iconic\",\n      \"hint\": \"Symbolic of a particular person, place, or thing.\"\n    }\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 300,
+            "completion_tokens": 555,
+            "total_tokens": 855
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Tue, 05 Mar 2024 03:28:43 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: infirm, info, inform, ionic, iron,
+        ironic, micro, microform, micron, miff, mimic, mini, minim, minion, minor,
+        mirror, moronic, noir, omicron, onion\n Respond in JSON format. There should
+        be an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Mar 2024 04:45:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '6801'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59678'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 322ms
+      X-Request-Id:
+      - 8d75b2adfcdf1c1a44b35cb97d434a05e90b6af7cd73559bb557e9fbeeea5e81
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=trYgrpYj06IfSPnxK.lP0TGd2LikLQH6VMD4ML86e7s-1709613946-1.0.1.1-aNSsVu7nOcNqmK2t2XaU9XMcNNG.rJsVz4xRZodEAjH.oFPFx4qEfV9uhCtktxA4v_ycCMX1ivIy9CFV9qIuaw;
+        path=/; expires=Tue, 05-Mar-24 05:15:46 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=x1uugpfwf4K4tBpXOkjsiHUbS2ezjKd9wqTBrVdPHo0-1709613946356-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f775301a9d2841-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8zGyJUdohlE9jXgSfld8rnW2WuRHd",
+          "object": "chat.completion",
+          "created": 1709613939,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\n  \"word_hints\": [\n    {\"word\": \"infirm\", \"hint\": \"Not in good health or physical condition\"},\n    {\"word\": \"info\", \"hint\": \"Abbreviation for information\"},\n    {\"word\": \"inform\", \"hint\": \"To provide knowledge or facts about a subject\"},\n    {\"word\": \"ionic\", \"hint\": \"Relating to a form of chemical bonding\"},\n    {\"word\": \"iron\", \"hint\": \"A strong, magnetic metal element\"},\n    {\"word\": \"ironic\", \"hint\": \"Having a sarcastic or unexpected twist\"},\n    {\"word\": \"micro\", \"hint\": \"Very small in size or scale\"},\n    {\"word\": \"microform\", \"hint\": \"A small form or representation of something\"},\n    {\"word\": \"micron\", \"hint\": \"A unit of length equal to one millionth of a meter\"},\n    {\"word\": \"miff\", \"hint\": \"To offend or annoy someone\"},\n    {\"word\": \"mimic\", \"hint\": \"To imitate or copy someone or something\"},\n    {\"word\": \"mini\", \"hint\": \"Something that is smaller in size or scale\"},\n    {\"word\": \"minim\", \"hint\": \"A musical note lasting half as long as a whole note\"},\n    {\"word\": \"minion\", \"hint\": \"A follower or subordinate, often in a negative context\"},\n    {\"word\": \"minor\", \"hint\": \"Lesser in importance or significance\"},\n    {\"word\": \"mirror\", \"hint\": \"A reflective surface that shows an image of whatever is in front of it\"},\n    {\"word\": \"moronic\", \"hint\": \"Showing a lack of intelligence or good judgment\"},\n    {\"word\": \"noir\", \"hint\": \"A genre of film characterized by its dark and gritty style\"},\n    {\"word\": \"omicron\", \"hint\": \"The fifteenth letter of the Greek alphabet\"},\n    {\"word\": \"onion\", \"hint\": \"A pungent vegetable often used in cooking\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 297,
+            "completion_tokens": 428,
+            "total_tokens": 725
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Tue, 05 Mar 2024 04:45:46 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: ricin, riff, cell, celli, chef,
+        chic, chichi, chicle, chicly, chief, chiefly, chili, chill, chilly, clef,
+        cliche, cliff, cycle, cyclic, fiche\n Respond in JSON format. There should
+        be an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Mar 2024 04:45:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '8968'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9998'
+      X-Ratelimit-Remaining-Tokens:
+      - '59489'
+      X-Ratelimit-Reset-Requests:
+      - 9.992s
+      X-Ratelimit-Reset-Tokens:
+      - 510ms
+      X-Request-Id:
+      - 97654bbd1fd17fa0a674391cd4d50a398aef945512f494678d575799731af321
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=5Yc5k_JXKypHh1IflWJlWJijXNQtWaZkrmqf6sGsVsY-1709613955-1.0.1.1-KMrFna7w.uQpDYwC4iHm6PHCkVFiOQHM624r8WV1Jd1SWC4FYQyEafeRIOfte3kJmxKFWleGfVjJrxhT.QOWkg;
+        path=/; expires=Tue, 05-Mar-24 05:15:55 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=DDIcKigDod6k2zGrQcmcwgNVpHtGIi6XG.v4aicgHCM-1709613955560-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f7755d98beec3c-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8zGyQfBSSQiDXj9Jnbvqt5imu8BWl",
+          "object": "chat.completion",
+          "created": 1709613946,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\n  \"word_hints\": [\n    {\"word\": \"ricin\", \"hint\": \"A highly toxic substance obtained from the seeds of the castor oil plant.\"},\n    {\"word\": \"riff\", \"hint\": \"A short repeated phrase in music, often played as an accompaniment.\"},\n    {\"word\": \"cell\", \"hint\": \"The smallest structural and functional unit of an organism, typically microscopic.\"},\n    {\"word\": \"celli\", \"hint\": \"Plural of a musical instrument similar to a cello.\"},\n    {\"word\": \"chef\", \"hint\": \"A professional cook, typically in charge of a kitchen.\"},\n    {\"word\": \"chic\", \"hint\": \"Stylish and fashionable in a distinctive and elegant way.\"},\n    {\"word\": \"chichi\", \"hint\": \"Pretentiously stylish and fashionable; overly elaborate or showy.\"},\n    {\"word\": \"chicle\", \"hint\": \"A gum-like substance obtained from the latex of sapodilla trees.\"},\n    {\"word\": \"chicly\", \"hint\": \"In a stylish and fashionable manner; demonstrating elegance.\"},\n    {\"word\": \"chief\", \"hint\": \"The leader or head of a group or organization.\"},\n    {\"word\": \"chiefly\", \"hint\": \"Mainly or primarily; predominantly.\"},\n    {\"word\": \"chili\", \"hint\": \"A spicy pepper or a dish made with chili peppers.\"},\n    {\"word\": \"chill\", \"hint\": \"A feeling of coldness, often accompanied by shivering.\"},\n    {\"word\": \"chilly\", \"hint\": \"Uncomfortably cool or cold in temperature.\"},\n    {\"word\": \"clef\", \"hint\": \"A symbol in musical notation indicating the pitch of written notes.\"},\n    {\"word\": \"cliche\", \"hint\": \"A phrase or idea that has been overused to the point of losing its originality or impact.\"},\n    {\"word\": \"cliff\", \"hint\": \"A steep rock face, especially at the edge of the sea or a river.\"},\n    {\"word\": \"cycle\", \"hint\": \"A series of events that are regularly repeated in the same order.\"},\n    {\"word\": \"cyclic\", \"hint\": \"Involving or occurring in cycles; characterized by periodic renewal or recurrence.\"},\n    {\"word\": \"fiche\", \"hint\": \"A small piece of microfilm containing a microphotograph of a newspaper page, manuscript, etc.\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 298,
+            "completion_tokens": 510,
+            "total_tokens": 808
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Tue, 05 Mar 2024 04:45:55 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: filch, fleece, icicle, icily, lech,
+        leech, lice, lychee, yecch, yech\n Respond in JSON format. There should be
+        an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Mar 2024 04:46:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '5324'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9998'
+      X-Ratelimit-Remaining-Tokens:
+      - '59432'
+      X-Ratelimit-Reset-Requests:
+      - 9.41s
+      X-Ratelimit-Reset-Tokens:
+      - 567ms
+      X-Request-Id:
+      - 902a1ee66657e840632d1a8be0bb28824219648679277ae42c4cba3cdfca3cd7
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=E0z6Eg3cP4Gu7NZYhfrV.ozI3n62g1im8sS_GPsXch0-1709613961-1.0.1.1-Vki7l1lALZSFaVfAete0rYz8BPHz0acmnRkBwRtueXFs8beBBlYBio.iapMsv6qC1RHNTdYifDxE0H1Un_feYg;
+        path=/; expires=Tue, 05-Mar-24 05:16:01 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=uKWyc1pgzWcbfyTfGgDOaFmF9nZNGfiy68QMJDZZW4c-1709613961160-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85f775971ce4c77e-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8zGyZJLCz4ONzifHaxnwFRwnnYNM6",
+          "object": "chat.completion",
+          "created": 1709613955,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\n  \"word_hints\": [\n    {\"word\": \"filch\", \"hint\": \"To steal something in a sneaky or secretive way.\"},\n    {\"word\": \"fleece\", \"hint\": \"To deceive or overcharge someone for something.\"},\n    {\"word\": \"icicle\", \"hint\": \"A long, pointed piece of ice that hangs down from a surface.\"},\n    {\"word\": \"icily\", \"hint\": \"In a cold or unfriendly manner.\"},\n    {\"word\": \"lech\", \"hint\": \"To have a strong and inappropriate sexual desire.\"},\n    {\"word\": \"leech\", \"hint\": \"A bloodsucking worm-like creature or a person who takes advantage of others.\"},\n    {\"word\": \"lice\", \"hint\": \"Small parasitic insects that infest mammals and birds.\"},\n    {\"word\": \"lychee\", \"hint\": \"A small, round fruit with a rough, red shell and sweet, white flesh.\"},\n    {\"word\": \"yecch\", \"hint\": \"An expression of disgust or dislike.\"},\n    {\"word\": \"yech\", \"hint\": \"An expression of revulsion or distaste.\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 281,
+            "completion_tokens": 245,
+            "total_tokens": 526
+          },
+          "system_fingerprint": "fp_2b778c6b35"
+        }
+  recorded_at: Tue, 05 Mar 2024 04:46:01 GMT
+recorded_with: VCR 6.2.0

@@ -10,8 +10,8 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-module WordHelper
-  def words_from_strings(*slice_args, with_hints: false)
+module OpenaiApiHelper
+  def sample_words_from_strings(*slice_args, with_hints: false)
     sample_words.slice(*slice_args).map do |text|
       Word.new(text:, hint: with_hints ? "hint" : nil)
     end
@@ -19,5 +19,5 @@ module WordHelper
 end
 
 RSpec.configure do |config|
-  config.include WordHelper
+  config.include OpenaiApiHelper
 end

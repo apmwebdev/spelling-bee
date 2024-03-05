@@ -10,7 +10,6 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-##
 # The instruction set sent to the OpenAI API for hint generation. Abstracted into its own model for
 # easier replication, change tracking, and analysis.
 class OpenaiHintInstruction < ApplicationRecord

@@ -10,11 +10,9 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-namespace :openai do
-  desc "Seed hints"
-  task seed_hints: :environment do
-    service = OpenaiApiService.new
-    service.logger.global_puts_and.push(:info, :warn)
-    service.seed_hints
-  end
+RSpec.shared_context "openai_test_logger" do
+  let(:word_limit) { 20 }
+  let(:logger) { instance_double(ContextualLogger) }
+  let(:validator) { instance_double(OpenaiApiService::Validator) }
+  let(:service) { OpenaiApiService.new(logger:, validator:) }
 end

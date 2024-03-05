@@ -12,33 +12,34 @@
 
 require "rails_helper"
 
-# NOTE: The tests in this spec must be run in order
 RSpec.describe BasicValidator do
   before(:all) do
-    @logger = ContextualLogger.new(global_puts_only: true)
+    @logger = ContextualLogger.new(IO::NULL, global_puts_and: false)
   end
 
-  describe "#valid_type?" do
+  describe "#valid_type?, #valid_type!, and #validate_type" do
     before(:all) do
       @helper = BasicValidatorHelper.new(logger: @logger)
     end
 
     describe "Argument Validation" do
       context "validating classes with no @logger instance variable defined" do
-        before(:each) do
-          @no_logger = BasicValidatorHelper::NoLogger.new
-        end
+        let(:no_logger) { BasicValidatorHelper::NoLogger.new }
 
         it "doesn't raise an error if logger_override is passed in" do
           expect do
-            @no_logger.valid_type?("foo", String, should_raise: true, logger_override: @logger)
+            no_logger.valid_type?("foo", String, logger_override: @logger)
+          end.not_to raise_error
+          expect do
+            no_logger.valid_type!("foo", String, logger_override: @logger)
           end.not_to raise_error
         end
 
         it "raises an ArgumentError if no logger_override is input, regardless of should_raise" do
-          expect { @no_logger.valid_type?("foo", String, should_raise: false) }.to(
-            raise_error(ArgumentError),
-          )
+          expect { no_logger.valid_type?("foo", String) }
+            .to raise_error(ArgumentError)
+          expect { no_logger.valid_type!("foo", String) }
+            .to raise_error(ArgumentError)
         end
       end
 
@@ -46,133 +47,269 @@ RSpec.describe BasicValidator do
         before(:each) do
           # The method should still raise exceptions for invalid arguments, even with
           # should_raise set to false.
-          @helper.reset_all(should_raise: false)
+          @helper.reset_all(value: "foo", type: String, logger: nil)
         end
 
         it "raises an ArgumentError when @logger is nil and no logger_override is passed in" do
-          expect { @helper.valid_type?("foo", String) }.to raise_error(ArgumentError)
+          expect { @helper.run(logger_override: :exclude) }.to raise_error(ArgumentError)
+          expect { @helper.run!(logger_override: :exclude) }.to raise_error(ArgumentError)
         end
 
         it "raises an ArgumentError when @logger is nil and logger_override is invalid",
           :aggregate_failures do
           @helper.logger_override = Logger.new($stdout)
-          expect { @helper.run({}, Hash) }.to raise_error(ArgumentError)
+          expect { @helper.run }.to raise_error(ArgumentError)
+          expect { @helper.run! }.to raise_error(ArgumentError)
           @helper.logger_override = "some random value"
-          expect { @helper.run([], Array) }.to raise_error(ArgumentError)
+          expect { @helper.run }.to raise_error(ArgumentError)
+          expect { @helper.run! }.to raise_error(ArgumentError)
         end
 
         it "raises a TypeError when both @logger and logger_override are invalid" do
           @helper.reset_all(logger: Logger.new($stdout), logger_override: Logger.new($stdout))
-          expect { @helper.run(Set.new, Set) }.to raise_error(ArgumentError)
+          expect { @helper.run }.to raise_error(ArgumentError)
+          expect { @helper.run! }.to raise_error(ArgumentError)
         end
 
         it "raises a TypeError when @logger is invalid and no logger_override is provided" do
-          expect { @helper.run({}, Hash) }.to raise_error(ArgumentError)
+          @helper.logger = "blah"
+          expect { @helper.run(logger_override: :exclude) }.to raise_error(ArgumentError)
+          expect { @helper.run!(logger_override: :exclude) }.to raise_error(ArgumentError)
         end
 
-        it "does not raise an exception if @logger is valid and no logger_override is present" do
+        it "does not raise an exception if @logger is valid and no logger_override is provided" do
           @helper.logger = @logger
-          expect { @helper.valid_type?("foo", String) }.not_to raise_error
+          expect { @helper.run(logger_override: :exclude) }.not_to raise_error
+          expect { @helper.run!(logger_override: :exclude) }.not_to raise_error
         end
 
-        it "does not raise an exception if logger_override is valid and no @logger is present" do
+        it "does not raise an exception if logger_override is valid and @logger is nil" do
           @helper.logger_override = @logger
-          expect { @helper.run(123, Integer) }.not_to raise_error
+          expect { @helper.run }.not_to raise_error
+          expect { @helper.run! }.not_to raise_error
         end
       end
 
       context "validating type argument" do
+        # For full validation, see the tests for #valid_asserted_type!
         before(:all) do
-          @helper.reset_all(should_raise: false, logger: @logger)
+          @helper.reset_all(value: "foo", logger: @logger)
         end
 
-        it "raises an ArgumentError if type is an empty array" do
-          @helper.type = []
-          expect { @helper.run([]) }.to raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError if type is an array and contains non-Class objects" do
-          @helper.type = [Integer, "String"]
-          expect { @helper.run(123) }.to raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError if type isn't a class or array", :aggregate_failures do
-          @helper.type = "String"
-          expect { @helper.run("food") }.to raise_error(ArgumentError)
+        it "raises an ArgumentError if type is invalid", :aggregate_failures do
           @helper.type = nil
-          expect { @helper.run(nil) }.to raise_error(ArgumentError)
-          @helper.type = 123
-          expect { @helper.run(123) }.to raise_error(ArgumentError)
+          expect { @helper.run }.to raise_error(ArgumentError)
+          expect { @helper.run! }.to raise_error(ArgumentError)
         end
 
         it "doesn't raise an exception if type is a class" do
           @helper.type = String
-          expect { @helper.run("foo") }.not_to raise_error
-        end
-
-        it "doesn't raise an exception if type is an array of classes" do
-          @helper.type = [Integer, String]
-          expect { @helper.run(333) }.not_to raise_error
+          expect { @helper.run }.not_to raise_error
+          expect { @helper.run! }.not_to raise_error
         end
       end
 
       context "validating validation_fn" do
+        # For full validation, see the tests for #valid_validation_fn!
         before(:all) do
-          @helper.reset_all(value: "foo", type: String, should_raise: true, logger: @logger)
+          @helper.reset_all(value: "foo", type: String, logger: @logger)
         end
 
-        it "raises an ArgumentError if validation_fn is a non-lambda Proc" do
+        it "raises an ArgumentError if validation_fn is invalid" do
           @helper.validation_fn = proc { true }
           expect { @helper.run }.to raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError if validation_fn is a lambda but has an arity other than 1",
-          :aggregate_failures do
-          @helper.validation_fn = -> { true }
-          expect { @helper.run }.to raise_error(ArgumentError)
-          @helper.validation_fn = ->(*args) { [*args] }
-          expect { @helper.run }.to raise_error(ArgumentError)
-          @helper.validation_fn = ->(**args) { { **args } }
-          expect { @helper.run }.to raise_error(ArgumentError)
-          @helper.validation_fn = ->(required, *rest) { [required, *rest] }
-          expect { @helper.run }.to raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError if validation_fn takes named arguments" do
-          @helper.validation_fn = ->(arg:) { arg }
-          expect { @helper.run }.to raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError if validation_fn is not nil and not a lambda",
-          :aggregate_failures do
-          @helper.validation_fn = []
-          expect { @helper.run }.to raise_error(ArgumentError)
-          @helper.validation_fn = 123
-          expect { @helper.run }.to raise_error(ArgumentError)
-          @helper.validation_fn = {}
-          expect { @helper.run }.to raise_error(ArgumentError)
+          expect { @helper.run! }.to raise_error(ArgumentError)
         end
 
         it "doesn't raise an error if validation_fn is nil" do
           @helper.validation_fn = nil
           expect { @helper.run }.not_to raise_error
+          expect { @helper.run! }.not_to raise_error
         end
 
         it "doesn't raise an error if validation_fn is a lambda that accepts 1 argument",
           :aggregate_failures do
           @helper.validation_fn = ->(arg) { arg }
           expect { @helper.run }.not_to raise_error
+          expect { @helper.run! }.not_to raise_error
         end
       end
-
-      # For validation of should_raise, see the tests for #validate_should_raise! and
-      # #determine_v8n_exception_type!
-    end
-
-    describe "Argument Behavior" do
     end
 
     describe "Type Validation" do
+      before(:each) do
+        @helper.reset_all(logger: @logger)
+      end
+
+      context "when type is a single class" do
+        it "returns true when value is an instance of type", :aggregate_failures do
+          expect(@helper.valid_type?(123, Integer)).to be(true)
+          expect(@helper.valid_type!(123, Integer)).to be(true)
+          expect(@helper.valid_type?("foo", String)).to be(true)
+          expect(@helper.valid_type!("foo", String)).to be(true)
+          expect(@helper.valid_type?({}, Hash)).to be(true)
+          expect(@helper.valid_type!({}, Hash)).to be(true)
+          expect(@helper.valid_type?([], Array)).to be(true)
+          expect(@helper.valid_type!([], Array)).to be(true)
+          expect(@helper.valid_type?(String, Class)).to be(true)
+          expect(@helper.valid_type!(String, Class)).to be(true)
+        end
+
+        it "returns true when value is an instance of a class that inherits from type" do
+          expect(@helper.valid_type?(TypeError.new, StandardError)).to be(true)
+          expect(@helper.valid_type!(TypeError.new, StandardError)).to be(true)
+          expect(@helper.valid_type?(ContextualLogger.new, Logger)).to be(true)
+          expect(@helper.valid_type!(ContextualLogger.new, Logger)).to be(true)
+          expect(@helper.valid_type?(123, Numeric)).to be(true)
+          expect(@helper.valid_type!(123, Numeric)).to be(true)
+        end
+
+        it "fails when value is not an instance of type or its parents" do
+          expect(@helper.valid_type?("foo", Integer)).to be(false)
+          expect { @helper.valid_type!("foo", Integer) }.to raise_error(TypeError)
+          expect(@helper.valid_type?(123, String)).to be(false)
+          expect { @helper.valid_type!(123, String) }.to raise_error(TypeError)
+        end
+
+        it "fails when value is an instance of an ancestor of type" do
+          expect(@helper.valid_type?(Object.new, Integer)).to be(false)
+          expect { @helper.valid_type!(Object.new, Integer) }.to raise_error(TypeError)
+        end
+
+        it "fails when value is type rather than an instance of type and type != Class" do
+          expect(@helper.valid_type?(String, String)).to be(false)
+          expect { @helper.valid_type!(String, String) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is a single module" do
+        it "returns true when value is an instance of a class that includes type" do
+          expect(@helper.valid_type?([], Enumerable)).to be(true)
+          expect(@helper.valid_type!([], Enumerable)).to be(true)
+          expect(@helper.valid_type?(Time.new, Comparable)).to be(true)
+          expect(@helper.valid_type!(Time.new, Comparable)).to be(true)
+        end
+
+        it "fails when value is not an instance of a class that includes type" do
+          expect(@helper.valid_type?([], Comparable)).to be(false)
+          expect { @helper.valid_type!([], Comparable) }.to raise_error(TypeError)
+          expect(@helper.valid_type?("foo", Enumerable)).to be(false)
+          expect { @helper.valid_type!("foo", Enumerable) }.to raise_error(TypeError)
+        end
+
+        it "fails when value is the class that includes type rather than an instance of that class" do
+          expect(@helper.valid_type?(Array, Enumerable)).to be(false)
+          expect { @helper.valid_type!(Array, Enumerable) }.to raise_error(TypeError)
+          expect(@helper.valid_type?(Time, Comparable)).to be(false)
+          expect { @helper.valid_type!(Time, Comparable) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is an array of classes" do
+        it "returns true when value is an instance of one of the classes in type",
+          :aggregate_failures do
+          @helper.type = [String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+
+          @helper.type = [String, Integer]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+          expect(@helper.run(123)).to be(true)
+          expect(@helper.run!(123)).to be(true)
+
+          @helper.type = [Hash, Array, Logger, Time]
+          expect(@helper.run({})).to be(true)
+          expect(@helper.run!({})).to be(true)
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+        end
+
+        it "fails when value is not an instance of one of the classes in type",
+          :aggregate_failures do
+          @helper.type = [String]
+          expect(@helper.run([])).to be(false)
+          expect { @helper.run!([]) }.to raise_error(TypeError)
+
+          @helper.type = [String, Integer]
+          expect(@helper.run([])).to be(false)
+          expect { @helper.run!([]) }.to raise_error(TypeError)
+          expect(@helper.run({})).to be(false)
+          expect { @helper.run!({}) }.to raise_error(TypeError)
+
+          @helper.type = [Hash, Array, Logger, Time]
+          expect(@helper.run("foo")).to be(false)
+          expect { @helper.run!("foo") }.to raise_error(TypeError)
+          expect(@helper.run(123)).to be(false)
+          expect { @helper.run!(123) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is an array of modules" do
+        it "returns true when value is an instance of a class that includes one of the modules in type",
+          :aggregate_failures do
+          @helper.type = [Enumerable]
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+
+          @helper.type = [Enumerable, Comparable]
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+          expect(@helper.run(Time.new)).to be(true)
+          expect(@helper.run!(Time.new)).to be(true)
+        end
+
+        it "fails when value is not an instance of a class that includes one of the modules in type" do
+          @helper.type = [Enumerable]
+          expect(@helper.run("foo")).to be(false)
+          expect { @helper.run!("foo") }.to raise_error(TypeError)
+          expect(@helper.run(:foo)).to be(false)
+          expect { @helper.run!(:foo) }.to raise_error(TypeError)
+
+          @helper.type = [Enumerable, Marshal]
+          expect(@helper.run("foo")).to be(false)
+          expect { @helper.run!("foo") }.to raise_error(TypeError)
+          expect(@helper.run(:foo)).to be(false)
+          expect { @helper.run!(:foo) }.to raise_error(TypeError)
+        end
+      end
+
+      context "when type is an array of classes and modules" do
+        it "returns true when value.is_a? returns true for at least one item in the array" do
+          @helper.type = [Enumerable, String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+          expect(@helper.run([])).to be(true)
+          expect(@helper.run!([])).to be(true)
+        end
+
+        it "returns true when value.is_a? returns true for all items in the array" do
+          @helper.type = [Comparable, String]
+          expect(@helper.run("foo")).to be(true)
+          expect(@helper.run!("foo")).to be(true)
+        end
+      end
+    end
+
+    describe "#valid_type?" do
+      it "returns false when validation fails" do
+        expect(@helper.valid_type?("foo", Integer)).to be(false)
+      end
+
+      it "does not raise an exception when validation fails" do
+        expect { @helper.valid_type?("foo", Integer) }.not_to raise_error
+      end
+    end
+
+    describe "#valid_type!" do
+      it "raises a TypeError if validation fails and error_class is not provided" do
+        expect { @helper.valid_type!("foo", Integer) }.to raise_error(TypeError)
+      end
+
+      it "raises error_class if a valid one is provided" do
+        error_class = ArgumentError
+        expect { @helper.valid_type!("foo", Integer, error_class:) }.to raise_error(error_class)
+      end
     end
   end
 
@@ -223,76 +360,132 @@ RSpec.describe BasicValidator do
     end
   end
 
-  describe "#validate_should_raise!" do
+  describe "#valid_asserted_type!" do
     before(:all) do
       @helper = BasicValidatorHelper.new
     end
 
-    it "returns true if should_raise is a boolean", :aggregate_failures do
-      expect(@helper.send(:validate_should_raise!, true)).to be(true)
-      expect(@helper.send(:validate_should_raise!, false)).to be(true)
+    it "raises an ArgumentError if type is an empty array" do
+      expect { @helper.send(:valid_asserted_type!, []) }.to raise_error(ArgumentError)
     end
 
-    it "returns true if should_raise is a class that is or inherits from StandardError",
-      :aggregate_failures do
-      expect(@helper.send(:validate_should_raise!, StandardError)).to be(true)
-      expect(@helper.send(:validate_should_raise!, ArgumentError)).to be(true)
-      expect(@helper.send(:validate_should_raise!, TypeError)).to be(true)
+    it "raises an ArgumentError if type is an array and contains non-Class objects" do
+      type = [Integer, "String"]
+      expect { @helper.send(:valid_asserted_type!, type) }.to raise_error(ArgumentError)
     end
 
-    it "raises an ArgumentError if should_raise is an instance of StandardError rather than the class itself",
-      :aggregate_failures do
-      expect { @helper.send(:validate_should_raise!, StandardError.new) }.to(
-        raise_error(ArgumentError),
-      )
-      expect { @helper.send(:validate_should_raise!, ArgumentError.new) }.to(
-        raise_error(ArgumentError),
-      )
-      expect { @helper.send(:validate_should_raise!, TypeError.new) }.to(
-        raise_error(ArgumentError),
-      )
+    it "raises an ArgumentError if type isn't a class or array", :aggregate_failures do
+      expect { @helper.send(:valid_asserted_type!, "String") }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_asserted_type!, nil) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_asserted_type!, 123) }.to raise_error(ArgumentError)
     end
 
-    it "raises an ArgumentError if should_raise is a class that doesn't inherit from StandardError",
-      :aggregate_failures do
-      expect { @helper.send(:validate_should_raise!, Exception) }.to raise_error(ArgumentError)
-      expect { @helper.send(:validate_should_raise!, String) }.to raise_error(ArgumentError)
+    it "doesn't raise an exception if type is a class" do
+      expect { @helper.send(:valid_asserted_type!, String) }.not_to raise_error
     end
 
-    it "raises an ArgumentError if should_raise isn't a class or a boolean", :aggregate_failures do
-      expect { @helper.send(:validate_should_raise!, "foo") }.to raise_error(ArgumentError)
-      expect { @helper.send(:validate_should_raise!, 123) }.to raise_error(ArgumentError)
-      expect { @helper.send(:validate_should_raise!, nil) }.to raise_error(ArgumentError)
+    it "doesn't raise an exception if type is an array of classes" do
+      expect { @helper.send(:valid_asserted_type!, [Integer, String]) }.not_to raise_error
     end
   end
 
-  describe "#determine_v8n_exception_type!" do
+  describe "#valid_validation_fn!" do
     before(:all) do
       @helper = BasicValidatorHelper.new
     end
 
-    it "raises an ArgumentError if should_raise is invalid", :aggregate_failures do
-      expect { @helper.send(:determine_v8n_exception_type!, nil) }.to raise_error(ArgumentError)
-      expect { @helper.send(:determine_v8n_exception_type!, 123) }.to raise_error(ArgumentError)
-      expect { @helper.send(:determine_v8n_exception_type!, "foo") }.to raise_error(ArgumentError)
-      expect { @helper.send(:determine_v8n_exception_type!, StandardError.new) }.to(
-        raise_error(ArgumentError),
-      )
-      expect { @helper.send(:determine_v8n_exception_type!, Exception) }.to(
-        raise_error(ArgumentError),
-      )
+    it "raises an ArgumentError if validation_fn is a non-lambda Proc" do
+      validation_fn = proc { true }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
     end
 
-    it "returns should_raise if should_raise is a class that inherits from StandardError",
+    it "raises an ArgumentError if validation_fn is a lambda but has an arity other than 1",
       :aggregate_failures do
-      expect(@helper.send(:determine_v8n_exception_type!, StandardError)).to be(StandardError)
-      expect(@helper.send(:determine_v8n_exception_type!, ArgumentError)).to be(ArgumentError)
-      expect(@helper.send(:determine_v8n_exception_type!, TypeError)).to be(TypeError)
+      validation_fn = -> { true }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
+      validation_fn = ->(*args) { [*args] }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
+      validation_fn = ->(**args) { { **args } }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
+      validation_fn = ->(required, *rest) { [required, *rest] }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
     end
 
-    it "returns TypeError if should_raise is a boolean" do
-      expect(@helper.send(:determine_v8n_exception_type!, true)).to be(TypeError)
-      expect(@helper.send(:determine_v8n_exception_type!, false)).to be(TypeError)
+    it "raises an ArgumentError if validation_fn takes named arguments" do
+      validation_fn = ->(arg:) { arg }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.to raise_error(ArgumentError)
+    end
+
+    it "raises an ArgumentError if validation_fn is not nil and not a lambda",
+      :aggregate_failures do
+      expect { @helper.send(:valid_validation_fn!, []) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_validation_fn!, 123) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_validation_fn!, {}) }.to raise_error(ArgumentError)
+    end
+
+    it "returns true and doesn't raise an error if validation_fn is nil" do
+      expect { @helper.send(:valid_validation_fn!, nil) }.not_to raise_error
+      expect(@helper.send(:valid_validation_fn!, nil)).to be(true)
+    end
+
+    it "returns true and doesn't raise an error if validation_fn is a lambda that accepts 1 argument",
+      :aggregate_failures do
+      validation_fn = ->(arg) { arg }
+      expect { @helper.send(:valid_validation_fn!, validation_fn) }.not_to raise_error
+      expect(@helper.send(:valid_validation_fn!, validation_fn)).to be(true)
+    end
+  end
+
+  describe "#valid_should_raise!" do
+    before(:all) do
+      @helper = BasicValidatorHelper.new
+    end
+
+    it "returns true if should_raise is a Boolean",
+      :aggregate_failures do
+      expect(@helper.send(:valid_should_raise!, true)).to be(true)
+      expect(@helper.send(:valid_should_raise!, false)).to be(true)
+    end
+
+    it "raises an ArgumentError if should_raise isn't a class or a boolean", :aggregate_failures do
+      expect { @helper.send(:valid_should_raise!, "foo") }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_should_raise!, 123) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_should_raise!, nil) }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe "#valid_error_class!" do
+    before(:all) do
+      @helper = BasicValidatorHelper.new
+    end
+
+    it "returns true if error_class is a Class that is or inherits from StandardError",
+      :aggregate_failures do
+      expect(@helper.send(:valid_error_class!, StandardError)).to be(true)
+      expect(@helper.send(:valid_error_class!, ArgumentError)).to be(true)
+      expect(@helper.send(:valid_error_class!, TypeError)).to be(true)
+    end
+
+    it "raises an ArgumentError if error_class is an instance of StandardError",
+      :aggregate_failures do
+      expect { @helper.send(:valid_error_class!, StandardError.new) }
+        .to raise_error(ArgumentError)
+      expect { @helper.send(:valid_error_class!, ArgumentError.new) }
+        .to raise_error(ArgumentError)
+      expect { @helper.send(:valid_error_class!, TypeError.new) }
+        .to raise_error(ArgumentError)
+    end
+
+    it "raises an ArgumentError if error_class is a Class that doesn't inherit from StandardError",
+      :aggregate_failures do
+      expect { @helper.send(:valid_error_class!, Exception) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_error_class!, String) }.to raise_error(ArgumentError)
+    end
+
+    it "raises an ArgumentError if error_class is not a Class" do
+      expect { @helper.send(:valid_error_class!, "foo") }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_error_class!, 123) }.to raise_error(ArgumentError)
+      expect { @helper.send(:valid_error_class!, nil) }.to raise_error(ArgumentError)
     end
   end
 
@@ -305,7 +498,7 @@ RSpec.describe BasicValidator do
       value = "foo"
       type = Integer
       display_name = "test_value"
-      expected_result = "test_value must be a(n) Integer but is a String: foo"
+      expected_result = "test_value must be a Integer but is a String: foo"
       expect(@helper.send(:compose_failed_v8n_message, value, type, display_name)).to(
         eq(expected_result),
       )
@@ -315,6 +508,14 @@ RSpec.describe BasicValidator do
   describe "#compose_type_string" do
     before(:all) do
       @helper = BasicValidatorHelper.new
+    end
+
+    it "returns the string if passed a string", :aggregate_failures do
+      type_string_a = "Boolean"
+      expect(@helper.send(:compose_type_string, type_string_a)).to eq(type_string_a)
+
+      type_string_b = "String or #to_s"
+      expect(@helper.send(:compose_type_string, type_string_b)).to eq(type_string_b)
     end
 
     it "returns the class's name if passed a single class" do

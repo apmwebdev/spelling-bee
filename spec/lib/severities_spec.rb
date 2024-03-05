@@ -133,9 +133,8 @@ RSpec.describe Severities do
 
         it "returns the matching integer for default when to_parsed is invalid",
           :aggregate_failures do
-          expect(@dummy.parse_severity(nil, default:, as_symbol:)).to(
-            eq(Severities::SEVERITIES[default]),
-          )
+          expect(@dummy.parse_severity(nil, default:, as_symbol:))
+            .to eq(Severities::SEVERITIES[default])
           expect(@dummy.parse_severity("blah", default:, as_symbol:)).to eq(5)
         end
       end

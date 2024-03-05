@@ -1,0 +1,120 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: aioli, alit, allay, allot, alloy,
+        ally, alto, atilt, atoll, avail, iota, laity, lava, loyal, loyally, loyalty,
+        oaty, oval, tail, tali\n Respond in JSON format. There should be an outer
+        object containing an array with the key \"word_hints\". The array should contain
+        an object for each word. The keys in this object should be \"word\", which
+        contains the word itself, and \"hint\", which contains your hint. An example
+        of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint text for
+        ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach hint
+        should be one or two sentences and should not contain any form of the word
+        you''re providing a hint for, or any word or phrase that the submitted word
+        can be an abbreviation for. For example, the hint for \"allay\" should not
+        contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus on
+        the meaning of the word, although hints about the pronunciation are also acceptable.
+        These hints are designed to replicate the user-provided hints that users provide
+        on the New York Times Spelling Bee forums for words in that day''s Spelling
+        Bee puzzle.\n\nPlease respond only with the JSON object and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 27 Feb 2024 02:02:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '10553'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59682'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 318ms
+      X-Request-Id:
+      - 0abcabb33a6e21fd723bbe893dfcabf766cf127c185b5f457055d61a1273dddb
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=zmVOEVpHlLvX3TXXEv1vmI23vd3SJJFkoWcl0Fhnjks-1708999323-1.0-ATCalHrLFXLQCby3iE66w6aJd0vcmw1mDRSaV+iMVrNA7zOcAone10EuTVLi94s5dQ/zprJ+kswZjllAiJhVfZk=;
+        path=/; expires=Tue, 27-Feb-24 02:32:03 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=5oWUC4U3_cuh.LEarjKIVS_tQEv0mDJU_7Ni7falZK0-1708999323187-0.0-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 85bcd7a7485ec729-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-8wh4yndWA4Yf51apC4JdhQLcY7QoJ",
+          "object": "chat.completion",
+          "created": 1708999312,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\n  \"word_hints\": [\n    {\"word\": \"aioli\", \"hint\": \"A Mediterranean sauce made from garlic and olive oil, often served with seafood and vegetables.\"},\n    {\"word\": \"alit\", \"hint\": \"Descended or landed, particularly used when referring to a bird or insect.\"},\n    {\"word\": \"allay\", \"hint\": \"To alleviate or calm someone's fears, worries, or doubts.\"},\n    {\"word\": \"allot\", \"hint\": \"To distribute or apportion something, usually time, resources, or tasks, among individuals or groups.\"},\n    {\"word\": \"alloy\", \"hint\": \"A mixture of two or more metals, often combined to enhance strength or durability.\"},\n    {\"word\": \"ally\", \"hint\": \"To form a partnership or connection with someone or a group to achieve a common goal or purpose.\"},\n    {\"word\": \"alto\", \"hint\": \"A voice or musical instrument with a range lower than soprano but higher than tenor.\"},\n    {\"word\": \"atilt\", \"hint\": \"Inclined or tilted to one side or at an angle.\"},\n    {\"word\": \"atoll\", \"hint\": \"A ring-shaped coral reef, island, or series of islets enclosing a lagoon.\"},\n    {\"word\": \"avail\", \"hint\": \"To benefit from something or make use of an opportunity or advantage.\"},\n    {\"word\": \"iota\", \"hint\": \"A very small amount or quantity, often used in the phrase 'not one ___.'\"},\n    {\"word\": \"laity\", \"hint\": \"The ordinary members of a religious community who are not part of the clergy or ordained profession.\"},\n    {\"word\": \"lava\", \"hint\": \"Molten rock that erupts from a volcano and flows down its slopes.\"},\n    {\"word\": \"loyal\", \"hint\": \"Demonstrating steadfast support, allegiance, or faithfulness to a person, cause, or organization.\"},\n    {\"word\": \"loyally\", \"hint\": \"In a faithful, unwavering, or loyal manner.\"},\n    {\"word\": \"loyalty\", \"hint\": \"The quality or state of being faithful, devoted, or staunchly supportive to someone or something.\"},\n    {\"word\": \"oaty\", \"hint\": \"Containing or made with oats, often used to describe a type of cereal or breakfast food.\"},\n    {\"word\": \"oval\", \"hint\": \"A shape that is elongated and rounded, resembling an egg or an ellipse.\"},\n    {\"word\": \"tail\", \"hint\": \"The rear or hinder part, often used to refer to the end of an animal's body or clothing.\"},\n    {\"word\": \"tali\", \"hint\": \"Traditional African throwing sticks used in games or ceremonies, particularly by the Maasai people of Kenya and Tanzania.\"}\n  ]\n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 300,
+            "completion_tokens": 589,
+            "total_tokens": 889
+          },
+          "system_fingerprint": "fp_86156a94a0"
+        }
+  recorded_at: Tue, 27 Feb 2024 02:02:03 GMT
+recorded_with: VCR 6.2.0

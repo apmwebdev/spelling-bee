@@ -29,10 +29,10 @@ class SyncApi::V1::SyncApiController < ApplicationController
     submitted_key = request.headers["Authorization"]&.split(" ")&.last
     raise ApiError.new("#{error_base}: Invalid API key", 400) unless submitted_key
 
-    hashed_submitted_key = SyncApiAuthenticator.hash_key(submitted_key)
+    hashed_submitted_key = SyncApiService::Authenticator.hash_key(submitted_key)
 
     begin
-      SyncApiAuthenticator.authenticate!(hashed_submitted_key)
+      SyncApiService::Authenticator.authenticate!(hashed_submitted_key)
     rescue UnauthorizedError => e
       raise e
     rescue StandardError

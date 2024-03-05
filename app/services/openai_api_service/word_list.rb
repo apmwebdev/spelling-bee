@@ -19,7 +19,6 @@ class OpenaiApiService
 
     attr_reader :puzzle_id, :word_set, :log_message
 
-    ##
     # @param [Integer] starting_puzzle_id
     # @param [Set] word_set
     def initialize(starting_puzzle_id = 1, word_set = Set.new, log_message = nil)
@@ -43,7 +42,6 @@ class OpenaiApiService
         end
     end
 
-    ##
     # @param [#to_s, LogMessage] msg
     # @param [Symbol] severity
     # @param [Boolean] auto_trace

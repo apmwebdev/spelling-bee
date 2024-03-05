@@ -21,11 +21,37 @@ module BooleanUtils
     return default
   end
 
-  def to_bool(value)
-    !!value
+  ##
+  # @param value [any] The value to coerce (or return as-is if it's already a Boolean)
+  # @param default [Boolean] What the value should be coerced to if it's not a Boolean
+  # @param nil_override [Boolean, nil] If true, nil is coerced to true. If false, nil is coerced
+  #   to false. If nil, nil is coerced to default.
+  def to_bool(value, default: true, nil_override: nil)
+    raise TypeError, "default must be a boolean, passed #{default}" unless bool?(default)
+
+    if value.nil?
+      return true if nil_override == true
+      return false if nil_override == false
+      return default if nil_override.nil?
+    end
+    # Coerce non-nil, non-boolean values to true if default == true. Boolean values are unaffected
+    return !!value if default
+    # Otherwise, coerce values to false
+    return value == true
   end
 
   def bool?(value)
     value == true || value == false # rubocop:disable Style/MultipleComparison
   end
+end
+
+# Make it so that true and false are Booleans
+module Boolean; end
+
+class TrueClass
+  include Boolean
+end
+
+class FalseClass
+  include Boolean
 end
