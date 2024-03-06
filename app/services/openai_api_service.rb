@@ -144,7 +144,12 @@ class OpenaiApiService
   def save_hint(word_hint)
     @validator.valid_word_hint!(word_hint)
 
-    word = Word.find(word_hint[:word])
+    begin
+      word = Word.find(word_hint[:word])
+    rescue ActiveRecord::RecordNotFound
+      @logger.error "Word not found: #{word_hint[:word]}. Skipping"
+      return
+    end
     word.hint = word_hint[:hint]
     word.save!
   end
