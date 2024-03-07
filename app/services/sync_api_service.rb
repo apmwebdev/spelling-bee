@@ -204,4 +204,9 @@ class SyncApiService
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end
+
+  def sync_openai_api_logs
+    # TODO
+    #   - Add `finish_reason` to OpenaiHintResponse model
+  end
 end
