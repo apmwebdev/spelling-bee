@@ -6,3 +6,14 @@ valid_instructions:
     Each hint should be one or two sentences and should not contain any form of the word you're providing a hint for, or any word or phrase that the submitted word can be an abbreviation for. For example, the hint for "allay" should not contain "allay," "allaying," "allays," etc. The hints should focus on the meaning of the word, although hints about the pronunciation are also acceptable. These hints are designed to replicate the user-provided hints that users provide on the New York Times Spelling Bee forums for words in that day's Spelling Bee puzzle.
 
     Please respond only with the JSON object and nothing else.
+
+# == Schema Information
+#
+# Table name: openai_hint_instructions
+#
+#  id                  :bigint           not null, primary key
+#  pre_word_list_text  :text
+#  post_word_list_text :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#

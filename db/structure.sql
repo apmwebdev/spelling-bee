@@ -495,7 +495,8 @@ CREATE TABLE public.openai_hint_responses (
     http_status integer,
     error_body jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    finish_reason character varying
 );
 
 
@@ -1882,6 +1883,7 @@ ALTER TABLE ONLY public.hint_panels
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240307204824'),
 ('20240208055651'),
 ('20240207033421'),
 ('20240207025904'),

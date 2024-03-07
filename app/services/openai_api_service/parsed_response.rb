@@ -46,6 +46,7 @@ class OpenaiApiService
       end
 
       self.body_meta = parsed_body
+      @finish_reason = parsed_body.dig(:choices, 0, :finish_reason)&.to_s
       parse_and_set_content(parsed_body)
     end
 
@@ -59,7 +60,6 @@ class OpenaiApiService
       if @validator.valid_response_body_content?(parsed_body)
         content = JSON.parse(parsed_body[:choices][0][:message][:content], symbolize_names: true)
         @word_hints = content[:word_hints]
-        @finish_reason = parsed_body[:choices][0][:finish_reason]
       else
         @error_body = parsed_body
       end

@@ -204,6 +204,7 @@ class OpenaiApiService
     record.error_body = parsed_response.error_body
     record.http_status = parsed_response.http_status
     record.response_time_seconds = parsed_response.response_time_seconds
+    record.finish_reason = parsed_response.finish_reason
 
     # Metadata from response body: Should be present, but save anyway if missing some or all
     meta = parsed_response.body_meta

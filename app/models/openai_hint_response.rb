@@ -43,6 +43,7 @@ end
 #  error_body                     :jsonb
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
+#  finish_reason                  :string
 #
 # Indexes
 #
