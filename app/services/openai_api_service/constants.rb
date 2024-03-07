@@ -7,7 +7,7 @@ class OpenaiApiService
     # 1. 60,000 tokens per minute
     # 2. 500 requests per minute
     # 3. 4,096 tokens per response
-    # Of these, the 4k tokens/response is the most limiting. With a word limit of 140, each response
+    # Of these, the 4k tokens/response is the most limiting. With a word limit of 120, each response
     # should be ~3k tokens, falling well under the limit with some wiggle room.
     DEFAULT_WORD_LIMIT = 120
 

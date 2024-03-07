@@ -157,7 +157,7 @@ class SyncApiService
 
     @validator.valid_hint_response!(response)
 
-    response.data.each do |word_hint|
+    response[:data].each do |word_hint|
       word = Word.find(word_hint[:word])
       word.hint = word_hint[:hint]
       word.save!

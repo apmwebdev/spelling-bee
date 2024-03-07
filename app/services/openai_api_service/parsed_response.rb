@@ -18,7 +18,6 @@ class OpenaiApiService
     include OpenaiLogger
     include BasicValidator
     include Constants
-    include Loggable
 
     attr_reader :logger, :validator, :raw_response, :body_meta, :headers, :http_status,
       :response_time_seconds, :word_hints, :error_body, :finish_reason
