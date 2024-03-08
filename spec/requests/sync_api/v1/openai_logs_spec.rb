@@ -28,7 +28,6 @@ RSpec.describe "SyncApi::V1::OpenaiLogs", type: :request do
       json = JSON.parse(response.body, symbolize_names: true)
       expect(response).to have_http_status(200)
       expect(json.key?(:data)).to be(true)
-      puts json[:data]
       expect(json[:data].key?(:responses)).to be(true)
       expect(json[:data].key?(:responses)).to be(true)
       expect(json[:data][:requests].length).to eq(2)
