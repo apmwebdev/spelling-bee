@@ -217,7 +217,7 @@ class SyncApiService
   def sync_openai_log_batch
     requests_offset = OpenaiHintRequest.count
     responses_offset = OpenaiHintResponse.count
-    @logger.info "Starting batch. Page size: 100 each, requests_offset: #{responses_offset}, "\
+    @logger.info "Starting batch. Page size: 100 each, requests_offset: #{requests_offset}, "\
       "responses_offset: #{responses_offset}"
     result = send_openai_log_request(requests_offset, responses_offset)
     OpenaiHintRequest.insert_all!(result[:requests])
