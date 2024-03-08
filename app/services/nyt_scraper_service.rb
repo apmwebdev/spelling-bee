@@ -16,6 +16,8 @@ require "json"
 
 # Scrapes puzzle data from the NYT Spelling Bee site
 class NytScraperService
+  attr_accessor :logger, :validator
+
   def initialize
     @logger = ContextualLogger.new("log/nyt_scraper.log", "weekly")
     @validator = NytScraperValidator.new(@logger)
@@ -43,22 +45,27 @@ class NytScraperService
       origin: nyt_puzzle,
     })
     @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
-    puzzle_json[:answers].each do |answer|
-      word = Word.create_or_find_by({ text: answer })
-      unless word.frequency.nil?
-        @logger.info "Datamuse data already exists for \"#{answer}\"."
-        next
-      end
-      @logger.info "Fetching datamuse data for \"#{answer}\"."
-      datamuse_data = DatamuseApiService.get_word_data(answer)
-      word.frequency = datamuse_data[:frequency]
-      word.definitions = datamuse_data[:definitions]
-      word.save!
-      Answer.create!({ puzzle:, word_text: answer })
-    end
+    create_answers(puzzle, puzzle_json[:answers])
     puzzle.create_excluded_words_cache
     @logger.info "Created excluded words cache"
     @logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
+  end
+
+  def create_answers(puzzle, answers)
+    answers.each do |answer|
+      word = Word.create_or_find_by({ text: answer })
+      if word.frequency.nil?
+        @logger.info "Fetching datamuse data for \"#{answer}\"."
+        datamuse_data = DatamuseApiService.get_word_data(answer)
+        word.frequency = datamuse_data[:frequency]
+        word.definitions = datamuse_data[:definitions]
+        word.save!
+      else
+        @logger.info "Datamuse data already exists for \"#{answer}\"."
+      end
+      Answer.create!({ puzzle:, word_text: answer })
+    end
+
   end
 
   def import_latest_puzzle
@@ -77,5 +84,18 @@ class NytScraperService
     @days_arr.each do |puzzle_json|
       create_puzzle_from_json(puzzle_json)
     end
+  end
+
+  def reparse_recent_answers(starting_id)
+    @logger.info "Reparsing answers for puzzle #{starting_id}"
+    puzzle = Puzzle.find(starting_id)
+    origin = puzzle.origin
+    raise TypeError, "Invalid origin, expected NytPuzzle: #{origin}" unless origin.is_a?(NytPuzzle)
+
+    puzzle_json = origin.json_data.symbolize_keys
+    Answer.where(puzzle:).destroy_all
+    create_answers(puzzle, puzzle_json[:answers])
+    return if puzzle == Puzzle.last
+    reparse_recent_answers(starting_id + 1)
   end
 end

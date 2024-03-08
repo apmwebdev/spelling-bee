@@ -15,9 +15,9 @@
 # extraneous to the game itself
 class Puzzle < ApplicationRecord
   belongs_to :origin, polymorphic: true
-  has_many :answers
+  has_many :answers, dependent: :destroy
   has_many :words, through: :answers
-  has_many :user_puzzle_attempts
+  has_many :user_puzzle_attempts, dependent: :destroy
 
   attr_accessor :pangrams, :perfect_pangrams, :valid_letters, :is_latest
 

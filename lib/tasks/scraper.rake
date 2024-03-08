@@ -21,6 +21,15 @@ namespace :scraper do
     NytScraperService.new.import_all_puzzles
   end
 
+  desc "Re-parse answers for all puzzles starting with [id]"
+  # e.g. rake "scraper:reparse_recent_answers[2129]"
+  task :reparse_recent_answers, [:starting_id] => :environment do |_t, args|
+    starting_id = args[:starting_id].to_i
+    service = NytScraperService.new
+    service.logger.global_puts_and.push(:info, :warn)
+    service.reparse_recent_answers(starting_id)
+  end
+
   desc "Test SbSolver #fetch_puzzle method"
   task test_sbs_fetch: :environment do
     puts SbSolverScraperService.new.fetch_puzzle(10_000)
