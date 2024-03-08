@@ -17,6 +17,8 @@ require "uri"
 # This is the service that is the client half of the Sync API. It is designed to be used by a dev
 # environment to get the most up-to-date puzzle data from the production environment.
 class SyncApiService
+  include BasicValidator
+
   BASE_URL = ENV["PRODUCTION_SYNC_API_URL"]
   AUTH_TOKEN = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}".freeze
 
@@ -32,7 +34,8 @@ class SyncApiService
     response = URI.open(full_url, "Authorization" => AUTH_TOKEN)&.read
     raise TypeError, "Response is nil. Exiting." unless response
 
-    JSON.parse(response, symbolize_names: true)
+    response = JSON.parse(response, symbolize_names: true)
+    raise ApiError, "Error: #{response[:error]}" if response[:error]
   end
 
   def send_post_request(path, body)
@@ -173,8 +176,6 @@ class SyncApiService
       @logger.info "Iterating loop, page: #{page}"
       response = sync_hint_batch(page)
 
-      raise ApiError, "Error returned: #{response[:error]}" if response[:error]
-
       if response[:data].length < 1000
         @logger.info "Data length < 1000. All hints synced successfully. Exiting"
         break
@@ -189,13 +190,12 @@ class SyncApiService
   def query_instruction_count
     path = "/instructions/count"
     response = send_get_request(path)
-    raise ApiError, "Error: #{response[:error]}" if response[:error]
     response[:data]
   end
 
   def send_instructions
     instruction_count = query_instruction_count
-    instructions = OpenaiHintInstruction.offset(instruction_count).each.map(&:to_hash)
+    instructions = OpenaiHintInstruction.offset(instruction_count).each.map(&:to_sync_api)
     return @logger.info "Instructions already fully synced. Exiting" if instructions.empty?
     path = "/instructions/sync"
     response = send_post_request(path, { instructions: })
@@ -205,8 +205,37 @@ class SyncApiService
     @logger.exception(e, :fatal)
   end
 
-  def sync_openai_api_logs
-    # TODO
-    #   - Add `finish_reason` to OpenaiHintResponse model
+  def send_openai_log_request(requests_offset, responses_offset)
+    valid_type!(requests_offset, Integer, ->(p) { !p.negative? })
+    valid_type!(responses_offset, Integer, ->(p) { !p.negative? })
+    path = "/openai_logs?requests_offset=#{requests_offset}&responses_offset=#{responses_offset}"
+    response = send_get_request(path)
+    response[:data]
+  end
+
+  def sync_openai_log_batch
+    requests_offset = OpenaiHintRequest.count
+    responses_offset = OpenaiHintResponse.count
+    @logger.info "Starting batch. Page size: 100 each, requests_offset: #{responses_offset}, "\
+      "responses_offset: #{responses_offset}"
+    result = send_openai_log_request(requests_offset, responses_offset)
+    OpenaiHintRequest.insert_all!(result[:requests])
+    OpenaiHintResponse.insert_all!(result[:responses])
+    requests_count = result[:requests].length
+    responses_count = result[:responses].length
+    @logger.info "Batch complete. requests_count: #{requests_count}, responses_count: "\
+      "#{responses_count}"
+    { requests_count:, responses_count: }
+  end
+
+  def sync_openai_logs
+    @logger.info "Starting OpenAI API request and response sync..."
+    loop do
+      result = sync_openai_log_batch
+      if result[:requests_count] < 100 && result[:responses_count] < 100
+        @logger.info "All records synced. Exiting"
+        break
+      end
+    end
   end
 end

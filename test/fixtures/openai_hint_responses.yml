@@ -2,10 +2,11 @@
 
 one:
   openai_hint_request: one
+  word_hints: [foo, bar]
   chat_completion_id: MyString
   system_fingerprint: MyString
   openai_created_timestamp: 2024-02-07 21:56:51
-  ai_model: MyString
+  res_ai_model: MyString
   prompt_tokens: 1
   completion_tokens: 1
   total_tokens: 1
@@ -19,15 +20,17 @@ one:
   x_ratelimit_reset_requests: MyString
   x_ratelimit_reset_tokens: MyString
   x_request_id: MyString
-  status: 1
-  error: 
+  http_status: 200
+  error:
+  finish_reason: stop
 
 two:
   openai_hint_request: two
+  word_hints: [boo, bas]
   chat_completion_id: MyString
   system_fingerprint: MyString
   openai_created_timestamp: 2024-02-07 21:56:51
-  ai_model: MyString
+  res_ai_model: MyString
   prompt_tokens: 1
   completion_tokens: 1
   total_tokens: 1
@@ -41,8 +44,9 @@ two:
   x_ratelimit_reset_requests: MyString
   x_ratelimit_reset_tokens: MyString
   x_request_id: MyString
-  status: 1
+  http_status: 200
   error:
+  finish_reason: stop
 
 # == Schema Information
 #

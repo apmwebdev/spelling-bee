@@ -1,23 +1,52 @@
-# frozen_string_literal: true
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# Super Spelling Bee - A vocabulary game with integrated hints
-# Copyright (C) 2023 Austin Miller
-#
-# This program is free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation, either version 3 of the License, or (at your option) any later
-# version.
-#
-# See the LICENSE file or https://www.gnu.org/licenses/ for more details.
+one:
+  openai_hint_request: one
+  word_hints: [{word: foo, hint: hint}, {word: bar, hint: hint}]
+  chat_completion_id: MyString
+  system_fingerprint: MyString
+  openai_created_timestamp: 2024-02-07 21:56:51
+  res_ai_model: MyString
+  prompt_tokens: 1
+  completion_tokens: 1
+  total_tokens: 1
+  response_time_seconds: 1
+  openai_processing_ms: 1
+  openai_version: MyString
+  x_ratelimit_limit_requests: 1
+  x_ratelimit_limit_tokens: 1
+  x_ratelimit_remaining_requests: 1
+  x_ratelimit_remaining_tokens: 1
+  x_ratelimit_reset_requests: MyString
+  x_ratelimit_reset_tokens: MyString
+  x_request_id: MyString
+  http_status: 200
+  error_body:
+  finish_reason: stop
 
-# Data for a word hint response from the Open AI API. Saved for analytics/auditing.
-class OpenaiHintResponse < ApplicationRecord
-  belongs_to :openai_hint_request
-
-  def to_sync_api
-    as_json
-  end
-end
+two:
+  openai_hint_request: two
+  word_hints: [{word: boo, hint: hint}, {word: baz, hint: hint}]
+  chat_completion_id: MyString
+  system_fingerprint: MyString
+  openai_created_timestamp: 2024-02-07 21:56:51
+  res_ai_model: MyString
+  prompt_tokens: 1
+  completion_tokens: 1
+  total_tokens: 1
+  response_time_seconds: 1
+  openai_processing_ms: 1
+  openai_version: MyString
+  x_ratelimit_limit_requests: 1
+  x_ratelimit_limit_tokens: 1
+  x_ratelimit_remaining_requests: 1
+  x_ratelimit_remaining_tokens: 1
+  x_ratelimit_reset_requests: MyString
+  x_ratelimit_reset_tokens: MyString
+  x_request_id: MyString
+  http_status: 200
+  error_body:
+  finish_reason: stop
 
 # == Schema Information
 #

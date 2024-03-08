@@ -14,6 +14,10 @@
 class OpenaiHintRequest < ApplicationRecord
   belongs_to :openai_hint_instruction
   has_one :openai_hint_response
+
+  def to_sync_api
+    as_json
+  end
 end
 
 # == Schema Information

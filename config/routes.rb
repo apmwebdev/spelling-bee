@@ -85,6 +85,8 @@ Rails.application.routes.draw do
       get "word_hints/:page", to: "word_hints#hint_batch"
       get "instructions/count", to: "openai_hint_instructions#count"
       post "instructions/sync", to: "openai_hint_instructions#sync"
+      # Expects query params `requests_offset` and `responses_offset`
+      get "openai_logs", to: "openai_logs#index_with_offset"
     end
   end
 
