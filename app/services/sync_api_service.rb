@@ -36,6 +36,7 @@ class SyncApiService
 
     response = JSON.parse(response, symbolize_names: true)
     raise ApiError, "Error: #{response[:error]}" if response[:error]
+    response
   end
 
   def send_post_request(path, body)

@@ -33,4 +33,11 @@ namespace :sync_api do
     service.logger.global_puts_and.push(:info, :warn)
     service.send_instructions
   end
+
+  desc "Sync OpenAI API requests and responses"
+  task sync_openai_logs: :environment do
+    service = SyncApiService.new
+    service.logger.global_puts_and.push(:info, :warn)
+    service.sync_openai_logs
+  end
 end

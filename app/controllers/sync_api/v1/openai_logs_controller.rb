@@ -15,8 +15,8 @@ class SyncApi::V1::OpenaiLogsController < SyncApi::V1::SyncApiController
   def index_with_offset
     requests_offset = params["requests_offset"].to_i
     responses_offset = params["responses_offset"].to_i
-    requests = OpenaiHintRequest.offset(requests_offset).limit(100).map(&:to_sync_api)
-    responses = OpenaiHintResponse.offset(responses_offset).limit(100).map(&:to_sync_api)
+    requests = OpenaiHintRequest.order(:id).offset(requests_offset).limit(100).map(&:to_sync_api)
+    responses = OpenaiHintResponse.order(:id).offset(responses_offset).limit(100).map(&:to_sync_api)
     render json: { data: { requests:, responses: }}
   rescue StandardError => e
     render json: { error: e.message }, status: 400
