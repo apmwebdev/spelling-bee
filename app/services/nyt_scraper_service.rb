@@ -48,6 +48,12 @@ class NytScraperService
     create_answers(puzzle, puzzle_json[:answers])
     puzzle.create_excluded_words_cache
     @logger.info "Created excluded words cache"
+    begin
+      @logger.info "Fetching definition hints for puzzle answers"
+      OpenaiApiService.new.fetch_hints(puzzle_id: puzzle.id)
+    rescue StandardError => e
+      @logger.exception e
+    end
     @logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
   end
 
@@ -65,7 +71,6 @@ class NytScraperService
       end
       Answer.create!({ puzzle:, word_text: answer })
     end
-
   end
 
   def import_latest_puzzle
