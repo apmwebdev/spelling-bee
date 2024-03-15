@@ -12,13 +12,9 @@
 
 RSpec.shared_context "openai_base" do
   fixtures :openai_hint_instructions
+  include_context "contextual_logger_double"
 
   let(:word_limit) { 20 }
-  let(:logger) { instance_double(ContextualLogger).as_null_object }
-  before do
-    allow(logger).to receive(:is_a?).with(ContextualLogger).and_return(true)
-  end
-  # let(:logger) { ContextualLogger.new(IO::NULL, global_puts_and: false) }
   let(:validator) { OpenaiApiService::Validator.new(logger) }
   let(:service) { OpenaiApiService.new(logger:, validator:, word_limit:) }
 
