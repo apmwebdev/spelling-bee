@@ -15,6 +15,10 @@ require "rails_helper"
 RSpec.describe OpenaiApiService do
   include_context "openai_base"
 
+  # before(:all) do
+  #   DatabaseCleaner.truncate_tables
+  # end
+
   describe "#send_request" do
     context "when submitting invalid content" do
       it "raises a TypeError when content is not a string", :aggregate_failures do
@@ -225,10 +229,11 @@ RSpec.describe OpenaiApiService do
       end
     end
 
-    it "raises an ActiveRecord::RecordNotFound error if it can't find the word" do
+    it "logs an error if it can't find the word" do
       word_hint = { word: "invalid_word", hint: "hint" }
-      allow(Word).to receive(:find).with(word_hint[:word]).and_raise(ActiveRecord::RecordNotFound)
-      expect { service.save_hint(word_hint) }.to raise_error(ActiveRecord::RecordNotFound)
+      allow(logger).to receive(:error)
+      expect(logger).to receive(:error)
+      service.save_hint(word_hint)
     end
 
     it "saves the hint if word and word_hint are valid" do
@@ -346,6 +351,10 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hint_response" do
+    before(:all) do
+      DatabaseCleaner.truncate_only(["openai_hint_requests", "openai_hint_responses"])
+    end
+
     include_context "openai_extended"
 
     it "saves an OpenaiHintResponse when passed a valid parsed_response" do
@@ -557,31 +566,28 @@ RSpec.describe OpenaiApiService do
 
     context "when arguments trigger immediate guard conditions" do
       it "raises a TypeError if batch_state isn't a BatchState", :aggregate_failures do
-        expect { service.fetch_hints(nil) }.to raise_error(TypeError)
-        expect { service.fetch_hints(nil, puzzle_id: 1, with_save: false) }
-          .to raise_error(TypeError)
-        expect { service.fetch_hints("foo") }.to raise_error(TypeError)
-        expect { service.fetch_hints(123) }.to raise_error(TypeError)
-        expect { service.fetch_hints([]) }.to raise_error(TypeError)
-        expect { service.fetch_hints({}) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state: "foo") }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state: 123) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state: {}) }.to raise_error(TypeError)
       end
 
       it "raises a TypeError if puzzle_id isn't a positive integer", :aggregate_failures do
-        expect { service.fetch_hints(batch_state, puzzle_id: nil) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: "1") }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: []) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: []) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: -1) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: 1.0) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, puzzle_id: 0) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: nil) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: "1") }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: -1) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: 1.0) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, puzzle_id: 0) }.to raise_error(TypeError)
       end
 
       it "raises a TypeError if with_save isn't a boolean", :aggregate_failures do
-        expect { service.fetch_hints(batch_state, with_save: nil) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, with_save: 1) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, with_save: "foo") }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, with_save: []) }.to raise_error(TypeError)
-        expect { service.fetch_hints(batch_state, with_save: {}) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, with_save: nil) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, with_save: 1) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, with_save: "foo") }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, with_save: []) }.to raise_error(TypeError)
+        expect { service.fetch_hints(batch_state:, with_save: {}) }.to raise_error(TypeError)
       end
 
       it "returns without doing anything if @request_cap is 0", :aggregate_failures do
@@ -591,10 +597,10 @@ RSpec.describe OpenaiApiService do
         expect(service).not_to receive(:generate_word_data)
         expect(service).not_to receive(:throttle_batch)
 
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
 
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintResponse, :count)
       end
 
       it "returns without doing anything if the request count equals the request cap",
@@ -606,10 +612,10 @@ RSpec.describe OpenaiApiService do
         expect(service).not_to receive(:generate_word_data)
         expect(service).not_to receive(:throttle_batch)
 
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
 
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintResponse, :count)
       end
 
       it "returns without doing anything if the request count is greater than the request cap",
@@ -623,10 +629,10 @@ RSpec.describe OpenaiApiService do
         expect(service).not_to receive(:generate_word_data)
         expect(service).not_to receive(:throttle_batch)
 
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
 
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintRequest, :count)
-        expect { service.fetch_hints(batch_state) }.not_to change(OpenaiHintResponse, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintRequest, :count)
+        expect { service.fetch_hints(batch_state:) }.not_to change(OpenaiHintResponse, :count)
       end
     end
 
@@ -640,26 +646,24 @@ RSpec.describe OpenaiApiService do
       it "sends expected messages to logger once", :aggregate_failures do
         allow(logger).to receive(:info).with(any_args)
         expect(logger).to receive(:info)
-          .with(OpenaiApiService::Messages.fetch_hints_start(batch_state)).once
-        expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_SUCCESSFUL_RESPONSE).once
         expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED).once
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
       end
 
       it "calls save_hint a number of times equal to the word limit" do
         allow(service).to receive(:save_hint)
         expect(service).to receive(:save_hint).exactly(word_limit).times
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
       end
 
       it "saves one hint request" do
-        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintRequest, :count).by(1)
+        expect { service.fetch_hints(batch_state:) }.to change(OpenaiHintRequest, :count).by(1)
       end
 
       it "saves one hint response" do
-        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintResponse, :count).by(1)
+        expect { service.fetch_hints(batch_state:) }.to change(OpenaiHintResponse, :count).by(1)
       end
     end
 
@@ -673,27 +677,25 @@ RSpec.describe OpenaiApiService do
       it "sends expected messages to logger" do
         allow(logger).to receive(:info).with(any_args)
         expect(logger).to receive(:info)
-          .with(OpenaiApiService::Messages.fetch_hints_start(batch_state)).once
-        expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_SUCCESSFUL_RESPONSE).twice
         expect(logger).to receive(:info)
           .with(OpenaiApiService::Messages::FETCH_HINTS_REQUEST_CAPPED).once
 
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
       end
 
       it "calls save_hint a number of times equal to the word limit times the request cap" do
         allow(service).to receive(:save_hint)
         expect(service).to receive(:save_hint).exactly(word_limit * service.request_cap).times
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
       end
 
       it "saves two hint requests" do
-        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintRequest, :count).by(2)
+        expect { service.fetch_hints(batch_state:) }.to change(OpenaiHintRequest, :count).by(2)
       end
 
       it "saves two hint responses" do
-        expect { service.fetch_hints(batch_state) }.to change(OpenaiHintResponse, :count).by(2)
+        expect { service.fetch_hints(batch_state:) }.to change(OpenaiHintResponse, :count).by(2)
       end
     end
 
@@ -703,13 +705,13 @@ RSpec.describe OpenaiApiService do
       let(:expected_request_count) { (Word.joins(:puzzles).distinct.count.to_f / word_limit).ceil }
 
       it "sends enough requests to get hints for each puzzle word" do
-        allow(service).to receive(:send_get_request).and_call_original
-        expect(service).to receive(:send_get_request).exactly(expected_request_count).times
-        service.fetch_hints(batch_state)
+        allow(service).to receive(:send_request).and_call_original
+        expect(service).to receive(:send_request).exactly(expected_request_count).times
+        service.fetch_hints(batch_state:)
       end
 
       it "saves the correct number of requests and responses" do
-        expect { service.fetch_hints(batch_state) }
+        expect { service.fetch_hints(batch_state:) }
           .to change(OpenaiHintRequest, :count).by(expected_request_count)
           .and change(OpenaiHintResponse, :count).by(expected_request_count)
       end
@@ -718,12 +720,12 @@ RSpec.describe OpenaiApiService do
         expected_result = Word.joins(:puzzles).distinct.count
         allow(service).to receive(:save_hint).and_call_original
         expect(service).to receive(:save_hint).exactly(expected_result).times
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
       end
 
       it "results in no puzzle words with a nil hint field" do
         expected_count = 0
-        service.fetch_hints(batch_state)
+        service.fetch_hints(batch_state:)
         actual_count = Word.joins(:puzzles).where(words: { hint: nil }).distinct.count
         expect(actual_count).to eq(expected_count)
       end

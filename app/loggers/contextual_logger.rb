@@ -23,28 +23,33 @@ class ContextualLogger < Logger
   attr_reader :global_puts_and, :global_puts_only, :logger
 
   def initialize(log_file = $stdout, log_rotation = "daily", log_level: nil,
-                 global_puts_and: [:error, :fatal, :unknown], global_puts_only: false)
-    # Built-in config
-    options = {}
-    options[:level] =
-      if log_level
-        parse_severity(log_level, default: :debug, as_symbol: false)
-      elsif Rails.env.production?
-        Logger::INFO
-      else
-        Logger::DEBUG
-      end
-
-    super(log_file, log_rotation, **options)
+                 global_puts_and: [:error, :fatal, :unknown], global_puts_only: false,
+                 is_dummy: false)
+    # If is_dummy is true, this is a dummy logger, i.e., don't log anything
+    is_dummy = to_bool(is_dummy, default: false)
+    if is_dummy
+      super(IO::NULL)
+      self.global_puts_and = false
+      self.global_puts_only = false
+    else
+      options = {}
+      options[:level] =
+        if log_level
+          parse_severity(log_level, default: :debug, as_symbol: false)
+        elsif Rails.env.production?
+          Logger::INFO
+        else
+          Logger::DEBUG
+        end
+      super(log_file, log_rotation, **options)
+      self.global_puts_and = global_puts_and
+      self.global_puts_only = global_puts_only
+    end
 
     @formatter = proc do |severity, datetime, _progname, msg|
       timestamp = datetime.strftime("%Y-%m-%d %H:%M:%S")
       "#{severity} #{timestamp} - #{msg}\n"
     end
-
-    # Custom config
-    self.global_puts_and = global_puts_and
-    self.global_puts_only = global_puts_only
   end
 
   # Tedious boilerplate logic below this line
