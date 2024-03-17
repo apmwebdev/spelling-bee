@@ -33,7 +33,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 97b301758e9cbc597110d566a67a9f527e770bf3b9162195986a70744a9cd2d3
+      - f41ab0cb65b3753329caff218337f2d794fd3981e3922c81ec2d3aa2eb797901
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"guilted","score":2147483647,"tags":["query","spellcor:quilted","f:0.002180"],"defs":["n\tResponsibility
@@ -76,7 +76,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 3b16c0c9b7f8ff069d96b50a42225fabcf9ab1bc10c10b12f1f56935a040985d
+      - cc3bc9214b61bdef771131999e1c48d4d176de912b5c80882d9846022b133b21
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"delete","score":2147483647,"tags":["query","f:4.794068"],"defs":["v\tTo
@@ -125,7 +125,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0fc682956c73fb3a5ea6c662fe8c6e1317b4c4a68ba0e21f602fa52302f39a04
+      - 1885f619a4d1394f1766823f86a5a51b7afadc24665e5776b018ad664b63428e
     body:
       encoding: UTF-8
       string: '[{"word":"deleted","score":2147483647,"tags":["query","f:3.609300"],"defs":["adj\tHaving
@@ -165,7 +165,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 2d992851e6eab03cd617c06be9a7d36403bb2fdf9c6896bc466f99d1cf1153dc
+      - 122ff908dd43ebf2e0e97f57525050081f818f412d6c76675e210260cecaa428
     body:
       encoding: UTF-8
       string: '[{"word":"delt","score":2147483647,"tags":["query","f:0.041721"],"defs":["n\t(bodybuilding,
@@ -204,7 +204,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 9b23604190a36a24b8a5ed7e378a9b072fa8e52de86019142545476bda0a368e
+      - 50e135785321d4ce7f8de5d4d988cade92ce9066e2432d22ba530c0e46ed0d1b
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"diet","score":2147483647,"tags":["query","f:23.496553"],"defs":["n\tThe
@@ -258,7 +258,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a1f78d524753c3b72d3ea47cc9569a8888f6049bd98db0d399c0126767087bc8
+      - cd287ce237734c70b8a9988c619c71c0c6d4f043ff2b13facb60cde93652b48c
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"dieted","score":2147483647,"tags":["query","spellcor:dieter","f:0.054389"],"defs":["n\tThe
@@ -312,7 +312,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 984b7902d6225aba18443f0b13e6e45b77daa749f7be352ea26b9ca4e3bab8e7
+      - 9ca6f08301dbfd42b753d885cfda138a6868d6bea64d20a9d6a3ac2a93e5f6a6
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -351,7 +351,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - '094f21bbbc833b9d1530a4f8bbc82b3bfcb5512ab3e6ba10cc2765cd44499a3f'
+      - 3ab66bac7bea6ebfd18e7cbf5ae06cc52d247388c8ea6669144b462af24ebfe9
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"dilute","score":2147483647,"tags":["query","f:4.114071"],"defs":["v\t(transitive)
@@ -397,7 +397,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 6f82e8972c0b08b81c3ae2c61b5885113445a1c0752707031a0b811700ed6529
+      - 7f39ab3d9c5ddafa5d0e9b9aee79be9cf5efa75ec02ea9de2f6aef60aafd8a31
     body:
       encoding: UTF-8
       string: '[{"word":"diluted","score":2147483647,"tags":["query","f:3.412184"],"defs":["adj\tThat
@@ -436,7 +436,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 01703a591ef2c470b21dde9a1206740d1459acd02b1eb6cfedc7175182deec57
+      - c99b28d096597c5df715a8637c4cd987e38a2cc536546a816e64dcce6dbc02ee
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"duet","score":2147483647,"tags":["query","f:0.721512"],"defs":["n\t(music)
@@ -481,7 +481,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 3079083c5e104c2c39f8ae6d3f535e3f6448d79ff136082ff9891b0fbe93876d
+      - a2011476078c1d757878c044a8c3ad89e7b5925ca41fb5628f5632510f4205dd
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"duetted","score":2147483647,"tags":["query","f:0.001883"],"defs":["n\t(music)
@@ -526,7 +526,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5dd8321ab7333fb4788303653826edb8e6db26eefbb54b2824b727a3d69b551f
+      - 12160a22622fe005d106ce8bd4720f973b52300b558716783adc72d564901fd4
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"edit","score":2147483647,"tags":["query","f:6.756510"],"defs":["n\tA
@@ -578,7 +578,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 149f35bf3f9eb215690e1a64913cf0035958d1ab839e96196a5a0f25fea9ab56
+      - 4dc58f8777ded33972616da99c048f0376000cdc54571d8c1025a42ae2ca541b
     body:
       encoding: UTF-8
       string: '[{"word":"edited","score":2147483647,"tags":["query","f:29.764331"],"defs":["adj\tHaving
@@ -617,7 +617,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ed307f0891a6551d4170fe668f78b782bf0b6892871b11dd4dbe329580b3d3f4
+      - 5ed5695a3a60208df614aea763bbcc7a72bd05f849a4c1e26f20f2bbee85ddf1
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"elite","score":2147483647,"tags":["query","f:14.172734"],"defs":["adj\tOf
@@ -660,7 +660,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 46b34794e801513ea4a3b798e2120add7e8cf7e86d6497f70901c85fe5ec4804
+      - 477d3374f39cdfaaf2b974af5375e419befcb4d99af4d88e2e7b54355e4c01d8
     body:
       encoding: UTF-8
       string: '[{"word":"etude","score":2147483647,"tags":["query","f:1.320141"],"defs":["n\t(music)
@@ -700,7 +700,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 49eb1721d81413628ce11b18b09e055b29f8943c72331e8abec7f2e722662140
+      - 449ae72c37f2ec1b8c58e6b8ad86253019957f306115e963c4ac110a2a7cd1b3
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gelt","score":2147483647,"tags":["query","f:0.036825"],"defs":["n\t(rare)
@@ -744,7 +744,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e20beaeeb188835266def627758d58f6dfe932c237595117bfe74979e58b3ec8
+      - dcc5f1e70f651832c1487f7efa269cb1201ba91f6b07a1f3538122ff8711e589
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gilt","score":2147483647,"tags":["query","f:1.626718"],"defs":["n\t(uncountable)
@@ -788,7 +788,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - f2ebcf0f1be5e08e973aa7059f0b56a7adfc37a76a31499d6f8829b994b60c7c
+      - 8213e9eb5a520f2da26c2a25473b14eaf4a7377e2d43376261e5dcc410afad57
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"glut","score":2147483647,"tags":["query","f:0.505322"],"defs":["n\tAn
@@ -837,7 +837,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - b68db7985257c2417ff0b0ffa669dd2e63c92ad20f8e37d7f04a515683534575
+      - 73f6ae2dd0c8ce2e4386ebf39613007f81b05c2d9e8c24c454a9a54324116ea2
     body:
       encoding: UTF-8
       string: '[{"word":"glute","score":2147483647,"tags":["query","spellcor:glue","spellcor:glut","spellcor:flute","spellcor:lute","spellcor:elute","spellcor:glume","spellcor:clute","f:0.003889"],"defs":["n\t(exercise,
@@ -876,7 +876,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - c76782b55bdd8aa7a8677c7e4197916ce2fc98e4014d784521e8e4adc1414b51
+      - 0ca3d8a2f5d217db2cdd63723dec7713f235074167453eb52e4a40a769c67c6c
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"glutei","score":2147483647,"tags":["query","spellcor:gluten","f:0.016803"],"defs":["n\t(anatomy)
@@ -918,7 +918,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - bb8f3f9923902e1cf9005647fbe6e3ae08b926bf9afc6f277fc651f4ef3b6b49
+      - f18cc68055fecab82574ec7235a6b85a95431dd14a177eed0b87270c720e25ca
     body:
       encoding: UTF-8
       string: '[{"word":"glutted","score":2147483647,"tags":["query","f:0.152513"],"defs":["adj\texceeding
@@ -957,7 +957,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - c557a54473afc2ff1b33283539826007e19b05985a2a4821d08d7ff12806c386
+      - 5bd23eb2b1403b1e53572f7c0163626afad8325e52aa336dd0a801664876b33f
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"guilt","score":2147483647,"tags":["query","f:14.550245"],"defs":["n\tResponsibility
@@ -1000,7 +1000,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 21da73a385a42dd0e13dfa9c9fb084ffd96956eaecbe2ca9aeadde3763f6fc69
+      - b32a1590bf8e27407d28051e2ebf184aa2bd809289d835bc029bcaa7ba0286d3
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gullet","score":2147483647,"tags":["query","spellcor:bullet","f:0.259528"],"defs":["n\tThe
@@ -1044,7 +1044,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0c34d605c68d4d52b7dffbbc815409b8e29804ecd653c61d4707bbdbc03d6fe4
+      - b20dbe40c782ca5b3e2d822ea3c2da652976fd6de5bd0f38b7fa9af515bca81d
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gutted","score":2147483647,"tags":["query","f:0.471370"],"defs":["adj\t(not
@@ -1086,7 +1086,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 3e70fbbc78ebb7af4bf023ab1e27e0e14566b68f8c2b2bda9705b0051baa38bc
+      - 55e1f3cff96b936c86140c053cbb6154485c42a573df551b219898ebe1fe348c
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"legit","score":2147483647,"tags":["query","f:0.118364"],"defs":["n\t(theater,
@@ -1131,7 +1131,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 4805401eafd77a25def894444d2a4ab2343e93879e72b0086d5bacd2c13076b7
+      - 840dd1e1729f98c71d191c1844433764dc77096d9d2193f5baf5a869ce2c957b
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lilt","score":2147483647,"tags":["query","f:0.264630"],"defs":["v\tTo
@@ -1174,7 +1174,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e3a2c6756cd21d148f9851edf75699778f3830590bf191fbb0333b4bbe9a670b
+      - cb7c58a52ff6e0ead57ba9984532307e7f67ef9d3fd44f18bd4a7b2c061fa853
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lilted","score":2147483647,"tags":["query","spellcor:tilted","spellcor:listed","spellcor:wilted","spellcor:lifted","f:0.031474"],"defs":["v\tTo
@@ -1217,7 +1217,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 2de4838a0414461a2b75b947bbde0fdaadf2fe9e56ef297cbf59918402238f2e
+      - c0909e7e60fccd6e3711e903fcf6bf4cf3543a2d132c73726e133d3073f7b395
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1256,7 +1256,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 26a760846fdfa446da97e89c5c90f967ce04b5a8e0d6b93234bacd4fe32563e1
+      - e210a2120ff5ad2b9227da12004c0ae69435009eb694ced743a795665d252177
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"little","score":2147483647,"tags":["query","f:343.154023"],"defs":["adj\tSmall
@@ -1314,7 +1314,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 33afea26e79ded2452e93abdb9c23765a32ad6a57a5dd0de02e3c4d8f62d0f4a
+      - 9c786a868e4f48f033a24118a486424e44603451cfe7fbe30e84a9bd6db07885
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lute","score":2147483647,"tags":["query","f:0.990863"],"defs":["n\tA
@@ -1361,7 +1361,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 379e9bd55cde4fda1fd73251a1b1cb7bee8acdc38344b1124f18cd44bc5d2e79
+      - ea5eae225b6624f25ec8cbbbd72e82a41f0b62809fbdb659470a8b2c7b99d4b9
     body:
       encoding: UTF-8
       string: '[{"word":"teed","score":2147483647,"tags":["query","f:0.122030"],"defs":["n\tA
@@ -1400,7 +1400,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5e7c71a980de1980cff8687f6f4a282ef74d1af155bfdc8c546f192e3003b653
+      - 5ebb2fbd8527918f6a3edaafb493e6cb416ae47f5f55607d5aa947d7ed14fe41
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tell","score":2147483647,"tags":["query","f:139.059245"],"defs":["v\t(transitive,
@@ -1458,7 +1458,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ea27f843f12ff0aadb4d3436292a8b6276d83354d48fa215f3aa35c07074621c
+      - b5331b0c17065ad4258b4a037e6614e8f642cd60230aeb96b38127c641900113
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tide","score":2147483647,"tags":["query","f:10.390002"],"defs":["n\tThe
@@ -1509,7 +1509,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 202d5db9436341291366a68eb82276d9c8c8a54a7928f36db361f1406b75e762
+      - 5665370380ab17e199ea2accb41437f2f4651a799d9e36c2342292f08d99d129
     body:
       encoding: UTF-8
       string: '[{"word":"tided","score":2147483647,"tags":["query","spellcor:tide","spellcor:tired","spellcor:tied","spellcor:timed","spellcor:sided","spellcor:tides","spellcor:aided","f:0.114285"],"defs":["adj\tAffected
@@ -1548,7 +1548,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 849ffbbad66402481f5ab2fe1d88c98c18013b1180787272f36af3709512196b
+      - 9021db76edd7f072f53aeee9efe9dacc84916fac78e4bb62fd9b3d76850e0a36
     body:
       encoding: UTF-8
       string: '[{"word":"tidied","score":2147483647,"tags":["query","f:0.231761"],"defs":["n\tOne
@@ -1587,7 +1587,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ad57e311b8c9e1b5479f941ec1ade5057162772bd6b4647a1169d683f8b0b02a
+      - 506db57383b8f59bd42f6ca355b2eed9dbc41f466205f94af8a303fd8fe4c6eb
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tied","score":2147483647,"tags":["query","f:18.197568"],"defs":["adj\tClosely
@@ -1632,7 +1632,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - b837b4bb94057b2a7f5d6e681716dfebbb3086ca6eb9c3ecfdc1bd962c619a05
+      - 3895e5f1f7edbb0c02406a989aed993a9c6a360096abda2e7bd892c33c9c9d77
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1671,7 +1671,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 39cc31ce5846e92cead560e05904fadfdad301f68b0f32a6f71eacdc17841eea
+      - 7451137ec079c328650076aae23b5d21a617cfe46d5dc69b6d31a7e3a2876430
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tile","score":2147483647,"tags":["query","f:3.542143"],"defs":["n\tA
@@ -1719,7 +1719,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e05385f3fce8f274526633a318cc5cc4ec7b1e57fe04d4e685e7f6954fa32ace
+      - e91ee8a1d983249b59675f41d520ba7e61b8b3cf475438e09b58e7095c485657
     body:
       encoding: UTF-8
       string: '[{"word":"tiled","score":2147483647,"tags":["query","f:0.886773"],"defs":["adj\tConstructed
@@ -1759,7 +1759,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - '09cb69330eb2937d71fb56031a405a450ead39c9de979a2726276e10ec71ab18'
+      - dfa22b212b92694a4042a6be724c474d00198293cf7b69e46d7d65fbc389a415
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"till","score":2147483647,"tags":["query","f:19.200481"],"defs":["n\tA
@@ -1811,7 +1811,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 9636bff9936b12eb14086f2707617becf0ed364b6be5f75c583f88e3a50267ae
+      - 977fcb6ef5c5554a49e49aeed2625ed9f7f4663d0877a5034a106e2b9c994ea9
     body:
       encoding: UTF-8
       string: '[{"word":"tilled","score":2147483647,"tags":["query","f:0.540652"],"defs":["adj\tploughed
@@ -1850,7 +1850,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5c403acdd914eb0b92e8153d621b8387c7314d823136b91276a38e89eb6c6cb3
+      - 213cc640ffe4e4a3e381e8c9f58de7264b0efcd93b962a60618a613ea1390238
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tilt","score":2147483647,"tags":["query","f:2.873716"],"defs":["v\t(transitive)
@@ -1905,7 +1905,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - da82c9d7dcacbc27f3374526e9056e90dd83b93b41fa863f18fbebbeea01d729
+      - a6481833076fc619ae4ae5502ad17beee1bfd7f8d06173636762e0324b516817
     body:
       encoding: UTF-8
       string: '[{"word":"tilted","score":2147483647,"tags":["query","f:2.854792"],"defs":["adj\tOf
@@ -1944,7 +1944,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - d19c2e8134bf6a883989e02d314ea40221b5519cf1952c64414a7f2628e446df
+      - db1fe30d59a70cb1f6d4abd56a6145fa3b69deb816f546751532b55d4ce99995
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"title","score":2147483647,"tags":["query","f:46.774375"],"defs":["n\tAn
@@ -1997,7 +1997,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 832e398ec5ba0b30ebefc42aa8c1c50ecbae586ad8464e56a1e26f04f4f00930
+      - 801b39f06f42ad097c264e63c7a7ada0c95d519682548b811042be67f5221f1d
     body:
       encoding: UTF-8
       string: '[{"word":"titled","score":2147483647,"tags":["query","f:3.258438"],"defs":["adj\tBearing
@@ -2037,7 +2037,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 1e05b82c408ad8817fc4eb96bad3dc612858d153898a01ff0439024d6f91d48a
+      - 95baca07cd2d4c67d9bccecf377a430956a3a0b94c36b89bc38226d55fd2a77d
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tittle","score":2147483647,"tags":["query","spellcor:title","spellcor:little","f:0.282202"],"defs":["n\t(typography)
@@ -2079,7 +2079,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7490c0deb750c0c76a06e96dfa5d3b685f8162369c2e8b7080a7f6a2fc75d65f
+      - 63154b12e8f99b620391d5af3b834d05b392ef4e1d4a055f3168c9d713acc083
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tugged","score":2147483647,"tags":["query","f:1.355139"],"defs":["v\t(transitive)
@@ -2124,7 +2124,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a30391055cc1275068ad88c07d9b679bf5d0426679e3578f32f2a106153f8dfd
+      - 511df36c19a957c7178d59852f472688c58fd3c9141a3aeaae17d61f29affdcd
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -2163,7 +2163,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 25daf46c4899094c96f8bf9571e6927c36102ff061bd787bf0bc3a13cf37e4bf
+      - ab1a09176dcd945189ace93c111394bb236f234a44597d8de578d0c4a599c650
     body:
       encoding: UTF-8
       string: '[{"word":"tutee","score":2147483647,"tags":["query","f:0.039481"],"defs":["n\tA
@@ -2202,7 +2202,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - '0692028e755c54d512e6eacdaf175f48c8844acc64516cc5fb49e75812e7e555'
+      - 923744c73a57a5a10d084caa878081da4faaab27b18c092c24ec9bced4c842a5
     body:
       encoding: UTF-8
       string: '[{"word":"tutted","score":2147483647,"tags":["query","spellcor:gutted","spellcor:tufted","f:0.032508"],"defs":["n\tA
@@ -2241,7 +2241,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a59d7bbb98c4482c048eee8e901ee1d0359343cee614f79218cc608761b9a940
+      - 787efc6d552caf55dda6ddce5ae8f9b0b44b4c06bc69d02e79d14c90ccdccde1
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tutti","score":2147483647,"tags":["query","f:0.327689"],"defs":["adv\t(music)
@@ -2283,7 +2283,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0af255174e3349ad408fba334f2b053ce19706e9cb16cf41bc7331a5c77b403e
+      - 7fcd7487a65e94be32f51654914fffda4f1b573cae99656bdcb733897ff5ba5e
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tutu","score":2147483647,"tags":["query","f:0.307659"],"defs":["n\tA
@@ -2325,7 +2325,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 91c14a1b211b6b57b3ec524236e8cb7e4e863707bb440798a09910abb82f79ac
+      - f71dcd2e83a79166fc34d8904af13c799f6fbaad6bbb9c51ffc51847d9749f6a
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"utile","score":2147483647,"tags":["query","spellcor:futile","spellcor:tile","f:0.169174"],"defs":["adj\t(now
@@ -2412,7 +2412,7 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 379ms
       X-Request-Id:
-      - 1dedd7ef9b6c38305002a9d219973507ac9ee88ffe209df825cc2d50cbd762c6
+      - 169c8b21c4af9e5ce3eaa49be0c26ab4986769a9aeaddddb506202cae23532b8
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -2509,7 +2509,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ff83bf9f193654afbc70f434ff954033279a7bb400baddcf6f0cca87acd5037c
+      - 82b44ba7016fed86f15ab7a3d07afe8783d72a281512539ff3061e01f128be8c
     body:
       encoding: UTF-8
       string: '{"id":"ae5b9b90250d4866bd61a9e3898988bb"}'
@@ -2569,7 +2569,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - eb2d269afcd1b7e12233941a31c216ddac9a207e846dd16d35e5cde12e89e054
+      - 7affafc6c25faf9d5f0ce70982dcacd67817bcf7605e1909b4ff7a95bb1ea11f
     body:
       encoding: UTF-8
       string: '{"id":"dc7a1cafe08141c89b4f4d02c44aabff"}'
@@ -2629,7 +2629,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e5b410b5fa7540b8b97390eafe20b79219a4b316326f6c4f03285722f7c7064c
+      - 2e65160f88c9b25f428cd98c6066c334387c7fd7e3ba5203145faed5278ccde1
     body:
       encoding: UTF-8
       string: '{"id":"563f52d08cd1421887533cb1dc2a9c06"}'
@@ -2689,7 +2689,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0761dedef2e3da3c945d7dd9b4a6620a603c4db47887a325b57f111b20efdeeb
+      - 0f6592866bc71cb9cc8c00c8b02b342069ef111bfa2a52e16f559cdd6c8075f9
     body:
       encoding: UTF-8
       string: '{"id":"d2296aa72bfc494283cf898840cdc4fa"}'
@@ -2749,7 +2749,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - bc759845601a13fca155f1947b5865d3a8b83f9b8b272b788f019990bdbb0633
+      - e6fefbc9600db1fdc95b26902ea1edf479f8af21eaadb7158e9665b96e230352
     body:
       encoding: UTF-8
       string: '{"id":"06a44c41e44440ca81effdafb7301328"}'
@@ -2809,7 +2809,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 659852275155a5d5aada74d43f72089295a3cce8b52ba240798202864a3748c1
+      - 10a6124c206311498b8e38c75806b25d509670218e9ab9b33dbff7a19a1b26fe
     body:
       encoding: UTF-8
       string: '{"id":"bca34c474e5545efb8e64dd994c331d1"}'
@@ -2869,7 +2869,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 405506ff98089bbfd8f0923746d189ced0cc99d1954383d2f773b03051a953f6
+      - d08db4cd1bf51675bad66084963e338436fce962c100b98b17fe620a75958997
     body:
       encoding: UTF-8
       string: '{"id":"fd06c8c5b84c4e368284b1f231c8ad7e"}'
@@ -2929,7 +2929,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - d6301e59e83091707c524cc639963c9f9fdc2464275abbd5b97703a79020c2dd
+      - 40aee4e00a39972822f4fc6d48d86d66d7108e5e114a888c00e60e1ed68ac835
     body:
       encoding: UTF-8
       string: '{"id":"240f0215dd474d8f8bc830213bac5888"}'
@@ -2989,7 +2989,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 32e81ac3a772a7b529863197ea5bf5b59662b91b3c3027edfd73dd12c4358b54
+      - e0ad7b117dd3a43091826c7d2d4fb32484027b47ebc61e70d2c3e2c50527da4b
     body:
       encoding: UTF-8
       string: '{"id":"cd76335681d345e7850db854fe0f3e01"}'
@@ -3049,7 +3049,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 653f69f733ace6be1f91592af28591529227fbb0eceddb54a1ef02c6c7e16e80
+      - 8718504a725a4109cf651fe02857fce42cd0f5f10ccc656b13c019091a7b7bc3
     body:
       encoding: UTF-8
       string: '{"id":"0ea5169f838245ad9b3289665beb3058"}'
@@ -3109,7 +3109,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e56c72b441a3eaa2085bbe8bbbf00944db65d18d910c908437d666948537955c
+      - 7b07cc762197915b2e86f4aba35e49e0bede0e9b30f73bca64f38173c4885e89
     body:
       encoding: UTF-8
       string: '{"id":"913ab959f0e84758b0b6c9a4ad7790d2"}'
@@ -3169,7 +3169,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 584655136174d751afe85b8990227b241e6899a9984a19c48ba687eacfbb5b3f
+      - a2b98add774b95e1d10e0170d75599d76428ee4b5b3e61452829ee6af67a5d2c
     body:
       encoding: UTF-8
       string: '{"id":"ef8143fd19e347f696ddaf04698276cd"}'
@@ -3229,7 +3229,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5c53eaf432b69e63c8b258ba18012944dd04b409904acbda7d632640adacbf90
+      - 2722d9badfec09b18942546e89668bc192fedcc8b55afdea24fc726c300357aa
     body:
       encoding: UTF-8
       string: '{"id":"22255f3abfb34a7aaa484a15838713ec"}'
@@ -3289,7 +3289,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a77fd8fb3c476ec43690902cad9d1e6a9cecc044e4cb835280785a1021d4f938
+      - f2569975e5940d5e883a1a3fee7a7c0886c6378238d86f45305e90171e7f109f
     body:
       encoding: UTF-8
       string: '{"id":"2f4ac17d51064e418bfda6b3ccf9646c"}'
@@ -3349,7 +3349,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 70d5825abfbceb204232b863917d06dfac0c66e7c212b6d2a27085fb1506dcd5
+      - 52e79345b3b8c77d6b8367825bf9730c40e316e497a3d1398275d98cad01d422
     body:
       encoding: UTF-8
       string: '{"id":"f07a57413a0e4bbaa18b3a1869e2590e"}'
@@ -3409,7 +3409,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5e2dadb583dc7005d945d38b35b71ebe55c499b99b35a106c936b8bdd730a3d4
+      - de7a70a7a4c8ac491a2000d09fbd4f9da4774585a9f1d0f83c1f4307cfb1aeb1
     body:
       encoding: UTF-8
       string: '{"id":"f33324cb3a934561951f22d6ffc70de5"}'
@@ -3469,9 +3469,129 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 8f3603237f86a8422592235697f794a3a25ba8ea3573b7c246f5fb7311ff588c
+      - 4e6eea1bd0bdbde157bef1c50590e87ee80d289e199130e7e7d81257ff8fe2fd
     body:
       encoding: UTF-8
       string: '{"id":"8b808500a8204263ae23582b9a95f0ae"}'
   recorded_at: Fri, 15 Mar 2024 20:34:56 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"63bd88bc034f42ea8032f3f3644b1859","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-17T05:44:02Z","trace":{"trace_id":"aeb71a2448504efc9505ddce10004c5a","sample_rate":"1.0","sampled":"true","environment":"test","release":"61fadb6807cd328330cc3cfc0dc7fa8a0ef52d32","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"63bd88bc034f42ea8032f3f3644b1859","level":"error","timestamp":1710654242.9290721,"release":"61fadb6807cd328330cc3cfc0dc7fa8a0ef52d32","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"afeff50f-2dc1-4df2-80b3-9ee655d39150"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"aeb71a2448504efc9505ddce10004c5a","span_id":"eb9e86da4eae43d4","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0"},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"sql.active_record","data":{"sql":"SHOW search_path","name":"SCHEMA","statement_name":null},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintRequest Load","statement_name":"a1"},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintRequest"},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintResponse Load","statement_name":"a2"},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintResponse"},"level":null,"message":"","timestamp":1710654242,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0","status":200,"view_runtime":0.12800004333257675,"db_runtime":0.5010003224015236},"level":null,"message":"","timestamp":1710654242,"type":null}]},"transaction":"SyncApi::V1::OpenaiLogsController#index_with_offset","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/openai_logs","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"afeff50f-2dc1-4df2-80b3-9ee655d39150"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"aeb71a2448504efc9505ddce10004c5a","span_id":"a5c7325c0d834451","parent_span_id":"eb9e86da4eae43d4","start_timestamp":1710654242.8791308,"timestamp":1710654242.9265869,"description":"SyncApi::V1::OpenaiLogsController#index_with_offset","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/openai_logs","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"}}},{"trace_id":"aeb71a2448504efc9505ddce10004c5a","span_id":"89c91ea368bd4a39","parent_span_id":"a5c7325c0d834451","start_timestamp":1710654242.8994691,"timestamp":1710654242.899619,"description":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}},{"trace_id":"aeb71a2448504efc9505ddce10004c5a","span_id":"9e8cd9ce9faf4c13","parent_span_id":"a5c7325c0d834451","start_timestamp":1710654242.912586,"timestamp":1710654242.912833,"description":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1710654242.8709152,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1710654242,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 17 Mar 2024 05:44:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Envoy-Upstream-Service-Time:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 02b75969e84c0eb1e77175486260d75da68c8f357b926e5ccefce23668ab4a37
+    body:
+      encoding: UTF-8
+      string: '{"id":"63bd88bc034f42ea8032f3f3644b1859"}'
+  recorded_at: Sun, 17 Mar 2024 05:44:03 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"69852a1254894a71a3c8d2b7b0f13649","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-17T05:44:03Z","trace":{"trace_id":"5d185cd48cd2426e927bc4f989b137b2","sample_rate":"1.0","sampled":"true","environment":"test","release":"61fadb6807cd328330cc3cfc0dc7fa8a0ef52d32","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"69852a1254894a71a3c8d2b7b0f13649","level":"error","timestamp":1710654243.025287,"release":"61fadb6807cd328330cc3cfc0dc7fa8a0ef52d32","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"4dacc1a4-349d-4ae7-a090-911c4137a990"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"5d185cd48cd2426e927bc4f989b137b2","span_id":"668a66f3e084426c","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1710654243,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1710654243,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1710654243,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.16700010746717453,"db_runtime":1.1549992486834526},"level":null,"message":"","timestamp":1710654243,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"4dacc1a4-349d-4ae7-a090-911c4137a990"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"5d185cd48cd2426e927bc4f989b137b2","span_id":"33bc88bb9a8549d2","parent_span_id":"668a66f3e084426c","start_timestamp":1710654243.006678,"timestamp":1710654243.025175,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"5d185cd48cd2426e927bc4f989b137b2","span_id":"1b6887008daf46aa","parent_span_id":"33bc88bb9a8549d2","start_timestamp":1710654243.020801,"timestamp":1710654243.021958,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1710654243.0038872,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1710654243,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 17 Mar 2024 05:44:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Envoy-Upstream-Service-Time:
+      - '2'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 8e392d133e7f61d865652e8cdbd37567fb72b92fc9d33b2180234695b976d6c2
+    body:
+      encoding: UTF-8
+      string: '{"id":"69852a1254894a71a3c8d2b7b0f13649"}'
+  recorded_at: Sun, 17 Mar 2024 05:44:03 GMT
 recorded_with: VCR 6.2.0

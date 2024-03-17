@@ -351,10 +351,6 @@ RSpec.describe OpenaiApiService do
   end
 
   describe "#save_hint_response" do
-    before(:all) do
-      DatabaseCleaner.truncate_only(["openai_hint_requests", "openai_hint_responses"])
-    end
-
     include_context "openai_extended"
 
     it "saves an OpenaiHintResponse when passed a valid parsed_response" do
@@ -367,7 +363,7 @@ RSpec.describe OpenaiApiService do
         service.save_hint_response(parsed_response, request_record)
       end
 
-      let(:result) { OpenaiHintResponse.first }
+      let(:result) { OpenaiHintResponse.last }
 
       it "properly links the response to the matching request record" do
         expect(result.openai_hint_request).to eq(request_record)
