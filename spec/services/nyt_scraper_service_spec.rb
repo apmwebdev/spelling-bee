@@ -121,11 +121,9 @@ RSpec.describe NytScraperService,
     end
 
     it "creates all puzzles" do
-      DatabaseCleaner.truncate_only(["puzzles"])
-      @service.import_all_puzzles
       past_puzzles = @puzzle_json[:pastPuzzles]
       expected_result = past_puzzles[:lastWeek].length + past_puzzles[:thisWeek].length
-      expect(Puzzle.count).to eq(expected_result)
+      expect { @service.import_all_puzzles }.to change(Puzzle, :count).by(expected_result)
     end
   end
 end
