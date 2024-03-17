@@ -14,8 +14,8 @@ require "rails_helper"
 require "json"
 
 RSpec.describe OpenaiApiService::ParsedResponse do
-  include_context "openai_extended"
   fixtures :openai_hint_instructions
+  include_context "openai_extended"
 
   describe "#initialize (mostly testing #parse method)" do
     # Shortcut for creating new instances of ParsedResponse, since the method being tested is

@@ -41,6 +41,8 @@ Metrics/PerceivedComplexity:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
+Style/ModuleFunction:
+  Enabled: false
 Style/NumericPredicate:
   Enabled: false
 Style/RedundantReturn:

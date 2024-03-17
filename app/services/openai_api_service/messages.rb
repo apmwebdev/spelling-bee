@@ -21,6 +21,8 @@ class OpenaiApiService
     SAVE_HINTS_LENGTH_STATIC = "word_hints length is"
     SAVE_HINTS_FINISHED = "Finished saving word hints"
     SAVE_HINT_REQUEST_SUCCESS = "Hint request saved successfully"
+
+    # #fetch_hints messages
     FETCH_HINTS_START_STATIC = "Starting iteration. batch_state ="
     FETCH_HINTS_REQUEST_CAPPED = "Request limit reached. Exiting"
     FETCH_HINTS_EMPTY_WORD_LIST = "Empty word_list. Exiting"

@@ -16,11 +16,11 @@ require "json"
 
 # Scrapes puzzle data from the NYT Spelling Bee site
 class NytScraperService
-  attr_accessor :logger, :validator
+  attr_reader :logger, :validator
 
-  def initialize
-    @logger = ContextualLogger.new("log/nyt_scraper.log", "weekly")
-    @validator = NytScraperValidator.new(@logger)
+  def initialize(logger: nil, validator: nil)
+    self.logger = logger
+    self.validator = validator
   end
 
   def fetch_puzzle_json
@@ -31,23 +31,30 @@ class NytScraperService
 
   def create_puzzle_from_json(puzzle_json)
     print_date = puzzle_json[:printDate]
-    @logger.info "Checking DB for #{print_date} puzzle."
+    @logger.info "Checking DB for #{print_date} puzzle"
     puzzle_date = Date.parse(print_date)
-    return @logger.info("Puzzle exists.", with_method: true) if Puzzle.exists?(date: puzzle_date)
+    return @logger.info "Puzzle exists. Exiting" if Puzzle.exists?(date: puzzle_date)
 
     @logger.info "Puzzle not present. Starting import..."
     nyt_puzzle = NytPuzzle.create!({ nyt_id: puzzle_json[:id], json_data: puzzle_json })
-    @logger.info "Created NytPuzzle."
+    @logger.info "Created NytPuzzle"
     puzzle = Puzzle.create!({
       date: puzzle_date,
       center_letter: puzzle_json[:centerLetter],
       outer_letters: puzzle_json[:outerLetters],
       origin: nyt_puzzle,
     })
-    @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}."
+    @logger.info "Created Puzzle: ID = #{puzzle.id}, Date = #{print_date}"
     create_answers(puzzle, puzzle_json[:answers])
+    @logger.info "Created answers"
     puzzle.create_excluded_words_cache
     @logger.info "Created excluded words cache"
+    begin
+      @logger.info "Fetching definition hints for puzzle answers"
+      OpenaiApiService.new.fetch_hints(puzzle_id: puzzle.id)
+    rescue StandardError => e
+      @logger.exception e
+    end
     @logger.info "Finished importing puzzle #{puzzle.id} for #{print_date}"
   end
 
@@ -55,17 +62,16 @@ class NytScraperService
     answers.each do |answer|
       word = Word.create_or_find_by({ text: answer })
       if word.frequency.nil?
-        @logger.info "Fetching datamuse data for \"#{answer}\"."
+        @logger.info "Fetching datamuse data for \"#{answer}\""
         datamuse_data = DatamuseApiService.get_word_data(answer)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
         word.save!
       else
-        @logger.info "Datamuse data already exists for \"#{answer}\"."
+        @logger.info "Datamuse data already exists for \"#{answer}\""
       end
       Answer.create!({ puzzle:, word_text: answer })
     end
-
   end
 
   def import_latest_puzzle
@@ -97,5 +103,23 @@ class NytScraperService
     create_answers(puzzle, puzzle_json[:answers])
     return if puzzle == Puzzle.last
     reparse_recent_answers(starting_id + 1)
+  end
+
+  def logger=(value)
+    @logger =
+      if value.is_a?(ContextualLogger)
+        value
+      else
+        ContextualLogger.new("log/nyt_scraper.log", "weekly")
+      end
+  end
+
+  def validator=(value)
+    @validator =
+      if value.is_a?(NytScraperValidator)
+        value
+      else
+        NytScraperValidator.new(@logger)
+      end
   end
 end

@@ -46,7 +46,7 @@ class OpenaiApiService
       end
 
       self.body_meta = parsed_body
-      @finish_reason = parsed_body.dig(:choices, 0, :finish_reason)&.to_s
+      self.finish_reason = parsed_body
       parse_and_set_content(parsed_body)
     end
 
@@ -71,9 +71,15 @@ class OpenaiApiService
       valid_type!(response, Net::HTTPResponse)
       response
         .to_hash # Turns response into a hash with headers as entries
-        .transform_keys(&:downcase) # Normalize keys before extracting relevant headers
-        .slice(*RELEVANT_HEADERS) # Extract relevant headers
+        .transform_keys(&:downcase)
+        .slice(*RELEVANT_HEADERS)
         .transform_values(&:first) # Each value is wrapped in an array; get just the value
+    end
+
+    def finish_reason=(value)
+      @finish_reason = value.dig(:choices, 0, :finish_reason)&.to_s
+    rescue StandardError
+      @logger.error "#dig to :finish_reason failed"
     end
 
     # Log, but do not raise, an error if body_meta is invalid. This shouldn't prevent the

@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  openai_hint_request: one
+res_one:
+  openai_hint_request: req_one
   word_hints: [{word: foo, hint: hint}, {word: bar, hint: hint}]
   chat_completion_id: MyString
   system_fingerprint: MyString
@@ -24,8 +24,8 @@ one:
   error_body:
   finish_reason: stop
 
-two:
-  openai_hint_request: two
+res_two:
+  openai_hint_request: req_two
   word_hints: [{word: boo, hint: hint}, {word: baz, hint: hint}]
   chat_completion_id: MyString
   system_fingerprint: MyString
