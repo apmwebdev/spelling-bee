@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+req_one:
   openai_hint_instruction: valid_instructions
   word_list: [foo, bar]
   req_ai_model: MyString
 
-two:
+req_two:
   openai_hint_instruction: valid_instructions
   word_list: [boo, baz]
   req_ai_model: MyString

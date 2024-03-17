@@ -296,12 +296,12 @@ class OpenaiApiService
   # Loop through the answers in batches and fetch hints for each one that doesn't already have a
   # hint, saving them to the database.
   # @return void
-  def fetch_hints(batch_state, puzzle_id: 1, with_save: true)
+  def fetch_hints(batch_state: nil, puzzle_id: 1, with_save: true)
+    batch_state ||= BatchState.new(@logger)
     valid_type!(batch_state, BatchState, display_name: "batch_state")
     valid_type!(puzzle_id, Integer, ->(p) { p.positive? }, display_name: "puzzle_id")
     valid_type!(with_save, Boolean, display_name: "with_save")
 
-    # @logger.info fetch_hints_start(batch_state)
     @logger.info "Starting iteration, puzzle_id: #{puzzle_id}"
 
     if @request_cap.is_a?(Integer) && batch_state.request_count >= @request_cap
@@ -332,7 +332,7 @@ class OpenaiApiService
       if parsed_response.http_status == 429
         batch_state.retry_count += 1
         sleep(batch_state.sleep_time_from_retry_count)
-        return fetch_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
+        return fetch_hints(batch_state:, puzzle_id: new_puzzle_id, with_save:)
       end
     else
       raise TypeError, "Something went wrong with the response. Both word_hints and error_body "\
@@ -344,12 +344,11 @@ class OpenaiApiService
     # case, return nothing.
     return unless word_list.word_set.length == @word_limit
 
-    return fetch_hints(batch_state, puzzle_id: new_puzzle_id, with_save:)
+    return fetch_hints(batch_state:, puzzle_id: new_puzzle_id, with_save:)
   end
 
   def seed_hints
-    batch_state = BatchState.new(@logger)
-    fetch_hints(batch_state)
+    fetch_hints
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end
