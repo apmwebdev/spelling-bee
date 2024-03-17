@@ -347,8 +347,8 @@ class OpenaiApiService
     return fetch_hints(batch_state:, puzzle_id: new_puzzle_id, with_save:)
   end
 
-  def seed_hints
-    fetch_hints
+  def seed_hints(puzzle_id = 1)
+    fetch_hints(batch_state: nil, puzzle_id:)
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end

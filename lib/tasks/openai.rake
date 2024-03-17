@@ -17,4 +17,11 @@ namespace :openai do
     service.logger.global_puts_and.push(:info, :warn)
     service.seed_hints
   end
+
+  desc "Seed hints starting with a certain puzzle ID"
+  # e.g. rake "openai:seed_hints_starting_at[2129]"
+  task :seed_hints_starting_at, [:puzzle_id] => environment do |_t, args|
+    puzzle_id = args[:puzzle_id].to_i
+    OpenaiApiService.new.seed_hints(puzzle_id)
+  end
 end
