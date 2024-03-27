@@ -26,11 +26,51 @@ RSpec.describe SyncApiService do
   describe "#sync_puzzles", vcr: { cassette_name: "sync_api_sync_puzzles" } do
     let(:page_size) { 3 }
     let(:page_limit) { 1 }
+    before do
+      allow(DatamuseApiService).to receive(:get_word_data).with(any_args)
+        .and_return({ frequency: 1, definitions: ["blah"] })
+    end
 
     it "creates number of puzzles equal to page_size * page_limit" do
-      @logger.global_puts_and = true
       expect { service.sync_puzzles(1, page_size:, page_limit:) }
         .to change(Puzzle, :count).by(page_size * page_limit)
+    end
+
+    it "creates answers for all puzzles" do
+      answers_fixture_path = Rails.root.join("spec/fixtures/answers.yml")
+      expected_count = YAML.load_file(answers_fixture_path).length
+      expect { service.sync_puzzles(1, page_size:, page_limit:) }
+        .to change(Answer, :count).by(expected_count)
+    end
+
+    it "creates words for any words that don't exist" do
+      words_fixture_path = Rails.root.join("spec/fixtures/words.yml")
+      expected_count = YAML.load_file(words_fixture_path).length
+      expect { service.sync_puzzles(1, page_size:, page_limit:) }
+        .to change(Word, :count).by(expected_count)
+    end
+
+    it "properly saves word hints" do
+      words_fixture_path = Rails.root.join("spec/fixtures/words.yml")
+      expected_count = YAML.load_file(words_fixture_path).length
+      expect { service.sync_puzzles(1, page_size:, page_limit:) }
+        .to change(Word.where.not(hint: nil), :count).by(expected_count)
+    end
+
+    context "when all words already exist in the database" do
+      fixtures :words
+
+      it "doesn't change the number of words in the database" do
+        expect { service.sync_puzzles(1, page_size:, page_limit:) }
+          .not_to change(Word, :count)
+      end
+
+      it "properly saves word hints" do
+        words_fixture_path = Rails.root.join("spec/fixtures/words.yml")
+        expected_count = YAML.load_file(words_fixture_path).length
+        expect { service.sync_puzzles(1, page_size:, page_limit:) }
+          .to change(Word.where.not(hint: nil), :count).by(expected_count)
+      end
     end
   end
 end

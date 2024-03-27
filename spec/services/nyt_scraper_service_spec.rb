@@ -15,7 +15,6 @@ require "rails_helper"
 RSpec.describe NytScraperService,
   vcr: { cassette_name: "nyt_scraper_fetch_puzzle_json" } do
   before(:all) do
-    # DatabaseCleaner.truncate_tables
     @logger = ContextualLogger.new(is_dummy: true)
     @validator = NytScraperValidator.new(@logger)
     @service = NytScraperService.new(logger: @logger)
