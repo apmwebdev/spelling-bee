@@ -94,7 +94,7 @@ class Puzzle < ApplicationRecord
     {
       puzzle_data: self,
       origin_data: origin,
-      answer_words: answers.pluck(:word_text),
+      answer_words: words.pluck(:text, :hint),
     }
   end
 end

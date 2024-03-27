@@ -22,11 +22,11 @@ class SyncApiService
   BASE_URL = ENV["PRODUCTION_SYNC_API_URL"]
   AUTH_TOKEN = "Bearer #{ENV['PRODUCTION_SYNC_API_KEY']}".freeze
 
-  attr_accessor :logger, :validator
+  attr_reader :logger, :validator
 
-  def initialize
-    @logger = ContextualLogger.new("log/sync_api.log", "weekly")
-    @validator = Validator.new(@logger)
+  def initialize(logger: nil, validator: nil)
+    self.logger = logger
+    self.validator = validator
   end
 
   def send_get_request(path)
@@ -58,9 +58,9 @@ class SyncApiService
   # The puzzle data for the Sync API is paginated, so this method is for getting one page of data
   # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
   # method until it gets to the most recent puzzle.
-  def sync_puzzle_batch(first_puzzle_identifier)
-    @logger.info "Starting with #{first_puzzle_identifier}"
-    path = "/recent_puzzles/#{first_puzzle_identifier}"
+  def sync_puzzle_batch(starting_id, page_size:)
+    @logger.info "Starting with #{starting_id}"
+    path = "/recent_puzzles/#{starting_id}?limit=#{page_size}"
     response = send_get_request(path)
 
     @validator.valid_puzzle_response!(response)
@@ -81,20 +81,27 @@ class SyncApiService
     response
   end
 
-  def sync_puzzles(first_puzzle_identifier)
-    @logger.info "Starting with #{first_puzzle_identifier}"
-    starting_identifier = first_puzzle_identifier
+  def sync_puzzles(starting_id, page_size: 50, page_limit: nil)
+    @logger.info "Starting with #{starting_id}"
+    page_count = 0
+
     loop do
       @logger.info "Iterating loop"
-      response = sync_puzzle_batch(starting_identifier)
+      response = sync_puzzle_batch(starting_id, page_size:)
       raise ApiError, "Error returned: #{response[:error]}" if response[:error]
 
-      if response[:data].length < 50
-        @logger.info "Data length < 50. Last puzzle reached. Exiting"
+      page_count += 1
+      if page_limit.is_a?(Integer) && page_count >= page_limit
+        @logger.info "Page limit reached. Exiting"
         break
       end
 
-      starting_identifier = result[:last_id].to_i + 1
+      if response[:data].length < page_size
+        @logger.info "Data length < #{page_size}. Last puzzle reached. Exiting"
+        break
+      end
+
+      starting_id = result[:last_id].to_i + 1
     end
   rescue StandardError => e
     @logger.exception(e, :fatal)
@@ -135,18 +142,22 @@ class SyncApiService
   end
 
   def create_answers(puzzle, answer_words)
-    answer_words.each do |answer_word|
-      word = Word.create_or_find_by({ text: answer_word })
+    answer_words.each do |text, hint|
+      word = Word.create_or_find_by({ text: })
       if word.frequency.nil?
-        @logger.debug "Fetching datamuse data for \"#{answer_word}\"."
-        datamuse_data = DatamuseApiService.get_word_data(answer_word)
+        @logger.debug "Fetching datamuse data for \"#{text}\"."
+        datamuse_data = DatamuseApiService.get_word_data(text)
         word.frequency = datamuse_data[:frequency]
         word.definitions = datamuse_data[:definitions]
         word.save!
       else
-        @logger.debug "Datamuse data already exists for \"#{answer_word}\"."
+        @logger.debug "Datamuse data already exists for \"#{text}\"."
       end
-      Answer.create!({ puzzle:, word_text: answer_word })
+      if word.hint.nil?
+        word.hint = hint
+        word.save!
+      end
+      Answer.create!({ puzzle:, word_text: text })
     end
   end
 
@@ -238,5 +249,24 @@ class SyncApiService
         break
       end
     end
+  end
+
+  def logger=(value)
+    @logger =
+      if value.is_a?(ContextualLogger)
+        value
+      else
+        ContextualLogger.new("log/sync_api.log", "weekly")
+      end
+    @validator&.logger = value
+  end
+
+  def validator=(value)
+    @validator =
+      if value.is_a?(Validator)
+        value
+      else
+        Validator.new(@logger)
+      end
   end
 end
