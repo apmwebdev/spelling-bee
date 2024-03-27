@@ -1,0 +1,2456 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=guilted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '465'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 538d362ac7f30b880f5d13737002a407ce3325b479ebbf2c1cdfe49ea2403ce8
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"guilted","score":2147483647,"tags":["query","spellcor:quilted","f:0.002180"],"defs":["n\tResponsibility
+        for wrongdoing. ","n\t(law) The state of having been found guilty or admitted
+        guilt in legal proceedings. ","n\tThe regret of having done wrong. ","v\t(intransitive,
+        obsolete) To commit offenses; act criminally. ","v\t(transitive, informal)
+        To cause someone to feel guilt, particularly in order to influence their behaviour.
+        "],"defHeadword":"guilt"}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:54 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=delete
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '865'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - bc38aa6b5a12a90401ccfed435a5fc7de93a29769cad28117952726c7a94dae0
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"delete","score":2147483647,"tags":["query","f:4.794068"],"defs":["v\tTo
+        remove, get rid of or erase, especially written or printed material, or data
+        on a computer or other device. ","v\t(online gaming, slang) To defeat or dominate.
+        ","v\t(transitive, slang) To kill or murder. ","n\t(computing) A deletion.
+        ","n\t(recorded entertainment industry) A remainder of a music or video release.
+        ","n\t(computing) The delete character (U+007F or %7F). ","n\t(computing)
+        A key that may be pressed to delete something (such as text or files) from
+        a computer. The key also erases text from left to right, unlike the backspace
+        key. ","n\t(uncountable) Alternative letter-case form of Delete [(computing)
+        A key that may be pressed to delete something (such as text or files) from
+        a computer. The key also erases text from left to right, unlike the backspace
+        key.] "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:55 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=deleted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '188'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - d820eb67e740839dd048e529c003dc86fc005b81ef3edba9490ea00d07adda6e
+    body:
+      encoding: UTF-8
+      string: '[{"word":"deleted","score":2147483647,"tags":["query","f:3.609300"],"defs":["adj\tHaving
+        been deleted or eliminated; absent from the final version. ","adj\t(slang)
+        Killed or murdered. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:55 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=delt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '156'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - '038621543f9e76b5b55d6c4e47ab06f0ff3905612497328db8bfe904860ae025'
+    body:
+      encoding: UTF-8
+      string: '[{"word":"delt","score":2147483647,"tags":["query","f:0.041721"],"defs":["n\t(bodybuilding,
+        slang) The deltoid muscle. ","v\tArchaic spelling of dealt. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:56 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=diet
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1297'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - f8645bfb8845acbd02505a4d3667e34c00d5f65682ec95d77b3768e415978cef
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"diet","score":2147483647,"tags":["query","f:23.496553"],"defs":["n\tThe
+        food and beverage a person or animal consumes. ","n\t(countable) A controlled
+        regimen of food and drink, as to gain or lose weight or otherwise influence
+        health. ","n\t(by extension) Any habitual intake or consumption. ","adj\t(of
+        a food or beverage) Containing less fat, salt, sugar, or calories than normal,
+        or claimed to have such. ","adj\t(informal, figurative) Having certain traits
+        subtracted. ","v\t(transitive) To regulate the food of (someone); to put on
+        a diet. ","v\t(intransitive) To modify one''s food and beverage intake so
+        as to decrease or increase body weight or influence health. ","v\t(obsolete)
+        To eat; to take one''s meals. ","v\t(obsolete, transitive) To cause to take
+        food; to feed. ","n\t(usually capitalized as a proper noun) A council or assembly
+        of leaders; a formal deliberative assembly. ","n\t(Scotland) A session of
+        exams ","n\t(Scotland, law) A criminal proceeding in court. ","n\t(Scotland)
+        A clerical or ecclesiastical function in Scotland. ","n\t(microbiology) Abbreviation
+        of direct interspecies electron transfer. ","n\tAlternative letter-case form
+        of diet (council or assembly of leaders; a formal deliberative assembly).
+        [The food and beverage a person or animal consumes.] "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:56 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=dieted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1337'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 47758be6250c373285de0a59d31b8ea25130d8cd13f3fa2a1f9c3c7285aff27c
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"dieted","score":2147483647,"tags":["query","spellcor:dieter","f:0.054389"],"defs":["n\tThe
+        food and beverage a person or animal consumes. ","n\t(countable) A controlled
+        regimen of food and drink, as to gain or lose weight or otherwise influence
+        health. ","n\t(by extension) Any habitual intake or consumption. ","adj\t(of
+        a food or beverage) Containing less fat, salt, sugar, or calories than normal,
+        or claimed to have such. ","adj\t(informal, figurative) Having certain traits
+        subtracted. ","v\t(transitive) To regulate the food of (someone); to put on
+        a diet. ","v\t(intransitive) To modify one''s food and beverage intake so
+        as to decrease or increase body weight or influence health. ","v\t(obsolete)
+        To eat; to take one''s meals. ","v\t(obsolete, transitive) To cause to take
+        food; to feed. ","n\t(usually capitalized as a proper noun) A council or assembly
+        of leaders; a formal deliberative assembly. ","n\t(Scotland) A session of
+        exams ","n\t(Scotland, law) A criminal proceeding in court. ","n\t(Scotland)
+        A clerical or ecclesiastical function in Scotland. ","n\t(microbiology) Abbreviation
+        of direct interspecies electron transfer. ","n\tAlternative letter-case form
+        of diet (council or assembly of leaders; a formal deliberative assembly).
+        [The food and beverage a person or animal consumes.] "],"defHeadword":"diet"}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:57 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=digit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1035'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 35c244cab0877778339d61dec7a1ddd357ac7280b834695933d19a35159e8e25
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sid29yZCI6ImRpZ2l0Iiwic2NvcmUiOjIxNDc0ODM2NDcsInRhZ3MiOlsicXVlcnkiLCJmOjQuMjY5ODc0Il0sImRlZnMiOlsiblx0KG1hdGhlbWF0aWNzKSBBIHBvc2l0aW9uIGluIGEgc2VxdWVuY2Ugb2YgbnVtZXJhbHMgcmVwcmVzZW50aW5nIGEgcGxhY2UgdmFsdWUgaW4gYSBwb3NpdGlvbmFsIG51bWJlciBzeXN0ZW0uICIsIm5cdChtYXRoZW1hdGljcykgQSBkaXN0aW5jdCBzeW1ib2wgcmVwcmVzZW50aW5nIGEgbmF0dXJhbCBudW1iZXIgaW4gYSBwb3NpdGlvbmFsIG51bWJlciBzeXN0ZW0uICIsIm5cdCh1bml0cyBvZiBtZWFzdXJlLCBhc3Ryb25vbXkpIMK54oGE4oKB4oKCIHRoZSBhcHBhcmVudCBkaWFtZXRlciBvZiB0aGUgc3VuIG9yIG1vb24sIChjaGllZmx5KSBhcyBhIG1lYXN1cmUgb2YgdGhlIHRvdGFsaXR5IG9mIGFuIGVjbGlwc2UuICIsIm5cdChoaXN0b3JpY2FsIHVuaXRzIG9mIG1lYXN1cmUpIEEgdW5pdCBvZiBsZW5ndGggbm90aW9uYWxseSBiYXNlZCB1cG9uIHRoZSB3aWR0aCBvZiBhbiBhZHVsdCBodW1hbiBmaW5nZXIsIHN0YW5kYXJkaXplZCBkaWZmZXJlbnRseSBpbiB2YXJpb3VzIHBsYWNlcyBhbmQgdGltZXMsIChlc3BlY2lhbGx5KSB0aGUgRW5nbGlzaCBkaWdpdCBvZiDCueKBhOKCgeKChiBmb290LCBub3cgZXF1aXZhbGVudCB0byBhYm91dCAxLjkgY20uICIsIm5cdCh1bml0cyBvZiBtZWFzdXJlLCBvYnNvbGV0ZSkgU3lub255bSBvZiBpbmNoLiAiLCJuXHQoYW5hdG9teSkgQSBuYXJyb3cgZXh0cmVtaXR5IG9mIHRoZSBodW1hbiBoYW5kIG9yIGZvb3Q6IGEgZmluZ2VyLCB0aHVtYiwgb3IgdG9lLiAiLCJuXHQoem9vbG9neSkgU2ltaWxhciBvciBzaW1pbGFyLWxvb2tpbmcgc3RydWN0dXJlcyBpbiBvdGhlciBhbmltYWxzLiAiLCJuXHQoZ2VvbWV0cnksIHJhcmUsIG9ic29sZXRlKSBTeW5vbnltIG9mIGRlZ3JlZTogwrnigYTigoPigobigoAgb2YgYSBjaXJjbGUuICIsInZcdCh0cmFuc2l0aXZlKSBUbyBwb2ludCBhdCBvciBwb2ludCBvdXQgd2l0aCB0aGUgZmluZ2VyLiAiXX1d
+  recorded_at: Thu, 14 Mar 2024 18:07:57 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=dilute
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:58 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '682'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - eb3f55056a3e8954fbeb8dac5e5875e4866d6e6259f19a7674fa71d2c7549612
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"dilute","score":2147483647,"tags":["query","f:4.114071"],"defs":["v\t(transitive)
+        To make thinner by adding solvent to a solution, especially by adding water.
+        ","v\t(transitive) To weaken, especially by adding a foreign substance. ","v\t(transitive,
+        stock market) To cause the value of individual shares or the stake of a shareholder
+        to decrease by increasing the total number of shares. ","v\t(intransitive)
+        To become attenuated, thin, or weak. ","adj\tHaving a low concentration. ","adj\tWeak;
+        reduced in strength by dilution; diluted. ","adj\tOf an animal: having a lighter-coloured
+        coat than is usual. ","n\tAn animal having a lighter-coloured coat than is
+        usual. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:57 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=diluted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:58 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '138'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - d52142137d75b319c2c464151fb5c8a3202a73c489fd7344da5b007579d2fed2
+    body:
+      encoding: UTF-8
+      string: '[{"word":"diluted","score":2147483647,"tags":["query","f:3.412184"],"defs":["adj\tThat
+        has had something added in order to dilute it. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:58 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=duet
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:58 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '630'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 3265f33b8ee91b0c6a4148db30ebdf457789f9995f8f0760cd3f3813f861bf77
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"duet","score":2147483647,"tags":["query","f:0.721512"],"defs":["n\t(music)
+        A musical composition in two parts, each performed by a single voice (singer,
+        instrument or univoce ensemble). ","n\t(music) A song composed for and/or
+        performed by a duo. ","n\tA pair or couple, especially one that is harmonious
+        or elegant. ","v\t(intransitive) To perform a duet. ","v\t(intransitive, zoology,
+        of pairs of animals) To communicate (warnings, mating calls, etc.) through
+        song. ","v\t(transitive) To perform (sing, play, etc.) as a duet. ","v\t(transitive)
+        (of two people) To say at the same time, to chorus. ","n\tA surname. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:58 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=duetted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:59 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '654'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 630bcfa7bf0fc3952762073efebb1c26c40791c2be00830911c95c5ec1f83931
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"duetted","score":2147483647,"tags":["query","f:0.001883"],"defs":["n\t(music)
+        A musical composition in two parts, each performed by a single voice (singer,
+        instrument or univoce ensemble). ","n\t(music) A song composed for and/or
+        performed by a duo. ","n\tA pair or couple, especially one that is harmonious
+        or elegant. ","v\t(intransitive) To perform a duet. ","v\t(intransitive, zoology,
+        of pairs of animals) To communicate (warnings, mating calls, etc.) through
+        song. ","v\t(transitive) To perform (sing, play, etc.) as a duet. ","v\t(transitive)
+        (of two people) To say at the same time, to chorus. ","n\tA surname. "],"defHeadword":"duet"}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:59 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=edit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:07:59 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1129'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 80e1de1e46d9d380332b3cbefe61a0d9cb1fc000fd9b90618b487df3c370adab
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"edit","score":2147483647,"tags":["query","f:6.756510"],"defs":["n\tA
+        change to the text of a document. ","n\t(computing) A change in the text of
+        a file, a website or the code of software. ","n\tAn edited piece of media,
+        especially video footage. ","n\t(Internet, specifically) A compilation of
+        memorable moments (in a show, sport, etc.), often featuring stylized camera
+        effects and intense music. ","n\t(comedy) An interruption or change to an
+        improvised scene. ","n\t(genetics) An alteration to the DNA sequence of a
+        chromosome; an act of gene splicing. ","n\t(fashion) A range of products related
+        by theme or purpose. ","v\tTo change a text, or a document. ","v\tTo alter
+        a photograph or recording of sound or video. ","v\t(transitive) To be the
+        editor of a publication. ","v\t(computing) To change the contents of a file,
+        website, etc. ","v\t(biology) To alter the DNA sequence of a chromosome; to
+        perform gene splicing. ","v\tTo assemble a film by cutting and splicing raw
+        footage. ","v\t(comedy) To cut short or otherwise alter an improvised scene.
+        ","v\t(ergative) To lend itself to editing in a certain way. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:07:59 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=edited
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '133'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 0c87701014b5585d536c7e8fbf0a600edb2a6cdc61fc7b1ac07e077cb6c814ee
+    body:
+      encoding: UTF-8
+      string: '[{"word":"edited","score":2147483647,"tags":["query","f:29.764331"],"defs":["adj\tHaving
+        been altered from the original version. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:00 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=elite
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '457'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - c0bf270aa9aca3fb2a9d33c847512c8b0c692f230c351b2e21b5931585be9152
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"elite","score":2147483647,"tags":["query","f:14.172734"],"defs":["adj\tOf
+        high birth or social position; aristocratic or patrician. ","adj\tRepresenting
+        the choicest or most select of a group. ","n\tA special group or social class
+        of people which have a superior intellectual, social or economic status as,
+        the elite of society. ","n\tSomeone who is among the best at a certain task.
+        ","n\t(typography) A typeface with 12 characters per inch. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:00 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=etude
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '183'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - bca1131db7a3c08515afd9dbefb12416ccafd29f5a78651406d50761d2bdb777
+    body:
+      encoding: UTF-8
+      string: '[{"word":"etude","score":2147483647,"tags":["query","f:1.320141"],"defs":["n\t(music)
+        A short piece of music, designed to give a performer practice in a particular
+        area or skill. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:00 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=gelt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:01 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '515'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - c3c350c3b704dbd6cd785127c090df45c7ab56c835f1dc0d0dc38574ac55e5c6
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"gelt","score":2147483647,"tags":["query","f:0.036825"],"defs":["n\t(rare)
+        A lunatic. ","n\t(obsolete) Gilding; gilt. ","n\tA gelding. ","n\t(originally
+        UK, especially thieves'' cant and Polari, later Judaism and general slang)
+        Money. ","n\tTribute; tax. ","n\t(Judaism) Money, especially that given as
+        a gift on Hanukkah or used in games of dreidel. ","n\t(Judaism) Chocolate
+        candy in the shape of coins, usually wrapped in metallic foil, usually eaten
+        on Hanukkah and often used for games of dreidel. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:01 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=gilt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:01 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '519'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - be6bea45a14e3a23fdb4c7b6befc4243448b1d4933cb6716121e73e1b6ebd8a6
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"gilt","score":2147483647,"tags":["query","f:1.626718"],"defs":["n\t(uncountable)
+        Gold or other metal in a thin layer; gilding. ","n\t(uncountable, by extension)
+        Gold-colored paint or other coating. ","n\t(uncountable, slang) Money. ","n\t(countable,
+        finance, UK) A security issued by the Bank of England (see gilt-edged). ","n\t(obsolete,
+        uncountable) A gilded object, an object covered with gold. ","adj\tGolden
+        coloured. ","n\t(UK, regional) A young female pig, at or nearing the age of
+        first breeding. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:01 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=glut
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '925'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - cd6dd02ea5a38aa33982e592d827a928d7703d8215e8ed233241622fbd686aa8
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"glut","score":2147483647,"tags":["query","f:0.505322"],"defs":["n\tAn
+        excess, too much. ","n\tThat which is swallowed. ","n\tSomething that fills
+        up an opening. ","n\tA wooden wedge used in splitting blocks. ","n\t(mining)
+        A piece of wood used to fill up behind cribbing or tubbing. ","n\t(bricklaying)
+        A bat, or small piece of brick, used to fill out a course. ","n\t(architecture)
+        An arched opening to the ashpit of a kiln. ","n\tA block used for a fulcrum.
+        ","n\tThe broad-nosed eel (Anguilla anguilla, syn. Anguilla latirostris),
+        found in Europe, Asia, the West Indies, etc. ","n\t(Britain, soccer) Five
+        goals scored by one player in a game. ","v\t(transitive) To fill to capacity;
+        to satisfy all demand or requirement; to sate. ","v\t(transitive, economics)
+        To provide (a market) with so much of a product that the supply greatly exceeds
+        the demand. ","v\t(intransitive) To eat gluttonously or to satiety. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:02 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=glute
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '239'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 6440f985a7f8076469b027eb24b84bed079cbf0f0844737e2f50b29dbad900b5
+    body:
+      encoding: UTF-8
+      string: '[{"word":"glute","score":2147483647,"tags":["query","spellcor:glue","spellcor:glut","spellcor:flute","spellcor:lute","spellcor:elute","spellcor:glume","spellcor:clute","f:0.003889"],"defs":["n\t(exercise,
+        colloquial) A gluteal muscle. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:02 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=glutei
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '403'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - ebaea0e1e839f5551d63b0f89f278c1249ea295134927449ac670b5f4908f85a
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"glutei","score":2147483647,"tags":["query","spellcor:gluten","f:0.016803"],"defs":["n\t(anatomy)
+        Any of the several muscles of the nates, each of which arises from the pelvis
+        and inserts into a femur. ","n\t(slang, informal) Short for gluteus maximus,
+        either of a pair of large muscles in the human buttocks. [(anatomy) The largest
+        of the muscles of each buttock.] "],"defHeadword":"gluteus"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:02 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=glutted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '102'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - ca385ae830cc2f43eda837b4a06f6fabdbabe7c21005a478e89dd135ee45c8a8
+    body:
+      encoding: UTF-8
+      string: '[{"word":"glutted","score":2147483647,"tags":["query","f:0.152513"],"defs":["adj\texceeding
+        demand"]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:03 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=guilt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '423'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - '080f1f26ec7f35b03c12bef22868690aeb74becb630deb36688da6cbd82610d0'
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"guilt","score":2147483647,"tags":["query","f:14.550245"],"defs":["n\tResponsibility
+        for wrongdoing. ","n\t(law) The state of having been found guilty or admitted
+        guilt in legal proceedings. ","n\tThe regret of having done wrong. ","v\t(intransitive,
+        obsolete) To commit offenses; act criminally. ","v\t(transitive, informal)
+        To cause someone to feel guilt, particularly in order to influence their behaviour.
+        "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:03 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=gullet
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '486'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 41533cc65b46dcd4f02a39712e33fca245e04a21576fc45035a1944bf3434bee
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"gullet","score":2147483647,"tags":["query","spellcor:bullet","f:0.259528"],"defs":["n\tThe
+        throat or esophagus. ","n\t(cytology) The cytopharynx of a ciliate, through
+        which food is ingested. ","n\tThe space between the teeth of a saw blade.
+        ","n\tA channel for water. ","n\tA preparatory cut or channel in excavations,
+        of sufficient width for the passage of earth wagons. ","n\tThe wide space
+        under the pommel of a saddle; the hollow over the withers of a saddled animal.
+        "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:03 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=gutted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '347'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 1a9bb247a7b93439031e33e41c243720877e7e6ebbd48bbce8dfd555b90f7ae7
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"gutted","score":2147483647,"tags":["query","f:0.471370"],"defs":["adj\t(not
+        comparable) Eviscerated. ","adj\tWith the most important parts destroyed (often
+        by fire), removed or rendered useless. ","adj\t(chiefly archaic) Having a
+        gut or guts. ","adj\t(slang) Deeply disappointed or crushed, as by defeat,
+        failure, or loss; let down. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:04 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=legit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '598'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - fa602704ddbec351b6d8b3b79b3905343a544790a7811e7b6aa3622e2a1d26dc
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"legit","score":2147483647,"tags":["query","f:0.118364"],"defs":["n\t(theater,
+        slang) A legitimate; a legitimate actor. ","n\t(slang) A legitimate child.
+        ","adj\t(informal) Legitimate; legal; allowed by the rules; valid. ","adj\t(video
+        games) Not using cheats. ","adj\t(by extension, of a thing or person) Genuine,
+        actual, literal or honest. ","adj\t(slang) Genuinely good and possessing all
+        the required or expected qualities; the real deal. ","adj\t(slang) Cool by
+        virtue of being genuine. ","adv\t(informal) Legitimately; within the law.
+        ","adv\t(slang) Honestly; truly; seriously. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:04 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=lilt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '454'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 3bcff3956401c3905604da45b680cb85a1bcbc7511132cc70cd10f104d665ac4
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"lilt","score":2147483647,"tags":["query","f:0.264630"],"defs":["v\tTo
+        do something rhythmically, with animation and quickness, usually of music.
+        ","v\tTo sing cheerfully, especially in Gaelic. ","v\tTo utter with spirit,
+        animation, or gaiety; to sing with spirit and liveliness. ","n\tAnimated,
+        brisk motion; spirited rhythm; sprightliness. ","n\tA lively song or dance;
+        a cheerful tune. ","n\tA cheerful or melodious accent when speaking. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:05 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=lilted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '549'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 2e20411bec74a5f9488c5f501a06bcdf9f39f239749d282936d1899d1fc2c207
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"lilted","score":2147483647,"tags":["query","spellcor:tilted","spellcor:listed","spellcor:wilted","spellcor:lifted","f:0.031474"],"defs":["v\tTo
+        do something rhythmically, with animation and quickness, usually of music.
+        ","v\tTo sing cheerfully, especially in Gaelic. ","v\tTo utter with spirit,
+        animation, or gaiety; to sing with spirit and liveliness. ","n\tAnimated,
+        brisk motion; spirited rhythm; sprightliness. ","n\tA lively song or dance;
+        a cheerful tune. ","n\tA cheerful or melodious accent when speaking. "],"defHeadword":"lilt"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:05 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=lite
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '923'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - fa266b101176d961c070bf5e06b688a069bd785057d0a4239779c6a05f592de3
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sid29yZCI6ImxpdGUiLCJzY29yZSI6MjE0NzQ4MzY0NywidGFncyI6WyJxdWVyeSIsImY6MC45NDk3MDUiXSwiZGVmcyI6WyJhZGpcdCh1c3VhbGx5IHBvc3Rwb3NpdGl2ZSkgQWJyaWRnZWQgb3IgbGVzc2VyOyBiZWluZyBhIHNpbXBsZXIgb3IgdW5wYWlkIHZlcnNpb24gb2YgYSBwcm9kdWN0LiAiLCJhZGpcdExpZ2h0IGluIGNvbXBvc2l0aW9uLCBub3RhYmx5IGxvdyBpbiBmYXQsIGNhbG9yaWVzIGV0Yy4gTW9zdCBjb21tb25seSB1c2VkIGNvbW1lcmNpYWxseS4gIiwiYWRqXHRMaWdodHdlaWdodCAiLCJhZGpcdCh1c3VhbGx5IHVzZWQgcG9zdHBvc2l0aXZlbHkpIExhY2tpbmcgc3Vic3RhbmNlIG9yIHNlcmlvdXNuZXNzOyB3YXRlcmVkIGRvd24uICIsIm5cdChhcmNoaXRlY3R1cmUpIEEgd2luZG93IHBhbmUgIiwiblx0KEJyaXRhaW4sIGRpYWxlY3QpIEEgbGl0dGxlLCBiaXQuICIsImFkalx0KEJyaXRhaW4sIGRpYWxlY3QpIGZldzsgbGl0dGxlICIsInZcdChCcml0YWluLCBkaWFsZWN0KSBUbyBleHBlY3Q7IHdhaXQuICIsInZcdChCcml0YWluLCBkaWFsZWN0KSBUbyByZWx5LiAiLCJuXHQoQnJpdGFpbiwgZGlhbGVjdCkgVGhlIGFjdCBvZiB3YWl0aW5nOyBhIHdhaXQuICIsImFkalx0SW5mb3JtYWwgc3BlbGxpbmcgb2YgbGlnaHQuIFtIYXZpbmcgbGlnaHQ7IGJyaWdodDsgY2xlYXI7IG5vdCBkYXJrIG9yIG9ic2N1cmUuXSAiLCJuXHRBcmNoYWljIGZvcm0gb2YgbGlnaHQgKOKAnHdpbmRvdyBvciBhcGVydHVyZSBpbiBhIGJ1aWxkaW5n4oCdKS4gWyhwaHlzaWNzLCB1bmNvdW50YWJsZSkgRWxlY3Ryb21hZ25ldGljIHJhZGlhdGlvbiBpbiB0aGUgd2F2ZWxlbmd0aCByYW5nZSB2aXNpYmxlIHRvIHRoZSBodW1hbiBleWUgKGFib3V0IDQwMOKAkzc1MCBuYW5vbWV0ZXJzKTsgdmlzaWJsZSBsaWdodC5dICJdfV0=
+  recorded_at: Thu, 14 Mar 2024 18:08:05 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=little
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1601'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - e3a23517ff3c98a16ac27f393a1d6d4ecab1cca091caa5edc53c79e87fc0473e
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"little","score":2147483647,"tags":["query","f:343.154023"],"defs":["adj\tSmall
+        in size. ","adj\tSmall and underdeveloped, particularly (of a male) in the
+        genitals. ","adj\tInsignificant, trivial. ","adj\t(offensive) Used to belittle
+        a person. ","adj\tVery young. ","adj\t(of a sibling) Younger. ","adj\t(often
+        capitalized) Used with the name of a place, especially of a country or its
+        capital, to denote a neighborhood whose residents or storekeepers are from
+        that place. ","adj\t(derogatory) To imply that the inhabitants of the place
+        have an insular attitude and are hostile to those they perceive as foreign.
+        ","adj\tHaving few members. ","adj\t(of an industry or other field, or institution(s)
+        therein, often capitalized) Operating on a small scale. ","adj\tShort in duration;
+        brief. ","adj\tSmall in extent of views or sympathies; narrow; shallow; contracted;
+        mean; illiberal; ungenerous. ","adv\tNot much. ","adv\tNot at all. ","n\t(chiefly
+        uncountable or in the singular) A small amount. ","n\t(countable, informal)
+        A child; particularly an infant. ","n\tAn adult in a child-like role: ","n\t(countable,
+        university slang) A newly initiated member of a sorority or fraternity, who
+        is mentored by a big. ","n\t(countable, BDSM, ABDL) The participant in ageplay
+        who acts out the younger role. ","n\t(countable) One who has mentally age
+        regressed to a childlike state. ","n\tA surname. ","n\tAn unincorporated community
+        in Breathitt County, Kentucky, United States, named after the local Little
+        family. ","n\tAn unincorporated community in Tyler County, West Virginia,
+        United States. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:06 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=lute
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '752'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 34284519f7f7d77033cf4d5e71be756e1373c356bf61aaa5bcf876aa75425d52
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"lute","score":2147483647,"tags":["query","f:0.990863"],"defs":["n\tA
+        fretted stringed instrument of European origin, similar to the guitar, having
+        a bowl-shaped body or soundbox; any of a wide variety of chordophones with
+        a pear-shaped body and a neck whose upper surface is in the same plane as
+        the soundboard, with strings along the neck and parallel to the soundboard.
+        ","v\tTo play on a lute, or as if on a lute. ","n\tThick sticky clay or cement
+        used to close up a hole or gap, especially to make something air-tight. ","n\tA
+        packing ring, as of rubber, for fruit jars, etc. ","n\t(brickmaking) A straight-edged
+        piece of wood for striking off superfluous clay from earth. ","v\tTo fix or
+        fasten something with lute. ","n\tA surname. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:06 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=teed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '113'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 9c37147337b8f6770b1e641061282c00a66f850838d779502be2891c139c999e
+    body:
+      encoding: UTF-8
+      string: '[{"word":"teed","score":2147483647,"tags":["query","f:0.122030"],"defs":["n\tA
+        surname. "],"defHeadword":"Teed"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:07 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tell
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1591'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - a54b695edaefa8a3043c422af7e087cb4aa327187bddec791aa293145cab3bd3
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tell","score":2147483647,"tags":["query","f:139.059245"],"defs":["v\t(transitive,
+        archaic outside of idioms) To count, reckon, or enumerate. ","v\t(transitive,
+        ditransitive) To narrate, to recount. ","v\t(transitive, ditransitive) To
+        convey by speech; to say. ","v\t(transitive) To instruct or inform. ","v\t(transitive)
+        To order; to direct, to say to someone. ","v\t(transitive or intransitive)
+        To discern, notice, identify or distinguish. ","v\t(transitive) To reveal.
+        ","v\t(intransitive) To be revealed. ","v\t(intransitive) To have an effect,
+        especially a noticeable one; to be apparent, to be demonstrated. ","v\t(transitive)
+        To use (beads or similar objects) as an aid to prayer. ","v\t(intransitive,
+        childish) To inform someone in authority about a wrongdoing. ","v\t(authorship,
+        intransitive) To reveal information in prose through outright expository statement
+        -- contrasted with show ","n\tA reflexive, often habitual behavior, especially
+        one occurring in a context that often features attempts at deception by persons
+        under psychological stress (such as a poker game or police interrogation),
+        that reveals information that the person exhibiting the behavior is attempting
+        to withhold. ","n\t(informal) A giveaway; something that unintentionally reveals
+        or hints at a secret. ","n\t(archaic) That which is told; a tale or account.
+        ","n\t(Internet) A private message to an individual in a chat room; a whisper.
+        ","n\t(archaeology) A hill or mound, originally and especially in the Middle
+        East, over or consisting of the ruins of ancient settlements. ","n\tA surname.
+        "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:07 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tide
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1051'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 9dd26e6e9beb803c82303328ea4598158055af7fa99a65adc11fc0fb2a03a1f1
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tide","score":2147483647,"tags":["query","f:10.390002"],"defs":["n\tThe
+        periodic change of the sea level, particularly when caused by the gravitational
+        influence of the sun and the moon. ","n\tA stream, current or flood. ","n\t(chronology,
+        obsolete, except in liturgy) Time, notably anniversary, period or season linked
+        to an ecclesiastical feast. ","n\t(regional, archaic) A time. ","n\t(regional,
+        archaic) A point or period of time identified or described by a qualifier
+        (found in compounds). ","n\t(mining) The period of twelve hours. ","n\tSomething
+        which changes like the tides of the sea. ","n\tTendency or direction of causes,
+        influences, or events; course; current. ","n\t(obsolete) Violent confluence
+        ","v\t(transitive) To cause to float with the tide; to drive or carry with
+        the tide or stream. ","v\t(intransitive) To pour a tide or flood. ","v\t(intransitive,
+        nautical) To work into or out of a river or harbor by drifting with the tide
+        and anchoring when it becomes adverse. ","v\t(intransitive, obsolete) To happen,
+        occur. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:07 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tided
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:08 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '238'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - a9ea70f04165d4c4a9f54df76717139e3e118ce6a26b613d24dce17166435f73
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tided","score":2147483647,"tags":["query","spellcor:tide","spellcor:tired","spellcor:tied","spellcor:timed","spellcor:sided","spellcor:tides","spellcor:aided","f:0.114285"],"defs":["adj\tAffected
+        by the tide; having a tide. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:08 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tidied
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:08 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '122'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 34939caefb5f541ebcf25aa355f77a85e3d03d4a70974ad3f8e9cc94408dd4a0
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tidied","score":2147483647,"tags":["query","f:0.231761"],"defs":["n\tOne
+        who tidies. "],"defHeadword":"tidier"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:08 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tied
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:09 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '584'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 9409d796be5cb0923df1abc08fa51f83481f6899036a91843a1d7d1c1bbfa0b8
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tied","score":2147483647,"tags":["query","f:18.197568"],"defs":["adj\tClosely
+        associated or Connected. ","adj\tRestricted. ","adj\tConditional on other
+        agreements being upheld. ","adj\t(sports or games) That resulted in a tie.
+        ","adj\tProvided for use by an employer for as long as one is employed, often
+        with restrictions on the conditions of use. ","adj\t(archaeology) Having walls
+        that are connected in a few places by a single stone overlapping from one
+        wall to another. ","adj\t(philately) A cover having a stamp where the postmark
+        cancellation overlaps the stamp. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:09 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tilde
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:09 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '535'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - a9dcf3dd17504a1d8fc7f0fd2992ca9b93c6df2bb06d87b3600361674b293c27
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sid29yZCI6InRpbGRlIiwic2NvcmUiOjIxNDc0ODM2NDcsInRhZ3MiOlsicXVlcnkiLCJzcGVsbGNvcjp0aWRlIiwic3BlbGxjb3I6dGlsZSIsInNwZWxsY29yOndpbGRlIiwiZjowLjEwMTEwOSJdLCJkZWZzIjpbIm5cdFRoZSBncmFwaGVtZSBvZiBjaGFyYWN0ZXIgfi4gIiwiblx0QSBkaWFjcml0aWNhbCBtYXJrICjLnCkgcGxhY2VkIGFib3ZlIGEgbGV0dGVyIHRvIG1vZGlmeSBpdHMgcHJvbnVuY2lhdGlvbiwgc3VjaCBhcyBieSBwYWxhdGFsaXphdGlvbiBpbiBTcGFuaXNoIHdvcmRzIG9yIG5hc2FsaXphdGlvbiBpbiBQb3J0dWd1ZXNlIHdvcmRzLiAiLCJuXHRBIHB1bmN0dWF0aW9uIG1hcmsgdGhhdCBpbmRpY2F0ZXMgcmFuZ2UgKGZyb20gYSBudW1iZXIgdG8gYW5vdGhlciBudW1iZXIpLiAiLCJuXHRNYXkgYmUgdXNlZCB0byByZXByZXNlbnQgYXBwcm94aW1hdGlvbiAobWF0aGVtYXRpY3MpLiAiLCJuXHQobG9naWMpIFRoZSBjaGFyYWN0ZXIgdXNlZCB0byByZXByZXNlbnQgbmVnYXRpb24sIHVzdWFsbHkgfiBvciDCrC4gIl19XQ==
+  recorded_at: Thu, 14 Mar 2024 18:08:09 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tile
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:09 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '858'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 4d0e6804cfadd4ae8004873f5d41b5d9dfb348cedc03d1e13a118e59fe8c7a41
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tile","score":2147483647,"tags":["query","f:3.542143"],"defs":["n\tA
+        regularly-shaped slab of clay or other material, affixed to cover or decorate
+        a surface, as in a roof-tile, glazed tile, stove tile, carpet tile, etc. ","n\t(computing)
+        A rectangular graphic. ","n\tAny of various flat cuboid playing pieces used
+        in certain games, such as dominoes, Scrabble, or mahjong. ","n\t(dated, informal)
+        A stiff hat. ","v\t(transitive) To cover with tiles. ","v\t(graphical user
+        interface) To arrange in a regular pattern, with adjoining edges (applied
+        to tile-like objects, graphics, windows in a computer interface). ","v\t(computing
+        theory) To optimize (a loop in program code) by means of the tiling technique.
+        ","v\t(Freemasonry) To seal a lodge against intrusions from unauthorised people.
+        ","v\tTo protect from the intrusion of the uninitiated. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:09 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tiled
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '225'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - ffced39d312581d2764480761ae5d7019a789a1661879aa3842203215ca60bf0
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tiled","score":2147483647,"tags":["query","f:0.886773"],"defs":["adj\tConstructed
+        from, or decorated with tiles. ","adj\t(Freemasonry) Of a lodge, having been
+        sealed against intrusions from unauthorised people. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:10 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=till
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1119'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - cfbc1d2b740564235ea951f75b21481429cd148d1665294aa266fbb5ec6147ca
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"till","score":2147483647,"tags":["query","f:19.200481"],"defs":["n\tA
+        cash register. ","n\tA removable box within a cash register containing the
+        money. ","n\tThe contents of a cash register, for example at the beginning
+        or end of the day or of a cashier''s shift. ","n\tA cash drawer in a bank,
+        used by a teller. ","n\t(obsolete) A tray or drawer in a chest. ","v\t(transitive)
+        To develop so as to improve or prepare for usage; to cultivate (said of knowledge,
+        virtue, mind etc.). ","v\t(transitive) To work or cultivate or plough (soil);
+        to prepare for growing vegetation and crops. ","v\t(intransitive) To cultivate
+        soil. ","v\t(obsolete) To prepare; to get. ","n\tglacial drift consisting
+        of a mixture of clay, sand, pebbles and boulders ","n\t(dialect) manure or
+        other material used to fertilize land ","n\tA vetch; a tare. ","n\tA placename
+        ","n\t(uncountable) A river in Northumberland, England, United Kingdom, tributary
+        to the Tweed. ","n\t(uncountable) A river in Wiltshire, England, United Kingdom
+        ","n\t(uncountable) A river in Lincolnshire, England, United Kingdom ","n\t(countable)
+        A surname. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:10 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tilled
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '108'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 244cc1333fd34cc387f102cc4645b90e5df757c66189e2b033372e101813839c
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tilled","score":2147483647,"tags":["query","f:0.540652"],"defs":["adj\tploughed
+        or cultivated "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:11 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tilt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1397'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 90c12ea154ac06cd7e3092803c9f7fcce072e4edeb42e780cd6129855e8fd1da
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tilt","score":2147483647,"tags":["query","f:2.873716"],"defs":["v\t(transitive)
+        To slope or incline (something); to slant. ","v\t(intransitive) To be at an
+        angle. ","v\t(intransitive, jousting) To charge (at someone) with a lance.
+        ","v\t(transitive) To point or thrust a weapon at. ","v\t(transitive) To point
+        or thrust (a weapon). ","v\tTo forge (something) with a tilt hammer. ","v\t(pinball,
+        of a machine) To intentionally let the ball fall down to the drain by disabling
+        flippers and most targets, done as a punishment to the player when the machine
+        is nudged too violently or frequently. ","v\t(originally poker, video games,
+        chess, slang) To enter a state of frustration and worsened performance resulting
+        from a series of losses. ","n\tA slope or inclination. ","n\tThe inclination
+        of part of the body, such as backbone, pelvis, head, etc. ","n\t(photography)
+        The controlled vertical movement of a camera, or a device to achieve this.
+        ","n\tA jousting contest. (countable) ","n\tAn attempt at something, such
+        as a tilt at public office. ","n\tA thrust, as with a lance. ","n\tA tilt
+        hammer. ","n\t(uncountable, poker, video games, chess, slang) A state of frustration
+        and worsened performance resulting from a series of losses. ","n\tA canvas
+        covering for carts, boats, etc. ","n\tAny covering overhead; especially, a
+        tent. ","v\t(transitive) To cover with a tilt, or awning. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:11 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tilted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '138'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - d1c350236808ec72bfb228624453a74845b4d41dbe6708cc8de1c8f45829aec3
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tilted","score":2147483647,"tags":["query","f:2.854792"],"defs":["adj\tOf
+        a vehicle, fitted with a tilt (canvass covering). "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:11 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=title
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:12 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1219'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 7a90e13f720bfac1b4fe7381b27a2d0eec74d3550549cf56a94c66912306883d
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"title","score":2147483647,"tags":["query","f:46.774375"],"defs":["n\tAn
+        appellation given to a person or family to signify either veneration, official
+        position, social rank, the possession of assets or properties, or a professional
+        or academic qualification. See also Category:Titles ","n\t(property law) Legal
+        right to ownership of a property; a deed or other certificate proving this.
+        ","n\tIn canon law, that by which a beneficiary holds a benefice. ","n\tA
+        church to which a priest was ordained, and where he was to reside. ","n\tThe
+        name of a book, film, musical piece, painting, or other work of art. ","n\tA
+        publication. ","n\tA section or division of a subject, as of a law or a book.
+        ","n\t(chiefly in the plural) A written title, credit, or caption shown with
+        a film, video, or performance. ","n\t(bookbinding) The panel for the name,
+        between the bands of the back of a book. ","n\tThe subject of a writing; a
+        short phrase that summarizes the entire topic. ","n\tA division of an act
+        of law ","n\t(sports) The recognition given to the winner of a championship
+        in sports. ","n\t(law, formal) A long title. ","n\t(law, informal) A short
+        title. ","v\t(transitive) To assign a title to; to entitle. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:12 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=titled
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:12 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '178'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - cf421c8d31efa7d0459018048c2f95848f97c991389125b9c6e9b89cd96f29f8
+    body:
+      encoding: UTF-8
+      string: '[{"word":"titled","score":2147483647,"tags":["query","f:3.258438"],"defs":["adj\tBearing
+        a title. ","adj\tSpecifically, having a title of nobility; belonging to the
+        peerage. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:12 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tittle
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '430'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - b49506f1eec389a22474264f2bcc5ed90bcb479fb4ab52ed1d1298b178c4c8ea
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tittle","score":2147483647,"tags":["query","spellcor:title","spellcor:little","f:0.282202"],"defs":["n\t(typography)
+        Any small dot, stroke, or diacritical mark, especially if part of a letter,
+        or if a letter-like abbreviation; in particular, the dots over the Latin letters
+        i and j. ","n\t(by extension) A small, insignificant amount (of something);
+        a modicum or speck. ","v\t(Scotland) To chatter. ","n\tA surname. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:13 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tugged
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '657'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 129015f749be3a490848715ea36f735c2bbdc3385e371812ff85f1e97e7aec44
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tugged","score":2147483647,"tags":["query","f:1.355139"],"defs":["v\t(transitive)
+        To pull or drag with great effort. ","v\t(transitive) To pull hard repeatedly.
+        ","v\t(transitive) To tow by tugboat. ","v\t(slang, transitive, intransitive)
+        To masturbate. ","n\tA sudden powerful pull. ","n\t(nautical) A tugboat. ","n\t(obsolete)
+        A kind of vehicle used for conveying timber and heavy articles. ","n\tA trace,
+        or drawing strap, of a harness. ","n\tA dog toy consisting of a rope, often
+        with a knot in it. ","n\t(mining) An iron hook of a hoisting tub, to which
+        a tackle is affixed. ","n\t(slang) An act of male masturbation. "],"defHeadword":"tug"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:13 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tulle
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '233'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 76ff88b8c0d5a4f4c7aaff242968542612ab155ae86fd6704bd0d8a01714165c
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sid29yZCI6InR1bGxlIiwic2NvcmUiOjIxNDc0ODM2NDcsInRhZ3MiOlsicXVlcnkiLCJmOjAuMTcwNTE4Il0sImRlZnMiOlsiblx0QSBraW5kIG9mIHNpbGsgbGFjZSBvciBsaWdodCBuZXR0aW5nLCB1c2VkIGZvciBjbG90aGluZywgdmVpbHMsIGV0Yy4gIiwiblx0QSB0b3duLCB0aGUgY2FwaXRhbCBvZiB0aGUgQ29ycsOoemUgZGVwYXJ0bWVudCwgTm91dmVsbGUtQXF1aXRhaW5lLCBGcmFuY2UuICJdfV0=
+  recorded_at: Thu, 14 Mar 2024 18:08:13 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tutee
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '104'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 60009ae5958431eae89e3c29f60f56cc3ef65700e823c6c8c016384f61d8e917
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tutee","score":2147483647,"tags":["query","f:0.039481"],"defs":["n\tA
+        student of a tutor. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:14 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tutted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '151'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 70c93d21e05831e4117a319c419cde3df72609ab5aff6aeee4e6ca5fbd4a1368
+    body:
+      encoding: UTF-8
+      string: '[{"word":"tutted","score":2147483647,"tags":["query","spellcor:gutted","spellcor:tufted","f:0.032508"],"defs":["n\tA
+        surname. "],"defHeadword":"tutt"}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:14 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tutti
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '361'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 91a894ae1dced4186bb4bea21ac1bcea24ae97938dda85aa7b747534b18478b4
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tutti","score":2147483647,"tags":["query","f:0.327689"],"defs":["adv\t(music)
+        All together. Indicates that the remainder of a group should join in playing
+        after a solo or other passage with a reduced number of voices. ","adj\t(music)
+        All together; with all playing at once. ","n\t(music) A passage in which all
+        members of an orchestra are playing "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:15 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=tutu
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '313'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 975ed38dcd82aeac274d5bc80bd1dd8c5757cfe408650da331d9a4ff57398079
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"tutu","score":2147483647,"tags":["query","f:0.307659"],"defs":["n\tA
+        ballet skirt made of layered stiff but light netting. ","n\t(New Zealand)
+        Any of the genus Coriaria of shrubs and trees found in New Zealand. ","v\t(New
+        Zealand, childish) to fiddle or mess around with something. ","n\tA surname.
+        "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:15 GMT
+- request:
+    method: get
+    uri: https://api.datamuse.com/words?max=1&md=fd&qe=sp&sp=utile
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:08:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '286'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-transform, max-age=86400
+      Vary:
+      - Accept-Encoding
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 05cb17ebae1919489a6268f0e243c40959e763bf7a40760c3c0d7753a77c3e02
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"word":"utile","score":2147483647,"tags":["query","spellcor:futile","spellcor:tile","f:0.169174"],"defs":["adj\t(now
+        rare) Useful. ","n\t(economics) A theoretical unit of measure of utility,
+        for indicating a supposed quantity of satisfaction derived from an economic
+        transaction. "]}]'
+  recorded_at: Thu, 14 Mar 2024 18:08:15 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-0125","messages":[{"role":"user","content":"Provide
+        definition hints for the following words: delete, deleted, delt, diet, dieted,
+        digit, dilute, diluted, duet, duetted, edit, edited, elite, etude, gelt, gilt,
+        glut, glute, glutei, glutted, guilt, guilted, gullet, gutted, legit, lilt,
+        lilted, lite, little, lute, teed, tell, tide, tided, tidied, tied, tilde,
+        tile, tiled, till, tilled, tilt, tilted, title, titled, tittle, tugged, tulle,
+        tutee, tutted, tutti, tutu, utile\n Respond in JSON format. There should be
+        an outer object containing an array with the key \"word_hints\". The array
+        should contain an object for each word. The keys in this object should be
+        \"word\", which contains the word itself, and \"hint\", which contains your
+        hint. An example of this format would be: {word_hints:[{word:\"aioli\",hint:\"Hint
+        text for ''aioli''\"},{word:\"alit\",hint:\"Hint text for ''alit''\"}]}\n\nEach
+        hint should be one or two sentences and should not contain any form of the
+        word you''re providing a hint for, or any word or phrase that the submitted
+        word can be an abbreviation for. For example, the hint for \"allay\" should
+        not contain \"allay,\" \"allaying,\" \"allays,\" etc. The hints should focus
+        on the meaning of the word, although hints about the pronunciation are also
+        acceptable. These hints are designed to replicate the user-provided hints
+        that users provide on the New York Times Spelling Bee forums for words in
+        that day''s Spelling Bee puzzle.\n\nPlease respond only with the JSON object
+        and nothing else.\n"}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Mar 2024 18:27:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      Openai-Processing-Ms:
+      - '16795'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59621'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 379ms
+      X-Request-Id:
+      - a796a32283a8b42846d73c593f0830a0541e0bff129949bcb9f85a569a6a9d2e
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=E2XCEjipFrFemn1eIlwKMkCiZpk1dJE2GYRCi4MBtws-1710440831-1.0.1.1-rK1llo7e8Ex_uPMmWjOWaTQ8CzbPlelnpZGSVU6GyM0XUnXbRcgCmTqpLZdLDh95XCzIB8UzXbCag.yGaMh9xw;
+        path=/; expires=Thu, 14-Mar-24 18:57:11 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=jrMBgT8OmBi8a3StTPdGBBRWDfvAIiqlL8yZBatZn8Q-1710440831686-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 864650934d40ec54-SEA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-92k51T12049uRwwrIWl8vCWAQKD5z",
+          "object": "chat.completion",
+          "created": 1710440815,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\n  \"word_hints\": [\n    {\"word\": \"delete\", \"hint\": \"To remove or erase something\"},\n    {\"word\": \"deleted\", \"hint\": \"Something that has been removed or erased\"},\n    {\"word\": \"delt\", \"hint\": \"A triangular muscle in the human body\"},\n    {\"word\": \"diet\", \"hint\": \"A specific food regimen aimed at losing weight or improving health\"},\n    {\"word\": \"dieted\", \"hint\": \"Engaged in a specific food regimen\"},\n    {\"word\": \"digit\", \"hint\": \"A single number from 0 to 9\"},\n    {\"word\": \"dilute\", \"hint\": \"To make a liquid thinner or weaker by adding water or another solvent\"},\n    {\"word\": \"diluted\", \"hint\": \"Made thinner or weaker by adding water or another solvent\"},\n    {\"word\": \"duet\", \"hint\": \"A musical composition for two performers or voices\"},\n    {\"word\": \"duetted\", \"hint\": \"Performed a musical composition for two performers or voices\"},\n    {\"word\": \"edit\", \"hint\": \"To make corrections or changes to a document or text\"},\n    {\"word\": \"edited\", \"hint\": \"Made corrections or changes to a document or text\"},\n    {\"word\": \"elite\", \"hint\": \"A select group that is superior in terms of ability or qualities\"},\n    {\"word\": \"etude\", \"hint\": \"A musical composition designed to improve a specific technical skill\"},\n    {\"word\": \"gelt\", \"hint\": \"Yiddish for money, often used for chocolate coins during Hanukkah\"},\n    {\"word\": \"gilt\", \"hint\": \"Covered in a thin layer of gold or gold paint\"},\n    {\"word\": \"glut\", \"hint\": \"An excessive supply or amount of something\"},\n    {\"word\": \"glute\", \"hint\": \"Short for gluteus, referring to muscles in the buttocks\"},\n    {\"word\": \"glutei\", \"hint\": \"Plural form of gluteus, referring to muscles in the buttocks\"},\n    {\"word\": \"glutted\", \"hint\": \"Consumed to excess, often in the context of food or drink\"},\n    {\"word\": \"guilt\", \"hint\": \"A feeling of responsibility or remorse for doing something wrong\"},\n    {\"word\": \"guilted\", \"hint\": \"Made someone feel responsible or remorseful for something wrong\"},\n    {\"word\": \"gullet\", \"hint\": \"The passage by which food passes from the mouth to the stomach\"},\n    {\"word\": \"gutted\", \"hint\": \"Emptied or destroyed the interior of something\"},\n    {\"word\": \"legit\", \"hint\": \"Informal term for legitimate or authentic\"},\n    {\"word\": \"lilt\", \"hint\": \"A cheerful or lively rhythm in music or speech\"},\n    {\"word\": \"lilted\", \"hint\": \"Spoke or sang with a cheerful or lively rhythm\"},\n    {\"word\": \"lite\", \"hint\": \"Informal term for light or low in fat or calories\"},\n    {\"word\": \"little\", \"hint\": \"Small in size, amount, or degree\"},\n    {\"word\": \"lute\", \"hint\": \"A musical instrument with strings that are plucked or strummed\"},\n    {\"word\": \"teed\", \"hint\": \"Placed a golf ball on a small peg before hitting it\"},\n    {\"word\": \"tell\", \"hint\": \"To communicate information or a story to someone\"},\n    {\"word\": \"tide\", \"hint\": \"The regular rise and fall of the ocean caused by gravitational forces\"},\n    {\"word\": \"tided\", \"hint\": \"Managed to survive or successfully deal with a difficult situation\"},\n    {\"word\": \"tidied\", \"hint\": \"Made clean and organized by putting things in their proper places\"},\n    {\"word\": \"tied\", \"hint\": \"Connected or fastened together with a knot or other device\"},\n    {\"word\": \"tilde\", \"hint\": \"A symbol (~) used in writing to indicate approximation or negation\"},\n    {\"word\": \"tile\", \"hint\": \"A flat piece of baked clay or other material used in covering surfaces\"},\n    {\"word\": \"tiled\", \"hint\": \"Covered a surface with flat pieces of baked clay or other material\"},\n    {\"word\": \"till\", \"hint\": \"A cash register or drawer for money\"},\n    {\"word\": \"tilted\", \"hint\": \"Moved or positioned at an angle\"},\n    {\"word\": \"title\", \"hint\": \"A word or phrase that gives a name to something such as a book or movie\"},\n    {\"word\": \"titled\", \"hint\": \"Given a specific title or name\"},\n    {\"word\": \"tittle\", \"hint\": \"A small distinguishing mark or point, such as the dot over an 'i'\"},\n    {\"word\": \"tugged\", \"hint\": \"Pulled or dragged something with a quick, strong movement\"},\n    {\"word\": \"tulle\", \"hint\": \"A fine, delicate netting fabric used in veils, tutus, and decorations\"},\n    {\"word\": \"tutee\", \"hint\": \"A person who is being tutored or taught\"},\n    {\"word\": \"tutted\", \"hint\": \"Made a disapproving noise by exhaling abruptly\"},\n    {\"word\": \"tutti\", \"hint\": \"In music, a passage for all performers in a symphony or orchestra\"},\n    {\"word\": \"tutu\", \"hint\": \"A fluffy, short skirt worn by ballerinas\"},\n    {\"word\": \"utile\", \"hint\": \"Useful or serving a practical purpose\"},\n    {\"word\": \"tilled\", \"hint\": \"hint\"}, \n    {\"word\": \"tilt\", \"hint\": \"hint\"}\n  ]  \n}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 387,
+            "completion_tokens": 1206,
+            "total_tokens": 1593
+          },
+          "system_fingerprint": "fp_4f0b692a78"
+        }
+  recorded_at: Thu, 14 Mar 2024 18:27:11 GMT

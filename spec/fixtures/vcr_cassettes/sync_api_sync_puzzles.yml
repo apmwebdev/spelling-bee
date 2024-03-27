@@ -1,0 +1,117 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: <SYNC_API_URL>/recent_puzzles/1?limit=3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - <REDACTED>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.24.0 (Ubuntu)
+      Date:
+      - Wed, 27 Mar 2024 10:20:57 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Etag:
+      - W/"e7df57ac2c13cbacd8eda9af564f7853"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.086430'
+      Vary:
+      - Accept, Origin
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"puzzle_data":{"id":1,"date":"2018-05-09","center_letter":"w","outer_letters":["a","h","o","r","t","y"],"origin_type":"SbSolverPuzzle","origin_id":1,"created_at":"2023-07-19T05:46:49.384Z","updated_at":"2023-11-20T01:14:22.024Z","excluded_words":["arow","harrowtry","hartwort","yowt","ratwa","tarrow","tawa","worrywort","wowt","wray","wrathy","wraw","wroot","wrothy","wroth","woohoo","arawa","atwo","awat","aworry","aworth","yawy","yawroot","yhwh","orrow","ottawa","ryotwar","ryotwary","rowy","rowt","rowth","rowty","trow","trowth","tway","twat","waar","wahwah","wayao","waywort","waratah","warray","warrty","warth","wartwort","wath","wawa","wawah","whar","wharry","wharrow","whart","whata","whyo","whoo","whoot","whory","whorry","whort","woyaway","arrowy","hoarwort","oathworthy","thawy","thow","thowt","thraw","thrawart","throatwort","throwwort","toywort","toothwort","towaway","towy"]},"origin_data":{"id":1,"sb_solver_id":"1","created_at":"2023-07-19T05:46:49.358Z","updated_at":"2023-07-19T05:46:49.358Z"},"answer_words":[["arrow","A
+        pointed weapon that is shot from a bow."],["arrowroot","A starchy substance
+        extracted from the roots of a tropical plant and used in cooking."],["athwart","In
+        a position that is transverse to the longitudinal axis."],["away","Not present
+        or in a different location."],["awry","Off course or twisted to one side."],["harrow","A
+        farming implement used to level the soil or break up clods."],["thataway","In
+        that direction, pointing to a specific place."],["thaw","To change from a
+        frozen to a liquid state."],["throw","To propel something with force through
+        the air."],["throwaway","Something intended to be discarded after use."],["thwart","To
+        prevent someone from accomplishing their goals."],["wahoo","A type of shrub
+        or tree with colorful fruit."],["wart","A small, hard growth on the skin."],["warty","Covered
+        in small, hard growths on the skin."],["wary","Being cautious or watchful."],["watt","A
+        unit of power."],["what","Used to ask about something unknown or not recalled."],["whoa","Used
+        to command a horse to stop."],["woot","Expression of excitement or joy."],["worry","To
+        be anxious about something."],["worrywart","A person who tends to worry excessively."],["wort","A
+        plant used in making beer or medicine."],["worth","Having value or importance."],["worthy","Deserving
+        of respect or admiration."],["wrath","Strong anger or rage."],["yarrow","A
+        plant with aromatic leaves and small white flowers."]]},{"puzzle_data":{"id":2,"date":"2018-05-10","center_letter":"i","outer_letters":["c","f","m","n","o","r"],"origin_type":"SbSolverPuzzle","origin_id":2,"created_at":"2023-07-19T05:46:50.529Z","updated_at":"2023-11-20T01:14:22.238Z","excluded_words":["ciconiform","ciconiiform","cimiciform","cincinni","cion","circ","cirriform","coccic","cocciform","coccin","cocin","coconino","cocorico","cominform","comino","concio","concion","crocin","croconic","imino","immi","nici","niff","nific","nincom","ninon","noconfirm","nomic","nomoi","noncomic","cnicin","confirmor","coni","conin","corcir","coriin","corin","cornic","cornific","corniform","cornin","coroniform","coronion","cric","crim","crimini","crin","crinion","forficiform","formin","forniciform","frim","incoffin","inconcinn","inconfirm","inconform","incor","incorr","incr","infin","iniomi","inion","inro","mico","micrococci","micrococcic","micrococcocci","micromicron","mimi","mimir","mincio","minimi","nonic","nonion","nonionic","nonironic","nonoic","noric","norimon","offic","officio","ficiform","ficin","fico","fifo","fini","finific","finn","finnic","finnoc","fino","fiorin","firn","foin","ioni","mino","miri","mirific","miro","moio","moir","momi","monic","monnion","monocormic","monoformin","moric","moriform","morin","morion","moriori","morrion","omni","omnific","omniform","oncin","orcin","oriconic","oriform","orion","ricinic","ricininic","riffi","rifi","rimiform","rincon","riroriro","roin","romic","ronin","ronion","ronni","rori","roric","cocci","coir","nori","mirin"]},"origin_data":{"id":2,"sb_solver_id":"2","created_at":"2023-07-19T05:46:50.527Z","updated_at":"2023-07-19T05:46:50.527Z"},"answer_words":[["cirri","Thin,
+        threadlike projections."],["coffin","A box used for burying a dead body."],["coif","A
+        hair accessory or hat worn by women."],["coin","A flat, round piece of metal
+        used as money."],["comic","Relating to or characteristic of comics or comic
+        strips, often involving humor or satire."],["confirm","To establish the truth
+        or correctness of something."],["conic","Having the form of a cone."],["coniform","Having
+        a cone-like shape."],["croci","Plural of crocus, a type of flowering plant."],["firm","Having
+        a solid or unyielding structure."],["foci","Plural of focus, the center of
+        attention."],["formic","Relating to or containing formic acid."],["icon","A
+        symbol or image that represents something."],["iconic","Widely recognized
+        and admired."],["infirm","Not physically or mentally strong."],["info","Short
+        for information."],["inform","To give knowledge or information."],["ionic","Relating
+        to ions."],["iron","A metallic element with the symbol Fe."],["ironic","Using
+        words to convey a meaning that is opposite of the literal sense."],["micro","Indicating
+        a factor of one millionth."],["microform","A reduced-size photographic reproduction
+        of printed material."],["micron","A unit of length equal to one millionth
+        of a meter."],["miff","A minor annoyance or offense."],["mimic","To imitate
+        or copy someone''s actions or speech."],["mini","Small or miniature in size."],["minim","The
+        smallest unit of liquid measurement."],["minion","A follower or underling
+        of a powerful person."],["minor","Not of legal age or significance."],["mirror","A
+        reflective surface that shows a reversed image."],["moronic","Extremely foolish
+        or stupid."],["noir","A style of film or literature characterized by cynicism
+        and moral ambiguity."],["omicron","The fifteenth letter of the Greek alphabet."],["onion","A
+        bulb with a strong odor and pungent taste."],["ricin","A highly toxic protein
+        found in castor beans."],["riff","A short, catchy musical phrase."]]},{"puzzle_data":{"id":3,"date":"2018-05-11","center_letter":"c","outer_letters":["e","f","h","i","l","y"],"origin_type":"SbSolverPuzzle","origin_id":3,"created_at":"2023-07-19T05:46:51.658Z","updated_at":"2023-11-20T01:14:22.473Z","excluded_words":["ceil","ceile","cele","ecce","ecch","eccl","hech","cecil","cecile","cecily","eche","echelle","elchee","elec","elechi","elfic","ellice","fecche","hilch","hylic","cicely","chee","chich","chichili","chiel","chih","chil","chile","chyle","chylify","chylific","chilli","chillily","cycl","cyclicly","cilice","cill","cleche","clechee","clechy","clee","cleech","clich","cliffy","felicify","felicific","fellic","ficche","fice","fyce","ficelle","filicic","flche","fleche","fleech","fleecily","flic","ycie","yecchy","yechy","yeech","ilicic","leche","lycee","lich","lych","lichee","lichi","fleecy"]},"origin_data":{"id":3,"sb_solver_id":"3","created_at":"2023-07-19T05:46:51.647Z","updated_at":"2023-07-19T05:46:51.647Z"},"answer_words":[["cell","The
+        basic structural unit of living organisms."],["celli","Plural of cello, a
+        large stringed instrument."],["chef","A professional cook in a restaurant
+        or hotel."],["chic","Stylish and fashionable."],["chichi","Pretentious or
+        overly sophisticated."],["chicle","The sap of a tropical tree used to make
+        chewing gum."],["chicly","In a stylish or fashionable manner."],["chief","The
+        leader or head of a group."],["chiefly","Mainly or primarily."],["chili","A
+        spicy stew made with chili peppers."],["chill","To relax or cool down."],["chilly","Unpleasantly
+        cold."],["clef","A symbol at the beginning of a musical staff indicating the
+        pitch of the notes."],["cliche","An overused phrase or idea."],["cliff","A
+        high, steep rock face."],["cycle","A series of events that repeat in a regular
+        order."],["cyclic","Occurring in cycles or regularly."],["fiche","A flat,
+        transparent sheet used in microfiche."],["filch","To steal something in a
+        sly or sneaky way."],["fleece","The woolly coat of a sheep."],["icicle","A
+        long, thin spike of ice formed by dripping water."],["icily","In a cold or
+        unfriendly manner."],["lech","To act in a lustful or lecherous way."],["leech","A
+        blood-sucking worm or person who extorts from others."],["lice","Plural of
+        louse, a parasitic insect."],["lychee","A small, sweet fruit with a rough
+        red shell."],["yecch","An exclamation of disgust or revulsion."],["yech","Used
+        to express strong dislike or aversion."]]}],"last_id":4}'
+  recorded_at: Wed, 27 Mar 2024 10:20:57 GMT
+recorded_with: VCR 6.2.0
