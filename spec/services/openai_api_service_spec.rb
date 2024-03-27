@@ -15,10 +15,6 @@ require "rails_helper"
 RSpec.describe OpenaiApiService do
   include_context "openai_base"
 
-  # before(:all) do
-  #   DatabaseCleaner.truncate_tables
-  # end
-
   describe "#send_request" do
     context "when submitting invalid content" do
       it "raises a TypeError when content is not a string", :aggregate_failures do

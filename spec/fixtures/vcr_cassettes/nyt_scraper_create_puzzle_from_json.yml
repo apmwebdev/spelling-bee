@@ -33,7 +33,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - f41ab0cb65b3753329caff218337f2d794fd3981e3922c81ec2d3aa2eb797901
+      - 538d362ac7f30b880f5d13737002a407ce3325b479ebbf2c1cdfe49ea2403ce8
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"guilted","score":2147483647,"tags":["query","spellcor:quilted","f:0.002180"],"defs":["n\tResponsibility
@@ -76,7 +76,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - cc3bc9214b61bdef771131999e1c48d4d176de912b5c80882d9846022b133b21
+      - bc38aa6b5a12a90401ccfed435a5fc7de93a29769cad28117952726c7a94dae0
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"delete","score":2147483647,"tags":["query","f:4.794068"],"defs":["v\tTo
@@ -125,7 +125,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 1885f619a4d1394f1766823f86a5a51b7afadc24665e5776b018ad664b63428e
+      - d820eb67e740839dd048e529c003dc86fc005b81ef3edba9490ea00d07adda6e
     body:
       encoding: UTF-8
       string: '[{"word":"deleted","score":2147483647,"tags":["query","f:3.609300"],"defs":["adj\tHaving
@@ -165,7 +165,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 122ff908dd43ebf2e0e97f57525050081f818f412d6c76675e210260cecaa428
+      - '038621543f9e76b5b55d6c4e47ab06f0ff3905612497328db8bfe904860ae025'
     body:
       encoding: UTF-8
       string: '[{"word":"delt","score":2147483647,"tags":["query","f:0.041721"],"defs":["n\t(bodybuilding,
@@ -204,7 +204,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 50e135785321d4ce7f8de5d4d988cade92ce9066e2432d22ba530c0e46ed0d1b
+      - f8645bfb8845acbd02505a4d3667e34c00d5f65682ec95d77b3768e415978cef
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"diet","score":2147483647,"tags":["query","f:23.496553"],"defs":["n\tThe
@@ -258,7 +258,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - cd287ce237734c70b8a9988c619c71c0c6d4f043ff2b13facb60cde93652b48c
+      - 47758be6250c373285de0a59d31b8ea25130d8cd13f3fa2a1f9c3c7285aff27c
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"dieted","score":2147483647,"tags":["query","spellcor:dieter","f:0.054389"],"defs":["n\tThe
@@ -312,7 +312,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 9ca6f08301dbfd42b753d885cfda138a6868d6bea64d20a9d6a3ac2a93e5f6a6
+      - 35c244cab0877778339d61dec7a1ddd357ac7280b834695933d19a35159e8e25
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -351,7 +351,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 3ab66bac7bea6ebfd18e7cbf5ae06cc52d247388c8ea6669144b462af24ebfe9
+      - eb3f55056a3e8954fbeb8dac5e5875e4866d6e6259f19a7674fa71d2c7549612
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"dilute","score":2147483647,"tags":["query","f:4.114071"],"defs":["v\t(transitive)
@@ -397,7 +397,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7f39ab3d9c5ddafa5d0e9b9aee79be9cf5efa75ec02ea9de2f6aef60aafd8a31
+      - d52142137d75b319c2c464151fb5c8a3202a73c489fd7344da5b007579d2fed2
     body:
       encoding: UTF-8
       string: '[{"word":"diluted","score":2147483647,"tags":["query","f:3.412184"],"defs":["adj\tThat
@@ -436,7 +436,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - c99b28d096597c5df715a8637c4cd987e38a2cc536546a816e64dcce6dbc02ee
+      - 3265f33b8ee91b0c6a4148db30ebdf457789f9995f8f0760cd3f3813f861bf77
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"duet","score":2147483647,"tags":["query","f:0.721512"],"defs":["n\t(music)
@@ -481,7 +481,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a2011476078c1d757878c044a8c3ad89e7b5925ca41fb5628f5632510f4205dd
+      - 630bcfa7bf0fc3952762073efebb1c26c40791c2be00830911c95c5ec1f83931
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"duetted","score":2147483647,"tags":["query","f:0.001883"],"defs":["n\t(music)
@@ -526,7 +526,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 12160a22622fe005d106ce8bd4720f973b52300b558716783adc72d564901fd4
+      - 80e1de1e46d9d380332b3cbefe61a0d9cb1fc000fd9b90618b487df3c370adab
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"edit","score":2147483647,"tags":["query","f:6.756510"],"defs":["n\tA
@@ -578,7 +578,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 4dc58f8777ded33972616da99c048f0376000cdc54571d8c1025a42ae2ca541b
+      - 0c87701014b5585d536c7e8fbf0a600edb2a6cdc61fc7b1ac07e077cb6c814ee
     body:
       encoding: UTF-8
       string: '[{"word":"edited","score":2147483647,"tags":["query","f:29.764331"],"defs":["adj\tHaving
@@ -617,7 +617,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5ed5695a3a60208df614aea763bbcc7a72bd05f849a4c1e26f20f2bbee85ddf1
+      - c0bf270aa9aca3fb2a9d33c847512c8b0c692f230c351b2e21b5931585be9152
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"elite","score":2147483647,"tags":["query","f:14.172734"],"defs":["adj\tOf
@@ -660,7 +660,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 477d3374f39cdfaaf2b974af5375e419befcb4d99af4d88e2e7b54355e4c01d8
+      - bca1131db7a3c08515afd9dbefb12416ccafd29f5a78651406d50761d2bdb777
     body:
       encoding: UTF-8
       string: '[{"word":"etude","score":2147483647,"tags":["query","f:1.320141"],"defs":["n\t(music)
@@ -700,7 +700,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 449ae72c37f2ec1b8c58e6b8ad86253019957f306115e963c4ac110a2a7cd1b3
+      - c3c350c3b704dbd6cd785127c090df45c7ab56c835f1dc0d0dc38574ac55e5c6
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gelt","score":2147483647,"tags":["query","f:0.036825"],"defs":["n\t(rare)
@@ -744,7 +744,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - dcc5f1e70f651832c1487f7efa269cb1201ba91f6b07a1f3538122ff8711e589
+      - be6bea45a14e3a23fdb4c7b6befc4243448b1d4933cb6716121e73e1b6ebd8a6
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gilt","score":2147483647,"tags":["query","f:1.626718"],"defs":["n\t(uncountable)
@@ -788,7 +788,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 8213e9eb5a520f2da26c2a25473b14eaf4a7377e2d43376261e5dcc410afad57
+      - cd6dd02ea5a38aa33982e592d827a928d7703d8215e8ed233241622fbd686aa8
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"glut","score":2147483647,"tags":["query","f:0.505322"],"defs":["n\tAn
@@ -837,7 +837,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 73f6ae2dd0c8ce2e4386ebf39613007f81b05c2d9e8c24c454a9a54324116ea2
+      - 6440f985a7f8076469b027eb24b84bed079cbf0f0844737e2f50b29dbad900b5
     body:
       encoding: UTF-8
       string: '[{"word":"glute","score":2147483647,"tags":["query","spellcor:glue","spellcor:glut","spellcor:flute","spellcor:lute","spellcor:elute","spellcor:glume","spellcor:clute","f:0.003889"],"defs":["n\t(exercise,
@@ -876,7 +876,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0ca3d8a2f5d217db2cdd63723dec7713f235074167453eb52e4a40a769c67c6c
+      - ebaea0e1e839f5551d63b0f89f278c1249ea295134927449ac670b5f4908f85a
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"glutei","score":2147483647,"tags":["query","spellcor:gluten","f:0.016803"],"defs":["n\t(anatomy)
@@ -918,7 +918,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - f18cc68055fecab82574ec7235a6b85a95431dd14a177eed0b87270c720e25ca
+      - ca385ae830cc2f43eda837b4a06f6fabdbabe7c21005a478e89dd135ee45c8a8
     body:
       encoding: UTF-8
       string: '[{"word":"glutted","score":2147483647,"tags":["query","f:0.152513"],"defs":["adj\texceeding
@@ -957,7 +957,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5bd23eb2b1403b1e53572f7c0163626afad8325e52aa336dd0a801664876b33f
+      - '080f1f26ec7f35b03c12bef22868690aeb74becb630deb36688da6cbd82610d0'
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"guilt","score":2147483647,"tags":["query","f:14.550245"],"defs":["n\tResponsibility
@@ -1000,7 +1000,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - b32a1590bf8e27407d28051e2ebf184aa2bd809289d835bc029bcaa7ba0286d3
+      - 41533cc65b46dcd4f02a39712e33fca245e04a21576fc45035a1944bf3434bee
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gullet","score":2147483647,"tags":["query","spellcor:bullet","f:0.259528"],"defs":["n\tThe
@@ -1044,7 +1044,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - b20dbe40c782ca5b3e2d822ea3c2da652976fd6de5bd0f38b7fa9af515bca81d
+      - 1a9bb247a7b93439031e33e41c243720877e7e6ebbd48bbce8dfd555b90f7ae7
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"gutted","score":2147483647,"tags":["query","f:0.471370"],"defs":["adj\t(not
@@ -1086,7 +1086,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 55e1f3cff96b936c86140c053cbb6154485c42a573df551b219898ebe1fe348c
+      - fa602704ddbec351b6d8b3b79b3905343a544790a7811e7b6aa3622e2a1d26dc
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"legit","score":2147483647,"tags":["query","f:0.118364"],"defs":["n\t(theater,
@@ -1131,7 +1131,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 840dd1e1729f98c71d191c1844433764dc77096d9d2193f5baf5a869ce2c957b
+      - 3bcff3956401c3905604da45b680cb85a1bcbc7511132cc70cd10f104d665ac4
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lilt","score":2147483647,"tags":["query","f:0.264630"],"defs":["v\tTo
@@ -1174,7 +1174,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - cb7c58a52ff6e0ead57ba9984532307e7f67ef9d3fd44f18bd4a7b2c061fa853
+      - 2e20411bec74a5f9488c5f501a06bcdf9f39f239749d282936d1899d1fc2c207
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lilted","score":2147483647,"tags":["query","spellcor:tilted","spellcor:listed","spellcor:wilted","spellcor:lifted","f:0.031474"],"defs":["v\tTo
@@ -1217,7 +1217,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - c0909e7e60fccd6e3711e903fcf6bf4cf3543a2d132c73726e133d3073f7b395
+      - fa266b101176d961c070bf5e06b688a069bd785057d0a4239779c6a05f592de3
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1256,7 +1256,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e210a2120ff5ad2b9227da12004c0ae69435009eb694ced743a795665d252177
+      - e3a23517ff3c98a16ac27f393a1d6d4ecab1cca091caa5edc53c79e87fc0473e
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"little","score":2147483647,"tags":["query","f:343.154023"],"defs":["adj\tSmall
@@ -1314,7 +1314,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 9c786a868e4f48f033a24118a486424e44603451cfe7fbe30e84a9bd6db07885
+      - 34284519f7f7d77033cf4d5e71be756e1373c356bf61aaa5bcf876aa75425d52
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"lute","score":2147483647,"tags":["query","f:0.990863"],"defs":["n\tA
@@ -1361,7 +1361,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ea5eae225b6624f25ec8cbbbd72e82a41f0b62809fbdb659470a8b2c7b99d4b9
+      - 9c37147337b8f6770b1e641061282c00a66f850838d779502be2891c139c999e
     body:
       encoding: UTF-8
       string: '[{"word":"teed","score":2147483647,"tags":["query","f:0.122030"],"defs":["n\tA
@@ -1400,7 +1400,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5ebb2fbd8527918f6a3edaafb493e6cb416ae47f5f55607d5aa947d7ed14fe41
+      - a54b695edaefa8a3043c422af7e087cb4aa327187bddec791aa293145cab3bd3
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tell","score":2147483647,"tags":["query","f:139.059245"],"defs":["v\t(transitive,
@@ -1458,7 +1458,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - b5331b0c17065ad4258b4a037e6614e8f642cd60230aeb96b38127c641900113
+      - 9dd26e6e9beb803c82303328ea4598158055af7fa99a65adc11fc0fb2a03a1f1
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tide","score":2147483647,"tags":["query","f:10.390002"],"defs":["n\tThe
@@ -1509,7 +1509,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 5665370380ab17e199ea2accb41437f2f4651a799d9e36c2342292f08d99d129
+      - a9ea70f04165d4c4a9f54df76717139e3e118ce6a26b613d24dce17166435f73
     body:
       encoding: UTF-8
       string: '[{"word":"tided","score":2147483647,"tags":["query","spellcor:tide","spellcor:tired","spellcor:tied","spellcor:timed","spellcor:sided","spellcor:tides","spellcor:aided","f:0.114285"],"defs":["adj\tAffected
@@ -1548,7 +1548,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 9021db76edd7f072f53aeee9efe9dacc84916fac78e4bb62fd9b3d76850e0a36
+      - 34939caefb5f541ebcf25aa355f77a85e3d03d4a70974ad3f8e9cc94408dd4a0
     body:
       encoding: UTF-8
       string: '[{"word":"tidied","score":2147483647,"tags":["query","f:0.231761"],"defs":["n\tOne
@@ -1587,7 +1587,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 506db57383b8f59bd42f6ca355b2eed9dbc41f466205f94af8a303fd8fe4c6eb
+      - 9409d796be5cb0923df1abc08fa51f83481f6899036a91843a1d7d1c1bbfa0b8
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tied","score":2147483647,"tags":["query","f:18.197568"],"defs":["adj\tClosely
@@ -1632,7 +1632,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 3895e5f1f7edbb0c02406a989aed993a9c6a360096abda2e7bd892c33c9c9d77
+      - a9dcf3dd17504a1d8fc7f0fd2992ca9b93c6df2bb06d87b3600361674b293c27
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1671,7 +1671,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7451137ec079c328650076aae23b5d21a617cfe46d5dc69b6d31a7e3a2876430
+      - 4d0e6804cfadd4ae8004873f5d41b5d9dfb348cedc03d1e13a118e59fe8c7a41
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tile","score":2147483647,"tags":["query","f:3.542143"],"defs":["n\tA
@@ -1719,7 +1719,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e91ee8a1d983249b59675f41d520ba7e61b8b3cf475438e09b58e7095c485657
+      - ffced39d312581d2764480761ae5d7019a789a1661879aa3842203215ca60bf0
     body:
       encoding: UTF-8
       string: '[{"word":"tiled","score":2147483647,"tags":["query","f:0.886773"],"defs":["adj\tConstructed
@@ -1759,7 +1759,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - dfa22b212b92694a4042a6be724c474d00198293cf7b69e46d7d65fbc389a415
+      - cfbc1d2b740564235ea951f75b21481429cd148d1665294aa266fbb5ec6147ca
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"till","score":2147483647,"tags":["query","f:19.200481"],"defs":["n\tA
@@ -1811,7 +1811,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 977fcb6ef5c5554a49e49aeed2625ed9f7f4663d0877a5034a106e2b9c994ea9
+      - 244cc1333fd34cc387f102cc4645b90e5df757c66189e2b033372e101813839c
     body:
       encoding: UTF-8
       string: '[{"word":"tilled","score":2147483647,"tags":["query","f:0.540652"],"defs":["adj\tploughed
@@ -1850,7 +1850,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 213cc640ffe4e4a3e381e8c9f58de7264b0efcd93b962a60618a613ea1390238
+      - 90c12ea154ac06cd7e3092803c9f7fcce072e4edeb42e780cd6129855e8fd1da
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tilt","score":2147483647,"tags":["query","f:2.873716"],"defs":["v\t(transitive)
@@ -1905,7 +1905,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a6481833076fc619ae4ae5502ad17beee1bfd7f8d06173636762e0324b516817
+      - d1c350236808ec72bfb228624453a74845b4d41dbe6708cc8de1c8f45829aec3
     body:
       encoding: UTF-8
       string: '[{"word":"tilted","score":2147483647,"tags":["query","f:2.854792"],"defs":["adj\tOf
@@ -1944,7 +1944,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - db1fe30d59a70cb1f6d4abd56a6145fa3b69deb816f546751532b55d4ce99995
+      - 7a90e13f720bfac1b4fe7381b27a2d0eec74d3550549cf56a94c66912306883d
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"title","score":2147483647,"tags":["query","f:46.774375"],"defs":["n\tAn
@@ -1997,7 +1997,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 801b39f06f42ad097c264e63c7a7ada0c95d519682548b811042be67f5221f1d
+      - cf421c8d31efa7d0459018048c2f95848f97c991389125b9c6e9b89cd96f29f8
     body:
       encoding: UTF-8
       string: '[{"word":"titled","score":2147483647,"tags":["query","f:3.258438"],"defs":["adj\tBearing
@@ -2037,7 +2037,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 95baca07cd2d4c67d9bccecf377a430956a3a0b94c36b89bc38226d55fd2a77d
+      - b49506f1eec389a22474264f2bcc5ed90bcb479fb4ab52ed1d1298b178c4c8ea
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tittle","score":2147483647,"tags":["query","spellcor:title","spellcor:little","f:0.282202"],"defs":["n\t(typography)
@@ -2079,7 +2079,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 63154b12e8f99b620391d5af3b834d05b392ef4e1d4a055f3168c9d713acc083
+      - 129015f749be3a490848715ea36f735c2bbdc3385e371812ff85f1e97e7aec44
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tugged","score":2147483647,"tags":["query","f:1.355139"],"defs":["v\t(transitive)
@@ -2124,7 +2124,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 511df36c19a957c7178d59852f472688c58fd3c9141a3aeaae17d61f29affdcd
+      - 76ff88b8c0d5a4f4c7aaff242968542612ab155ae86fd6704bd0d8a01714165c
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -2163,7 +2163,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - ab1a09176dcd945189ace93c111394bb236f234a44597d8de578d0c4a599c650
+      - 60009ae5958431eae89e3c29f60f56cc3ef65700e823c6c8c016384f61d8e917
     body:
       encoding: UTF-8
       string: '[{"word":"tutee","score":2147483647,"tags":["query","f:0.039481"],"defs":["n\tA
@@ -2202,7 +2202,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 923744c73a57a5a10d084caa878081da4faaab27b18c092c24ec9bced4c842a5
+      - 70c93d21e05831e4117a319c419cde3df72609ab5aff6aeee4e6ca5fbd4a1368
     body:
       encoding: UTF-8
       string: '[{"word":"tutted","score":2147483647,"tags":["query","spellcor:gutted","spellcor:tufted","f:0.032508"],"defs":["n\tA
@@ -2241,7 +2241,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 787efc6d552caf55dda6ddce5ae8f9b0b44b4c06bc69d02e79d14c90ccdccde1
+      - 91a894ae1dced4186bb4bea21ac1bcea24ae97938dda85aa7b747534b18478b4
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tutti","score":2147483647,"tags":["query","f:0.327689"],"defs":["adv\t(music)
@@ -2283,7 +2283,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7fcd7487a65e94be32f51654914fffda4f1b573cae99656bdcb733897ff5ba5e
+      - 975ed38dcd82aeac274d5bc80bd1dd8c5757cfe408650da331d9a4ff57398079
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"tutu","score":2147483647,"tags":["query","f:0.307659"],"defs":["n\tA
@@ -2325,7 +2325,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - f71dcd2e83a79166fc34d8904af13c799f6fbaad6bbb9c51ffc51847d9749f6a
+      - 05cb17ebae1919489a6268f0e243c40959e763bf7a40760c3c0d7753a77c3e02
     body:
       encoding: ASCII-8BIT
       string: '[{"word":"utile","score":2147483647,"tags":["query","spellcor:futile","spellcor:tile","f:0.169174"],"defs":["adj\t(now
@@ -2412,7 +2412,7 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 379ms
       X-Request-Id:
-      - 169c8b21c4af9e5ce3eaa49be0c26ab4986769a9aeaddddb506202cae23532b8
+      - a796a32283a8b42846d73c593f0830a0541e0bff129949bcb9f85a569a6a9d2e
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -2509,7 +2509,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 82b44ba7016fed86f15ab7a3d07afe8783d72a281512539ff3061e01f128be8c
+      - 6c821c02e22d73302a448df540bad1260ee67ab404330624e1e02e5aafdd5197
     body:
       encoding: UTF-8
       string: '{"id":"ae5b9b90250d4866bd61a9e3898988bb"}'
@@ -2569,7 +2569,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7affafc6c25faf9d5f0ce70982dcacd67817bcf7605e1909b4ff7a95bb1ea11f
+      - 2eabf342ec47ffe6e8842a8d90f89429e34fdee0feadbe79d7dc6b3c44ee9737
     body:
       encoding: UTF-8
       string: '{"id":"dc7a1cafe08141c89b4f4d02c44aabff"}'
@@ -2629,7 +2629,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 2e65160f88c9b25f428cd98c6066c334387c7fd7e3ba5203145faed5278ccde1
+      - 2f74d5bdaa210bee8b95beb8382a41e0fffc091c11564971c7990765aa47b50e
     body:
       encoding: UTF-8
       string: '{"id":"563f52d08cd1421887533cb1dc2a9c06"}'
@@ -2689,7 +2689,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 0f6592866bc71cb9cc8c00c8b02b342069ef111bfa2a52e16f559cdd6c8075f9
+      - 77bb1d5466109a71930ff286eb6eedeb70990c6408511695bda130df137273ec
     body:
       encoding: UTF-8
       string: '{"id":"d2296aa72bfc494283cf898840cdc4fa"}'
@@ -2749,7 +2749,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e6fefbc9600db1fdc95b26902ea1edf479f8af21eaadb7158e9665b96e230352
+      - e1fea7e58a6836bec2cc46b11d8c8dc4de3315dd4d0fce8d9f56d8d7dc971455
     body:
       encoding: UTF-8
       string: '{"id":"06a44c41e44440ca81effdafb7301328"}'
@@ -2809,7 +2809,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 10a6124c206311498b8e38c75806b25d509670218e9ab9b33dbff7a19a1b26fe
+      - 2076b940f2ffd1e5271a9920776d00f28e9c01b90379bc1d9a88f37feabc74d8
     body:
       encoding: UTF-8
       string: '{"id":"bca34c474e5545efb8e64dd994c331d1"}'
@@ -2869,7 +2869,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - d08db4cd1bf51675bad66084963e338436fce962c100b98b17fe620a75958997
+      - 033f3f3532c4fcb7cdea6701f2799cedc02b68aea4399d0487cd1e6f0d18d62f
     body:
       encoding: UTF-8
       string: '{"id":"fd06c8c5b84c4e368284b1f231c8ad7e"}'
@@ -2929,7 +2929,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 40aee4e00a39972822f4fc6d48d86d66d7108e5e114a888c00e60e1ed68ac835
+      - 160be71942a1dcee80fafa856a8567a9f6a2866c9a56d7f0554b3a11ebfce333
     body:
       encoding: UTF-8
       string: '{"id":"240f0215dd474d8f8bc830213bac5888"}'
@@ -2989,7 +2989,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - e0ad7b117dd3a43091826c7d2d4fb32484027b47ebc61e70d2c3e2c50527da4b
+      - 3f80001bf07e18700ed24958c3ba28f2546fc4a4e8edf045a78891143bf84aa8
     body:
       encoding: UTF-8
       string: '{"id":"cd76335681d345e7850db854fe0f3e01"}'
@@ -3049,7 +3049,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 8718504a725a4109cf651fe02857fce42cd0f5f10ccc656b13c019091a7b7bc3
+      - 78bba10dcda4f1209227ecc8ea6a8677ae7982ed970f7a6bf05f9a84c3c0bdfe
     body:
       encoding: UTF-8
       string: '{"id":"0ea5169f838245ad9b3289665beb3058"}'
@@ -3109,7 +3109,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 7b07cc762197915b2e86f4aba35e49e0bede0e9b30f73bca64f38173c4885e89
+      - b955dd3b48767edc78d9e59034b28438a8f59b343d863ad86487155d70cd1e3c
     body:
       encoding: UTF-8
       string: '{"id":"913ab959f0e84758b0b6c9a4ad7790d2"}'
@@ -3169,7 +3169,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - a2b98add774b95e1d10e0170d75599d76428ee4b5b3e61452829ee6af67a5d2c
+      - 8ee235a6597c2598fa5bbcda6213987414c711d430e1601d7eb04e2ec1201e75
     body:
       encoding: UTF-8
       string: '{"id":"ef8143fd19e347f696ddaf04698276cd"}'
@@ -3229,7 +3229,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 2722d9badfec09b18942546e89668bc192fedcc8b55afdea24fc726c300357aa
+      - ccf3b52366c4c32fc265af9d4096343466bc62e2e8febfd45566495044a91f31
     body:
       encoding: UTF-8
       string: '{"id":"22255f3abfb34a7aaa484a15838713ec"}'
@@ -3289,7 +3289,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - f2569975e5940d5e883a1a3fee7a7c0886c6378238d86f45305e90171e7f109f
+      - 31ec8662d559bf2473b826c793baef560325a0e6284cb2c85bee789b778ac025
     body:
       encoding: UTF-8
       string: '{"id":"2f4ac17d51064e418bfda6b3ccf9646c"}'
@@ -3349,7 +3349,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 52e79345b3b8c77d6b8367825bf9730c40e316e497a3d1398275d98cad01d422
+      - 8e11a97ed26079894dfbbdd7734b4faa1d7a9806c22cc7975327781114c533f3
     body:
       encoding: UTF-8
       string: '{"id":"f07a57413a0e4bbaa18b3a1869e2590e"}'
@@ -3409,7 +3409,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - de7a70a7a4c8ac491a2000d09fbd4f9da4774585a9f1d0f83c1f4307cfb1aeb1
+      - 5edda474aa4abc035319220c315862f0fdd5a807b94659edc5fa07b18b1fd4b0
     body:
       encoding: UTF-8
       string: '{"id":"f33324cb3a934561951f22d6ffc70de5"}'
@@ -3469,7 +3469,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 4e6eea1bd0bdbde157bef1c50590e87ee80d289e199130e7e7d81257ff8fe2fd
+      - b3667dd58489ae3044f9567df5c1e4c14fcc6caf74354e2f4951eff6ccdb7ae6
     body:
       encoding: UTF-8
       string: '{"id":"8b808500a8204263ae23582b9a95f0ae"}'
@@ -3529,7 +3529,7 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 02b75969e84c0eb1e77175486260d75da68c8f357b926e5ccefce23668ab4a37
+      - 6b7f416616e2f2c38923b001f0386781f24d2d3eeb54ec9b8599cf866719a3d6
     body:
       encoding: UTF-8
       string: '{"id":"63bd88bc034f42ea8032f3f3644b1859"}'
@@ -3589,9 +3589,419 @@ http_interactions:
       Openai-Organization:
       - user-bispkxt54u8d4zj8kpa30v7x
       X-Request-Id:
-      - 8e392d133e7f61d865652e8cdbd37567fb72b92fc9d33b2180234695b976d6c2
+      - eee57a13053fc2332c7ad782e09818cabd71b19c5cccbfb020004974d2fdd38d
     body:
       encoding: UTF-8
       string: '{"id":"69852a1254894a71a3c8d2b7b0f13649"}'
   recorded_at: Sun, 17 Mar 2024 05:44:03 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"90e8d2e2f66246ff84300ebe066f2442","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T10:58:13Z","trace":{"trace_id":"eaa4015d531846dea371822528a8902a","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"90e8d2e2f66246ff84300ebe066f2442","level":"error","timestamp":1711537093.664702,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"1e9d0371-5458-4996-a251-8c5cf28475f3"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"eaa4015d531846dea371822528a8902a","span_id":"a2504533f99b4172","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1711537093,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1711537093,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1711537093,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.16899965703487396,"db_runtime":0.9960001334547997},"level":null,"message":"","timestamp":1711537093,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"1e9d0371-5458-4996-a251-8c5cf28475f3"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"eaa4015d531846dea371822528a8902a","span_id":"6798aae49ac74386","parent_span_id":"a2504533f99b4172","start_timestamp":1711537093.6400352,"timestamp":1711537093.6645749,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"eaa4015d531846dea371822528a8902a","span_id":"e4f1696259f448b4","parent_span_id":"6798aae49ac74386","start_timestamp":1711537093.658647,"timestamp":1711537093.659645,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537093.635365,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537093,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 10:58:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 629a3648947646d7f14b74e69a7af982f73fa0675e36b1b3033103c586929844
+    body:
+      encoding: UTF-8
+      string: '{"id":"90e8d2e2f66246ff84300ebe066f2442"}'
+  recorded_at: Wed, 27 Mar 2024 10:58:13 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"4cb76f181b994c34b5f4e59f93c70cf1","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:00:59Z","trace":{"trace_id":"2e8203a33880416984daa557f63ffbc4","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"4cb76f181b994c34b5f4e59f93c70cf1","level":"error","timestamp":1711537259.525804,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"c79597d0-a03f-4c05-a677-a0817bc4a2a1"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"2e8203a33880416984daa557f63ffbc4","span_id":"8ca6e072faae442d","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1711537259,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1711537259,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1711537259,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.15799980610609055,"db_runtime":1.435999758541584},"level":null,"message":"","timestamp":1711537259,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"c79597d0-a03f-4c05-a677-a0817bc4a2a1"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"2e8203a33880416984daa557f63ffbc4","span_id":"3b7756a818994008","parent_span_id":"8ca6e072faae442d","start_timestamp":1711537259.5083451,"timestamp":1711537259.525663,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"2e8203a33880416984daa557f63ffbc4","span_id":"27d0d5f65e7942a8","parent_span_id":"3b7756a818994008","start_timestamp":1711537259.516245,"timestamp":1711537259.5176818,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537259.5051,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537259,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:00:59 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - a3047cb493e88700ff168dd94f0e12eff6ef65005915f718bcef452f69d963ba
+    body:
+      encoding: UTF-8
+      string: '{"id":"4cb76f181b994c34b5f4e59f93c70cf1"}'
+  recorded_at: Wed, 27 Mar 2024 11:00:59 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"1b9fb12f5b0f4a90806cd012e5adcf0f","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:05:56Z","trace":{"trace_id":"18505f6fe47142c3a2484e86b63def0c","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"1b9fb12f5b0f4a90806cd012e5adcf0f","level":"error","timestamp":1711537556.861574,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"0756a548-da00-4dea-ac4d-5bfd2e98ff10"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"18505f6fe47142c3a2484e86b63def0c","span_id":"1555e100d6f84f8e","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"sql.active_record","data":{"sql":"SHOW search_path","name":"SCHEMA","statement_name":null},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintRequest Load","statement_name":"a1"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintRequest"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintResponse Load","statement_name":"a2"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintResponse"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0","status":200,"view_runtime":0.11199992150068283,"db_runtime":0.5189999938011169},"level":null,"message":"","timestamp":1711537556,"type":null}]},"transaction":"SyncApi::V1::OpenaiLogsController#index_with_offset","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/openai_logs","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"0756a548-da00-4dea-ac4d-5bfd2e98ff10"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"18505f6fe47142c3a2484e86b63def0c","span_id":"148413cb11904078","parent_span_id":"1555e100d6f84f8e","start_timestamp":1711537556.817083,"timestamp":1711537556.860651,"description":"SyncApi::V1::OpenaiLogsController#index_with_offset","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/openai_logs","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"}}},{"trace_id":"18505f6fe47142c3a2484e86b63def0c","span_id":"a5b68d11ae6343dc","parent_span_id":"148413cb11904078","start_timestamp":1711537556.8294458,"timestamp":1711537556.8296227,"description":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}},{"trace_id":"18505f6fe47142c3a2484e86b63def0c","span_id":"cddfb92ec8ac41e9","parent_span_id":"148413cb11904078","start_timestamp":1711537556.8359208,"timestamp":1711537556.83613,"description":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537556.809817,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537556,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:05:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Envoy-Upstream-Service-Time:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 8bc736e3d72e9ec7c2e43c4afccfc80d4649c6bb632f83158b29fa6811f14d42
+    body:
+      encoding: UTF-8
+      string: '{"id":"1b9fb12f5b0f4a90806cd012e5adcf0f"}'
+  recorded_at: Wed, 27 Mar 2024 11:05:57 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"0996c4a7127848c0a9a650f8a57cef2b","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:05:56Z","trace":{"trace_id":"f5caf95eca9c42b98bb82d0c836f03d5","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"0996c4a7127848c0a9a650f8a57cef2b","level":"error","timestamp":1711537556.980073,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"6327ac41-0101-4b39-b779-e1be00b19ec5"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"f5caf95eca9c42b98bb82d0c836f03d5","span_id":"7552fae885a84ca1","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1711537556,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.15700049698352814,"db_runtime":0.6829993799328804},"level":null,"message":"","timestamp":1711537556,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"6327ac41-0101-4b39-b779-e1be00b19ec5"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"f5caf95eca9c42b98bb82d0c836f03d5","span_id":"e10a5d0c21654b82","parent_span_id":"7552fae885a84ca1","start_timestamp":1711537556.961131,"timestamp":1711537556.979946,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"f5caf95eca9c42b98bb82d0c836f03d5","span_id":"6bddb0a7c4a54b16","parent_span_id":"e10a5d0c21654b82","start_timestamp":1711537556.9714,"timestamp":1711537556.972085,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537556.958378,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537556,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:05:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 83e280885e9928c976ac4187906f194d31f9f85b7b1a67297b30abf4776a929f
+    body:
+      encoding: UTF-8
+      string: '{"id":"0996c4a7127848c0a9a650f8a57cef2b"}'
+  recorded_at: Wed, 27 Mar 2024 11:05:57 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"5e932066bbc34788b28232f6615c2cb0","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:07:18Z","trace":{"trace_id":"65ecf20bf2f1414bbb293535421c868b","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"5e932066bbc34788b28232f6615c2cb0","level":"error","timestamp":1711537638.250494,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"79320cfb-f69d-43bc-a63c-5fad9b9fd293"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"65ecf20bf2f1414bbb293535421c868b","span_id":"2c331811b1e24bc4","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"sql.active_record","data":{"sql":"SHOW search_path","name":"SCHEMA","statement_name":null},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintRequest Load","statement_name":"a1"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintRequest"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","name":"OpenaiHintResponse Load","statement_name":"a2"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"instantiation.active_record","data":{"record_count":2,"class_name":"OpenaiHintResponse"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::OpenaiLogsController","action":"index_with_offset","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"},"format":"html","method":"GET","path":"/sync_api/v1/openai_logs?requests_offset=0&responses_offset=0","status":200,"view_runtime":0.14299992471933365,"db_runtime":0.6099995225667953},"level":null,"message":"","timestamp":1711537638,"type":null}]},"transaction":"SyncApi::V1::OpenaiLogsController#index_with_offset","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/openai_logs","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"79320cfb-f69d-43bc-a63c-5fad9b9fd293"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"65ecf20bf2f1414bbb293535421c868b","span_id":"cc0833643b484ece","parent_span_id":"2c331811b1e24bc4","start_timestamp":1711537638.210304,"timestamp":1711537638.2493591,"description":"SyncApi::V1::OpenaiLogsController#index_with_offset","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/openai_logs","params":{"requests_offset":"0","responses_offset":"0","controller":"sync_api/v1/openai_logs","action":"index_with_offset"}}},{"trace_id":"65ecf20bf2f1414bbb293535421c868b","span_id":"237b664182294263","parent_span_id":"cc0833643b484ece","start_timestamp":1711537638.219696,"timestamp":1711537638.219912,"description":"SELECT \"openai_hint_requests\".* FROM \"openai_hint_requests\" ORDER BY \"openai_hint_requests\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}},{"trace_id":"65ecf20bf2f1414bbb293535421c868b","span_id":"bafe6f5df34a4a8c","parent_span_id":"cc0833643b484ece","start_timestamp":1711537638.2255712,"timestamp":1711537638.2258132,"description":"SELECT \"openai_hint_responses\".* FROM \"openai_hint_responses\" ORDER BY \"openai_hint_responses\".\"id\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537638.205657,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537638,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:07:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 8b25440f5583c3c0ae80475a57b2075802f073d28cb1ac788b95ea67993e792e
+    body:
+      encoding: UTF-8
+      string: '{"id":"5e932066bbc34788b28232f6615c2cb0"}'
+  recorded_at: Wed, 27 Mar 2024 11:07:18 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"09ebf61dff1f48149b9eb6b22936438e","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:07:18Z","trace":{"trace_id":"f35e572ff1f6467db5c7bb2ca45fe6b5","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"09ebf61dff1f48149b9eb6b22936438e","level":"error","timestamp":1711537638.359469,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"c839b2af-8be2-49d3-8cea-374fc1c92a3d"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"f35e572ff1f6467db5c7bb2ca45fe6b5","span_id":"1f8871a3c9d64f22","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1711537638,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.14900043606758118,"db_runtime":0.7880004122853279},"level":null,"message":"","timestamp":1711537638,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"c839b2af-8be2-49d3-8cea-374fc1c92a3d"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"f35e572ff1f6467db5c7bb2ca45fe6b5","span_id":"266a6ca9a00b461b","parent_span_id":"1f8871a3c9d64f22","start_timestamp":1711537638.343758,"timestamp":1711537638.359338,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"f35e572ff1f6467db5c7bb2ca45fe6b5","span_id":"416f72eb58a54800","parent_span_id":"266a6ca9a00b461b","start_timestamp":1711537638.350615,"timestamp":1711537638.351404,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711537638.3407722,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711537638,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:07:18 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      X-Envoy-Upstream-Service-Time:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - '0093807b8f0061dc4e7f9a7f624acdb909e560b1ab40162609ab4f1d85d5cb07'
+    body:
+      encoding: UTF-8
+      string: '{"id":"09ebf61dff1f48149b9eb6b22936438e"}'
+  recorded_at: Wed, 27 Mar 2024 11:07:18 GMT
+- request:
+    method: post
+    uri: https://o4506572944900096.ingest.sentry.io/api/4506572948242432/envelope/
+    body:
+      encoding: UTF-8
+      string: |-
+        {"event_id":"82a95c771c5e42a3916065f623bbef99","dsn":"https://266bd78da8dc1cf9f0d2e0fc5a9ae672@o4506572944900096.ingest.sentry.io/4506572948242432","sdk":{"name":"sentry.ruby","version":"5.16.1"},"sent_at":"2024-03-27T11:18:45Z","trace":{"trace_id":"d1dd8df9b18742748f3559da55f75d08","sample_rate":"1.0","sampled":"true","environment":"test","release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","public_key":"266bd78da8dc1cf9f0d2e0fc5a9ae672"}}
+        {"type":"transaction","content_type":"application/json"}
+        {"event_id":"82a95c771c5e42a3916065f623bbef99","level":"error","timestamp":1711538325.93838,"release":"b1a66783740e8ee0c7ada857ae048e2980fb8a19","environment":"test","server_name":"Shamamalay.local","modules":{"rake":"13.1.0","base64":"0.1.1","bigdecimal":"3.1.6","concurrent-ruby":"1.2.2","connection_pool":"2.4.1","ruby2_keywords":"0.0.5","drb":"2.2.0","i18n":"1.14.1","minitest":"5.20.0","mutex_m":"0.2.0","tzinfo":"2.0.6","activesupport":"7.1.3","builder":"3.2.4","erubi":"1.12.0","racc":"1.7.1","nokogiri":"1.16.2","rails-dom-testing":"2.2.0","crass":"1.0.6","loofah":"2.22.0","rails-html-sanitizer":"1.6.0","actionview":"7.1.3","rack":"2.2.8","rack-session":"1.0.2","rack-test":"2.1.0","actionpack":"7.1.3","nio4r":"2.5.9","websocket-extensions":"0.1.5","websocket-driver":"0.7.6","zeitwerk":"2.6.12","actioncable":"7.1.3","globalid":"1.2.1","activejob":"7.1.3","activemodel":"7.1.3","timeout":"0.4.1","activerecord":"7.1.3","marcel":"1.0.2","activestorage":"7.1.3","mini_mime":"1.1.5","date":"3.3.4","net-protocol":"0.2.2","net-imap":"0.4.10","net-pop":"0.1.2","net-smtp":"0.4.0.1","mail":"2.8.1","actionmailbox":"7.1.3","actionmailer":"7.1.3","actiontext":"7.1.3","public_suffix":"5.0.3","addressable":"2.8.5","net-ssh":"7.2.0","net-scp":"4.0.0","sshkit":"1.21.5","airbrussh":"1.5.0","annotate":"3.2.0","ast":"2.4.2","bcrypt":"3.1.19","bcrypt_pbkdf":"1.1.0","msgpack":"1.7.2","bootsnap":"1.16.0","bundler":"2.3.26","capistrano":"3.18.0","capistrano-bundler":"2.1.0","capistrano-dotenv":"0.0.5","capistrano-rails":"1.6.3","capistrano-rbenv":"2.2.0","rexml":"3.2.6","crack":"1.0.0","stringio":"3.0.8","psych":"5.1.1.1","rdoc":"6.5.0","io-console":"0.6.0","reline":"0.3.9","irb":"1.8.3","debug":"1.8.0","orm_adapter":"0.5.0","webrick":"1.8.1","rackup":"1.0.0","thor":"1.3.0","railties":"7.1.3","responders":"3.1.1","warden":"1.2.9","devise":"4.9.3","dry-core":"1.0.1","dry-auto_inject":"1.0.1","dry-configurable":"1.1.0","jwt":"2.7.1","warden-jwt_auth":"0.8.0","devise-jwt":"0.10.0","devise-jwt-cookie":"0.6.0","diff-lcs":"1.5.1","dotenv":"2.8.1","dotenv-rails":"2.8.1","ed25519":"1.3.0","hashdiff":"1.1.0","json":"2.6.3","jsonapi-serializer":"2.2.0","language_server-protocol":"3.17.0.3","launchy":"2.5.2","letter_opener":"1.8.1","logger":"1.5.3","parallel":"1.23.0","parser":"3.2.2.4","pg":"1.5.4","puma":"5.6.7","rack-cors":"2.0.1","rails":"7.1.3","rainbow":"3.1.1","regexp_parser":"2.8.2","rspec-support":"3.13.0","rspec-core":"3.13.0","rspec-expectations":"3.13.0","rspec-mocks":"3.13.0","rspec-rails":"6.1.1","rubocop-ast":"1.30.0","ruby-progressbar":"1.13.0","unicode-display_width":"2.5.0","rubocop":"1.56.4","rubocop-rails":"2.23.1","sentry-ruby":"5.16.1","sentry-rails":"5.16.1","vcr":"6.2.0","webmock":"3.20.0","yard":"0.9.34"},"message":"","user":{},"tags":{"request_id":"cf436160-de22-4b5d-99c7-1cced75dab21"},"contexts":{"os":{"name":"Darwin","version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","build":"23.2.0","kernel_version":"Darwin Kernel Version 23.2.0: Wed Nov 15 21:53:18 PST 2023; root:xnu-10002.61.3~2/RELEASE_ARM64_T6000","machine":"arm64"},"runtime":{"name":"ruby","version":"ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]"},"trace":{"trace_id":"d1dd8df9b18742748f3559da55f75d08","span_id":"48e5982b0de7449a","parent_span_id":null,"description":null,"op":"http.server","status":"ok"}},"extra":{},"fingerprint":[],"breadcrumbs":{"values":[{"category":"start_processing.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0"},"level":null,"message":"","timestamp":1711538325,"type":null},{"category":"sql.active_record","data":{"sql":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","name":"Word Load","statement_name":"a3"},"level":null,"message":"","timestamp":1711538325,"type":null},{"category":"instantiation.active_record","data":{"record_count":90,"class_name":"Word"},"level":null,"message":"","timestamp":1711538325,"type":null},{"category":"process_action.action_controller","data":{"controller":"SyncApi::V1::WordHintsController","action":"hint_batch","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"},"format":"html","method":"GET","path":"/sync_api/v1/word_hints/0","status":200,"view_runtime":0.14699995517730713,"db_runtime":0.8270004764199257},"level":null,"message":"","timestamp":1711538325,"type":null}]},"transaction":"SyncApi::V1::WordHintsController#hint_batch","transaction_info":{"source":"view"},"platform":"ruby","sdk":{"name":"sentry.ruby","version":"5.16.1"},"type":"transaction","request":{"url":"http://www.example.com/sync_api/v1/word_hints/0","method":"GET","headers":{"Content-Length":"0","Host":"www.example.com","Accept":"text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5","X-Request-Id":"cf436160-de22-4b5d-99c7-1cced75dab21"},"env":{"SERVER_NAME":"www.example.com","SERVER_PORT":"80"}},"spans":[{"trace_id":"d1dd8df9b18742748f3559da55f75d08","span_id":"7396da003cc9478f","parent_span_id":"48e5982b0de7449a","start_timestamp":1711538325.917556,"timestamp":1711538325.93823,"description":"SyncApi::V1::WordHintsController#hint_batch","op":"view.process_action.action_controller","status":"ok","tags":{},"data":{"http.response.status_code":200,"format":"text/html","method":"GET","path":"/sync_api/v1/word_hints/0","params":{"controller":"sync_api/v1/word_hints","action":"hint_batch","page":"0"}}},{"trace_id":"d1dd8df9b18742748f3559da55f75d08","span_id":"836d3ed5056d4004","parent_span_id":"7396da003cc9478f","start_timestamp":1711538325.9249752,"timestamp":1711538325.9258041,"description":"SELECT DISTINCT \"words\".\"text\", \"words\".\"hint\" FROM \"words\" INNER JOIN \"answers\" ON \"answers\".\"word_text\" = \"words\".\"text\" INNER JOIN \"puzzles\" ON \"puzzles\".\"id\" = \"answers\".\"puzzle_id\" ORDER BY \"words\".\"text\" ASC LIMIT $1 OFFSET $2","op":"db.sql.active_record","status":null,"tags":{},"data":{"db.system":"postgresql","db.name":"spelling_bee_test"}}],"start_timestamp":1711538325.91457,"measurements":{}}
+    headers:
+      Content-Type:
+      - application/x-sentry-envelope
+      Content-Encoding:
+      - ''
+      User-Agent:
+      - sentry-ruby/5.16.1
+      X-Sentry-Auth:
+      - Sentry sentry_version=7, sentry_client=sentry-ruby/5.16.1, sentry_timestamp=1711538325,
+        sentry_key=266bd78da8dc1cf9f0d2e0fc5a9ae672
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 27 Mar 2024 11:18:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '41'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - origin,access-control-request-method,access-control-request-headers
+      Access-Control-Expose-Headers:
+      - x-sentry-error,x-sentry-rate-limits,retry-after
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Openai-Organization:
+      - user-bispkxt54u8d4zj8kpa30v7x
+      X-Request-Id:
+      - 500e7bd263206176a46ae805c9a4b1b7c8a7b64730acf464a13825976e2a7946
+    body:
+      encoding: UTF-8
+      string: '{"id":"82a95c771c5e42a3916065f623bbef99"}'
+  recorded_at: Wed, 27 Mar 2024 11:18:46 GMT
 recorded_with: VCR 6.2.0

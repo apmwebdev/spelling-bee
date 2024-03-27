@@ -70,6 +70,7 @@ group :development do
 end
 
 group :test do
+  gem "database_cleaner-active_record"
   gem "vcr", "~> 6.2"
   gem "webmock", "~> 3.20"
 end

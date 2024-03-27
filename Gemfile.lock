@@ -121,6 +121,10 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -347,6 +351,7 @@ DEPENDENCIES
   capistrano-dotenv
   capistrano-rails (~> 1.6)
   capistrano-rbenv (~> 2.2)
+  database_cleaner-active_record
   debug
   devise
   devise-jwt

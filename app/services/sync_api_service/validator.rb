@@ -41,8 +41,12 @@ class SyncApiService
       valid_hash?(json, [
         [:puzzle_data, Hash, ->(p) { @puzzle_validator.valid_sync_api_puzzle?(p) }],
         [:origin_data, Hash, ->(p) { valid_nyt_origin_data?(p) || valid_sb_solver_origin_data?(p) }],
-        [:answer_words, Array, ->(p) { @puzzle_validator.valid_word_array?(p) }],
-      ], display_name: "data_item",)
+        [:answer_words, Array, ->(p) { valid_synced_puzzle_words?(p) }],
+      ], display_name: "puzzle_data",)
+    end
+
+    def valid_synced_puzzle_words?(arr)
+      valid_array?(arr, Array, ->(p) { p.length == 2 }, display_name: "answer_words")
     end
 
     def valid_nyt_origin_data?(json)

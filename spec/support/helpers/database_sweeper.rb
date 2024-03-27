@@ -11,12 +11,12 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # TODO: Add doc
-module DatabaseCleaner
+module DatabaseSweeper
   extend self
 
   PERSISTED_TABLES = ["ar_internal_metadata", "schema_migrations"].freeze
 
-  def truncate_tables(excluded_tables = [])
+  def truncate_except(excluded_tables = [])
     final_excluded_tables = Set.new([*excluded_tables, *PERSISTED_TABLES])
     ActiveRecord::Base.connection.tables.each do |table|
       next if final_excluded_tables.include?(table)
