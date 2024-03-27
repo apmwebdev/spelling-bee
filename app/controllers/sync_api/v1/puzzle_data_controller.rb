@@ -14,23 +14,27 @@
 # different instances of the app). This controller is used by the instance acting
 # as the host, receiving the request.
 class SyncApi::V1::PuzzleDataController < SyncApi::V1::SyncApiController
-  # GET .../puzzle_data/:id
+  # GET .../puzzle_data/:starting_id?limit=:limit
   def recent_puzzles
     return_data = []
-    identifier = params[:first_puzzle_identifier].to_s
-    current_puzzle = PuzzleIdentifierService.find_puzzle(identifier)
-    return_data.push(current_puzzle.to_sync_api)
-    current_id = current_puzzle.id
-    49.times do
-      current_id += 1
-      current_puzzle = Puzzle.includes(:answers).find(current_id)
+    limit = params[:limit].to_i
+    puzzle_id = params[:starting_id].to_i
+    if limit < 1 || puzzle_id < 1
+      render json: { error: "Invalid params" }, status: 400
+      return
+    end
+
+    limit.times do
+      current_puzzle = Puzzle.includes(:words).find(puzzle_id)
       return_data.push(current_puzzle.to_sync_api)
+      puzzle_id += 1
     rescue ActiveRecord::RecordNotFound
       break
     end
+
     render json: {
       data: return_data,
-      last_id: current_puzzle.id,
+      last_id: puzzle_id,
     }
   end
 end

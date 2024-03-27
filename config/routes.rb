@@ -81,7 +81,7 @@ Rails.application.routes.draw do
 
   namespace :sync_api do
     namespace :v1 do
-      get "recent_puzzles/:first_puzzle_identifier", to: "puzzle_data#recent_puzzles"
+      get "recent_puzzles/:starting_id", to: "puzzle_data#recent_puzzles"
       get "word_hints/:page", to: "word_hints#hint_batch"
       get "instructions/count", to: "openai_hint_instructions#count"
       post "instructions/sync", to: "openai_hint_instructions#sync"

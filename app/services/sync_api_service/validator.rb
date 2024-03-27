@@ -13,6 +13,8 @@
 class SyncApiService
   # Validates puzzle data returned from the Sync API
   class Validator < ExternalServiceValidatorBase
+    attr_accessor :puzzle_validator
+
     def initialize(logger)
       super
       @puzzle_validator = PuzzleJsonValidator.new(logger)
@@ -57,7 +59,7 @@ class SyncApiService
       valid_hash?(json, [
         [:created_at, String, ->(p) { valid_date?(p) }],
         [:id, Integer],
-        [:sb_solver_id, Integer],
+        [:sb_solver_id, String],
         [:updated_at, String, ->(p) { valid_date?(p) }],
       ], display_name: "origin_data",)
     end
@@ -71,6 +73,11 @@ class SyncApiService
 
     def valid_word_hints!(array)
       OpenaiApiService::Validator.new(@logger).valid_word_hints!(array)
+    end
+
+    def logger=(value)
+      super
+      @puzzle_validator&.logger = value
     end
   end
 end
