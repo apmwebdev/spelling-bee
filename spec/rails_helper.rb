@@ -28,6 +28,7 @@ VCR.configure do |config|
   config.filter_sensitive_data("<OPENAI_API_KEY>") { ENV["OPENAI_API_KEY"] }
   config.filter_sensitive_data("<SYNC_API_KEY>") { ENV["PRODUCTION_SYNC_API_KEY"] }
   config.filter_sensitive_data("<SYNC_API_URL>") { ENV["PRODUCTION_SYNC_API_URL"] }
+  config.filter_sensitive_data("<SENTRY_DSN>") { ENV["SENTRY_DSN"] }
   config.before_record do |interaction|
     if interaction.request.headers["Authorization"]
       interaction.request.headers["Authorization"] = "<REDACTED>"
