@@ -17,16 +17,27 @@ FAKE_USER_ID = "user-bispkxt54u8d4zj8kpa30v7x"
 
 # VCR configuration
 VCR.configure do |config|
+  config.ignore_request do |request|
+    request.uri =~ /sentry\.io/
+  end
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.allow_http_connections_when_no_cassette = true
   # config.ignore_localhost = true
   config.filter_sensitive_data("<OPENAI_API_KEY>") { ENV["OPENAI_API_KEY"] }
+  config.filter_sensitive_data("<SYNC_API_KEY>") { ENV["PRODUCTION_SYNC_API_KEY"] }
+  config.filter_sensitive_data("<SYNC_API_URL>") { ENV["PRODUCTION_SYNC_API_URL"] }
   config.before_record do |interaction|
-    # Redact the real user ID and request ID
-    interaction.response.headers["Openai-Organization"] = [FAKE_USER_ID]
-    interaction.response.headers["X-Request-Id"] = [SecureRandom.hex(32)]
+    if interaction.request.headers["Authorization"]
+      interaction.request.headers["Authorization"] = "<REDACTED>"
+    end
+    if interaction.response.headers["Openai-Organization"]
+      interaction.response.headers["Openai-Organization"] = [FAKE_USER_ID]
+    end
+    if interaction.response.headers["X-Request-Id"]
+      interaction.response.headers["X-Request-Id"] = [SecureRandom.hex(32)]
+    end
   end
 end
 

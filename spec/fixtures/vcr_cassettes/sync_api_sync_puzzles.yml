@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://superspellingbee.com/sync_api/v1/recent_puzzles/1?limit=3
+    uri: <SYNC_API_URL>/recent_puzzles/1?limit=3
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Authorization:
-      - Bearer HqFs374Zu6PG7v2UBX1P644A74KieLntRaSByM7aBdE
+      - <REDACTED>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -46,14 +46,10 @@ http_interactions:
       - W/"e7df57ac2c13cbacd8eda9af564f7853"
       Cache-Control:
       - max-age=0, private, must-revalidate
-      X-Request-Id:
-      - 51b2f67deff0b9b17e7a8d782abc4ecc7d9aaf456d33c35b7d13c5afbcaa251c
       X-Runtime:
       - '0.086430'
       Vary:
       - Accept, Origin
-      Openai-Organization:
-      - user-bispkxt54u8d4zj8kpa30v7x
     body:
       encoding: UTF-8
       string: '{"data":[{"puzzle_data":{"id":1,"date":"2018-05-09","center_letter":"w","outer_letters":["a","h","o","r","t","y"],"origin_type":"SbSolverPuzzle","origin_id":1,"created_at":"2023-07-19T05:46:49.384Z","updated_at":"2023-11-20T01:14:22.024Z","excluded_words":["arow","harrowtry","hartwort","yowt","ratwa","tarrow","tawa","worrywort","wowt","wray","wrathy","wraw","wroot","wrothy","wroth","woohoo","arawa","atwo","awat","aworry","aworth","yawy","yawroot","yhwh","orrow","ottawa","ryotwar","ryotwary","rowy","rowt","rowth","rowty","trow","trowth","tway","twat","waar","wahwah","wayao","waywort","waratah","warray","warrty","warth","wartwort","wath","wawa","wawah","whar","wharry","wharrow","whart","whata","whyo","whoo","whoot","whory","whorry","whort","woyaway","arrowy","hoarwort","oathworthy","thawy","thow","thowt","thraw","thrawart","throatwort","throwwort","toywort","toothwort","towaway","towy"]},"origin_data":{"id":1,"sb_solver_id":"1","created_at":"2023-07-19T05:46:49.358Z","updated_at":"2023-07-19T05:46:49.358Z"},"answer_words":[["arrow","A
