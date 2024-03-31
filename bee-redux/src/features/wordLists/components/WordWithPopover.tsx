@@ -27,7 +27,7 @@ export function WordWithPopover({ item }: { item: string | TGuess }) {
   }
 
   const completeWord = useAppSelector(selectAnswers).find(
-    (answer) => answer.word === word,
+    (answer) => answer.text === word,
   );
   const pangrams = useAppSelector(selectPangrams);
   const isPangram = pangrams.includes(word);

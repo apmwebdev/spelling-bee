@@ -30,9 +30,9 @@ export function Word({
   const { revealedLetters, showObscurity, revealLength } = definitionPanelData;
 
   const unknownWordDisplay = () => {
-    let returnStr = `${answer.word.slice(0, revealedLetters)}...`;
+    let returnStr = `${answer.text.slice(0, revealedLetters)}...`;
     if (revealLength) {
-      returnStr += ` ${answer.word.length}`;
+      returnStr += ` ${answer.text.length}`;
     }
     return returnStr;
   };
@@ -44,7 +44,7 @@ export function Word({
           ErrorText: !isKnown,
         })}
       >
-        {isKnown ? answer.word : unknownWordDisplay()}
+        {isKnown ? answer.text : unknownWordDisplay()}
       </div>
       {showObscurity ? (
         <div className="italic">

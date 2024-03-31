@@ -40,8 +40,8 @@ const displayUnknownWord = ({
   revealedLetters: number;
   revealLength: boolean;
 }) => {
-  let returnStr = `${answer.word.slice(0, revealedLetters)}...`;
-  if (revealLength) returnStr += ` ${answer.word.length}`;
+  let returnStr = `${answer.text.slice(0, revealedLetters)}...`;
+  if (revealLength) returnStr += ` ${answer.text.length}`;
   return returnStr;
 };
 
@@ -78,14 +78,14 @@ export function ObscurityHintPanel({
     }
 
     return answers.map((answer) => {
-      if (!hideKnown && knownWords.includes(answer.word)) {
+      if (!hideKnown && knownWords.includes(answer.text)) {
         return (
-          <tr key={answer.word}>
+          <tr key={answer.text}>
             <td className="capitalize">
               {clickToDefine ? (
                 <DefinitionPopover answer={answer} />
               ) : (
-                answer.word
+                answer.text
               )}
             </td>
             <td>{formatFrequency(answer.frequency)}</td>
@@ -96,7 +96,7 @@ export function ObscurityHintPanel({
         );
       }
       return (
-        <tr className="ErrorText" key={answer.word}>
+        <tr className="ErrorText" key={answer.text}>
           <td className="capitalize">
             {clickToDefine ? (
               <DefinitionPopover

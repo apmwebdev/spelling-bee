@@ -81,7 +81,7 @@ export const selectRanks = (state: RootState) => state.puzzle.data.ranks;
 
 export const selectAnswerWords = createSelector([selectAnswers], (answers) => {
   if (answers && answers.length > 0) {
-    return answers.map((answer) => answer.word);
+    return answers.map((answer) => answer.text);
   }
   return [];
 });
