@@ -18,7 +18,6 @@ class Answer < ApplicationRecord
   def to_front_end
     {
       word: word_text,
-      # Because Rails stores the frequency as a BigDecimal, it will be encoded as a string in JSON
       frequency: word.frequency,
       definitions: word.definitions,
       hint: word.hint,

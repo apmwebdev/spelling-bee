@@ -57,7 +57,8 @@ class FrontEndApi::V1::UserPuzzleAttemptsController < FrontEndApi::AuthRequiredC
       .where(puzzle_id: puzzle.id).count
 
     if existing_attempts_count >= 10
-      raise ApiError, "#{error_base}: You've reached the maximum number of attempts for this puzzle."
+      raise ApiError,
+        "#{error_base}: You've reached the maximum number of attempts for this puzzle."
     end
 
     @user_puzzle_attempt = UserPuzzleAttempt.new(user_puzzle_attempt_params.except(:created_at))
@@ -112,7 +113,7 @@ class FrontEndApi::V1::UserPuzzleAttemptsController < FrontEndApi::AuthRequiredC
       item_status[:error] = error.to_front_end if error
       return_array.push(item_status)
     end
-    render json: return_array, status: 200
+    render json: return_array
   end
 
   private

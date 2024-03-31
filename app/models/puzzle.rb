@@ -84,7 +84,7 @@ class Puzzle < ApplicationRecord
       validLetters: @valid_letters,
       pangrams: @pangrams,
       perfectPangrams: @perfect_pangrams,
-      answers: answers.map(&:to_front_end).sort_by { |answer| answer[:word] },
+      answers: words.map(&:to_front_end).sort_by { |word| word[:text] },
       excludedWords: excluded_words,
       isLatest: @is_latest,
     }
