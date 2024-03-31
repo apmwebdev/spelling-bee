@@ -52,7 +52,7 @@ export function Word({
           {usageExplanation(answer.frequency).toLowerCase()})
         </div>
       ) : null}
-      <div>{answer.definitions[0]}</div>
+      <div>{answer.hint}</div>
     </div>
   );
 }
