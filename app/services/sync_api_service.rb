@@ -81,7 +81,8 @@ class SyncApiService
     response
   end
 
-  def sync_puzzles(starting_id, page_size: 50, page_limit: nil)
+  def sync_puzzles(starting_id = nil, page_size: 50, page_limit: nil)
+    starting_id ||= Puzzle.last.id
     @logger.info "Starting with #{starting_id}"
     page_count = 0
 
@@ -256,7 +257,8 @@ class SyncApiService
       if value.is_a?(ContextualLogger)
         value
       else
-        ContextualLogger.new("log/sync_api.log", "weekly")
+        ContextualLogger.new("log/sync_api.log", "weekly",
+          global_puts_and: [:unknown, :fatal, :error, :warn, :info],)
       end
     @validator&.logger = value
   end

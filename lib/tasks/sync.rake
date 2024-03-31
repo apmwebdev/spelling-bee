@@ -11,33 +11,30 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 namespace :sync_api do
-  desc "Sync puzzles"
-  # e.g. rake "sync_api:sync_puzzles[2129]"
-  task :sync_puzzles, [:first_puzzle_identifier] => :environment do |_t, args|
-    service = SyncApiService.new
-    service.logger.global_puts_and.push(:info, :warn)
+  desc "Sync latest puzzles starting with [id]"
+  # e.g. rake "sync_api:sync_puzzles_from[2129]"
+  task :sync_puzzles_from, [:first_puzzle_identifier] => :environment do |_t, args|
     first_puzzle_identifier = args[:first_puzzle_identifier].to_i
-    service.sync_puzzles(first_puzzle_identifier)
+    SyncApiService.new.sync_puzzles(first_puzzle_identifier)
+  end
+
+  desc "Sync puzzles after latest"
+  task sync_puzzles: :environment do
+    SyncApiService.new.sync_puzzles
   end
 
   desc "Sync hints"
   task sync_hints: :environment do
-    service = SyncApiService.new
-    service.logger.global_puts_and.push(:info, :warn)
-    service.sync_hints
+    SyncApiService.new.sync_hints
   end
 
   desc "Send OpenAI API request instructions"
   task send_instructions: :environment do
-    service = SyncApiService.new
-    service.logger.global_puts_and.push(:info, :warn)
-    service.send_instructions
+    SyncApiService.new.send_instructions
   end
 
   desc "Sync OpenAI API requests and responses"
   task sync_openai_logs: :environment do
-    service = SyncApiService.new
-    service.logger.global_puts_and.push(:info, :warn)
-    service.sync_openai_logs
+    SyncApiService.new.sync_openai_logs
   end
 end
