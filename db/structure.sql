@@ -991,7 +991,8 @@ CREATE TABLE public.users (
     failed_attempts integer DEFAULT 0 NOT NULL,
     locked_at timestamp(6) without time zone,
     unlock_token character varying,
-    sync_api_key character varying
+    sync_api_key character varying,
+    is_admin boolean DEFAULT false NOT NULL
 );
 
 
@@ -1883,6 +1884,7 @@ ALTER TABLE ONLY public.hint_panels
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240401221213'),
 ('20240307204824'),
 ('20240208055651'),
 ('20240207033421'),

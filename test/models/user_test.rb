@@ -28,6 +28,7 @@ end
 #  locked_at              :datetime
 #  unlock_token           :string
 #  sync_api_key           :string
+#  is_admin               :boolean          default(FALSE), not null
 #
 # Indexes
 #
