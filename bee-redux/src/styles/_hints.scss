@@ -73,12 +73,9 @@
 .HintPanels {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  .App___twoColumns & {
-    gap: 8px;
-  }
-  .App___oneColumn & {
-    gap: 4px;
+  gap: 8px;
+  .App___threeColumns & {
+    gap: 12px;
   }
 }
 
