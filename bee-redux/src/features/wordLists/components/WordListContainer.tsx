@@ -33,6 +33,7 @@ export function WordListContainer({
   emptyListMessage,
   allowPopovers,
   useSpoilers,
+  additionalControls,
 }: {
   wordList: string[] | TGuess[];
   settingsData: WordListContainerSettingsData;
@@ -43,6 +44,7 @@ export function WordListContainer({
   emptyListMessage: string;
   allowPopovers: boolean;
   useSpoilers?: boolean;
+  additionalControls?: ReactElement;
 }) {
   return (
     <div className="WordListContainer">
@@ -52,6 +54,7 @@ export function WordListContainer({
         sortOrder={sortOrder}
         setSortType={setSortType}
         setSortOrder={setSortOrder}
+        additionalControls={additionalControls}
       />
       {wordList.length > 0 ? (
         <WordListScroller

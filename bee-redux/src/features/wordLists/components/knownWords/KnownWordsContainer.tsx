@@ -22,6 +22,7 @@ import { KnownWordsSettings } from "./KnownWordsSettings";
 import { getSortedGuessList } from "@/features/wordLists/util/wordListsUtil";
 import { WordListContainer } from "@/features/wordLists/components/WordListContainer";
 import { selectKnownAnswerGuesses } from "@/features/progress/api/progressSlice";
+import { KnownWordsAdminControls } from "@/features/wordLists/components/knownWords/KnownWordsAdminControls";
 
 export function KnownWordsContainer() {
   const dispatch = useAppDispatch();
@@ -54,6 +55,7 @@ export function KnownWordsContainer() {
         setSortOrder={setKnownWordsSortOrder}
         emptyListMessage="No known words"
         allowPopovers={true}
+        additionalControls={<KnownWordsAdminControls />}
       />
     </div>
   );

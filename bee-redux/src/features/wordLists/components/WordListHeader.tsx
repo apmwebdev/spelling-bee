@@ -17,6 +17,7 @@ import { WordListContainerSettingsData } from "@/features/wordLists/components/W
 import { SettingsToggle } from "@/components/SettingsToggle";
 import { SettingsCollapsible } from "@/components/SettingsCollapsible";
 import { SortType } from "@/features/wordLists/types/wordListTypes";
+import { ReactElement } from "react";
 
 export type WordListSortProps = {
   sortType: SortType;
@@ -27,10 +28,11 @@ export type WordListSortProps = {
 
 export type WordListHeaderProps = WordListSortProps & {
   settingsData: WordListContainerSettingsData;
+  additionalControls?: ReactElement;
 };
 
 export function WordListHeader(props: WordListHeaderProps) {
-  const { settingsData, ...sortProps } = props;
+  const { settingsData, additionalControls, ...sortProps } = props;
   const { isExpanded, toggleIsExpanded, settingsComponent } = settingsData;
   const { sortType, setSortType } = sortProps;
   const generateToggles = () => {
@@ -59,6 +61,7 @@ export function WordListHeader(props: WordListHeaderProps) {
           <span>Sort</span>
           <div className="ToggleGroupRoot">{generateToggles()}</div>
         </div>
+        {additionalControls}
       </div>
       {isExpanded && (
         <SettingsCollapsible isExpanded={isExpanded}>
