@@ -734,6 +734,7 @@ a.ButtonLink, div.ButtonLink {
   border-radius: var(--border-radius);
   overflow: hidden;
   border: 1.5px solid var(--dark-gray-5);
+  width: 100%; //Keep
   align-self: stretch;
 }
 
