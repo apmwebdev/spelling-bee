@@ -54,7 +54,6 @@
 .MobileProgress_rankSection {
   display: grid;
   grid-template-columns: max-content 1fr;
-  max-width: 100%;
   gap: 16px;
   align-items: center;
   justify-content: center;
@@ -192,8 +191,6 @@
 .ProgressRankItem_numbers {
   font-size: var(--smaller-font);
   color: var(--text-secondary);
-  //position: absolute;
-  //top: 20px;
 }
 
 .MobileProgressStatus {
@@ -253,9 +250,6 @@
   padding: 4px 8px 12px;
   align-items: center;
   font-size: var(--small-font);
-  //.App___threeColumns & {
-  //  padding: 16px 8px;
-  //}
   .WordListStatusCount {
     font-weight: bold;
   }
@@ -272,9 +266,6 @@
   flex-direction: column;
   gap: 6px;
   align-items: flex-start;
-  //.App___oneColumn & {
-  //  flex-direction: column;
-  //}
 }
 
 .KWSI_count {
@@ -285,15 +276,12 @@
   display: flex;
   gap: 4px;
   padding-bottom: 1px;
-  //border-bottom: 1px solid var(--text-secondary);
 }
 
 .KnownWordsStatusItem_data {
   display: grid;
   grid-template-columns: auto auto;
   row-gap: 4px;
-  //display: flex;
-  //gap: 6px;
 }
 
 .WordListContainer {
@@ -376,7 +364,6 @@ button.WordPopoverTrigger {
 
 .WordPopover_word___spoiled {
   background-color:  highlight-color-dark($error-hue);
-  //text-decoration-color: bg-color-dark($error-hue);
 }
 
 button.Revealer {

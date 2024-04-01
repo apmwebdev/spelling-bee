@@ -29,10 +29,6 @@ body {
   font-size: 16px;
 }
 
-#Root {
-  width: 100%;
-}
-
 .App {
   --font-size: 16px;
   --large-font: calc(1.11111111 * var(--font-size));
@@ -41,8 +37,6 @@ body {
 
   font-size: var(--font-size);
   text-align: center;
-  display: flex;
-  flex-direction: column;
   position: relative;
   &.App___threeColumns {
     --font-size: 18px;
@@ -50,7 +44,6 @@ body {
 }
 
 .PuzzleMainContainer {
-  width: 100%;
   padding: 8px;
   .App___threeColumns & {
     padding: 12px;
@@ -59,7 +52,6 @@ body {
 
 .PuzzleMain {
   display: grid;
-  width: 100%;
   justify-items: center;
   .App___threeColumns & {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -74,7 +66,6 @@ body {
 
 .PuzzleMain_section {
   width: 100%;
-  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -90,7 +81,7 @@ body {
 }
 
 .SingleColumnTabs {
-  width: 100%;
+  //width: 100%;
   max-width: calc(100vw - 16px);
   &.TabsRoot {
     border: none;
@@ -102,7 +93,6 @@ body {
 
 .NonPuzzleLayout {
   display: flex;
-  width: 100%;
   justify-content: center;
   padding: 16px;
 }
@@ -214,11 +204,6 @@ button {
 
 /***   Collapsible   ***/
 
-.CollapsibleRoot {
-  //display: flex;
-  //flex-direction: column;
-}
-
 .CollapsibleTitleTrigger {
   padding: 8px 24px;
   border: 1.5px solid transparent;
@@ -296,7 +281,6 @@ button {
 
 .DropdownMenuItem_icon {
   font-size: 1.2em;
-  //margin-right: 8px;
 }
 
 .DropdownMenuLabel {
@@ -356,8 +340,6 @@ button {
 /***   Horizontal Scroll Container   ***/
 
 .HorizontalScrollContainer_outer {
-  display: flex;
-  flex-direction: column;
   overflow-x: auto;
 }
 
@@ -482,7 +464,6 @@ input.NumberInput_input {
 a {
   $this-hue: $yellow-hue;
   text-decoration: underline;
-  //color: ui-line-color-dark($this-hue);
   color: var(--yellow-line);
   border-radius: var(--border-radius);
   &:hover {
@@ -504,9 +485,7 @@ a.ButtonLink, div.ButtonLink {
     padding: 6px 16px;
   }
   gap: 4px;
-  //border: 1.5px solid ui-line-color-dark($this-hue);
   border: 1.5px solid var(--yellow-line);
-  //border: 1.5px solid;
   &:hover {
     color: ui-line-color-hover-dark($this-hue);
     border-color: ui-line-color-hover-dark($this-hue);
@@ -536,7 +515,6 @@ a.ButtonLink, div.ButtonLink {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
   background-color: var(--mid-gray);
-  //box-shadow: 0 0 0px 4px $dark-gray;
   &:focus {
     outline: none;
   }
@@ -668,7 +646,6 @@ a.ButtonLink, div.ButtonLink {
   padding: 2px;
   background: #333;
   border-radius: 12px;
-  //transition: background 160ms ease-out;
   &[data-orientation='horizontal'] {
     flex-direction: column;
     height: 12px;
@@ -686,8 +663,6 @@ a.ButtonLink, div.ButtonLink {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
     min-width: 44px;
     min-height: 44px;
   }
@@ -759,7 +734,6 @@ a.ButtonLink, div.ButtonLink {
   border-radius: var(--border-radius);
   overflow: hidden;
   border: 1.5px solid var(--dark-gray-5);
-  width: 100%;
   align-self: stretch;
 }
 
@@ -865,8 +839,6 @@ a.ButtonLink, div.ButtonLink {
   color: var(--dark-gray-1);
   padding: 6px 12px;
   z-index: 3;
-  //border: 1px solid $dark-gray-lighter;
-  //box-shadow: 0px 0px 0px 3px $dark-gray;
 }
 
 .TooltipArrow {

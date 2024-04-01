@@ -38,7 +38,6 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  //padding: 16px;
 }
 
 .Auth_dialogContent {
@@ -150,7 +149,6 @@ input.User_textInput {
 
 .User_actions {
   display: flex;
-  width: 100%;
   justify-content: flex-end;
 }
 
@@ -171,13 +169,11 @@ input.User_textInput {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  //align-self: flex-start;
   align-items: center;
 }
 
 .Auth_moreActionsList {
   display: flex;
-  //grid-template-columns: 1fr 1fr;
   flex-direction: column;
   justify-content: center;
   gap: 12px;

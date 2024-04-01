@@ -205,16 +205,6 @@ button.SettingsToggle {
   }
 }
 
-.SettingsCollapsibleHeaderButton {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 4px;
-}
-
 .HintPanelSettings {
   border: 1.5px solid var(--dark-gray-5);
   margin-bottom: 8px;
@@ -317,8 +307,6 @@ button.SettingsToggle {
 .HintPanelQuickActions {
   position: relative;
   z-index: 2;
-  width: 100%;
-  align-self: flex-start;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -333,9 +321,6 @@ button.SettingsToggle {
     > div {
       display: grid;
     }
-  }
-  > div.HintPanelQuickActions_buttons {
-    display: flex;
   }
 }
 
@@ -389,11 +374,6 @@ button.SettingsToggle {
   gap: 4px;
   padding: 4px 4px 8px;
   font-size: var(--small-font);
-  div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
 }
 
 .LetterPanelKey_trackingValue {

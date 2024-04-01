@@ -35,15 +35,11 @@
   align-items: center;
   gap: 0.6em;
   a {
-    display: flex;
-    justify-content: flex-start;
     padding: 4px 8px;
   }
 }
 
 .HeaderTitle {
-  display: flex;
-  justify-content: flex-start;
   padding: 0.4em;
   font-size: var(--large-font);
   font-weight: bold;
@@ -64,8 +60,6 @@
 
 .PuzzleSearchForm {
   position: relative;
-  display: flex;
-  align-items: center;
 
   .PuzzleSearchForm_searchInput {
     padding-left: 30px; //Not sure why, but this seems to be the correct spacing
