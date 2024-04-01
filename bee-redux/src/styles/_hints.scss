@@ -205,16 +205,6 @@ button.SettingsToggle {
   }
 }
 
-.SettingsCollapsibleHeaderButton {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 4px;
-}
-
 .HintPanelSettings {
   border: 1.5px solid var(--dark-gray-5);
   margin-bottom: 8px;
@@ -317,8 +307,6 @@ button.SettingsToggle {
 .HintPanelQuickActions {
   position: relative;
   z-index: 2;
-  width: 100%;
-  align-self: flex-start;
   display: flex;
   align-items: center;
   justify-content: space-between;
