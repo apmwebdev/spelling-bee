@@ -23,10 +23,10 @@ export function DefinitionPopover({
   return (
     <Popover.Root>
       <Popover.Trigger className="DefinitionPopoverTrigger capitalize">
-        {displayString ?? answer.word}
+        {displayString ?? answer.text}
       </Popover.Trigger>
       <Popover.ContentWithPortal>
-        <span>{answer.definitions[0]}</span>
+        <span>{answer.hint}</span>
       </Popover.ContentWithPortal>
     </Popover.Root>
   );

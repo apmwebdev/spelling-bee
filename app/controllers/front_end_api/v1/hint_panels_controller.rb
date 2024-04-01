@@ -51,10 +51,12 @@ class FrontEndApi::V1::HintPanelsController < FrontEndApi::AuthRequiredControlle
     the_params = hint_panel_update_params
     if the_params[:initial_display_state_attributes] &&
        !@hint_panel.initial_display_state.update(the_params[:initial_display_state_attributes])
+
       raise RecordInvalidError.new(error_base, nil, @hint_panel.initial_display_state.errors)
     end
     if the_params[:current_display_state_attributes] &&
        !@hint_panel.current_display_state.update(the_params[:current_display_state_attributes])
+
       raise RecordInvalidError.new(error_base, nil, @hint_panel.current_display_state.errors)
     end
 
@@ -85,7 +87,8 @@ class FrontEndApi::V1::HintPanelsController < FrontEndApi::AuthRequiredControlle
         :panel_subtype_attributes,
       ),
     )
-      render json: @hint_panel.to_front_end, status: 200
+
+      render json: @hint_panel.to_front_end
     else
       raise RecordInvalidError.new(error_base, nil, @hint_panel.errors)
     end
@@ -106,6 +109,7 @@ class FrontEndApi::V1::HintPanelsController < FrontEndApi::AuthRequiredControlle
 
     if old_index > panels.size || new_index > panels.size || old_index.negative? ||
        new_index.negative? || old_index == new_index || panels.size < 2
+
       raise ApiError, "Invalid move"
     end
 

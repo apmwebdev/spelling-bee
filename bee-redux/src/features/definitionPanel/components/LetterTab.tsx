@@ -33,7 +33,7 @@ export function LetterTab({
           answer={answer}
           definitionPanelData={definitionPanelData}
           isKnown={false}
-          key={answer.word}
+          key={answer.text}
         />
       ))}
     </div>
@@ -51,7 +51,7 @@ export function LetterTab({
               answer={answer}
               definitionPanelData={definitionPanelData}
               isKnown={letterAnswers.known.includes(answer)}
-              key={answer.word}
+              key={answer.text}
             />
           ))}
         </div>
@@ -67,7 +67,7 @@ export function LetterTab({
               answer={answer}
               definitionPanelData={definitionPanelData}
               isKnown={true}
-              key={answer.word}
+              key={answer.text}
             />
           ))}
         </div>

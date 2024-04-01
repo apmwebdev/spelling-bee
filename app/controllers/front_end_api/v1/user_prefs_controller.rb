@@ -42,6 +42,7 @@ class FrontEndApi::V1::UserPrefsController < FrontEndApi::AuthRequiredController
       current_hint_profile_type: params[:current_hint_profile_type],
       current_hint_profile_uuid: params[:current_hint_profile_uuid],
     )
+
       render json: @user_pref.current_hint_profile.to_front_end_complete
     end
   end

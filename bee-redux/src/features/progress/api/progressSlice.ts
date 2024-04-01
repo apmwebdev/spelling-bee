@@ -77,24 +77,24 @@ export const selectProgressShowTotalPoints = (state: RootState) =>
 export const selectKnownAnswers = createSelector(
   [selectAnswers, selectGuessWords],
   (answers, guessWords) =>
-    answers.filter((answer) => guessWords.includes(answer.word)),
+    answers.filter((answer) => guessWords.includes(answer.text)),
 );
 
 export const selectKnownAnswerWords = createSelector(
   [selectKnownAnswers],
-  (answers) => answers.map((answer) => answer.word),
+  (answers) => answers.map((answer) => answer.text),
 );
 
 export const selectRemainingAnswers = createSelector(
   [selectAnswers, selectKnownAnswerWords],
   (answers, knownWords) =>
-    answers.filter((answer) => !knownWords.includes(answer.word)),
+    answers.filter((answer) => !knownWords.includes(answer.text)),
 );
 
 export const selectRemainingAnswerWords = createSelector(
   [selectRemainingAnswers],
   (answers) => {
-    return answers.map((answer) => answer.word);
+    return answers.map((answer) => answer.text);
   },
 );
 
@@ -294,14 +294,14 @@ export const selectAnswersByLetter = createSelector(
     const desc: AnswersByLetter = {};
     const answersByLetterSortable: AnswersByLetterSortable = { asc, desc };
     for (const answer of answers) {
-      const firstLetter = answer.word[0];
+      const firstLetter = answer.text[0];
       if (asc[firstLetter] === undefined) {
         asc[firstLetter] = createLetterAnswers();
         desc[firstLetter] = createLetterAnswers();
       }
       asc[firstLetter].all.push(answer);
       desc[firstLetter].all.unshift(answer);
-      if (knownWords.includes(answer.word)) {
+      if (knownWords.includes(answer.text)) {
         asc[firstLetter].known.push(answer);
         desc[firstLetter].known.unshift(answer);
       } else {
@@ -310,8 +310,8 @@ export const selectAnswersByLetter = createSelector(
       }
     }
     for (const letter in asc) {
-      asc[letter].unknown.sort((a, b) => a.word.length - b.word.length);
-      desc[letter].unknown.sort((a, b) => b.word.length - a.word.length);
+      asc[letter].unknown.sort((a, b) => a.text.length - b.text.length);
+      desc[letter].unknown.sort((a, b) => b.text.length - a.text.length);
     }
     return answersByLetterSortable;
   },
