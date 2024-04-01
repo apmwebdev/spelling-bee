@@ -214,11 +214,6 @@ button {
 
 /***   Collapsible   ***/
 
-.CollapsibleRoot {
-  //display: flex;
-  //flex-direction: column;
-}
-
 .CollapsibleTitleTrigger {
   padding: 8px 24px;
   border: 1.5px solid transparent;
@@ -296,7 +291,6 @@ button {
 
 .DropdownMenuItem_icon {
   font-size: 1.2em;
-  //margin-right: 8px;
 }
 
 .DropdownMenuLabel {
@@ -482,7 +476,6 @@ input.NumberInput_input {
 a {
   $this-hue: $yellow-hue;
   text-decoration: underline;
-  //color: ui-line-color-dark($this-hue);
   color: var(--yellow-line);
   border-radius: var(--border-radius);
   &:hover {
@@ -504,9 +497,7 @@ a.ButtonLink, div.ButtonLink {
     padding: 6px 16px;
   }
   gap: 4px;
-  //border: 1.5px solid ui-line-color-dark($this-hue);
   border: 1.5px solid var(--yellow-line);
-  //border: 1.5px solid;
   &:hover {
     color: ui-line-color-hover-dark($this-hue);
     border-color: ui-line-color-hover-dark($this-hue);
@@ -536,7 +527,6 @@ a.ButtonLink, div.ButtonLink {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
   background-color: var(--mid-gray);
-  //box-shadow: 0 0 0px 4px $dark-gray;
   &:focus {
     outline: none;
   }
@@ -668,7 +658,6 @@ a.ButtonLink, div.ButtonLink {
   padding: 2px;
   background: #333;
   border-radius: 12px;
-  //transition: background 160ms ease-out;
   &[data-orientation='horizontal'] {
     flex-direction: column;
     height: 12px;
@@ -865,8 +854,6 @@ a.ButtonLink, div.ButtonLink {
   color: var(--dark-gray-1);
   padding: 6px 12px;
   z-index: 3;
-  //border: 1px solid $dark-gray-lighter;
-  //box-shadow: 0px 0px 0px 3px $dark-gray;
 }
 
 .TooltipArrow {
