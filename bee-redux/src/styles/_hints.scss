@@ -322,9 +322,6 @@ button.SettingsToggle {
       display: grid;
     }
   }
-  > div.HintPanelQuickActions_buttons {
-    display: flex;
-  }
 }
 
 
@@ -377,11 +374,6 @@ button.SettingsToggle {
   gap: 4px;
   padding: 4px 4px 8px;
   font-size: var(--small-font);
-  div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
 }
 
 .LetterPanelKey_trackingValue {

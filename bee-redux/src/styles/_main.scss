@@ -340,8 +340,6 @@ button {
 /***   Horizontal Scroll Container   ***/
 
 .HorizontalScrollContainer_outer {
-  display: flex;
-  flex-direction: column;
   overflow-x: auto;
 }
 
