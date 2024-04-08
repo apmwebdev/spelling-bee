@@ -14,6 +14,7 @@
 
 $yellow-hue: 50;
 $accent-hue: $yellow-hue + 165;
+//$accent-hue: $yellow-hue;
 $title-hue: $yellow-hue + 0;
 
 $success-hue: 130;
@@ -82,14 +83,20 @@ $error-hue: 0;
   @return hsl($hue, 50%, 12%);
 }
 
-//Interactive element colors
+//Highlight colors
+
+@function highlight($color) {
+  $highlightColor: saturate($color, 15%);
+  $highlightColor: lighten($highlightColor, 15%);
+  @return $highlightColor;
+}
 
 @function highlight-color-dark($hue) {
   @return hsl($hue, 60%, 40%);
 }
 
-@function ui-line-color-dark($hue) {
-  @return hsl($hue, 55%, 70%);
+@function highlight-border-color-dark($hue) {
+  @return hsl($hue, 50%, 55%);
 }
 
 @function ui-line-color-hover-dark($hue) {

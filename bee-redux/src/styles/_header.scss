@@ -62,12 +62,12 @@
   position: relative;
 
   .PuzzleSearchForm_searchInput {
-    padding-left: 30px; //Not sure why, but this seems to be the correct spacing
+    padding-left: 36px; //Not sure why, but this seems to be the correct spacing
   }
 
   .PuzzleSearchForm_searchSymbol {
     position: absolute;
-    left: 8px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
