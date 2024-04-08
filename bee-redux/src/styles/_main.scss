@@ -154,7 +154,7 @@ button {
 .IconButton {
   @include button-mixin;
   font-size: 20px;
-  padding: 4px 12px;
+  padding: 6px 12px;
   &.IconButton_Square {
     padding: 6px;
   }
@@ -366,7 +366,8 @@ input[type="email"]
 {
   $this-hue: $accent-hue;
   width: 25ch;
-  padding: 4px 8px;
+  height: 31px;
+  padding: 4px 12px;
   color: var(--line-mid);
   border-radius: var(--border-radius);
   border: 1.5px solid border-color-dark($this-hue);
@@ -427,6 +428,7 @@ input.NumberInput_input {
   appearance: textfield;
   text-align: center;
   border-radius: 0;
+  height: 35px;
   width: 3em;
   max-width: 3em;
   padding: 6px 8px;
@@ -436,10 +438,16 @@ input.NumberInput_input {
   }
 }
 
+input.NumberInput_input::-webkit-inner-spin-button,
+input.NumberInput_input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .NumberInput_button {
   @include button-mixin;
-  font-size: var(--smaller-font);
-  font-weight: bold;
+  font-size: var(--small-font);
+  //font-weight: bold;
   padding: 6px 8px;
   position: relative;
   &:focus, &:hover {
@@ -482,7 +490,7 @@ a.ButtonLink, div.ButtonLink {
   justify-content: center;
   padding: 4px 12px;
   .App___threeColumns & {
-    padding: 6px 16px;
+    padding: 7px 16px;
   }
   gap: 4px;
   border: 1.5px solid var(--yellow-line);
@@ -549,7 +557,7 @@ a.ButtonLink, div.ButtonLink {
   font-size: var(--small-font);
   border: 1.5px solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
-  padding: 6px 12px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -562,6 +570,7 @@ a.ButtonLink, div.ButtonLink {
     gap: 6px;
   }
   span {
+    line-height: 1;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -694,16 +703,24 @@ a.ButtonLink, div.ButtonLink {
 .SwitchRoot {
   @include basic-hover;
   @include basic-focus;
-  display: block;
-  position: relative;
+  --switch-container-height: 27px;
+  --switch-border-width: 1.5px;
+  --switch-padding: 3px;
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--switch-padding);
   border-radius: 9999px;
   width: 42px;
-  height: 25px;
-  border: 1.5px solid border-color-dark($accent-hue);
+  height: var(--switch-height);
+  border: var(--switch-border-width) solid border-color-dark($accent-hue);
   background-color: bg-color-darker($accent-hue);
   &[data-state='checked'] {
-    background-color: highlight-color-dark($accent-hue);
-    border-color: border-color-dark-hover($accent-hue);
+    background-color: highlight(bg-color-dark($accent-hue));
+    border-color: highlight(border-color-dark($accent-hue));
+    &:hover {
+      border-color: highlight(border-color-dark-hover($accent-hue));
+    }
+    justify-content: flex-end;
   }
   &[data-disabled] {
     background-color: bg-color-dark-disabled($accent-hue);
@@ -713,16 +730,11 @@ a.ButtonLink, div.ButtonLink {
 }
 
 .SwitchThumb {
-  display: block;
-  position: relative;
+  --switch-thumb-diameter: calc(var(--switch-container-height) - calc(2 * var(--switch-border-width)) - calc(2 * var(--switch-padding)));
   border-radius: 9999px;
-  height: 18px;
-  width: 18px;
-  transform: translateX(-2px);
+  height: var(--switch-thumb-diameter);
+  width: var(--switch-thumb-diameter);
   background-color: var(--line-bright);
-  &[data-state='checked'] {
-    transform: translateX(15px);
-  }
   &[data-disabled] {
     background-color: var(--line-disabled);
   }
@@ -792,6 +804,7 @@ a.ButtonLink, div.ButtonLink {
   //--bg-color: #{$dark-gray-2};
   --bg-color: #{bg-color-dark-inactive($this-hue)};
   border-radius: 0;
+  height: 28px;
   padding: 4px 12px;
   background-color: var(--bg-color);
   border: 1.5px solid var(--bg-color);
