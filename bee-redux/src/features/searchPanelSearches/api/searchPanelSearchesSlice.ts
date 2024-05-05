@@ -34,12 +34,13 @@ import {
 import { devLog, errLog } from "@/util";
 import {
   createAddItemThunk,
-  createDataResolverThunk,
+  createDataUnionThunk,
   createSetDataFromIdbThunk,
   createUuidSyncThunk,
   createUuidUpdateReducer,
-} from "@/features/api/util/synchronizer";
-import { DataSourceKeys, Uuid } from "@/features/api/types/apiTypes";
+} from "@/lib/dataSyncFactories/dataSyncFactories";
+import { Uuid } from "@/features/api/types/apiTypes";
+import { DataSourceKeys } from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 const modelDisplayName = "search";
 
@@ -106,7 +107,7 @@ export const syncSearchPanelSearchUuids = createUuidSyncThunk({
 });
 
 export const resolveSearchPanelSearchData =
-  createDataResolverThunk<SearchPanelSearchData>({
+  createDataUnionThunk<SearchPanelSearchData>({
     modelDisplayName: "search",
     actionType: "searchPanelSearches/resolveSearchPanelSearchData",
     primaryDataKey: DataSourceKeys.serverData,
@@ -114,7 +115,7 @@ export const resolveSearchPanelSearchData =
     addBulkServerDataEndpoint:
       searchPanelSearchesApiSlice.endpoints.addBulkSearchPanelSearches,
     bulkAddIdbDataFn: bulkAddIdbSearchPanelSearches,
-    bulkDeleteIdbDataFn: bulkDeleteIdbSearchPanelSearches,
+    bulkDeleteIdbFn: bulkDeleteIdbSearchPanelSearches,
     syncUuidFn: syncSearchPanelSearchUuids,
   });
 

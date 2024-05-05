@@ -4,12 +4,12 @@ import { UserPuzzleAttempt } from "@/features/userPuzzleAttempts/types";
 import { SearchPanelSearchData } from "@/features/searchPanelSearches";
 import { HintProfileData } from "@/features/hintProfiles";
 import { THintPanel } from "@/features/hintPanels";
+import { isUuid } from "@/features/api/types/apiTypes";
+import { devLog, errLog } from "@/util";
 import {
-  isUuid,
   UuidRecord,
   UuidUpdateData,
-} from "@/features/api/types/apiTypes";
-import { devLog, errLog } from "@/util";
+} from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 export class SsbDexie extends Dexie {
   attempts!: Table<UserPuzzleAttempt>;

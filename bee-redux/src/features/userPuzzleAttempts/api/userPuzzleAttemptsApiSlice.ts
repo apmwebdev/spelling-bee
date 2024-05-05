@@ -17,7 +17,7 @@ import { devLog, errLog } from "@/util";
 import {
   UuidRecordStatus,
   UuidUpdateData,
-} from "@/features/api/types/apiTypes";
+} from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 export const userPuzzleAttemptsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

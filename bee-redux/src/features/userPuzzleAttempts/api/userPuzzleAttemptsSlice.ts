@@ -33,14 +33,16 @@ import {
   deleteIdbAttempt,
   updateIdbAttemptUuids,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsIdbApi";
-import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
+import { isUuid, Uuid } from "@/features/api/types/apiTypes";
 import { selectPuzzleId } from "@/features/puzzle";
 import {
   createAddItemThunk,
-  createDataResolverThunk,
+  createDataMergeThunk,
+  createDataUnionThunk,
   createUuidSyncThunk,
   createUuidUpdateReducer,
-} from "@/features/api/util/synchronizer";
+} from "@/lib/dataSyncFactories/dataSyncFactories";
+import { DataSourceKeys } from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 const modelDisplayName = "attempt";
 
@@ -71,11 +73,24 @@ export const userPuzzleAttemptsSlice = createSlice({
     },
     addAttempt: (state, { payload }: PayloadAction<UserPuzzleAttempt>) => {
       if (!isUserPuzzleAttempt(payload)) {
-        errLog("Invalid attempt:", payload);
+        errLog("Invalid addAttempt payload:", payload);
         return;
       }
       state.data.attempts.push(payload);
       state.data.currentAttempt = payload;
+    },
+    addAttempts: (state, { payload }: PayloadAction<UserPuzzleAttempt[]>) => {
+      if (
+        !Array.isArray(payload) ||
+        payload.length < 1 ||
+        !payload.every((item) => isUserPuzzleAttempt(item))
+      ) {
+        errLog("Invalid addAttempts payload:", payload);
+        return;
+      }
+      state.data.attempts.push(...payload);
+      // We check the length of the array right above this...
+      state.data.currentAttempt = payload.at(-1)!;
     },
     deleteAttempt: (state, { payload }: PayloadAction<Uuid>) => {
       if (!isUuid(payload)) {
@@ -117,10 +132,25 @@ export const userPuzzleAttemptsSlice = createSlice({
 export const {
   setAttempts,
   addAttempt,
+  addAttempts,
   deleteAttempt,
   setCurrentAttempt,
   updateAttemptUuids,
 } = userPuzzleAttemptsSlice.actions;
+
+export const selectCurrentAttempt = (state: RootState) =>
+  state.userPuzzleAttempts.data.currentAttempt;
+export const selectCurrentAttemptUuid = createSelector(
+  [selectCurrentAttempt],
+  (attempt) => attempt.uuid,
+);
+export const selectAttempts = (state: RootState) =>
+  state.userPuzzleAttempts.data.attempts;
+
+export const selectAttemptsMemoized = createSelector(
+  [selectAttempts],
+  (attempts) => attempts,
+);
 
 export const generateUserPuzzleAttempt = (
   puzzleId: number,
@@ -159,16 +189,28 @@ export const syncAttemptUuids = createUuidSyncThunk({
   stateUuidUpdateFn: updateAttemptUuids,
 });
 
-export const resolveAttemptsData = createDataResolverThunk<UserPuzzleAttempt>({
+export const loadAttemptsDataUnionThunk =
+  createDataUnionThunk<UserPuzzleAttempt>({
+    modelDisplayName,
+    actionType: "userPuzzleAttempts/loadAttemptsDataUnionThunk",
+    primaryDataKey: DataSourceKeys.serverData,
+    setDataReducer: setAttempts,
+    bulkAddEndpoint: userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts,
+    bulkAddIdbFn: bulkAddIdbAttempts,
+    bulkDeleteIdbFn: bulkDeleteIdbAttempts,
+    syncUuidFn: syncAttemptUuids,
+  });
+
+export const mergeAttemptsDataThunk = createDataMergeThunk<UserPuzzleAttempt>({
   modelDisplayName,
-  actionType: "userPuzzleAttempts/resolveAttemptsData",
-  primaryDataKey: DataSourceKeys.serverData,
-  setDataReducer: setAttempts,
-  addBulkServerDataEndpoint:
-    userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts,
-  bulkAddIdbDataFn: bulkAddIdbAttempts,
-  bulkDeleteIdbDataFn: bulkDeleteIdbAttempts,
+  actionType: "userPuzzleAttempts/mergeAttemptsDataThunk",
+  bulkAddEndpoint: userPuzzleAttemptsApiSlice.endpoints.addBulkAttempts,
+  bulkAddIdbFn: bulkAddIdbAttempts,
+  bulkDeleteIdbFn: bulkDeleteIdbAttempts,
   syncUuidFn: syncAttemptUuids,
+  newDataSourceKey: DataSourceKeys.serverData,
+  mergeDataReducer: addAttempts,
+  dataSelector: selectAttempts,
 });
 
 export const deleteUserPuzzleAttemptThunk = createAsyncThunk(
@@ -199,20 +241,6 @@ export const deleteUserPuzzleAttemptThunk = createAsyncThunk(
     }
     Promise.all([idbResult, rtkqResult]).then(() => devLog("Attempt deleted"));
   },
-);
-
-export const selectCurrentAttempt = (state: RootState) =>
-  state.userPuzzleAttempts.data.currentAttempt;
-export const selectCurrentAttemptUuid = createSelector(
-  [selectCurrentAttempt],
-  (attempt) => attempt.uuid,
-);
-const selectAttempts = (state: RootState) =>
-  state.userPuzzleAttempts.data.attempts;
-
-export const selectAttemptsMemoized = createSelector(
-  [selectAttempts],
-  (attempts) => attempts,
 );
 
 export default userPuzzleAttemptsSlice.reducer;

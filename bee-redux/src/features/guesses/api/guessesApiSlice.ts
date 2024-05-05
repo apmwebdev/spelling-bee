@@ -23,11 +23,11 @@ import {
   RawGuess,
   TGuess,
 } from "@/features/guesses";
+import { devLog } from "@/util";
 import {
   UuidRecordStatus,
   UuidUpdateData,
-} from "@/features/api/types/apiTypes";
-import { devLog } from "@/util";
+} from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 const railsifyGuess = (guess: TGuess): RailsGuessFormat => {
   return {
