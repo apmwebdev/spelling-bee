@@ -18,12 +18,12 @@ import { guessesApiSlice } from "@/features/guesses/api/guessesApiSlice";
 import { isGuess, TGuess } from "@/features/guesses/types/guessTypes";
 import {
   createAddItemThunk,
-  createDataResolverThunk,
+  createDataUnionThunk,
   createSetDataFromIdbThunk,
   createUuidSyncThunk,
   createUuidUpdateReducer,
-} from "@/features/api/util/synchronizer";
-import { DataSourceKeys, isUuid, Uuid } from "@/features/api/types/apiTypes";
+} from "@/lib/dataSyncFactories/dataSyncFactories";
+import { isUuid, Uuid } from "@/features/api/types/apiTypes";
 import {
   addIdbGuess,
   bulkAddIdbGuesses,
@@ -31,6 +31,7 @@ import {
   getIdbAttemptGuesses,
   updateIdbGuessUuids,
 } from "@/features/guesses/api/guessesIdbApi";
+import { DataSourceKeys } from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 const modelDisplayName = "guess";
 
@@ -89,14 +90,14 @@ export const syncGuessUuids = createUuidSyncThunk({
   stateUuidUpdateFn: updateGuessUuids,
 });
 
-export const resolveGuessesData = createDataResolverThunk<TGuess>({
+export const resolveGuessesData = createDataUnionThunk<TGuess>({
   modelDisplayName: "guess",
   actionType: "guesses/resolveGuessesData",
   primaryDataKey: DataSourceKeys.serverData,
   setDataReducer: setGuesses,
   addBulkServerDataEndpoint: guessesApiSlice.endpoints.addBulkGuesses,
   bulkAddIdbDataFn: bulkAddIdbGuesses,
-  bulkDeleteIdbDataFn: bulkDeleteIdbGuesses,
+  bulkDeleteIdbFn: bulkDeleteIdbGuesses,
   syncUuidFn: syncGuessUuids,
 });
 

@@ -21,7 +21,7 @@ import {
 } from "@/features/userData";
 import {
   generateNewAttemptThunk,
-  resolveAttemptsData,
+  loadAttemptsDataUnionThunk,
   selectCurrentAttemptUuid,
   setAttempts,
 } from "@/features/userPuzzleAttempts/api/userPuzzleAttemptsSlice";
@@ -173,7 +173,7 @@ export const getUserPuzzleDataThunk = createAsyncThunk(
       );
       //Resolve attempts
       api.dispatch(
-        resolveAttemptsData({
+        loadAttemptsDataUnionThunk({
           idbData: idbAttemptsResult.value,
           serverData: serverResult.value.data.attempts,
         }),

@@ -16,7 +16,7 @@ import { devLog } from "@/util";
 import {
   UuidRecordStatus,
   UuidUpdateData,
-} from "@/features/api/types/apiTypes";
+} from "@/lib/dataSyncFactories/types/dataSyncFactoryTypes";
 
 const railsifyAddSearchData = (newSearch: SearchPanelSearchData) => {
   return {

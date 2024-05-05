@@ -42,10 +42,10 @@ export type UserBaseData = {
 };
 
 export type UserPuzzleData = {
-  searches: SearchPanelSearchData[];
   attempts: UserPuzzleAttempt[];
   currentAttempt: string;
   guesses: TGuess[];
+  searches: SearchPanelSearchData[];
 };
 
 export const isUserPuzzleData = createTypeGuard<UserPuzzleData>(
@@ -73,5 +73,7 @@ export type FullUserPuzzleDataResponse = {
 export const isFullUserPuzzleDataResponse = (
   response: any,
 ): response is FullUserPuzzleDataResponse => {
-  return isUserPuzzleDataResponse(response) && "data" in response;
+  if (!isUserPuzzleDataResponse(response)) return false;
+  if (!isUserPuzzleData(response.data)) return false;
+  return response.data.attempts.length > 0;
 };
