@@ -12,13 +12,13 @@
 
 # Utility functions for working with booleans
 module BooleanUtils
-  # Coerces a non-nil value to a boolean
+  # Coerces a non-nil value to a boolean. Thus the return can be true, false, or nil.
   # @param value [any] The value to coerce (or return as-is if it's a Boolean or nil)
   # @param default [Boolean, nil] What the value should be coerced to if it's not a Boolean or nil
   # @return [Boolean, nil]
-  def bool_or_nil(value, default: false)
+  def to_ternary(value, default: false)
     return value if value.nil? || value == true || value == false
-    return default
+    default
   end
 
   ##
@@ -37,7 +37,7 @@ module BooleanUtils
     # Coerce non-nil, non-boolean values to true if default == true. Boolean values are unaffected
     return !!value if default
     # Otherwise, coerce values to false
-    return value == true
+    value == true
   end
 
   def bool?(value)
