@@ -21,6 +21,46 @@ module BasicValidator
     end
   end
 
+  def some_valid?(args, display_name: "value", error_class: TypeError, logger_override: nil,
+                  should_log: true)
+    validate_multiple(args, display_name:, error_class:, logger_override:, should_log:,
+      should_raise: false, all_must_be_valid: false,)
+  end
+
+  def some_valid!(args, display_name: "value", error_class: TypeError, logger_override: nil,
+                  should_log: true)
+    validate_multiple(args, display_name:, error_class:, logger_override:, should_log:,
+      should_raise: true, all_must_be_valid: false,)
+  end
+
+  def validate_multiple(args, display_name:, error_class:, logger_override:, should_log:,
+                        should_raise:, all_must_be_valid:)
+    method_logger = determine_logger!(@logger, logger_override)
+    result = ValidationResultData.new(valid: all_must_be_valid, messages: [])
+
+    args.each do |arg|
+      method_name = arg[0]
+      positional_args = arg[1]
+      keyword_args = arg[2] || {}
+      res = send(method_name, *positional_args, **keyword_args, should_log: false)
+      if all_must_be_valid && !res.valid?
+        result.valid = false
+        result.messages << "#{method_name} invalid: #{res.messages.join(', ')}"
+      elsif !all_must_be_valid && res.valid?
+        result.valid = true
+      elsif !all_must_be_valid && !res.valid?
+        result.messages << "#{method_name} invalid: #{res.messages.join(', ')}"
+      end
+      # Do nothing if all_must_be_valid and res.valid?
+    end
+    return validation_result(result, should_log) if result.valid?
+
+    message_string = "Invalid #{display_name}: #{result.messages.join(', ')}"
+    raise error_class, message_string if should_raise
+    method_logger&.error(message_string) if should_log
+    validation_result(result, should_log)
+  end
+
   # Validates a value, returning true if valid and false if invalid.
   # @see #validate_type for more information.
   def valid_type?(value, type, validation_fn = nil, error_class: TypeError,

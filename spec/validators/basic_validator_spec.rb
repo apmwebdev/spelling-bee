@@ -17,6 +17,22 @@ RSpec.describe BasicValidator do
     @logger = ContextualLogger.new(IO::NULL, global_puts_and: false)
   end
 
+  describe "#some_valid?" do
+    before(:all) do
+      @helper = BasicValidatorHelper.new(logger: @logger)
+    end
+
+    it "properly evaluates an array of validations" do
+      result = @helper.some_valid?([
+        [:valid_array?, [[], Integer]],
+        [:valid_type?, [5, Integer]],
+      ], should_log: false,)
+
+      expect(result.valid?).to be(true)
+      expect(result.messages.length).to eq(0)
+    end
+  end
+
   describe "#valid_type?, #valid_type!, and #validate_type" do
     before(:all) do
       @helper = BasicValidatorHelper.new(logger: @logger)
