@@ -43,6 +43,10 @@ module BooleanUtils
   def bool?(value)
     value == true || value == false # rubocop:disable Style/MultipleComparison
   end
+
+  def ternary?(value)
+    bool?(value) || value.nil?
+  end
 end
 
 # Make it so that true and false are Booleans
