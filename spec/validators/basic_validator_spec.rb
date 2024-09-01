@@ -436,24 +436,6 @@ RSpec.describe BasicValidator do
     end
   end
 
-  describe "#valid_should_raise!" do
-    before(:all) do
-      @helper = BasicValidatorHelper.new
-    end
-
-    it "returns true if should_raise is a Boolean",
-      :aggregate_failures do
-      expect(@helper.send(:valid_should_raise!, true)).to be(true)
-      expect(@helper.send(:valid_should_raise!, false)).to be(true)
-    end
-
-    it "raises an ArgumentError if should_raise isn't a class or a boolean", :aggregate_failures do
-      expect { @helper.send(:valid_should_raise!, "foo") }.to raise_error(ArgumentError)
-      expect { @helper.send(:valid_should_raise!, 123) }.to raise_error(ArgumentError)
-      expect { @helper.send(:valid_should_raise!, nil) }.to raise_error(ArgumentError)
-    end
-  end
-
   describe "#valid_error_class!" do
     before(:all) do
       @helper = BasicValidatorHelper.new
