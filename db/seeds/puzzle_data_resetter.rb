@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-module DeletePuzzleData
+module PuzzleDataResetter
   def self.delete_puzzle_data
     Answer.delete_all
     ActiveRecord::Base.connection.reset_pk_sequence!("answers")

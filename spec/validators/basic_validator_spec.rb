@@ -17,6 +17,22 @@ RSpec.describe BasicValidator do
     @logger = ContextualLogger.new(IO::NULL, global_puts_and: false)
   end
 
+  describe "#some_valid?" do
+    before(:all) do
+      @helper = BasicValidatorHelper.new(logger: @logger)
+    end
+
+    it "properly evaluates an array of validations" do
+      result = @helper.some_valid?([
+        [:valid_array?, [[], Integer]],
+        [:valid_type?, [5, Integer]],
+      ], should_log: false,)
+
+      expect(result.valid?).to be(true)
+      expect(result.messages.length).to eq(0)
+    end
+  end
+
   describe "#valid_type?, #valid_type!, and #validate_type" do
     before(:all) do
       @helper = BasicValidatorHelper.new(logger: @logger)
@@ -433,24 +449,6 @@ RSpec.describe BasicValidator do
       validation_fn = ->(arg) { arg }
       expect { @helper.send(:valid_validation_fn!, validation_fn) }.not_to raise_error
       expect(@helper.send(:valid_validation_fn!, validation_fn)).to be(true)
-    end
-  end
-
-  describe "#valid_should_raise!" do
-    before(:all) do
-      @helper = BasicValidatorHelper.new
-    end
-
-    it "returns true if should_raise is a Boolean",
-      :aggregate_failures do
-      expect(@helper.send(:valid_should_raise!, true)).to be(true)
-      expect(@helper.send(:valid_should_raise!, false)).to be(true)
-    end
-
-    it "raises an ArgumentError if should_raise isn't a class or a boolean", :aggregate_failures do
-      expect { @helper.send(:valid_should_raise!, "foo") }.to raise_error(ArgumentError)
-      expect { @helper.send(:valid_should_raise!, 123) }.to raise_error(ArgumentError)
-      expect { @helper.send(:valid_should_raise!, nil) }.to raise_error(ArgumentError)
     end
   end
 

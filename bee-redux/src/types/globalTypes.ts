@@ -194,6 +194,25 @@ export const isTypeValidatorWithOptions = (
 
 export type TypeValidator = TypeValidatorBase | TypeValidatorWithOptions;
 
+/** Reusable function for testing a prop and validator. Defined here for readability, but only used
+ * in the function returned from createTypeGuard, below.
+ */
+const propIsValid = ({
+  validator,
+  prop,
+}: {
+  validator: TypeValidator;
+  prop: any;
+}) => {
+  if (typeof validator === "string") {
+    //If the validator is a string, the prop must be the `typeof` that string
+    if (!(typeof prop === validator)) return false;
+  } else if (typeof validator === "function") {
+    if (!validator(prop)) return false;
+  }
+  return true;
+};
+
 /** A factory function to make creating type guards easier. Give it an array of properties +
  * validation for those properties (`validators`) to create the type guard function, then pass
  * an object (`toTest`) to the created type guard to type check that object.
@@ -204,42 +223,25 @@ export type TypeValidator = TypeValidatorBase | TypeValidatorWithOptions;
 export const createTypeGuard = <ValidType>(
   ...validators: [string, TypeValidator][]
 ) => {
-  //The factory function
-
-  //Reusable function for testing a prop and validator. This is defined here, but only used in the
-  // returned type guard function, below.
-  const propIsValid = ({
-    validator,
-    prop,
-  }: {
-    validator: TypeValidator;
-    prop: any;
-  }) => {
-    if (typeof validator === "string") {
-      //If the validator is a string, the prop must be the `typeof` that string
-      if (!(typeof prop === validator)) return false;
-    } else if (typeof validator === "function") {
-      if (!validator(prop)) return false;
-    }
-    return true;
-  };
-
   const errorBase = "Custom type guard error";
+  // Retrofitting a logging option for when something fails a type check for debugging purposes. I
+  // realize this is a pretty jank way to do it, but doing something better would a) be more
+  // complicated, and b) require a lot of refactoring.
+  const andLog = validators.at(-1)?.[0] === "__andLog";
   const invalidate = (...toLog: any[]) => {
     errLog(errorBase, ...toLog);
   };
 
-  //The generated type guard function
   return (toTest: any): toTest is ValidType => {
     //This app doesn't use object constructors or classes, so toTest should be a plain object
     if (!isPlainObject(toTest)) {
-      // invalidate("toTest isn't a plain object:", toTest);
+      if (andLog) invalidate("toTest isn't a plain object:", toTest);
       return false;
     }
     for (const [key, value] of validators) {
       if (isTypeValidatorWithOptions(value) && !value.isOptional) {
         if (!(key in toTest)) {
-          // invalidate(`Missing key ${key}`);
+          if (andLog) invalidate(`Missing key ${key}`);
           return false;
         }
         if (value.validator === null) continue;
@@ -249,7 +251,7 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          // invalidate(`${key} is invalid:`, toTest[key]);
+          if (andLog) invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       } else if (isTypeValidatorWithOptions(value) && value.isOptional) {
@@ -260,12 +262,12 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          // invalidate(`${key} is invalid:`, toTest[key]);
+          if (andLog) invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       } else {
         if (!(key in toTest)) {
-          // invalidate(`Missing key ${key}`);
+          if (andLog) invalidate(`Missing key ${key}`);
           return false;
         }
         if (value === null) continue;
@@ -275,7 +277,7 @@ export const createTypeGuard = <ValidType>(
             prop: toTest[key],
           })
         ) {
-          // invalidate(`${key} is invalid:`, toTest[key]);
+          if (andLog) invalidate(`${key} is invalid:`, toTest[key]);
           return false;
         }
       }

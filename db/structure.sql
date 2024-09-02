@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -162,13 +169,13 @@ ALTER SEQUENCE public.default_hint_profiles_id_seq OWNED BY public.default_hint_
 
 CREATE TABLE public.definition_panels (
     id bigint NOT NULL,
-    hide_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT false NOT NULL,
+    revealed_letters integer DEFAULT 1 NOT NULL,
     reveal_length boolean DEFAULT true NOT NULL,
     show_obscurity boolean DEFAULT false NOT NULL,
     sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    revealed_letters integer DEFAULT 1 NOT NULL,
     separate_known boolean DEFAULT true NOT NULL,
     uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
@@ -243,9 +250,9 @@ CREATE TABLE public.hint_panels (
     status_tracking character varying NOT NULL,
     panel_subtype_type character varying NOT NULL,
     panel_subtype_id bigint NOT NULL,
+    display_index integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    display_index integer,
     uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     hint_profile_uuid uuid,
     initial_display_state_uuid uuid,
@@ -283,7 +290,7 @@ CREATE TABLE public.letter_panels (
     output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
     number_of_letters integer DEFAULT 1 NOT NULL,
     letters_offset integer DEFAULT 0 NOT NULL,
-    hide_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT false NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     uuid uuid DEFAULT gen_random_uuid() NOT NULL,
@@ -349,14 +356,14 @@ ALTER SEQUENCE public.nyt_puzzles_id_seq OWNED BY public.nyt_puzzles.id;
 
 CREATE TABLE public.obscurity_panels (
     id bigint NOT NULL,
-    hide_known boolean DEFAULT true NOT NULL,
+    hide_known boolean DEFAULT false NOT NULL,
+    revealed_letters integer DEFAULT 1 NOT NULL,
     separate_known boolean DEFAULT false NOT NULL,
     reveal_length boolean DEFAULT true NOT NULL,
     click_to_define boolean DEFAULT false NOT NULL,
     sort_order public.sort_order_options DEFAULT 'asc'::public.sort_order_options NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    revealed_letters integer,
     uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     CONSTRAINT positive_revealed_letters CHECK ((revealed_letters > 0))
 );
@@ -786,12 +793,12 @@ CREATE TABLE public.search_panel_searches (
     id bigint NOT NULL,
     search_panel_id bigint NOT NULL,
     user_puzzle_attempt_id bigint NOT NULL,
+    search_string character varying NOT NULL,
     location public.search_panel_locations DEFAULT 'anywhere'::public.search_panel_locations NOT NULL,
     output_type public.substring_hint_output_types DEFAULT 'letters_list'::public.substring_hint_output_types NOT NULL,
     letters_offset integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    search_string character varying,
     uuid uuid DEFAULT gen_random_uuid() NOT NULL,
     search_panel_uuid uuid,
     user_puzzle_attempt_uuid uuid,
@@ -909,10 +916,10 @@ CREATE TABLE public.user_prefs (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
     color_scheme public.user_color_scheme DEFAULT 'auto'::public.user_color_scheme NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
     current_hint_profile_type character varying,
     current_hint_profile_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     current_hint_profile_uuid uuid
 );
 
@@ -1899,15 +1906,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231011153938'),
 ('20231002213304'),
 ('20231001001349'),
-('20230913100015'),
 ('20230912212040'),
-('20230912210851'),
 ('20230912194527'),
 ('20230911051856'),
 ('20230828115156'),
 ('20230828060858'),
 ('20230818004354'),
-('20230816121754'),
 ('20230815073035'),
 ('20230815065033'),
 ('20230815064457'),
@@ -1924,17 +1928,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230804013314'),
 ('20230804013313'),
 ('20230803205319'),
-('20230803182425'),
 ('20230726045405'),
-('20230726043150'),
-('20230726041910'),
 ('20230726041156'),
 ('20230726033728'),
 ('20230718075800'),
 ('20230718072005'),
 ('20230718071300'),
 ('20230718061549'),
-('20230718042515'),
-('20230718021604'),
-('20230606230237');
+('20230718042515');
 

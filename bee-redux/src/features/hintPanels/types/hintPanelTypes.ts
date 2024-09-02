@@ -236,6 +236,7 @@ export const isHintPanel = createTypeGuard<THintPanel>(
   ["currentDisplayState", isPlainObject],
   ["statusTracking", isEnumValue(StatusTrackingKeys)],
   ["typeData", isHintPanelTypeData],
+  ["__andLog", null],
 );
 
 export type HintPanelCreateForm = {

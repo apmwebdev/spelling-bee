@@ -39,7 +39,7 @@ end
 #  output_type       :enum             default("letters_list"), not null
 #  number_of_letters :integer          default(1), not null
 #  letters_offset    :integer          default(0), not null
-#  hide_known        :boolean          default(TRUE), not null
+#  hide_known        :boolean          default(FALSE), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  uuid              :uuid             not null

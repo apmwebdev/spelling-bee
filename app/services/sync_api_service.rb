@@ -143,21 +143,10 @@ class SyncApiService
   end
 
   def create_answers(puzzle, answer_words)
-    answer_words.each do |text, hint|
-      word = Word.create_or_find_by({ text: })
-      if word.frequency.nil?
-        @logger.debug "Fetching datamuse data for \"#{text}\"."
-        datamuse_data = DatamuseApiService.get_word_data(text)
-        word.frequency = datamuse_data[:frequency]
-        word.definitions = datamuse_data[:definitions]
-        word.save!
-      else
-        @logger.debug "Datamuse data already exists for \"#{text}\"."
-      end
-      if word.hint.nil?
-        word.hint = hint
-        word.save!
-      end
+    answer_words.each do |word_data|
+      text = word_data[:text]
+      word = Word.create_or_find_by!(text:)
+      word.update!(word_data.exclude(:text))
       Answer.create!({ puzzle:, word_text: text })
     end
   end

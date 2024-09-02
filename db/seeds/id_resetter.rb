@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # Module for resetting a primary key for a given model in Postgres
-module ResetId
+module IdResetter
   def self.reset(*to_reset)
     to_reset.each do |item_to_reset|
       if item_to_reset.is_a?(String)

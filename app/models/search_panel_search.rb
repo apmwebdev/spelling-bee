@@ -39,12 +39,12 @@ end
 #  id                       :bigint           not null, primary key
 #  search_panel_id          :bigint           not null
 #  user_puzzle_attempt_id   :bigint           not null
+#  search_string            :string           not null
 #  location                 :enum             default("anywhere"), not null
 #  output_type              :enum             default("letters_list"), not null
 #  letters_offset           :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  search_string            :string
 #  uuid                     :uuid             not null
 #  search_panel_uuid        :uuid
 #  user_puzzle_attempt_uuid :uuid

@@ -11,7 +11,7 @@
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
 # :nodoc:
-module SeedStatusTrackingOptions
+module StatusTrackingOptionSeeder
   def self.seed
     StatusTrackingOption.create!(key: "found_of_total", title: "Found of Total")
     StatusTrackingOption.create!(key: "remaining_of_total", title: "Remaining of Total")

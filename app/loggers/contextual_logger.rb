@@ -175,10 +175,10 @@ class ContextualLogger < Logger
     standard_error = options[:standard_error].is_a?(StandardError) ? options[:standard_error] : nil
     # Log to STDOUT instead of log file. Default to false, can be nil. If set, overrides global
     # value (@global_puts_only)
-    puts_only = bool_or_nil(options[:puts_only])
+    puts_only = to_ternary(options[:puts_only])
     # Log to STDOUT _and_ log file. Default to false, can be nil. If set, overrides global value
     # (@global_puts_and)
-    puts_and = bool_or_nil(options[:puts_and])
+    puts_and = to_ternary(options[:puts_and])
 
     message = msg.to_s
     if with_trace
