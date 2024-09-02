@@ -12,7 +12,7 @@
 
 # Seed the words table of the database. Note that this will attempt to seed all
 # ~600,000 words. Do not do this unless you REALLY want to do this.
-module WordsSeederService
+module WordSeeder
   def self.seed_from_file
     File.foreach("db/seeds/words_alpha.txt") do |line|
       Word.create({ text: line.strip })

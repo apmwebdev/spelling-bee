@@ -13,7 +13,7 @@
 require "logger"
 
 # Seed the excluded words array for existing puzzles
-class SeedExcludedWords
+class ExcludedWordSeeder
   # :nodoc:
   class ExcludedWordsSeederLogger < Logger
     def initialize
