@@ -94,7 +94,7 @@ class Puzzle < ApplicationRecord
     {
       puzzle_data: self,
       origin_data: origin,
-      answer_words: words.pluck(:text, :hint),
+      answer_words: words.map(&:to_sync_api),
     }
   end
 end

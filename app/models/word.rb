@@ -20,6 +20,10 @@ class Word < ApplicationRecord
   def to_front_end
     { text:, frequency:, definitions:, hint: }
   end
+
+  def to_sync_api
+    to_front_end
+  end
 end
 
 # == Schema Information
