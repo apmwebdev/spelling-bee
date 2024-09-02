@@ -2,8 +2,11 @@
 
 # Sets up a new dev environment from scratch
 class DevBootstrapper
+  attr_reader :logger
+
   def initialize
     @logger = ContextualLogger.new("log/dev_bootstrapper.log", global_puts_only: true)
+    @sync_api = SyncApiService.new(logger: @logger)
   end
 
   def run
@@ -15,19 +18,26 @@ class DevBootstrapper
     # For #seed_from_prod, you must have a sync API key
     seed_static_data
     seed_hint_profiles_and_admin_user!
-    seed_from_prod
+    seed_puzzles
+    seed_openai_logs
   rescue StandardError => e
     @logger.exception(e, :fatal)
   end
 
-  def seed_from_prod
-    service = SyncApiService.new(logger:)
-    service.sync_puzzles(1, page_size: 200)
-    service.sync_openai_logs
-  end
-
   def seed_hint_profiles_and_admin_user!
     HintProfileSeeder.new(logger:).seed!(seed_user_if_needed: true)
+  end
+
+  def seed_openai_logs
+    @sync_api.sync_openai_logs
+  end
+
+  def seed_puzzles
+    @sync_api.sync_puzzles(1, page_size: 200)
+  end
+
+  def seed_puzzle_test
+    @sync_api.sync_puzzles(1, page_size: 5, page_limit: 1)
   end
 
   def seed_static_data

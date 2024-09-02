@@ -146,7 +146,7 @@ class SyncApiService
     answer_words.each do |word_data|
       text = word_data[:text]
       word = Word.create_or_find_by!(text:)
-      word.update!(word_data.exclude(:text))
+      word.update!(word_data.except(:text))
       Answer.create!({ puzzle:, word_text: text })
     end
   end

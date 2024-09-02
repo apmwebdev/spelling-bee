@@ -45,8 +45,22 @@ class SyncApiService
       ], display_name: "puzzle_data",)
     end
 
-    def valid_synced_puzzle_words?(arr)
-      valid_array?(arr, Array, ->(p) { p.length == 2 }, display_name: "answer_words")
+    def valid_synced_puzzle_words?(json)
+      valid_array!(
+        json,
+        Hash,
+        ->(p) { valid_synced_puzzle_word?(p) },
+        can_be_empty: false,
+      )
+    end
+
+    def valid_synced_puzzle_word?(json)
+      valid_hash?(json, [
+        [:text, String],
+        [:frequency, String],
+        [:definitions, Array],
+        [:hint, String],
+      ], display_name: "answer_words",)
     end
 
     def valid_origin_data?(json)

@@ -12,6 +12,8 @@
 
 # Seed default hint profiles and user hint profiles for testing
 class HintProfileSeeder
+  attr_reader :logger
+
   def initialize(logger: nil, rethrow: false)
     @logger = logger || ContextualLogger.new(global_puts_only: true)
     @rethrow = rethrow

@@ -227,7 +227,11 @@ export const createTypeGuard = <ValidType>(
   // Retrofitting a logging option for when something fails a type check for debugging purposes. I
   // realize this is a pretty jank way to do it, but doing something better would a) be more
   // complicated, and b) require a lot of refactoring.
-  const andLog = validators.at(-1)?.[0] === "__andLog";
+  let andLog = false
+  if (validators.at(-1)?.[0] === "__andLog") {
+    andLog = true
+    validators.pop()
+  }
   const invalidate = (...toLog: any[]) => {
     errLog(errorBase, ...toLog);
   };
