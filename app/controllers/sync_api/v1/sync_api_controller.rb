@@ -27,7 +27,7 @@ class SyncApi::V1::SyncApiController < ApplicationController
   def authenticate_sync_api_user!
     error_base = "Sync API authentication failed"
     submitted_key = request.headers["Authorization"]&.split(" ")&.last
-    raise ApiError.new("#{error_base}: Invalid API key", 400) unless submitted_key
+    raise ApiError.new("#{error_base}: Invalid API key", 401) unless submitted_key
 
     hashed_submitted_key = SyncApiService::Authenticator.hash_key(submitted_key)
 
