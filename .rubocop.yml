@@ -39,6 +39,8 @@ Metrics/ParameterLists:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/ModuleFunction:
