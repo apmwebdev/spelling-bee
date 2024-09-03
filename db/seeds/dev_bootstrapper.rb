@@ -6,7 +6,6 @@ class DevBootstrapper
 
   def initialize
     @logger = ContextualLogger.new("log/dev_bootstrapper.log", global_puts_only: true)
-    @sync_api = SyncApiService.new(logger: @logger)
   end
 
   def run
@@ -29,15 +28,15 @@ class DevBootstrapper
   end
 
   def seed_openai_logs
-    @sync_api.sync_openai_logs
+    SyncApiService::OpenaiLogSyncer.new(logger:).sync_openai_logs
   end
 
   def seed_puzzles
-    @sync_api.sync_puzzles(1, page_size: 200)
+    SyncApiService::PuzzleSyncer.new(logger:).sync_puzzles(1, page_size: 200)
   end
 
   def seed_puzzle_test
-    @sync_api.sync_puzzles(1, page_size: 5, page_limit: 1)
+    SyncApiService::PuzzleSyncer.new(logger:).sync_puzzles(1, page_size: 5, page_limit: 1)
   end
 
   def seed_static_data

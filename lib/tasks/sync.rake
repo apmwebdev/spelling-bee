@@ -14,27 +14,37 @@ namespace :sync_api do
   desc "Sync latest puzzles starting with [id]"
   # e.g. rake "sync_api:sync_puzzles_from[2129]"
   task :sync_puzzles_from, [:first_puzzle_identifier] => :environment do |_t, args|
-    first_puzzle_identifier = args[:first_puzzle_identifier].to_i
-    SyncApiService.new.sync_puzzles(first_puzzle_identifier)
+    puts "Must be refactored. Exiting"
+    return
+    # first_puzzle_identifier = args[:first_puzzle_identifier].to_i
+    # SyncApiService.new.sync_puzzles(first_puzzle_identifier)
   end
 
   desc "Sync puzzles after latest"
   task sync_puzzles: :environment do
-    SyncApiService.new.sync_puzzles
+    puts "Must be refactored. Exiting"
+    return
+    # SyncApiService.new.sync_puzzles
   end
 
   desc "Sync hints"
   task sync_hints: :environment do
-    SyncApiService.new.sync_hints
+    puts "Must be refactored. Exiting"
+    return
+    # SyncApiService.new.sync_hints
   end
 
   desc "Send OpenAI API request instructions"
   task send_instructions: :environment do
-    SyncApiService.new.send_instructions
+    puts "Must be refactored. Exiting"
+    return
+    # SyncApiService.new.send_instructions
   end
 
   desc "Sync OpenAI API requests and responses"
   task sync_openai_logs: :environment do
-    SyncApiService.new.sync_openai_logs
+    puts "Must be refactored. Exiting"
+    return
+    # SyncApiService.new.sync_openai_logs
   end
 end
