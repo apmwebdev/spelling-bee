@@ -2,30 +2,7 @@
 
 module SyncApiService
   # Syncs logs of requests to the OpenAI API
-  class OpenaiLogSyncer < SyncApiService::Client
-    def send_openai_log_request(requests_offset, responses_offset)
-      valid_type!(requests_offset, Integer, ->(p) { !p.negative? })
-      valid_type!(responses_offset, Integer, ->(p) { !p.negative? })
-      path = "/openai_logs?requests_offset=#{requests_offset}&responses_offset=#{responses_offset}"
-      response = send_get_request(path)
-      response[:data]
-    end
-
-    def sync_openai_log_batch
-      requests_offset = OpenaiHintRequest.count
-      responses_offset = OpenaiHintResponse.count
-      @logger.info "Starting batch. Page size: 100 each, requests_offset: #{requests_offset}, "\
-        "responses_offset: #{responses_offset}"
-      result = send_openai_log_request(requests_offset, responses_offset)
-      OpenaiHintRequest.insert_all!(result[:requests])
-      OpenaiHintResponse.insert_all!(result[:responses])
-      requests_count = result[:requests].length
-      responses_count = result[:responses].length
-      @logger.info "Batch complete. requests_count: #{requests_count}, responses_count: "\
-        "#{responses_count}"
-      { requests_count:, responses_count: }
-    end
-
+  class OpenaiLogSyncer < SyncApiService::Syncer
     def sync_openai_logs
       @logger.info "Starting OpenAI API request and response sync..."
       loop do
@@ -35,6 +12,30 @@ module SyncApiService
           break
         end
       end
+    rescue StandardError => e
+      @logger.exception e, :fatal
+    end
+
+    private
+
+    def send_get_openai_logs(requests_offset, responses_offset)
+      path = "/openai_logs?requests_offset=#{requests_offset}&responses_offset=#{responses_offset}"
+      @client.send_get_request(path)
+    end
+
+    def sync_openai_log_batch
+      requests_offset = OpenaiHintRequest.count
+      responses_offset = OpenaiHintResponse.count
+      @logger.info "Starting batch. Page size: 100 each, requests_offset: #{requests_offset}, "\
+        "responses_offset: #{responses_offset}"
+      result = send_get_openai_logs(requests_offset, responses_offset)[:data]
+      OpenaiHintRequest.insert_all!(result[:requests])
+      OpenaiHintResponse.insert_all!(result[:responses])
+      requests_count = result[:requests].length
+      responses_count = result[:responses].length
+      @logger.info "Batch complete. requests_count: #{requests_count}, responses_count: "\
+        "#{responses_count}"
+      { requests_count:, responses_count: }
     end
   end
 end

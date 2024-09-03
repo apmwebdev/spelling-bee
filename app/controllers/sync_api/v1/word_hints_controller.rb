@@ -12,7 +12,7 @@
 
 # TODO: Add docs
 class SyncApi::V1::WordHintsController < SyncApi::V1::SyncApiController
-  def hint_batch
+  def index
     page = params["page"].to_i
     raise ApiError, "Invalid page" if page.negative? || page > 100
 

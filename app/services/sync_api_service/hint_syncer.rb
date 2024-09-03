@@ -3,26 +3,6 @@
 module SyncApiService
   # Syncs just word hints
   class HintSyncer < SyncApiService::Client
-    def send_hint_request(page)
-      path = "/word_hints/#{page}"
-      send_get_request(path)
-    end
-
-    def sync_hint_batch(page)
-      @logger.info "Starting hint batch, page: #{page}"
-      response = send_hint_request(page)
-
-      @validator.valid_hint_response!(response)
-
-      response[:data].each do |word_hint|
-        word = Word.find(word_hint[:word])
-        word.hint = word_hint[:hint]
-        word.save!
-      end
-      @logger.info "Batch complete"
-      response
-    end
-
     def sync_hints
       @logger.info "Starting hint sync..."
       page = 0
@@ -39,6 +19,28 @@ module SyncApiService
       end
     rescue StandardError => e
       @logger.exception(e, :fatal)
+    end
+
+    private
+
+    def send_get_hints(page)
+      path = "/word_hints?page=#{page}"
+      @client.send_get_request(path)
+    end
+
+    def sync_hint_batch(page)
+      @logger.info "Starting hint batch, page: #{page}"
+      response = send_get_hints(page)
+
+      @validator.valid_hint_response!(response)
+
+      response[:data].each do |word_hint|
+        word = Word.find(word_hint[:word])
+        word.hint = word_hint[:hint]
+        word.save!
+      end
+      @logger.info "Batch complete"
+      response
     end
   end
 end

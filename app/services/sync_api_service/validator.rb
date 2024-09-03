@@ -10,7 +10,7 @@
 #
 # See the LICENSE file or https://www.gnu.org/licenses/ for more details.
 
-class SyncApiService
+module SyncApiService
   # Validates puzzle data returned from the Sync API
   class Validator < ExternalServiceValidatorBase
     attr_accessor :puzzle_validator

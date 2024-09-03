@@ -13,9 +13,9 @@
 # Controller for sending puzzle data for the Sync API (API for syncing data between
 # different instances of the app). This controller is used by the instance acting
 # as the host, receiving the request.
-class SyncApi::V1::PuzzleDataController < SyncApi::V1::SyncApiController
-  # GET .../puzzle_data/:starting_id?limit=:limit
-  def recent_puzzles
+class SyncApi::V1::PuzzlesController < SyncApi::V1::SyncApiController
+  # GET .../puzzles?starting_id=#&limit=#
+  def index
     return_data = []
     limit = params[:limit].to_i
     puzzle_id = params[:starting_id].to_i

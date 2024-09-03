@@ -12,23 +12,34 @@
 
 # TODO: Add doc
 class SyncApi::V1::OpenaiHintInstructionsController < SyncApi::V1::SyncApiController
-  def count
-    render json: { data: OpenaiHintInstruction.count }
+  def index
+    offset = params[:offset]
+    data = OpenaiHintInstruction
+      .offset(offset)
+      .limit(500)
+      .map(&:to_sync_api)
+    render json: { data: }
+  rescue StandardError => e
+    render json: { error: e.message }, status: 400
   end
 
-  def sync
-    OpenaiHintInstruction.insert_all!(sync_params)
+  def create
+    OpenaiHintInstruction.insert_all!(create_params)
     render json: { success: "Sync successful" }
   rescue StandardError => e
     render json: { error: e.message }, status: 422
   end
 
+  def count
+    render json: { data: OpenaiHintInstruction.count }
+  end
+
   private
 
-  def sync_params
+  def create_params
     params.require(:instructions)
       .map do |item|
-      item.permit(:id, :pre_word_list_test, :post_word_list_text, :created_at, :updated_at).to_h
+      item.permit(:id, :pre_word_list_text, :post_word_list_text, :created_at, :updated_at).to_h
     end
   end
 end

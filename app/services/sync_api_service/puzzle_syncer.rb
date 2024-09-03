@@ -2,7 +2,7 @@
 
 module SyncApiService
   # Syncs puzzles and associated answers and words
-  class PuzzleSyncer < SyncApiService::Client
+  class PuzzleSyncer < SyncApiService::Syncer
     def sync_puzzles(starting_id = nil, page_size: 50, page_limit: nil)
       starting_id ||= Puzzle.last.id
       @logger.info "Starting with #{starting_id}"
@@ -30,13 +30,28 @@ module SyncApiService
       @logger.exception(e, :fatal)
     end
 
+    private
+
+    def create_answers(puzzle, answer_words)
+      answer_words.each do |word_data|
+        text = word_data[:text]
+        word = Word.create_or_find_by!(text:)
+        word.update!(word_data.except(:text))
+        Answer.create!({ puzzle:, word_text: text })
+      end
+    end
+
+    def send_get_puzzles(starting_id:, page_size:)
+      path = "/puzzles?starting_id=#{starting_id}?limit=#{page_size}"
+      @client.send_get_request(path)
+    end
+
     # The puzzle data for the Sync API is paginated, so this method is for getting one page of data
     # at a time, which is 50 puzzles. This method is called in a loop by the `sync_recent_puzzles`
     # method until it gets to the most recent puzzle.
     def sync_puzzle_batch(starting_id, page_size:)
       @logger.info "Starting with #{starting_id}"
-      path = "/recent_puzzles/#{starting_id}?limit=#{page_size}"
-      response = send_get_request(path)
+      response = send_get_puzzles(starting_id:, page_size:)
 
       @validator.valid_puzzle_response!(response)
 
@@ -47,31 +62,13 @@ module SyncApiService
         @logger.info "Syncing puzzle #{puzzle_id}"
         existing_puzzle = Puzzle.find_by(id: puzzle_id)
         if existing_puzzle && Date.parse(puzzle_data[:date]) == existing_puzzle.date
-          @logger.info "Data for puzzle #{puzzle_id} already matches. Skipping."
+          @logger.info "Data for puzzle #{puzzle_id} already matches. Skipping"
           next
         end
 
         update_or_create_puzzle(item, existing_puzzle)
       end
       response
-    end
-
-    def update_or_create_puzzle(data_hash, existing_puzzle)
-      puzzle_data, origin_data, answer_words =
-        data_hash.values_at(:puzzle_data, :origin_data, :answer_words)
-
-      update_or_create_origin(puzzle_data, origin_data)
-
-      if existing_puzzle.nil?
-        puzzle = Puzzle.create!(puzzle_data)
-      else
-        puzzle = existing_puzzle
-        puzzle.update!(puzzle_data)
-        puzzle.answers.destroy_all
-        puzzle.user_puzzle_attempts.destroy_all
-      end
-
-      create_answers(puzzle, answer_words)
     end
 
     def update_or_create_origin(puzzle_data, origin_data)
@@ -90,13 +87,22 @@ module SyncApiService
       end
     end
 
-    def create_answers(puzzle, answer_words)
-      answer_words.each do |word_data|
-        text = word_data[:text]
-        word = Word.create_or_find_by!(text:)
-        word.update!(word_data.except(:text))
-        Answer.create!({ puzzle:, word_text: text })
+    def update_or_create_puzzle(data_hash, existing_puzzle)
+      puzzle_data, origin_data, answer_words =
+        data_hash.values_at(:puzzle_data, :origin_data, :answer_words)
+
+      update_or_create_origin(puzzle_data, origin_data)
+
+      if existing_puzzle.nil?
+        puzzle = Puzzle.create!(puzzle_data)
+      else
+        puzzle = existing_puzzle
+        puzzle.update!(puzzle_data)
+        puzzle.answers.destroy_all
+        puzzle.user_puzzle_attempts.destroy_all
       end
+
+      create_answers(puzzle, answer_words)
     end
   end
 end

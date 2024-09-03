@@ -81,12 +81,14 @@ Rails.application.routes.draw do
 
   namespace :sync_api do
     namespace :v1 do
-      get "recent_puzzles/:starting_id", to: "puzzle_data#recent_puzzles"
-      get "word_hints/:page", to: "word_hints#hint_batch"
-      get "instructions/count", to: "openai_hint_instructions#count"
-      post "instructions/sync", to: "openai_hint_instructions#sync"
-      # Expects query params `requests_offset` and `responses_offset`
-      get "openai_logs", to: "openai_logs#index_with_offset"
+      resources :openai_hint_instructions, only: [:index, :create] do
+        collection do
+          get :count
+        end
+      end
+      resources :openai_logs, only: :index
+      resources :puzzles, only: :index
+      resources :word_hints, only: :index
     end
   end
 

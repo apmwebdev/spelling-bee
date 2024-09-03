@@ -12,7 +12,7 @@
 
 # :nodoc:
 class SyncApi::V1::OpenaiLogsController < SyncApi::V1::SyncApiController
-  def index_with_offset
+  def index
     requests_offset = params["requests_offset"].to_i
     responses_offset = params["responses_offset"].to_i
     requests = OpenaiHintRequest.order(:id).offset(requests_offset).limit(100).map(&:to_sync_api)
